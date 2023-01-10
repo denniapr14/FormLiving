@@ -1,0 +1,59 @@
+// colors
+$black: #000;
+$white: #fff;
+$yellow: #ff0;
+$red: #f00;
+$blue: #00f;
+
+// Base Color
+$fd_bs_white: #ffffff;
+$fd_bs_black: #333333;
+$fd_bs_black--sc: #78828C;
+
+// Primary Color
+$fd_pr_green: #8ACCA1;
+$fd_pr_green-50: #E2F3E8;
+$fd_pr_green-100: #B9E0C6;
+$fd_pr_green-300: #58B97D;
+$fd_pr_green-400: #2BAB63;
+
+// Secondary Color
+$fd_sc_brown-500: #8E5C2E;
+$fd_sc_brown-400: #A47349;
+$fd_sc_brown-300: #BA8C65;
+$fd_sc_brown-50: #FFE9C7;
+
+// Transparent Color
+$fd_tr_primary: rgba(138, 204, 161, 0.2);
+$fd_tr_secondary: rgba(164, 115, 73, 0.2);
+$fd_tr_success: rgba(60, 210, 152, 0.2);
+$fd_tr_warning: rgba(255, 200, 38, 0.2);
+$fd_tr_error: rgba(255, 107, 51, 0.2);
+
+// Background Color
+$fd_bg_dark: #00105F;
+$fd_bg_grey: #EAEAEA;
+$fd_bg_light-grey: #FAFAFA;
+$fd_bg_base: #E6F5EF;
+
+// Status Color
+$fd_st_neutral: #F0F0F0;
+$fd_st_warning: #FFC826;
+$fd_st_error: #FF3333;
+$fd_st_success: #3CD298;
+
+// State Color
+$fd_sta_secondary: #EAEAEA;
+$fd_sta_inactive: #CCCCCC;
+$fd_sta_disabled: #AAAAAA;
+
+$fd_bg_orange: #FFBF01;
+
+// Font weights
+$FW_EXTRA_LIGHT: 200;
+$FW_LIGHT: 300;
+$FW_REGULAR: 400;
+$FW_MEDIUM: 500;
+$FW_SEMI_BOLD: 600;
+$FW_BOLD: 700;
+

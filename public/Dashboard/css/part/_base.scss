@@ -1,0 +1,21 @@
+html, body {
+  width: 100%;
+}
+
+body {
+  font-size: 16px;
+  min-height: 100vh;
+  width: 100%;
+  background: $fd_tr_primary;
+}
+
+a {
+  text-decoration: none;
+  &:hover{
+    text-decoration: none;
+  }
+}
+
+li{
+  list-style: none;
+}

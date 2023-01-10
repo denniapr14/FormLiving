@@ -1,0 +1,170 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin box-shadow($options) {
+  -moz-box-shadow: $options;
+  -webkit-box-shadow: $options;
+  box-shadow: $options;
+}
+
+@mixin box-sizing($val...) {
+  -webkit-box-sizing: $val;
+  -moz-box-sizing: $val;
+  box-sizing: $val;
+}
+
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transform($transform) {
+  transform: $transform;
+  -ms-transform: $transform; /* IE 9 */
+  -webkit-transform: $transform; /* Opera, Chrome, and Safari */
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    @content;
+  }
+
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin user-select($val: none) {
+  -webkit-user-select: $val;
+  -moz-user-select: $val;
+  -ms-user-select: $val;
+  user-select: $val;
+}
+
+@mixin viewport($device) {
+  // @device DESKTOP-LARGE
+  @if $device == desktop-large {
+    @media only screen and (min-width: 1440px) {
+      @content;
+    }
+  }
+  @else if $device == desktop-large-down {
+    @media only screen and (min-width: 320px) {
+      @content;
+    }
+  }
+
+  // @device DESKTOP
+  @else if $device == desktop {
+    @media only screen and (max-width: 1439px) and (min-width: 1200px) {
+      @content;
+    }
+  }
+  @else if $device == desktop-up {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+  @else if $device == desktop-down {
+    @media only screen and (max-width: 1439px) and (min-width: 320px) {
+      @content;
+    }
+  }
+
+  // @device TABLET
+  @else if $device == tablet {
+    @media only screen and (max-width: 1199.98px) and (min-width: 992px) {
+      @content;
+    }
+  }
+  @else if $device == tablet-up {
+    @media only screen and (min-width: 992px) {
+      @content;
+    }
+  }
+  @else if $device == tablet-down {
+    @media only screen and (max-width: 1199.98px) {
+      @content;
+    }
+  }
+
+  // @device TABLET-PORTRAIT
+  @else if $device == tablet-portrait {
+    @media only screen and (max-width: 991.98px) and (min-width: 768px) {
+      @content;
+    }
+  }
+  @else if $device == tablet-portrait-up {
+    @media only screen and (min-width: 768px) {
+      @content;
+    }
+  }
+  @else if $device == tablet-portrait-down {
+    @media only screen and (max-width: 991.98px) {
+      @content;
+    }
+  }
+
+  // @device MOBILE
+  @else if $device == mobile {
+    @media only screen and (max-width: 767.98px) and (min-width: 480px) {
+      @content;
+    }
+  }
+  @else if $device == mobile-up {
+    @media only screen and (min-width: 480px) {
+      @content;
+    }
+  }
+  @else if $device == mobile-down {
+    @media only screen and (max-width: 767.98px) {
+      @content;
+    }
+  }
+
+  // @device MOBILE-PORTRAIT
+  @else if $device == mobile-portrait {
+    @media only screen and (max-width: 479.98px) and (min-width: 320px) {
+      @content;
+    }
+  }
+  @else if $device == mobile-portrait-up {
+    @media only screen and (min-width: 320px) {
+      @content;
+    }
+  }
+}
+
+@mixin custom-nav-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    // -webkit-box-shadow: inset 0 0 6px $fd_bs_black--sc;
+    border-radius: 12px;
+    background: $fd_bg_grey;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: $fd_pr_green;
+  }
+}

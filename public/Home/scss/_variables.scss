@@ -1,0 +1,131 @@
+$primary: linear-gradient(109.12deg, #a6e1b7 0%, #8acca1 54.5%);
+$primary-normal: #8acca1;
+$secondary: #a47449;
+$secondary-light: #d3bba5;
+$grey-light: #b8babc;
+$grey: #58595b;
+
+/* BREAKPOINTS */
+@mixin breakpoint($point) {
+  @if $point ==desktop {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+
+  @else if $point ==laptop {
+    @media (min-width: 992px) {
+      @content;
+    }
+  }
+
+  @else if $point ==largeDesktop {
+    @media (min-width: 1400px) {
+      @content;
+    }
+  }
+
+  @else if $point ==tablet {
+    @media (min-width: 768px) {
+      @content;
+    }
+  }
+
+  @else if $point ==mobileonly {
+    @media (max-width: 576px) {
+      @content;
+    }
+  }
+
+  @else if $point ==untilTablet {
+    @media (max-width: 992px) {
+      @content;
+    }
+  }
+}
+
+@mixin blurBg {
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+  }
+}
+
+.primary-color {
+  color: $primary-normal;
+}
+
+.light-grey-color {
+  color: $grey-light;
+}
+
+@mixin dotsWhite() {
+  .slick-dots {
+    bottom: 18px;
+    left: 1.5rem;
+    text-align: left;
+
+    li {
+      width: 8px;
+      height: 8px;
+
+      button {
+        height: 8px;
+        width: 8px;
+
+        &::before {
+          background-color: rgba($color: white, $alpha: 0.6);
+          content: '';
+          opacity: 1;
+          height: 8px;
+          width: 8px;
+          border-radius: 50%;
+        }
+      }
+
+      &.slick-active {
+        width: 32px;
+        height: 8px;
+
+        button {
+          width: 32px;
+          height: 8px;
+
+          &::before {
+            background-color: white;
+            opacity: 1;
+            width: 32px;
+            height: 8px;
+            border-radius: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin overflowFlex() {
+  overflow: auto;
+  display: flex;
+  flex-wrap: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@mixin mobileCardShadow() {
+  box-shadow: 0px 2px 8px 0px #0000001A;
+  padding: .5rem;
+}

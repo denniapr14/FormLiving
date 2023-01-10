@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;500;600&family=Questrial&display=swap');
+
+@import 'variables';
+@import 'overrides';
+@import 'global';
+@import 'template';
+@import 'index';
+@import 'greenland';
+@import 'login';
+@import 'cluster';
+@import 'pages';
+@import 'kiosk';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: 'Poppins', sans-serif;
+    color: $grey;
+    overflow-x: hidden;
+}

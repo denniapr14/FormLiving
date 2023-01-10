@@ -1,0 +1,96 @@
+.login {
+    overflow: hidden;
+
+    .login-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+        position: relative;
+
+        .logo {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            text-align: left;
+            min-width: 35vw;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        h5 {
+            margin-bottom: 1rem;
+        }
+
+        .ornament {
+            &.one {
+                top: -25%;
+                right: -25%;
+
+                img {
+                    width: 430px;
+                }
+            }
+
+            &.two {
+                bottom: -25%;
+                left: -25%;
+
+                img {
+                    width: 430px;
+                }
+            }
+        }
+
+        @include breakpoint(mobileonly) {
+            padding: 2rem 0.5rem;
+            font-size: 14px;
+            min-height: 100vh;
+
+            .forms {
+                width: 100%;
+            }
+
+            .form-label {
+                display: none;
+            }
+
+            h5 {
+                margin-bottom: 20px;
+            }
+
+            .contact {
+                font-size: 12px;
+                margin-bottom: 30px;
+            }
+
+            .form-control {
+                font-size: 12px;
+            }
+
+            .recovery {
+                font-size: 10px;
+            }
+
+            .ornament.two {
+                display: none;
+            }
+
+            .ornament.one {
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+                top: -20%;
+
+                img {
+                    width: 300px;
+                }
+            }
+        }
+    }
+}
