@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver'    => 'session',
+            'provider' => 'user_admin'
+        ],
+        'guest' => [
+            'driver'    => 'session',
+            'provider' => 'user_pelanggan'
+        ]
     ],
 
     /*
@@ -63,6 +71,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'user_admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\UserAdmin::class,
+        ],
+        'user_pelanggan' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\UserPelanggan::class,
         ],
 
         // 'users' => [
@@ -93,6 +109,18 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        // 'user_admin' => [
+        //     'provider' => 'user_admin',
+        //     'table' => 'password_resets',
+        //     'expire' => 60,
+        //     'throttle' => 60,
+        // ],
+        // 'user_pelanggan' => [
+        //     'provider' => 'user_pelanggan',
+        //     'table' => 'password_resets',
+        //     'expire' => 60,
+        //     'throttle' => 60,
+        // ],
     ],
 
     /*

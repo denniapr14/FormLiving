@@ -18,8 +18,8 @@ use App\Http\Controllers\Home;
     Route::get('/', [Home::class,'index']);
     Route::get('/housing', [Home::class,'housing']);
     Route::get('/my-cart', [Home::class,'MyCart']);
-
-
+    Route::get('/login', [Home::class,'login']);
+    Route::post('/login', [Home::class,'loginAction'])->name('login.action');
 
 
     Route::get('/cluster', [Home::class,'Cluster']);

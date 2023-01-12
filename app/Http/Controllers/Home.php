@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Models\UserAdmin;
+use Illuminate\Contracts\Auth\Guard;
+
 
 class Home extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('guest')->except('logout');
+        // $this->middleware('guest:admin')->except('logout');
+        // // $this->middleware('guest:writer')->except('logout');
+    }
     //
 
 // =============================== NAVBAR
@@ -21,6 +32,52 @@ class Home extends Controller
 
 // ===========================================================
 
+// LOGIN
+    public function Login()
+    {
+        return view('login');
+    }
+
+
+    public function LoginAction(Request $request)
+    {
+        $user = \App\Models\UserAdmin::where([
+            'username_ua' => $request->username,
+            'password_ua' => md5($request->password)
+        ])->first();
+
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        // dd($user);
+        // die();
+        dd(Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)], $request->get('remember')));
+        die();
+        // $credentials = $request->only('username_ua', 'password_ua');
+        if (!empty($user)) {
+            if (Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
+
+                // return redirect()->intended('/');
+
+                // return "Daaaaa";
+                // return redirect()->intended('dashboard')
+                //             ->withSuccess('Signed in');
+            }
+        }
+        // return "salah";
+
+
+        return redirect("login")->withSuccess('Login details are not valid');
+
+
+
+    }
+    protected function guard($guard)
+    {
+        return Auth::guard($guard);
+    }
 
 
 // ===================== OPTIONAL ============================
