@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,17 +7,17 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserAdmin extends Authenticatable
+class UserPelanggan extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
     use \Illuminate\Auth\Authenticatable;
-    protected $primaryKey = "id_user_admin";
-    protected $guard = 'admin';
-    protected $table = 'user_admin';
+    protected $primaryKey = "id_pelanggan";
+    protected $guard = 'guest';
+    protected $table = 'user_pelanggan';
 
     public function getAuthPassword()
     {
-        return bcrypt($this->password_ua);
+        return bcrypt($this->password_plgn);
     }
 }

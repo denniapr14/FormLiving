@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+
+// Model
 use App\Models\UserAdmin;
+use App\Models\UserPelanggan;
+// =======================
+
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Hash;
 
 
 class Home extends Controller
@@ -46,6 +53,13 @@ class Home extends Controller
             'password_ua' => md5($request->password)
         ])->first();
 
+        // CHECK PELANGGAN
+        $userPelanggan = \App\Models\UserPelanggan::where([
+            'username_plgn' => $request->username,
+            'password_plgn' => md5($request->password)
+        ])->first();
+
+
         $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -53,13 +67,32 @@ class Home extends Controller
 
         // dd($user);
         // die();
-        dd(Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)], $request->get('remember')));
-        die();
+//         $user = UserAdmin::where('username', '=', Input::get('username'))->first();
+
+//         if(isset($user)) {
+//             if($user->password == md5(Input::get('password'))) { // If their password is still MD5
+//                 $user->password = Hash::make(Input::get('password')); // Convert to new format
+//                 $user->save();
+//                 Auth::login(Input::get('username'));
+//     }
+// }
+        // dd(Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)]));
+        // die();
         // $credentials = $request->only('username_ua', 'password_ua');
         if (!empty($user)) {
             if (Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
 
-                // return redirect()->intended('/');
+                return redirect('/');
+
+                // return "Daaaaa";
+                // return redirect()->intended('dashboard')
+                //             ->withSuccess('Signed in');
+            }
+        }
+        if (!empty($userPelanggan)) {
+            if (Auth::guard('guest')->attempt(['username_plgn' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
+
+                return redirect('/housing');
 
                 // return "Daaaaa";
                 // return redirect()->intended('dashboard')
