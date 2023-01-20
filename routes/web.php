@@ -70,6 +70,18 @@ use App\Http\Controllers\Home;
 
 
 
+// >>>>>>>>>>>>>>>>>>>> KIOS K <<<<<<<<<<<<<<<<<<<<<<<<<<
+
+Route::get('/kiosk/congratulation', function () {
+    return view('kiosk/k_congratulation');
+});
+
+Route::get('/kiosk/full-video', function () {
+    return view('kiosk/k_fullWidthVideo');
+});
+
+
+// >>>>>>>>>>>>>>>>>>>> END KIOS K <<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 // >>>>>>>>>>>>>>> DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
