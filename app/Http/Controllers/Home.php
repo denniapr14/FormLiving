@@ -125,10 +125,67 @@ class Home extends Controller
         return view('cluster');
         # code...
     }
+    public function DetailCluster()
+    {
+        return view('detailCluster');
+        # code...
+    }
 
+    public function SplashScreen()
+    {
+        return view('splashScreen');
+        # code...
+    }
+
+    public function LoadingPage()
+    {
+        return view('loadingPage');
+        # code...
+    }
+    public function VirtualTour()
+    {
+        return view('virtualTour');
+        # code...
+    }
 
 
 // ======================- END OPTIONAL -=====================
+
+
+
+// ===================== Profile ============================
+
+public function EditProfile()
+{
+    return view('editProfile');
+    # code...
+}
+
+public function FilterResult()
+{
+        return view('filterResult');
+        # code...
+}
+public function ProfileSetting()
+{
+        return view('profileSetting');
+        # code...
+}
+
+public function  SearchItem()
+{
+        return view('searchItem');
+        # code...
+}
+
+public function SignUp()
+{
+    return view('signUp');
+    # code...
+}
+
+
+// ===================== End Profile ============================
 
 
 // =======================- SIMULATION -======================
@@ -180,7 +237,11 @@ class Home extends Controller
         return view('simSummary');
         # code...
     }
-
+    public function Congratulation()
+    {
+        return view('congratulation');
+        # code...
+    }
 
 
 

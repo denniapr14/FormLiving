@@ -23,6 +23,21 @@ use App\Http\Controllers\Home;
 
 
     Route::get('/cluster', [Home::class,'Cluster']);
+    Route::get('/detail-cluster', [Home::class,'DetailCluster']);
+    Route::get('/virtual-tour', [Home::class,'VirtualTour']);
+
+
+
+    // >>>>>>>>>>>>>>>>>>> PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
+
+    Route::get('/profile-setting', [Home::class,'ProfileSetting']);
+    Route::get('/edit-profile', [Home::class,'editProfile']);
+    Route::get('/filter-result', [Home::class,'filterResult']);
+    Route::get('/search-item', [Home::class,'SearchItem']);
+    Route::get('/sign-up', [Home::class,'SignUp']);
+    // >>>>>>>>>>>>>>>>>>> END PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
+
+
 
     // ---------------= SIMULATION =-----------------
 
@@ -34,6 +49,7 @@ use App\Http\Controllers\Home;
     Route::get('/simulation-price', [Home::class,'simPrice']);
     Route::get('/simulation-order', [Home::class,'simOrder']);
     Route::get('/simulation-summary', [Home::class,'simSummary']);
+    Route::get('/congratulation', [Home::class,'congratulation']);
 
 
 
@@ -43,7 +59,7 @@ use App\Http\Controllers\Home;
 
     // FOOTER
 
-
+    Route::get('/loading-page', [Home::class,'loadingPage']);
     Route::get('/privacy', [Home::class,'Privacy']);
     Route::get('/terms', [Home::class,'Terms']);
 

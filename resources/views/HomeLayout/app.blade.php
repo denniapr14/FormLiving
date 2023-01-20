@@ -43,6 +43,8 @@
 
 @yield('content')
 
+@yield('navbar-profile')
+
 {{-- @yield('branch') --}}
 @yield('footer')
 </body>
