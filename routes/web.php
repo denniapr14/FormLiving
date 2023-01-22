@@ -80,7 +80,79 @@ Route::get('/kiosk/full-video', function () {
     return view('kiosk/k_fullWidthVideo');
 });
 
+// 0
+Route::get('/kiosk/unit', function () {
+    return view('kiosk/k_unit');
+});
+// 1
+Route::get('/kiosk/simulasi-kluster',function () {
+    return view('kiosk/k_simCluster');
+});
+//2
+Route::get('/kiosk/simulasi-pilih-unit',function () {
+    return view('kiosk/k_simSelectUnit');
+});
+//3
+Route::get('/kiosk/simulasi-tipe',function () {
+    return view('kiosk/k_simType');
+});
 
+
+Route::get('/kiosk/simulasi-modifikasi',function () {
+    return view('kiosk/k_simModification');
+});
+Route::get('/kiosk/simulasi-order',function () {
+    return view('kiosk/k_simOrder');
+});
+Route::get('/kiosk/simulasi-pembayaran',function () {
+    return view('kiosk/k_simPayment');
+});
+Route::get('/kiosk/simulasi-harga',function () {
+    return view('kiosk/k_simPrice');
+});
+
+
+Route::get('/kiosk/simulasi-unit',function () {
+    return view('kiosk/k_simUnit');
+});
+// 8
+Route::get('/kiosk/simulasi-data-konfirmasi',function () {
+    return view('kiosk/k_simDataConfirmation');
+});
+
+Route::get('/kiosk/loading-page',function () {
+    return view('kiosk/k_loadingPage');
+});
+Route::get('/kiosk/projek-fasilitas',function () {
+    return view('kiosk/k_projectFasilitas');
+});
+Route::get('/kiosk/projek-fitur',function () {
+    return view('kiosk/k_projectFeatures');
+});
+Route::get('/kiosk/projek-nearby',function () {
+    return view('kiosk/k_nearbyPlaces');
+});
+Route::get('/kiosk/projek-promo',function () {
+    return view('kiosk/k_projectPromo');
+});
+Route::get('/kiosk/projek-pilih-kluster',function () {
+    return view('kiosk/k_projectSelectCluster');
+});
+Route::get('/kiosk/projek-pilih-tipe',function () {
+    return view('kiosk/k_projectSelectType');
+});
+Route::get('/kiosk/projek-testimoni',function () {
+    return view('kiosk/k_projectTestimonial');
+});
+Route::get('/kiosk/pilih-kategori',function () {
+    return view('kiosk/k_selectCategory');
+});
+Route::get('/kiosk/pilih-projek',function () {
+    return view('kiosk/k_selectProject');
+});
+Route::get('/kiosk/splash-screen',function () {
+    return view('kiosk/k_splashScreen');
+});
 // >>>>>>>>>>>>>>>>>>>> END KIOS K <<<<<<<<<<<<<<<<<<<<<<<<<<
 
 

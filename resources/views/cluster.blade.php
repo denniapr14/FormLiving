@@ -2,7 +2,7 @@
 @extends('HomeLayout.navbar')
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footer')
-@section('tittle','Forms | Cluster')
+@section('tittle','Forms | Kluster')
 @section('body','k-cluster')
 
 @section('content')
@@ -28,7 +28,7 @@
             </h2>
             <div class="row">
                 <div class="col-12 col-lg-4">
-                    <a href="/detail-cluster.html" class="item">
+                    <a href="/detail-cluster" class="item">
                         <div class="item-image">
                             <img src="{{ asset('Home') }}/images/img-cluster1.png" alt="">
                         </div>
