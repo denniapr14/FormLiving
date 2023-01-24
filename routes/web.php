@@ -22,7 +22,7 @@ use App\Http\Controllers\Home;
     Route::post('/login', [Home::class,'loginAction'])->name('login.action');
 
 
-    Route::get('/cluster', [Home::class,'Cluster']);
+    Route::get('/kluster', [Home::class,'Cluster']);
     Route::get('/detail-cluster', [Home::class,'DetailCluster']);
     Route::get('/virtual-tour', [Home::class,'VirtualTour']);
 

@@ -135,7 +135,7 @@
                     <div class="mainroad mt-3">
                         <div class="row">
                             <div class="col-12 col-lg-4">
-                                <a href="/detail-cluster.html" class="item">
+                                <a href="/detail-cluster" class="item">
                                     <div class="item-image">
                                         <img src="{{ asset('Home') }}/images/img-cluster1.png" alt="">
                                     </div>

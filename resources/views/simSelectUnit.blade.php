@@ -59,7 +59,7 @@
 
             <div class="bg-black"></div>
 
-            <div id="popup" class="popup" style="height: 160%; ">
+            <div id="popup" class="popup" style=" ">
                 <button class="popup-close">
 
                         <img src="{{ asset('Home') }}/images/ic-close.png" alt="">

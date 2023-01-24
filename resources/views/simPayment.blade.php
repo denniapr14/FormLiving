@@ -11,11 +11,11 @@
 <div class="cluster">
     <div class="header-simulation mobile-only">
         <div class="ornament one">
-            <img src="/{{ asset('Home') }}/images/img-ornament1.png" alt="">
+            <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
         </div>
         <div class="nav-header">
             <div class="ic-back">
-                <img src="/{{ asset('Home') }}/images/ic-back-sim.png" alt="">
+                <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
             </div>
             <h2 class="title">
                 Miliki Unit
@@ -57,7 +57,7 @@
                     <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                         <div class="mod-type">
                             <div class="type-image">
-                                <img src="/{{ asset('Home') }}/images/img-cluster.png" alt="">
+                                <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
                             </div>
                             <div class="items">
                                 <div class="type-item">
@@ -121,7 +121,7 @@
                     <div class="item selected">
                         <div class="row">
                             <div class="col-2">
-                                <img src="/{{ asset('Home') }}/images/img-modification1.png" alt="">
+                                <img src="{{ asset('Home') }}/images/img-modification1.png" alt="">
                             </div>
                             <div class="col-4">
                                 <h6>Parket Kayu</h6>
@@ -138,7 +138,7 @@
                     <div class="item">
                         <div class="row">
                             <div class="col-2">
-                                <img src="/{{ asset('Home') }}/images/img-modification6.png" alt="">
+                                <img src="{{ asset('Home') }}/images/img-modification6.png" alt="">
                             </div>
                             <div class="col-4">
                                 <h6>Parket Gipsum</h6>

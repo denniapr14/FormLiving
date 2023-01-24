@@ -11,11 +11,11 @@
 <div class="cluster">
     <div class="header-simulation mobile-only">
         <div class="ornament one">
-            <img src="/{{ asset('Home') }}/images/img-ornament1.png" alt="">
+            <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
         </div>
         <div class="nav-header">
             <div class="ic-back">
-                <img src="/{{ asset('Home') }}/images/ic-back-sim.png" alt="">
+                <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
             </div>
             <h2 class="title">
                 Miliki Unit
@@ -55,7 +55,7 @@
                     <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                         <div class="mod-type">
                             <div class="type-image">
-                                <img src="/{{ asset('Home') }}/images/img-cluster.png" alt="">
+                                <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
                             </div>
                             <div class="items">
                                 <div class="type-item">
@@ -135,7 +135,7 @@
                                     <label for="gender" class="form-label">Pakai Promo</label>
                                     <button type="button" class="btn btn-form" data-bs-toggle="modal"
                                         data-bs-target="#modelId">
-                                        <div class="promo-text"><img src="/{{ asset('Home') }}/images/ic-promo.png" alt=""> Makin Untung
+                                        <div class="promo-text"><img src="{{ asset('Home') }}/images/ic-promo.png" alt=""> Makin Untung
                                             Pakai Promo</div>
                                         <div><i class="bi-chevron-right"></i></div>
                                     </button>
@@ -179,7 +179,7 @@
                     <h5 class="mb-4">Pilih Promo</h5>
                     <div class="promo-item active">
                         <div class="promo-icon">
-                            <img src="/{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
+                            <img src="{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
                         </div>
                         <div class="promo-text">
                             <h6>Cashback Rp. 5.000.000</h6>
@@ -188,7 +188,7 @@
                     </div>
                     <div class="promo-item">
                         <div class="promo-icon">
-                            <img src="/{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
+                            <img src="{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
                         </div>
                         <div class="promo-text">
                             <h6>Cashback Rp. 5.000.000</h6>
@@ -197,7 +197,7 @@
                     </div>
                     <div class="promo-item">
                         <div class="promo-icon">
-                            <img src="/{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
+                            <img src="{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
                         </div>
                         <div class="promo-text">
                             <h6>Cashback Rp. 5.000.000</h6>
@@ -207,7 +207,7 @@
                 </div>
                 <!-- STATE NO PROMO -->
                 <div class="no-promo text-center d-none">
-                    <img src="/{{ asset('Home') }}/images/img-illustration4.png" class="w-100" alt="">
+                    <img src="{{ asset('Home') }}/images/img-illustration4.png" class="w-100" alt="">
                 </div>
             </div>
 
