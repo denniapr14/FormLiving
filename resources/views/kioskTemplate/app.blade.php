@@ -36,7 +36,6 @@
 <body class="@yield('body')">
 
     @yield('sidebar')
-    @yield('apaini')
 
     @yield('content')
 

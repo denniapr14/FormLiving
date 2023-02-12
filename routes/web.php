@@ -20,9 +20,9 @@ use App\Http\Controllers\Home;
     Route::get('/my-cart', [Home::class,'MyCart']);
     Route::get('/login', [Home::class,'login']);
     Route::post('/login', [Home::class,'loginAction'])->name('login.action');
+    Route::get('/logout', [Home::class,'logout']);
 
-
-    Route::get('/kluster', [Home::class,'Cluster']);
+    Route::get('/cluster', [Home::class,'Cluster']);
     Route::get('/detail-cluster', [Home::class,'DetailCluster']);
     Route::get('/virtual-tour', [Home::class,'VirtualTour']);
 
@@ -31,10 +31,14 @@ use App\Http\Controllers\Home;
     // >>>>>>>>>>>>>>>>>>> PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
 
     Route::get('/profile-setting', [Home::class,'ProfileSetting']);
+    Route::post('/profile-setting/update', [Home::class,'ProfileSettingAction'])->name('profileSetting.action');
+
     Route::get('/edit-profile', [Home::class,'editProfile']);
     Route::get('/filter-result', [Home::class,'filterResult']);
     Route::get('/search-item', [Home::class,'SearchItem']);
+
     Route::get('/sign-up', [Home::class,'SignUp']);
+    Route::post('/sign-up/create', [Home::class,'SignUpAction'])->name('sign-up.action');
     // >>>>>>>>>>>>>>>>>>> END PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
 
 

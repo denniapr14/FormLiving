@@ -2112,38 +2112,39 @@ h1 {
   }
 }
 .map .bg-black {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
   width: 100%;
   height: 100%;
-  border-radius: 20px;
   display: none;
   z-index: 1;
   top: 0;
   left: 0;
-  position: absolute;
+  position: fixed;
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
 }
 .map .bg-black.active {
   display: block;
 }
 .map .popup {
   display: none;
-  height: 60%;
-  width: 50%;
-  position: absolute;
-  left: 2rem;
+  height: 85%;
+  width: 35%;
+  position: fixed;
+  left: 50%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 20px;
-  z-index: 2;
+  z-index: 4;
 }
 .map .popup .popup-close {
   position: absolute;
   background-color: white;
   top: -2rem;
   right: 0;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2151,8 +2152,22 @@ h1 {
   cursor: pointer;
 }
 .map .popup .popup-close img {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
+}
+@media (max-width: 992px) {
+  .map .popup {
+    width: 100vw;
+    height: 90vh;
+    bottom: 0;
+    top: auto;
+    transform: translate(-50%, 0);
+    border-radius: 20px 20px 0 0;
+  }
+  .map .popup .popup-close {
+    top: 1rem;
+    right: 1rem;
+  }
 }
 .map .popup .popup-image img {
   height: 147px;

@@ -32,5 +32,6 @@
     @yield('content')
 
     @yield('footer')
+    @yield('script')
 </body>
 </html>

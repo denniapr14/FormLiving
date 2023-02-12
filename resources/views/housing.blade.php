@@ -27,7 +27,7 @@
                     interdum neque vel euismod. Nam ac nisl eu ex fermentum molestie et nec mi. Donec et suscipit
                     metus, ut pharetra leo. </p>
 
-                <button type="button" class="btn btn-primary d-none d-lg-block">Learn More</button>
+                <a href="/simulasi-cluster" class="btn btn-primary d-none d-lg-block">Buy Now!</a>
             </div>
         </div>
         <div class="row">
@@ -149,7 +149,7 @@
                         <h4>Green East</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque vel
                             euismod. </p>
-                        <a href="/k-cluster.html" class="more">Miliki Aku ></a>
+                        <a href="/cluster" class="more">Miliki Aku ></a>
                     </div>
                 </div>
             </div>
@@ -186,9 +186,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 d-flex justify-content-center" data-aos="fade-up">
+            {{--  <div class="col-12 d-flex justify-content-center" data-aos="fade-up">
                 <button type="button" class="btn btn-primary">Tampilkan Semua</button>
-            </div>
+            </div>  --}}
         </div>
     </div>
 </div>

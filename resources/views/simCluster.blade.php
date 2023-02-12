@@ -25,11 +25,11 @@
             <div class="step active">1</div>
             <div class="step">2</div>
             <div class="step">3</div>
+
             <div class="step">4</div>
             <div class="step">5</div>
             <div class="step">6</div>
-            <div class="step">7</div>
-            <div class="step last">8</div>
+            <div class="step last">7</div>
         </div>
 
     </div>
@@ -38,11 +38,11 @@
             <div class="step active">1</div>
             <div class="step">2</div>
             <div class="step">3</div>
+
             <div class="step">4</div>
             <div class="step">5</div>
             <div class="step">6</div>
-            <div class="step">7</div>
-            <div class="step last">8</div>
+            <div class="step last">7</div>
         </div>
 
         <div class="choose-cluster">
@@ -50,8 +50,9 @@
                 Pilih Cluster
             </h2>
             <div class="row">
-                <a href="/simulation-select-unit">
                 <div class="col-6 col-lg-3">
+
+
                     <div class="item">
                         <div class="item-image">
                             <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
@@ -60,9 +61,11 @@
                         <h5 class="item-title">The Mainroad</h5>
                         <p class="item-sub">Cluster</p>
                     </div>
+
+
                 </div>
-                </a>
                 <div class="col-6 col-lg-3">
+
                     <div class="item">
                         <div class="item-image">
                             <img src="{{ asset('Home') }}/images/img-cluster2.png" alt="">
@@ -72,8 +75,10 @@
                         <h5 class="item-title">The Icon</h5>
                         <p class="item-sub">Cluster</p>
                     </div>
+
                 </div>
                 <div class="col-6 col-lg-3">
+
                     <div class="item">
                         <div class="item-image">
                             <img src="{{ asset('Home') }}/images/img-cluster3.png" alt="">
@@ -82,8 +87,10 @@
                         <h5 class="item-title">Green West</h5>
                         <p class="item-sub">Cluster</p>
                     </div>
+
                 </div>
                 <div class="col-6 col-lg-3">
+
                     <div class="item">
                         <div class="item-image">
                             <img src="{{ asset('Home') }}/images/img-cluster4.png" alt="">
@@ -92,13 +99,14 @@
                         <h5 class="item-title">Green East</h5>
                         <p class="item-sub">Cluster</p>
                     </div>
+
                 </div>
             </div>
         </div>
 
         <div class="btn-groups">
-            <a href="/k-cluster.html" type="button" class="btn btn-grey">Kembali</a>
-            <a href="/k-simulation-select-unit.html" type="button" class="btn btn-primary">Lanjutkan</a>
+            <a href="/cluster" type="button" class="btn btn-grey">Kembali</a>
+            <a href="/simulation-select-unit" type="button" class="btn btn-primary">Lanjutkan</a>
         </div>
     </div>
 </div>

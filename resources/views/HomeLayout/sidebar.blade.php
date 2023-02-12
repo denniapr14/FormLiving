@@ -71,12 +71,34 @@
                 </li>
             </ul>
         </div>
+        @if (!empty(Session::get('guest')))
+
         <div class="action">
-            <a href="/login" type="button" class="btn btn-outline-secondary">Login/Register</button>
+
+            <a href="/profile-setting" type="button" class="btn btn-outline-secondary">{{ $userPelanggan->nama_plgn }}</a>
+                <a href="/my-cart">
+                    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
+                </a>
+
+        </div>
+        @elseif (!empty(Session::get('user')))
+        <div class="action">
+
+            <a href="/profile-setting"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</>
                 <a href="/my-cart">
                     <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
                 </a>
         </div>
+        @else
+        <div class="action">
+
+            <a href="/login" type="button" class="btn btn-outline-secondary">Login/Register</a>
+                <a href="/my-cart">
+                    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
+                </a>
+        </div>
+        @endif
+
     </div>
 </div>
 

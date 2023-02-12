@@ -41,12 +41,14 @@
 @yield('navbar')
 @yield('sidebar')
 
+@yield('flashdata')
 @yield('content')
 
 @yield('navbar-profile')
 
 {{-- @yield('branch') --}}
 @yield('footer')
+@yield('script')
 </body>
 
 <script>
