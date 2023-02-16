@@ -2,8 +2,8 @@
 @extends('HomeLayout.navbar')
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footer')
-@section('tittle','Forms | Simulasi Pembayaran')
-@section('body','')
+@section('tittle', 'Forms | Simulasi Pembayaran')
+@section('body', '')
 
 
 @section('content')
@@ -26,11 +26,11 @@
             <div class="step done">1</div>
             <div class="step done">2</div>
             <div class="step done">3</div>
-            <div class="step done">4</div>
-            <div class="step active">5</div>
+            <div class="step active">4</div>
+            <div class="step">5</div>
             <div class="step">6</div>
             <div class="step last">7</div>
-            {{--  <div class="step">7</div>  --}}
+            {{-- <div class="step">7</div> --}}
         </div>
 
     </div>
@@ -39,72 +39,78 @@
             <div class="step done">1</div>
             <div class="step done">2</div>
             <div class="step done">3</div>
-            <div class="step done">4</div>
-            <div class="step active">5</div>
+            <div class="step active">4</div>
+            <div class="step ">5</div>
             <div class="step">6</div>
             <div class="step last">7</div>
-            {{--  <div class="step">7</div>  --}}
+            {{-- <div class="step">7</div> --}}
         </div>
         <div>
+            {{--  FORM  --}}
+            <form action="{{ route('simulation-price',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah,'']) }}" method="post">
+                @csrf
+                <div class="second-layout">
 
-            <div class="second-layout">
-                <div class="row">
-                    <div class="col-12 order-2 order-lg-1">
-                        <h2 class="title">
-                            Metode Pembayaran
-                        </h2>
-                    </div>
-                    <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
-                        <div class="mod-type">
-                            <div class="type-image">
-                                <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
-                            </div>
-                            <div class="items">
-                                <div class="type-item">
-                                    <p>Type</p>
-                                    <h5>150</h5>
+                    <div class="row">
+                        <div class="col-12 order-2 order-lg-1">
+                            <h2 class="title">
+                                Metode Pembayaran
+                            </h2>
+                        </div>
+                        <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
+                            <div class="mod-type">
+                                <div class="type-image">
+                                    <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
                                 </div>
-                                <div class="type-item">
-                                    <p>Blok</p>
-                                    <h5>A2</h5>
-                                </div>
-                                <div class="type-item">
-                                    <p>Cluster</p>
-                                    <h5>The Mainroad</h5>
-                                </div>
-                                <div class="type-item">
-                                    <p>Start from</p>
-                                    <h5>Rp. 975,000,000</h5>
+                                <div class="items">
+                                    <div class="type-item">
+                                        <p>Type</p>
+                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Blok</p>
+                                        <h5>{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Cluster</p>
+                                        <h5>{{ $rumah->nama_cluster }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Start from</p>
+
+                                        <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-8 right-column order-3">
-                        <div class="card-shadow">
-                            <div class="form-check form-radio">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="kpr" id="kpr"
-                                        value="checkedValue" checked>
-                                    KPR Bank
-                                </label>
+
+                        <div class="col-12 col-lg-8 right-column order-3">
+                            <div class="card-shadow">
+                                <div class="form-check form-radio">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="payment" id="kpr" value="KPR"
+                                            checked>
+                                        KPR Bank
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-shadow">
-                            <div class="form-check form-radio">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="kpr" id="kpr"
-                                        value="checkedValue">
-                                    Cicilan Developer
-                                </label>
+                            <div class="card-shadow">
+                                <div class="form-check form-radio">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="payment" id="kpr"
+                                            value="Cicilan">
+                                        Cicilan Developer
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="btn-groups">
-                <a href="/simulation-modification" type="button" class="btn btn-grey">Kembali</a>
-                <a href="/simulation-price" type="button" class="btn btn-primary">Lanjutkan</a>
-            </div>
+                <div class="btn-groups">
+                    <a href="/simulation-type/{{ $rumah->id_rumah }}" type="button" class="btn btn-grey">Kembali</a>
+                    <button type="submit"  type="button" class="btn btn-primary">Lanjutkan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -160,3 +166,12 @@
 
 
 @endsection
+
+<?php
+function rupiah($angka)
+{
+    $hasil_rupiah = number_format($angka, 2, ',', '.');
+    return $hasil_rupiah;
+}
+
+?>

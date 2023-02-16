@@ -96,6 +96,68 @@
                                     </div>
                                 </form>
                             @endif
+
+                            @if (!empty(Session::get('user')))
+                                <form action="{{ route('profileSetting.action') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="edit-image">
+                                        <div class="image">
+                                            <img src="{{ asset('Home') }}/images/img-profile-large.png" alt="">
+                                            <div class="btn-change">
+                                                <img src="{{ asset('Home') }}/images/btn_change-foto.png" alt="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row forms">
+                                        <div class="col-12 col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="username" class="form-label">Username</label>
+                                                <input type="text" class="form-control" name="username" id="username"
+                                                    value="{{ $user->username_ua }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label">Full Name</label>
+                                                <input type="text" class="form-control" name="nama" id="nama"
+                                                    placeholder="{{ $user->nama_ua }}" value="{{ $user->nama_ua }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" name="email" id="email"
+                                                    placeholder="{{ $user->email_ua }}" value="{{ $user->email_ua }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="full_name" class="form-label">Phone Number</label>
+                                                <input type="tel" class="form-control" name="telp" id="telp"
+                                                    placeholder="{{ $user->no_tlp_ua }}" value="{{ $user->no_tlp_ua }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            <div class="mb-5">
+                                                <label for="full_name" class="form-label">Password</label>
+                                                <input type="password" class="form-control" name="password" id="password"
+                                                    placeholder="***************">
+                                                <span id="spanPwd"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <button type="sumbit" value="submit" class="btn btn-primary w-100">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @endif
                     </div>
                 </div>
             </div>

@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use App\Models\UserAdmin;
 use App\Models\UserPelanggan;
 use App\Models\TipeRumah;
+use App\Models\Rumah;
+use App\Models\Cluster;
+use App\Models\Promo;
 // =======================
 
 use Illuminate\Contracts\Auth\Guard;
@@ -90,6 +93,24 @@ class Home extends Controller
     // LOGIN
     public function Login()
     {
+
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])->first();
+
+            // dd($user);
+            // die();
+            return view('login', compact('user'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            // dd($userPelanggan);
+            // die();
+            return view('login', compact('userPelanggan'));
+        }
         // if (!session()->has('guest') || session()->has('user')) {
         //     return redirect("/login")->with('error',"You not sign in or sign up!");
         //     # code...
@@ -213,13 +234,12 @@ class Home extends Controller
     {
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
+
             return view('cluster', compact('user'));
         }
         if (session()->has('guest')) {
@@ -238,13 +258,11 @@ class Home extends Controller
     {
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
             return view('detailCluster', compact('user'));
         }
         if (session()->has('guest')) {
@@ -287,7 +305,7 @@ class Home extends Controller
 
     public function EditProfile()
     {
-         if (!session()->has('guest') || session()->has('user')) {
+        if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
@@ -298,14 +316,13 @@ class Home extends Controller
         }
 
         if (session()->has('user')) {
-            $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where(['id_user_admin' => session::get('user')])
                 ->first();
 
-            dd($user);
-            die();
+            // dd($user);
+            // die();
             return view('editProfile', compact('user'));
         }
         if (session()->has('guest')) {
@@ -328,7 +345,7 @@ class Home extends Controller
     }
     public function ProfileSetting()
     {
-        if (!session()->has('guest') || session()->has('user')) {
+        if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
@@ -339,14 +356,13 @@ class Home extends Controller
         }
 
         if (session()->has('user')) {
-            $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where(['id_user_admin' => session::get('user')])
                 ->first();
 
-            dd($user);
-            die();
+            // dd($user);
+            // die();
             return view('profileSetting', compact('user'));
         }
         if (session()->has('guest')) {
@@ -364,19 +380,58 @@ class Home extends Controller
 
     public function ProfileSettingAction(Request $request)
     {
+        if (session()->has('user')) {
 
 
-        // if (session()->has('user')) {
-        //     $user = \App\Models\UserAdmin::where([
-        //             'id_user_admin' => session::get('user'),
-        //         ])
-        //         ->join('ktgr_admin')
-        //         ->first();
 
-        //     // dd($user);
-        //     // die();
-        //     return view('profileSetting', compact('user'));
-        // }
+            // dd($userPelanggan);
+            // die();
+            $this->validate($request, [
+                'username'  => 'required',
+                'nama'      => 'required',
+                'email'     => 'required',
+
+                'password'  => 'required|min:6'
+            ]);
+
+            $user = \App\Models\UserAdmin::where([
+                'username_ua' => $request->username,
+                'password_ua' => md5($request->password)
+            ])->first();
+            // dd(session::get('guest'));
+            //             die();
+            // $userP = \App\Models\UserPelanggan::where([
+            //     'username_plgn' => $request->username,
+            // ])->first();
+
+            // if (!empty($userP)) {
+            //     return redirect('/profile-setting')->with('error', 'Username is use!');
+            // }
+
+            $dataInput = array(
+                'nama_ua'             => $request->nama,
+                // 'password_plgn'         => md5($request->password),
+                'email_ua'            => $request->email,
+                'no_tlp_ua'           => $request->telp,
+
+            );
+
+            if (!empty($user)) {
+                DB::table('user_admin')
+                    ->where('id_user_admin', $user->id_user_admin)
+                    ->update(
+                        $dataInput
+                    );
+                return back()->with('success', 'Your Account ' . $request->username . ' has been updated!');
+            } else {
+                return back()->with('error', 'Your Password wrong!');
+            }
+
+
+            return back()->with('success', 'Your Account ' . $request->username . ' has been updated!');
+        }
+
+
         if (session()->has('guest')) {
 
 
@@ -396,8 +451,8 @@ class Home extends Controller
                 'username_plgn' => $request->username,
                 'password_plgn' => md5($request->password)
             ])->first();
-// dd(session::get('guest'));
-//             die();
+            // dd(session::get('guest'));
+            //             die();
             // $userP = \App\Models\UserPelanggan::where([
             //     'username_plgn' => $request->username,
             // ])->first();
@@ -417,10 +472,10 @@ class Home extends Controller
 
             if (!empty($userPelanggan)) {
                 DB::table('user_pelanggan')
-                ->where('id_pelanggan', $userPelanggan->id_pelanggan )
-                ->update(
-                    $dataInput
-                );
+                    ->where('id_pelanggan', $userPelanggan->id_pelanggan)
+                    ->update(
+                        $dataInput
+                    );
                 return back()->with('success', 'Your Account ' . $request->username . ' has been updated!');
             } else {
                 return back()->with('error', 'Your Password wrong!');
@@ -428,7 +483,6 @@ class Home extends Controller
 
 
             return back()->with('success', 'Your Account ' . $request->username . ' has been updated!');
-
         }
 
         // return view('profileSetting');
@@ -498,16 +552,24 @@ class Home extends Controller
 
     public function SimCluster()
     {
+        $cluster = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->select('cluster.nama_cluster', 'cluster.codecluster', DB::raw('COUNT(rumah.id_rumah) as count'))
+        ->where('status', '=', 'available')
+        ->groupBy('cluster.nama_cluster')
+        ->get();
+        // dd($cluster);
+        //     die();
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
-            return view('simCluster', compact('user'));
+            // dd($user);
+            // die();
+            return view('simCluster', compact('user'),compact('cluster'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -515,52 +577,101 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('simCluster', compact('userPelanggan'));
+            return view('simCluster', compact('userPelanggan'),compact('cluster'));
         }
-        return view('simCluster');
+        return view('simCluster',compact('cluster'));
         # code...
     }
 
-    public function SimSelectUnit()
+    public function SimSelectUnit($codecluster)
+    {
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.codecluster', '=', $codecluster)
+        ->get();
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])
+
+                ->first();
+
+            // dd($user);
+            // die();
+            return view('simSelectUnit', compact('user'),compact('rumah'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            // dd($userPelanggan);
+            // die();
+
+
+
+            return view('simSelectUnit', compact('userPelanggan'),compact('rumah'));
+        }
+
+
+        return view('simSelectUnit', compact('rumah'));
+        # code...
+    }
+
+    public function getomah()
     {
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
+            // dd($user);
+            // die();
             return view('simSelectUnit', compact('user'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
                 'id_pelanggan' => session::get('guest'),
             ])->first();
+
+            $omah = DB::table('rumah')->select('id_rumah', 'blok', 'nomor', 'status')->get();
+
             // dd($userPelanggan);
             // die();
             return view('simSelectUnit', compact('userPelanggan'));
         }
-        return view('simSelectUnit');
-        # code...
+
+
+        // if (isset($_POST['getem'])) {
+        //     $data = \App\Models\UserAdmin::where('id_rumah,blok,nomor,status', 'rumah')->result_array();
+        //     echo json_encode($data);
+        // }
     }
 
-    public function SimType()
+
+    public function SimType($id_rumah)
     {
-        $tipe = DB::table('tipe_rumah')->get();
-        // dd($tipe);
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.id_rumah', '=', $id_rumah)
+        ->first();
+        // dd($rumah);
         // die();
+        $tipe = DB::table('tipe_rumah')->get();
+
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
-            return view('simType', compact('user'), compact('tipe'));
+            // dd($user);
+            // die();
+            return view('simType', compact('user','tipe','rumah') );
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -568,9 +679,9 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('simType', compact('userPelanggan'),compact('tipe'));
+            return view('simType', compact('userPelanggan','tipe','rumah'));
         }
-        return view('simType',compact('tipe'));
+        return view('simType', compact('tipe'), compact('rumah'));
         # code...
     }
 
@@ -578,19 +689,21 @@ class Home extends Controller
     {
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
+            // dd($user);
+            // die();
             return view('simModification', compact('user'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
                 'id_pelanggan' => session::get('guest'),
             ])->first();
+
+
             // dd($userPelanggan);
             // die();
             return view('simModification', compact('userPelanggan'));
@@ -599,43 +712,102 @@ class Home extends Controller
         # code...
     }
 
-    public function SimPayment()
+    public function SimPayment($id_rumah,$id_tipe)
     {
+        $tipeRumah = DB::table('tipe_rumah')->where([
+            'id_tipe_rumah' => $id_tipe
+        ])->first();
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.id_rumah', '=', $id_rumah)
+        ->first();
+        // $data= 'tipe','rumah';
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
-            return view('simPayment', compact('user'));
+            // dd($user);
+            // die();
+            return view('simPayment', compact('user','tipeRumah','rumah'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
                 'id_pelanggan' => session::get('guest'),
             ])->first();
+
             // dd($userPelanggan);
             // die();
-            return view('simPayment', compact('userPelanggan'));
+            return view('simPayment', compact('userPelanggan','tipeRumah','rumah'));
         }
-        return view('simPayment');
+        return view('simPayment','tipeRumah','rumah');
         # code...
     }
 
-    public function SimPrice()
+    public function SimPrice(Request $request,$id_rumah,$id_tipe)
+
     {
+        $tipeRumah = DB::table('tipe_rumah')->where([
+            'id_tipe_rumah' => $id_tipe
+        ])->first();
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.id_rumah', '=', $id_rumah)
+        ->first();
+        $payment = $request->payment;
+        if (!empty($payment)) {
+            return redirect('/simulation-price-payment/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment);
+        } else {
+            return back()->with('error', 'You not select payment method!');
+        }
+// if (session()->has('user')) {
+        //     $user = \App\Models\UserAdmin::where([
+        //         'id_user_admin' => session::get('user'),
+        //     ])
+
+        //         ->first();
+
+        //     // dd($user);
+        //     // die();
+        //     return view('simPrice', compact('user','tipeRumah','rumah','payment'));
+        // }
+        // if (session()->has('guest')) {
+        //     $userPelanggan = \App\Models\UserPelanggan::where([
+        //         'id_pelanggan' => session::get('guest'),
+        //     ])->first();
+        //     // dd($userPelanggan);
+        //     // die();
+        //     return view('simPrice', compact('userPelanggan','tipeRumah','rumah','payment'));
+        // }
+        // return view('simPrice','tipeRumah','rumah','payment');
+        # code...
+    }
+    public function SimPricePayment($id_rumah,$id_tipe, $payment)
+
+    {
+        $tipeRumah = DB::table('tipe_rumah')->where([
+            'id_tipe_rumah' => $id_tipe
+        ])->first();
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.id_rumah', '=', $id_rumah)
+        ->first();
+
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
-            return view('simPrice', compact('user'));
+            // dd($user);
+            // die();
+            return view('simPrice', compact('user','tipeRumah','rumah','payment'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -643,24 +815,39 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('simPrice', compact('userPelanggan'));
+            return view('simPrice', compact('userPelanggan','tipeRumah','rumah','payment'));
         }
-        return view('simPrice');
+        return view('simPrice','tipeRumah','rumah','payment');
         # code...
     }
 
-    public function SimOrder()
+    public function SimOrder($id_rumah,$id_tipe, $payment)
     {
+        $tipeRumah = DB::table('tipe_rumah')->where([
+            'id_tipe_rumah' => $id_tipe
+        ])->first();
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.id_rumah', '=', $id_rumah)
+        ->first();
+        $promo = DB::table('promo')
+        ->where('status', '=', "aktif")
+        // ->where('tgl_aktif', '<=', NOW())
+        ->where('tgl_berakhir', '>=', NOW())
+        ->get();
+        // dd($promo);
+        // die();
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
-            return view('simOrder', compact('user'));
+            // dd($user);
+            // die();
+            return view('simOrder', compact('user','tipeRumah','rumah','promo','payment'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -668,24 +855,71 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('simOrder', compact('userPelanggan'));
+            return view('simOrder', compact('userPelanggan','tipeRumah','rumah','promo','payment'));
         }
-        return view('simOrder');
+        return view('simOrder',compact('tipeRumah','rumah','promo','payment'));
         # code...
     }
 
-    public function SimSummary()
+    public function SimOrderAction(Request $request,$id_rumah,$id_tipe, $payment)
     {
+        $tipeRumah = DB::table('tipe_rumah')->where([
+            'id_tipe_rumah' => $id_tipe
+        ])->first();
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.id_rumah', '=', $id_rumah)
+        ->first();
+        $promo = DB::table('promo')
+        ->where('status', '=', "aktif")
+        // ->where('tgl_aktif', '<=', NOW())
+        ->where('tgl_berakhir', '>=', NOW())
+        ->get();
+
+        $voucher = $request->promo;
+
+        // dd($request->all());
+        // die();
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
-                ->first();
+                'id_user_admin' => session::get('user'),
+            ])
 
-            dd($user);
-            die();
-            return view('simSummary', compact('user'));
+                ->first();
+                $this->validate($request, [
+                    'nama'      => 'required|min:3',
+
+                    'email' => 'required',
+                    // 'user'  => 'required'
+                    // 'phone' => 'required|numeric',
+
+                    // 'kelamin'   => 'required',
+
+                ]);
+
+
+                $dataInput = array(
+                    'nama_plgn'             => $request->nama,
+                    'id_user_admin'         => session::get('user'),
+                    'no_ktp_plgn'           => $request->nik,
+                    'no_telp_plgn'          => $request->telp,
+                    'no_wa_plgn'            => $request->wa,
+                    'alamat_plgn'           => $request->alamat,
+                    'email_plgn'            => $request->email,
+                    'npwp_plgn'             => $request->npwp,
+                    'jenis_kelamin_status'  => $request->kelamin
+
+                );
+
+                $id = DB::table('user_pelanggan')->insertGetId(
+                    $dataInput
+                 );
+                return redirect('/simulation-summary/'.$rumah->id_rumah.'/'.$tipeRumah->id_tipe_rumah.'/'.$payment.'/'.$voucher.'/'.$id);
+
+            // dd($dataInput);
+            // die();
+
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -693,7 +927,242 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('simSummary', compact('userPelanggan'));
+            $this->validate($request, [
+                'nama'      => 'required|min:3',
+
+                'email' => 'required',
+                // 'phone' => 'required|numeric',
+
+                // 'kelamin'   => 'required',
+
+            ]);
+
+
+            $dataInput = array(
+                'nama_plgn'             => $request->nama,
+                'no_ktp_plgn'           => $request->nik,
+                'no_telp_plgn'          => $request->telp,
+                'no_wa_plgn'            => $request->wa,
+                'alamat_plgn'           => $request->alamat,
+                'email_plgn'            => $request->email,
+                'npwp_plgn'             => $request->npwp,
+                'jenis_kelamin_status'  => $request->kelamin
+
+            );
+            DB::table('user_pelanggan')
+            ->where('id_pelanggan', session::get('guest'))
+            ->update(
+                $dataInput
+            );
+            return redirect('/simulation-summary/'.$rumah->id_rumah.'/'.$tipeRumah->id_tipe_rumah.'/'.$payment.'/'.$voucher.'/'.session::get('guest'));
+
+
+        }
+        // return view('simOrder',compact('tipeRumah','rumah','promo'));
+        # code...
+    }
+
+    public function SimSummary($id_rumah,$id_tipe, $payment, $voucher, $id_pelanggan)
+    {
+        $pelanggan = DB::table('user_pelanggan')->where([
+            'id_pelanggan' => $id_pelanggan
+        ])->first();
+        $tipeRumah = DB::table('tipe_rumah')->where([
+            'id_tipe_rumah' => $id_tipe
+        ])->first();
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.id_rumah', '=', $id_rumah)
+        ->first();
+        $promo = DB::table('promo')
+        ->where('kode_promo', '=', $voucher)
+        // ->where('tgl_aktif', '<=', NOW())
+
+        ->first();
+
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])
+
+                ->first();
+
+            // dd($user);
+            // die();
+            return view('simSummary', compact('user','tipeRumah','rumah','promo','payment','voucher','pelanggan'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            // dd($userPelanggan);
+            // die();
+            return view('simSummary', compact('userPelanggan','tipeRumah','rumah','promo','payment','voucher','pelanggan'));
+        }
+        return view('simSummary');
+        # code...
+    }
+    public function SimSummaryAction(Request $request, $id_rumah,$id_tipe, $payment, $voucher , $id_pelanggan)
+    {
+        $tipeRumah = DB::table('tipe_rumah')->where([
+            'id_tipe_rumah' => $id_tipe
+        ])->first();
+        $pelanggan = DB::table('user_pelanggan')->where([
+            'id_pelanggan' => $id_pelanggan
+        ])->first();
+        $rumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('status', '=', 'available')
+        ->where('rumah.id_rumah', '=', $id_rumah)
+        ->first();
+        $promo = DB::table('promo')
+        ->where('kode_promo', '=', $voucher)
+        // ->where('tgl_aktif', '<=', NOW())
+
+        ->first();
+
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])
+
+                ->first();
+                $this->validate($request, [
+                    'harga'      => 'required',
+
+
+                    // 'phone' => 'required|numeric',
+
+                    // 'kelamin'   => 'required',
+
+                ]);
+                if (!empty($promo)) {
+                    $dataInputDetail = array(
+                        'luas_tanah_kkpr'           => $rumah->luas_tanah,
+                        'tipe_kkpr'                 => $tipeRumah->jenis_tr,
+                        'harga_awal'                => $tipeRumah->harga_tr,
+                        'total_diskon'              => $promo->diskon_promo,
+                        'total_harga'               => $tipeRumah->harga_tr
+                    );
+                }
+                if (empty($promo)) {
+                    $dataInputDetail = array(
+                        'luas_tanah_kkpr'           => $rumah->luas_tanah,
+                        'tipe_kkpr'                 => $tipeRumah->jenis_tr,
+                        'harga_awal'                => $tipeRumah->harga_tr,
+
+                        'total_harga'               => $tipeRumah->harga_tr
+                    );
+                }
+
+                $id = DB::table('kalkulator_kpr')->insertGetId(
+                   $dataInputDetail
+                );
+                if (!empty($promo)) {
+                    $dataInput = array(
+                        'id_pelanggan'              => $pelanggan->id_pelanggan,
+                        'id_user_admin'             => session::get('user'),
+                        'id_kkpr'                   => $id,
+                        'id_rumah'                  => $id_rumah,
+                        'id_tipe_rumah'             => $id_tipe,
+                        'jenis_pembayaran_fp'       => $payment,
+                        'id_promo'                  => $promo->id_promo,
+
+                    );
+                }
+                if (empty($promo)) {
+                    $dataInput = array(
+                        'id_pelanggan'              => $pelanggan->id_pelanggan,
+                        'id_user_admin'             => session::get('user'),
+                        'id_kkpr'                   => $id,
+                        'id_rumah'                  => $id_rumah,
+                        'id_tipe_rumah'             => $id_tipe,
+                        'jenis_pembayaran_fp'       => $payment,
+
+
+                    );
+                }
+                DB::table('formulir_pesanan')->insert(
+                    $dataInput
+                );
+                return redirect('/congratulation')->with('success', 'Data has been send!');
+            // dd($user);
+            // die();
+
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            // dd($userPelanggan);
+            // die();
+            $this->validate($request, [
+                'harga'      => 'required',
+
+
+                // 'phone' => 'required|numeric',
+
+                // 'kelamin'   => 'required',
+
+            ]);
+            if (!empty($promo)) {
+                $dataInputDetail = array(
+                    'luas_tanah_kkpr'           => $rumah->luas_tanah,
+                    'tipe_kkpr'                 => $tipeRumah->jenis_tr,
+                    'harga_awal'                => $tipeRumah->harga_tr,
+                    'total_diskon'              => $promo->diskon_promo,
+                    'total_harga'               => $tipeRumah->harga_tr
+                );
+            }
+            if (empty($promo)) {
+                $dataInputDetail = array(
+                    'luas_tanah_kkpr'           => $rumah->luas_tanah,
+                    'tipe_kkpr'                 => $tipeRumah->jenis_tr,
+                    'harga_awal'                => $tipeRumah->harga_tr,
+
+                    'total_harga'               => $tipeRumah->harga_tr
+                );
+            }
+
+            $id = DB::table('kalkulator_kpr')->insertGetId(
+               $dataInputDetail
+            );
+            if (!empty($promo)) {
+                $dataInput = array(
+                    'id_pelanggan'              => session::get('guest'),
+                    'id_kkpr'                   => $id,
+                    'id_rumah'                  => $id_rumah,
+                    'id_tipe_rumah'             => $id_tipe,
+                    'jenis_pembayaran_fp'       => $payment,
+                    'id_promo'                  => $promo->id_promo,
+
+                );
+            }
+            if (empty($promo)) {
+                $dataInput = array(
+                    'id_pelanggan'              => session::get('guest'),
+                    'id_kkpr'                   => $id,
+                    'id_rumah'                  => $id_rumah,
+                    'id_tipe_rumah'             => $id_tipe,
+                    'jenis_pembayaran_fp'       => $payment,
+
+
+                );
+            }
+            DB::table('formulir_pesanan')->insert(
+                $dataInput
+            );
+            return redirect('/congratulation')->with('success', 'Data has been send!');
+            // dd($dataInput);
+            // die();
+
+            // DB::table('user_pelanggan')
+            // ->where('id_pelanggan', session::get('guest'))
+            // ->update(
+            //     $dataInput
+            // );
+
         }
         return view('simSummary');
         # code...
@@ -702,13 +1171,13 @@ class Home extends Controller
     {
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
-                    'id_user_admin' => session::get('user'),
-                ])
-                ->join('ktgr_admin')
+                'id_user_admin' => session::get('user'),
+            ])
+
                 ->first();
 
-            dd($user);
-            die();
+            // dd($user);
+            // die();
             return view('congratulation', compact('user'));
         }
         if (session()->has('guest')) {

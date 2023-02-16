@@ -2,6 +2,7 @@
 @extends('HomeLayout.navbar')
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footer')
+{{--  @extends('HomeLayout.map')  --}}
 @section('tittle', 'Forms | Simulasi Kluster')
 @section('body', '')
 
@@ -45,17 +46,17 @@
 
             </div>
 
-            <div class="map">
-                <img src="{{ asset('Home') }}/images/img-map.png" alt="">
+            <div class="map" style="background-color: white">
+                <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/>
 
-                <div class="control">
+                {{--  <div class="control">
                     <div class="zoom in">
                         <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
                     </div>
                     <div class="zoom">
                         <img src="{{ asset('Home') }}/images/ic-zoom-out.png" alt="">
                     </div>
-                </div>
+                </div>  --}}
 
                 <div class="bg-black"></div>
 
@@ -115,7 +116,7 @@
                         </div>
                         <center>
                             <a href="/simulation-type" class="btn btn-outline-secondary">Pilih Unit</a>
-                            {{-- <button type="button" class="btn btn-outline-secondary">Pilih Unit</button> --}}
+                            {{--  <button type="button" class="btn btn-outline-secondary">Pilih Unit</button>  --}}
                         </center>
                     </div>
                 </div>
@@ -141,11 +142,36 @@
                     $('.bg-black').removeClass('active');
                 });
             </script>
+            <div class="choose-cluster">
+                <h2 class="title">
+                    Choose Your House
+                </h2>
+                <div class="row">
+                    @foreach ($rumah as $rumah )
 
-            {{--  <div class="btn-groups">
-            <a href="/k-simulation-cluster.html" type="button" class="btn btn-grey">Kembali</a>
-            <a href="/k-simulation-type.html" type="button" class="btn btn-primary">Lanjutkan</a>
-        </div>  --}}
+
+                    <div class="col-6 col-lg-3">
+
+                        <a href="/simulation-type/{{ $rumah->id_rumah }}">
+                        <div class="item">
+                            <div class="item-image">
+                                <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                            </div>
+                            <div class="item-avail">Surface Area : {{ $rumah->luas_tanah }} m<sup>2</sup></div>
+                            <h5 class="item-title">{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
+                            <p class="item-sub">{{ $rumah->nama_cluster }}</p>
+                        </div>
+
+
+                    </a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="btn-groups">
+            <a href="/simulation-cluster" type="button" class="btn btn-grey">Kembali</a>
+            {{--  <a href="/simulation-type.html" type="button" class="btn btn-primary">Lanjutkan</a>  --}}
+        </div>
         </div>
     </div>
 @endsection

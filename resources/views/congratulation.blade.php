@@ -2,6 +2,7 @@
 @extends('HomeLayout.navbar')
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footer')
+@extends('flashdata')
 @section('tittle','Forms | Congratulation')
 @section('body','')
 

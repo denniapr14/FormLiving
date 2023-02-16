@@ -46,13 +46,17 @@ use App\Http\Controllers\Home;
     // ---------------= SIMULATION =-----------------
 
     Route::get('/simulation-cluster', [Home::class,'simCluster']);
-    Route::get('/simulation-select-unit', [Home::class,'simSelectUnit']);
-    Route::get('/simulation-type', [Home::class,'simType']);
+    Route::get('/simulation-select-unit/{codecluster}', [Home::class,'simSelectUnit']);
+    Route::get('/simulation-type/{id_rumah}', [Home::class,'simType']);
     Route::get('/simulation-modification', [Home::class,'simModif']);
-    Route::get('/simulation-payment-option', [Home::class,'simPayment']);
-    Route::get('/simulation-price', [Home::class,'simPrice']);
-    Route::get('/simulation-order', [Home::class,'simOrder']);
-    Route::get('/simulation-summary', [Home::class,'simSummary']);
+    Route::get('/simulation-payment-option/{id_rumah}/{id_tipe}', [Home::class,'simPayment']);
+    Route::post('/simulation-price/{id_rumah}/{id_tipe}', [Home::class, 'simPrice'])->name('simulation-price');
+    Route::get('/simulation-price-payment/{id_rumah}/{id_tipe}/{payment}', [Home::class, 'simPricePayment']);
+    // Route::get('/simulation-price/store/{id_rumah}/{id_tipe}/{payment}', [Home::class,'simPriceAction'])->name('simulation-price.action');
+    Route::get('/simulation-order/{id_rumah}/{id_tipe}/{payment}', [Home::class,'simOrder']);
+    Route::post('/simulation-order/store/{id_rumah}/{id_tipe}/{payment}', [Home::class,'simOrderAction'])->name('simulation-order.action');
+    Route::get('/simulation-summary/{id_rumah}/{id_tipe}/{payment}/{voucher}/{id_pelanggan}', [Home::class,'simSummary']);
+    Route::post('/simulation-summary/store/{id_rumah}/{id_tipe}/{payment}/{voucher}/{id_pelanggan}', [Home::class,'simSummaryAction'])->name('simulation-sumary.action');
     Route::get('/congratulation', [Home::class,'congratulation']);
 
 

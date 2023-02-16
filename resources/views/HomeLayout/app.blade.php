@@ -43,6 +43,7 @@
 
 @yield('flashdata')
 @yield('content')
+@yield('map')
 
 @yield('navbar-profile')
 

@@ -46,144 +46,369 @@
         </div>
         <div>
 
-            <div class="second-layout">
-                <div class="row">
-                    <div class="col-12 order-2 order-lg-1">
-                        <h2 class="title">
-                            Ringkasan Pemesanan Sementara
-                        </h2>
-                    </div>
-                    <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
-                        <div class="mod-type">
-                            <div class="type-image">
-                                <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
-                            </div>
-                            <div class="items">
-                                <div class="type-item">
-                                    <p>Type</p>
-                                    <h5>150</h5>
+            @if(!empty(Session::get('guest')))
+            <form action="{{ route('simulation-sumary.action',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$payment,$voucher,$pelanggan->id_pelanggan]) }}" method="POST">
+                <div class="second-layout">
+                    <div class="row">
+                        <div class="col-12 order-2 order-lg-1">
+                            <h2 class="title">
+                                Ringkasan Pemesanan Sementara
+                            </h2>
+                        </div>
+                        <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
+                            <div class="mod-type">
+                                <div class="type-image">
+                                    <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
                                 </div>
-                                <div class="type-item">
-                                    <p>Blok</p>
-                                    <h5>A2</h5>
-                                </div>
-                                <div class="type-item">
-                                    <p>Cluster</p>
-                                    <h5>The Mainroad</h5>
-                                </div>
-                                <div class="type-item">
-                                    <p>Start from</p>
-                                    <h5>Rp. 975,000,000</h5>
+                                <div class="items">
+                                    <div class="type-item">
+                                        <p>Type</p>
+                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Blok</p>
+                                        <h5>{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Cluster</p>
+                                        <h5>{{ $rumah->nama_cluster }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Start from</p>
+
+                                        <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-8 right-column order-3">
-                        <div class="row summary">
-                            <div class="col-5 col-lg-4">
-                                <p>Nama (Sesuai KTP)</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>Gilbert Setiawan</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>NIK</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>24348454545000003i</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>No. Whatsapp (Aktif)</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>+6285648984919</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>Alamat</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>Jl. Raya Tidar No. 18, Malang</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>Email</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>gl@gilbertsetiawan.com</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>No. NPWP</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>1234567890</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>Cluster / Blok</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>The Mainroad / A-2</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>Luas Tanah</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>170 m2</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>Luas Bangunan</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>90 m2</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>Biaya Modifikasi</p>
-                            </div>
-                            <div class="col-7 col-lg-8 detail">
-                                <p>Rp. 250,000,000</p>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#detail">Lihat Detail</a>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>Harga Rumah</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>Rp. 955,000,000</p>
-                            </div>
-                            <div class="col-5 col-lg-4">
-                                <p>Promo Digunakan</p>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <p>- Rp. 5,000,000</p>
-                            </div>
-                            <div class="col-5 col-lg-4"></div>
-                            <div class="col-7 col-lg-8 ">
-                                <div class="promo">
-                                    <img src="{{ asset('Home') }}/images/ic-promo.png" alt="">
-                                    <p>Kode Kupon: BELIRUMAH</p>
+
+                        <div class="col-12 col-lg-8 right-column order-3">
+
+
+
+                                @csrf
+                            <div class="row summary">
+                                <div class="col-5 col-lg-4">
+                                    <p>Nama (Sesuai KTP)</p>
                                 </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $userPelanggan->nama_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>NIK</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $userPelanggan->no_ktp_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>No. Whatsapp (Aktif)</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $userPelanggan->no_wa_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Alamat</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $userPelanggan->alamat_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Email</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $userPelanggan->email_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>No. NPWP</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $userPelanggan->npwp_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Cluster / Blok</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Luas Tanah</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $rumah->luas_tanah }} m2</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Tipe Rumah</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $tipeRumah->jenis_tr }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Biaya Modifikasi</p>
+                                </div>
+                                <div class="col-7 col-lg-8 detail">
+                                    <p>Rp. 0</p>
+                                    {{--  <a href="#" data-bs-toggle="modal" data-bs-target="#detail">Lihat Detail</a>  --}}
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Harga Rumah</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>Rp. {{ $tipeRumah->harga_tr }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Promo Digunakan</p>
+                                </div>
+                                @if(!empty($promo))
+                                <div class="col-7 col-lg-8">
+                                    <p>Rp. {{ $promo->diskon_promo }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Keterangan</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p> {{ $promo->keterangan }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4"></div>
+                                <div class="col-7 col-lg-8 ">
+                                    <div class="promo">
+                                        <img src="{{ asset('Home') }}/images/ic-promo.png" alt="">
+                                        <p>Kode Kupon: {{ $promo->kode_promo }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <hr>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <h6>Harga Akhir Rumah</h6>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <h6>Rp. {{ $tipeRumah->harga_tr - $promo->diskon_promo  }}</h6>
+                                    <input type="text" name="harga" value=" {{ $tipeRumah->harga_tr - $promo->diskon_promo  }}">
+                                </div>
+                                @else
+                                <div class="col-7 col-lg-8">
+                                    <p>Rp. 0</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Keterangan</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p> Tidak ada promo</p>
+                                </div>
+                                <div class="col-5 col-lg-4"></div>
+                                <div class="col-7 col-lg-8 ">
+
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <h6>Harga Akhir Rumah</h6>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <h6>Rp. {{ $tipeRumah->harga_tr  }}</h6>
+                                    <input type="text" name="harga" value=" {{ $tipeRumah->harga_tr}}">
+                                </div>
+                                @endif
+
+
+
                             </div>
-                            <div class="col-12">
-                                <hr>
+                            <div class="form-check checkbox">
+                                <input type="checkbox" class="form-check-input" name="disclaimer" id="disclaimer"
+                                    value="checkedValue" data-bs-toggle="modal" data-bs-target="#disclaim">
+                                <label class="form-check-label" for="disclaimer">
+                                    Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </label>
                             </div>
-                            <div class="col-5 col-lg-4">
-                                <h6>Harga Akhir Rumah</h6>
-                            </div>
-                            <div class="col-7 col-lg-8">
-                                <h6>Rp. 950,000,000</h6>
-                            </div>
-                        </div>
-                        <div class="form-check checkbox">
-                            <input type="checkbox" class="form-check-input" name="disclaimer" id="disclaimer"
-                                value="checkedValue" data-bs-toggle="modal" data-bs-target="#disclaim">
-                            <label class="form-check-label" for="disclaimer">
-                                Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            </label>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="btn-groups">
-                <a href="/simulation-order" type="button" class="btn btn-grey">Kembali</a>
-                <a href="/congratulation" type="button" class="btn btn-primary">Lanjutkan</a>
-            </div>
+                <div class="btn-groups">
+                    <a href="/simulation-order/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}" type="button" class="btn btn-grey">Kembali</a>
+                    <button type="submit" class="btn btn-primary">Lanjutkan</button>
+                </div>
+            </form>
+            @endif
+            @if(!empty(Session::get('user')))
+            <form action="{{ route('simulation-sumary.action',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$payment,$voucher,$pelanggan->id_pelanggan]) }}" method="POST">
+                <div class="second-layout">
+                    <div class="row">
+                        <div class="col-12 order-2 order-lg-1">
+                            <h2 class="title">
+                                Ringkasan Pemesanan Sementara
+                            </h2>
+                        </div>
+                        <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
+                            <div class="mod-type">
+                                <div class="type-image">
+                                    <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
+                                </div>
+                                <div class="items">
+                                    <div class="type-item">
+                                        <p>Type</p>
+                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Blok</p>
+                                        <h5>{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Cluster</p>
+                                        <h5>{{ $rumah->nama_cluster }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Start from</p>
+
+                                        <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-8 right-column order-3">
+
+
+
+                                @csrf
+                            <div class="row summary">
+                                <div class="col-5 col-lg-4">
+                                    <p>Nama (Sesuai KTP)</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $pelanggan->nama_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>NIK</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $pelanggan->no_ktp_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>No. Whatsapp (Aktif)</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $pelanggan->no_wa_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Alamat</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $pelanggan->alamat_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Email</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $pelanggan->email_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>No. NPWP</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $pelanggan->npwp_plgn }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Cluster / Blok</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Luas Tanah</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $rumah->luas_tanah }} m2</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Tipe Rumah</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>{{ $tipeRumah->jenis_tr }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Biaya Modifikasi</p>
+                                </div>
+                                <div class="col-7 col-lg-8 detail">
+                                    <p>Rp. 0</p>
+                                    {{--  <a href="#" data-bs-toggle="modal" data-bs-target="#detail">Lihat Detail</a>  --}}
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Harga Rumah</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p>Rp. {{ $tipeRumah->harga_tr }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Promo Digunakan</p>
+                                </div>
+                                @if(!empty($promo))
+                                <div class="col-7 col-lg-8">
+                                    <p>Rp. {{ $promo->diskon_promo }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Keterangan</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p> {{ $promo->keterangan }}</p>
+                                </div>
+                                <div class="col-5 col-lg-4"></div>
+                                <div class="col-7 col-lg-8 ">
+                                    <div class="promo">
+                                        <img src="{{ asset('Home') }}/images/ic-promo.png" alt="">
+                                        <p>Kode Kupon: {{ $promo->kode_promo }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <hr>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <h6>Harga Akhir Rumah</h6>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <h6>Rp. {{ $tipeRumah->harga_tr - $promo->diskon_promo  }}</h6>
+                                    <input type="text" name="harga" value=" {{ $tipeRumah->harga_tr - $promo->diskon_promo  }}">
+                                </div>
+                                @else
+                                <div class="col-7 col-lg-8">
+                                    <p>Rp. 0</p>
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <p>Keterangan</p>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <p> Tidak ada promo</p>
+                                </div>
+                                <div class="col-5 col-lg-4"></div>
+                                <div class="col-7 col-lg-8 ">
+
+                                </div>
+                                <div class="col-5 col-lg-4">
+                                    <h6>Harga Akhir Rumah</h6>
+                                </div>
+                                <div class="col-7 col-lg-8">
+                                    <h6>Rp. {{ $tipeRumah->harga_tr  }}</h6>
+                                    <input type="text" name="harga" value=" {{ $tipeRumah->harga_tr}}">
+                                </div>
+                                @endif
+
+
+
+                            </div>
+                            <div class="form-check checkbox">
+                                <input type="checkbox" class="form-check-input" name="disclaimer" id="disclaimer"
+                                    value="checkedValue" data-bs-toggle="modal" data-bs-target="#disclaim">
+                                <label class="form-check-label" for="disclaimer">
+                                    Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-groups">
+                    <a href="/simulation-order/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}" type="button" class="btn btn-grey">Kembali</a>
+                    <button type="submit" class="btn btn-primary">Lanjutkan</button>
+                </div>
+            </form>
+            @endif
+
         </div>
     </div>
 </div>
@@ -327,3 +552,12 @@
 
 
 @endsection
+
+<?php
+function rupiah($angka)
+{
+    $hasil_rupiah = number_format($angka, 2, ',', '.');
+    return $hasil_rupiah;
+}
+
+?>

@@ -27,7 +27,7 @@
                     interdum neque vel euismod. Nam ac nisl eu ex fermentum molestie et nec mi. Donec et suscipit
                     metus, ut pharetra leo. </p>
 
-                <a href="/simulasi-cluster" class="btn btn-primary d-none d-lg-block">Buy Now!</a>
+                <a href="/simulation-cluster" class="btn btn-primary d-none d-lg-block">Buy Now!</a>
             </div>
         </div>
         <div class="row">

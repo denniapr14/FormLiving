@@ -50,64 +50,32 @@
                 Pilih Cluster
             </h2>
             <div class="row">
+                @foreach ($cluster as $cluster)
+
+
                 <div class="col-6 col-lg-3">
 
-
+                    <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
                     <div class="item">
                         <div class="item-image">
                             <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
                         </div>
-                        <div class="item-avail">4 Available</div>
-                        <h5 class="item-title">The Mainroad</h5>
+                        <div class="item-avail">{{ $cluster->count }} Available</div>
+                        <h5 class="item-title">{{ $cluster->nama_cluster }}</h5>
                         <p class="item-sub">Cluster</p>
                     </div>
 
 
+                </a>
                 </div>
-                <div class="col-6 col-lg-3">
-
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster2.png" alt="">
-                        </div>
-                        <div class="item-avail">4 Available</div>
-
-                        <h5 class="item-title">The Icon</h5>
-                        <p class="item-sub">Cluster</p>
-                    </div>
-
-                </div>
-                <div class="col-6 col-lg-3">
-
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster3.png" alt="">
-                        </div>
-                        <div class="item-avail">4 Available</div>
-                        <h5 class="item-title">Green West</h5>
-                        <p class="item-sub">Cluster</p>
-                    </div>
-
-                </div>
-                <div class="col-6 col-lg-3">
-
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster4.png" alt="">
-                        </div>
-                        <div class="item-avail">4 Available</div>
-                        <h5 class="item-title">Green East</h5>
-                        <p class="item-sub">Cluster</p>
-                    </div>
-
-                </div>
+                @endforeach
             </div>
         </div>
 
-        <div class="btn-groups">
+        {{--  <div class="btn-groups">
             <a href="/cluster" type="button" class="btn btn-grey">Kembali</a>
             <a href="/simulation-select-unit" type="button" class="btn btn-primary">Lanjutkan</a>
-        </div>
+        </div>  --}}
     </div>
 </div>
 
