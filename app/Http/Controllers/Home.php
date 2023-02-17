@@ -59,6 +59,18 @@ class Home extends Controller
 
     public function housing()
     {
+        $cluster = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->select('cluster.nama_cluster', 'cluster.codecluster', DB::raw('COUNT(rumah.id_rumah) as count'))
+        ->where('status', '=', 'available')
+        ->groupBy('cluster.nama_cluster')
+        ->get();
+        $cluster2 = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->select('cluster.nama_cluster', 'cluster.codecluster', DB::raw('COUNT(rumah.id_rumah) as count'))
+        ->where('status', '=', 'available')
+        ->groupBy('cluster.nama_cluster')
+        ->get();
 
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -75,7 +87,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('housing', compact('user'));
+            return view('housing', compact('user','cluster','cluster2'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -83,9 +95,9 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('housing', compact('userPelanggan'));
+            return view('housing', compact('userPelanggan','cluster','cluster2'));
         }
-        return view('housing');
+        return view('housing','cluster','cluster2');
     }
 
     // ===========================================================

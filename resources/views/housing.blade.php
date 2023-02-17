@@ -95,39 +95,19 @@
                 Hunian di Greenland
             </h2>
             <div class="items">
-                <a href="/k-cluster.html" class="item">
+                @foreach ($cluster as $cluster)
+
+
+                <a href="/cluster" class="item">
                     <div class="item-image">
                         <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
                     </div>
-                    <div class="item-avail">4 Available</div>
-                    <h5 class="item-title">The Mainroad</h5>
+                    <div class="item-avail">{{ $cluster->count }} Available</div>
+                    <h5 class="item-title">{{ $cluster->nama_cluster }}</h5>
                     <p class="item-sub">Cluster</p>
                 </a>
-                <div class="item">
-                    <div class="item-image">
-                        <img src="{{ asset('Home') }}/images/img-cluster2.png" alt="">
-                    </div>
-                    <div class="item-avail">4 Available</div>
+                @endforeach
 
-                    <h5 class="item-title">The Icon</h5>
-                    <p class="item-sub">Cluster</p>
-                </div>
-                <div class="item">
-                    <div class="item-image">
-                        <img src="{{ asset('Home') }}/images/img-cluster3.png" alt="">
-                    </div>
-                    <div class="item-avail">4 Available</div>
-                    <h5 class="item-title">Green West</h5>
-                    <p class="item-sub">Cluster</p>
-                </div>
-                <div class="item">
-                    <div class="item-image">
-                        <img src="{{ asset('Home') }}/images/img-cluster4.png" alt="">
-                    </div>
-                    <div class="item-avail">4 Available</div>
-                    <h5 class="item-title">Green East</h5>
-                    <p class="item-sub">Cluster</p>
-                </div>
             </div>
         </div>
     </div>
@@ -142,50 +122,22 @@
             Hunian di Greenland
         </h2>
         <div class="row">
+            @foreach ($cluster2 as $cluster)
+
+
             <div class="col-12 col-lg-6">
                 <div class="item" data-aos="fade-right">
                     <img src="{{ asset('Home') }}/images/img-cluster-large1.png" alt="">
                     <div class="item-text">
-                        <h4>Green East</h4>
+                        <h4>{{ $cluster->nama_cluster }}</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque vel
                             euismod. </p>
                         <a href="/cluster" class="more">Miliki Aku ></a>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
-                <div class="item" data-aos="fade-left">
-                    <img src="{{ asset('Home') }}/images/img-cluster-large2.png" alt="">
-                    <div class="item-text">
-                        <h4>Green West</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque vel
-                            euismod. </p>
-                        <a href="" class="more">Miliki Aku ></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
-                    <div class="item-text">
-                        <h4>The Icon</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque vel
-                            euismod. </p>
-                        <a href="" class="more">Miliki Aku ></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="item" data-aos="fade-left">
-                    <img src="{{ asset('Home') }}/images/img-cluster-large4.png" alt="">
-                    <div class="item-text">
-                        <h4>The Mainroad</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque vel
-                            euismod. </p>
-                        <a href="" class="more">Miliki Aku ></a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+
             {{--  <div class="col-12 d-flex justify-content-center" data-aos="fade-up">
                 <button type="button" class="btn btn-primary">Tampilkan Semua</button>
             </div>  --}}

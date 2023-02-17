@@ -19,7 +19,7 @@
                     soluta laudantium at,
                     minima temporibus sapiente!</p>
                 <div class="actions" data-aos="fade-right" data-aos-delay="600">
-                    <button type="button" class="btn btn-primary">Jelajahi Sekarang</button>
+                    <a href="/housing" type="button" class="btn btn-primary">Buy Now!</a>
                     <button type="button" class="btn btn-blank-primary"><img src="{{ asset('Home') }}/images/ic-play-fill.png" alt="">
                         <span>Tonton Video</span></button>
                 </div>
@@ -219,7 +219,7 @@
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
                             inventore,
                             aperiam esse animi.</p>
-                        <a href="/greenland.html" class="more">
+                        <a href="/housing" class="more">
                             Learn More <i class="bi bi-chevron-right"></i>
                         </a>
                     </div>
