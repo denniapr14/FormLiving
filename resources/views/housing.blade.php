@@ -20,7 +20,7 @@
         <div class="row mb-3 mb-lg-5">
             <div class="col-12 col-lg-6">
                 <h6 data-aos="fade-right">Selamat datang di Greenland.</h6>
-                <h1 data-aos="fade-right" data-aos-delay="400">Rumah sudah jadi, istrinya kapan?</h1>
+                <h1 data-aos="fade-right" data-aos-delay="400">Resepsi sudah jadi, Rumahnya kapan?</h1>
             </div>
             <div class="col-12 col-lg-6 ps-lg-5" data-aos="fade-left" data-aos-delay="400">
                 <p class="header-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim

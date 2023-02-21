@@ -56,7 +56,7 @@
                         <small>Hunian hijau di Greenland at Tidar </small>
                     </div>
                     <div>
-                        <h5>Calm</h5>
+                        <h5>Kalm</h5>
                         <small>Project Coming Soon </small>
                     </div>
                     {{-- <div>
@@ -206,7 +206,7 @@
             Projects
         </h5>
         <h2 class="title">
-            Proyek Proyek Kami
+            Our Projects
         </h2>
         <div class="row items">
             <div class="col-6 col-md-6">
@@ -225,7 +225,7 @@
                 <div class="item" data-aos="fade-left">
                     <img src="{{ asset('Home') }}/images/img-apartement.png" alt="">
                     <div class="item-text">
-                        <h4>Calm</h4>
+                        <h4>Kalm</h4>
                         <p>-- COMING SOON --</p>
                         <div class="more">
                             Learn More <i class="bi bi-chevron-right"></i>
@@ -279,13 +279,10 @@
             </div>
             <div class="slider-content">
                 <h1 class="title">
-                    Lorem ipsum dolor sit amet consectetur.
+                    The ARC
                 </h1>
                 <div class="desc">
-                    <div class="text questrial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                        dignissim
-                        interdum
-                        neque vel euismod. </div>
+                    <div class="text questrial">A beautiful style in green, captivating yet refresh for those who seek comfort </div>
                     <div class="more">Learn More <i class="bi bi-chevron-right"></i></div>
                 </div>
             </div>
@@ -296,13 +293,10 @@
             </div>
             <div class="slider-content">
                 <h1 class="title">
-                    Lorem ipsum dolor sit amet consectetur.
+                    Enjoy your Life
                 </h1>
                 <div class="desc questrial">
-                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim
-                        interdum
-                        neque vel euismod. </div>
-                    <div class="more">Learn More <i class="bi bi-chevron-right"></i></div>
+                    <div class="text">Family is always place to return to. </div>
                 </div>
             </div>
         </div>
@@ -321,7 +315,7 @@
             Promotions
         </h5>
         <h2 class="title">
-            Promo untung banget
+           Lebih untung pakai promo!
         </h2>
         <div class="row items">
             {{-- <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-lg-0">
