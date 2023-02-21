@@ -31,40 +31,40 @@
                                 <a class="dropdown-item" href="#">
                                     <div>
                                         <img src="{{ asset('Home') }}/images/logo-project2b.png" alt="">
-                                        <p>Project B</p>
+                                        <p>CALM - COMING SOON</p>
                                     </div>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">
-                                    <div>
+                                    {{-- <div>
                                         <img src="{{ asset('Home') }}/images/logo-project3b.png" alt="">
                                         <p>Project C</p>
-                                    </div>
+                                    </div> --}}
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">
-                                    <div>
+                                    {{-- <div>
                                         <img src="{{ asset('Home') }}/images/logo-project4.png" alt="">
                                         <p>Project D</p>
-                                    </div>
+                                    </div> --}}
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">
-                                    <div>
+                                    {{-- <div>
                                         <img src="{{ asset('Home') }}/images/logo-project5.png" alt="">
                                         <p>Project E</p>
-                                    </div>
+                                    </div> --}}
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    {{-- <li>
                         Hotel
                     </li>
-                    <li>Mall</li>
+                    <li>Mall</li> --}}
                     <li>
                         <a href="/about">About Forms</a>
                     </li>
@@ -80,9 +80,9 @@
         <div class="action">
 
             <a href="/profile-setting" type="button" class="btn btn-outline-secondary">{{ $userPelanggan->nama_plgn }}</a>
-                <a href="/my-cart">
+                {{-- <a href="/my-cart">
                     <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
-                </a>
+                </a> --}}
 
         </div>
         @elseif (!empty(Session::get('user')))

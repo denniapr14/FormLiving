@@ -19,12 +19,12 @@
                     soluta laudantium at,
                     minima temporibus sapiente!</p>
                 <div class="actions" data-aos="fade-right" data-aos-delay="600">
-                    <a href="/housing" type="button" class="btn btn-primary">Buy Now!</a>
-                    <button type="button" class="btn btn-blank-primary"><img src="{{ asset('Home') }}/images/ic-play-fill.png" alt="">
-                        <span>Tonton Video</span></button>
+                    <a href="/housing" type="button" class="btn btn-primary btn-lg" >Buy Now!</a>
+                    {{-- <button type="button" class="btn btn-blank-primary"><img src="{{ asset('Home') }}/images/ic-play-fill.png" alt="">
+                        <span>Tonton Video</span></button> --}}
                 </div>
                 <div class="sponsor" data-aos="fade-right" data-aos-delay="600" data-aos-offset="0">
-                    <p>Trusted by</p>
+                    {{-- <p>Trusted by</p>
                     <div class="logos">
                         <div class="item">
                             <img src="{{ asset('Home') }}/images/logo-tidar-gray.png" alt="">
@@ -35,7 +35,7 @@
                         <div class="item">
                             <img src="{{ asset('Home') }}/images/logo-project3b.png" alt="">
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-12 col-lg-6 cta-img pe-0" data-aos="fade-left" data-aos-delay="400">
@@ -46,26 +46,24 @@
                     <div>
                         <img src="{{ asset('Home') }}/images/img-cluster-large1.png" class="w-100" alt="">
                     </div>
-                    <div>
+                    {{-- <div>
                         <img src="{{ asset('Home') }}/images/img-cluster-large2.png" class="w-100" alt="">
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="text-blur-bg text-sliders">
                     <div>
-                        <h5>Apartemen</h5>
-                        <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque
-                            vel euismod. </small>
+                        <h5>Greenland</h5>
+                        <small>Hunian hijau di Greenland at Tidar </small>
                     </div>
                     <div>
-                        <h5>Mall</h5>
-                        <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque
-                            vel euismod. </small>
+                        <h5>Calm</h5>
+                        <small>Project Coming Soon </small>
                     </div>
-                    <div>
+                    {{-- <div>
                         <h5>Hotel</h5>
                         <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque
                             vel euismod. </small>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -153,7 +151,7 @@
                                 <img src="{{ asset('Home') }}/images/img-greenland.png" alt="">
                             </div>
                             <h6>Greenland</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <p>Perumahan Greenland at Tidar </p>
                         </a>
                         <a href="#" class="item">
                             <div class="item-img">
@@ -211,35 +209,31 @@
             Proyek Proyek Kami
         </h2>
         <div class="row items">
-            <div class="col-12 col-lg-6">
+            <div class="col-6 col-md-6">
                 <div class="item" data-aos="fade-right">
                     <img src="{{ asset('Home') }}/images/img-greenland.png" alt="">
                     <div class="item-text">
                         <h4>Greenland</h4>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
-                            inventore,
-                            aperiam esse animi.</p>
+                        <p>Greenland at Tidar</p>
                         <a href="/housing" class="more">
                             Learn More <i class="bi bi-chevron-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-6 col-lg-6">
                 <div class="item" data-aos="fade-left">
                     <img src="{{ asset('Home') }}/images/img-apartement.png" alt="">
                     <div class="item-text">
-                        <h4>Project B</h4>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
-                            inventore,
-                            aperiam esse animi.</p>
+                        <h4>Calm</h4>
+                        <p>-- COMING SOON --</p>
                         <div class="more">
                             Learn More <i class="bi bi-chevron-right"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
+            {{-- <div class="col-12 col-lg-6">
                 <div class="item" data-aos="fade-right">
                     <img src="{{ asset('Home') }}/images/img-hotel.png" alt="">
                     <div class="item-text">
@@ -252,8 +246,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-lg-6">
+            </div> --}}
+            {{-- <div class="col-12 col-lg-6">
                 <div class="item" data-aos="fade-left">
                     <img src="{{ asset('Home') }}/images/img-mall.png" alt="">
                     <div class="item-text">
@@ -266,12 +260,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12">
+            </div> --}}
+            {{-- <div class="col-12">
                 <div class="d-flex justify-content-center">
                     <button type="button" class="btn btn-primary">Tampilkan Semua</button>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
     </div>
@@ -330,7 +324,7 @@
             Promo untung banget
         </h2>
         <div class="row items">
-            <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-lg-0">
+            {{-- <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-lg-0">
                 <div class="item brown">
                     <div class="cashback">
                         <div class="text-cashback">
@@ -368,18 +362,18 @@
                                 src="{{ asset('Home') }}/images/ic-copy.png" alt=""></button>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-lg-0">
+            </div> --}}
+            <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-lg-0 align-self-center">
                 <div class="item grey">
                     <div class="cashback">
                         <div class="text-cashback">
-                            <h5>Cashback</h5>
-                            <h1>20%</h1>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+                            <h5>Promo Blok M</h5>
+                            <h1>Rp. 20 Juta</h1>
+                            <p>Promo khusus blok M (promo demo)</p>
                             <div class="mobile-only">
-                                <small>Berlaku hingga: 15 Mei 2022</small>
-                                <button type="button" class="btn btn-white">Salin Kode <img class="ms-2"
-                                        src="{{ asset('Home') }}/images/ic-copy.png" alt=""></button>
+                                <small>Berlaku hingga: 28 Februari 2023</small>
+                                {{-- <button type="button" class="btn btn-white">Salin Kode <img class="ms-2"
+                                        src="{{ asset('Home') }}/images/ic-copy.png" alt=""></button> --}}
                             </div>
                         </div>
 
@@ -397,17 +391,17 @@
                     <div class="line">
                         <img src="{{ asset('Home') }}/images/line-coupon.png" alt="">
                     </div>
-                    <div class="qr">
+                    {{-- <div class="qr">
                         <div class="qr-img">
                             <img src="{{ asset('Home') }}/images/qr-code.png" alt="">
                         </div>
                         <p>Scan QR Code or Copy the code</p>
                         <button type="button" class="btn btn-white">Salin Kode <img class="ms-2"
                                 src="{{ asset('Home') }}/images/ic-copy.png" alt=""></button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-lg-0">
+            {{-- <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-lg-0">
                 <div class="item green">
                     <div class="cashback">
                         <div class="text-cashback">
@@ -444,12 +438,12 @@
                                 src="{{ asset('Home') }}/images/ic-copy.png" alt=""></button>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
 
-<div class="apps" data-aos="fade-up" data-aos-offset="0">
+{{-- <div class="apps" data-aos="fade-up" data-aos-offset="0">
     <div class="container">
         <div class="ornament one">
             <img src="{{ asset('Home') }}/images/img-ornament3.png" alt="">
@@ -547,6 +541,6 @@
 
         <p>Profile</p>
     </a>
-</div>
+</div> --}}
 
 @endsection

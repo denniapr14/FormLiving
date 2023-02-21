@@ -27,12 +27,12 @@
                     interdum neque vel euismod. Nam ac nisl eu ex fermentum molestie et nec mi. Donec et suscipit
                     metus, ut pharetra leo. </p>
 
-                <a href="/simulation-cluster" class="btn btn-primary d-none d-lg-block">Buy Now!</a>
+                <a href="/simulation-cluster" class="btn btn-primary d-none btn-lg d-lg-block">Buy Now!</a>
             </div>
         </div>
         <div class="row">
             <div class="col-12 header-bottom" data-aos="fade-up" data-aos-delay="600">
-                <div class="search-bar d-none d-lg-block">
+                {{-- <div class="search-bar d-none d-lg-block">
                     <div class="row align-items-center">
                         <div class="col">
                             <label for="harga" class="form-label">Harga</label>
@@ -71,7 +71,7 @@
                                 Unit</button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="sliders">
                     <div class="slider-image">
                         <img src="{{ asset('Home') }}/images/img-greenland2.png" class="w-100" alt="">
@@ -365,17 +365,17 @@
                 <a href="" class="more">Learn More <i class="bi bi-chevron-right"></i></a>
             </div>
 
-            <div class="col-12 mt-4">
+            {{-- <div class="col-12 mt-4">
                 <div class="btn-groups mt-0">
                     <button type="button" class="btn btn-outline-primary">See All Features</button>
 
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
 
-<div class="promotions" data-aos="zoom-in-left">
+{{-- <div class="promotions" data-aos="zoom-in-left">
     <div class="container">
         <h5 class="subtitle">
             Promotions
@@ -501,7 +501,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="excellence">
     <div class="container-fluid px-0">
@@ -661,7 +661,7 @@
     </div>
 </div>
 
-<div class="apps" data-aos="fade-down">
+{{-- <div class="apps" data-aos="fade-down">
     <div class="container">
         <div class="ornament one">
             <img src="{{ asset('Home') }}/images/img-ornament3.png" alt="">
@@ -704,7 +704,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 @endsection

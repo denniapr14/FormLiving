@@ -35,7 +35,7 @@
                             <a class="dropdown-item" href="#">
                                 <div>
                                     <img src="{{url('Main')}}/images/logo-project2b.png" alt="">
-                                    <p>Project B</p>
+                                    <p>CALM - COMING</p>
                                 </div>
                             </a>
                         </li>
