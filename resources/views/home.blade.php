@@ -14,10 +14,7 @@
                 <h1 class="cta-title" data-aos="fade-right" data-aos-delay="400">Representasi gaya hidup millenials
                     dalam satu genggaman
                 </h1>
-                <p class="cta-desc" data-aos="fade-right" data-aos-delay="600">Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Accusantium ullam
-                    soluta laudantium at,
-                    minima temporibus sapiente!</p>
+                <p class="cta-desc" data-aos="fade-right" data-aos-delay="600">keindahan dari proyek-proyek kami kami sajikan dalam satu website</p>
                 <div class="actions" data-aos="fade-right" data-aos-delay="600">
                     <a href="/housing" type="button" class="btn btn-primary btn-lg" >Buy Now!</a>
                     {{-- <button type="button" class="btn btn-blank-primary"><img src="{{ asset('Home') }}/images/ic-play-fill.png" alt="">
