@@ -91,17 +91,17 @@
         <div class="action">
 
             <a href="/profile-setting"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</>
-                <a href="/my-cart">
+                {{-- <a href="/my-cart">
                     <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
-                </a>
+                </a> --}}
         </div>
         @else
         <div class="action">
 
             <a href="/login" type="button" class="btn btn-outline-secondary">Login/Register</a>
-                <a href="/my-cart">
+                {{-- <a href="/my-cart">
                     <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
-                </a>
+                </a> --}}
         </div>
         @endif
 
