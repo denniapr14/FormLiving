@@ -41,13 +41,13 @@
             <div class="col-12 col-lg-6 cta-img pe-0" data-aos="fade-left" data-aos-delay="400">
                 <div class="image-sliders">
                     <div>
-                        <img src="{{ asset('Home') }}/images/img-splash-screen.png" class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/60.jpg" class="w-100" alt="">
                     </div>
                     <div>
                         <img src="{{ asset('Home') }}/images/img-cluster-large1.png" class="w-100" alt="">
                     </div>
                     {{-- <div>
-                        <img src="{{ asset('Home') }}/images/img-cluster-large2.png" class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/img4.jpeg" class="w-100" alt="">
                     </div> --}}
                 </div>
                 <div class="text-blur-bg text-sliders">
