@@ -22,12 +22,10 @@
                 <h6 data-aos="fade-right">Selamat datang di Greenland.</h6>
                 <h1 data-aos="fade-right" data-aos-delay="400">Resepsi sudah jadi, Rumahnya kapan?</h1>
             </div>
-            <div class="col-12 col-lg-6 ps-lg-5" data-aos="fade-left" data-aos-delay="400">
-                <p class="header-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim
-                    interdum neque vel euismod. Nam ac nisl eu ex fermentum molestie et nec mi. Donec et suscipit
-                    metus, ut pharetra leo. </p>
+            <div class="col-12 col-lg-6 ps-lg-6" data-aos="fade-left" data-aos-delay="400">
+                <p class="header-text">Temukan ketenangan jiwa di antara hijaunya rerumputan dan birunya langit </p>
 
-                <a href="/simulation-cluster" class="btn btn-primary d-none btn-lg d-lg-block">Buy Now!</a>
+                <a href="/simulation-cluster" class="btn btn-primary d-none d-lg-block">Buy Now!</a>
             </div>
         </div>
         <div class="row">
@@ -97,10 +95,10 @@
             <div class="items">
                 @foreach ($cluster as $cluster)
 
-
+                a==1;
                 <a href="/cluster" class="item">
                     <div class="item-image">
-                        <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                        <img src="{{ asset('Home') }}/images/{{$cluster->nama_img}}" alt="">
                     </div>
                     <div class="item-avail">{{ $cluster->count }} Available</div>
                     <h5 class="item-title">{{ $cluster->nama_cluster }}</h5>
@@ -127,7 +125,7 @@
 
             <div class="col-12 col-lg-6">
                 <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/img-cluster-large1.png" alt="">
+                    <img src="{{ asset('Home') }}/images/{{$cluster->nama_img}}" alt="">
                     <div class="item-text">
                         <h4>{{ $cluster->nama_cluster }}</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque vel
@@ -145,7 +143,7 @@
     </div>
 </div>
 
-<div class="facilities" data-aos="fade-down">
+{{-- <div class="facilities" data-aos="fade-down">
     <div class="container-fluid left-side">
         <h5 class="subtitle">Facilities
         </h5>
@@ -222,7 +220,7 @@
         </script>
         </script>
     </div>
-</div>
+</div> --}}
 
 <div class="testimoni">
     <div class="container-fluid px-0">
@@ -235,14 +233,14 @@
                                 <img src="{{ asset('Home') }}/images/img-testimonial.png" class="w-100" alt="">
                                 <div class="text-blur-bg">
                                     <h5>Alex Boston</h5>
-                                    <p>Businessman</p>
+                                    <p>Residence</p>
                                 </div>
                             </div>
                             <div class="image-item">
                                 <img src="{{ asset('Home') }}/images/img-food-court.png" class="w-100" alt="">
                                 <div class="text-blur-bg">
-                                    <h5>Alex Boston</h5>
-                                    <p>Businessman</p>
+                                    <h5>Food Court</h5>
+                                    <p>upcoming Soon</p>
                                 </div>
                             </div>
                         </div>
@@ -254,11 +252,7 @@
                                     <img src="{{ asset('Home') }}/images/ic-quote.png" alt="">
                                 </div>
                                 <h2 class="testimoni-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum
-                                    neque
-                                    vel euismod. Nam ac nisl eu ex fermentum molestie et nec mi. Donec et suscipit
-                                    metus, ut
-                                    pharetra leo.
+                                    Hunian Berkelas dimana anda dan keluarga menatap masa depan nan gemilang
                                 </h2>
                                 <div class="until-tablet">
                                     <div class="items">
@@ -266,7 +260,7 @@
                                             <div><img src="{{ asset('Home') }}/images/img-testimonial.png" alt=""></div>
                                             <div>
                                                 <h6>Alex Boston</h6>
-                                                <small>Businessman</small>
+                                                <small>Residence</small>
                                             </div>
                                         </div>
                                         <div class="quote">
@@ -280,8 +274,7 @@
                                     <img src="{{ asset('Home') }}/images/ic-quote.png" alt="">
                                 </div>
                                 <h3 class="testimoni-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum
-                                    neque
+                                   -- coming soon --
                                 </h3>
                                 <div class="until-tablet">
                                     <div class="items">
@@ -289,7 +282,7 @@
                                             <div><img src="{{ asset('Home') }}/images/img-testimonial.png" alt=""></div>
                                             <div>
                                                 <h6>Alex Boston</h6>
-                                                <small>Businessman</small>
+                                                <small>Residence</small>
                                             </div>
                                         </div>
                                         <div class="quote">
@@ -337,13 +330,13 @@
         </h2>
         <div class="row">
             <div class="col-12 col-lg-4 feature">
-                <img src="{{ asset('Home') }}/images/img-gate.png" alt="">
+                <img src="{{ asset('Home') }}/images/one-way.png" alt="">
                 <h3>One Gate System</h3>
                 <p>Keamanan lingkungan
                     perumahan lebih terjamin
                     dengan One Gate System
                     yang terintegrasi.</p>
-                <a href="" class="more">Learn More <i class="bi bi-chevron-right"></i></a>
+                {{-- <a href="" class="more">Learn More <i class="bi bi-chevron-right"></i></a> --}}
             </div>
             <div class="col-12 col-lg-4 feature">
                 <img src="{{ asset('Home') }}/images/img-cctv.png" alt="">
@@ -351,18 +344,17 @@
                 <p>Perlindungan penuh dengan pengawasan CCTV dan
                     penjagaan security selama 24
                     jam non-stop</p>
-                <a href="" class="more">Learn More <i class="bi bi-chevron-right"></i></a>
+                {{-- <a href="" class="more">Learn More <i class="bi bi-chevron-right"></i></a> --}}
 
             </div>
             <div class="col-12 col-lg-4 feature">
-                <img src="{{ asset('Home') }}/images/img-after-sales.png" alt="">
-                <h3>Layanan After Sales</h3>
+                <img src="{{ asset('Home') }}/images/img-gate.png" alt="">
+                <h3>Taman Bermain</h3>
                 <p>Meningkatkan kenyamanan
                     keluarga besar Greenland
-                    dengan manajemen after
-                    sales bintang lima.
+                    dengan taman luas
                 </p>
-                <a href="" class="more">Learn More <i class="bi bi-chevron-right"></i></a>
+                {{-- <a href="" class="more">Learn More <i class="bi bi-chevron-right"></i></a> --}}
             </div>
 
             {{-- <div class="col-12 mt-4">

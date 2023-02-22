@@ -211,7 +211,7 @@
         <div class="row items">
             <div class="col-6 col-md-6">
                 <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/img-greenland.png" alt="">
+                    <img src="{{ asset('Home') }}/images/greenland-project.jpeg" alt="">
                     <div class="item-text">
                         <h4>Greenland</h4>
                         <p>Greenland at Tidar</p>
@@ -223,7 +223,7 @@
             </div>
             <div class="col-6 col-lg-6">
                 <div class="item" data-aos="fade-left">
-                    <img src="{{ asset('Home') }}/images/img-apartement.png" alt="">
+                    <img src="{{ asset('Home') }}/images/kalm-project.jpeg" alt="">
                     <div class="item-text">
                         <h4>Kalm</h4>
                         <p>-- COMING SOON --</p>
@@ -275,7 +275,7 @@
     <div class="sliders">
         <div class="slider-item">
             <div class="slider-img">
-                <img src="{{ asset('Home') }}/images/slider-1.png" class="w-100" alt="">
+                <img src="{{ asset('Home') }}/images/landslide-1.jpeg" class="w-100" alt="">
             </div>
             <div class="slider-content">
                 <h1 class="title">

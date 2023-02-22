@@ -66,10 +66,12 @@
                     </li>
                     <li>Mall</li> --}}
                     <li>
-                        <a href="/about">About Forms</a>
+                        {{-- <a href="/about">About Forms</a> --}}
+                        About Forms
                     </li>
                     <li>
-                        <a href="/contect">Contact</a>
+                        {{-- <a href="/contect">Contact</a> --}}
+                        Contact
                     </li>
                 </ul>
             </div>

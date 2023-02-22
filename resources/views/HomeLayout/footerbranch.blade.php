@@ -9,30 +9,30 @@
                 <div class="logo">
                     <img src="{{ asset('Home') }}/images/logo-forms-living1.png" alt="">
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam praesentium quod esse eos quae
-                    voluptate maxime fugiat dolorum minima</p>
+                <p>Universal website projects</p>
             </div>
             <div class="col-6 col-lg-auto">
                 <div class="footer-title">
-                    Hunian Greenland
+                    PT CITRA ARGO TIRTA
                 </div>
-                <p>Green West</p>
-                <p>Green East</p>
+                <p>Jalan Raya Candi VI C (Perumahan Greenland at Tidar Blok A-1)</p>
+                <p> Greenland at Tidar @ 2014</p>
+                {{-- <p>Green East</p>
                 <p>The Mainroad</p>
                 <p>The Icon</p>
-                <p>The Peak</p>
+                <p>The Peak</p> --}}
             </div>
             <div class="col-6 col-lg-auto">
                 <div class="footer-title">
-                    Hunian Greenland
+                    kalm Residence
                 </div>
-                <p>President Suits</p>
-                <p>Green Suits</p>
+                <p>Coming Soon</p>
+                {{-- <p>Green Suits</p>
                 <p>Excel Suits</p>
                 <p>Prime Suits</p>
-                <p>Basic Suits</p>
+                <p>Basic Suits</p> --}}
             </div>
-            <div class="col-6 col-lg-auto">
+            {{-- <div class="col-6 col-lg-auto">
                 <div class="footer-title">
                     SpaceX Supermall
                 </div>
@@ -49,10 +49,10 @@
                 <p>Co-working Space</p>
                 <p>Studio X</p>
                 <p>Central Conf</p>
-            </div>
+            </div> --}}
         </div>
         <hr>
-        <div class="row second-row">
+        {{-- <div class="row second-row">
             <div class="col-6 col-lg-auto">
                 <div class="footer-title">
                     SpaceX Supermall
@@ -71,16 +71,16 @@
                 <p>Studio X</p>
                 <p>Central Conf</p>
             </div>
-        </div>
+        </div> --}}
         <hr>
         <div class="copyright">
             <div class="copy-year">
                 &#169; 2022 FORMS.Inc
             </div>
-            <div class="links">
+            {{-- <div class="links">
                 <a href="/privacy">Kebijakan privasi</a>
                 <a href="/terms">Syarat dan Ketentuan</a>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
