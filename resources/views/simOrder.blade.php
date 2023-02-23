@@ -88,7 +88,7 @@
                         @if (!empty(Session::get('guest')))
                             <div class="col-12 col-lg-8 right-column order-3">
                                 <form
-                                    action="{{ route('simulation-order.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$payment]) }}"
+                                    action="{{ route('simulation-order.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$payment,$kkpr->id_kkpr]) }}"
                                     method="POST">
                                     @csrf
                                     <div class="row form-order">
@@ -262,7 +262,7 @@
                                 </form>
                             @elseif (session::get('user'))
                                 <div class="col-12 col-lg-8 right-column order-3">
-                                    <form action="{{ route('simulation-order.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$payment,'']) }}" method="POST">
+                                    <form action="{{ route('simulation-order.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$payment,$kkpr->id_kkpr,'']) }}" method="POST">
                                         @csrf
                                         <div class="row form-order">
                                             <div class="col-12 col-lg-6">

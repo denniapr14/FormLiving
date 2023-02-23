@@ -77,159 +77,219 @@
 
                                         <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
                                     </div>
+                                    <div class="type-item">
+                                        <p>Luas Tanah</p>
+
+                                        <h5>{{ $rumah->luas_tanah }} m<sup>2</sup></h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-12 col-lg-8 right-column order-3">
+                            @if (!empty($payment))
+                                @if ($payment == 'KPR')
 
-                    @if (!empty($payment))
-                        @if ($payment == 'KPR')
-                            KPR
-                            <div class="col-12 col-lg-8 right-column order-3">
-                                <div class="simulation-price">
-                                    <div class="collapse-item">
-                                        <a class="card-shadow" data-bs-toggle="collapse" href="#bank" role="button"
-                                            aria-expanded="false" aria-controls="bank">
-                                            Pilih Bank
-                                        </a>
-                                        <div class="collapse" id="bank">
-                                            <div class="card card-body">
-                                                <div class="form-check form-radio">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="bank" id="bank"
-                                                            value="checkedValue" checked>
-                                                        Bank 1
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-radio">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="bank" id="bank"
-                                                            value="checkedValue">
-                                                        Bank 2
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 mb-lg-4 form-group">
-                                        <div class="label-text">
-                                            Jumlah
-                                        </div>
-                                        <input type="text" class="form-control card-shadow" name="" id=""
-                                            aria-describedby="helpId" placeholder="">
-                                    </div>
-                                    <div class="collapse-item">
-                                        <a class="card-shadow" data-bs-toggle="collapse" href="#bunga" role="button"
-                                            aria-expanded="false" aria-controls="bunga">
-                                            Suku Bunga
-                                        </a>
-                                        <div class="collapse" id="bunga">
-                                            <div class="card card-body">
-                                                <div class="form-check form-radio">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="suku"
-                                                            id="suku" value="checkedValue" checked>
-                                                        Suku Bunga 1
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-radio">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="suku"
-                                                            id="suku" value="checkedValue">
-                                                        Suku Bunga 2
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="collapse-item">
-                                        <a class="card-shadow" data-bs-toggle="collapse" href="#waktu" role="button"
-                                            aria-expanded="false" aria-controls="waktu">
-                                            Jangka Waktu Peminjaman
-                                        </a>
-                                        <div class="collapse" id="waktu">
-                                            <div class="card card-body">
-                                                <div class="form-check form-radio">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="jangka_waktu"
-                                                            id="jangka_waktu" value="checkedValue" checked>
-                                                        Jangka Waktu 1
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-radio">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="jangka_waktu"
-                                                            id="jangka_waktu" value="checkedValue">
-                                                        Jangka Waktu 2
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="btn-groups">
-                                    <button type="button" class="btn btn-primary">Hitung Simulasi</button>
-                                </div>
-                                <div class="price-total">
-                                    <p>Perkiraan pembayaran KPR Anda:</p>
-                                    <h5>Rp. 16,350,000 / bulan</h5>
-                                </div>
-                            </div>
-                        @elseif($payment == 'Cicilan')
-                            <div class="col-12 col-lg-8 right-column order-3">
-                                <div class="simulation-price">
-                                    @for ($i = 1; $i < 5; $i++)
-                                        <?php
-                                        $thn = $tipeRumah->harga_tr / (60 + 60 * $i);
+                                    <form
+                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}"
+                                        method="POST">
+                                        @csrf
+                                        <div class="simulation-price">
+                                            <div class="collapse-item">
 
-                                        ?>
+                                                <div id="bank">
+                                                    <div class="form-group">
+                                                        <label for="" class="card-shadow">Pilih Bank</label>
+                                                        <div class="card card-body">
+                                                            @foreach ($skBunga as $bank)
+                                                                <div class="form-check form-radio">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input"
+                                                                            name="bank" id="bank"
+                                                                            value="{{ $bank->id_bunga }}" checked>
+                                                                        {{ $bank->nama_bank }}
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
 
-                                        <div class="collapse-item">
-                                            <a class="card-shadow" data-bs-toggle="collapse" href="#bank{{ $i }}"
-                                                role="button" aria-expanded="false" aria-controls="bank">
-                                                Cicilan {{ 5 * $i }} Tahun
-                                            </a>
-                                            <div class="collapse" id="bank{{ $i }}">
-                                                <div class="card card-body">
-                                                    <div class="form-check form-radio">
-                                                        <label class="form-check-label">
-                                                            Rp. {{ rupiah(round($thn, -3)) }} Per Bulan
 
-                                                        </label>
+                                                        </div>
                                                     </div>
 
                                                 </div>
                                             </div>
+                                            <div class="card-shadow">
+                                                <label for="">Uang Muka</label>
+                                            </div>
+                                            <div class="">
+                                                <input type="text" class="form-control card-shadow" name="uangMuka"
+                                                    id="uangMuka" aria-describedby="helpId" placeholder=""
+                                                    onkeyup="getValue('uangMuka')" value="{{ rupiah($tipeRumah->harga_tr*(10/100)) }}">
+                                            </div>
+                                            <div class="card-shadow">
+                                                <label for="">Jumlah</label>
+                                            </div>
+                                            <div class="">
+                                                <input type="text" class="form-control card-shadow" name="jumlah"
+                                                    id="jumlahHarga" aria-describedby="helpId" placeholder=""
+                                                    onkeyup="getValue('jumlahHarga')" value="{{ rupiah($tipeRumah->harga_tr) }}">
+                                            </div>
+                                            <div class="card-shadow">
+                                                <label for="">Suku Bunga</label>
+                                            </div>
+                                            <div class="">
+                                                <input type="text" class="form-control card-shadow" name="sukuBunga"
+                                                    id="sukuBunga" aria-describedby="helpId" placeholder="" value="">
+                                            </div>
+                                            <div class="card-shadow">
+                                                <label for="">Waktu Pinjaman</label>
+                                            </div>
+                                            <div class="">
+                                                <select class="form form-control card-shadow" name="tahun" id="tahun">
+                                                    <option value="">-- Pilih --</option>
+                                                    <option value="5">5 tahun</option>
+                                                    <option value="10">10 tahun</option>
+                                                    <option value="15">15 tahun</option>
+                                                    <option value="20">20 tahun</option>
+                                                </select>
+                                            </div>
+
+
                                         </div>
-                                        <br>
-                                    @endfor
-                                </div>
+                                        <div class="btn-groups">
+                                            <a type="button"
+                                                onclick="hitung('jumlahHarga','uangMuka','sukuBunga','tahun','hasil')"
+                                                class="btn btn-primary">Hitung Simulasi</a>
+                                        </div>
+                                        <div class="price-total">
+                                            <p>Perkiraan pembayaran KPR Anda:</p>
+                                            <h5 id="hasil">/ Bulan</h5>
+                                        </div>
+                                        <div class="btn-groups">
+                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
+                                                type="button" class="btn btn-grey">Kembali</a>
+                                                <button type="submit"  type="button" class="btn btn-primary">Lanjutkan</button>
+                                        </div>
+                                    </form>
+                                @elseif($payment == 'Cicilan')
+                                    <form
+                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}">
+                                        <div class="simulation-price">
+                                            @for ($i = 1; $i < 5; $i++)
+                                                <?php
+                                                $thn = $tipeRumah->harga_tr / (60 + 60 * $i);
 
-                            </div>
-                        @endif
+                                                ?>
+
+                                                <div class="collapse-item">
+                                                    <a class="card-shadow" data-bs-toggle="collapse"
+                                                        href="#bank{{ $i }}" role="button"
+                                                        aria-expanded="false" aria-controls="bank">
+                                                        Cicilan {{ 5 * $i }} Tahun
+                                                    </a>
+                                                    <div class="" id="bank{{ $i }}">
+                                                        <div class="card card-body">
+                                                            <div class="form-check form-radio">
+                                                                <input type="radio" id="age1" name="cicilan"
+                                                                    value="{{ 5 * $i }}">
+                                                                <label class="form-check-label">
+                                                                    Rp. {{ rupiah(round($thn, -3)) }} Per Bulan
+
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            @endfor
+                                        </div>
+                                        <div class="btn-groups">
+                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
+                                                type="button" class="btn btn-grey">Kembali</a>
+                                            <a href="/simulation-order/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}"
+                                                type="button" class="btn btn-primary">Lanjutkan</a>
+                                        </div>
+                                    </form>
+                                @endif
 
 
-                    @endif
+                            @endif
 
+                        </div>
 
+                    </div>
 
                 </div>
             </div>
-            <div class="btn-groups">
-                <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
-                    type="button" class="btn btn-grey">Kembali</a>
-                <a href="/simulation-order/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}" type="button" class="btn btn-primary">Lanjutkan</a>
-            </div>
+
         </div>
     </div>
     </div>
 
 @endsection
 
+<script>
+    function hitung(jumlah, uangmuka, sukubunga, tahun, result) {
+
+        var jml = document.getElementById(jumlah).value;
+        jml = jml.replace(/\D/g, '');
+        console.log(jml);
+        var um = document.getElementById(uangmuka).value;
+        um = um.replace(/\D/g, '');
+        console.log(um);
+        var sb = document.getElementById(sukubunga).value;
+        var thn = document.getElementById(tahun).value;
+        var hasil = document.getElementById(result);
+        var cicilan;
+
+        cicilan = ((jml - um) * (sb / 100) * thn) / (thn * 12);
+        console.log(cicilan);
+
+        var hasilCicilan = Math.round(parseInt((cicilan / 1000)) * 1000).toString(),
+            sisa = hasilCicilan.length % 3,
+            rupiah = hasilCicilan.substr(0, sisa),
+            ribuan = hasilCicilan.substr(sisa).match(/\d{3}/g);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        console.log(rupiah);
+
+        hasil.innerText = rupiah + "/ Bulan";
+    }
+
+    function getValue(id) {
+        var dataValue = document.getElementById(id);
+
+        dataValue.value = formatRupiah(dataValue.value, '', id);
+
+    }
+
+    function formatRupiah(angka, prefix, id) {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+
+        document.getElementById(id).value = rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+    }
+</script>
+
 <?php
 function rupiah($angka)
 {
-    $hasil_rupiah = number_format($angka, 2, ',', '.');
+    $hasil_rupiah = number_format($angka, 0, ',', '.');
     return $hasil_rupiah;
 }
 

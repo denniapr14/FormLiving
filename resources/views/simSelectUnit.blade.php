@@ -45,7 +45,9 @@
                 <div class="step last">7</div>
 
             </div>
-
+            <h2 class="title">
+                Choose Your House
+            </h2>
             <div class="map" style="background-color: white">
                 <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/>
 
@@ -143,9 +145,7 @@
                 });
             </script>
             <div class="choose-cluster">
-                <h2 class="title">
-                    Choose Your House
-                </h2>
+
                 <div class="row">
                     @foreach ($rumah as $rumah )
 

@@ -127,10 +127,8 @@
                 <div class="item" data-aos="fade-right">
                     <img src="{{ asset('Home') }}/images/{{$cluster->nama_img}}" alt="">
                     <div class="item-text">
-                        <h4>{{ $cluster->nama_cluster }}</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque vel
-                            euismod. </p>
-                        <a href="/cluster" class="more">Miliki Aku ></a>
+
+                        <a href="/cluster" class="more">{{ $cluster->nama_cluster }} ></a>
                     </div>
                 </div>
             </div>

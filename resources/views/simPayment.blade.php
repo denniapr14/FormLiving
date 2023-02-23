@@ -80,6 +80,11 @@
 
                                         <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
                                     </div>
+                                    <div class="type-item">
+                                        <p>Luas Tanah</p>
+
+                                        <h5>{{ $rumah->luas_tanah }} m<sup>2</sup></h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
