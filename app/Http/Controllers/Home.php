@@ -515,7 +515,7 @@ class Home extends Controller
     public function SignUpAction(Request $request)
     {
         // dd($request->all());
-if (!session()->has('guest') && !session()->has('user')) {
+        if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
@@ -617,7 +617,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         $rumah = DB::table('rumah')
@@ -645,7 +644,7 @@ if (!session()->has('guest') && !session()->has('user')) {
 
 
 
-            return view('simSelectUnit', compact('userPelanggan'), compact('rumah'));
+            return view('simSelectUnit', compact('userPelanggan'), ['rumah' => $rumah]);
         }
 
 
@@ -692,7 +691,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         $rumah = DB::table('rumah')
@@ -734,7 +732,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         if (session()->has('user')) {
@@ -769,7 +766,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         $skBunga = DB::table('sk_bunga')->where([
@@ -817,7 +813,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         $skBunga = DB::table('sk_bunga')->where([
@@ -866,7 +861,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         $skBunga = DB::table('sk_bunga')->where([
@@ -901,7 +895,7 @@ if (!session()->has('guest') && !session()->has('user')) {
             // dd($userPelanggan);
             // die();
 
-            return view('simPrice', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment','skBunga'));
+            return view('simPrice', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment', 'skBunga'));
         }
         return view('simPrice', 'tipeRumah', 'rumah', 'payment');
         # code...
@@ -917,7 +911,7 @@ if (!session()->has('guest') && !session()->has('user')) {
         return response()->json($skBunga);
     }
 
-    public function SimPricePaymentAction(Request $request,$id_rumah,$id_tipe, $payment)
+    public function SimPricePaymentAction(Request $request, $id_rumah, $id_tipe, $payment)
 
     {
         $skBunga = DB::table('sk_bunga')->where([
@@ -927,10 +921,10 @@ if (!session()->has('guest') && !session()->has('user')) {
             'id_tipe_rumah' => $id_tipe
         ])->first();
         $rumah = DB::table('rumah')
-        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-        ->where('status', '=', 'available')
-        ->where('rumah.id_rumah', '=', $id_rumah)
-        ->first();
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->where('status', '=', 'available')
+            ->where('rumah.id_rumah', '=', $id_rumah)
+            ->first();
 
 
         if (session()->has('user')) {
@@ -951,10 +945,10 @@ if (!session()->has('guest') && !session()->has('user')) {
             if ($payment == "KPR") {
                 $dataInput = array(
                     'id_bank'           => $request->bank,
-                    'uang_muka'         => preg_replace('/\D/','', $request->uangMuka),
+                    'uang_muka'         => preg_replace('/\D/', '', $request->uangMuka),
                     'harga_awal'        => preg_replace('/\D/', '', $request->jumlah),
                     'bunga'             => $request->sukuBunga,
-                    'cicilan'           =>   ($request->tahun*12)."|".$request->tahun
+                    'cicilan'           => ($request->tahun * 12) . "|" . $request->tahun
                 );
                 // dd($dataInput);
                 // die();
@@ -963,26 +957,24 @@ if (!session()->has('guest') && !session()->has('user')) {
             if ($payment == "Cicilan") {
                 $dataInput = array(
 
-                    'cicilan'         =>   ($request->tahun*12)."|".$request->tahun
+                    'cicilan'         => ($request->tahun * 12) . "|" . $request->tahun
                 );
             }
             $id = DB::table('kalkulator_kpr')->insertGetId(
                 $dataInput
-             );
-            return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment.'/'.$id);
-
+            );
+            return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $id);
         }
 
         # code...
     }
 
-    public function SimOrder($id_rumah,$id_tipe, $payment, $id_kkpr)
+    public function SimOrder($id_rumah, $id_tipe, $payment, $id_kkpr)
     {
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
         $kkpr = DB::table('kalkulator_kpr')->where([
             'id_kkpr' => $id_kkpr
@@ -1035,7 +1027,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         $tipeRumah = DB::table('tipe_rumah')->where([
@@ -1141,7 +1132,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         $pelanggan = DB::table('user_pelanggan')->where([
@@ -1353,7 +1343,6 @@ if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-
         }
 
         if (session()->has('user')) {

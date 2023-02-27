@@ -49,8 +49,45 @@
                 Choose Your House
             </h2>
             <div class="map" style="background-color: white">
-                <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/>
 
+                {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
+                {{-- @include('map.svg') --}}
+                {!! file_get_contents(resource_path('views/map.svg')) !!}
+                <script>
+                    var data = {!! json_encode($rumah) !!};
+                    $(document).ready(function(){
+                        data.forEach(function(item) {
+                        var block = item.blok;
+                        var nomor = item.nomor;
+                        var idrumah = document.getElementById(block+"-"+nomor);
+                        idrumah.setAttribute('fill',color(item.status));
+                    });
+                    });
+
+                    function color(stat) {
+                            var iro = 'warnaa';
+                            switch (stat) {
+                            case 'Available':
+                                iro = '#28a744';
+                                break;
+                            case 'Keep':
+                                iro = '#dc3546';
+                                break;
+                            case 'Sold':
+                                iro = '#dc3546';
+                                break;
+                            case 'onProgress':
+                                iro = '#dc3546';
+                                break;
+                            case 'Undeveloped':
+                                iro = 'none';
+                            case 'Hold':
+                                iro = '#dc3546';
+                                break;
+                            }
+                            return iro;
+                        }
+                </script>
                 {{--  <div class="control">
                     <div class="zoom in">
                         <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
@@ -145,7 +182,6 @@
                 });
             </script>
             <div class="choose-cluster">
-
                 <div class="row">
                     @foreach ($rumah as $rumah )
 
@@ -161,8 +197,6 @@
                             <h5 class="item-title">{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
                             <p class="item-sub">{{ $rumah->nama_cluster }}</p>
                         </div>
-
-
                     </a>
                     </div>
                     @endforeach
