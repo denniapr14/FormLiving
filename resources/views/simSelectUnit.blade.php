@@ -55,14 +55,14 @@
                 {!! file_get_contents(resource_path('views/map.svg')) !!}
                 <script>
                     var data = {!! json_encode($rumah) !!};
-                    $(document).ready(){
+                    $(document).ready(function(){
                         data.forEach(function(item) {
                         var block = item.blok;
                         var nomor = item.nomor;
                         var idrumah = document.getElementById(block+"-"+nomor);
                         idrumah.setAttribute('fill',color(item.status));
                     });
-                    }
+                    });
 
                     function color(stat) {
                             var iro = 'warnaa';
