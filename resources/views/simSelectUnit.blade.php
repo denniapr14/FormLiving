@@ -49,8 +49,10 @@
                 Choose Your House
             </h2>
             <div class="map" style="background-color: white">
-                <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/>
 
+                {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
+                {{-- @include('map.svg') --}}
+                {!! file_get_contents(resource_path('views/map.svg')) !!}
                 {{--  <div class="control">
                     <div class="zoom in">
                         <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
