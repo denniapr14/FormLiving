@@ -51,8 +51,11 @@ use App\Http\Controllers\Home;
     Route::get('/simulation-modification', [Home::class,'simModif']);
     Route::get('/simulation-payment-option/{id_rumah}/{id_tipe}', [Home::class,'simPayment']);
     Route::post('/simulation-price/{id_rumah}/{id_tipe}', [Home::class, 'simPrice'])->name('simulation-price');
+
     Route::get('/simulation-price-payment/{id_rumah}/{id_tipe}/{payment}', [Home::class, 'simPricePayment']);
+    Route::get('/simulation-price-payment/{id_rumah}/{id_tipe}/{payment}/{namaBank}', [Home::class, 'getSKBunga']);
     Route::post('/simulation-price-payment/action/{id_rumah}/{id_tipe}/{payment}', [Home::class, 'simPricePaymentAction'])->name('simulation-price-payment.action');
+
     // Route::get('/simulation-price/store/{id_rumah}/{id_tipe}/{payment}', [Home::class,'simPriceAction'])->name('simulation-price.action');
     Route::get('/simulation-order/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}', [Home::class,'simOrder']);
     Route::post('/simulation-order/store/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}', [Home::class,'simOrderAction'])->name('simulation-order.action');

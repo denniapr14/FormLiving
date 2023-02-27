@@ -7,7 +7,54 @@
 
 
 @section('content')
+    <script type='text/javascript'>
+        {{--  $(document).ready(function(){
+        $("#test").click(function(){
+            alert("jQuery is working perfectly.");
+        });
+    });  --}}
+        $(document).ready(function() {
+            $('#getSkBunga').change(function() {
+                var getNama = $(this).val();
+                console.log(getNama);
+                $('#namaBank').find('option').not(':first').remove();
 
+                $.ajax({
+                    url: '/simulation-price-payment/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}/'+getNama,
+                    method: "GET",
+
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response);
+                        var len = 0;
+
+                        {{--  for (var i = 0; i < response.length; i++) {
+                            var option = "<option value='" +response[i].id_bunga+ "'> Bank " + response[i].nama_bank + " Bunga "+ response[i].persentase +"%</option>";
+                            $("#namaBank").append(option);
+                        }  --}}
+
+                        if (response != null) {
+                            len = response.length;
+                        }
+
+                        if (len > 0) {
+                            // Read data and create <option >
+                            for (var i = 0; i < len; i++) {
+
+                                var id = response[i].id_bunga;
+                                var name = response[i].nama_bank;
+                                var persen = response[i].persentase;
+
+                                var option = "<option value='" + id + "'>Bank " + name + " Bunga "+ persen +"%</option>";
+
+                                $("#namaBank").append(option);
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
     <div class="cluster">
         <div class="header-simulation mobile-only">
             <div class="ornament one">
@@ -22,6 +69,7 @@
                 </h2>
                 <div></div>
             </div>
+
             <div class="steps">
                 <div class="step done">1</div>
                 <div class="step done">2</div>
@@ -46,6 +94,7 @@
                 {{--  <div class="step">7</div>  --}}
             </div>
             <div>
+
 
                 <div class="second-layout">
                     <div class="row">
@@ -94,28 +143,35 @@
                                         method="POST">
                                         @csrf
                                         <div class="simulation-price">
-                                            <div class="collapse-item">
+                                            <div class="card-shadow">
+                                                <label for="">Pilih Bank</label>
+                                            </div>
+                                            <div class="">
+                                                <input list="skBunga" id="getSkBunga" class="form form-control" name="skBunga"
+                                                required placeholder="--Pilih Bank--">
 
-                                                <div id="bank">
-                                                    <div class="form-group">
-                                                        <label for="" class="card-shadow">Pilih Bank</label>
-                                                        <div class="card card-body">
-                                                            @foreach ($skBunga as $bank)
-                                                                <div class="form-check form-radio">
-                                                                    <label class="form-check-label">
-                                                                        <input type="radio" class="form-check-input"
-                                                                            name="bank" id="bank"
-                                                                            value="{{ $bank->id_bunga }}" checked>
-                                                                        {{ $bank->nama_bank }}
-                                                                    </label>
-                                                                </div>
-                                                            @endforeach
+                                            <datalist id="skBunga">
+                                                @foreach ($skBunga as $bank)
+                                                    <option value="{{ $bank->nama_bank }}">
+                                                        {{ $bank->nama_bank }}
+                                                    </option>
+                                                @endforeach
+                                            </datalist>
 
 
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="card-shadow">
+                                                <label for="">Pilih Bank Promo</label>
+                                            </div>
+                                            <div class="">
+                                                <select name="namaBank" class="form form-control" id="namaBank">
+                                                    <option value="">--Pilih--</option>
+                                                </select>
+                                            </div>
+                                            <br>
+                                            <div class="card-shadow">
+                                                <label for="">Booking Fee Rp. {{ rupiah(10000000) }}</label>
                                             </div>
                                             <div class="card-shadow">
                                                 <label for="">Uang Muka</label>
@@ -123,28 +179,67 @@
                                             <div class="">
                                                 <input type="text" class="form-control card-shadow" name="uangMuka"
                                                     id="uangMuka" aria-describedby="helpId" placeholder=""
-                                                    onkeyup="getValue('uangMuka')" value="{{ rupiah($tipeRumah->harga_tr*(10/100)) }}">
+                                                    onkeyup="getValue('uangMuka')"
+                                                    value="{{ rupiah($tipeRumah->harga_tr * (10 / 100) - 10000000) }}">
                                             </div>
+                                            <?php
+                                            $date = date('d M');
+                                            $date = strtotime($date);
+                                            $date = strtotime('+7 day', $date);
+                                            ?>
+                                            @if ($rumah->status_stock == 'Inden')
+                                                <div class="card-shadow">
+                                                    <label for="">Cicilan Uang Muka</label>
+
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            Rp. {{ rupiah((($tipeRumah->harga_tr * (10 / 100)) -10000000)/ 4) }}
+                                                        </div>
+                                                        <div class="col">
+
+                                                            {{ date('d M Y', $date) }}
+                                                        </div>
+                                                    </div>
+                                                    @for ($i = 0; $i < 3; $i++)
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                Rp.   {{ rupiah((($tipeRumah->harga_tr * (10 / 100))- 10000000) / 4) }}
+                                                            </div>
+                                                            <div class="col">
+                                                                <?php $date = strtotime('+30 day', $date);
+                                                                ?>
+                                                                {{ date('d M Y', $date) }}
+                                                            </div>
+                                                        </div>
+                                                    @endfor
+
+
+                                                </div>
+
+                                            @endif
                                             <div class="card-shadow">
                                                 <label for="">Jumlah</label>
                                             </div>
                                             <div class="">
                                                 <input type="text" class="form-control card-shadow" name="jumlah"
                                                     id="jumlahHarga" aria-describedby="helpId" placeholder=""
-                                                    onkeyup="getValue('jumlahHarga')" value="{{ rupiah($tipeRumah->harga_tr) }}">
+                                                    onkeyup="getValue('jumlahHarga')"
+                                                    value="{{ rupiah($tipeRumah->harga_tr) }}">
                                             </div>
                                             <div class="card-shadow">
                                                 <label for="">Suku Bunga</label>
                                             </div>
                                             <div class="">
                                                 <input type="text" class="form-control card-shadow" name="sukuBunga"
-                                                    id="sukuBunga" aria-describedby="helpId" placeholder="" value="">
+                                                    id="sukuBunga" aria-describedby="helpId" placeholder=""
+                                                    value="">
                                             </div>
                                             <div class="card-shadow">
                                                 <label for="">Waktu Pinjaman</label>
                                             </div>
                                             <div class="">
-                                                <select class="form form-control card-shadow" name="tahun" id="tahun">
+                                                <select class="form form-control card-shadow" name="tahun"
+                                                    id="tahun">
                                                     <option value="">-- Pilih --</option>
                                                     <option value="5">5 tahun</option>
                                                     <option value="10">10 tahun</option>
@@ -167,7 +262,8 @@
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
-                                                <button type="submit"  type="button" class="btn btn-primary">Lanjutkan</button>
+                                            <button type="submit" type="button"
+                                                class="btn btn-primary">Lanjutkan</button>
                                         </div>
                                     </form>
                                 @elseif($payment == 'Cicilan')
@@ -285,6 +381,7 @@
         return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
     }
 </script>
+
 
 <?php
 function rupiah($angka)

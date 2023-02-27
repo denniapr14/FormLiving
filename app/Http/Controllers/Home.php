@@ -871,7 +871,9 @@ if (!session()->has('guest') && !session()->has('user')) {
 
         $skBunga = DB::table('sk_bunga')->where([
             'status_bunga' => "aktif"
-        ])->get();
+        ])
+        ->groupBy('nama_bank')
+        ->get();
         $tipeRumah = DB::table('tipe_rumah')->where([
             'id_tipe_rumah' => $id_tipe
         ])->first();
@@ -905,7 +907,15 @@ if (!session()->has('guest') && !session()->has('user')) {
         # code...
     }
 
-
+    public function getSKBunga($id_rumah,$id_tipe, $payment,$namaBank = "")
+    {
+        $skBunga = DB::table('sk_bunga')
+        ->select('id_bunga','nama_bank','persentase')
+        ->where([
+            'nama_bank' => $namaBank
+        ])->get();
+        return response()->json($skBunga);
+    }
 
     public function SimPricePaymentAction(Request $request,$id_rumah,$id_tipe, $payment)
 
