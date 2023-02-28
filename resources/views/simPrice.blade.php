@@ -45,7 +45,7 @@
                                 var name = response[i].nama_bank;
                                 var persen = response[i].persentase;
 
-                                var option = "<option value='" + id + "'>Bank " + name + " Bunga "+ persen +"%</option>";
+                                var option = "<option value='" + persen + "'>Bank " + name + " Bunga "+ persen +"%</option>";
 
                                 $("#namaBank").append(option);
                             }
@@ -229,35 +229,21 @@
                                             <div class="card-shadow">
                                                 <label for="">Suku Bunga</label>
                                             </div>
-                                            <div class="">
-                                                <input type="text" class="form-control card-shadow" name="sukuBunga"
-                                                    id="sukuBunga" aria-describedby="helpId" placeholder=""
-                                                    value="">
-                                            </div>
-                                            <div class="card-shadow">
-                                                <label for="">Waktu Pinjaman</label>
-                                            </div>
-                                            <div class="">
-                                                <select class="form form-control card-shadow" name="tahun"
-                                                    id="tahun">
-                                                    <option value="">-- Pilih --</option>
-                                                    <option value="5">5 tahun</option>
-                                                    <option value="10">10 tahun</option>
-                                                    <option value="15">15 tahun</option>
-                                                    <option value="20">20 tahun</option>
-                                                </select>
-                                            </div>
+
 
 
                                         </div>
                                         <div class="btn-groups">
                                             <a type="button"
-                                                onclick="hitung('jumlahHarga','uangMuka','sukuBunga','tahun','hasil')"
+                                                onclick="hitung('jumlahHarga','uangMuka','namaBank','hasil','hasil2')"
                                                 class="btn btn-primary">Hitung Simulasi</a>
                                         </div>
                                         <div class="price-total">
                                             <p>Perkiraan pembayaran KPR Anda:</p>
                                             <h5 id="hasil">/ Bulan</h5>
+                                            <h5 id="hasil2">/ Bulan</h5>
+                                            <h5 id="hasil3">/ Bulan</h5>
+                                            <h5 id="hasil4">/ Bulan</h5>
                                         </div>
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
@@ -325,7 +311,7 @@
 @endsection
 
 <script>
-    function hitung(jumlah, uangmuka, sukubunga, tahun, result) {
+    function hitung(jumlah, uangmuka, sukubunga, result, result2) {
 
         var jml = document.getElementById(jumlah).value;
         jml = jml.replace(/\D/g, '');
@@ -334,14 +320,22 @@
         um = um.replace(/\D/g, '');
         console.log(um);
         var sb = document.getElementById(sukubunga).value;
-        var thn = document.getElementById(tahun).value;
+        console.log(sb);
+        {{--  var thn = document.getElementById(tahun).value;  --}}
         var hasil = document.getElementById(result);
+        var hasil2 = document.getElementById(result2);
         var cicilan;
+        var cicilan2;
 
-        cicilan = ((jml - um) * (sb / 100) * thn) / (thn * 12);
-        console.log(cicilan);
-
-        var hasilCicilan = Math.round(parseInt((cicilan / 1000)) * 1000).toString(),
+        cicilan = (((jml - um) * (sb / 100)) * 10) / (10 * 12);
+        console.log(sb / 100);
+        var hasilRupiah = formatRupiah2(cicilan);
+        cicilan2 = ((jml - um) * (sb / 100) * 5) / (5 * 12);
+        console.log(cicilan2);
+        var hasilRupiah2 = formatRupiah2(cicilan2);
+        console.log(hasilRupiah);
+        console.log(hasilRupiah2);
+        {{--  var hasilCicilan = Math.round(parseInt((cicilan / 1000)) * 1000).toString(),
             sisa = hasilCicilan.length % 3,
             rupiah = hasilCicilan.substr(0, sisa),
             ribuan = hasilCicilan.substr(sisa).match(/\d{3}/g);
@@ -351,9 +345,25 @@
             rupiah += separator + ribuan.join('.');
         }
 
-        console.log(rupiah);
+        cicilan2 = ((jml - um) * (sb / 100) * 20) / (20 * 12);
+        console.log(cicilan2);
 
-        hasil.innerText = rupiah + "/ Bulan";
+        var hasilCicilan2 = Math.round(parseInt((cicilan2 / 1000)) * 1000).toString(),
+            sisa2 = hasilCicilan2.length % 3,
+            rupiah2 = hasilCicilan2.substr(0, sisa2),
+            ribuan2 = hasilCicilan2.substr(sisa2).match(/\d{3}/g);
+
+        if (ribuan2) {
+            separator2 = sisa2 ? '.' : '';
+            rupiah2 += separator2 + ribuan2.join('.');
+        }
+        console.log(hasilCicilan);
+        console.log(hasilCicilan2);
+
+        console.log(rupiah2);  --}}
+
+        hasil.innerText = "Cicilan KPR Selama 5 Tahun "+ hasilRupiah + "/ Bulan" ;
+        hasil2.innerText = "Cicilan KPR Selama 10 Tahun "+ hasilRupiah2 + "/ Bulan";
     }
 
     function getValue(id) {
@@ -361,6 +371,20 @@
 
         dataValue.value = formatRupiah(dataValue.value, '', id);
 
+    }
+
+    function formatRupiah2(angka){
+            var hasilCicilan = Math.round(parseInt((angka / 1000)) * 1000).toString(),
+            sisa = hasilCicilan.length % 3,
+            rupiah = hasilCicilan.substr(0, sisa),
+            ribuan = hasilCicilan.substr(sisa).match(/\d{3}/g);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        return rupiah;
     }
 
     function formatRupiah(angka, prefix, id) {
