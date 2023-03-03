@@ -806,6 +806,8 @@ class Home extends Controller
         # code...
     }
 
+
+
     public function SimPrice(Request $request, $id_rumah, $id_tipe)
 
     {
@@ -828,6 +830,9 @@ class Home extends Controller
             ->first();
         $payment = $request->payment;
         if (!empty($payment)) {
+
+
+
             return redirect('/simulation-price-payment/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment);
         } else {
             return back()->with('error', 'You not select payment method!');
@@ -942,28 +947,56 @@ class Home extends Controller
             $userPelanggan = \App\Models\UserPelanggan::where([
                 'id_pelanggan' => session::get('guest'),
             ])->first();
+
             if ($payment == "KPR") {
-                $dataInput = array(
-                    'id_bank'           => $request->bank,
-                    'uang_muka'         => preg_replace('/\D/', '', $request->uangMuka),
-                    'harga_awal'        => preg_replace('/\D/', '', $request->jumlah),
-                    'bunga'             => $request->sukuBunga,
-                    'cicilan'           => ($request->tahun * 12) . "|" . $request->tahun
-                );
-                // dd($dataInput);
-                // die();
-            }
+                dd( $request->namaBank);
+                die();
+                $bank = implode("|", $request->namaBank);
+                    $dataInput = array(
+                        'id_bunga'          => $bank[0],
+                        'uang_muka'         => preg_replace('/\D/', '', $request->uangMuka),
+                        'harga_awal'        => (int)preg_replace('/\D/', '', $request->jumlah) +
+                                                (int)preg_replace('/\D/', '', $request->uangMuka)
+                                                + 10000000,
+                        'bunga'             => $bank[1],
 
-            if ($payment == "Cicilan") {
-                $dataInput = array(
 
-                    'cicilan'         => ($request->tahun * 12) . "|" . $request->tahun
+                    );
+                    dd($dataInput);
+                    die();
+                }
+
+                if ($payment == "Cicilan") {
+                    $dataInput = array(
+
+                        'cicilan'         => ($request->tahun * 12) . "|" . $request->tahun
+                    );
+                }
+                $id = DB::table('kalkulator_kpr')->insertGetId(
+                    $dataInput
                 );
-            }
-            $id = DB::table('kalkulator_kpr')->insertGetId(
-                $dataInput
-            );
-            return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $id);
+            // if ($payment == "KPR") {
+            //     $dataInput = array(
+            //         'id_bank'           => $request->bank,
+            //         'uang_muka'         => preg_replace('/\D/', '', $request->uangMuka),
+            //         'harga_awal'        => preg_replace('/\D/', '', $request->jumlah),
+            //         'bunga'             => $request->sukuBunga,
+            //         'cicilan'           => ($request->tahun * 12) . "|" . $request->tahun
+            //     );
+            //     // dd($dataInput);
+            //     // die();
+            // }
+
+            // if ($payment == "Cicilan") {
+            //     $dataInput = array(
+
+            //         'cicilan'         => ($request->tahun * 12) . "|" . $request->tahun
+            //     );
+            // }
+            // $id = DB::table('kalkulator_kpr')->insertGetId(
+            //     $dataInput
+            // );
+            // return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $id);
         }
 
         # code...

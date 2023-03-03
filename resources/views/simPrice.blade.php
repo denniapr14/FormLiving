@@ -45,7 +45,7 @@
                                 var name = response[i].nama_bank;
                                 var persen = response[i].persentase;
 
-                                var option = "<option value='" + persen + "'>Bank " + name + " Bunga "+ persen +"%</option>";
+                                var option = "<option value='"+id+"|" + persen + "'>Bank " + name + " Bunga "+ persen +"%</option>";
 
                                 $("#namaBank").append(option);
                             }
@@ -168,6 +168,7 @@
                                                 <select name="namaBank" class="form form-control" id="namaBank">
                                                     <option value="">--Pilih--</option>
                                                 </select>
+
                                             </div>
                                             <br>
                                             <div class="card-shadow">
@@ -218,24 +219,22 @@
 
                                             @endif
                                             <div class="card-shadow">
-                                                <label for="">Jumlah</label>
+                                                <label for="">Jumlah Plafon KPR</label>
                                             </div>
                                             <div class="">
                                                 <input type="text" class="form-control card-shadow" name="jumlah"
                                                     id="jumlahHarga" aria-describedby="helpId" placeholder=""
                                                     onkeyup="getValue('jumlahHarga')"
-                                                    value="{{ rupiah($tipeRumah->harga_tr) }}">
+                                                    value="{{ rupiah($tipeRumah->harga_tr - ($tipeRumah->harga_tr * (10 / 100) - 10000000)) }}">
                                             </div>
-                                            <div class="card-shadow">
-                                                <label for="">Suku Bunga</label>
-                                            </div>
+
 
 
 
                                         </div>
                                         <div class="btn-groups">
                                             <a type="button"
-                                                onclick="hitung('jumlahHarga','uangMuka','namaBank','hasil','hasil2')"
+                                                onclick="hitung('jumlahHarga','uangMuka','namaBank','hasil','hasil2','hasil3','hasil4')"
                                                 class="btn btn-primary">Hitung Simulasi</a>
                                         </div>
                                         <div class="price-total">
@@ -311,7 +310,10 @@
 @endsection
 
 <script>
-    function hitung(jumlah, uangmuka, sukubunga, result, result2) {
+
+
+
+    function hitung(jumlah, uangmuka, sukubunga, result, result2, result3, result4) {
 
         var jml = document.getElementById(jumlah).value;
         jml = jml.replace(/\D/g, '');
@@ -320,19 +322,37 @@
         um = um.replace(/\D/g, '');
         console.log(um);
         var sb = document.getElementById(sukubunga).value;
+        const suku = sb.split("|");
         console.log(sb);
         {{--  var thn = document.getElementById(tahun).value;  --}}
         var hasil = document.getElementById(result);
         var hasil2 = document.getElementById(result2);
         var cicilan;
         var cicilan2;
+        var perngurangan = (jml-um);
+        /*
+        ir - interest rate per month
+        np - number of periods (months)
+        pv - present value
+        fv - future value (residual value)
+        */
 
-        cicilan = (((jml - um) * (sb / 100)) * 10) / (10 * 12);
-        console.log(sb / 100);
+        cicilan = calculatePMT(jml,suku[1],60);
+        console.log(jml);
+        console.log(cicilan);
         var hasilRupiah = formatRupiah2(cicilan);
-        cicilan2 = ((jml - um) * (sb / 100) * 5) / (5 * 12);
+        cicilan2 = calculatePMT(jml,suku[1],120);
         console.log(cicilan2);
         var hasilRupiah2 = formatRupiah2(cicilan2);
+
+        cicilan3 = calculatePMT(jml,suku[1],180);
+        console.log(cicilan3);
+        var hasilRupiah3 = formatRupiah2(cicilan3);
+
+        cicilan4 = calculatePMT(jml,suku[1],240);
+        console.log(cicilan4);
+        var hasilRupiah4 = formatRupiah2(cicilan4);
+
         console.log(hasilRupiah);
         console.log(hasilRupiah2);
         {{--  var hasilCicilan = Math.round(parseInt((cicilan / 1000)) * 1000).toString(),
@@ -364,6 +384,8 @@
 
         hasil.innerText = "Cicilan KPR Selama 5 Tahun "+ hasilRupiah + "/ Bulan" ;
         hasil2.innerText = "Cicilan KPR Selama 10 Tahun "+ hasilRupiah2 + "/ Bulan";
+        hasil3.innerText = "Cicilan KPR Selama 15 Tahun "+ hasilRupiah3 + "/ Bulan";
+        hasil4.innerText = "Cicilan KPR Selama 20 Tahun "+ hasilRupiah4 + "/ Bulan";
     }
 
     function getValue(id) {
@@ -371,6 +393,20 @@
 
         dataValue.value = formatRupiah(dataValue.value, '', id);
 
+    }
+
+    function calculatePMT(P, r, n) {
+    // Convert the annual interest rate to a monthly rate
+    r = r / 1200;
+
+    // Calculate the PMT using the formula
+    var PMT = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+
+    // Round the result to two decimal places
+    PMT = Math.round(PMT * 100) / 100;
+
+    // Return the PMT
+    return PMT;
     }
 
     function formatRupiah2(angka){
