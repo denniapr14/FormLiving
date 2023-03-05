@@ -57,7 +57,6 @@
                                 Form Pemesanan
                             </h2>
                         </div>
-
                         <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                             <div class="mod-type">
                                 <div class="type-image">
@@ -74,12 +73,17 @@
                                     </div>
                                     <div class="type-item">
                                         <p>Cluster</p>
-                                        <h5>The Mainroad</h5>
+                                        <h5>{{ $rumah->nama_cluster }}</h5>
                                     </div>
                                     <div class="type-item">
                                         <p>Start from</p>
 
                                         <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Luas Tanah</p>
+
+                                        <h5>{{ $rumah->luas_tanah }} m<sup>2</sup></h5>
                                     </div>
                                 </div>
                             </div>
@@ -126,14 +130,50 @@
                                                 <span>*required</span>
                                             </div>
                                         </div>
+
+                                        @if(!empty($userPelanggan->alamat_plgn))
+                                        <?php
+
+                                        $alamat = explode(',',$userPelanggan->alamat_plgn);
+                                        ?>
+
+
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <label for="alamat" class="form-label">Alamat</label>
-                                                <input type="text" class="form-control" name="alamat" id="alamat"
-                                                    placeholder="Alamat" value="{{ $userPelanggan->alamat_plgn }}">
-                                                <span>*required</span>
+                                                <label for="" class="form-label">Pulau</label>
+                                                <input type="text" class="form-control" name="pulau"
+                                                    id="alamat" value="" placeholder="Pulau">
                                             </div>
                                         </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group">
+                                                <label for="alamat" class="form-label">Kota</label>
+                                                <input type="text" class="form-control" name="kota"
+                                                    id="alamat" value="" placeholder="Kota/Kabupaten">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group">
+                                                <label for="alamat" class="form-label">Kecamatan</label>
+                                                <input type="text" class="form-control" name="kecamatan"
+                                                    id="alamat" value="" placeholder="Kecamatan">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group">
+                                                <label for="alamat" class="form-label">Kelurahan</label>
+                                                <input type="text" class="form-control" name="kelurahan"
+                                                    id="alamat" value="" placeholder="Kelurahan">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group">
+                                                <label for="alamat" class="form-label">Jalan</label>
+                                                <input type="text" class="form-control" name="jalan"
+                                                    id="alamat" value="" placeholder="jalan">
+                                            </div>
+                                        </div>
+                                        @endif
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
                                                 <label for="email" class="form-label">Email</label>
@@ -297,8 +337,36 @@
                                             </div>
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="alamat" class="form-label">Alamat</label>
-                                                    <input type="text" class="form-control" name="alamat"
+                                                    <label for="" class="form-label">Pulau</label>
+                                                    <input type="text" class="form-control" name="pulau"
+                                                        id="alamat" value="{{ old('alamat') }}" placeholder="Alamat">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="alamat" class="form-label">Kota</label>
+                                                    <input type="text" class="form-control" name="kota"
+                                                        id="alamat" value="{{ old('alamat') }}" placeholder="Alamat">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="alamat" class="form-label">Kecamatan</label>
+                                                    <input type="text" class="form-control" name="kecamatan"
+                                                        id="alamat" value="{{ old('alamat') }}" placeholder="Alamat">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="alamat" class="form-label">Kelurahan</label>
+                                                    <input type="text" class="form-control" name="kelurahan"
+                                                        id="alamat" value="{{ old('alamat') }}" placeholder="Alamat">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="alamat" class="form-label">Jalan</label>
+                                                    <input type="text" class="form-control" name="jalan"
                                                         id="alamat" value="{{ old('alamat') }}" placeholder="Alamat">
                                                 </div>
                                             </div>

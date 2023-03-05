@@ -949,9 +949,9 @@ class Home extends Controller
             ])->first();
 
             if ($payment == "KPR") {
-                dd( $request->namaBank);
-                die();
-                $bank = implode("|", $request->namaBank);
+                // dd( $request->namaBank);
+                // die();
+                $bank = explode("|", $request->namaBank);
                     $dataInput = array(
                         'id_bunga'          => $bank[0],
                         'uang_muka'         => preg_replace('/\D/', '', $request->uangMuka),
@@ -962,8 +962,7 @@ class Home extends Controller
 
 
                     );
-                    dd($dataInput);
-                    die();
+
                 }
 
                 if ($payment == "Cicilan") {
@@ -975,6 +974,7 @@ class Home extends Controller
                 $id = DB::table('kalkulator_kpr')->insertGetId(
                     $dataInput
                 );
+                return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $id);
             // if ($payment == "KPR") {
             //     $dataInput = array(
             //         'id_bank'           => $request->bank,
@@ -1047,14 +1047,14 @@ class Home extends Controller
             // dd($userPelanggan);
             // die();
 
-            return view('simOrder', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment'));
+            return view('simOrder', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment','kkpr'));
         }
-        return view('simOrder', compact('tipeRumah', 'rumah', 'promo', 'payment'));
+        return view('simOrder', compact('tipeRumah', 'rumah', 'promo', 'payment','kkpr'));
 
         # code...
     }
 
-    public function SimOrderAction(Request $request, $id_rumah, $id_tipe, $payment)
+    public function SimOrderAction(Request $request, $id_rumah, $id_tipe, $payment, $id_kkpr)
     {
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -1064,6 +1064,9 @@ class Home extends Controller
 
         $tipeRumah = DB::table('tipe_rumah')->where([
             'id_tipe_rumah' => $id_tipe
+        ])->first();
+        $kkpr = DB::table('kalkulator_kpr')->where([
+            'id_kkpr' => $id_kkpr
         ])->first();
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
@@ -1107,14 +1110,15 @@ class Home extends Controller
                 'alamat_plgn'           => $request->alamat,
                 'email_plgn'            => $request->email,
                 'npwp_plgn'             => $request->npwp,
-                'jenis_kelamin_status'  => $request->kelamin
+                'jenis_kelamin_status'  => $request->gender,
+                // 'id_kkpr'               => $kkpr->id_kkpr,
 
             );
 
             $id = DB::table('user_pelanggan')->insertGetId(
                 $dataInput
             );
-            return redirect('/simulation-summary/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $voucher . '/' . $id);
+            return redirect('/simulation-summary/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $voucher . '/' . $kkpr->id_kkpr .'/'. $id);
 
             // dd($dataInput);
             // die();
@@ -1142,24 +1146,27 @@ class Home extends Controller
                 'no_ktp_plgn'           => $request->nik,
                 'no_telp_plgn'          => $request->telp,
                 'no_wa_plgn'            => $request->wa,
-                'alamat_plgn'           => $request->alamat,
+                'alamat_plgn'           => $request->jalan.', '.$request->kelurahan.', '.$request->kecamatan.', '.$request->kota.', '.$request->pulau,
                 'email_plgn'            => $request->email,
                 'npwp_plgn'             => $request->npwp,
-                'jenis_kelamin_status'  => $request->kelamin
+                'jenis_kelamin_status'  => $request->gender,
+                // 'id_kkpr'               => $kkpr->id_kkpr,
 
             );
+            // dd($dataInput);
+            // die();
             DB::table('user_pelanggan')
                 ->where('id_pelanggan', session::get('guest'))
                 ->update(
                     $dataInput
                 );
-            return redirect('/simulation-summary/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $voucher . '/' . session::get('guest'));
+            return redirect('/simulation-summary/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $kkpr->id_kkpr . '/' .$voucher . '/' . session::get('guest'));
         }
         // return view('simOrder',compact('tipeRumah','rumah','promo'));
         # code...
     }
 
-    public function SimSummary($id_rumah, $id_tipe, $payment, $voucher, $id_pelanggan)
+    public function SimSummary($id_rumah, $id_tipe, $payment, $id_kkpr, $voucher, $id_pelanggan)
     {
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -1169,6 +1176,9 @@ class Home extends Controller
 
         $pelanggan = DB::table('user_pelanggan')->where([
             'id_pelanggan' => $id_pelanggan
+        ])->first();
+        $kkpr = DB::table('kalkulator_kpr')->where([
+            'id_kkpr' => $id_kkpr
         ])->first();
         $tipeRumah = DB::table('tipe_rumah')->where([
             'id_tipe_rumah' => $id_tipe
@@ -1193,7 +1203,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('simSummary', compact('user', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan'));
+            return view('simSummary', compact('user', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan','kkpr'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1201,18 +1211,21 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan'));
+            return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan','kkpr'));
         }
         return view('simSummary');
         # code...
     }
-    public function SimSummaryAction(Request $request, $id_rumah, $id_tipe, $payment, $voucher, $id_pelanggan)
+    public function SimSummaryAction(Request $request, $id_rumah, $id_tipe, $payment, $id_kkpr, $voucher, $id_pelanggan)
     {
         $tipeRumah = DB::table('tipe_rumah')->where([
             'id_tipe_rumah' => $id_tipe
         ])->first();
         $pelanggan = DB::table('user_pelanggan')->where([
             'id_pelanggan' => $id_pelanggan
+        ])->first();
+        $kkpr = DB::table('kalkulator_kpr')->where([
+            'id_kkpr' => $id_kkpr
         ])->first();
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
@@ -1266,7 +1279,7 @@ class Home extends Controller
                 $dataInput = array(
                     'id_pelanggan'              => $pelanggan->id_pelanggan,
                     'id_user_admin'             => session::get('user'),
-                    'id_kkpr'                   => $id,
+                    'id_kkpr'                   => $id_kkpr,
                     'id_rumah'                  => $id_rumah,
                     'id_tipe_rumah'             => $id_tipe,
                     'jenis_pembayaran_fp'       => $payment,
@@ -1278,7 +1291,7 @@ class Home extends Controller
                 $dataInput = array(
                     'id_pelanggan'              => $pelanggan->id_pelanggan,
                     'id_user_admin'             => session::get('user'),
-                    'id_kkpr'                   => $id,
+                    'id_kkpr'                   => $id_kkpr,
                     'id_rumah'                  => $id_rumah,
                     'id_tipe_rumah'             => $id_tipe,
                     'jenis_pembayaran_fp'       => $payment,

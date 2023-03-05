@@ -59,8 +59,8 @@ use App\Http\Controllers\Home;
     // Route::get('/simulation-price/store/{id_rumah}/{id_tipe}/{payment}', [Home::class,'simPriceAction'])->name('simulation-price.action');
     Route::get('/simulation-order/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}', [Home::class,'simOrder']);
     Route::post('/simulation-order/store/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}', [Home::class,'simOrderAction'])->name('simulation-order.action');
-    Route::get('/simulation-summary/{id_rumah}/{id_tipe}/{payment}/{voucher}/{id_pelanggan}', [Home::class,'simSummary']);
-    Route::post('/simulation-summary/store/{id_rumah}/{id_tipe}/{payment}/{voucher}/{id_pelanggan}', [Home::class,'simSummaryAction'])->name('simulation-sumary.action');
+    Route::get('/simulation-summary/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}/{voucher}/{id_pelanggan}', [Home::class,'simSummary']);
+    Route::post('/simulation-summary/store/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}/{voucher}/{id_pelanggan}', [Home::class,'simSummaryAction'])->name('simulation-sumary.action');
     Route::get('/congratulation', [Home::class,'congratulation']);
 
 
