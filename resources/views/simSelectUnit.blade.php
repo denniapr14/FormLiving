@@ -59,10 +59,18 @@
                         data.forEach(function(item) {
                         var block = item.blok;
                         var nomor = item.nomor;
-                        var idrumah = document.getElementById(block+"-"+nomor);
+                        console.log(block+"-"+nomor);
+                        var blockNomor = block+"-"+nomor;
+                        blockNomor.toString();
+                        console.log(blockNomor);
+                        console.log(data);
+                        var idrumah = document.getElementById(blockNomor);
+                        
+                        idrumah.style.fill = 'green';
                         idrumah.setAttribute('fill',color(item.status));
+
                     });
-                    });
+                    }); 
 
                     function color(stat) {
                             var iro = 'warnaa';
