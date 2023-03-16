@@ -149,9 +149,7 @@
                                         <div class="col-7 col-lg-8">
                                             <p>{{ $tipeRumah->jenis_tr }}</p>
                                         </div>
-                                        <div class="col-5 col-lg-4">
-                                            <p>Biaya Modifikasi</p>
-                                        </div>
+
                                         <div class="col-7 col-lg-8 detail">
                                             <p>Rp. 0</p>
                                             {{--  <a href="#" data-bs-toggle="modal" data-bs-target="#detail">Lihat Detail</a>  --}}
@@ -335,13 +333,7 @@
                                         <div class="col-7 col-lg-8">
                                             <p>{{ $tipeRumah->jenis_tr }}</p>
                                         </div>
-                                        <div class="col-5 col-lg-4">
-                                            <p>Biaya Modifikasi</p>
-                                        </div>
-                                        <div class="col-7 col-lg-8 detail">
-                                            <p>Rp. 0</p>
-                                            {{--  <a href="#" data-bs-toggle="modal" data-bs-target="#detail">Lihat Detail</a>  --}}
-                                        </div>
+
                                         <div class="col-5 col-lg-4">
                                             <p>Harga Rumah</p>
                                         </div>

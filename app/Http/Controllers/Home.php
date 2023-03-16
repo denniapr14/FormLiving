@@ -14,6 +14,10 @@ use App\Models\TipeRumah;
 use App\Models\Rumah;
 use App\Models\Cluster;
 use App\Models\Promo;
+
+
+// Controller
+use App\Http\Controllers\WhatsappAPI;
 // =======================
 use App\Mail\MailNotify;
 use Mail;
@@ -1269,6 +1273,7 @@ class Home extends Controller
         $tipeRumah = DB::table('tipe_rumah')->where([
             'id_tipe_rumah' => $id_tipe
         ])->first();
+
         $pelanggan = DB::table('user_pelanggan')->where([
             'id_pelanggan' => $id_pelanggan
         ])->first();
@@ -1350,6 +1355,29 @@ class Home extends Controller
             DB::table('formulir_pesanan')->insert(
                 $dataInput
             );
+            $data = [
+                "subject"       =>"Cambo Tutorial Mail",
+                "body"          =>"Hello friends, Welcome to Cambo Tutorial Mail Delivery!",
+                "nama_plgn"     => $pelanggan->nama_plgn,
+                "nik"           => $pelanggan->no_ktp_plgn,
+                "no_wa"         => $pelanggan->no_wa_plgn,
+                "alamat"        => $pelanggan->alamat_plgn,
+                "cluster"       => $rumah->nama_cluster ." / ". $rumah->blok ." - ".$rumah->nomor,
+                "luas_tanah"    => $rumah->luas_tanah,
+                "tipe"          => $tipeRumah->jenis_tr,
+                "tipe"          => $tipeRumah->harga_tr,
+                ];
+              // MailNotify class that is extend from Mailable class.
+              try
+              {
+                \Mail::to($pelanggan->email_plgn)->send(new MailNotify($data));
+                return response()->json(['Great! Successfully send in your mail']);
+              }
+              catch(Exception $e)
+              {
+                return response()->json(['Sorry! Please try again latter']);
+              }
+
             return redirect('/congratulation')->with('success', 'Data has been send!');
             // dd($user);
             // die();
@@ -1417,6 +1445,30 @@ class Home extends Controller
             DB::table('formulir_pesanan')->insert(
                 $dataInput
             );
+
+            $data = [
+                "subject"       =>"Cambo Tutorial Mail",
+                "body"          =>"Hello friends, Welcome to Cambo Tutorial Mail Delivery!",
+                "nama_plgn"     => $pelanggan->nama_plgn,
+                "nik"           => $pelanggan->no_ktp_plgn,
+                "no_wa"         => $pelanggan->no_wa_plgn,
+                "alamat"        => $pelanggan->alamat_plgn,
+                "cluster"       => $rumah->nama_cluster ." / ". $rumah->blok ." - ".$rumah->nomor,
+                "luas_tanah"    => $rumah->luas_tanah,
+                "tipe"          => $tipeRumah->jenis_tr,
+                "tipe"          => $tipeRumah->harga_tr,
+                ];
+              // MailNotify class that is extend from Mailable class.
+              try
+              {
+                \Mail::to($pelanggan->email_plgn)->send(new MailNotify($data));
+                return response()->json(['Great! Successfully send in your mail']);
+              }
+              catch(Exception $e)
+              {
+                return response()->json(['Sorry! Please try again latter']);
+              }
+
             return redirect('/congratulation')->with('success', 'Data has been send!');
             // dd($dataInput);
             // die();
@@ -1513,6 +1565,14 @@ class Home extends Controller
           {
             return response()->json(['Sorry! Please try again latter']);
           }
+    }
+
+    public function SendWA()
+    {
+        $WhatsappFun = new WhatsappAPI();
+        $status = $WhatsappFun->sendText("+6281227476463", "TEST MESSAGE FROM LARAVEL");
+        dd($status);
+
     }
 
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2023 at 04:25 AM
+-- Generation Time: Mar 16, 2023 at 09:54 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -15337,7 +15337,8 @@ INSERT INTO `kalkulator_kpr` (`id_kkpr`, `id_koef`, `id_bunga`, `bunga`, `luas_t
 (319, NULL, 3, 8, NULL, NULL, NULL, 985000000, NULL, NULL, NULL, 87500000, 2, NULL, NULL, NULL, NULL),
 (320, NULL, NULL, NULL, 376, NULL, 150, 975000000, 10000000, 975000000, NULL, NULL, 4, NULL, NULL, NULL, NULL),
 (321, NULL, 1, 7, NULL, NULL, NULL, 985000000, NULL, NULL, NULL, 87500000, 3, NULL, NULL, NULL, NULL),
-(322, NULL, NULL, NULL, 376, NULL, 150, 975000000, 10000000, 975000000, NULL, NULL, 4, NULL, NULL, NULL, NULL);
+(322, NULL, NULL, NULL, 376, NULL, 150, 975000000, 10000000, 975000000, NULL, NULL, 4, NULL, NULL, NULL, NULL),
+(323, NULL, 1, 7, NULL, NULL, NULL, 985000000, NULL, NULL, NULL, 87500000, 4, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -18673,7 +18674,7 @@ CREATE TABLE `user_pelanggan` (
 --
 
 INSERT INTO `user_pelanggan` (`id_pelanggan`, `id_user_admin`, `nama_plgn`, `username_plgn`, `password_plgn`, `alamat_plgn`, `email_plgn`, `no_ktp_plgn`, `no_telp_plgn`, `no_wa_plgn`, `id_line_plgn`, `id_ig_plgn`, `npwp_plgn`, `pekerjaan_plgn`, `jenis_kelamin_status`, `qr_code_plgn`, `foto_ktp`, `kategori_plgn`, `sales_plgn`, `status_plgn`, `tgl_input_plgn`, `tgl_update_plgn`, `keterangan_plgn`) VALUES
-(1, 6, 'Ronaldo wati wow', 'Ronaldo', 'd54d1702ad0f8326224b817c796763c9', 'Jalan Candi Agung, Kelurahan, Sudimoro, Kota Malang, Jawa Timur', 'Ronaldozzzzzzzzzttttt@gmail.comm', '89864564231231231', '81803075448', '81803075448', '', '', '1231564654', '', 'Laki - Laki', 'Ronaldozzzzzzzzzttttt@gmail.comm2019-04-16.png', '', 'guest', 'Nining', 'No Deal', '2019-04-16 08:51:27', NULL, '0'),
+(1, 6, 'Ronaldo wati wow', 'Ronaldo', 'd54d1702ad0f8326224b817c796763c9', 'Jl puncak mandala 44f, , Sudimoro, Kota Malang, Jawa Timur', 'Ronaldozzzzzzzzzttttt@gmail.comm', '89864564231231231', '81803075448', '81803075448', '', '', '1231564654', '', 'Laki - Laki', 'Ronaldozzzzzzzzzttttt@gmail.comm2019-04-16.png', '', 'guest', 'Nining', 'No Deal', '2019-04-16 08:51:27', NULL, '0'),
 (2, 6, 'Yuliani', 'Yuliani030119', '25d55ad283aa400af464c76d713c07ad', 'Jl puncak mandala 44f', 'yulianiiiiiiii@gmail.comm', NULL, '8123233029', '8123233029', '', '', NULL, NULL, NULL, 'yulianiiiiiiii@gmail.comm2019-04-16.png', '', 'guest', 'Nining', 'No Deal', '2019-04-16 08:53:27', NULL, '0'),
 (3, 6, 'Christian', 'Christian150119', '25d55ad283aa400af464c76d713c07ad', 'Jl puncak mandala 44f', 'christiannnn@gmail.comm', '558545', '85331179996', '85331179996', '', '', NULL, 'bambung', 'Pria / Joss', 'christiannnn@gmail.comm2019-04-16.png', '', 'guest', 'Nining', 'No Deal', '2019-04-16 08:54:57', NULL, '0'),
 (4, 7, 'Robert', NULL, 'd41d8cd98f00b204e9800998ecf8427e', NULL, 'gaadaemail@gmail.com', '0193821093812', '+6281333007517', '+6281333007517', '', '', NULL, 'Solid', 'Laki Laki / Belum Menikah', 'gaadaemail@gmail.com2019-04-16.png', '', 'guest', 'Indra', 'No Deal', '2019-04-16 09:02:08', '2020-06-29', '0'),
@@ -21314,7 +21315,7 @@ ALTER TABLE `joblist`
 -- AUTO_INCREMENT for table `kalkulator_kpr`
 --
 ALTER TABLE `kalkulator_kpr`
-  MODIFY `id_kkpr` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=323;
+  MODIFY `id_kkpr` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
 
 --
 -- AUTO_INCREMENT for table `keep_log`

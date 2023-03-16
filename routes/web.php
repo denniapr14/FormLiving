@@ -68,6 +68,7 @@ use App\Http\Controllers\Home;
 
 
     Route::get('/MailSend',[Home::class,'Send']);
+    Route::get('/WASend',[Home::class,'SendWA']);
 
 
     // ------------= END SIMULATION =----------------
