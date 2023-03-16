@@ -87,15 +87,17 @@
                 </a> --}}
 
         </div>
-        @elseif (!empty(Session::get('user')))
+        @endif
+        @if (!empty(Session::get('user')))
         <div class="action">
 
-            <a href="/profile-setting"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</>
+            <a href="/profile-setting"  type="button"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</a>
                 {{-- <a href="/my-cart">
                     <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
                 </a> --}}
         </div>
-        @else
+        @endif
+        @if (empty(Session::get('user')) && empty(Session::get('guest')))
         <div class="action">
 
             <a href="/login" type="button" class="btn btn-outline-secondary">Login/Register</a>
@@ -105,9 +107,9 @@
         </div>
         @endif
 
-            <div class="icon-bell">
+            {{--  <div class="icon-bell">
                 <img src="{{ asset('Home') }}/images/ic-bell.png" alt="">
-            </div>
+            </div>  --}}
             <button type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar"
                 class="icon-burger btn p-0">
                 <img src="{{ asset('Home') }}/images/ic-hamburger.svg" alt="">

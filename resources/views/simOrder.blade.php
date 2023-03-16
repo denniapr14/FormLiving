@@ -12,6 +12,7 @@
 
 
 
+
     <div class="cluster">
         <div class="header-simulation mobile-only">
             <div class="ornament one">
@@ -234,7 +235,7 @@
                                                                         name="promo" id="promo"
                                                                         placeholder="Masukkan kode promo">
 
-                                                                    <div class="btn">Terapkan</div>
+                                                                    <a id="cariPromo" class="btn">Terapkan</a>
                                                                 </div>
                                                                 <!-- STATE PROMO -->
                                                                 <div class=" d-block">
@@ -285,7 +286,7 @@
                                                 </div>
                                                 <br>
                                                 <div class="form-group">
-                                                    <input type="text" name="promo" value="NULL" id="selectedPromoCode" class="form-control"
+                                                    <input type="text" name="promo"  value="NULL" id="selectedPromoCode" class="form-control"
                                                         readonly>
 
                                                 </div>
@@ -424,10 +425,10 @@
 
                                                                     <div class="promo-input">
                                                                         <input type="text" class="form-control"
-                                                                            name="promo" id="promo"
-                                                                            placeholder="Masukkan kode promo">
+                                                                        name="promo" id="promo"
+                                                                        placeholder="Masukkan kode promo">
 
-                                                                        <div class="btn">Terapkan</div>
+                                                                    <a id="cariPromo" class="btn">Terapkan</a>
                                                                     </div>
                                                                     <!-- STATE PROMO -->
                                                                     <div class=" d-block">
@@ -520,7 +521,31 @@
         });
     </script>
 
+    <script>
 
+        $('#cariPromo').click(function() {
+            var kodePromo = document.getElementById('promo').value;
+            $.ajax({
+                url: '/simulation-order/cariKupon/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}/'+kodePromo,
+                type: 'GET',
+
+                dataType: 'json',
+                success: function(response) {
+
+                    if (response!==null) {
+                        alert('Kupon Berhasil di terapkan');
+                        document.getElementById('selectedPromoCode').value= kodePromo;
+                    } else {
+                        alert('Kupon tidak ada');
+                        // Update the UI to show an error message
+                    }
+                    console.log(response);
+                }
+            });
+
+            {{--  console.log('bisa ko');  --}}
+        });
+    </script>
     <!-- Modal -->
 
 
@@ -528,6 +553,8 @@
 
 
 <?php
+
+
 function rupiah($angka)
 {
     $hasil_rupiah = number_format($angka, 2, ',', '.');

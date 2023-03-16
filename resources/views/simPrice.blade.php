@@ -20,7 +20,8 @@
                 $('#namaBank').find('option').not(':first').remove();
 
                 $.ajax({
-                    url: '/simulation-price-payment/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}/'+getNama,
+                    url: '/simulation-price-payment/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}/' +
+                        getNama,
                     method: "GET",
 
                     dataType: 'json',
@@ -45,7 +46,8 @@
                                 var name = response[i].nama_bank;
                                 var persen = response[i].persentase;
 
-                                var option = "<option value='"+id+"|" + persen + "'>Bank " + name + " Bunga "+ persen +"%</option>";
+                                var option = "<option value='" + id + "|" + persen + "'>Bank " +
+                                    name + " Bunga " + persen + "%</option>";
 
                                 $("#namaBank").append(option);
                             }
@@ -147,16 +149,16 @@
                                                 <label for="">Pilih Bank</label>
                                             </div>
                                             <div class="">
-                                                <input list="skBunga" id="getSkBunga" class="form form-control" name="skBunga"
-                                                required placeholder="--Pilih Bank--">
+                                                <input list="skBunga" id="getSkBunga" class="form form-control"
+                                                    name="skBunga" required placeholder="--Pilih Bank--">
 
-                                            <datalist id="skBunga">
-                                                @foreach ($skBunga as $bank)
-                                                    <option value="{{ $bank->nama_bank }}">
-                                                        {{ $bank->nama_bank }}
-                                                    </option>
-                                                @endforeach
-                                            </datalist>
+                                                <datalist id="skBunga">
+                                                    @foreach ($skBunga as $bank)
+                                                        <option value="{{ $bank->nama_bank }}">
+                                                            {{ $bank->nama_bank }}
+                                                        </option>
+                                                    @endforeach
+                                                </datalist>
 
 
                                             </div>
@@ -188,36 +190,57 @@
                                             $date = strtotime($date);
                                             $date = strtotime('+7 day', $date);
                                             ?>
-                                            @if ($rumah->status_stock == 'Inden')
-                                                <div class="card-shadow">
-                                                    <label for="">Cicilan Uang Muka</label>
+                                            @if (!empty(Session::get('user')))
+                                                @if ($rumah->status_stock == 'Inden')
+                                                    <div class="card-shadow">
+                                                        <label for="">Cicilan Uang Muka</label>
 
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            Rp. {{ rupiah((($tipeRumah->harga_tr * (10 / 100)) -10000000)/ 4) }}
-                                                        </div>
-                                                        <div class="col">
+                                                        <select name="cicilanUM" id="" class="form-control">
+                                                            @for ($i = 1; $i < 5; $i++)
+                                                            <option value="{{ $i }}">Rp. {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000) / $i) }} Per Bulan Cicilan {{ $i }} Kali</option>
+                                                            @endfor
+                                                        </select>
 
-                                                            {{ date('d M Y', $date) }}
-                                                        </div>
+
                                                     </div>
-                                                    @for ($i = 0; $i < 3; $i++)
+
+                                                @endif
+                                            @endif
+                                            @if (!empty(Session::get('guest')))
+                                                @if ($rumah->status_stock == 'Inden')
+                                                    <div class="card-shadow">
+                                                        <label for="">Cicilan Uang Muka</label>
+
                                                         <div class="row">
                                                             <div class="col">
-                                                                Rp.   {{ rupiah((($tipeRumah->harga_tr * (10 / 100))- 10000000) / 4) }}
+                                                                Rp.
+                                                                {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000) / 4) }}
                                                             </div>
                                                             <div class="col">
-                                                                <?php $date = strtotime('+30 day', $date);
-                                                                ?>
+
                                                                 {{ date('d M Y', $date) }}
                                                             </div>
                                                         </div>
-                                                    @endfor
+                                                        @for ($i = 0; $i < 3; $i++)
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    Rp.
+                                                                    {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000) / 4) }}
+                                                                </div>
+                                                                <div class="col">
+                                                                    <?php $date = strtotime('+30 day', $date);
+                                                                    ?>
+                                                                    {{ date('d M Y', $date) }}
+                                                                </div>
+                                                            </div>
+                                                        @endfor
 
 
-                                                </div>
+                                                    </div>
 
+                                                @endif
                                             @endif
+
                                             <div class="card-shadow">
                                                 <label for="">Jumlah Plafon KPR</label>
                                             </div>
@@ -310,9 +333,6 @@
 @endsection
 
 <script>
-
-
-
     function hitung(jumlah, uangmuka, sukubunga, result, result2, result3, result4) {
 
         var jml = document.getElementById(jumlah).value;
@@ -329,7 +349,7 @@
         var hasil2 = document.getElementById(result2);
         var cicilan;
         var cicilan2;
-        var perngurangan = (jml-um);
+        var perngurangan = (jml - um);
         /*
         ir - interest rate per month
         np - number of periods (months)
@@ -337,19 +357,19 @@
         fv - future value (residual value)
         */
 
-        cicilan = calculatePMT(jml,suku[1],60);
+        cicilan = calculatePMT(jml, suku[1], 60);
         console.log(jml);
         console.log(cicilan);
         var hasilRupiah = formatRupiah2(cicilan);
-        cicilan2 = calculatePMT(jml,suku[1],120);
+        cicilan2 = calculatePMT(jml, suku[1], 120);
         console.log(cicilan2);
         var hasilRupiah2 = formatRupiah2(cicilan2);
 
-        cicilan3 = calculatePMT(jml,suku[1],180);
+        cicilan3 = calculatePMT(jml, suku[1], 180);
         console.log(cicilan3);
         var hasilRupiah3 = formatRupiah2(cicilan3);
 
-        cicilan4 = calculatePMT(jml,suku[1],240);
+        cicilan4 = calculatePMT(jml, suku[1], 240);
         console.log(cicilan4);
         var hasilRupiah4 = formatRupiah2(cicilan4);
 
@@ -382,10 +402,10 @@
 
         console.log(rupiah2);  --}}
 
-        hasil.innerText = "Cicilan KPR Selama 5 Tahun "+ hasilRupiah + "/ Bulan" ;
-        hasil2.innerText = "Cicilan KPR Selama 10 Tahun "+ hasilRupiah2 + "/ Bulan";
-        hasil3.innerText = "Cicilan KPR Selama 15 Tahun "+ hasilRupiah3 + "/ Bulan";
-        hasil4.innerText = "Cicilan KPR Selama 20 Tahun "+ hasilRupiah4 + "/ Bulan";
+        hasil.innerText = "Cicilan KPR Selama 5 Tahun " + hasilRupiah + "/ Bulan";
+        hasil2.innerText = "Cicilan KPR Selama 10 Tahun " + hasilRupiah2 + "/ Bulan";
+        hasil3.innerText = "Cicilan KPR Selama 15 Tahun " + hasilRupiah3 + "/ Bulan";
+        hasil4.innerText = "Cicilan KPR Selama 20 Tahun " + hasilRupiah4 + "/ Bulan";
     }
 
     function getValue(id) {
@@ -396,21 +416,21 @@
     }
 
     function calculatePMT(P, r, n) {
-    // Convert the annual interest rate to a monthly rate
-    r = r / 1200;
+        // Convert the annual interest rate to a monthly rate
+        r = r / 1200;
 
-    // Calculate the PMT using the formula
-    var PMT = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+        // Calculate the PMT using the formula
+        var PMT = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
 
-    // Round the result to two decimal places
-    PMT = Math.round(PMT * 100) / 100;
+        // Round the result to two decimal places
+        PMT = Math.round(PMT * 100) / 100;
 
-    // Return the PMT
-    return PMT;
+        // Return the PMT
+        return PMT;
     }
 
-    function formatRupiah2(angka){
-            var hasilCicilan = Math.round(parseInt((angka / 1000)) * 1000).toString(),
+    function formatRupiah2(angka) {
+        var hasilCicilan = Math.round(parseInt((angka / 1000)) * 1000).toString(),
             sisa = hasilCicilan.length % 3,
             rupiah = hasilCicilan.substr(0, sisa),
             ribuan = hasilCicilan.substr(sisa).match(/\d{3}/g);

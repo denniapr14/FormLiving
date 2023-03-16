@@ -15,7 +15,8 @@ use App\Models\Rumah;
 use App\Models\Cluster;
 use App\Models\Promo;
 // =======================
-
+use App\Mail\MailNotify;
+use Mail;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -41,7 +42,7 @@ class Home extends Controller
                 'id_user_admin' => session::get('user'),
             ])->first();
 
-            // dd($userPelanggan);
+            // dd($user);
             // die();
             return view('home', compact('user'));
         }
@@ -219,7 +220,7 @@ class Home extends Controller
         // return "salah";
 
 
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->with('error','Login details are not valid');
     }
 
     public function Logout()
@@ -341,6 +342,7 @@ class Home extends Controller
             $userPelanggan = \App\Models\UserPelanggan::where([
                 'id_pelanggan' => session::get('guest'),
             ])->first();
+
             // dd($userPelanggan);
             // die();
             return view('editProfile', compact('userPelanggan'));
@@ -789,7 +791,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-
+            return view('simPayment', compact('user', 'tipeRumah', 'rumah'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -837,26 +839,26 @@ class Home extends Controller
         } else {
             return back()->with('error', 'You not select payment method!');
         }
-        // if (session()->has('user')) {
-        //     $user = \App\Models\UserAdmin::where([
-        //         'id_user_admin' => session::get('user'),
-        //     ])
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])
 
-        //         ->first();
+                ->first();
 
-        //     // dd($user);
-        //     // die();
-        //     return view('simPrice', compact('user','tipeRumah','rumah','payment'));
-        // }
-        // if (session()->has('guest')) {
-        //     $userPelanggan = \App\Models\UserPelanggan::where([
-        //         'id_pelanggan' => session::get('guest'),
-        //     ])->first();
-        //     // dd($userPelanggan);
-        //     // die();
-        //     return view('simPrice', compact('userPelanggan','tipeRumah','rumah','payment'));
-        // }
-        // return view('simPrice','tipeRumah','rumah','payment');
+            // dd($user);
+            // die();
+            return view('simPrice', compact('user', 'tipeRumah', 'rumah', 'payment'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            // dd($userPelanggan);
+            // die();
+            return view('simPrice', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment'));
+        }
+        return view('simPrice', 'tipeRumah', 'rumah', 'payment');
         # code...
     }
     public function SimPricePayment($id_rumah, $id_tipe, $payment)
@@ -871,8 +873,8 @@ class Home extends Controller
         $skBunga = DB::table('sk_bunga')->where([
             'status_bunga' => "aktif"
         ])
-        ->groupBy('nama_bank')
-        ->get();
+            ->groupBy('nama_bank')
+            ->get();
         $tipeRumah = DB::table('tipe_rumah')->where([
             'id_tipe_rumah' => $id_tipe
         ])->first();
@@ -891,7 +893,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-
+            return view('simPrice', compact('user', 'tipeRumah', 'rumah', 'payment', 'skBunga'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -906,13 +908,15 @@ class Home extends Controller
         # code...
     }
 
-    public function getSKBunga($id_rumah,$id_tipe, $payment,$namaBank = "")
+
+    // AJAX
+    public function getSKBunga($id_rumah, $id_tipe, $payment, $namaBank = "")
     {
         $skBunga = DB::table('sk_bunga')
-        ->select('id_bunga','nama_bank','persentase')
-        ->where([
-            'nama_bank' => $namaBank
-        ])->get();
+            ->select('id_bunga', 'nama_bank', 'persentase')
+            ->where([
+                'nama_bank' => $namaBank
+            ])->get();
         return response()->json($skBunga);
     }
 
@@ -938,7 +942,33 @@ class Home extends Controller
             ])
 
                 ->first();
+            if ($payment == "KPR") {
+                // dd( $request->namaBank);
+                // die();
+                $bank = explode("|", $request->namaBank);
+                $dataInput = array(
+                    'id_bunga'          => $bank[0],
+                    'uang_muka'         => preg_replace('/\D/', '', $request->uangMuka),
+                    'harga_awal'        => (int)preg_replace('/\D/', '', $request->jumlah) +
+                        (int)preg_replace('/\D/', '', $request->uangMuka)
+                        + 10000000,
+                    'bunga'             => $bank[1],
+                    'cicilan_um'        => $request->cicilanUM,
 
+
+                );
+            }
+
+            if ($payment == "Cicilan") {
+                $dataInput = array(
+
+                    'cicilan'         => ($request->tahun * 12) . "|" . $request->tahun
+                );
+            }
+            $id = DB::table('kalkulator_kpr')->insertGetId(
+                $dataInput
+            );
+            return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $id);
             // dd($user);
             // die();
 
@@ -952,29 +982,28 @@ class Home extends Controller
                 // dd( $request->namaBank);
                 // die();
                 $bank = explode("|", $request->namaBank);
-                    $dataInput = array(
-                        'id_bunga'          => $bank[0],
-                        'uang_muka'         => preg_replace('/\D/', '', $request->uangMuka),
-                        'harga_awal'        => (int)preg_replace('/\D/', '', $request->jumlah) +
-                                                (int)preg_replace('/\D/', '', $request->uangMuka)
-                                                + 10000000,
-                        'bunga'             => $bank[1],
+                $dataInput = array(
+                    'id_bunga'          => $bank[0],
+                    'uang_muka'         => preg_replace('/\D/', '', $request->uangMuka),
+                    'harga_awal'        => (int)preg_replace('/\D/', '', $request->jumlah) +
+                        (int)preg_replace('/\D/', '', $request->uangMuka)
+                        + 10000000,
+                    'bunga'             => $bank[1],
 
 
-                    );
-
-                }
-
-                if ($payment == "Cicilan") {
-                    $dataInput = array(
-
-                        'cicilan'         => ($request->tahun * 12) . "|" . $request->tahun
-                    );
-                }
-                $id = DB::table('kalkulator_kpr')->insertGetId(
-                    $dataInput
                 );
-                return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $id);
+            }
+
+            if ($payment == "Cicilan") {
+                $dataInput = array(
+
+                    'cicilan'         => ($request->tahun * 12) . "|" . $request->tahun
+                );
+            }
+            $id = DB::table('kalkulator_kpr')->insertGetId(
+                $dataInput
+            );
+            return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $id);
             // if ($payment == "KPR") {
             //     $dataInput = array(
             //         'id_bank'           => $request->bank,
@@ -1024,6 +1053,7 @@ class Home extends Controller
             ->first();
         $promo = DB::table('promo')
             ->where('status', '=', "aktif")
+            ->where('tipe_promo', '=', "standart")
             // ->where('tgl_aktif', '<=', NOW())
             ->where('tgl_berakhir', '>=', NOW())
             ->get();
@@ -1038,7 +1068,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-
+            return view('simOrder', compact('user', 'tipeRumah', 'rumah', 'promo', 'payment', 'kkpr'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1047,12 +1077,29 @@ class Home extends Controller
             // dd($userPelanggan);
             // die();
 
-            return view('simOrder', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment','kkpr'));
+            return view('simOrder', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment', 'kkpr'));
         }
-        return view('simOrder', compact('tipeRumah', 'rumah', 'promo', 'payment','kkpr'));
+        return view('simOrder', compact('tipeRumah', 'rumah', 'promo', 'payment', 'kkpr'));
 
         # code...
     }
+
+    public function FindKupon($id_rumah, $id_tipe, $payment, $id_kkpr, $kode_promo)
+    {
+        $promo = DB::table('promo')
+
+            ->where('status', '=', "aktif")
+            ->where('tipe_promo', '=', "spesial")
+            // ->where('tgl_aktif', '<=', NOW())
+            ->where('tgl_berakhir', '>=', NOW())
+            ->where([
+                'kode_promo' => $kode_promo
+            ])->get();
+        // dd($promo);
+        // die();
+        return response()->json($promo);
+    }
+
 
     public function SimOrderAction(Request $request, $id_rumah, $id_tipe, $payment, $id_kkpr)
     {
@@ -1104,6 +1151,7 @@ class Home extends Controller
             $dataInput = array(
                 'nama_plgn'             => $request->nama,
                 'id_user_admin'         => session::get('user'),
+                // 'id_sales'              => session::get('user'),
                 'no_ktp_plgn'           => $request->nik,
                 'no_telp_plgn'          => $request->telp,
                 'no_wa_plgn'            => $request->wa,
@@ -1118,7 +1166,7 @@ class Home extends Controller
             $id = DB::table('user_pelanggan')->insertGetId(
                 $dataInput
             );
-            return redirect('/simulation-summary/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $voucher . '/' . $kkpr->id_kkpr .'/'. $id);
+            return redirect('/simulation-summary/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $kkpr->id_kkpr . '/' . $voucher . '/' . $id);
 
             // dd($dataInput);
             // die();
@@ -1146,7 +1194,7 @@ class Home extends Controller
                 'no_ktp_plgn'           => $request->nik,
                 'no_telp_plgn'          => $request->telp,
                 'no_wa_plgn'            => $request->wa,
-                'alamat_plgn'           => $request->jalan.', '.$request->kelurahan.', '.$request->kecamatan.', '.$request->kota.', '.$request->pulau,
+                'alamat_plgn'           => $request->jalan . ', ' . $request->kelurahan . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->pulau,
                 'email_plgn'            => $request->email,
                 'npwp_plgn'             => $request->npwp,
                 'jenis_kelamin_status'  => $request->gender,
@@ -1160,7 +1208,7 @@ class Home extends Controller
                 ->update(
                     $dataInput
                 );
-            return redirect('/simulation-summary/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $kkpr->id_kkpr . '/' .$voucher . '/' . session::get('guest'));
+            return redirect('/simulation-summary/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $kkpr->id_kkpr . '/' . $voucher . '/' . session::get('guest'));
         }
         // return view('simOrder',compact('tipeRumah','rumah','promo'));
         # code...
@@ -1203,7 +1251,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('simSummary', compact('user', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan','kkpr'));
+            return view('simSummary', compact('user', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan', 'kkpr'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1211,7 +1259,7 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan','kkpr'));
+            return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan', 'kkpr'));
         }
         return view('simSummary');
         # code...
@@ -1434,5 +1482,37 @@ class Home extends Controller
     }
 
     // ======================= END FOOTER ========================
+
+
+    public function Send()
+    {
+
+        // $email = new MailNotify();
+        // Mail::to('denniapr14@gmail.com')->send($email);
+
+        // return "Email sent successfully!";
+        // $mailData = [
+        //     'subject' => 'Mail from ItSolutionStuff.com',
+        //     'body' => 'This is for testing email using smtp.'
+        // ];
+
+        // Mail::to('denniapr14@gmail.com')->send(new MailNotify($mailData));
+
+        // dd("Email is sent successfully.");
+        $data = [
+            "subject"=>"Cambo Tutorial Mail",
+            "body"=>"Hello friends, Welcome to Cambo Tutorial Mail Delivery!"
+            ];
+          // MailNotify class that is extend from Mailable class.
+          try
+          {
+            \Mail::to('gamesapr14@gmail.com')->send(new MailNotify($data));
+            return response()->json(['Great! Successfully send in your mail']);
+          }
+          catch(Exception $e)
+          {
+            return response()->json(['Sorry! Please try again latter']);
+          }
+    }
 
 }

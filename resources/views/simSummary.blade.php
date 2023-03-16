@@ -224,7 +224,7 @@
                                         <input type="checkbox" class="form-check-input" name="disclaimer" id="disclaimer"
                                             value="checkedValue" data-bs-toggle="modal" data-bs-target="#disclaim">
                                         <label class="form-check-label" for="disclaimer">
-                                            Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            Setuju
                                         </label>
                                     </div>
                                 </div>
@@ -239,7 +239,7 @@
                 @endif
                 @if (!empty(Session::get('user')))
                     <form
-                        action="{{ route('simulation-sumary.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment, $voucher, $pelanggan->id_pelanggan]) }}"
+                        action="{{ route('simulation-sumary.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment, $kkpr->id_kkpr, $voucher, $pelanggan->id_pelanggan]) }}"
                         method="POST">
                         <div class="second-layout">
                             <div class="row">
@@ -376,7 +376,7 @@
                                             </div>
                                             <div class="col-7 col-lg-8">
                                                 <h6>Rp. {{ $tipeRumah->harga_tr - $promo->diskon_promo }}</h6>
-                                                <input type="text" name="harga"
+                                                <input type="text" name="harga" hidden
                                                     value=" {{ $tipeRumah->harga_tr - $promo->diskon_promo }}">
                                             </div>
                                         @else
@@ -398,7 +398,7 @@
                                             </div>
                                             <div class="col-7 col-lg-8">
                                                 <h6>Rp. {{ $tipeRumah->harga_tr }}</h6>
-                                                <input type="text" name="harga"
+                                                <input type="text" name="harga" hidden
                                                     value=" {{ $tipeRumah->harga_tr }}">
                                             </div>
                                         @endif
@@ -411,7 +411,7 @@
                                             id="disclaimer" value="checkedValue" data-bs-toggle="modal"
                                             data-bs-target="#disclaim">
                                         <label class="form-check-label" for="disclaimer">
-                                            Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            Setuju
                                         </label>
                                     </div>
                                 </div>

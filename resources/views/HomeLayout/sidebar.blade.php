@@ -84,10 +84,10 @@
         @elseif (!empty(Session::get('user')))
         <div class="action">
 
-            <a href="/profile-setting"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</>
-                <a href="/my-cart">
+            <a href="/profile-setting"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</a>
+                {{--  <a href="/my-cart">
                     <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
-                </a>
+                </a>  --}}
         </div>
         @else
         <div class="action">
