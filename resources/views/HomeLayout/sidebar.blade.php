@@ -21,54 +21,54 @@
                             <a class="dropdown-item" href="/housing">
                                 <div>
                                     <img src="{{ asset('Home') }}/images/logo-tidar-green.png" alt="">
-                                    <p>Greenland</p>
+
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <div>
-                                    <img src="{{ asset('Home') }}/images/logo-project2b.png" alt="">
-                                    <p>Project B</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <div>
-                                    <img src="{{ asset('Home') }}/images/logo-project3b.png" alt="">
-                                    <p>Project C</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <div>
-                                    <img src="{{ asset('Home') }}/images/logo-project4.png" alt="">
-                                    <p>Project D</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <div>
-                                    <img src="{{ asset('Home') }}/images/logo-project5.png" alt="">
-                                    <p>Project E</p>
-                                </div>
-                            </a>
-                        </li>
+                        <!--<li>-->
+                        <!--    <a class="dropdown-item" href="#">-->
+                        <!--        <div>-->
+                        <!--            <img src="{{ asset('Home') }}/images/logo-project2b.png" alt="">-->
+                        <!--            <p>Project B</p>-->
+                        <!--        </div>-->
+                        <!--    </a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                        <!--    <a class="dropdown-item" href="#">-->
+                        <!--        <div>-->
+                        <!--            <img src="{{ asset('Home') }}/images/logo-project3b.png" alt="">-->
+                        <!--            <p>Project C</p>-->
+                        <!--        </div>-->
+                        <!--    </a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                        <!--    <a class="dropdown-item" href="#">-->
+                        <!--        <div>-->
+                        <!--            <img src="{{ asset('Home') }}/images/logo-project4.png" alt="">-->
+                        <!--            <p>Project D</p>-->
+                        <!--        </div>-->
+                        <!--    </a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                        <!--    <a class="dropdown-item" href="#">-->
+                        <!--        <div>-->
+                        <!--            <img src="{{ asset('Home') }}/images/logo-project5.png" alt="">-->
+                        <!--            <p>Project E</p>-->
+                        <!--        </div>-->
+                        <!--    </a>-->
+                        <!--</li>-->
                     </ul>
                 </li>
-                <li>
-                    Hotel
-                </li>
-                <li>Mall</li>
+                <!--<li>-->
+                <!--    Hotel-->
+                <!--</li>-->
+                <!--<li>Mall</li>-->
                 <li>
                     <a href="">About Forms</a>
                 </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
+                <!--<li>-->
+                <!--    <a href="#">Contact</a>-->
+                <!--</li>-->
             </ul>
         </div>
         @if (!empty(Session::get('guest')))
@@ -76,9 +76,9 @@
         <div class="action">
 
             <a href="/profile-setting" type="button" class="btn btn-outline-secondary">{{ $userPelanggan->nama_plgn }}</a>
-                <a href="/my-cart">
-                    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
-                </a>
+                <!--<a href="/my-cart">-->
+                <!--    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">-->
+                <!--</a>-->
 
         </div>
         @elseif (!empty(Session::get('user')))
@@ -93,9 +93,9 @@
         <div class="action">
 
             <a href="/login" type="button" class="btn btn-outline-secondary">Login/Register</a>
-                <a href="/my-cart">
-                    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
-                </a>
+                <!--<a href="/my-cart">-->
+                <!--    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">-->
+                <!--</a>-->
         </div>
         @endif
 

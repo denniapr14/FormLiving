@@ -22,7 +22,7 @@ use App\Http\Controllers\Home;
     Route::post('/login', [Home::class,'loginAction'])->name('login.action');
     Route::get('/logout', [Home::class,'logout']);
 
-    Route::get('/cluster', [Home::class,'Cluster']);
+    Route::get('/cluster/{id_cluster}', [Home::class,'Cluster']);
     Route::get('/detail-cluster', [Home::class,'DetailCluster']);
     Route::get('/virtual-tour', [Home::class,'VirtualTour']);
 
@@ -48,6 +48,7 @@ use App\Http\Controllers\Home;
     Route::get('/simulation-cluster', [Home::class,'simCluster']);
     Route::get('/simulation-select-unit/{codecluster}', [Home::class,'simSelectUnit']);
     Route::get('/simulation-type/{id_rumah}', [Home::class,'simType']);
+    Route::get('/simulation-detail-type/{id_rumah}/{id_tipe}', [Home::class,'simDetailType']);
     Route::get('/simulation-modification', [Home::class,'simModif']);
     Route::get('/simulation-payment-option/{id_rumah}/{id_tipe}', [Home::class,'simPayment']);
     Route::post('/simulation-price/{id_rumah}/{id_tipe}', [Home::class, 'simPrice'])->name('simulation-price');

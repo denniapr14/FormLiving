@@ -58,7 +58,19 @@
                     <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
                     <div class="item">
                         <div class="item-image">
+                            <?php
+                            if(!empty($cluster->nama_img)){
+                                ?>
+                                <img  src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
+                                <?php
+                            }else{
+                            ?>
+
                             <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                            <?php
+                            }
+                            ?>
+
                         </div>
                         <div class="item-avail">{{ $cluster->count }} Available</div>
                         <h5 class="item-title">{{ $cluster->nama_cluster }}</h5>

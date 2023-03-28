@@ -65,12 +65,12 @@
                         console.log(blockNomor);
                         console.log(data);
                         var idrumah = document.getElementById(blockNomor);
-                        
+
                         idrumah.style.fill = 'green';
                         idrumah.setAttribute('fill',color(item.status));
 
                     });
-                    }); 
+                    });
 
                     function color(stat) {
                             var iro = 'warnaa';
@@ -117,6 +117,7 @@
 
 
                     <div class="popup-image">
+
                         <img src="{{ asset('Home') }}/images/img-cluster-large1.png" alt="">
                     </div>
                     <div class="popup-content">
@@ -199,11 +200,23 @@
                         <a href="/simulation-type/{{ $rumah->id_rumah }}">
                         <div class="item">
                             <div class="item-image">
-                                <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                                <?php
+                                if(!empty($rumah->img_rumah)){
+                                    ?>
+                                    <img src="{{ asset('Home') }}/images/rumah/{{$rumah->img_rumah}}" alt="">
+                                    <?php
+                                }else{
+                                ?>
+
+                               <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                                <?php
+                                }
+                                ?>
+
                             </div>
-                            <div class="item-avail">Surface Area : {{ $rumah->luas_tanah }} m<sup>2</sup></div>
                             <h5 class="item-title">{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
-                            <p class="item-sub">{{ $rumah->nama_cluster }}</p>
+                            <div class="item-avail">Luas Tanah : {{ $rumah->luas_tanah }} m<sup>2</sup></div>
+
                         </div>
                     </a>
                     </div>

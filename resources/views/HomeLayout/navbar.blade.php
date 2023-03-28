@@ -23,7 +23,7 @@
                                 <a class="dropdown-item" href="/housing">
                                     <div>
                                         <img src="{{ asset('Home') }}/images/logo-tidar-green.png" alt="">
-                                        <p>Greenland</p>
+
                                     </div>
                                 </a>
                             </li>
@@ -31,7 +31,7 @@
                                 <a class="dropdown-item" href="#">
                                     <div>
                                         <img src="{{ asset('Home') }}/images/logo-project2b.png" alt="">
-                                        <p>CALM - COMING SOON</p>
+
                                     </div>
                                 </a>
                             </li>
@@ -66,13 +66,13 @@
                     </li>
                     <li>Mall</li> --}}
                     <li>
-                        {{-- <a href="/about">About Forms</a> --}}
-                        About Forms
+                         <a href="/about">About Forms</a>
+
                     </li>
-                    <li>
-                        {{-- <a href="/contect">Contact</a> --}}
-                        Contact
-                    </li>
+                    <!--<li>-->
+                    <!--    {{-- <a href="/contect">Contact</a> --}}-->
+                    <!--    Contact-->
+                    <!--</li>-->
                 </ul>
             </div>
 

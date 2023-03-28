@@ -50,41 +50,39 @@
                 </h2>
                 <div class="row">
 
-@foreach ($tipe as $tipe )
-<div class="col-12 col-lg-4">
+                    @foreach ($tipe as $tipe)
+                        <div class="col-12 col-lg-4">
 
-    <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipe->id_tipe_rumah }}">
-        <div class="item">
-            <div class="item-image">
-                <img src="{{ asset('Home') }}/images/tipe/{{ $tipe->img_tr }}" alt="">
-            </div>
-            <div>
-                <h5 class="type">Type: {{ $tipe->jenis_tr }}</h5>
-                <div class="type-infos">
-                    <div class="info">
-                        <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bedroom.png"
-                                alt=""> {{ $tipe->kmr_tidur_tr }}</div>
-                        <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bathroom.png"
-                                alt=""> {{ $tipe->kmr_mandi_tr }}</div>
-                    </div>
-                    <div>
-                        <h5>Rp. {{ $tipe->harga_text_tr }}</h5>
-                    </div>
+                            <a href="/simulation-detail-type/{{ $rumah->id_rumah }}/{{ $tipe->id_tipe_rumah }}">
+                                <div class="item">
+                                    <div class="item-image">
+                                        <img src="{{ asset('Home') }}/images/tipe/{{ $tipe->img_tr }}" alt="">
+                                    </div>
+                                    <div>
+                                        <h5 class="type">Type: {{ $tipe->jenis_tr }}</h5>
+                                        <div class="type-infos">
+                                            <div class="info">
+                                                <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bedroom.png"
+                                                        alt=""> {{ $tipe->kmr_tidur_tr }}</div>
+                                                <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bathroom.png"
+                                                        alt=""> {{ $tipe->kmr_mandi_tr }}</div>
+                                            </div>
+                                            <div>
+                                                <h5>Rp. {{ $tipe->harga_text_tr }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-        </div>
-    </a>
-</div>
-
-
-
-@endforeach
-</div>
 
                 <div class="btn-groups">
-                <a href="/simulation-select-unit/{{ $rumah->codecluster }}" type="button" class="btn btn-grey">Kembali</a>
-                {{--  <a href="/k-simulation-modification.html" type="button" class="btn btn-primary">Lanjutkan</a>  --}}
-            </div>
+                    <a href="/simulation-select-unit/{{ $rumah->codecluster }}" type="button"
+                        class="btn btn-grey">Kembali</a>
+                    {{--  <a href="/k-simulation-modification.html" type="button" class="btn btn-primary">Lanjutkan</a>  --}}
+                </div>
             </div>
         </div>
     </div>

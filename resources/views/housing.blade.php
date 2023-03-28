@@ -72,7 +72,7 @@
                 </div> --}}
                 <div class="sliders">
                     <div class="slider-image">
-                        <img src="{{ asset('Home') }}/images/img-greenland2.png" class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/cluster/A-11.jpg" class="w-100" alt="">
                     </div>
                     <div class="text-blur-bg d-none d-lg-block">
                         <h5>The Icon Cluster</h5>
@@ -95,13 +95,33 @@
             <div class="items">
                 @foreach ($cluster as $cluster)
 
-                a==1;
+
                 <a href="/cluster" class="item">
                     <div class="item-image">
-                        <img src="{{ asset('Home') }}/images/{{$cluster->nama_img}}" alt="">
+                        <?php
+                    if(!empty($cluster->nama_img))
+                    {
+                        ?>
+                        <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
+                        <?php
+                    }else{
+                    ?>
+
+                        <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">
+
+                        <?php
+                    }
+                    ?>
                     </div>
                     <div class="item-avail">{{ $cluster->count }} Available</div>
-                    <h5 class="item-title">{{ $cluster->nama_cluster }}</h5>
+                    <h5 class="item-title">
+                        @if(!empty($cluster->logo_img))
+                        <img src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt="">
+                        @else
+                        {{ $cluster->nama_cluster }}
+                        @endif
+
+                    </h5>
                     <p class="item-sub">Cluster</p>
                 </a>
                 @endforeach
@@ -125,10 +145,31 @@
 
             <div class="col-12 col-lg-6">
                 <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/{{$cluster->nama_img}}" alt="">
+                    <?php
+                    if(!empty($cluster->nama_img))
+                    {
+                        ?>
+                        <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
+                        <?php
+                    }else{
+                    ?>
+
+                        <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">
+
+                        <?php
+                    }
+                    ?>
+
                     <div class="item-text">
 
-                        <a href="/cluster" class="more">{{ $cluster->nama_cluster }} ></a>
+                        @if(!empty($cluster->logo_img))
+                       <a href="/cluster/{{ $cluster->codecluster }}"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                        @else
+                        <a href="/cluster/{{ $cluster->codecluster }}">
+                            {{ $cluster->nama_cluster }}
+                        </a>
+
+                        @endif
                     </div>
                 </div>
             </div>

@@ -9,139 +9,49 @@
 
 <div class="cluster">
     <div class="container">
-        <div class="map">
-            <img src="{{ asset('Home') }}/images/img-map.png" alt="">
+        <div  style=" height:100%; background-image: url('{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+         <center> <img style="width: 30%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""></center>
 
-            <div class="control">
-                <div class="zoom in">
-                    <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
-                </div>
-                <div class="zoom">
-                    <img src="{{ asset('Home') }}/images/ic-zoom-out.png" alt="">
-                </div>
-            </div>
+         <div style="height: 1000px"></div>
         </div>
 
+
+
         <div class="mainroad">
+            <br><br>
             <h2 class="title">
-                The Mainroad Cluster
+               Available
             </h2>
             <div class="row">
-                <div class="col-12 col-lg-4">
-                    <a href="/detail-cluster" class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster1.png" alt="">
-                        </div>
-                        <div class="item-desc">
-                            <h5 class="type">Type: 150</h5>
-                            <div class="type-infos">
-                                <div class="info">
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bedroom.png" alt=""> 2</div>
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bathroom.png" alt=""> 1</div>
-                                </div>
-                                <div>
-                                    <h5>Rp. 975 Juta</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster2.png" alt="">
-                        </div>
-                        <div class="item-desc">
-                            <h5 class="type">Type: 145</h5>
-                            <div class="type-infos">
-                                <div class="info">
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bedroom.png" alt=""> 2</div>
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bathroom.png" alt=""> 1</div>
-                                </div>
-                                <div>
-                                    <h5>Rp. 750 Juta</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster3.png" alt="">
-                        </div>
-                        <div class="item-desc">
-                            <h5 class="type">Type: 135</h5>
-                            <div class="type-infos">
-                                <div class="info">
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bedroom.png" alt=""> 2</div>
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bathroom.png" alt=""> 1</div>
-                                </div>
-                                <div>
-                                    <h5>Rp. 575 Juta</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster4.png" alt="">
-                        </div>
-                        <div class="item-desc">
-                            <h5 class="type">Type: 80</h5>
-                            <div class="type-infos">
-                                <div class="info">
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bedroom.png" alt=""> 2</div>
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bathroom.png" alt=""> 1</div>
-                                </div>
-                                <div>
-                                    <h5>Rp. 360 Juta</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster5.png" alt="">
-                        </div>
-                        <div class="item-desc">
-                            <h5 class="type">Type: 65</h5>
-                            <div class="type-infos">
-                                <div class="info">
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bedroom.png" alt=""> 2</div>
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bathroom.png" alt=""> 1</div>
-                                </div>
-                                <div>
-                                    <h5>Rp. 300 Juta</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ asset('Home') }}/images/img-cluster6.png" alt="">
-                        </div>
-                        <div class="item-desc">
-                            <h5 class="type">Type: 55</h5>
-                            <div class="type-infos">
-                                <div class="info">
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bedroom.png" alt=""> 2</div>
-                                    <div class="info-item"><img src="{{ asset('Home') }}/images/ic_bathroom.png" alt=""> 1</div>
-                                </div>
-                                <div>
-                                    <h5>Rp. 274 Juta</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @foreach ($rumah as $rumah )
 
+
+                <div class="col-6 col-lg-3">
+
+                    <a href="/simulation-type/{{ $rumah->id_rumah }}">
+                    <div class="item">
+                        <div class="item-image">
+                            <?php
+                            if(!empty($rumah->img_rumah)){
+                                ?>
+                                <img src="{{ asset('Home') }}/images/rumah/{{$rumah->img_rumah}}" alt="">
+                                <?php
+                            }else{
+                            ?>
+
+                           <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                            <?php
+                            }
+                            ?>
+
+                        </div>
+                        <h5 class="item-title">{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
+                        <div class="item-avail">Luas Tanah : {{ $rumah->luas_tanah }} m<sup>2</sup></div>
+
+                    </div>
+                </a>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>

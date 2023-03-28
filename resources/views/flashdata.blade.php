@@ -29,7 +29,7 @@
 @endif
 
 @if ($errors->any())
-< class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>Please check the form below for errors</strong>
   {{ implode('', $errors->all(':message')) }}
   {{--  <strong>{{ dd($errors->any()) }}</strong>  --}}

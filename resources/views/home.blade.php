@@ -9,40 +9,19 @@
 <div class="cta">
     <div class="container-fluid left-side">
         <div class="row align-items-center">
-            <div class="col-12 col-lg-6 cta-text mb-4 mb-lg-0">
-                <h5 class="cta-subtitle" data-aos="fade-right">Selamat datang di FORMS Living</h5>
-                <h1 class="cta-title" data-aos="fade-right" data-aos-delay="400">Representasi gaya hidup millenials
-                    dalam satu genggaman
-                </h1>
-                <p class="cta-desc" data-aos="fade-right" data-aos-delay="600">keindahan dari proyek-proyek kami kami sajikan dalam satu website</p>
-                <div class="actions" data-aos="fade-right" data-aos-delay="600">
-                    <a href="/housing" type="button" class="btn btn-primary btn-lg" >Buy Now!</a>
-                    {{-- <button type="button" class="btn btn-blank-primary"><img src="{{ asset('Home') }}/images/ic-play-fill.png" alt="">
-                        <span>Tonton Video</span></button> --}}
-                </div>
-                <div class="sponsor" data-aos="fade-right" data-aos-delay="600" data-aos-offset="0">
-                    {{-- <p>Trusted by</p>
-                    <div class="logos">
-                        <div class="item">
-                            <img src="{{ asset('Home') }}/images/logo-tidar-gray.png" alt="">
-                        </div>
-                        <div class="item">
-                            <img src="{{ asset('Home') }}/images/logo-project2b.png" alt="">
-                        </div>
-                        <div class="item">
-                            <img src="{{ asset('Home') }}/images/logo-project3b.png" alt="">
-                        </div>
-                    </div> --}}
-                </div>
-            </div>
-            <div class="col-12 col-lg-6 cta-img pe-0" data-aos="fade-left" data-aos-delay="400">
+
+            <div class="col-lg-12 " data-aos="fade-left" data-aos-delay="400">
                 <div class="image-sliders">
-                    <div>
+                    {{--  <div>
                         <img src="{{ asset('Home') }}/images/60.jpg" class="w-100" alt="">
+                    </div>  --}}
+                    <div>
+                        <img src="{{ asset('Home') }}/images/landslide-1.jpeg"  class="w-100" alt="">
                     </div>
                     <div>
-                        <img src="{{ asset('Home') }}/images/img-cluster-large1.png" class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/landslide-1.jpeg" class="w-100" alt="">
                     </div>
+
                     {{-- <div>
                         <img src="{{ asset('Home') }}/images/img4.jpeg" class="w-100" alt="">
                     </div> --}}
@@ -50,7 +29,8 @@
                 <div class="text-blur-bg text-sliders">
                     <div>
                         <h5>Greenland</h5>
-                        <small>Hunian hijau di Greenland at Tidar </small>
+                        <small>Hunian hijau di Greenland at Tidar </small><br>
+                        <a href="" style="width: 30%" class="btn btn-primary d-lg-block">Buy Now</a>
                     </div>
                     <div>
                         <h5>Kalm</h5>
@@ -197,115 +177,6 @@
         });
     });
 </script>
-<div class="projects">
-    <div class="container">
-        <h5 class="subtitle">
-            Projects
-        </h5>
-        <h2 class="title">
-            Our Projects
-        </h2>
-        <div class="row items">
-            <div class="col-6 col-md-6">
-                <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/greenland-project.jpeg" alt="">
-                    <div class="item-text">
-                        <h4>Greenland</h4>
-                        <p>Greenland at Tidar</p>
-                        <a href="/housing" class="more">
-                            Learn More <i class="bi bi-chevron-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-6">
-                <div class="item" data-aos="fade-left">
-                    <img src="{{ asset('Home') }}/images/kalm-project.jpeg" alt="">
-                    <div class="item-text">
-                        <h4>Kalm</h4>
-                        <p>-- COMING SOON --</p>
-                        <div class="more">
-                            Learn More <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- <div class="col-12 col-lg-6">
-                <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/img-hotel.png" alt="">
-                    <div class="item-text">
-                        <h4>Project C</h4>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
-                            inventore,
-                            aperiam esse animi.</p>
-                        <div class="more">
-                            Learn More <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            {{-- <div class="col-12 col-lg-6">
-                <div class="item" data-aos="fade-left">
-                    <img src="{{ asset('Home') }}/images/img-mall.png" alt="">
-                    <div class="item-text">
-                        <h4>Project D</h4>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
-                            inventore,
-                            aperiam esse animi.</p>
-                        <div class="more">
-                            Learn More <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            {{-- <div class="col-12">
-                <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary">Tampilkan Semua</button>
-                </div>
-            </div> --}}
-        </div>
-
-    </div>
-</div>
-
-<div class="sliders-index container-fluid" data-aos="zoom-in">
-    <div class="sliders">
-        <div class="slider-item">
-            <div class="slider-img">
-                <img src="{{ asset('Home') }}/images/landslide-1.jpeg" class="w-100" alt="">
-            </div>
-            <div class="slider-content">
-                <h1 class="title">
-                    The ARC
-                </h1>
-                <div class="desc">
-                    <div class="text questrial">A beautiful style in green, captivating yet refresh for those who seek comfort </div>
-                    <div class="more">Learn More <i class="bi bi-chevron-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="slider-item">
-            <div class="slider-img">
-                <img src="{{ asset('Home') }}/images/slider-1.png" class="w-100" alt="">
-            </div>
-            <div class="slider-content">
-                <h1 class="title">
-                    Enjoy your Life
-                </h1>
-                <div class="desc questrial">
-                    <div class="text">Family is always place to return to. </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function () {
-        $('.sliders').slick();
-    });
-</script>
-
 <div class="promotions" data-aos="zoom-right" data-aos-offset="0" data-aos-duration="500">
     <div class="container">
         <h5 class="subtitle">
@@ -433,6 +304,116 @@
         </div>
     </div>
 </div>
+<div class="projects">
+    <div class="container">
+        <h5 class="subtitle">
+            Projects
+        </h5>
+        <h2 class="title">
+            Our Projects
+        </h2>
+        <div class="row items">
+            <div class="col-6 col-md-6">
+                <div class="item" data-aos="fade-right">
+                    <img src="{{ asset('Home') }}/images/greenland-project.jpeg" alt="">
+                    <div class="item-text">
+                        <h4>Greenland</h4>
+                        <p>Greenland at Tidar</p>
+                        <a href="/housing" class="more">
+                            Learn More <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-6">
+                <div class="item" data-aos="fade-left">
+                    <img src="{{ asset('Home') }}/images/kalm-project.jpeg" alt="">
+                    <div class="item-text">
+                        <h4>Kalm</h4>
+                        <p>-- COMING SOON --</p>
+                        <div class="more">
+                            Learn More <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-12 col-lg-6">
+                <div class="item" data-aos="fade-right">
+                    <img src="{{ asset('Home') }}/images/img-hotel.png" alt="">
+                    <div class="item-text">
+                        <h4>Project C</h4>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
+                            inventore,
+                            aperiam esse animi.</p>
+                        <div class="more">
+                            Learn More <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+            {{-- <div class="col-12 col-lg-6">
+                <div class="item" data-aos="fade-left">
+                    <img src="{{ asset('Home') }}/images/img-mall.png" alt="">
+                    <div class="item-text">
+                        <h4>Project D</h4>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
+                            inventore,
+                            aperiam esse animi.</p>
+                        <div class="more">
+                            Learn More <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+            {{-- <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary">Tampilkan Semua</button>
+                </div>
+            </div> --}}
+        </div>
+
+    </div>
+</div>
+
+<div class="sliders-index container-fluid" data-aos="zoom-in">
+    <div class="sliders">
+        <div class="slider-item">
+            <div class="slider-img">
+                <img src="{{ asset('Home') }}/images/landslide-1.jpeg" class="w-100" alt="">
+            </div>
+            <div class="slider-content">
+                <h1 class="title">
+                    The ARC
+                </h1>
+                <div class="desc">
+                    <div class="text questrial">A beautiful style in green, captivating yet refresh for those who seek comfort </div>
+                    <div class="more">Learn More <i class="bi bi-chevron-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-item">
+            <div class="slider-img">
+                <img src="{{ asset('Home') }}/images/slider-1.png" class="w-100" alt="">
+            </div>
+            <div class="slider-content">
+                <h1 class="title">
+                    Enjoy your Life
+                </h1>
+                <div class="desc questrial">
+                    <div class="text">Family is always place to return to. </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.sliders').slick();
+    });
+</script>
+
+
 
 {{-- <div class="apps" data-aos="fade-up" data-aos-offset="0">
     <div class="container">

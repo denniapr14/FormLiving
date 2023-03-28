@@ -37,7 +37,7 @@ class MailNotify extends Mailable
      */
     public function build()
     {
-        return $this->from('formsliving.com@gmail.com', 'TEST EMAIL')
+        return $this->from('formliving@greenlandtidar.net','Formulir Pesanan')
         ->subject($this->data["subject"])
                     ->view('mail.test')->with("data",$this->data);
     }

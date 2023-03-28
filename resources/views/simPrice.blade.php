@@ -108,7 +108,7 @@
                         <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                             <div class="mod-type">
                                 <div class="type-image">
-                                    <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
+                                    <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
                                 </div>
                                 <div class="items">
                                     <div class="type-item">
@@ -146,25 +146,26 @@
                                         @csrf
                                         <div class="simulation-price">
                                             <div class="card-shadow">
-                                                <label for="">Pilih Bank</label>
+                                                <label for="">Bank</label>
                                             </div>
                                             <div class="">
-                                                <input list="skBunga" id="getSkBunga" class="form form-control"
-                                                    name="skBunga" required placeholder="--Pilih Bank--">
 
-                                                <datalist id="skBunga">
+                                                <select  class="form form-control"  id="getSkBunga">
+
+                                                        <option value="">--Pilih--</option>
+
                                                     @foreach ($skBunga as $bank)
                                                         <option value="{{ $bank->nama_bank }}">
                                                             {{ $bank->nama_bank }}
                                                         </option>
                                                     @endforeach
-                                                </datalist>
+                                                </select>
 
 
                                             </div>
                                             <br>
                                             <div class="card-shadow">
-                                                <label for="">Pilih Bank Promo</label>
+                                                <label for="">Bank Promo</label>
                                             </div>
                                             <div class="">
                                                 <select name="namaBank" class="form form-control" id="namaBank">
@@ -180,10 +181,13 @@
                                                 <label for="">Uang Muka</label>
                                             </div>
                                             <div class="">
-                                                <input type="text" class="form-control card-shadow" name="uangMuka"
-                                                    id="uangMuka" aria-describedby="helpId" placeholder=""
-                                                    onkeyup="getValue('uangMuka')"
-                                                    value="{{ rupiah($tipeRumah->harga_tr * (10 / 100) - 10000000) }}">
+                                                <select name="uangMuka" id="uangMuka" class="form-control">
+                                                    @for($i = 1; $i < 6; $i++)
+                                                    <option value="{{ $tipeRumah->harga_tr * (10*$i / 100) - 10000000 }}">{{ rupiah($tipeRumah->harga_tr * (10*$i / 100) - 10000000) }} Uang muka {{ 10*$i }} %</option>
+                                                    @endfor
+
+                                                </select>
+<br>
                                             </div>
                                             <?php
                                             $date = date('d M');
@@ -196,9 +200,12 @@
                                                         <label for="">Cicilan Uang Muka</label>
 
                                                         <select name="cicilanUM" id="" class="form-control">
-                                                            @for ($i = 1; $i < 5; $i++)
-                                                            <option value="{{ $i }}">Rp. {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000) / $i) }} Per Bulan Cicilan {{ $i }} Kali</option>
+                                                            @for($um = 0; $um < 6; $um++)
+                                                                @for ($i = 1; $i < 5; $i++)
+                                                                <option value="{{ $i }}">Rp. {{ rupiah(($tipeRumah->harga_tr * (10*$um / 100) - 10000000) / $i) }} Per Bulan Cicilan {{ $i }} Kali</option>
+                                                                @endfor
                                                             @endfor
+
                                                         </select>
 
 
@@ -208,13 +215,16 @@
                                             @endif
                                             @if (!empty(Session::get('guest')))
                                                 @if ($rumah->status_stock == 'Inden')
+                                                @for ($in = 1 ; $in < 6; $in++)
+
+
                                                     <div class="card-shadow">
-                                                        <label for="">Cicilan Uang Muka</label>
+                                                        <label for="">Cicilan Uang Muka {{ 10*$in }} %</label>
 
                                                         <div class="row">
                                                             <div class="col">
                                                                 Rp.
-                                                                {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000) / 4) }}
+                                                                {{ rupiah(($tipeRumah->harga_tr * (10*$in / 100) - 10000000) / 4) }}
                                                             </div>
                                                             <div class="col">
 
@@ -225,7 +235,7 @@
                                                             <div class="row">
                                                                 <div class="col">
                                                                     Rp.
-                                                                    {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000) / 4) }}
+                                                                    {{ rupiah(($tipeRumah->harga_tr * (10*$in / 100) - 10000000) / 4) }}
                                                                 </div>
                                                                 <div class="col">
                                                                     <?php $date = strtotime('+30 day', $date);
@@ -237,7 +247,7 @@
 
 
                                                     </div>
-
+                                                @endfor
                                                 @endif
                                             @endif
 
@@ -245,7 +255,7 @@
                                                 <label for="">Jumlah Plafon KPR</label>
                                             </div>
                                             <div class="">
-                                                <input type="text" class="form-control card-shadow" name="jumlah"
+                                                <input type="text" readonly class="form-control card-shadow" name="jumlah"
                                                     id="jumlahHarga" aria-describedby="helpId" placeholder=""
                                                     onkeyup="getValue('jumlahHarga')"
                                                     value="{{ rupiah($tipeRumah->harga_tr - ($tipeRumah->harga_tr * (10 / 100) - 10000000)) }}">
@@ -276,11 +286,12 @@
                                     </form>
                                 @elseif($payment == 'Cicilan')
                                     <form
-                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}">
+                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}"  method="POST">
                                         <div class="simulation-price">
+                                             @csrf
                                             @for ($i = 1; $i < 5; $i++)
                                                 <?php
-                                                $thn = $tipeRumah->harga_tr / (60 + 60 * $i);
+                                                $thn = $tipeRumah->harga_tr / (3 * $i);
 
                                                 ?>
 
@@ -288,15 +299,15 @@
                                                     <a class="card-shadow" data-bs-toggle="collapse"
                                                         href="#bank{{ $i }}" role="button"
                                                         aria-expanded="false" aria-controls="bank">
-                                                        Cicilan {{ 5 * $i }} Tahun
+                                                        Cicilan {{ 3 * $i }} Bulan
                                                     </a>
                                                     <div class="" id="bank{{ $i }}">
                                                         <div class="card card-body">
                                                             <div class="form-check form-radio">
                                                                 <input type="radio" id="age1" name="cicilan"
-                                                                    value="{{ 5 * $i }}">
+                                                                    value="{{ 3 * $i }}">
                                                                 <label class="form-check-label">
-                                                                    Rp. {{ rupiah(round($thn, -3)) }} Per Bulan
+                                                                    Rp. {{ pembulatan(round($thn, -3)+1000) }} Per Bulan
 
                                                                 </label>
                                                             </div>
@@ -310,8 +321,8 @@
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
-                                            <a href="/simulation-order/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}"
-                                                type="button" class="btn btn-primary">Lanjutkan</a>
+                                           <button type="submit" type="button"
+                                                class="btn btn-primary">Lanjutkan</button>
                                         </div>
                                     </form>
                                 @endif
@@ -339,7 +350,7 @@
         jml = jml.replace(/\D/g, '');
         console.log(jml);
         var um = document.getElementById(uangmuka).value;
-        um = um.replace(/\D/g, '');
+        {{--  um = um.replace(/\D/g, '');  --}}
         console.log(um);
         var sb = document.getElementById(sukubunga).value;
         const suku = sb.split("|");
@@ -357,19 +368,19 @@
         fv - future value (residual value)
         */
 
-        cicilan = calculatePMT(jml, suku[1], 60);
+        cicilan = calculatePMT(perngurangan, suku[1], 60);
         console.log(jml);
         console.log(cicilan);
         var hasilRupiah = formatRupiah2(cicilan);
-        cicilan2 = calculatePMT(jml, suku[1], 120);
+        cicilan2 = calculatePMT(perngurangan, suku[1], 120);
         console.log(cicilan2);
         var hasilRupiah2 = formatRupiah2(cicilan2);
 
-        cicilan3 = calculatePMT(jml, suku[1], 180);
+        cicilan3 = calculatePMT(perngurangan, suku[1], 180);
         console.log(cicilan3);
         var hasilRupiah3 = formatRupiah2(cicilan3);
 
-        cicilan4 = calculatePMT(jml, suku[1], 240);
+        cicilan4 = calculatePMT(perngurangan, suku[1], 240);
         console.log(cicilan4);
         var hasilRupiah4 = formatRupiah2(cicilan4);
 

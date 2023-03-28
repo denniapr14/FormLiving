@@ -61,7 +61,7 @@
                         <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                             <div class="mod-type">
                                 <div class="type-image">
-                                    <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
+                                    <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
                                 </div>
                                 <div class="items">
                                     <div class="type-item">
@@ -132,16 +132,12 @@
                                             </div>
                                         </div>
 
-                                        @if(!empty($userPelanggan->alamat_plgn))
-                                        <?php
-
-                                        $alamat = explode(',',$userPelanggan->alamat_plgn);
-                                        ?>
+                                        
 
 
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <label for="" class="form-label">Pulau</label>
+                                                <label for="" class="form-label">Provinsi</label>
                                                 <input type="text" class="form-control" name="pulau"
                                                     id="alamat" value="" placeholder="Pulau">
                                             </div>
@@ -174,7 +170,7 @@
                                                     id="alamat" value="" placeholder="jalan">
                                             </div>
                                         </div>
-                                        @endif
+                                       
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
                                                 <label for="email" class="form-label">Email</label>
@@ -210,10 +206,10 @@
 
                                                 <button type="button" id="openModal" class="btn btn-form"
                                                     data-bs-toggle="modal" data-bs-target="#modelId">
-                                                    <div class="promo-text"><img
+                                                    <div  class="promo-text"><img
                                                             src="{{ asset('Home') }}/images/ic-promo.png" alt="">
-                                                        Makin Untung
-                                                        Pakai Promo</div>
+                                                        <div id="textPromo">Pilih promo di sini</div>
+                                                        </div>
                                                     <div><i class="bi-chevron-right"></i></div>
                                                 </button>
 
@@ -241,28 +237,34 @@
                                                                 <div class=" d-block">
 
                                                                     <h5 class="mb-4">Pilih Promo</h5>
-                                                                    @foreach ($promo as $promo)
-                                                                        <div class="promo-item">
-                                                                            <div class="row">
-                                                                                <div class="promo-icon col-md-1">
-                                                                                    <img src="{{ asset('Home') }}/images/ic-promo.png"
-                                                                                        alt="Promo">
+                                                                   @foreach ($promo as $promo)
+                                                                            <div class="promo-item">
+                                                                                <div class="row">
+                                                                                    <div class="promo-icon col-md-1">
+                                                                                        <img src="{{ asset('Home') }}/images/ic-promo.png"
+                                                                                            alt="Promo">
+                                                                                    </div>
+                                                                                    <div class="promo-text col-md-9">
+                                                                                        
+                                                                                        <h6 id='keteranganPromo'>{{ $promo->promo }}</h6>
+                                                                                        <p>Berlaku hingga:
+                                                                                            {{ date('d M Y', strtotime($promo->tgl_berakhir)) }}
+                                                                                        </p>
+                                                                                         <div class="hemat">
+                                                                                        <p class="light-grey-color">Anda bisa hemat</p>
+                                                                                        <h5>Rp. {{rupiah($promo->diskon_promo)}}</h5>
+                                                                                    </div>
+                                                                                    </div>
+                                                                                    <div class="promo-button col-md-1">
+                                                                                        <a class="promoCodeBtn btn btn btn-outline-success"
+                                                                                            data-promo-code="{{ $promo->kode_promo }}" data-promo="{{ $promo->promo }}">{{ $promo->kode_promo }}    </a>
+                                                                                            
+                                                                                        </li>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="promo-text col-md-9">
-                                                                                    <h6>{{ $promo->keterangan }}</h6>
-                                                                                    <p>Berlaku hingga:
-                                                                                        {{ date('d M Y', strtotime($promo->tgl_berakhir)) }}
-                                                                                    </p>
-                                                                                </div>
-                                                                                <div class="promo-button col-md-1">
-                                                                                    <a class="promoCodeBtn btn btn btn-outline-success"
-                                                                                        data-promo-code="{{ $promo->kode_promo }}">{{ $promo->kode_promo }}</a>
-                                                                                    </li>
-                                                                                </div>
-                                                                            </div>
 
-                                                                        </div>
-                                                                    @endforeach
+                                                                            </div>
+                                                                        @endforeach
                                                                 </div>
                                                                 <!-- STATE NO PROMO -->
                                                                 <div class="no-promo text-center d-none">
@@ -271,22 +273,15 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="modal-footer promo-footer">
-                                                                <div class="hemat">
-                                                                    <p class="light-grey-color">Anda bisa hemat</p>
-                                                                    <h5>Rp. 5.000.000</h5>
-                                                                </div>
-                                                                <div>
-                                                                    {{--  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Pakai
-                                                        Promo</button>  --}}
-                                                                </div>
+                                                           
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
                                                 <br>
                                                 <div class="form-group">
-                                                    <input type="text" name="promo"  value="NULL" id="selectedPromoCode" class="form-control"
+                                                    <input type="text" name="promo"  value="Tidak Ada Promo" id="selectedPromoCode" class="form-control"
                                                         readonly>
 
                                                 </div>
@@ -294,6 +289,7 @@
 
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                     <div class="btn-groups">
                                         <a href="/simulation-price-payment/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}" type="button" class="btn btn-grey">Kembali</a>
@@ -338,7 +334,7 @@
                                             </div>
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="" class="form-label">Pulau</label>
+                                                    <label for="" class="form-label">Provinsi</label>
                                                     <input type="text" class="form-control" name="pulau"
                                                         id="alamat" value="{{ old('alamat') }}" placeholder="Alamat">
                                                 </div>
@@ -404,8 +400,8 @@
                                                         <div class="promo-text"><img
                                                                 src="{{ asset('Home') }}/images/ic-promo.png"
                                                                 alt="">
-                                                            Makin Untung
-                                                            Pakai Promo</div>
+                                                            <div id="textPromo">Pilih promo di sini</div>
+                                                            </div>
                                                         <div><i class="bi-chevron-right"></i></div>
                                                     </button>
 
@@ -434,6 +430,7 @@
                                                                     <div class=" d-block">
 
                                                                         <h5 class="mb-4">Pilih Promo</h5>
+                                                                        
                                                                         @foreach ($promo as $promo)
                                                                             <div class="promo-item">
                                                                                 <div class="row">
@@ -442,14 +439,20 @@
                                                                                             alt="Promo">
                                                                                     </div>
                                                                                     <div class="promo-text col-md-9">
-                                                                                        <h6>{{ $promo->keterangan }}</h6>
+                                                                                        
+                                                                                        <h6 id='keteranganPromo'>{{ $promo->promo }}</h6>
                                                                                         <p>Berlaku hingga:
                                                                                             {{ date('d M Y', strtotime($promo->tgl_berakhir)) }}
                                                                                         </p>
+                                                                                         <div class="hemat">
+                                                                                        <p class="light-grey-color">Anda bisa hemat</p>
+                                                                                        <h5>Rp. {{rupiah($promo->diskon_promo)}}</h5>
+                                                                                    </div>
                                                                                     </div>
                                                                                     <div class="promo-button col-md-1">
                                                                                         <a class="promoCodeBtn btn btn btn-outline-success"
-                                                                                            data-promo-code="{{ $promo->kode_promo }}">{{ $promo->kode_promo }}</a>
+                                                                                            data-promo-code="{{ $promo->kode_promo }}" data-promo="{{ $promo->promo }}">{{ $promo->kode_promo }}    </a>
+                                                                                            
                                                                                         </li>
                                                                                     </div>
                                                                                 </div>
@@ -465,21 +468,14 @@
                                                                 </div>
 
                                                                 <div class="modal-footer promo-footer">
-                                                                    <div class="hemat">
-                                                                        <p class="light-grey-color">Anda bisa hemat</p>
-                                                                        <h5>Rp. 5.000.000</h5>
-                                                                    </div>
-                                                                    <div>
-                                                                        {{--  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Pakai
-                                                        Promo</button>  --}}
-                                                                    </div>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <input type="text" name="promo" value="NULL" id="selectedPromoCode" class="form-control"
+                                                        <input type="text" name="promo" value="Tidak Ada Promo" id="selectedPromoCode" class="form-control"
                                                             readonly>
 
                                                     </div>
@@ -508,15 +504,19 @@
     <script>
         const promoCodeBtns = document.querySelectorAll(".promoCodeBtn");
         const selectedPromoCodeInput = document.getElementById("selectedPromoCode");
-
+        
         promoCodeBtns.forEach((promoCodeBtn) => {
             promoCodeBtn.addEventListener("click", () => {
                 const promoCode = promoCodeBtn.dataset.promoCode;
+                const promo = promoCodeBtn.dataset.promo;
                 selectedPromoCodeInput.value = promoCode;
                 console.log(promoCode);
+                
+                document.getElementById('textPromo').innerText = promo;
+                
                 $('#modelId').modal('toggle');
                 $('#modelId').modal('hide');
-
+                
             });
         });
     </script>
@@ -531,10 +531,20 @@
 
                 dataType: 'json',
                 success: function(response) {
-
+                var len = 1;
+                var promo="";
                     if (response!==null) {
                         alert('Kupon Berhasil di terapkan');
                         document.getElementById('selectedPromoCode').value= kodePromo;
+                       for (var i = 0; i < len; i++) {
+
+                                promo = response[i].promo;
+                                console.log(promo);
+                           
+                       }
+                        document.getElementById('textPromo').innerText = promo;
+                        
+                        $('#modelId').modal('hide');
                     } else {
                         alert('Kupon tidak ada');
                         // Update the UI to show an error message
@@ -545,6 +555,7 @@
 
             {{--  console.log('bisa ko');  --}}
         });
+        
     </script>
     <!-- Modal -->
 

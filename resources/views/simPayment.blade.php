@@ -60,13 +60,10 @@
                         <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                             <div class="mod-type">
                                 <div class="type-image">
-                                    <img src="{{ asset('Home') }}/images/img-cluster.png" alt="">
+                                    <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
                                 </div>
                                 <div class="items">
-                                    <div class="type-item">
-                                        <p>Type</p>
-                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
-                                    </div>
+
                                     <div class="type-item">
                                         <p>Blok</p>
                                         <h5>{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
@@ -84,6 +81,14 @@
                                         <p>Luas Tanah</p>
 
                                         <h5>{{ $rumah->luas_tanah }} m<sup>2</sup></h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Type</p>
+                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Luas Bangunan</p>
+                                        <h5></h5>
                                     </div>
                                 </div>
                             </div>

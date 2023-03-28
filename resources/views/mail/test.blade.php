@@ -141,32 +141,7 @@
                                     <td class="esd-stripe" align="center">
                                         <table bgcolor="#ffffff" class="es-content-body" align="center" cellpadding="0" cellspacing="0" width="600">
                                             <tbody>
-                                                <tr>
-                                                    <td class="esd-structure es-p20" align="left">
-                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td width="560" class="esd-container-frame" align="center" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text">
-                                                                                        <h2>sudah terkirim&nbsp;</h2>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text es-p20b">
-                                                                                        <p>Expected delivery <strong>Apr 22 — 26, 2021</strong></p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
+                                               
                                                 <tr>
                                                     <td class="esd-structure es-p20t es-p20r es-p20l" align="left">
                                                         <table cellpadding="0" cellspacing="0" width="100%">
@@ -206,7 +181,7 @@
 
                                                                                 <tr>
                                                                                     <td>Dengan Harga</td>
-                                                                                    <td>: {{ $data['Harga'] }}</td>
+                                                                                    <td>: {{ $data['harga'] }}</td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
