@@ -59,11 +59,8 @@
                         data.forEach(function(item) {
                         var block = item.blok;
                         var nomor = item.nomor;
-                        console.log(block+"-"+nomor);
                         var blockNomor = block+"-"+nomor;
-                        blockNomor.toString();
-                        console.log(blockNomor);
-                        console.log(data);
+                        blockNomor.toString()                     
                         var idrumah = document.getElementById(blockNomor);
 
                         idrumah.style.fill = 'green';
