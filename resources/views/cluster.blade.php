@@ -20,7 +20,7 @@
         <div class="mainroad">
             <br><br>
             <h2 class="title">
-               Available
+               Kavling Tersedia
             </h2>
             <div class="row">
                 @foreach ($rumah as $rumah )

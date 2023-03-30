@@ -56,6 +56,158 @@
                 });
             });
         });
+
+        $(document).ready(function() {
+            const date = new Date();
+            $('#uangMuka').change(function() {
+                var uangMuka = $(this).val();
+                console.log(uangMuka);
+
+
+                const existingDiv = document.getElementById('UMText');
+                existingDiv.innerHTML = '';
+
+                const row = document.createElement('div');
+                // Set some attributes for the new div
+
+                row.className = 'row';
+                row.innerHTML = '<label> Cicilan Uang Muka </label>';
+
+                existingDiv.appendChild(row);
+
+                const col1 = document.createElement('div');
+
+                col1.className = 'col';
+                col1.innerHTML = 'Rp ' + ChangeRupiah(uangMuka / 4);
+
+                row.appendChild(col1);
+
+
+                let nextMonthDate = new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000));
+
+                const col2 = document.createElement('div');
+
+
+                let day = nextMonthDate.getDate();
+                let month = nextMonthDate.getMonth(); // Add 1 to adjust for zero-based indexing
+                let year = nextMonthDate.getFullYear() % 100; // Get the last two digits of the year
+                console.log(month);
+                let monthNames = [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December"
+                ];
+
+                // Get the month name from the array
+                let monthName = monthNames[month];
+
+                let formattedDateID = `${day} ${monthName} ${year}`;
+                col2.className = 'col';
+                col2.innerHTML = formattedDateID;
+
+                row.appendChild(col2);
+
+                for (um = 1; um < 4; um++) {
+
+                    // Create a new div element
+
+                    const row = document.createElement('div');
+                    // Set some attributes for the new div
+
+                    row.className = 'row';
+                    row.innerHTML = '';
+
+                    existingDiv.appendChild(row);
+
+                    const col1 = document.createElement('div');
+
+                    col1.className = 'col';
+                    col1.innerHTML = 'Rp ' + ChangeRupiah(uangMuka / 4);
+
+                    row.appendChild(col1);
+
+                    let nextMonthDate = new Date(date.getTime() + ((30 * 24 * 60 * 60 * 1000)) * um + (7 *
+                        24 * 60 * 60 * 1000));
+                    {{--  if(um == 1){
+
+                    }else{
+                       nextMonthDate = new Date(date.getTime() + ((30) * 24 * 60 * 60 * 1000) * um );
+                    }  --}}
+
+                    const col2 = document.createElement('div');
+
+                    {{--  let formattedDate = nextMonthDate.toDateString();  --}}
+                    let day = nextMonthDate.getDate();
+                    let month = nextMonthDate.getMonth(); // Add 1 to adjust for zero-based indexing
+                    let year = nextMonthDate.getFullYear() % 100; // Get the last two digits of the year
+
+                    let monthNames = [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December"
+                    ];
+
+                    // Get the month name from the array
+                    let monthName = monthNames[month];
+
+                    let formattedDateID = `${day} ${monthName} ${year}`;
+                    col2.className = 'col';
+                    col2.innerHTML = formattedDateID;
+
+                    row.appendChild(col2);
+                    // Append the new div to the existing div
+
+                    {{--  <div class="row">
+                        <div class="col">
+                            Rp.
+                            {{ rupiah(($tipeRumah->harga_tr * (10*$in / 100) - 10000000) / 4) }}
+                        </div>
+                        <div class="col">
+
+                            {{ date('d M Y', $date) }}
+                        </div>
+                    </div>  --}}
+                }
+
+            });
+        });
+
+        function ChangeRupiah(angkaRupiah) {
+            var bilangan = angkaRupiah;
+            var reverse = bilangan.toString().split('').reverse().join(''),
+                ribuanAngka = reverse.match(/\d{1,3}/g);
+            ribuanAngka = ribuanAngka.join('.').split('').reverse().join('');
+            return ribuanAngka;
+        }
+
+        {{--  $(document).ready(function() {
+            const date = new Date();
+            $('#uangMuka').click(function() {
+                var uangMuka = $(this).val();
+                console.log(uangMuka);
+
+                }
+
+            });
+        });  --}}
     </script>
     <div class="cluster">
         <div class="header-simulation mobile-only">
@@ -77,10 +229,10 @@
                 <div class="step done">2</div>
                 <div class="step done">3</div>
                 <div class="step done">4</div>
-                <div class="step active">5</div>
-                <div class="step ">6</div>
-                <div class="step last">7</div>
-                {{--  <div class="step">7</div>  --}}
+                <div class="step done">5</div>
+                <div class="step active">6</div>
+                <div class="step">7</div>
+                <div class="step last">8</div>
             </div>
 
         </div>
@@ -90,10 +242,10 @@
                 <div class="step done">2</div>
                 <div class="step done">3</div>
                 <div class="step done">4</div>
-                <div class="step active">5</div>
-                <div class="step ">6</div>
-                <div class="step last">7</div>
-                {{--  <div class="step">7</div>  --}}
+                <div class="step done">5</div>
+                <div class="step active">6</div>
+                <div class="step">7</div>
+                <div class="step last">8</div>
             </div>
             <div>
 
@@ -108,13 +260,10 @@
                         <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                             <div class="mod-type">
                                 <div class="type-image">
-                                    <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
+                                    <img src="{{ asset('Home') }}/images/tipe/{{ $tipeRumah->img_tr }}" alt="">
                                 </div>
                                 <div class="items">
-                                    <div class="type-item">
-                                        <p>Type</p>
-                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
-                                    </div>
+
                                     <div class="type-item">
                                         <p>Blok</p>
                                         <h5>{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
@@ -124,14 +273,22 @@
                                         <h5>{{ $rumah->nama_cluster }}</h5>
                                     </div>
                                     <div class="type-item">
-                                        <p>Start from</p>
+                                        <p>Harga Jual</p>
 
-                                        <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
+                                        <h5>Rp {{ rupiah($tipeRumah->harga_tr) }}</h5>
                                     </div>
                                     <div class="type-item">
                                         <p>Luas Tanah</p>
 
                                         <h5>{{ $rumah->luas_tanah }} m<sup>2</sup></h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Type</p>
+                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Luas Bangunan</p>
+                                        <h5>{{ $tipeRumah->luas_bangunan_tr }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -150,9 +307,9 @@
                                             </div>
                                             <div class="">
 
-                                                <select  class="form form-control"  id="getSkBunga">
+                                                <select class="form form-control" id="getSkBunga">
 
-                                                        <option value="">--Pilih--</option>
+                                                    <option value="">--Pilih--</option>
 
                                                     @foreach ($skBunga as $bank)
                                                         <option value="{{ $bank->nama_bank }}">
@@ -182,12 +339,15 @@
                                             </div>
                                             <div class="">
                                                 <select name="uangMuka" id="uangMuka" class="form-control">
-                                                    @for($i = 1; $i < 6; $i++)
-                                                    <option value="{{ $tipeRumah->harga_tr * (10*$i / 100) - 10000000 }}">{{ rupiah($tipeRumah->harga_tr * (10*$i / 100) - 10000000) }} Uang muka {{ 10*$i }} %</option>
+                                                    @for ($i = 1; $i < 6; $i++)
+                                                        <option
+                                                            value="{{ $tipeRumah->harga_tr * ((10 * $i) / 100) - 10000000 }}">
+                                                            {{ rupiah($tipeRumah->harga_tr * ((10 * $i) / 100) - 10000000) }}
+                                                            Uang muka {{ 10 * $i }} %</option>
                                                     @endfor
 
                                                 </select>
-<br>
+                                                <br>
                                             </div>
                                             <?php
                                             $date = date('d M');
@@ -200,9 +360,11 @@
                                                         <label for="">Cicilan Uang Muka</label>
 
                                                         <select name="cicilanUM" id="" class="form-control">
-                                                            @for($um = 0; $um < 6; $um++)
+                                                            @for ($um = 0; $um < 6; $um++)
                                                                 @for ($i = 1; $i < 5; $i++)
-                                                                <option value="{{ $i }}">Rp. {{ rupiah(($tipeRumah->harga_tr * (10*$um / 100) - 10000000) / $i) }} Per Bulan Cicilan {{ $i }} Kali</option>
+                                                                    <option value="{{ $i }}">Rp.
+                                                                        {{ rupiah(($tipeRumah->harga_tr * ((10 * $um) / 100) - 10000000) / $i) }}
+                                                                        Per Bulan Cicilan {{ $i }} Kali</option>
                                                                 @endfor
                                                             @endfor
 
@@ -215,7 +377,13 @@
                                             @endif
                                             @if (!empty(Session::get('guest')))
                                                 @if ($rumah->status_stock == 'Inden')
-                                                @for ($in = 1 ; $in < 6; $in++)
+                                                    <div class="card-shadow">
+                                                        <div id="UMText">
+
+                                                        </div>
+                                                    </div>
+
+                                                    {{--  @for ($in = 1; $in < 6; $in++)
 
 
                                                     <div class="card-shadow">
@@ -247,7 +415,7 @@
 
 
                                                     </div>
-                                                @endfor
+                                                @endfor  --}}
                                                 @endif
                                             @endif
 
@@ -255,8 +423,8 @@
                                                 <label for="">Jumlah Plafon KPR</label>
                                             </div>
                                             <div class="">
-                                                <input type="text" readonly class="form-control card-shadow" name="jumlah"
-                                                    id="jumlahHarga" aria-describedby="helpId" placeholder=""
+                                                <input type="text" readonly class="form-control card-shadow"
+                                                    name="jumlah" id="jumlahHarga" aria-describedby="helpId" placeholder=""
                                                     onkeyup="getValue('jumlahHarga')"
                                                     value="{{ rupiah($tipeRumah->harga_tr - ($tipeRumah->harga_tr * (10 / 100) - 10000000)) }}">
                                             </div>
@@ -284,9 +452,10 @@
                                     </form>
                                 @elseif($payment == 'Cicilan')
                                     <form
-                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}"  method="POST">
+                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}"
+                                        method="POST">
                                         <div class="simulation-price">
-                                             @csrf
+                                            @csrf
                                             @for ($i = 1; $i < 5; $i++)
                                                 <?php
                                                 $thn = $tipeRumah->harga_tr / (3 * $i);
@@ -305,7 +474,7 @@
                                                                 <input type="radio" id="age1" name="cicilan"
                                                                     value="{{ 3 * $i }}">
                                                                 <label class="form-check-label">
-                                                                    Rp. {{ pembulatan(round($thn, -3)+1000) }} Per Bulan
+                                                                    Rp. {{ pembulatan(round($thn, -3) + 1000) }} Per Bulan
 
                                                                 </label>
                                                             </div>
@@ -319,7 +488,7 @@
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
-                                           <button type="submit" type="button"
+                                            <button type="submit" type="button"
                                                 class="btn btn-primary">Lanjutkan</button>
                                         </div>
                                     </form>
@@ -470,6 +639,7 @@
         return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
     }
 </script>
+
 
 
 <?php

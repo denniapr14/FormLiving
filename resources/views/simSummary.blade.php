@@ -29,8 +29,9 @@
                 <div class="step done">4</div>
                 <div class="step done">5</div>
                 <div class="step done">6</div>
-                <div class="step active last">7</div>
-                {{--  <div class="step done">7</div>  --}}
+                <div class="step done">7</div>
+                <div class="step active last">8</div>
+
             </div>
         </div>
         <div class="container">
@@ -41,8 +42,8 @@
                 <div class="step done">4</div>
                 <div class="step done">5</div>
                 <div class="step done">6</div>
-                <div class="step active last">7</div>
-                {{--  <div class="step done">7</div>  --}}
+                <div class="step done">7</div>
+                <div class="step active last">8</div>
             </div>
             <div>
 
@@ -493,10 +494,10 @@
                     <div>
                         <div class="section">
                             <h5 class="modal-title">
-                                Syarat dan Ketentuan <br> 
+                                Syarat dan Ketentuan <br>
                                 Transaksi Pembelian Rumah di Greenland At Tidar
                             </h5>
-                                
+
                             <h6>I. Pemesanan</h6>
                             <p align="justify">
                                 1.	Pembeli dan PT. Citra Argo Tirta sepakat apabila luas tanah yang dicantumkan dalam Formulir Pesanan berbeda dengan luas yang dicantumkan dalam Sertifikat Tanah yang diterbitkan oleh Kantor Badan Pertanahan Nasional, dimana ada selisih kelebihan/kekurangan luas tanah, maka akan diperhitungkan sebesar Rp……………………per meter persegi.
@@ -593,7 +594,7 @@
                                 Dengan menandatangani formulir ini, saya selaku pembeli di Perumahan Greenland At Tidar menyatakan telah membaca, memahami dan menyetujui hal - hal yang tercantum pada Syarat dan Ketentuan Transaksi Pembelian Rumah di Greenland At Tidar beserta Buku Tata Tertib dan Pedoman Desain dari PT. Citra Argo Tirta.
                             </p>
                         </div>
-                       
+
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
@@ -618,16 +619,16 @@
 
     function enableButton(button) {
         document.getElementById(button).disabled = false;
-        
+
         // document.getElementById("disclaimer").disabled = true;
     }
-    
+
     function validate() {
       var remember = document.getElementById("disclaimer");
       if (remember.checked==false) {
        document.getElementById("lanjutkan").disabled = true;
       remember.setAttribute("data-bs-target", "#disclaim");
-      
+
       }  if (remember.checked==true) {
        document.getElementById("lanjutkan").disabled = true;
         remember.setAttribute("data-bs-target", "hahahaha");

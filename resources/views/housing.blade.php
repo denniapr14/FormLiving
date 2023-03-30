@@ -96,7 +96,7 @@
                 @foreach ($cluster as $cluster)
 
 
-                <a href="/cluster" class="item">
+                <a href="/simulation-select-unit/{{ $cluster->codecluster }}" class="item">
                     <div class="item-image">
                         <?php
                     if(!empty($cluster->nama_img))
@@ -163,9 +163,9 @@
                     <div class="item-text">
 
                         @if(!empty($cluster->logo_img))
-                       <a href="/cluster/{{ $cluster->codecluster }}"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                       <a href="/simulation-select-unit/{{ $cluster->codecluster }}"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
                         @else
-                        <a href="/cluster/{{ $cluster->codecluster }}">
+                        <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
                             {{ $cluster->nama_cluster }}
                         </a>
 

@@ -33,9 +33,9 @@
                 <div class="step done">3</div>
                 <div class="step done">4</div>
                 <div class="step done">5</div>
-                <div class="step active">6</div>
-                <div class="step last">7</div>
-                {{-- <div class="step active">7</div> --}}
+                <div class="step done">6</div>
+                <div class="step active">7</div>
+                <div class="step last">8</div>
             </div>
         </div>
         <div class="container">
@@ -45,9 +45,9 @@
                 <div class="step done">3</div>
                 <div class="step done">4</div>
                 <div class="step done">5</div>
-                <div class="step active">6</div>
-                <div class="step last">7</div>
-                {{-- <div class="step active">7</div> --}}
+                <div class="step done">6</div>
+                <div class="step active">7</div>
+                <div class="step last">8</div>
             </div>
             <div>
 
@@ -64,10 +64,7 @@
                                     <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
                                 </div>
                                 <div class="items">
-                                    <div class="type-item">
-                                        <p>Type</p>
-                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
-                                    </div>
+
                                     <div class="type-item">
                                         <p>Blok</p>
                                         <h5>{{ $rumah->blok }} - {{ $rumah->nomor }}</h5>
@@ -77,14 +74,22 @@
                                         <h5>{{ $rumah->nama_cluster }}</h5>
                                     </div>
                                     <div class="type-item">
-                                        <p>Start from</p>
+                                        <p>Harga Jual</p>
 
-                                        <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
+                                        <h5>Rp {{ rupiah($tipeRumah->harga_tr) }}</h5>
                                     </div>
                                     <div class="type-item">
                                         <p>Luas Tanah</p>
 
                                         <h5>{{ $rumah->luas_tanah }} m<sup>2</sup></h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Type</p>
+                                        <h5>{{ $tipeRumah->jenis_tr }}</h5>
+                                    </div>
+                                    <div class="type-item">
+                                        <p>Luas Bangunan</p>
+                                        <h5>{{ $tipeRumah->luas_bangunan_tr }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +137,7 @@
                                             </div>
                                         </div>
 
-                                        
+
 
 
                                         <div class="col-12 col-lg-6">
@@ -170,7 +175,7 @@
                                                     id="alamat" value="" placeholder="jalan">
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
                                                 <label for="email" class="form-label">Email</label>
@@ -245,7 +250,7 @@
                                                                                             alt="Promo">
                                                                                     </div>
                                                                                     <div class="promo-text col-md-9">
-                                                                                        
+
                                                                                         <h6 id='keteranganPromo'>{{ $promo->promo }}</h6>
                                                                                         <p>Berlaku hingga:
                                                                                             {{ date('d M Y', strtotime($promo->tgl_berakhir)) }}
@@ -258,7 +263,7 @@
                                                                                     <div class="promo-button col-md-1">
                                                                                         <a class="promoCodeBtn btn btn btn-outline-success"
                                                                                             data-promo-code="{{ $promo->kode_promo }}" data-promo="{{ $promo->promo }}">{{ $promo->kode_promo }}    </a>
-                                                                                            
+
                                                                                         </li>
                                                                                     </div>
                                                                                 </div>
@@ -273,12 +278,12 @@
                                                                 </div>
                                                             </div>
 
-                                                           
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <br>
                                                 <div class="form-group">
                                                     <input type="text" name="promo"  value="Tidak Ada Promo" id="selectedPromoCode" class="form-control"
@@ -430,7 +435,7 @@
                                                                     <div class=" d-block">
 
                                                                         <h5 class="mb-4">Pilih Promo</h5>
-                                                                        
+
                                                                         @foreach ($promo as $promo)
                                                                             <div class="promo-item">
                                                                                 <div class="row">
@@ -439,7 +444,7 @@
                                                                                             alt="Promo">
                                                                                     </div>
                                                                                     <div class="promo-text col-md-9">
-                                                                                        
+
                                                                                         <h6 id='keteranganPromo'>{{ $promo->promo }}</h6>
                                                                                         <p>Berlaku hingga:
                                                                                             {{ date('d M Y', strtotime($promo->tgl_berakhir)) }}
@@ -452,7 +457,7 @@
                                                                                     <div class="promo-button col-md-1">
                                                                                         <a class="promoCodeBtn btn btn btn-outline-success"
                                                                                             data-promo-code="{{ $promo->kode_promo }}" data-promo="{{ $promo->promo }}">{{ $promo->kode_promo }}    </a>
-                                                                                            
+
                                                                                         </li>
                                                                                     </div>
                                                                                 </div>
@@ -468,7 +473,7 @@
                                                                 </div>
 
                                                                 <div class="modal-footer promo-footer">
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -504,19 +509,19 @@
     <script>
         const promoCodeBtns = document.querySelectorAll(".promoCodeBtn");
         const selectedPromoCodeInput = document.getElementById("selectedPromoCode");
-        
+
         promoCodeBtns.forEach((promoCodeBtn) => {
             promoCodeBtn.addEventListener("click", () => {
                 const promoCode = promoCodeBtn.dataset.promoCode;
                 const promo = promoCodeBtn.dataset.promo;
                 selectedPromoCodeInput.value = promoCode;
                 console.log(promoCode);
-                
+
                 document.getElementById('textPromo').innerText = promo;
-                
+
                 $('#modelId').modal('toggle');
                 $('#modelId').modal('hide');
-                
+
             });
         });
     </script>
@@ -540,10 +545,10 @@
 
                                 promo = response[i].promo;
                                 console.log(promo);
-                           
+
                        }
                         document.getElementById('textPromo').innerText = promo;
-                        
+
                         $('#modelId').modal('hide');
                     } else {
                         alert('Kupon tidak ada');
@@ -555,7 +560,7 @@
 
             {{--  console.log('bisa ko');  --}}
         });
-        
+
     </script>
     <!-- Modal -->
 

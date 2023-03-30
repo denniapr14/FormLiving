@@ -26,11 +26,11 @@
             <div class="step done">1</div>
             <div class="step done">2</div>
             <div class="step done">3</div>
-            <div class="step active">4</div>
-            <div class="step">5</div>
+            <div class="step done">4</div>
+            <div class="step active">5</div>
             <div class="step">6</div>
-            <div class="step last">7</div>
-            {{-- <div class="step">7</div> --}}
+            <div class="step">7</div>
+            <div class="step last">8</div>
         </div>
 
     </div>
@@ -39,11 +39,11 @@
             <div class="step done">1</div>
             <div class="step done">2</div>
             <div class="step done">3</div>
-            <div class="step active">4</div>
-            <div class="step ">5</div>
+            <div class="step done">4</div>
+            <div class="step active">5</div>
             <div class="step">6</div>
-            <div class="step last">7</div>
-            {{-- <div class="step">7</div> --}}
+            <div class="step">7</div>
+            <div class="step last">8</div>
         </div>
         <div>
             {{--  FORM  --}}
@@ -73,9 +73,9 @@
                                         <h5>{{ $rumah->nama_cluster }}</h5>
                                     </div>
                                     <div class="type-item">
-                                        <p>Start from</p>
+                                        <p>Harga Jual</p>
 
-                                        <h5>Rp. {{ rupiah($tipeRumah->harga_tr) }}</h5>
+                                        <h5>Rp {{ rupiah($tipeRumah->harga_tr) }}</h5>
                                     </div>
                                     <div class="type-item">
                                         <p>Luas Tanah</p>
@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="type-item">
                                         <p>Luas Bangunan</p>
-                                        <h5></h5>
+                                        <h5>{{ $tipeRumah->luas_bangunan_tr }}</h5>
                                     </div>
                                 </div>
                             </div>
