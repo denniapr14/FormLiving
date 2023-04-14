@@ -16,10 +16,10 @@
                         <img src="{{ asset('Home') }}/images/60.jpg" class="w-100" alt="">
                     </div>  --}}
                     <div>
-                        <img src="{{ asset('Home') }}/images/719e80760999b4c355a723224120eb07.png"  class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/greenland-project.jpeg"  class="w-100" alt="">
                     </div>
                     <div>
-                        <img src="{{ asset('Home') }}/images/719e80760999b4c355a723224120eb07.png"  class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/kalm-project.jpeg"  class="w-100" alt="">
                     </div>
 
                     {{-- <div>

@@ -641,7 +641,11 @@ class Home extends Controller
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
         }
+        $cluster = DB::table('cluster')
 
+
+        ->where('codecluster', '=', $codecluster)
+        ->first();
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->where('status', '=', 'available')
@@ -656,7 +660,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('simSelectUnit', compact('user'), compact('rumah'));
+            return view('simSelectUnit', compact('user','rumah','cluster'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -667,7 +671,7 @@ class Home extends Controller
 
 
 
-            return view('simSelectUnit', compact('userPelanggan'), ['rumah' => $rumah]);
+            return view('simSelectUnit', compact('userPelanggan','rumah','cluster'));
         }
 
 

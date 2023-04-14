@@ -45,8 +45,13 @@
                 <div class="step last">7</div>
 
             </div>
-            <h2 class="title">
-                Choose Your House
+            <h2 class="title" style="">
+                @if(!empty($cluster->logo_img))
+
+                <img style="filter: invert(100%); width: 30%" src="{{ asset('Home') }}/images/logo_cluster/{{ $cluster->logo_img }}" alt="">
+                @else
+                {{ $cluster->nama_cluster }}
+                @endif
             </h2>
             <div class="map" style="background-color: white">
 
@@ -60,7 +65,7 @@
                         var block = item.blok;
                         var nomor = item.nomor;
                         var blockNomor = block+"-"+nomor;
-                        blockNomor.toString()                     
+                        blockNomor.toString()
                         var idrumah = document.getElementById(blockNomor);
 
                         idrumah.style.fill = 'green';
