@@ -9,6 +9,166 @@
 
 @section('content')
 
+<style>
+    .carbon-example {
+        padding: 8px;
+        background-color: #fff;
+        width: 295px;
+        box-sizing: border-box;
+        border-radius: 6px;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        -webkit-align-items: flex-start;
+        -moz-align-items: flex-start;
+        align-items: flex-start;
+        position: relative;
+        z-index: 5;
+        box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+        margin-top:20px;
+      }
+
+      .carbon-example img {
+        margin-right: 9px;
+        max-width: 125px;
+      }
+
+      .carbon-example .inner-wrapper {
+        text-align: left;
+      }
+
+      .carbon-example .inner-wrapper p {
+        font-size: 12px;
+        line-height: 1.33;
+        margin: 8px 0;
+      }
+
+      .carbon-example .inner-wrapper p.fine-print {
+        font-size: 8px;
+        color: #C5CDD0;
+        line-height: 1.25;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      .flex-wrapper {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        -moz-align-items: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        -moz-justify-content: space-between;
+        justify-content: space-between;
+      }
+      @media screen and (max-width: 991px) {
+        .flex-wrapper.two-col {
+          display: block;
+          text-align: center;
+        }
+      }
+
+      .flex-wrapper.two-col > * {
+        width: 50%;
+      }
+
+      .flex-wrapper.two-col > *:first-of-type {
+        padding-right: 130px;
+      }
+      @media screen and (max-width: 991px) {
+
+        .flex-wrapper.two-col > * {
+          width: 100%;
+        }
+
+        .flex-wrapper.two-col > *:first-of-type {
+          padding-right: 0;
+        }
+      }
+
+      .flex-wrapper.two-col.reversed > *:first-of-type {
+        order: 2;
+        padding-right: 0;
+      }
+      @media screen and (min-width: 992px) {
+        .flex-wrapper.two-col.reversed > *:first-of-type {
+          padding-left: 130px;
+        }
+      }
+
+      .flex-wrapper.three-col {
+        text-align: left;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        -webkit-align-items: flex-start;
+        -moz-align-items: flex-start;
+        align-items: flex-start;
+        margin-top: 40px;
+      }
+      @media screen and (max-width: 767px) {
+        .flex-wrapper.three-col {
+          -webkit-flex-wrap: wrap;
+          -moz-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+        }
+      }
+      .flex-wrapper.three-col > * {
+        width: 33.3%;
+      }
+      @media screen and (max-width: 767px) {
+        .flex-wrapper.three-col > * {
+          width: 100%;
+        }
+      }
+      @media screen and (min-width: 768px) {
+        .flex-wrapper.three-col li {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .flex-wrapper.three-col li:first-child {
+          padding-left: 0;
+        }
+        .flex-wrapper.three-col li:last-child {
+          padding-right: 0;
+        }
+      }
+
+      .flex-wrapper.three-col .flex-wrapper {
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        -webkit-align-items: flex-start;
+        -moz-align-items: flex-start;
+        align-items: flex-start;
+        margin-top: 0;
+      }
+      @media screen and (max-width: 767px) {
+        .flex-wrapper.three-col .flex-wrapper {
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          -webkit-justify-content: center;
+          -moz-justify-content: center;
+          justify-content: center;
+        }
+
+        .flex-wrapper.three-col .flex-wrapper:not(:first-of-type) {
+          margin-top: 40px;
+        }
+      }
+
+      .flex-wrapper.three-col .flex-wrapper .icon {
+        top: 0;
+        transform: none;
+      }
+
+</style>
+
     <div class="profile with-nav">
         <div class="header-simulation mobile-only">
             <div class="ornament one">
@@ -86,9 +246,10 @@
                     <!-- EDIT PROFILE MOBILE STATE -->
                     <div class="col-12 col-lg-8 right-column d-none d-lg-block">
                         <div class="edit-profile">
-                            <h5>Edit Profile</h5>
+                            <h5>Dashboard</h5>
                             @if (!empty(Session::get('guest')))
-                                <form action="{{ route('profileSetting.action') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('profileSetting.action') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="edit-image">
                                         <div class="image">
@@ -112,14 +273,16 @@
                                             <div class="mb-3">
                                                 <label for="name" class="form-label">Full Name</label>
                                                 <input type="text" class="form-control" name="nama" id="nama"
-                                                    placeholder="{{ $userPelanggan->nama_plgn }}" value="{{ $userPelanggan->nama_plgn }}">
+                                                    placeholder="{{ $userPelanggan->nama_plgn }}"
+                                                    value="{{ $userPelanggan->nama_plgn }}">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
                                                 <input type="email" class="form-control" name="email" id="email"
-                                                    placeholder="{{ $userPelanggan->email_plgn }}" value="{{ $userPelanggan->email_plgn }}">
+                                                    placeholder="{{ $userPelanggan->email_plgn }}"
+                                                    value="{{ $userPelanggan->email_plgn }}">
                                             </div>
                                         </div>
 
@@ -127,21 +290,23 @@
                                             <div class="mb-3">
                                                 <label for="full_name" class="form-label">Phone Number</label>
                                                 <input type="tel" class="form-control" name="telp" id="telp"
-                                                    placeholder="{{ $userPelanggan->no_telp_plgn }}" value="{{ $userPelanggan->no_telp_plgn }}">
+                                                    placeholder="{{ $userPelanggan->no_telp_plgn }}"
+                                                    value="{{ $userPelanggan->no_telp_plgn }}">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="mb-3">
                                                 <label for="full_name" class="form-label">What Apps</label>
                                                 <input type="tel" class="form-control" name="wa" id="wa"
-                                                    placeholder="{{ $userPelanggan->no_telp_plgn }}" value="{{ $userPelanggan->no_wa_plgn }}">
+                                                    placeholder="{{ $userPelanggan->no_telp_plgn }}"
+                                                    value="{{ $userPelanggan->no_wa_plgn }}">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="mb-5">
                                                 <label for="full_name" class="form-label">Password</label>
-                                                <input type="password" class="form-control" name="password" id="password"
-                                                    placeholder="***************">
+                                                <input type="password" class="form-control" name="password"
+                                                    id="password" placeholder="***************">
                                                 <span id="spanPwd"></span>
                                             </div>
                                         </div>
@@ -149,73 +314,66 @@
 
                                         </div>
                                         <div class="col-12 col-lg-6">
-                                            <button type="sumbit" value="submit" class="btn btn-primary w-100">Save Changes</button>
+                                            <button type="sumbit" value="submit" class="btn btn-primary w-100">Save
+                                                Changes</button>
                                         </div>
                                     </div>
                                 </form>
                             @endif
 
                             @if (!empty(Session::get('user')))
-                            <form action="{{ route('profileSetting.action') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="edit-image">
-                                    <div class="image">
-                                        <img src="{{ asset('Home') }}/images/img-profile-large.png" alt="">
-                                        <div class="btn-change">
-                                            <img src="{{ asset('Home') }}/images/btn_change-foto.png" alt="">
-                                        </div>
-                                    </div>
 
+                                <div class="carbon-example flex-wrapper">
+                                    <img src="{{ asset('Home') }}/images/Daco_94682.png"
+                                                                alt="">
+                                    <div class="inner-wrapper">
+
+                                        <h5>User bulan ini </h5>
+                                        <center> <span class="btn btn-outline-secondary" >{{ $fpCount->count  }}</span>
+                                        </center>
+                                    </div>
                                 </div>
 
-                                <div class="row forms">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" name="username" id="username"
-                                                value="{{ $user->username_ua }}" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Full Name</label>
-                                            <input type="text" class="form-control" name="nama" id="nama"
-                                                placeholder="{{ $user->nama_ua }}" value="{{ $user->nama_ua }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" name="email" id="email"
-                                                placeholder="{{ $user->email_ua }}" value="{{ $user->email_ua }}">
-                                        </div>
-                                    </div>
 
-                                    <div class="col-12 col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="full_name" class="form-label">Phone Number</label>
-                                            <input type="tel" class="form-control" name="telp" id="telp"
-                                                placeholder="{{ $user->no_tlp_ua }}" value="{{ $user->no_tlp_ua }}">
-                                        </div>
-                                    </div>
+                                <br>
+                                <div class="choose-cluster">
+                                    <div class="row">
+                                        @foreach ($fp as $fp)
+                                            <div class="col-6 col-lg-3">
 
-                                    <div class="col-12 col-lg-6">
-                                        <div class="mb-5">
-                                            <label for="full_name" class="form-label">Password</label>
-                                            <input type="password" class="form-control" name="password" id="password"
-                                                placeholder="***************">
-                                            <span id="spanPwd"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
+                                                <a href="/simulation-type/{{ $fp->id_formulir }}">
+                                                    <div class="item">
+                                                        <div class="item-image">
+                                                            <?php
+                                                    if(!empty($fp->img_rumah)){
+                                                        ?>
+                                                            <img src="{{ asset('Home') }}/images/rumah/{{ $fp->img_rumah }}"
+                                                                alt="">
+                                                            <?php
+                                                    }else{
+                                                    ?>
 
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <button type="sumbit" value="submit" class="btn btn-primary w-100">Save Changes</button>
+                                                            <img src="{{ asset('Home') }}/images/img-cluster-large3.png"
+                                                                alt="">
+                                                            <?php
+                                                    }
+                                                    ?>
+
+                                                        </div>
+                                                        <h6 class="item-title">{{ $fp->blok }} - {{ $fp->nomor }}
+                                                        </h6>
+                                                        <div class="item-avail">Nama User : {{ $fp->nama_plgn }}
+                                                        </div>
+
+
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                            </form>
-                        @endif
+
+                            @endif
                         </div>
                     </div>
                 </div>

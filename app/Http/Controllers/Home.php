@@ -380,6 +380,8 @@ class Home extends Controller
     }
     public function ProfileSetting()
     {
+
+
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
@@ -396,9 +398,31 @@ class Home extends Controller
                 ->where(['id_user_admin' => session::get('user')])
                 ->first();
 
-            // dd($user);
+            $fp = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                // ->select('logo_img','nama_img','cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+                // ->groupBy('cluster.nama_cluster')
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                    ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
+                // ->where(
+                //         "MONTH('formulir_pesanan'.'tgl_input_fp')",'=','MONTH(CURRENT_DATE())'
+                //         )
+                ->get();
+            $fpCount = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select( DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                    ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
+                ->first();
+            // dd($fpCount);
             // die();
-            return view('profileSetting', compact('user'));
+            return view('profileSetting', compact('user','fp','fpCount'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
