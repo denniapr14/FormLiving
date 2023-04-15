@@ -780,6 +780,9 @@ class Home extends Controller
         ->where([
             'id_tipe' => $id_tipe
         ])
+        ->where([
+            'jenis_img' => 'gambar'
+        ])
         ->get();
         $imgRumah2 = DB::table('gambar_rumah')
         ->where([
@@ -787,6 +790,20 @@ class Home extends Controller
         ])
         ->where([
             'id_tipe' => $id_tipe
+        ])
+        ->where([
+            'jenis_img' => 'gambar'
+        ])
+        ->get();
+        $imgDenah = DB::table('gambar_rumah')
+        ->where([
+            'id_rumah' => $id_rumah
+        ])
+        ->where([
+            'id_tipe' => $id_tipe
+        ])
+        ->where([
+            'jenis_img' => 'denah'
         ])
         ->get();
         // dd($imgRumah);
@@ -807,7 +824,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('simDetailType', compact('user','rumah','tipeRumah','imgRumahSingle','imgRumah'));
+            return view('simDetailType', compact('user','rumah','tipeRumah','imgRumahSingle','imgRumah','imgRumah2','imgDenah'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -817,9 +834,9 @@ class Home extends Controller
 
             // dd($userPelanggan);
             // die();
-            return view('simDetailType', compact('userPelanggan','rumah','tipeRumah','imgRumahSingle','imgRumah','imgRumah2'));
+            return view('simDetailType', compact('userPelanggan','rumah','tipeRumah','imgRumahSingle','imgRumah','imgRumah2','imgDenah'));
         }
-        return view('simDetailType','rumah','tipeRumah','imgRumahSingle','imgRumah');
+        return view('simDetailType','rumah','tipeRumah','imgRumahSingle','imgRumah','imgDenah');
 
         # code...
     }
@@ -1320,6 +1337,18 @@ class Home extends Controller
             // ->where('tgl_aktif', '<=', NOW())
 
         ->first();
+        $dataUpdatePromo = array(
+            'kuota_promo' => $promo->kuota_promo - 1
+
+
+        );
+        DB::table('promo')
+        ->where('kode_promo', '=', $voucher)
+        ->update(
+             $dataUpdatePromo
+        );
+
+
 
         }
 

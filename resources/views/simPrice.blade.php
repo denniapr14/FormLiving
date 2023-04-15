@@ -360,11 +360,14 @@
                                                         <label for="">Cicilan Uang Muka</label>
 
                                                         <select name="cicilanUM" id="" class="form-control">
-                                                            @for ($um = 0; $um < 6; $um++)
+                                                            @for ($um = 1; $um < 6; $um++)
+                                                            <?php
+                                                            $persen = 10
+                                                            ?>
                                                                 @for ($i = 1; $i < 5; $i++)
                                                                     <option value="{{ $i }}">Rp.
                                                                         {{ rupiah(($tipeRumah->harga_tr * ((10 * $um) / 100) - 10000000) / $i) }}
-                                                                        Per Bulan Cicilan {{ $i }} Kali</option>
+                                                                        Per Bulan Cicilan {{ $i }} Kali Uang Muka {{ $persen * $um }}%</option>
                                                                 @endfor
                                                             @endfor
 
@@ -446,7 +449,7 @@
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
-                                            <button type="submit" type="button"
+                                            <button type="submit" type="button" id="next" disabled="true"
                                                 class="btn btn-primary">Lanjutkan</button>
                                         </div>
                                     </form>
@@ -488,7 +491,7 @@
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
-                                            <button type="submit" type="button"
+                                            <button type="submit" type="button" id="next" disabled="true"
                                                 class="btn btn-primary">Lanjutkan</button>
                                         </div>
                                     </form>
@@ -584,6 +587,7 @@
         hasil2.innerText = "Cicilan KPR Selama 10 Tahun " + hasilRupiah2 + "/ Bulan";
         hasil3.innerText = "Cicilan KPR Selama 15 Tahun " + hasilRupiah3 + "/ Bulan";
         hasil4.innerText = "Cicilan KPR Selama 20 Tahun " + hasilRupiah4 + "/ Bulan";
+        document.getElementById('next').disabled = false;
     }
 
     function getValue(id) {

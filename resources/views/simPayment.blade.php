@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="btn-groups">
-                    <a href="/simulation-type/{{ $rumah->id_rumah }}" type="button" class="btn btn-grey">Kembali</a>
+                    <a href="/simulation-detail-type/{{ $rumah->id_rumah }}" type="button" class="btn btn-grey">Kembali</a>
                     <button type="submit"  type="button" class="btn btn-primary">Lanjutkan</button>
                 </div>
             </form>

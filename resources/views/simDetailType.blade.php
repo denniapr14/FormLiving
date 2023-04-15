@@ -63,14 +63,27 @@
             <div class="row">
 
                 <div class="col-12 col-lg-9 image-left mb-3 mb-lg-0">
+                    @if (empty($imgRumahSingle->img_rumah))
+                    <img src="{{ asset('Home') }}/images/NoImg.jpg" alt="">
+
+                    @else
+
                     <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumahSingle->img_rumah }}" alt="">
+                    @endif
                 </div>
                 <div class="col-12 col-lg-3 image-right">
                     <div class="row">
 
                         <div class="col-4 col-lg-12 mb-0 mb-lg-4">
+
                             <a href="#" class="see-more">
+                                @if (empty($imgRumahSingle->img_rumah))
+                                <img src="{{ asset('Home') }}/images/NoImg.jpg" alt="">
+
+                                @else
+
                                 <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumahSingle->img_rumah }}" alt="">
+                                @endif
                             </a>
                         </div>
                     </div>
@@ -88,7 +101,13 @@
 
 
                     <div class="main-item">
+                        @if (empty($imgRumah->img_rumah))
+                        <img src="{{ asset('Home') }}/images/NoImg.jpg" alt="">
+
+                        @else
+
                         <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumah->img_rumah }}" alt="">
+                        @endif
                     </div>
 
                     @endforeach
@@ -100,7 +119,12 @@
 
 
                     <div class="main-item">
+                        @if (empty($imgRumah2->img_rumah))
+                        <img src="{{ asset('Home') }}/images/NoImg.jpg" alt="">
+
+                        @else
                         <img src="{{ asset('Home') }}/images/rumah/{{ $gambarRumah->img_rumah }}" alt="">
+                        @endif
                     </div>
 
                     @endforeach
@@ -152,13 +176,13 @@
                     <h3>The Mainroad Cluster</h3>
                 </div>
                 <div class="text-end desktop-only">
-                    <p class="mb-2">Start from</p>
-                    <h5>975 jt</h5>
+                    <p class="mb-2">Harga Total</p>
+                    <h5>{{ $tipeRumah->harga_text_tr }}</h5>
                 </div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <p>Type: 150</p>
+                    <p>Type: {{ $tipeRumah->jenis_tr }}</p>
                     <div class="d-flex">
                         <div class="small-info me-3">
                             <img src="{{ asset('Home') }}/images/ic_bedroom.png" alt=""> 2 Kamar Tidur
@@ -191,12 +215,18 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="denah" role="tabpanel" aria-labelledby="denah-tab">
                         <div class="denah-sliders mt-4">
+                            @foreach ($imgDenah as $denah)
+
+
                             <div class="img-denah">
-                                <img src="{{ asset('Home') }}/images/img-denah.png" alt="">
+                                @if (empty($denah->img_rumah))
+                                <img src="{{ asset('Home') }}/images/NoImg.jpg" alt="">
+                                @else
+                                <img src="{{ asset('Home') }}/images/denah/{{ $denah->img_rumah }}" alt="">
+                                @endif
                             </div>
-                            <div class="img-denah">
-                                <img src="{{ asset('Home') }}/images/img-greenland.png" alt="">
-                            </div>
+
+                            @endforeach
                         </div>
                     </div>
                     <script>
@@ -214,48 +244,45 @@
                                 <tbody>
                                     <tr>
                                         <td>Pondasi</td>
-                                        <td>Batu kali, footplate</td>
+                                        <td>{{ $tipeRumah->pondasi_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Struktur</td>
-                                        <td>Beton bertulang</td>
+                                        <td>{{ $tipeRumah->struktur_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Dinding luar</td>
-                                        <td>Pasangan bata finishing cat/woodplank/batu alam</td>
+                                        <td>{{ $tipeRumah->dinding_dlm_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Dinding dalam</td>
-                                        <td>Pasangan bata finishing cat</td>
+                                        <td>{{ $tipeRumah->dinding_luar_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Dinding kamar mandi</td>
-                                        <td>Granitile 60x60</td>
+                                        <td>{{ $tipeRumah->dinding_kmr_mnd_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Rangka atap</td>
-                                        <td>Galvalum</td>
+                                        <td>{{ $tipeRumah->rangka_atap_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Penutup atap</td>
-                                        <td>Genteng flat beton </td>
+                                        <td>{{ $tipeRumah->penutup_atap_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Plafon Dalam</td>
-                                        <td>Gypsum</td>
+                                        <td>{{ $tipeRumah->plafon_dlm_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Plafon Luar</td>
-                                        <td>Fiber Semen</td>
+                                        <td>{{ $tipeRumah->dinding_luar_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Lantai Ruang Utama</td>
-                                        <td>Granitile 60x60</td>
+                                        <td>{{ $tipeRumah->lantai_ru_tr }}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Sanitasi Kamar Mandi</td>
-                                        <td>American Standart</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
