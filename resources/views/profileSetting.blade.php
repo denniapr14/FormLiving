@@ -341,7 +341,7 @@
                                         @foreach ($fp as $fp)
                                             <div class="col-6 col-lg-3">
 
-                                                <a href="/simulation-type/{{ $fp->id_formulir }}">
+                                                <a href="">
                                                     <div class="item">
                                                         <div class="item-image">
                                                             <?php
@@ -362,7 +362,16 @@
                                                         </div>
                                                         <h6 class="item-title">{{ $fp->blok }} - {{ $fp->nomor }}
                                                         </h6>
-                                                        <div class="item-avail">Nama User : {{ $fp->nama_plgn }}
+                                                        <div class="item-avail">
+                                                            <p> Nama User : {{ $fp->nama_plgn }}</p>
+                                                            @if($fp->status_market_fp == "accept")
+
+
+                                                            <p class="btn btn-success"><i class="bi bi-check"></i></p>
+                                                            @else
+                                                            <p class="btn btn-danger"><i class="bi bi-x"></i></p>
+                                                            @endif
+
                                                         </div>
 
 

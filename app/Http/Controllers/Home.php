@@ -1361,16 +1361,7 @@ class Home extends Controller
             // ->where('tgl_aktif', '<=', NOW())
 
         ->first();
-        $dataUpdatePromo = array(
-            'kuota_promo' => $promo->kuota_promo - 1
 
-
-        );
-        DB::table('promo')
-        ->where('kode_promo', '=', $voucher)
-        ->update(
-             $dataUpdatePromo
-        );
 
 
 
@@ -1434,6 +1425,16 @@ class Home extends Controller
             // ->where('tgl_aktif', '<=', NOW())
 
             ->first();
+            $dataUpdatePromo = array(
+                'kuota_promo' => $promo->kuota_promo - 1
+
+
+            );
+            DB::table('promo')
+            ->where('kode_promo', '=', $voucher)
+            ->update(
+                 $dataUpdatePromo
+            );
         }
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
