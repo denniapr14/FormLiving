@@ -28,9 +28,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/kalm">
                                     <div>
-                                        <img src="{{ asset('Home') }}/images/logo-project2b.png" alt="">
+                                        <img src="{{ asset('Home') }}/images/logo-kalm.png" alt="">
 
                                     </div>
                                 </a>

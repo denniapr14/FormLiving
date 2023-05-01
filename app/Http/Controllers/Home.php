@@ -37,7 +37,8 @@ class Home extends Controller
     }
     //
 
-    // =============================== NAVBAR
+
+
     public function index()
     {
         // Session
@@ -66,15 +67,15 @@ class Home extends Controller
     {
         $cluster = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->select('logo_img','nama_img','cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
             ->where('status', '=', 'available')
             ->groupBy('cluster.nama_cluster')
             ->get();
-            //   dd($cluster);
-            // die();
+        //   dd($cluster);
+        // die();
         $cluster2 = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->select('logo_img','nama_img','cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
             ->where('status', '=', 'available')
             ->groupBy('cluster.nama_cluster')
             ->get();
@@ -108,7 +109,57 @@ class Home extends Controller
         return view('housing', 'cluster', 'cluster2');
     }
 
+
+    // KALM SEMENTARA
+    public function kalm()
+    {
+        $cluster = DB::table('rumah')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+            ->where('status', '=', 'available')
+            ->groupBy('cluster.nama_cluster')
+            ->get();
+        //   dd($cluster);
+        // die();
+        $cluster2 = DB::table('rumah')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+            ->where('status', '=', 'available')
+            ->groupBy('cluster.nama_cluster')
+            ->get();
+
+
+        if (!session()->has('guest') && !session()->has('user')) {
+            // $hasilSess = Session::get('guest');
+            // response()->json('hasilSess');
+            return redirect("/login")->with('error', "You not sign in or sign up!");
+            # code...
+
+        }
+
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])->first();
+
+            // dd($user);
+            // die();
+            return view('kalm', compact('user', 'cluster', 'cluster2'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            // dd($userPelanggan);
+            // die();
+            return view('kalm', compact('userPelanggan', 'cluster', 'cluster2'));
+        }
+        return view('kalm', 'cluster', 'cluster2');
+    }
+
     // ===========================================================
+
+
 
     // LOGIN
     public function Login()
@@ -143,9 +194,10 @@ class Home extends Controller
     }
 
 
+
+
     public function LoginAction(Request $request)
     {
-
         $user = \App\Models\UserAdmin::where([
             'username_ua' => $request->username,
             'password_ua' => md5($request->password)
@@ -164,22 +216,6 @@ class Home extends Controller
         ]);
 
 
-
-        // dd($user);
-        // die();
-        //         $user = UserAdmin::where('username', '=', Input::get('username'))->first();
-
-        //         if(isset($user)) {
-        //             if($user->password == md5(Input::get('password'))) { // If their password is still MD5
-        //                 $user->password = Hash::make(Input::get('password')); // Convert to new format
-        //                 $user->save();
-        //                 Auth::login(Input::get('username'));
-        //     }
-        // }
-        // dd(Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)]));
-        // die();
-        // $credentials = $request->only('username_ua', 'password_ua');
-
         if (!empty($user)) {
             if (Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
 
@@ -187,47 +223,51 @@ class Home extends Controller
                 $hasilSess = Session::get('user');
 
 
-                // return response()->json($hasilSess);
-                // dd($hasilSess);
-                // die();
-                return redirect('/');
+                $userRole = $this->Role(Session::get('user'));
 
-                // return "Daaaaa";
-                // return redirect()->intended('dashboard')
-                //             ->withSuccess('Signed in');
+                switch ($userRole) {
+                    case 'AdminAccounting':
+                        return redirect('/profile-setting');
+                        break;
+
+                    default:
+                        return redirect('/');
+                        break;
+                }
+
             }
         }
 
         if (!empty($userPelanggan)) {
             if (Auth::guard('guest')->attempt(['username_plgn' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
-                // dd($request->session()->all());
-                // die();
-                // $dataSess = array(
-                //     'id_pelanggan'  => $userPelanggan->id_pelanggan,
-                //     'nama_plgn'     => $userPelanggan->nama_plgn
-                // );
+
                 Session::put('guest', $userPelanggan->id_pelanggan);
-                # code...
-                // $hasilSess = Session::get('guest');
-
-
-                // return response()->json($hasilSess);
-                // dd($hasilSess);
-                // die();
 
                 return redirect('/housing')
 
                     ->with('success', "You're Sign in!");
 
-                // return "Daaaaa";
-                // return redirect()->intended('dashboard')
-                //             ->withSuccess('Signed in');
             }
         }
-        // return "salah";
+
+        return redirect("login")->with('error', 'Login details are not valid');
+    }
+    public function Role($idUser)
+    {
+
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+
+                ->where('user_admin.id_user_admin', '=', $idUser)
+
+                ->first();
+
+            // dd($user->kategori);
+            // die();
 
 
-        return redirect("login")->with('error','Login details are not valid');
+           return $user->kategori;
+
     }
 
     public function Logout()
@@ -254,11 +294,11 @@ class Home extends Controller
     {
 
         $cluster = DB::table('rumah')
-        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-        ->select('logo_img','nama_img','cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
-        ->where('cluster.codecluster', '=', $id_cluster)
-        ->groupBy('cluster.nama_cluster')
-        ->first();
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+            ->where('cluster.codecluster', '=', $id_cluster)
+            ->groupBy('cluster.nama_cluster')
+            ->first();
 
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
@@ -274,7 +314,7 @@ class Home extends Controller
                 ->first();
 
 
-            return view('cluster', compact('user','rumah','cluster'));
+            return view('cluster', compact('user', 'rumah', 'cluster'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -282,10 +322,10 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('cluster', compact('userPelanggan','rumah','cluster'));
+            return view('cluster', compact('userPelanggan', 'rumah', 'cluster'));
         }
 
-        return view('cluster','rumah');
+        return view('cluster', 'rumah');
         # code...
     }
     public function DetailCluster()
@@ -405,7 +445,7 @@ class Home extends Controller
                 // ->groupBy('cluster.nama_cluster')
                 ->where([
                     'formulir_pesanan.id_user_admin' => session::get('user')
-                    ])
+                ])
                 ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
                 // ->where(
                 //         "MONTH('formulir_pesanan'.'tgl_input_fp')",'=','MONTH(CURRENT_DATE())'
@@ -414,15 +454,15 @@ class Home extends Controller
             $fpCount = DB::table('formulir_pesanan')
                 ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
                 ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-                ->select( DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
                 ->where([
                     'formulir_pesanan.id_user_admin' => session::get('user')
-                    ])
+                ])
                 ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
                 ->first();
             // dd($fpCount);
             // die();
-            return view('profileSetting', compact('user','fp','fpCount'));
+            return view('profileSetting', compact('user', 'fp', 'fpCount'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -629,7 +669,7 @@ class Home extends Controller
 
         $cluster = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->select('nama_img','cluster.nama_cluster', 'cluster.codecluster', DB::raw('COUNT(rumah.id_rumah) as count'))
+            ->select('nama_img', 'cluster.nama_cluster', 'cluster.codecluster', DB::raw('COUNT(rumah.id_rumah) as count'))
             ->where('status', '=', 'available')
             ->groupBy('cluster.nama_cluster')
             ->get();
@@ -668,8 +708,8 @@ class Home extends Controller
         $cluster = DB::table('cluster')
 
 
-        ->where('codecluster', '=', $codecluster)
-        ->first();
+            ->where('codecluster', '=', $codecluster)
+            ->first();
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->where('status', '=', 'available')
@@ -684,7 +724,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('simSelectUnit', compact('user','rumah','cluster'));
+            return view('simSelectUnit', compact('user', 'rumah', 'cluster'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -695,7 +735,7 @@ class Home extends Controller
 
 
 
-            return view('simSelectUnit', compact('userPelanggan','rumah','cluster'));
+            return view('simSelectUnit', compact('userPelanggan', 'rumah', 'cluster'));
         }
 
 
@@ -780,56 +820,56 @@ class Home extends Controller
     public function SimDetailType($id_rumah, $id_tipe)
     {
         $rumah = DB::table('rumah')
-        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-        ->where('status', '=', 'available')
-        ->where('rumah.id_rumah', '=', $id_rumah)
-        ->first();
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->where('status', '=', 'available')
+            ->where('rumah.id_rumah', '=', $id_rumah)
+            ->first();
         $tipeRumah = DB::table('tipe_rumah')->where([
             'id_tipe_rumah' => $id_tipe
         ])->first();
         // dd($tipeRumah);
         // die();
         $imgRumahSingle = DB::table('gambar_rumah')
-        ->where([
-            'id_rumah' => $id_rumah
-        ])
-        ->where([
-            'id_tipe' => $id_tipe
-        ])
-        ->first();
+            ->where([
+                'id_rumah' => $id_rumah
+            ])
+            ->where([
+                'id_tipe' => $id_tipe
+            ])
+            ->first();
         $imgRumah = DB::table('gambar_rumah')
-        ->where([
-            'id_rumah' => $id_rumah
-        ])
-        ->where([
-            'id_tipe' => $id_tipe
-        ])
-        ->where([
-            'jenis_img' => 'gambar'
-        ])
-        ->get();
+            ->where([
+                'id_rumah' => $id_rumah
+            ])
+            ->where([
+                'id_tipe' => $id_tipe
+            ])
+            ->where([
+                'jenis_img' => 'gambar'
+            ])
+            ->get();
         $imgRumah2 = DB::table('gambar_rumah')
-        ->where([
-            'id_rumah' => $id_rumah
-        ])
-        ->where([
-            'id_tipe' => $id_tipe
-        ])
-        ->where([
-            'jenis_img' => 'gambar'
-        ])
-        ->get();
+            ->where([
+                'id_rumah' => $id_rumah
+            ])
+            ->where([
+                'id_tipe' => $id_tipe
+            ])
+            ->where([
+                'jenis_img' => 'gambar'
+            ])
+            ->get();
         $imgDenah = DB::table('gambar_rumah')
-        ->where([
-            'id_rumah' => $id_rumah
-        ])
-        ->where([
-            'id_tipe' => $id_tipe
-        ])
-        ->where([
-            'jenis_img' => 'denah'
-        ])
-        ->get();
+            ->where([
+                'id_rumah' => $id_rumah
+            ])
+            ->where([
+                'id_tipe' => $id_tipe
+            ])
+            ->where([
+                'jenis_img' => 'denah'
+            ])
+            ->get();
         // dd($imgRumah);
         // die();
 
@@ -848,7 +888,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('simDetailType', compact('user','rumah','tipeRumah','imgRumahSingle','imgRumah','imgRumah2','imgDenah'));
+            return view('simDetailType', compact('user', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgRumah2', 'imgDenah'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -858,9 +898,9 @@ class Home extends Controller
 
             // dd($userPelanggan);
             // die();
-            return view('simDetailType', compact('userPelanggan','rumah','tipeRumah','imgRumahSingle','imgRumah','imgRumah2','imgDenah'));
+            return view('simDetailType', compact('userPelanggan', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgRumah2', 'imgDenah'));
         }
-        return view('simDetailType','rumah','tipeRumah','imgRumahSingle','imgRumah','imgDenah');
+        return view('simDetailType', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgDenah');
 
         # code...
     }
@@ -1144,7 +1184,6 @@ class Home extends Controller
                 $dataInput
             );
             return redirect('/simulation-order/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $payment . '/' . $id);
-
         }
 
         # code...
@@ -1355,16 +1394,22 @@ class Home extends Controller
             ->where('status', '=', 'available')
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
-        if($voucher != "Tidak Ada Promo"){
+        if ($voucher != "Tidak Ada Promo") {
             $promo = DB::table('promo')
-            ->where('kode_promo', '=', $voucher)
-            // ->where('tgl_aktif', '<=', NOW())
+                ->where('kode_promo', '=', $voucher)
+                // ->where('tgl_aktif', '<=', NOW())
 
-        ->first();
+                ->first();
+            $dataUpdatePromo = array(
+                'kuota_promo' => $promo->kuota_promo - 1
 
 
-
-
+            );
+            DB::table('promo')
+                ->where('kode_promo', '=', $voucher)
+                ->update(
+                    $dataUpdatePromo
+                );
         }
 
         if (session()->has('user')) {
@@ -1376,13 +1421,11 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            if($voucher != "Tidak Ada Promo"){
-                 return view('simSummary', compact('user', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan', 'kkpr'));
-            }
-            else{
+            if ($voucher != "Tidak Ada Promo") {
+                return view('simSummary', compact('user', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan', 'kkpr'));
+            } else {
                 return view('simSummary', compact('user', 'tipeRumah', 'rumah', 'payment', 'voucher', 'pelanggan', 'kkpr'));
             }
-
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1390,16 +1433,13 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            if($voucher != "Tidak Ada Promo"){
+            if ($voucher != "Tidak Ada Promo") {
                 return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan', 'kkpr'));
+            } else {
+                return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment', 'voucher', 'pelanggan', 'kkpr'));
             }
-            else{
-                 return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment', 'voucher', 'pelanggan', 'kkpr'));
-
-
-            }
-        return view('simSummary');
-        # code...
+            return view('simSummary');
+            # code...
         }
     }
     public function SimSummaryAction(Request $request, $id_rumah, $id_tipe, $payment, $id_kkpr, $voucher, $id_pelanggan)
@@ -1419,23 +1459,15 @@ class Home extends Controller
             ->where('status', '=', 'available')
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
-        if($voucher != "Tidak Ada Promo"){
-        $promo = DB::table('promo')
-            ->where('kode_promo', '=', $voucher)
-            // ->where('tgl_aktif', '<=', NOW())
+        if ($voucher != "Tidak Ada Promo") {
+            $promo = DB::table('promo')
+                ->where('kode_promo', '=', $voucher)
+                // ->where('tgl_aktif', '<=', NOW())
 
-            ->first();
-            $dataUpdatePromo = array(
-                'kuota_promo' => $promo->kuota_promo - 1
-
-
-            );
-            DB::table('promo')
-            ->where('kode_promo', '=', $voucher)
-            ->update(
-                 $dataUpdatePromo
-            );
+                ->first();
         }
+        $template = 'mail.coba';
+        $template2 = 'mail.salesFP';
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -1457,7 +1489,7 @@ class Home extends Controller
                     'tipe_kkpr'                 => $tipeRumah->jenis_tr,
                     'harga_awal'                => $tipeRumah->harga_tr,
                     'total_diskon'              => $promo->diskon_promo,
-                    'uang_muka'                 => $request->harga * (10/100),
+                    'uang_muka'                 => $request->harga * (10 / 100),
                     'total_harga'               => $request->harga,
 
                 );
@@ -1467,15 +1499,17 @@ class Home extends Controller
                     'luas_tanah_kkpr'           => $rumah->luas_tanah,
                     'tipe_kkpr'                 => $tipeRumah->jenis_tr,
                     'harga_awal'                => $tipeRumah->harga_tr,
-                    'uang_muka'                 => $request->harga * (10/100),
+                    'uang_muka'                 => $request->harga * (10 / 100),
                     'total_harga'               => $request->harga
                 );
             }
             DB::table('kalkulator_kpr')
-            ->where('id_kkpr', $id_kkpr)
-            ->update(
-                 $dataInputDetail
-            );
+                ->where('id_kkpr', $id_kkpr)
+                ->update(
+                    $dataInputDetail
+                );
+
+
 
             // $id = DB::table('kalkulator_kpr')->insertGetId(
             //     $dataInputDetail
@@ -1507,31 +1541,130 @@ class Home extends Controller
 
                 );
             }
-            DB::table('formulir_pesanan')->insert(
+            $fp = DB::table('formulir_pesanan')->insertGetId(
                 $dataInput
             );
+
+
+            $dtPembayaran = [];
+            if ($payment == "Cicilan") {
+                # code...
+                $dtPembayaran[] = array(
+                    'id_rumah'      =>  $id_rumah,
+                    'id_formulir'   =>  $fp,
+                    'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                    'detail_pr'     =>  "Uang Muka",
+                    'harga_pr'      =>  $kkpr->uang_muka,
+                    'sisa_pr'       =>  $kkpr->uang_muka,
+                    'tgl_pr'        =>  date("Y-m-d", strtotime("+7 days")),
+                    'status_pr'     =>  "belum"
+                );
+
+                for ($i = 1; $i < $kkpr->cicilan + 1; $i++) {
+
+                    if (!empty($promo)) {
+                        $dtPembayaran[] = array(
+                            'id_rumah'      =>  $id_rumah,
+                            'id_formulir'   =>  $fp,
+                            'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                            'detail_pr'     =>  "Cicilan " . $i,
+                            'harga_pr'      => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) + $kkpr->total_diskon)) / $kkpr->cicilan,
+                            'sisa_pr'       => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) + $kkpr->total_diskon)) / $kkpr->cicilan,
+                            'tgl_pr'        =>  date("Y-m-d", strtotime("+1 month")),
+                            'status_pr'     =>  "belum"
+                        );
+                    }
+                    if (empty($promo)) {
+                        $dtPembayaran[] = array(
+                            'id_rumah'      =>  $id_rumah,
+                            'id_formulir'   =>  $fp,
+                            'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                            'detail_pr'     =>  "Cicilan " . $i,
+                            'harga_pr'      => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100))) / $kkpr->cicilan,
+                            'sisa_pr'       => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100))) / $kkpr->cicilan,
+                            'tgl_pr'        =>  date("Y-m-d", strtotime("+1 month")),
+                            'status_pr'     =>  "belum"
+                        );
+                    }
+                }
+            }
+            if ($payment == "KPR") {
+                $dtPembayaran[] = array(
+                    'id_rumah'      =>  $id_rumah,
+                    'id_formulir'   =>  $fp,
+                    'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                    'detail_pr'     =>  "Cicilan Uang Muka " . 1,
+                    'harga_pr'      =>  $kkpr->uang_muka / $kkpr->cicilan_um,
+                    'sisa_pr'       =>  $kkpr->uang_muka / $kkpr->cicilan_um,
+                    'tgl_pr'        =>  date("Y-m-d", strtotime("+7 days")),
+                    'status_pr'     =>  "belum"
+                );
+                for ($k = 1; $k < $kkpr->cicilan_um; $k++) {
+
+                    $dtPembayaran[] = array(
+                        'id_rumah'      =>  $id_rumah,
+                        'id_formulir'   =>  $fp,
+                        'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                        'detail_pr'     =>  "Cicilan Uang Muka " . 1 + $k,
+                        'harga_pr'      =>  $kkpr->uang_muka / $kkpr->cicilan_um,
+                        'sisa_pr'       =>  $kkpr->uang_muka / $kkpr->cicilan_um,
+                        'tgl_pr'        =>  date("Y-m-d", strtotime("+1 month")),
+                        'status_pr'     =>  "belum"
+                    );
+                }
+                if (!empty($promo)) {
+                    $dtPembayaran[] = array(
+                        'id_rumah'      =>  $id_rumah,
+                        'id_formulir'   =>  $fp,
+                        'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                        'detail_pr'     =>  "Uang Muka",
+                        'harga_pr'      =>  $kkpr->total_harga - ($kkpr->uang_muka + $kkpr->total_diskon),
+                        'sisa_pr'       =>  $kkpr->total_harga - ($kkpr->uang_muka + $kkpr->total_diskon),
+                        'tgl_pr'        =>  date("Y-m-d", strtotime("+5 years")),
+                        'status_pr'     =>  "belum"
+                    );
+                }
+                if (empty($promo)) {
+                    $dtPembayaran[] = array(
+                        'id_rumah'      =>  $id_rumah,
+                        'id_formulir'   =>  $fp,
+                        'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                        'detail_pr'     =>  "KPR",
+                        'harga_pr'      =>  $kkpr->total_harga - $kkpr->uang_muka,
+                        'sisa_pr'       =>  $kkpr->total_harga - $kkpr->uang_muka,
+                        'tgl_pr'        =>  date("Y-m-d", strtotime("+5 years")),
+                        'status_pr'     =>  "belum"
+                    );
+                }
+            }
+            dd($dtPembayaran);
+            die();
+
+
+
+
             $data = [
-                "subject"       =>"Form Living",
-                "body"          =>"",
+                "subject"       => "Form Living",
+                "body"          => "",
                 "nama_plgn"     => $pelanggan->nama_plgn,
                 "nik"           => $pelanggan->no_ktp_plgn,
                 "no_wa"         => $pelanggan->no_wa_plgn,
                 "alamat"        => $pelanggan->alamat_plgn,
-                "cluster"       => $rumah->nama_cluster ." / ". $rumah->blok ." - ".$rumah->nomor,
+                "cluster"       => $rumah->nama_cluster . " / " . $rumah->blok . " - " . $rumah->nomor,
                 "luas_tanah"    => $rumah->luas_tanah,
                 "tipe"          => $tipeRumah->jenis_tr,
                 "harga"          => $tipeRumah->harga_tr,
-                ];
-              // MailNotify class that is extend from Mailable class.
-              try
-              {
-                Mail::to($pelanggan->email_plgn)->send(new MailNotify($data));
+                'tgl_beli'      => date("d M Y"),
+                'uang_muka'     => $kkpr->uang_muka
+            ];
+            // MailNotify class that is extend from Mailable class.
+            try {
+                Mail::to($pelanggan->email_plgn)->send(new MailNotify($data, $template));
+                Mail::to($user->email_ua)->send(new MailNotify($data, $template2));
                 // return response()->json(['Great! Successfully send in your mail']);
-              }
-              catch(Exception $e)
-              {
+            } catch (Exception $e) {
                 // return response()->json(['Sorry! Please try again latter']);
-              }
+            }
 
             return redirect('/congratulation')->with('success', 'Data has been send!');
             // dd($user);
@@ -1559,7 +1692,7 @@ class Home extends Controller
                     'tipe_kkpr'                 => $tipeRumah->jenis_tr,
                     'harga_awal'                => $tipeRumah->harga_tr,
                     'total_diskon'              => $promo->diskon_promo,
-                    'uang_muka'                 => $request->harga * (10/100),
+                    'uang_muka'                 => $request->harga * (10 / 100),
                     'total_harga'               => $request->harga
                 );
             }
@@ -1568,17 +1701,17 @@ class Home extends Controller
                     'luas_tanah_kkpr'           => $rumah->luas_tanah,
                     'tipe_kkpr'                 => $tipeRumah->jenis_tr,
                     'harga_awal'                => $tipeRumah->harga_tr,
-                    'uang_muka'                 => $request->harga * (10/100),
+                    'uang_muka'                 => $request->harga * (10 / 100),
 
                     'total_harga'               => $request->harga
                 );
             }
 
-           DB::table('kalkulator_kpr')
-            ->where('id_kkpr', $id_kkpr)
-            ->update(
-                 $dataInputDetail
-            );
+            DB::table('kalkulator_kpr')
+                ->where('id_kkpr', $id_kkpr)
+                ->update(
+                    $dataInputDetail
+                );
             if (!empty($promo)) {
                 $dataInput = array(
                     'id_pelanggan'              => session::get('guest'),
@@ -1603,32 +1736,124 @@ class Home extends Controller
                 );
             }
             // dd($pelanggan);
-            DB::table('formulir_pesanan')->insert(
+            $fp = DB::table('formulir_pesanan')->insertGetId(
                 $dataInput
             );
 
+
+            $dtPembayaran = [];
+            if ($payment == "Cicilan") {
+                # code...
+                $dtPembayaran[] = array(
+                    'id_rumah'      =>  $id_rumah,
+                    'id_formulir'   =>  $fp,
+                    'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                    'detail_pr'     =>  "Uang Muka",
+                    'harga_pr'      =>  $kkpr->uang_muka,
+                    'sisa_pr'       =>  $kkpr->uang_muka,
+                    'tgl_pr'        =>  date("Y-m-d", strtotime("+7 days")),
+                    'status_pr'     =>  "belum"
+                );
+
+                for ($i = 1; $i < $kkpr->cicilan + 1; $i++) {
+
+                    if (!empty($promo)) {
+                        $dtPembayaran[] = array(
+                            'id_rumah'      =>  $id_rumah,
+                            'id_formulir'   =>  $fp,
+                            'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                            'detail_pr'     =>  "Cicilan " . $i,
+                            'harga_pr'      => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) + $kkpr->total_diskon)) / $kkpr->cicilan,
+                            'sisa_pr'       => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) + $kkpr->total_diskon)) / $kkpr->cicilan,
+                            'tgl_pr'        =>  date("Y-m-d", strtotime("+1 month")),
+                            'status_pr'     =>  "belum"
+                        );
+                    }
+                    if (empty($promo)) {
+                        $dtPembayaran[] = array(
+                            'id_rumah'      =>  $id_rumah,
+                            'id_formulir'   =>  $fp,
+                            'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                            'detail_pr'     =>  "Cicilan " . $i,
+                            'harga_pr'      => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100))) / $kkpr->cicilan,
+                            'sisa_pr'       => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100))) / $kkpr->cicilan,
+                            'tgl_pr'        =>  date("Y-m-d", strtotime("+1 month")),
+                            'status_pr'     =>  "belum"
+                        );
+                    }
+                }
+            }
+            if ($payment == "KPR") {
+                $dtPembayaran[] = array(
+                    'id_rumah'      =>  $id_rumah,
+                    'id_formulir'   =>  $fp,
+                    'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                    'detail_pr'     =>  "Cicilan Uang Muka " . 1,
+                    'harga_pr'      =>  $kkpr->uang_muka / $kkpr->cicilan_um,
+                    'sisa_pr'       =>  $kkpr->uang_muka / $kkpr->cicilan_um,
+                    'tgl_pr'        =>  date("Y-m-d", strtotime("+7 days")),
+                    'status_pr'     =>  "belum"
+                );
+                for ($k = 1; $k < $kkpr->cicilan_um; $k++) {
+
+                    $dtPembayaran[] = array(
+                        'id_rumah'      =>  $id_rumah,
+                        'id_formulir'   =>  $fp,
+                        'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                        'detail_pr'     =>  "Cicilan Uang Muka " . 1 + $k,
+                        'harga_pr'      =>  $kkpr->uang_muka / $kkpr->cicilan_um,
+                        'sisa_pr'       =>  $kkpr->uang_muka / $kkpr->cicilan_um,
+                        'tgl_pr'        =>  date("Y-m-d", strtotime("+1 month")),
+                        'status_pr'     =>  "belum"
+                    );
+                }
+                if (!empty($promo)) {
+                    $dtPembayaran[] = array(
+                        'id_rumah'      =>  $id_rumah,
+                        'id_formulir'   =>  $fp,
+                        'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                        'detail_pr'     =>  "Uang Muka",
+                        'harga_pr'      =>  $kkpr->total_harga - ($kkpr->uang_muka + $kkpr->total_diskon),
+                        'sisa_pr'       =>  $kkpr->total_harga - ($kkpr->uang_muka + $kkpr->total_diskon),
+                        'tgl_pr'        =>  date("Y-m-d", strtotime("+5 years")),
+                        'status_pr'     =>  "belum"
+                    );
+                }
+                if (empty($promo)) {
+                    $dtPembayaran[] = array(
+                        'id_rumah'      =>  $id_rumah,
+                        'id_formulir'   =>  $fp,
+                        'id_pelanggan'  =>  $pelanggan->id_pelanggan,
+                        'detail_pr'     =>  "KPR",
+                        'harga_pr'      =>  $kkpr->total_harga - $kkpr->uang_muka,
+                        'sisa_pr'       =>  $kkpr->total_harga - $kkpr->uang_muka,
+                        'tgl_pr'        =>  date("Y-m-d", strtotime("+5 years")),
+                        'status_pr'     =>  "belum"
+                    );
+                }
+            }
+
             $data = [
-                "subject"       =>"Form Living",
-                "body"          =>"Form Living",
+                "subject"       => "Form Living",
+                "body"          => "Form Living",
                 "nama_plgn"     => $pelanggan->nama_plgn,
                 "nik"           => $pelanggan->no_ktp_plgn,
                 "no_wa"         => $pelanggan->no_wa_plgn,
                 "alamat"        => $pelanggan->alamat_plgn,
-                "cluster"       => $rumah->nama_cluster ." / ". $rumah->blok ." - ".$rumah->nomor,
+                "cluster"       => $rumah->nama_cluster . " / " . $rumah->blok . " - " . $rumah->nomor,
                 "luas_tanah"    => $rumah->luas_tanah,
                 "tipe"          => $tipeRumah->jenis_tr,
-                "harga"          => $tipeRumah->harga_tr,
-                ];
-              // MailNotify class that is extend from Mailable class.
-              try
-              {
-                Mail::to($pelanggan->email_plgn)->send(new MailNotify($data));
+                "harga"         => $tipeRumah->harga_tr,
+                'tgl_beli'      => date("d M Y"),
+                'uang_muka'     => $kkpr->uang_muka
+            ];
+            // MailNotify class that is extend from Mailable class.
+            try {
+                Mail::to($pelanggan->email_plgn)->send(new MailNotify($data, $template));
                 // return response()->json(['Great! Successfully send in your mail']);
-              }
-              catch(Exception $e)
-              {
+            } catch (Exception $e) {
                 // return response()->json(['Sorry! Please try again latter']);
-              }
+            }
 
             return redirect('/congratulation')->with('success', 'Data has been send!');
             // dd($dataInput);
@@ -1754,7 +1979,5 @@ class Home extends Controller
         $WhatsappFun = new WhatsappAPI();
         $status = $WhatsappFun->sendText("+6281227476463", "TEST MESSAGE FROM LARAVEL");
         dd($status);
-
     }
-
 }

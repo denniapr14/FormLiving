@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
+use App\Http\Controllers\AdminAccounting;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,6 +75,7 @@ use App\Http\Controllers\Home;
 
     // ------------= END SIMULATION =----------------
 
+    Route::get('/kalm',[Home::class,'Kalm']);
 
     // FOOTER
 
@@ -195,5 +197,15 @@ Route::get('/kiosk/splash-screen',function () {
     Route::get('/agent-company', function () {
         return view('Dashboard.agent_company');
     });
+
+// >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+// >>>>>>>>>>>>>>> DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+Route::get('/dashboard-admin-accounting', [AdminAccounting::class,'index']);
+Route::get('/formulirPesanan/{id_formulir}', [AdminAccounting::class,'formulirPesanan']);
+
+
 
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<

@@ -491,7 +491,7 @@
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
-                                            <button type="submit" type="button" id="next" disabled="true"
+                                            <button type="submit" type="button" id=""
                                                 class="btn btn-primary">Lanjutkan</button>
                                         </div>
                                     </form>

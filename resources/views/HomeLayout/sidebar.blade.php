@@ -20,11 +20,20 @@
                         <li>
                             <a class="dropdown-item" href="/housing">
                                 <div>
-                                    <img src="{{ asset('Home') }}/images/logo-tidar-green.png" alt="">
+                                    <img style="width: 50%" src="{{ asset('Home') }}/images/logo-tidar-green.png" alt="">
 
                                 </div>
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" href="/kalm">
+                                <div>
+                                    <img style="width: 50%" src="{{ asset('Home') }}/images/logo-kalm.png" alt="">
+
+                                </div>
+                            </a>
+                        </li>
+
                         <!--<li>-->
                         <!--    <a class="dropdown-item" href="#">-->
                         <!--        <div>-->

@@ -203,6 +203,16 @@
                                 <div class="user-detail">
                                     <h5>{{ $user->nama_ua }}</h5>
                                     <p>{{ $user->kategori }}</p>
+                                    @switch($user->kategori)
+                                        @case('AdminAccounting')
+                                            <a href="/dashboard-admin-accounting" class="btn btn-primary">Form One</a>
+                                            @break
+                                        @case(2)
+
+                                            @break
+                                        @default
+
+                                    @endswitch
                                 </div>
                             @endif
                         </div>
