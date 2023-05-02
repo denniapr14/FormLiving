@@ -212,11 +212,8 @@ table.no-space th {
                     <td class="text-left" style="width: 15%">Cluster - Blok</td>
                     <td class="text-left">: &nbsp;<span id="blokCluster" style="font-weight:bold;">
 
-
-
-                      </span>
-                      <input type="text" name="rumah" hidden id="dlCluster" value="<?= $fp->id_rumah ?>"
-                        class="noprint" placeholder="PILIH RUMAH">
+                    {{$fp->blok ." - ". $fp->nomor}}
+                      
 
                     </td>
                     <td> Spek :<input type="text" readonly name="spek" class="myinput" style="width: 80%;"
@@ -303,8 +300,8 @@ table.no-space th {
                         </td>
                       </tr>
                       <tr>
-                        <td class="text-left">fp</td>
-                        <td class="text-left">: &nbsp; <span style="font-weight:bold;" id="textfp">
+                        <td class="text-left">Harga</td>
+                        <td class="text-left">: {{rupiah($fp->total_harga - $fp->uang_muka)}} &nbsp; <span style="font-weight:bold;" id="textfp">
 
                         </td>
                       </tr>
@@ -374,49 +371,28 @@ table.no-space th {
               <div class="col-md-12">
                 <table class="table solid-border" style="table-layout:fixed">
                   <tbody>
+                    <?php
+                      $no = 1;
+                      ?>
+
+                    @foreach($dtPembayaran as $pem)
+
+                    
                     <tr style="height:25px; ">
-                      <td style="width: 5%; ">1</td>
+                      
+                      <td style="width: 5%; ">{{$no++}}</td>
                       <td style="width: 62%; ">
-                        <input type="text" name="ket1" class="myinput" style="width: 100%;">
+                        {{$pem->detail_pr}}
                       </td>
-                      <td> <input type="text" name="harga1" class="myinput" style="width: 100%;"></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td> <input type="text" name="ket2" class="myinput" style="width: 100%;">
+                      <td> 
+                       {{rupiah($pem->harga_pr)}}
                       </td>
-                      <td> <input type="text" name="harga2" class="myinput" style="width: 100%;"></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td> <input type="text" name="ket3" class="myinput" style="width: 100%;">
+                      <td>
+                        {{ date("d M Y", strtotime($pem->tgl_pr)) }}
                       </td>
-                      <td> <input type="text" name="harga3" class="myinput" style="width: 100%;"></td>
                     </tr>
-                    <tr>
-                      <td>4</td>
-                      <td> <input type="text" name="ket4" class="myinput" style="width: 100%;">
-                      </td>
-                      <td> <input type="text" name="harga4" class="myinput" style="width: 100%;"></td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td> <input type="text" name="ket5" class="myinput" style="width: 100%;">
-                      </td>
-                      <td> <input type="text" name="harga5" class="myinput" style="width: 100%;"></td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td> <input type="text" name="ket6" class="myinput" style="width: 100%;">
-                      </td>
-                      <td> <input type="text" name="harga6" class="myinput" style="width: 100%;"></td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td> <input type="text" name="ket7" class="myinput" style="width: 100%;">
-                      </td>
-                      <td> <input type="text" name="harga7" class="myinput" style="width: 100%;"></td>
-                    </tr>
+                    @endforeach
+                    
                   </tbody>
                 </table>
               </div>
@@ -428,7 +404,7 @@ table.no-space th {
                 <br>
                 <h6>- Bersedia menambah uang muka seandainya kredit yang diberikan lembaga kredit tidak
                   sesuai dengan permohonan.</h6>
-                <h6>- Uang muka harus lunas sebelum realisasi fp.</h6>
+                <h6>- Uang muka harus lunas sebelum realisasi .</h6>
                 <br>
 
               </div>
@@ -582,9 +558,31 @@ table.no-space th {
           </div>
         </form>
       </div>
+      <div style="background-color: gray; width: 100%; text-align: center;color:white;height: 50px; font-size: 32px "><i>FORMLIVING.COM</i></div>
       <!-- /.card-body -->
 
     </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td scope="row"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td scope="row"></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- /.row (main row) -->
   </div><!-- /.container-fluid -->

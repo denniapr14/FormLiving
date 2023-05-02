@@ -44,11 +44,11 @@
                     if ($time >= '04:00' && $time < '17:00') {
                         ?>
 
-                        <img src="{{ url('Dashboard') }}/images/content/sun_illustration.png" alt="sun_illustration">
+                        <img style="width: 25%" src="{{ url('Dashboard') }}/images/content/sun_illustration.png" alt="sun_illustration">
                         <?php
                     } else {
                         ?>
-                        <img src="{{ url('Dashboard') }}/images/content/night.png" alt="night">
+                        <img style="width: 25%" src="{{ url('Dashboard') }}/images/content/night.png" alt="night">
                         <?php
                     }
                     ?>

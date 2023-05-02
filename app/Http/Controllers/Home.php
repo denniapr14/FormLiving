@@ -234,7 +234,6 @@ class Home extends Controller
                         return redirect('/');
                         break;
                 }
-
             }
         }
 
@@ -246,7 +245,6 @@ class Home extends Controller
                 return redirect('/housing')
 
                     ->with('success', "You're Sign in!");
-
             }
         }
 
@@ -255,19 +253,18 @@ class Home extends Controller
     public function Role($idUser)
     {
 
-            $user = DB::table('user_admin')
-                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        $user = DB::table('user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
 
-                ->where('user_admin.id_user_admin', '=', $idUser)
+            ->where('user_admin.id_user_admin', '=', $idUser)
 
-                ->first();
+            ->first();
 
-            // dd($user->kategori);
-            // die();
+        // dd($user->kategori);
+        // die();
 
 
-           return $user->kategori;
-
+        return $user->kategori;
     }
 
     public function Logout()
@@ -1637,8 +1634,8 @@ class Home extends Controller
                     );
                 }
             }
-            dd($dtPembayaran);
-            die();
+            // dd($dtPembayaran);
+            // die();
 
 
 

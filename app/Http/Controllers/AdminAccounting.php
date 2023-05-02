@@ -31,26 +31,28 @@ class AdminAccounting extends Controller
     {
 
         $fp = DB::table('formulir_pesanan')
-        ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-        ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-        ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
-        ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
-        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+            ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+            ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+            ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
 
 
 
-        ->get();
+            ->get();
+        // dd($fp);
+        // die();
         if (session()->has('user')) {
 
             $user = DB::table('user_admin')
-            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
 
-            ->where('user_admin.id_user_admin', '=', session::get('user'))
+                ->where('user_admin.id_user_admin', '=', session::get('user'))
 
-            ->first();
+                ->first();
 
-            return view('AdminAccounting.dashboard', compact('user','fp'));
-        }else{
+            return view('AdminAccounting.dashboard', compact('user', 'fp'));
+        } else {
 
             return redirect('/login');
         }
@@ -60,27 +62,31 @@ class AdminAccounting extends Controller
     public function formulirPesanan($id_formulir)
     {
         $fp = DB::table('formulir_pesanan')
-        ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-        ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-        ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
-        ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
-        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-        ->where('id_formulir','=',$id_formulir)
-        ->first();
+            ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+            ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+            ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+            ->where('id_formulir', '=', $id_formulir)
+            ->first();
+        $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_formulir', '=', $id_formulir)
+            ->get();
 
-        // dd($fp);
+        // dd($dtPembayaran);
         // die();
         if (session()->has('user')) {
 
             $user = DB::table('user_admin')
-            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
 
-            ->where('user_admin.id_user_admin', '=', session::get('user'))
+                ->where('user_admin.id_user_admin', '=', session::get('user'))
 
-            ->first();
+                ->first();
 
-            return view('AdminAccounting.formulirPesanan', compact('user','fp'));
-        }else{
+            return view('AdminAccounting.formulirPesanan', compact('user', 'fp', 'dtPembayaran'));
+        } else {
 
             return redirect('/login');
         }
