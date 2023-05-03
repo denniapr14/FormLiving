@@ -1977,4 +1977,61 @@ class Home extends Controller
         $status = $WhatsappFun->sendText("+6281227476463", "TEST MESSAGE FROM LARAVEL");
         dd($status);
     }
+    public function email($id_formulir)
+    {
+        $fp = DB::table('formulir_pesanan')
+            ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+            ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+            ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+            ->where('id_formulir', '=', $id_formulir)
+            ->first();
+        $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_formulir', '=', $id_formulir)
+            ->get();
+
+        $dtPem = "";
+        // for ($i = 0; $i < count($dtPembayaran); $i++) {
+        //     # code...
+        // }
+        ob_start();
+        echo "<tbody>";
+        foreach ($dtPembayaran as $pem) {
+            echo "<tr style='border: 1px solid; font-size:12px'>" .
+                "<td style='border: 1px solid; width:70%'> " . $pem->detail_pr . " </td>" .
+                "<td style='border: 1px solid;width:30%'> " . date("d M Y", strtotime($pem->tgl_pr)) . " <a href='
+                https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pembayaran Tagihan " . $pem->detail_pr . "&dates=" . date("Ymd", strtotime($pem->tgl_pr)) . "T193000Z/" . date("Ymd", strtotime($pem->tgl_pr)) . "T223000Z&details=Pembayaran Tagihan " . $pem->detail_pr . " sejumlah " . $this->rupiah($pem->harga_pr) . "&location=Jakarta
+                ' style='border-radius:5px;
+                border:1px solid #a37343;
+                display:inline-block;
+                cursor:pointer;
+                color:#a37343;' > Simpan </a>  </td>"
+                . "</tr>";
+        }
+        echo "</tbody>";
+        $dtPem = ob_get_clean();
+
+        $data = [
+            "subject"       => "Form Living",
+            "body"          => "Form Living",
+            "dataFP"        => array($fp),
+            "dataPembayaran" => $dtPem,
+            "hargaAwal"     => $this->rupiah($fp->harga_awal),
+            "promo"         => "Tidak Ada Promo",
+            "tgl_input"     => date("d M Y", strtotime($fp->tgl_input_fp))
+        ];
+        // echo $dtPem;
+        // die();
+        // dd($data);
+        // die();
+        return view('mail.index', compact('data'));
+    }
+
+    function rupiah($angka)
+    {
+        $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.') . ',-';
+        return $hasil_rupiah;
+    }
 }
