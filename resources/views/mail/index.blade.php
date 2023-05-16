@@ -114,31 +114,31 @@ a[x-apple-data-detectors] {
                         <tbody style="font-size:12px">
                          <tr style="height:5px;padding:2px">
                           <td class="text-left" style="padding:0;Margin:0;width:25%">Nama</td>
-                        
+
                           <td class="text-left" style="padding:0;Margin:0;width:27%"> : {{$data['dataFP'][0]->nama_plgn}}</td>
                           <td class="text-left" style="padding:0;Margin:0;width:16%;vertical-align:middle">Pekerjaan</td>
-                          
+
                           <td class="text-left " style="padding:0;Margin:0;width:30%"> : {{$data['dataFP'][0]->pekerjaan_plgn}}</td>
                          </tr>
                          <tr>
                           <td class="text-left" style="padding:0;Margin:0">No.KTP</td>
-                          
+
                           <td class="text-left" style="padding:0;Margin:0"> : {{$data['dataFP'][0]->no_ktp_plgn}}</td>
                           <td class="text-left" style="padding:0;Margin:0">No. Telepon</td>
-                          
+
                           <td class="text-left " style="padding:0;Margin:0"> : {{$data['dataFP'][0]->no_telp_plgn}}</td>
                          </tr>
                          <tr>
                           <td class="text-left" style="padding:0;Margin:0">Jenis kelamin / Status</td>
-                         
+
                           <td class="text-left " style="padding:0;Margin:0"> : {{$data['dataFP'][0]->jenis_kelamin_status}}</td>
                           <td class="text-left" style="padding:0;Margin:0">Email </td>
-                          
+
                           <td colspan="20" class="text-left " style="padding:0;Margin:0">: {{$data['dataFP'][0]->email_plgn}}</td>
                          </tr>
                          <tr>
                           <td class="text-left" style="padding:0;Margin:0">Alamat</td>
-                          
+
                           <td style="padding:0;Margin:0;width:100%" class=" text-left" colspan="5">: {{$data['dataFP'][0]->alamat_plgn}}</td>
                          </tr>
                        </table></td>
@@ -275,7 +275,7 @@ a[x-apple-data-detectors] {
                          </div>
                         </div>
                        </div>
-                     
+
                        </div></td>
                      </tr>
                    </table></td>
@@ -333,7 +333,7 @@ a[x-apple-data-detectors] {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr class="es-visible-simple-html-only">
-                      <td align="center" bgcolor="#A37343" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#ffffff;font-size:14px">FORMLIVING.COM</p></td>
+                      <td align="center" bgcolor="#A37343" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#ffffff;font-size:14px">FORMSLIVING.COM</p></td>
                      </tr>
                    </table></td>
                  </tr>

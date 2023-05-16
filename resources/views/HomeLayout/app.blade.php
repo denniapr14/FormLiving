@@ -22,8 +22,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('Home') }}/css/app.css">
+    {{--  <link rel="stylesheet" href="{{url('Dashboard')}}/css/style.css" type="text/css">  --}}
 
     <!-- JS -->
+    <script src="https://kit.fontawesome.com/e393db40ad.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>

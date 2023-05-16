@@ -1,7 +1,7 @@
 @extends('AdminAccounting.app')
 @extends('DashboardLayout.sidebar')
 @extends('AdminAccounting.footer')
-@extends('flashdata')
+
 @section('tittle', 'FORMS ONE | Formulir')
 @section('content')
 <style>
@@ -107,7 +107,6 @@
 <br>
 <section class="content" id="printcontent">
     <div class="container-fluid ">
-
         <div class="card card-primary">
 
 
@@ -134,13 +133,8 @@
                                     <table class="table table-borderless">
                                         <tr>
                                             <td>No : </td>
-
-                                            <td>
-
-
-                                                <input type="text" class="myinput" name="no_fp"
+                                            <td><input type="text" class="myinput" name="no_fp"
                                                     value=" {{ $fp->no_fp }} ">
-
                                             </td>
                                         </tr>
                                     </table>
@@ -369,12 +363,12 @@
                             <!-- ============= BATAS DATA RINCIAN HARGA & RUMAH  -->
                             <?php
                 $noDtl = 1;
-                if (!empty($dtPembayaran)) {
+                if (!empty($detailFP)) {
                 ?>
                             <div class="col-md-12">
                                 <table class="table solid-border" style="table-layout:fixed;">
                                     <?php
-                      foreach ($dtPembayaran as $dfp) {
+                      foreach ($detailFP as $dfp) {
                       ?>
                                     <tbody style="border:1px solid black;">
                                         <tr style="height:30px; border:1px solid black;" class="BDT">
@@ -382,18 +376,16 @@
                                                 <?= $noDtl ?>
                                             </td>
                                             <td style="width: 40%; border:1px solid black; ">
-
-
-                                                    {{ $dfp->detail_pr }}
+                                                <input type="hidden" name="id_dfp[]" value="<?= $dfp->id_dtl_fp ?>">
+                                                <input type="text" name="ket[]" class="myinput"
+                                                    value="<?= $dfp->ket_dfp ?>" style="width: 100%;">
                                             </td>
                                             <td style="border:1px solid black;">
-                                                {{ date("d M Y", strtotime($dfp->tgl_pr)) }}
+                                                <input type="date" readonly class="myinput" name="notifDate[]"
+                                                    value="<?=$dfp->date_dfp?>">
                                             </td>
-                                            <td style="border:1px solid black;"> {{ rupiah($dfp->harga_pr) }}
-                                            </td>
-                                            <td style="border:1px solid black;">
-                                                <a href="/ubah-pembayaran/{{ $dfp->id_pem_rumah }} "class="btn btn-outline-primary">Edit</a>
-                                                <a href="/pembayaran/{{ $dfp->id_pem_rumah }} "class="btn btn-outline-primary">bayar</a>
+                                            <td style="border:1px solid black;"> <input type="text" name="notifHarga[]"
+                                                    class="myinput" value="<?= $dfp->harga_dfp ?>" style="width: 100%;">
                                             </td>
                                         </tr>
                                         <?php

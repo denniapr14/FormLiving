@@ -32,7 +32,6 @@
 <body>
 
     @yield('sidebar')
-    @yield('flashdata')
     <section class="main-content" id="main-content">
         <div class="navbar-content">
             <a href="#" class="navbar__sidebar-toggler">

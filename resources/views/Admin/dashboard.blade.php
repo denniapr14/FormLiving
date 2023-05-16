@@ -1,7 +1,7 @@
 @extends('AdminAccounting.app')
 @extends('AdminAccounting.sidebar')
 @extends('AdminAccounting.footer')
-@extends('flashdata')
+
 @section('tittle', 'FORMS | Dashboard')
 
 @section('content')

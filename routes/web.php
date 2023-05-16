@@ -32,6 +32,7 @@ Route::get('/virtual-tour', [Home::class, 'VirtualTour']);
 // >>>>>>>>>>>>>>>>>>> PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('/profile-setting', [Home::class, 'ProfileSetting']);
+Route::get('/cari-user', [Home::class, 'Search'])->name('search.action');
 Route::post('/profile-setting/update', [Home::class, 'ProfileSettingAction'])->name('profileSetting.action');
 
 Route::get('/edit-profile', [Home::class, 'editProfile']);
@@ -205,7 +206,10 @@ Route::get('/agent-company', function () {
 
 Route::get('/dashboard-admin-accounting', [AdminAccounting::class, 'index']);
 Route::get('/formulirPesanan/{id_formulir}', [AdminAccounting::class, 'formulirPesanan']);
-
+Route::get('/ubah-pembayaran/{id_pembayaran}', [AdminAccounting::class, 'editPembayaran']);
+Route::post('/ubah-pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'editPembayaranAction'])->name('ubah-pembayaran.action');;
+Route::get('/pembayaran/{id_pembayaran}', [AdminAccounting::class, 'pembayaran']);
+Route::post('/pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'pembayaranAction'])->name('pembayaran.action');;;
 
 
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<

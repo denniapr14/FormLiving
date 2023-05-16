@@ -17,15 +17,23 @@ use App\Models\Promo;
 use App\Http\Controllers\WhatsappAPI;
 // =======================
 use App\Mail\MailNotify;
+use Illuminate\Support\Facades\Storage;
 use Mail;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\If_;
+use Intervention\Image\Facades\Image;
 
 class AdminAccounting extends Controller
 {
+    public function __construct()
+    {
+        if (!session()->has('user')) {
+            return redirect('/login');
+        }
+    }
 
     public function index()
     {
@@ -94,4 +102,163 @@ class AdminAccounting extends Controller
 
         # code...
     }
+
+    public function editPembayaran($id_pembayaran)
+    {
+        $user = DB::table('user_admin')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+
+        ->where('user_admin.id_user_admin', '=', session::get('user'))
+
+        ->first();
+        $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_pem_rumah', '=', $id_pembayaran)
+            ->first();
+        return view('AdminAccounting.editPembayaranRumah',compact('dtPembayaran','user'));
+    }
+    public function editPembayaranAction(Request $request, $id_pembayaran)
+    {
+        $user = DB::table('user_admin')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+
+        ->where('user_admin.id_user_admin', '=', session::get('user'))
+
+        ->first();
+        $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_pem_rumah', '=', $id_pembayaran)
+            ->first();
+
+            $dataUpdate = array(
+                'detail_pr'         => $request->detail,
+                'harga_pr'          => $request->harga,
+                'sisa_pr'           => $request->sisa,
+                'status_pr'         => $request->status,
+                'tgl_pr'            => $request->tanggal
+            );
+
+
+            // dd($dataUpdate);
+            // die();
+
+            DB::table('pembayaran_rumah')
+                ->where('id_pem_rumah', $id_pembayaran)
+                ->update(
+                    $dataUpdate
+                );
+            return redirect('formulirPesanan/'.$dtPembayaran->id_formulir)->with('success', 'Data has been send!');
+    }
+
+
+    public function pembayaran($id_pembayaran)
+    {
+
+        $user = DB::table('user_admin')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+
+        ->where('user_admin.id_user_admin', '=', session::get('user'))
+
+        ->first();
+        $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_pem_rumah', '=', $id_pembayaran)
+            ->first();
+        $dtDetailPembayaran = DB::table('pembayaran_rumah')
+            ->join('rincian_pembayaran', 'pembayaran_rumah.id_pem_rumah', '=', 'rincian_pembayaran.id_pem_rumah')
+            ->where('pembayaran_rumah.id_pem_rumah', '=', $id_pembayaran)
+            ->get();
+
+        // dd($dtDetailPembayaran);
+        // die();
+        if (session()->has('user')) {
+
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+
+                ->where('user_admin.id_user_admin', '=', session::get('user'))
+
+                ->first();
+
+            // return view('AdminAccounting.dashboard', compact('user', 'fp'));
+            return view('AdminAccounting.pembayaranRumah',compact('dtPembayaran','user','dtDetailPembayaran'));
+        } else {
+
+            return redirect('/login');
+        }
+
+    }
+    public function pembayaranAction(Request $request,$id_pembayaran)
+    {
+        $user = DB::table('user_admin')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+
+        ->where('user_admin.id_user_admin', '=', session::get('user'))
+
+        ->first();
+        $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_pem_rumah', '=', $id_pembayaran)
+            ->first();
+        $dtDetailPembayaran = DB::table('pembayaran_rumah')
+            ->join('rincian_pembayaran', 'pembayaran_rumah.id_pem_rumah', '=', 'rincian_pembayaran.id_pem_rumah')
+            ->where('pembayaran_rumah.id_pem_rumah', '=', $id_pembayaran)
+            ->get();
+
+
+
+
+        // Get the uploaded file
+        $image = $request->file('image');
+
+
+        $destinationPath = public_path('/thumbnail');
+        // Generate a unique filename
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+
+        // Resize the image
+        // $resizedImage = Image::make($image)->fit(300);
+        $img = Image::make($image->path());
+        $img->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$input['image']);
+
+        // Save the resized image to disk
+        Storage::put('public/Dashboard/images/pembayaran/' . $filename, $img);
+
+        // Return a response
+        return response()->json(['success' => true]);
+
+        $user = DB::table('user_admin')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+
+        ->where('user_admin.id_user_admin', '=', session::get('user'))
+
+        ->first();
+
+
+        $dataUpdatePembayaran = array(
+
+            'sisa_pr'           => $request->sisa,
+
+        );
+
+        $dataUpdateRincian = array(
+            'detail_pr'         => $request->detail,
+            'harga_pr'          => $request->harga,
+            'sisa_pr'           => $request->sisa,
+            'status_pr'         => $request->status,
+            'gambar'            => $resizedImage,
+            'tgl_pr'            => $request->tanggal
+        );
+
+
+        dd($dataUpdateRincian);
+        die();
+
+        // DB::table('pembayaran_rumah')
+        //     ->where('id_pem_rumah', $id_pembayaran)
+        //     ->update(
+        //         $dataUpdate
+        //     );
+        return redirect('formulirPesanan/'.$dtPembayaran->id_formulir)->with('success', 'Data has been send!');
+
+    }
+
 }

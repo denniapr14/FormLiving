@@ -229,6 +229,10 @@ class Home extends Controller
                     case 'AdminAccounting':
                         return redirect('/profile-setting');
                         break;
+                    case 'Admin':
+                        return redirect('/profile-setting');
+                        break;
+
 
                     default:
                         return redirect('/');
@@ -430,6 +434,9 @@ class Home extends Controller
         }
 
         if (session()->has('user')) {
+
+            // $lastMonth = \Carbon\Carbon::now()->subMonth();
+
             $user = DB::table('user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
                 ->where(['id_user_admin' => session::get('user')])
@@ -457,9 +464,30 @@ class Home extends Controller
                 ])
                 ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
                 ->first();
+
+            $fpCountLast = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month - 1 )
+                ->first();
+
+            $fpCountAll = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+
+                ->first();
+
             // dd($fpCount);
             // die();
-            return view('profileSetting', compact('user', 'fp', 'fpCount'));
+            return view('profileSetting', compact('user', 'fp', 'fpCount','fpCountLast','fpCountAll'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -472,6 +500,88 @@ class Home extends Controller
 
         return view('profileSetting');
         # code...
+    }
+
+    public function Search(Request $request){
+
+        if (session()->has('user')) {
+
+            // $lastMonth = \Carbon\Carbon::now()->subMonth();
+
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where(['id_user_admin' => session::get('user')])
+                ->first();
+
+            $bulan = now();
+            $tahun = now();
+            $status = null;
+            if (!empty($request->month)) {
+                $bulan = $request->month;
+            }
+            if (!empty($request->year)) {
+                $tahun = $request->year;
+            }
+            if (!empty($request->status)) {
+                $status = $request->status;
+            }
+            $fp = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                // ->select('logo_img','nama_img','cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+                // ->groupBy('cluster.nama_cluster')
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', $bulan)
+                ->whereYear('formulir_pesanan.tgl_input_fp', $tahun)
+                ->where([
+                    'formulir_pesanan.status_fp' => $status
+                ])
+                // ->where(
+                //         "MONTH('formulir_pesanan'.'tgl_input_fp')",'=','MONTH(CURRENT_DATE())'
+                //         )
+                ->get();
+            $fpCount = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
+                ->first();
+
+            $fpCountLast = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month - 1 )
+                ->first();
+
+            $fpCountAll = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+
+                ->first();
+
+
+
+            // dd($bulan);
+            // dd($tahun);
+            // dd($fp);
+            // die();
+            return view('profileSetting', compact('user', 'fp', 'fpCount','fpCountLast','fpCountAll'));
+        }else{
+            return redirect()->route('login');
+        }
     }
 
     public function ProfileSettingAction(Request $request)
@@ -1439,6 +1549,7 @@ class Home extends Controller
             # code...
         }
     }
+
     public function SimSummaryAction(Request $request, $id_rumah, $id_tipe, $payment, $id_kkpr, $voucher, $id_pelanggan)
     {
         $tipeRumah = DB::table('tipe_rumah')->where([
@@ -1863,6 +1974,7 @@ class Home extends Controller
             // );
 
         }
+
         return view('simSummary');
         # code...
     }
@@ -2033,5 +2145,9 @@ class Home extends Controller
     {
         $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.') . ',-';
         return $hasil_rupiah;
+
+
     }
+
+
 }
