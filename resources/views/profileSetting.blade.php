@@ -295,76 +295,98 @@
                     <div class="edit-profile">
                         <h5>Dashboard</h5>
                         @if (!empty(Session::get('guest')))
-                        <form action="{{ route('profileSetting.action') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="edit-image">
-                                <div class="image">
-                                    <img src="{{ asset('Home') }}/images/img-profile-large.png" alt="">
-                                    <div class="btn-change">
-                                        <img src="{{ asset('Home') }}/images/btn_change-foto.png" alt="">
+                        <div class="choose-cluster">
+                            <form action="{{ route('search.action') }}" method="get">
+                                <div class="row col-md-12">
+                                    <div class="col-md-4">
+
+                                    <select name="month" class="form form-select" style="" id="">
+                                        <option selected="selected">-- Pilih Bulan --</option>
+                                        <?php
+                                        $bulan=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+                                        $jlh_bln=count($bulan);
+                                        ?>
+                                        @for ($c=0; $c<$jlh_bln; $c+=1) <option value="{{ $c+1 }}"> {{ $bulan[$c] }}
+                                            </option>
+                                            @endfor
+
+
+                                    </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="year" class="form form-select"  id="">
+                                            <option value="{{ date("Y/m/d")}}">--Tahun--</option>
+                                            <?php
+                                            $now=date('Y');
+                                            ?>
+                                            @for ($a=2012;$a<=$now;$a++)
+                                                <option value="{{ $a }}">{{ $a }}</option>
+
+                                            @endfor
+
+
+                                            </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select name="status" class="form form-select"  id="">
+                                            <option value="">--Pilih Status--</option>
+                                            <option value="validated">Selesai</option>
+                                            <option value="unvalidated">Belum</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
 
+
+                                <div>
+
+
+                                </div>
+                            </form>
+                            <div class="row">
+                                @foreach ($fp as $fp)
+                                <div class="col-6 col-lg-3">
+
+                                    <a href="/profile/formulir-pesanan/{{ $fp->id_formulir }}">
+                                        <div class="item">
+                                            <div class="item-image">
+                                                <?php
+                                                    if(!empty($fp->img_rumah)){
+                                                        ?>
+                                                <img src="{{ asset('Home') }}/images/rumah/{{ $fp->img_rumah }}" alt="">
+                                                <?php
+                                                    }else{
+                                                    ?>
+
+                                                <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                                                <?php
+                                                    }
+                                                    ?>
+
+                                            </div>
+                                            <h6 class="item-title">{{ $fp->blok }} - {{ $fp->nomor }}
+                                            </h6>
+                                            <div class="item-avail">
+
+                                                <p> Nama User : {{ $fp->nama_plgn }}</p>
+                                                @if ($fp->status_market_fp == 'accept')
+                                                <p class="btn btn-success"><i class="bi bi-check"></i></p>
+                                                @else
+                                                <p class="btn btn-danger"><i class="bi bi-x"></i></p>
+                                                @endif
+
+                                            </div>
+
+
+                                        </div>
+                                    </a>
+                                </div>
+                                @endforeach
                             </div>
+                        </div>
 
-                            <div class="row forms">
-                                <div class="col-12 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control" name="username" id="username"
-                                            value="{{ $userPelanggan->username_plgn }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Full Name</label>
-                                        <input type="text" class="form-control" name="nama" id="nama"
-                                            placeholder="{{ $userPelanggan->nama_plgn }}"
-                                            value="{{ $userPelanggan->nama_plgn }}">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" name="email" id="email"
-                                            placeholder="{{ $userPelanggan->email_plgn }}"
-                                            value="{{ $userPelanggan->email_plgn }}">
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="full_name" class="form-label">Phone Number</label>
-                                        <input type="tel" class="form-control" name="telp" id="telp"
-                                            placeholder="{{ $userPelanggan->no_telp_plgn }}"
-                                            value="{{ $userPelanggan->no_telp_plgn }}">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="full_name" class="form-label">What Apps</label>
-                                        <input type="tel" class="form-control" name="wa" id="wa"
-                                            placeholder="{{ $userPelanggan->no_telp_plgn }}"
-                                            value="{{ $userPelanggan->no_wa_plgn }}">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="mb-5">
-                                        <label for="full_name" class="form-label">Password</label>
-                                        <input type="password" class="form-control" name="password" id="password"
-                                            placeholder="***************">
-                                        <span id="spanPwd"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <button type="sumbit" value="submit" class="btn btn-primary w-100">Save
-                                        Changes</button>
-                                </div>
-                            </div>
-                        </form>
                         @endif
 
                         @if (!empty(Session::get('user')))
@@ -502,7 +524,7 @@
                                 @foreach ($fp as $fp)
                                 <div class="col-6 col-lg-3">
 
-                                    <a href="">
+                                    <a href="/profile/formulir-pesanan/{{ $fp->id_formulir }}">
                                         <div class="item">
                                             <div class="item-image">
                                                 <?php
