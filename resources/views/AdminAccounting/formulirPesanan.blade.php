@@ -123,7 +123,7 @@
                     </div>
                 </div>
 
-                <form action="" method="POST" enctype="multipart/form-data">
+
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
@@ -602,7 +602,7 @@
                                     Simpan</i></button>
                         </center>
                     </div>
-                </form>
+
             </div>
             <div
                 style="background-color: gray; width: 100%; text-align: center;color:white;height: 50px; font-size: 32px ">

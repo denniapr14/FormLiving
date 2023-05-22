@@ -209,91 +209,15 @@
     </div>
     <div class="container">
         <div class="second-layout">
+
             <div class="row">
-                <!-- PROFILE -->
-                <div class="col-12 col-lg-4 left-column ">
-                    <div class="user-profile">
-                        <div class="user-image">
-                            <img src="{{ asset('Home') }}/images/img-profile-medium.png" alt="">
-                        </div>
-                        @if (!empty(Session::get('guest')))
-                        <div class="user-detail">
-                            <h5>{{ $userPelanggan->nama_plgn }}</h5>
-                            <p>Pelanggan</p>
-                        </div>
-                        @endif
-                        @if (!empty(Session::get('user')))
-                        <div class="user-detail">
-                            <h5>{{ $user->nama_ua }}</h5>
-                            <p>{{ $user->kategori }}</p>
-                            @switch($user->kategori)
-                            @case('AdminAccounting')
-                            <a href="/dashboard-admin-accounting" class="btn btn-primary">Form One</a>
-                            @break
+                <div class="col-12 col-lg-12 ">
+                    <div class="">
 
-                            @case(2)
-                            @break
 
-                            @default
-                            @endswitch
-                        </div>
-                        @endif
-                    </div>
+                            <div class="col-md-6"><h5 class="float-right">Dashboard</h5></div>
 
-                    <div class="profile-nav">
-                        <a href="/dashboard-profile" class="item">
-                            <div class="d-flex">
-                                <div class="icon">
-                                    <img src="{{ asset('Home') }}/images/ic-dashboard.png" alt="">
-                                </div>
-                                <p>Dashboard</p>
-                            </div>
-                            <div class="ic-chevron">
-                                <i class="bi-chevron-right"></i>
-                            </div>
-                        </a>
-                        @if(!empty(Session::get('user')))
-                        <a href="/edit-profile" class="item">
-                            <div class="d-flex">
-                                <div class="icon">
-                                    <i class="fa fa-diamond mycolor" aria-hidden="true"></i>
-                                </div>
-                                <p> &nbsp;Komisi</p>
-                            </div>
-                            <div class="ic-chevron">
-                                <i class="bi-chevron-right"></i>
-                            </div>
-                        </a>
-                        @endif
-                        <a href="/edit-profile" class="item">
-                            <div class="d-flex">
-                                <div class="icon">
-                                    <img src="{{ asset('Home') }}/images/ic-profile.png" alt="">
-                                </div>
-                                <p>Edit Profile</p>
-                            </div>
-                            <div class="ic-chevron">
-                                <i class="bi-chevron-right"></i>
-                            </div>
-                        </a>
-
-                        <a href="/logout" class="item">
-                            <div class="d-flex">
-                                <div class="icon">
-                                    <img src="{{ asset('Home') }}/images/ic-logout.png" alt="">
-                                </div>
-                                <p>Logout</p>
-                            </div>
-                            <div class="ic-chevron">
-                                <i class="bi-chevron-right"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- EDIT PROFILE MOBILE STATE -->
-                <div class="col-12 col-lg-8 right-column d-none d-lg-block">
-                    <div class="edit-profile">
-                        <h5>Dashboard</h5>
+<br>
                         @if (!empty(Session::get('guest')))
                         <form action="{{ route('profileSetting.action') }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -447,7 +371,6 @@
 
 
                         <br>
-
                         <div class="choose-cluster">
                             <form action="{{ route('search.action') }}" method="get">
                                 <div class="row col-md-12">
@@ -498,11 +421,12 @@
 
                                 </div>
                             </form>
+                            <br>
                             <div class="row">
                                 @foreach ($fp as $fp)
                                 <div class="col-6 col-lg-3">
 
-                                    <a href="">
+                                    <a href="/profile/formulir-pesanan/{{ $fp->id_formulir }}">
                                         <div class="item">
                                             <div class="item-image">
                                                 <?php
@@ -521,8 +445,8 @@
                                             </div>
                                             <h6 class="item-title">{{ $fp->blok }} - {{ $fp->nomor }}
                                             </h6>
-                                            <div class="item-avail">
-                                                {{ $fp->id_formulir }}
+                                            <div class="">
+
                                                 <p> Nama User : {{ $fp->nama_plgn }}</p>
                                                 @if ($fp->status_market_fp == 'accept')
                                                 <p class="btn btn-success"><i class="bi bi-check"></i></p>
@@ -543,6 +467,7 @@
                         @endif
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

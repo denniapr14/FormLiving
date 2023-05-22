@@ -119,7 +119,8 @@
 
 
                     <div class="main-item">
-                        @if (empty($imgRumah2->img_rumah))
+
+                        @if (!empty($imgRumah2->img_rumah))
                         <img src="{{ asset('Home') }}/images/NoImg.jpg" alt="">
 
                         @else

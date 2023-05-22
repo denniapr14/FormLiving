@@ -49,6 +49,7 @@
 
 @yield('navbar-profile')
 
+@yield('navbar-mobile')
 {{-- @yield('branch') --}}
 @yield('footer')
 @yield('script')

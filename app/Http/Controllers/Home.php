@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+// use Spatie\PdfToText\Pdf;
+// use PDF;
 
 // Model
 use App\Models\UserAdmin;
@@ -20,7 +22,9 @@ use App\Models\Promo;
 use App\Http\Controllers\WhatsappAPI;
 // =======================
 use App\Mail\MailNotify;
+use Illuminate\Support\Facades\Storage;
 use Mail;
+use PDF;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -422,7 +426,6 @@ class Home extends Controller
     public function ProfileSetting()
     {
 
-
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
@@ -759,6 +762,231 @@ class Home extends Controller
     }
 
 
+    public function DashboardProfile()
+    {
+        if (!session()->has('guest') && !session()->has('user')) {
+            // $hasilSess = Session::get('guest');
+            // response()->json('hasilSess');
+            return redirect("/login")->with('error', "You not sign in or sign up!");
+            # code...
+
+
+
+        }
+
+        if (session()->has('user')) {
+
+            // $lastMonth = \Carbon\Carbon::now()->subMonth();
+
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where(['id_user_admin' => session::get('user')])
+                ->first();
+
+            $fp = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                // ->select('logo_img','nama_img','cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+                // ->groupBy('cluster.nama_cluster')
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
+                // ->where(
+                //         "MONTH('formulir_pesanan'.'tgl_input_fp')",'=','MONTH(CURRENT_DATE())'
+                //         )
+                ->get();
+            $fpCount = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
+                ->first();
+
+            $fpCountLast = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month - 1 )
+                ->first();
+
+            $fpCountAll = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->select(DB::raw('COUNT(rumah.id_rumah) as count'))
+                ->where([
+                    'formulir_pesanan.id_user_admin' => session::get('user')
+                ])
+
+                ->first();
+
+            // dd($fpCount);
+            // die();
+            return view('dashboardProfile', compact('user', 'fp', 'fpCount','fpCountLast','fpCountAll'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            $fp = DB::table('formulir_pesanan')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                // ->select('logo_img','nama_img','cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+                // ->groupBy('cluster.nama_cluster')
+                ->where([
+                    'formulir_pesanan.id_pelanggan' => session::get('guest')
+                ])
+                ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
+                // ->where(
+                //         "MONTH('formulir_pesanan'.'tgl_input_fp')",'=','MONTH(CURRENT_DATE())'
+                //         )
+                ->get();
+            // dd($userPelanggan);
+            // die();
+            return view('dashboardProfile', compact('userPelanggan'));
+        }
+
+        return view('dashboardProfile');
+        # code...
+    }
+    public function formulirPesanan($id_formulir)
+    {
+        if (!session()->has('guest') && !session()->has('user')) {
+            // $hasilSess = Session::get('guest');
+            // response()->json('hasilSess');
+            return redirect("/login")->with('error', "You not sign in or sign up!");
+            # code...
+
+
+
+        }
+
+        if (session()->has('user')) {
+
+            // $lastMonth = \Carbon\Carbon::now()->subMonth();
+
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where(['id_user_admin' => session::get('user')])
+                ->first();
+
+                $fp = DB::table('formulir_pesanan')
+                ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+                ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where('id_formulir', '=', $id_formulir)
+                ->first();
+            $dtPembayaran = DB::table('pembayaran_rumah')
+                ->where('id_formulir', '=', $id_formulir)
+                ->get();
+
+            // dd($fpCount);
+            // die();
+            return view('formulirPesanan', compact('user', 'fp','dtPembayaran'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where(['id_user_admin' => session::get('user')])
+                ->first();
+
+                $fp = DB::table('formulir_pesanan')
+                ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+                ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+                ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where('id_formulir', '=', $id_formulir)
+                ->first();
+            $dtPembayaran = DB::table('pembayaran_rumah')
+                ->where('id_formulir', '=', $id_formulir)
+                ->get();
+
+            // dd($fpCount);
+            // die();
+            return view('formulirPesanan', compact('user', 'fp','dtPembayaran'));
+        }
+
+        return view('login');
+        # code...
+    }
+    public function Cetak($id_formulir)
+    {
+        $fp = DB::table('formulir_pesanan')
+        ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+        ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+        ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+        ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+        ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->where('id_formulir', '=', $id_formulir)
+        ->first();
+    $dtPembayaran = DB::table('pembayaran_rumah')
+        ->where('id_formulir', '=', $id_formulir)
+        ->get();
+
+    $dtPem = "";
+    // for ($i = 0; $i < count($dtPembayaran); $i++) {
+    //     # code...
+    // }
+    ob_start();
+    echo "<tbody>";
+    foreach ($dtPembayaran as $pem) {
+        echo "<tr style='border: 1px solid; font-size:12px'>" .
+            "<td style='border: 1px solid; width:70%'> " . $pem->detail_pr . " </td>" .
+            "<td style='border: 1px solid;width:30%'> " . date("d M Y", strtotime($pem->tgl_pr)) . " <a href='
+            https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pembayaran Tagihan " . $pem->detail_pr . "&dates=" . date("Ymd", strtotime($pem->tgl_pr)) . "T193000Z/" . date("Ymd", strtotime($pem->tgl_pr)) . "T223000Z&details=Pembayaran Tagihan " . $pem->detail_pr . " sejumlah " . $this->rupiah($pem->harga_pr) . "&location=Jakarta
+            ' style='border-radius:5px;
+            border:1px solid #a37343;
+            display:inline-block;
+            cursor:pointer;
+            color:#a37343;' > Simpan </a>  </td>"
+            . "</tr>";
+    }
+    echo "</tbody>";
+    $dtPem = ob_get_clean();
+
+    $data = [
+        "subject"       => "Form Living",
+        "body"          => "Form Living",
+        "dataFP"        => array($fp),
+        "dataPembayaran" => $dtPem,
+        "hargaAwal"     => $this->rupiah($fp->harga_awal),
+        "promo"         => "Tidak Ada Promo",
+        "tgl_input"     => date("d M Y", strtotime($fp->tgl_input_fp))
+    ];
+    // echo $dtPem;
+    // die();
+    // dd($data);
+    // die();
+    // view()->share('data',$data);
+    $pdf = PDF::loadView('pdf.printFP',['fp'=>$fp,'dtPembayaran'=>$dtPembayaran]);
+    // $pdf = PDF::loadView('mail.index');
+    $pdf->setPaper('F4','potrait');
+    // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
+    // $pdf->render();
+    // $pdfData = $pdf->output();
+    // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
+    // Storage::put($filename, $pdfData);
+    // dd($fp);
+    // $path = 'Home/pdf/';
+    // $pdf->save($path . 'FP-'.$fp->blok."-".$fp->nomor.'-'.$fp->id_formulir.'.pdf');
+    return $pdf->download('FP-'.$fp->blok."-".$fp->nomor.'.pdf');
+        # code...
+    }
     // ===================== End Profile ============================
 
 
@@ -1575,7 +1803,7 @@ class Home extends Controller
                 ->first();
         }
         $template = 'mail.coba';
-        $template2 = 'mail.salesFP';
+        $template2 = 'pdf.salesFP';
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -1745,8 +1973,8 @@ class Home extends Controller
                     );
                 }
             }
-            // dd($dtPembayaran);
-            // die();
+
+
 
 
 
@@ -1765,6 +1993,7 @@ class Home extends Controller
                 'tgl_beli'      => date("d M Y"),
                 'uang_muka'     => $kkpr->uang_muka
             ];
+
             // MailNotify class that is extend from Mailable class.
             try {
                 Mail::to($pelanggan->email_plgn)->send(new MailNotify($data, $template));
@@ -2052,6 +2281,7 @@ class Home extends Controller
     // ======================= END FOOTER ========================
 
 
+
     // public function Send()
     // {
 
@@ -2138,7 +2368,23 @@ class Home extends Controller
         // die();
         // dd($data);
         // die();
-        return view('mail.index', compact('data'));
+        // view()->share('data',$data);
+        $pdf = PDF::loadView('pdf.printFP',['fp'=>$fp,'dtPembayaran'=>$dtPembayaran]);
+        // $pdf = PDF::loadView('mail.index');
+        $pdf->setPaper('F4','potrait');
+        // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
+        $pdf->render();
+        $pdfData = $pdf->output();
+        // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
+        // Storage::put($filename, $pdfData);
+        // dd($filename);
+        $path = 'Home/pdf/';
+        $pdf->save($path . 'FP-'.$fp->blok."-".$fp->nomor.'-'.$fp->id_formulir.'.pdf');
+        // $pdf->download('FP-'.$fp->blok."-".$fp->nomor.'.pdf');
+        // // set_time_limit(300);
+        // dd($dtPembayaran);
+        // die();
+        // return view('mail.index', compact('data'));
     }
 
     function rupiah($angka)

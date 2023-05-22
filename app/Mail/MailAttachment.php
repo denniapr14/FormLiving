@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MailNotify extends Mailable
+class MailAttachment extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,18 +19,15 @@ class MailNotify extends Mailable
      * @return void
      */
     public $data=[];
-    protected $pdfPath;
-
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data,$pdfPath)
+    public function __construct($data)
     {
-        $this->data = $data;
-        $pdf = $pdfPath;
+        $this->data= $data;
     }
 
     /**

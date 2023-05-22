@@ -32,6 +32,9 @@ Route::get('/virtual-tour', [Home::class, 'VirtualTour']);
 // >>>>>>>>>>>>>>>>>>> PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('/profile-setting', [Home::class, 'ProfileSetting']);
+Route::get('/dashboard-profile', [Home::class, 'DashboardProfile']);
+Route::get('/profile/formulir-pesanan/{id_formulir}', [Home::class, 'FormulirPesanan']);
+Route::get('/profile/cetak/{id_formulir}', [Home::class, 'cetak']);
 Route::get('/cari-user', [Home::class, 'Search'])->name('search.action');
 Route::post('/profile-setting/update', [Home::class, 'ProfileSettingAction'])->name('profileSetting.action');
 
