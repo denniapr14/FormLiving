@@ -20,7 +20,7 @@
                 $('#namaBank').find('option').not(':first').remove();
 
                 $.ajax({
-                    url: '/simulation-price-payment/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}/' +
+                    url: '/simulation-price-payment/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}/{{ $payment }}/' +
                         getNama,
                     method: "GET",
 
@@ -230,8 +230,8 @@
                 <div class="step done">3</div>
                 <div class="step done">4</div>
                 <div class="step done">5</div>
-                <div class="step active">6</div>
-                <div class="step">7</div>
+                <div class="step done">6</div>
+                <div class="step active">7</div>
                 <div class="step last">8</div>
             </div>
 
@@ -243,8 +243,8 @@
                 <div class="step done">3</div>
                 <div class="step done">4</div>
                 <div class="step done">5</div>
-                <div class="step active">6</div>
-                <div class="step">7</div>
+                <div class="step done">6</div>
+                <div class="step active">7</div>
                 <div class="step last">8</div>
             </div>
             <div>
@@ -254,7 +254,11 @@
                     <div class="row">
                         <div class="col-12 order-2 order-lg-1">
                             <h2 class="title">
-                                Simulasi Kredit
+                                Simulasi Kredit @if ($payment == 'KPR')
+                                    KPR
+                                @elseif($payment == 'Cicilan')
+                                Inhouse
+                                @endif
                             </h2>
                         </div>
                         <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
@@ -298,7 +302,7 @@
                                 @if ($payment == 'KPR')
 
                                     <form
-                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}"
+                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$pelanggan->id_pelanggan,$kdPromo, $payment]) }}"
                                         method="POST">
                                         @csrf
                                         <div class="simulation-price">
@@ -439,6 +443,7 @@
                                                 onclick="hitung('jumlahHarga','uangMuka','namaBank','hasil','hasil2','hasil3','hasil4')"
                                                 class="btn btn-primary">Hitung Simulasi</a>
                                         </div>
+                                        @if ($payment == 'KPR')
                                         <div class="price-total">
                                             <p>Perkiraan pembayaran KPR Anda:</p>
                                             <h5 id="hasil">/ Bulan</h5>
@@ -446,8 +451,10 @@
                                             <h5 id="hasil3">/ Bulan</h5>
                                             <h5 id="hasil4">/ Bulan</h5>
                                         </div>
+                                        @endif
+
                                         <div class="btn-groups">
-                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
+                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
                                             <button type="submit" type="button" id="next" disabled="true"
                                                 class="btn btn-primary">Lanjutkan</button>
@@ -455,7 +462,7 @@
                                     </form>
                                 @elseif($payment == 'Cicilan')
                                     <form
-                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}"
+                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$pelanggan->id_pelanggan,$kdPromo, $payment]) }}"
                                         method="POST">
                                         <div class="simulation-price">
                                             @csrf
@@ -489,7 +496,7 @@
                                             @endfor
                                         </div>
                                         <div class="btn-groups">
-                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
+                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
                                             <button type="submit" type="button" id=""
                                                 class="btn btn-primary">Lanjutkan</button>

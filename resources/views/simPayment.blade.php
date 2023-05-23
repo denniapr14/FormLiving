@@ -27,8 +27,8 @@
             <div class="step done">2</div>
             <div class="step done">3</div>
             <div class="step done">4</div>
-            <div class="step active">5</div>
-            <div class="step">6</div>
+            <div class="step done">5</div>
+            <div class="step active">6</div>
             <div class="step">7</div>
             <div class="step last">8</div>
         </div>
@@ -40,14 +40,14 @@
             <div class="step done">2</div>
             <div class="step done">3</div>
             <div class="step done">4</div>
-            <div class="step active">5</div>
-            <div class="step">6</div>
+            <div class="step done">5</div>
+            <div class="step active">6</div>
             <div class="step">7</div>
             <div class="step last">8</div>
         </div>
         <div>
             {{--  FORM  --}}
-            <form action="{{ route('simulation-price',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah,'']) }}" method="post">
+            <form action="{{ route('simulation-price',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$pelanggan->id_pelanggan,$kdPromo]) }}" method="post">
                 @csrf
                 <div class="second-layout">
 
@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="btn-groups">
-                    <a href="/simulation-detail-type/{{ $rumah->id_rumah }}" type="button" class="btn btn-grey">Kembali</a>
+                    <a href="/simulation-data-pelanggan/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}" type="button" class="btn btn-grey">Kembali</a>
                     <button type="submit"  type="button" class="btn btn-primary">Lanjutkan</button>
                 </div>
             </form>
