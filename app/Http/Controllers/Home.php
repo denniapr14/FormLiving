@@ -1616,9 +1616,13 @@ class Home extends Controller
         $pelanggan = DB::table('user_pelanggan')
             ->where('id_pelanggan', '=', $id_pelanggan)
             ->first();
-        $skBunga = DB::table('sk_bunga')->where([
+        $skBunga = DB::table('sk_bunga')
+        ->join('list_sk_bunga','sk_bunga.id_bunga','=','list_sk_bunga.id_bunga')
+        ->where([
             'status_bunga' => "aktif",
-        ])->get();
+        ])
+        ->where('list_sk_bunga.id_rumah','=',$id_rumah)
+        ->get();
         $tipeRumah = DB::table('tipe_rumah')->where([
             'id_tipe_rumah' => $id_tipe,
         ])->first();
@@ -1715,10 +1719,16 @@ class Home extends Controller
     public function getSKBunga($id_rumah, $id_tipe, $id_pelanggan, $payment, $namaBank = "")
     {
         $skBunga = DB::table('sk_bunga')
-            ->select('id_bunga', 'nama_bank', 'persentase')
-            ->where([
-                'nama_bank' => $namaBank,
-            ])->get();
+        ->select('id_bunga', 'nama_bank', 'persentase')
+        ->join('list_sk_bunga','sk_bunga.id_bunga','=','list_sk_bunga.id_bunga')
+        ->where([
+            'status_bunga' => "aktif",
+        ])
+        ->where('list_sk_bunga.id_rumah','=',$id_rumah)
+        ->where([
+            'nama_bank' => $namaBank,
+        ])->get();
+
         return response()->json($skBunga);
     }
 
