@@ -85,7 +85,10 @@
                                 <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumahSingle->img_rumah }}" alt="">
                                 @endif
                             </a>
+
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -111,6 +114,7 @@
                     </div>
 
                     @endforeach
+
                 </div>
 
                 <div class="thumbnails-container">

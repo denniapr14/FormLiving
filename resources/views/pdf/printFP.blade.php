@@ -66,7 +66,7 @@
                             <div class="col-md-12">
 
                                 <br>
-                                <center><u><b>FORMULIR PESANAN</b></u></center>
+                                <center><u><b>ORMULIR PEMESANAN</b></u></center>
                                 <br>
                                 <div class="float-right" style="display: inline; width: 30%;">
                                     <table class="table table-borderless">
