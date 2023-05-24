@@ -22,10 +22,12 @@
                 $.ajax({
                     url: '/simulation-price-payment/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}/{{ $payment }}/' +
                         getNama,
+
                     method: "GET",
 
                     dataType: 'json',
                     success: function(response) {
+
                         console.log(response);
                         var len = 0;
 
@@ -429,12 +431,22 @@
                                             <div class="card-shadow">
                                                 <label for="">Jumlah Plafon KPR</label>
                                             </div>
+                                            @if (!empty($promo))
+                                            <div class="">
+                                                <input type="text" readonly class="form-control card-shadow"
+                                                    name="jumlah" id="jumlahHarga" aria-describedby="helpId" placeholder=""
+                                                    onkeyup="getValue('jumlahHarga')"
+                                                    value="{{ rupiah(($tipeRumah->harga_tr -  $promo->diskon_promo) - ((($tipeRumah->harga_tr-  $promo->diskon_promo) * (10 / 100)) - 10000000)) }}">
+                                            </div>
+                                            @else
                                             <div class="">
                                                 <input type="text" readonly class="form-control card-shadow"
                                                     name="jumlah" id="jumlahHarga" aria-describedby="helpId" placeholder=""
                                                     onkeyup="getValue('jumlahHarga')"
                                                     value="{{ rupiah($tipeRumah->harga_tr - ($tipeRumah->harga_tr * (10 / 100) - 10000000)) }}">
                                             </div>
+                                            @endif
+
 
 
                                         </div>

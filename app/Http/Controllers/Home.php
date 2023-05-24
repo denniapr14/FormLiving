@@ -1771,18 +1771,18 @@ class Home extends Controller
     }
 
     // AJAX
-    public function getSKBunga($id_rumah, $id_tipe, $id_pelanggan, $payment, $namaBank = "")
+    public function getSKBunga($id_rumah, $id_tipe, $id_pelanggan,$kdPromo, $payment, $namaBank = "")
     {
         $skBunga = DB::table('sk_bunga')
         ->select('sk_bunga.id_bunga', 'sk_bunga.nama_bank', 'sk_bunga.persentase')
         ->join('list_sk_bunga','sk_bunga.id_bunga','=','list_sk_bunga.id_bunga')
+
         ->where([
-            'status_bunga' => "aktif",
-        ])
-        ->where('list_sk_bunga.id_rumah','=',$id_rumah)
-        ->where([
+            'list_sk_bunga.id_rumah'=>$id_rumah,
+            'sk_bunga.status_bunga' => "aktif",
             'nama_bank' => $namaBank,
         ])->get();
+        // dd($skBunga);
 
         return response()->json($skBunga);
     }
