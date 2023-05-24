@@ -745,28 +745,68 @@ class Home extends Controller
         $userP = \App\Models\UserPelanggan::where([
             'username_plgn' => $request->username,
         ])->first();
+        $userUA = DB::table('user_admin')
+        ->where('username_ua','=',$request->username )
+        ->first();
 
-        if (!empty($userP)) {
+        if (!empty($userP) && !empty($userUA)) {
             return redirect('/sign-up')->with('error', 'Username is use!');
         }
+        if ($request->userTipe == "pelanggan") {
+            $dataInput = array(
+                'nama_plgn' => $request->nama,
+                'username_plgn' => $request->username,
+                'password_plgn' => md5($request->password),
+                'email_plgn' => $request->email,
+                'no_telp_plgn' => $request->phone,
+                // 'no_wa_plgn'            => $request->wa,
+                'kategori_plgn' => "guest",
+                'jenis_kelamin_status' => $request->kelamin,
 
-        $dataInput = array(
-            'nama_plgn' => $request->nama,
-            'username_plgn' => $request->username,
-            'password_plgn' => md5($request->password),
-            'email_plgn' => $request->email,
-            'no_telp_plgn' => $request->phone,
+            );
+
+
+            // dd($dataInput);
+            // die();
+
+            DB::table('user_pelanggan')->insert(
+                $dataInput
+            );
+        }
+        if ($request->userTipe == "agentWithCompany") {
+            $dataInput = array(
+            'id_kategori'   => 24,
+            'code_id_ua'    => "XMP".$request->tanggalLahir."AGC",
+            'username_ua'   => $request->username,
+            'password_ua'   => md5($request->password),
+            'email_ua'      => $request->email,
+            'no_telp_ua'    => $request->phone,
             // 'no_wa_plgn'            => $request->wa,
-            'kategori_plgn' => "guest",
-            'jenis_kelamin_status' => $request->kelamin,
+            // 'jenis_kelamin_status' => $request->kelamin,
+            );
+            DB::table('user_admin')->insert(
+                $dataInput
+            );
+        }
+        if ($request->userTipe == "agentWithCompany") {
+            $dataInput = array(
+            'id_kategori'   => 5,
+            'code_id_ua'    => "MDT".$request->tanggalLahir."AG",
+            'username_ua'   => $request->username,
+            'password_ua'   => md5($request->password),
+            'email_ua'      => $request->email,
+            'no_telp_ua'    => $request->phone,
+            // 'no_wa_plgn'            => $request->wa,
+            // 'jenis_kelamin_status' => $request->kelamin,
+            );
+            DB::table('user_admin')->insert(
+                $dataInput
+            );
+        }
 
-        );
-        // dd($dataInput);
-        // die();
 
-        DB::table('user_pelanggan')->insert(
-            $dataInput
-        );
+
+
         return redirect('/login')->with('success', 'Your Account ' . $request->username . ' has been created');
         // return view('signUp');
         # code...
@@ -1719,7 +1759,7 @@ class Home extends Controller
     public function getSKBunga($id_rumah, $id_tipe, $id_pelanggan, $payment, $namaBank = "")
     {
         $skBunga = DB::table('sk_bunga')
-        ->select('id_bunga', 'nama_bank', 'persentase')
+        ->select('sk_bunga.id_bunga', 'sk_bunga.nama_bank', 'sk_bunga.persentase')
         ->join('list_sk_bunga','sk_bunga.id_bunga','=','list_sk_bunga.id_bunga')
         ->where([
             'status_bunga' => "aktif",

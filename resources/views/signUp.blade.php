@@ -60,11 +60,27 @@
                         <span>*Required</span>
                     </div>
                     <div class="mb-3 form-group">
+                        <label for="phone" class="form-label">Born</label>
+                        <input type="tel" class="form-control" name="tanggalLahir" id="" placeholder="Phone Number">
+                        <span>*Required</span>
+                    </div>
+
+                    <div class="mb-3 form-group">
                         <label for="kelamin" class="form-label">Gender</label>
                         <select name="kelamin" class="form-select form-control" id="">
                             <option value=""> - Select Gender - </option>
                             <option value="Laki - Laki"> Male </option>
                             <option value="Wanita"> Female </option>
+                        </select>
+                        <span>*Required</span>
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label for="kelamin" class="form-label">Gender</label>
+                        <select name="tipeUser" class="form-select form-control" id="">
+                            <option value=""> - Select Gender - </option>
+                            <option value="pelanggan">Pelanggan</option>
+                            <option value="agentWithCompany"> Agen dengan Company</option>
+                            <option value="agentWithoutCompany"> Agen tidak dengan Company </option>
                         </select>
                         <span>*Required</span>
                     </div>
