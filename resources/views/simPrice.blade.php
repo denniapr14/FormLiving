@@ -466,34 +466,76 @@
                                         method="POST">
                                         <div class="simulation-price">
                                             @csrf
+                                            @if (!empty($promo))
+                                            <div class="form-group">
+                                              <label for="">Booking Fee</label>
+                                              {{ rupiah(10000000) }}
+                                            </div>
+                                            <br>
                                             @for ($i = 1; $i < 5; $i++)
-                                                <?php
-                                                $thn = $tipeRumah->harga_tr / (3 * $i);
+                                            <?php
+                                            $thn = (($tipeRumah->harga_tr - $promo->diskon_promo)-10000000)/ (3 * $i);
 
-                                                ?>
+                                            ?>
 
-                                                <div class="collapse-item">
-                                                    <a class="card-shadow" data-bs-toggle="collapse"
-                                                        href="#bank{{ $i }}" role="button"
-                                                        aria-expanded="false" aria-controls="bank">
-                                                        Cicilan {{ 3 * $i }} Bulan
-                                                    </a>
-                                                    <div class="" id="bank{{ $i }}">
-                                                        <div class="card card-body">
-                                                            <div class="form-check form-radio">
-                                                                <input type="radio" id="age1" name="cicilan"
-                                                                    value="{{ 3 * $i }}">
-                                                                <label class="form-check-label">
-                                                                    Rp. {{ pembulatan(round($thn, -3) + 1000) }} Per Bulan
+                                            <div class="collapse-item">
+                                                <a class="card-shadow" data-bs-toggle="collapse"
+                                                    href="#bank{{ $i }}" role="button"
+                                                    aria-expanded="false" aria-controls="bank">
+                                                    Cicilan {{ 3 * $i }} Bulan
+                                                </a>
+                                                <div class="" id="bank{{ $i }}">
+                                                    <div class="card card-body">
+                                                        <div class="form-check form-radio">
+                                                            <input type="radio" id="age1" name="cicilan"
+                                                                value="{{ 3 * $i }}">
+                                                            <label class="form-check-label">
+                                                                Rp. {{ pembulatan(round($thn, -3) + 1000) }} Per Bulan
 
-                                                                </label>
-                                                            </div>
-
+                                                            </label>
                                                         </div>
+
                                                     </div>
                                                 </div>
-                                                <br>
-                                            @endfor
+                                            </div>
+                                            <br>
+                                        @endfor
+                                            @else
+                                            <div class="form-group">
+                                              <label for="">Booking Fee</label>
+                                              {{ rupiah(10000000) }}
+                                            </div>
+                                            <br>
+                                            @for ($i = 1; $i < 5; $i++)
+                                            <?php
+                                            $thn = ($tipeRumah->harga_tr - 10000000) / (3 * $i);
+
+                                            ?>
+
+                                            <div class="collapse-item">
+                                                <a class="card-shadow" data-bs-toggle="collapse"
+                                                    href="#bank{{ $i }}" role="button"
+                                                    aria-expanded="false" aria-controls="bank">
+                                                    Cicilan {{ 3 * $i }} Bulan
+                                                </a>
+                                                <div class="" id="bank{{ $i }}">
+                                                    <div class="card card-body">
+                                                        <div class="form-check form-radio">
+                                                            <input type="radio" id="age1" name="cicilan"
+                                                                value="{{ 3 * $i }}">
+                                                            <label class="form-check-label">
+                                                                Rp. {{ pembulatan(round($thn, -3) + 1000) }} Per Bulan
+
+                                                            </label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        @endfor
+                                            @endif
+
                                         </div>
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}"

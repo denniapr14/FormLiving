@@ -803,6 +803,21 @@ class Home extends Controller
                 $dataInput
             );
         }
+        if ($request->userTipe == "sales") {
+            $dataInput = array(
+            'id_kategori'   => 4,
+            'code_id_ua'    => "GL".$request->tanggalLahir."SL",
+            'username_ua'   => $request->username,
+            'password_ua'   => md5($request->password),
+            'email_ua'      => $request->email,
+            'no_telp_ua'    => $request->phone,
+            // 'no_wa_plgn'            => $request->wa,
+            // 'jenis_kelamin_status' => $request->kelamin,
+            );
+            DB::table('user_admin')->insert(
+                $dataInput
+            );
+        }
 
 
 
@@ -1688,7 +1703,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('simPrice', compact('user', 'tipeRumah', 'rumah', 'payment', 'kdPromo'));
+            return view('simPrice', compact('user', 'tipeRumah', 'rumah', 'payment', 'kdPromo','promo'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1696,7 +1711,7 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('simPrice', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment', 'kdPromo'));
+            return view('simPrice', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment', 'kdPromo','promo'));
         }
         return view('simPrice', 'tipeRumah', 'rumah', 'payment');
         # code...
@@ -1740,7 +1755,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('simPrice', compact('user', 'tipeRumah', 'rumah', 'payment', 'skBunga', 'pelanggan', 'kdPromo'));
+            return view('simPrice', compact('user', 'tipeRumah', 'rumah', 'payment', 'skBunga', 'pelanggan', 'kdPromo','promo'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1749,7 +1764,7 @@ class Home extends Controller
             // dd($userPelanggan);
             // die();
 
-            return view('simPrice', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment', 'skBunga', 'pelanggan', 'kdPromo'));
+            return view('simPrice', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment', 'skBunga', 'pelanggan', 'kdPromo','promo'));
         }
         return view('simPrice', 'tipeRumah', 'rumah', 'payment');
         # code...

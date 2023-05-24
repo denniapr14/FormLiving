@@ -61,7 +61,7 @@
                     </div>
                     <div class="mb-3 form-group">
                         <label for="phone" class="form-label">Born</label>
-                        <input type="tel" class="form-control" name="tanggalLahir" id="" placeholder="Phone Number">
+                        <input type="date" class="form-control" name="tanggalLahir" id="" placeholder="">
                         <span>*Required</span>
                     </div>
 
@@ -79,6 +79,7 @@
                         <select name="tipeUser" class="form-select form-control" id="">
                             <option value=""> - Select Gender - </option>
                             <option value="pelanggan">Pelanggan</option>
+                            <option value="sales">Sales Inhouse</option>
                             <option value="agentWithCompany"> Agen dengan Company</option>
                             <option value="agentWithoutCompany"> Agen tidak dengan Company </option>
                         </select>
