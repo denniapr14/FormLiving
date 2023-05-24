@@ -788,7 +788,7 @@ class Home extends Controller
                 $dataInput
             );
         }
-        if ($request->userTipe == "agentWithCompany") {
+        if ($request->userTipe == "agentWithoutCompany") {
             $dataInput = array(
             'id_kategori'   => 5,
             'code_id_ua'    => "MDT".$request->tanggalLahir."AG",
