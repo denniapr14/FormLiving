@@ -228,7 +228,10 @@
                                             </div>
                                             <div><i class="bi-chevron-right"></i></div>
                                         </button>
+                                        <br>
+                                        <div id="myAlert"  role="alert">
 
+                                        </div>
                                         <div class="modal fade promo" id="modelId" tabindex="-1" role="dialog"
                                             aria-labelledby="modelTitleId" aria-hidden="true">
                                             <div class="modal-dialog  modal-lg" role="document">
@@ -253,7 +256,7 @@
 
                                                             <h5 class="mb-4">Pilih Promo</h5>
 
-                                                            @if (empty($promoRumah))\
+                                                            @if (empty($promoRumah))
                                                             <h5>Promo Rumah</h5>
                                                             Tidak ada promo Rumah
                                                             @else
@@ -532,7 +535,7 @@
 
                                                             <h5 class="mb-4">Pilih Promo</h5>
 
-                                                            @if (empty($promoRumah))\
+                                                            @if (empty($promoRumah))
                                                             <h5>Promo Rumah</h5>
                                                             Tidak ada promo Rumah
                                                             @else
