@@ -344,7 +344,7 @@
                                                                         <br></p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        Halo [Nama],</p>
+                                                                        Halo $data['nama'],</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         <br></p>
