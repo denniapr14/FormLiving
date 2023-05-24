@@ -91,7 +91,7 @@ Route::get('/loading-page', [Home::class, 'loadingPage']);
 Route::get('/privacy', [Home::class, 'Privacy']);
 Route::get('/terms', [Home::class, 'Terms']);
 
-
+Route::get('/cetak/{id_formulir}', [Home::class, 'PrintFP']);
 // END FOOTER
 
 // >>>>>>>>>>>>>>>>>>> END HOME <<<<<<<<<<<<<<<<<<<<<<<<

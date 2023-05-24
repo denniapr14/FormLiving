@@ -39,6 +39,7 @@ class MailAttachment extends Mailable
     {
         return $this->from('formliving@greenlandtidar.net','Formulir Pesanan')
         ->subject($this->data["subject"])
-                    ->view('mail.test')->with("data",$this->data);
+                    ->view('mail.test')->with("data",$this->data)
+                    ->attach($this->data["attachment"]);
     }
 }
