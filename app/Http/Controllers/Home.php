@@ -1519,7 +1519,7 @@ class Home extends Controller
                     $dataInput
                 );
             }
-            return redirect('/simulation-payment-option/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $id);
+            return redirect('/simulation-payment-option/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $id . '/' . $request->promo);
 
             // dd($dataInput);
             // die();
