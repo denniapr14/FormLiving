@@ -2371,8 +2371,47 @@ class Home extends Controller
                     );
                 }
             }
+            $fp = DB::table('formulir_pesanan')
+            ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+            ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+            ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+            ->where('id_formulir', '=', $fp)
+            ->first();
+        $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_formulir', '=', $fp)
+            ->get();
+            $pdf = PDF::loadView('pdf.printFP', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran]);
+            // $pdf = PDF::loadView('mail.index');
+            $pdf->setPaper('F4', 'potrait');
+            // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
+            $pdf->render();
+            $pdfData = $pdf->output();
+            // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
+            // Storage::put($filename, $pdfData);
+            // dd($filename);
+            $path = 'Home/pdf/';
+            $filename = $pdf->save($path . 'FP-' . $fp->blok . "-" . $fp->nomor . '-' . $fp->id_formulir . '.pdf');
 
-            $data = [
+            $dataEmail1 = [
+                'to'      => $pelanggan->email_plgn,
+                "subject" => "Form Living",
+                "body" => "",
+                "nama_plgn" => $pelanggan->nama_plgn,
+                "nik" => $pelanggan->no_ktp_plgn,
+                "no_wa" => $pelanggan->no_wa_plgn,
+                "alamat" => $pelanggan->alamat_plgn,
+                "cluster" => $rumah->nama_cluster . " / " . $rumah->blok . " - " . $rumah->nomor,
+                "luas_tanah" => $rumah->luas_tanah,
+                "tipe" => $tipeRumah->jenis_tr,
+                "harga" => $tipeRumah->harga_tr,
+                'tgl_beli' => date("d M Y"),
+                'uang_muka' => $kkpr->uang_muka,
+            ];
+            $dataEmail2 = [
+                'to'      => $user->email_ua,
                 "subject" => "Form Living",
                 "body" => "",
                 "nama_plgn" => $pelanggan->nama_plgn,
@@ -2389,8 +2428,10 @@ class Home extends Controller
 
             // MailNotify class that is extend from Mailable class.
             try {
-                Mail::to($pelanggan->email_plgn)->send(new MailNotify($data, $template));
-                Mail::to($user->email_ua)->send(new MailNotify($data, $template2));
+                $plgn = Mail::to($pelanggan->email_plgn)->send(new MailNotify($dataEmail1, $template));
+                $plgn->attach($filename);
+                $sales= Mail::to($user->email_ua)->send(new MailNotify($dataEmail2, $template2));
+                $sales->attach($filename);
                 // return response()->json(['Great! Successfully send in your mail']);
             } catch (Exception $e) {
                 // return response()->json(['Sorry! Please try again latter']);
