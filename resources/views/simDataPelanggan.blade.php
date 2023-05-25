@@ -101,24 +101,26 @@
                             action="{{ route('dataPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}"
                             method="POST">
                             @csrf
+
+                            <h5>NB : Required <span style="color: red">*</span></h5>
                             <div class="row form-order">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Nama (Sesuai KTP)</label>
+                                        <label for="name" class="form-label">Nama (Sesuai KTP) <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="nama" id="name"
                                             value="{{ old('name') }}" placeholder="Nama (Sesuai KTP)">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label">NIK</label>
+                                        <label for="nik" class="form-label">NIK <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="nik" id="nik"
                                             value="{{ old('nik') }}" placeholder="NIK">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label">Pekerjaan</label>
+                                        <label for="nik" class="form-label">Pekerjaan <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="pekerjaan" id="pekerjaan"
                                             value="{{ old('pekerjaan') }}" placeholder="pekerjaan">
                                     </div>
@@ -132,7 +134,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="telp" class="form-label">No. Telepon </label>
+                                        <label for="telp" class="form-label">No. Telepon <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="telp" id="telp"
                                             placeholder="No. Telp" value="{{ old('telp') }}">
 
@@ -140,63 +142,63 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="wa" class="form-label">No. Whataspp (Aktif)</label>
+                                        <label for="wa" class="form-label">No. Whataspp (Aktif) <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="wa" id="wa"
                                             value="{{ old('wa') }}" placeholder="No. Whataspp (Aktif)">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="" class="form-label">Provinsi</label>
+                                        <label for="" class="form-label">Provinsi <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="pulau" id="provinsi"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label">Kota</label>
+                                        <label for="alamat" class="form-label">Kota <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="kota" id="kota"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label">Kecamatan</label>
+                                        <label for="alamat" class="form-label">Kecamatan <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="kecamatan" id="kecamatan"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label">Kelurahan</label>
+                                        <label for="alamat" class="form-label">Kelurahan <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="kelurahan" id="kelurahan"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label">Jalan</label>
+                                        <label for="alamat" class="form-label">Jalan <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="jalan" id="jalan"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="email" class="form-label">Email</label>
+                                        <label for="email" class="form-label">Email <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="email" id="email"
                                             value="{{ old('email') }}" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="npwp" class="form-label">No. NPWP</label>
+                                        <label for="npwp" class="form-label">No. NPWP <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="npwp" id="npwp"
                                             value="{{ old('npwp') }}" placeholder="No. NPWP">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="gender" class="form-label">Jenis Kelamin</label>
+                                        <label for="gender" class="form-label">Jenis Kelamin <span style="color: red">*</span></label>
                                         <select class="input form-select" name="gender" id="gender">
                                             <option disabled selected>Jenis Kelamin</option>
                                             <option>Laki Laki</option>
@@ -206,7 +208,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="gender" class="form-label">Status Pernikahan</label>
+                                        <label for="gender" class="form-label">Status Pernikahan <span style="color: red">*</span></label>
                                         <select class="input form-select" name="statusPernikahan" id="statusPernikahan">
                                             <option disabled selected>Pilih Status Penikahan</option>
                                             <option>Sudah Menikah</option>
@@ -214,7 +216,6 @@
                                         </select>
                                     </div>
                                 </div>
-
 
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
@@ -380,24 +381,25 @@
                             action="{{ route('dataPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}"
                             method="POST">
                             @csrf
+                            <h5>NB : Required <span style="color: red">*</span></h5>
                             <div class="row form-order">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Nama (Sesuai KTP)</label>
+                                        <label for="name" class="form-label">Nama (Sesuai KTP) <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="nama" id="name"
                                             value="{{ old('name') }}" placeholder="Nama (Sesuai KTP)">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label">NIK</label>
+                                        <label for="nik" class="form-label">NIK <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="nik" id="nik"
                                             value="{{ old('nik') }}" placeholder="NIK">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label">Pekerjaan</label>
+                                        <label for="nik" class="form-label">Pekerjaan <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="pekerjaan" id="pekerjaan"
                                             value="{{ old('pekerjaan') }}" placeholder="pekerjaan">
                                     </div>
@@ -411,7 +413,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="telp" class="form-label">No. Telepon </label>
+                                        <label for="telp" class="form-label">No. Telepon <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="telp" id="telp"
                                             placeholder="No. Telp" value="{{ old('telp') }}">
 
@@ -419,63 +421,63 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="wa" class="form-label">No. Whataspp (Aktif)</label>
+                                        <label for="wa" class="form-label">No. Whataspp (Aktif) <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="wa" id="wa"
                                             value="{{ old('wa') }}" placeholder="No. Whataspp (Aktif)">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="" class="form-label">Provinsi</label>
+                                        <label for="" class="form-label">Provinsi <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="pulau" id="provinsi"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label">Kota</label>
+                                        <label for="alamat" class="form-label">Kota <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="kota" id="kota"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label">Kecamatan</label>
+                                        <label for="alamat" class="form-label">Kecamatan <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="kecamatan" id="kecamatan"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label">Kelurahan</label>
+                                        <label for="alamat" class="form-label">Kelurahan <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="kelurahan" id="kelurahan"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label">Jalan</label>
+                                        <label for="alamat" class="form-label">Jalan <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="jalan" id="jalan"
                                             value="{{ old('alamat') }}" placeholder="Alamat">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="email" class="form-label">Email</label>
+                                        <label for="email" class="form-label">Email <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="email" id="email"
                                             value="{{ old('email') }}" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="npwp" class="form-label">No. NPWP</label>
+                                        <label for="npwp" class="form-label">No. NPWP <span style="color: red">*</span></label>
                                         <input type="text" class="input form-control" name="npwp" id="npwp"
                                             value="{{ old('npwp') }}" placeholder="No. NPWP">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="gender" class="form-label">Jenis Kelamin</label>
+                                        <label for="gender" class="form-label">Jenis Kelamin <span style="color: red">*</span></label>
                                         <select class="input form-select" name="gender" id="gender">
                                             <option disabled selected>Jenis Kelamin</option>
                                             <option>Laki Laki</option>
@@ -485,7 +487,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="gender" class="form-label">Status Pernikahan</label>
+                                        <label for="gender" class="form-label">Status Pernikahan <span style="color: red">*</span></label>
                                         <select class="input form-select" name="statusPernikahan" id="statusPernikahan">
                                             <option disabled selected>Pilih Status Penikahan</option>
                                             <option>Sudah Menikah</option>
@@ -666,7 +668,7 @@
     const name              = document.getElementById('name');
         const nik               = document.getElementById('nik');
         const pekerjaan         = document.getElementById('pekerjaan');
-        const sumberDana        = document.getElementById('sumberDana');
+
         const telp              = document.getElementById('telp');
         const wa                = document.getElementById('wa');
         const provinsi          = document.getElementById('provinsi');
@@ -684,7 +686,7 @@
         name.addEventListener('input',checkInputs);
         nik.addEventListener('input',checkInputs);
         pekerjaan.addEventListener('input',checkInputs);
-        sumberDana.addEventListener('input',checkInputs);
+
         telp.addEventListener('input',checkInputs);
         wa.addEventListener('input',checkInputs);
         provinsi.addEventListener('input',checkInputs);
@@ -702,7 +704,6 @@
                 name.value !== '' &&
                 nik.value !== '' &&
                 pekerjaan.value !== '' &&
-                sumberDana.value !== '' &&
                 telp.value !== '' &&
                 wa.value !== '' &&
                 provinsi.value !== '' &&
