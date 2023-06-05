@@ -12,14 +12,14 @@
 
             <div class="col-lg-12 " data-aos="fade-left" data-aos-delay="400">
                 <div class="image-sliders">
-                    {{--  <div>
+                    {{-- <div>
                         <img src="{{ asset('Home') }}/images/60.jpg" class="w-100" alt="">
-                    </div>  --}}
+                    </div> --}}
                     <div>
-                        <img src="{{ asset('Home') }}/images/greenland-project.jpeg"  class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/greenland-project.jpeg" class="w-100" alt="">
                     </div>
                     <div>
-                        <img src="{{ asset('Home') }}/images/kalm-project.jpeg"  class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/kalm-project.jpeg" class="w-100" alt="">
                     </div>
 
                     {{-- <div>
@@ -74,7 +74,9 @@
     <div class="cta-mobile">
         <div class="container">
             <div class="sliders-mobile">
-                <a href="/greenland.html" class="item">
+                <div class="item">
+
+
                     <div class="logo">
                         <img src="{{ asset('Home') }}/images/logo-tidar-white.png" alt="">
                     </div>
@@ -82,9 +84,13 @@
                         <img src="{{ asset('Home') }}/images/mobile-sliders1.png" alt="">
                     </div>
                     <div class="float-button">
-                        Miliki Unit <i class="bi-chevron-right"></i>
+                        <div>
+                            <a href="/greenland.html">
+                                Miliki Unit <i class="bi-chevron-right"></i>
+                            </a>
+                        </div>
                     </div>
-                </a>
+                </div>
                 <div class="item">
                     <div class="logo">
                         <img src="{{ asset('Home') }}/images/logo-project2b.png" alt="">
@@ -104,24 +110,23 @@
         <div class="container">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="semua-tab" data-bs-toggle="tab"
-                        data-bs-target="#semua-tab-pane" type="button" role="tab" aria-controls="semua-tab-pane"
-                        aria-selected="true">Semua</button>
+                    <button class="nav-link active" id="semua-tab" data-bs-toggle="tab" data-bs-target="#semua-tab-pane"
+                        type="button" role="tab" aria-controls="semua-tab-pane" aria-selected="true">Semua</button>
                 </li>
-                {{--  <li class="nav-item" role="presentation">
+                {{-- <li class="nav-item" role="presentation">
                     <button class="nav-link" id="perumahaan-tab" data-bs-toggle="tab"
                         data-bs-target="#perumahaan-tab-pane" type="button" role="tab"
                         aria-controls="perumahaan-tab-pane" aria-selected="false">Perumahaan</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="apartemen-tab" data-bs-toggle="tab"
-                        data-bs-target="#apartemen-tab-pane" type="button" role="tab"
-                        aria-controls="apartemen-tab-pane" aria-selected="false">Apartemen</button>
-                </li>  --}}
+                        data-bs-target="#apartemen-tab-pane" type="button" role="tab" aria-controls="apartemen-tab-pane"
+                        aria-selected="false">Apartemen</button>
+                </li> --}}
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="semua-tab-pane" role="tabpanel"
-                    aria-labelledby="semua-tab" tabindex="0">
+                <div class="tab-pane fade show active" id="semua-tab-pane" role="tabpanel" aria-labelledby="semua-tab"
+                    tabindex="0">
                     <div class="units">
                         <a href="/greenland.html" class="item">
                             <div class="item-img">
@@ -170,7 +175,7 @@
             Promotions
         </h5>
         <h2 class="title">
-           Lebih untung pakai promo!
+            Lebih untung pakai promo!
         </h2>
         <div class="row items">
             {{-- <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-lg-0">
@@ -373,7 +378,8 @@
                     The ARC
                 </h1>
                 <div class="desc">
-                    <div class="text questrial">A beautiful style in green, captivating yet refresh for those who seek comfort </div>
+                    <div class="text questrial">A beautiful style in green, captivating yet refresh for those who seek
+                        comfort </div>
                     <div class="more">Learn More <i class="bi bi-chevron-right"></i></div>
                 </div>
             </div>

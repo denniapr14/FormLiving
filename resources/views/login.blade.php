@@ -62,7 +62,7 @@
                             <p class="light-grey-color contact">Hubungi admin WA: +62134567890 jika akun anda bermasalah.
                             </p>
                             <p class="mb-0 light-grey-color">Didn't have an account? <a href="/sign-up"
-                                    class="primary-color">Sign
+                                    class="btn btn-success">Sign
                                     Up</a></p>
                         </div>
 

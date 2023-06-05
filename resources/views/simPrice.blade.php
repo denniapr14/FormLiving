@@ -380,9 +380,11 @@
                                             </div>
                                                 @if ($rumah->status_stock == 'Inden')
                                                     <div class="card-shadow">
+
                                                         <label for="">Cicilan Uang Muka</label>
+
                                                         @if (!empty($promo))
-                                                        <select name="cicilanUM" id="10" style="display: none" class="form-control">
+                                                        <select name="cicilanUM" id="10" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 10%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
@@ -391,7 +393,7 @@
                                                             @endfor
                                                         </select>
 
-                                                        <select name="cicilanUM" id="20" style="display: none" class="form-control">
+                                                        <select name="cicilanUM" id="20" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 20%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
@@ -400,7 +402,7 @@
                                                             @endfor
                                                         </select>
 
-                                                        <select name="cicilanUM" id="30" style="display: none" class="form-control">
+                                                        <select name="cicilanUM" id="30" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 30%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
@@ -409,7 +411,7 @@
                                                             @endfor
                                                         </select>
 
-                                                        <select name="cicilanUM" id="40" style="display: none" class="form-control">
+                                                        <select name="cicilanUM" id="40" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 40%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
@@ -417,7 +419,7 @@
                                                                 Per Bulan Cicilan {{ $i }} Kali Uang Muka 40 %</option>
                                                             @endfor
                                                         </select>
-                                                        <select name="cicilanUM" id="50" style="display: none" class="form-control">
+                                                        <select name="cicilanUM" id="50" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 50%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
@@ -426,16 +428,16 @@
                                                             @endfor
                                                         </select>
                                                         @else
-                                                            <select name="cicilanUM" id="10" style="display: none" class="form-control">
+                                                            <select name="cicilanUM" id="10" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 10%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
-                                                                    {{ rupiah(( ($tipeRumah->harga_tr - $promo->diskon_promo)  * (10 / 100) - 10000000)/$i) }}
+                                                                    {{ rupiah(( ($tipeRumah->harga_tr)  * (10 / 100) - 10000000)/$i) }}
                                                                     Per Bulan Cicilan {{ $i }} Kali Uang Muka 10 %</option>
                                                                 @endfor
                                                             </select>
 
-                                                            <select name="cicilanUM" id="20" style="display: none" class="form-control">
+                                                            <select name="cicilanUM" id="20" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 20%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
@@ -444,7 +446,7 @@
                                                                 @endfor
                                                             </select>
 
-                                                            <select name="cicilanUM" id="30" style="display: none" class="form-control">
+                                                            <select name="cicilanUM" id="30" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 30%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
@@ -453,7 +455,7 @@
                                                                 @endfor
                                                             </select>
 
-                                                            <select name="cicilanUM" id="40" style="display: none" class="form-control">
+                                                            <select name="cicilanUM" id="40" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 40%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
@@ -461,7 +463,7 @@
                                                                     Per Bulan Cicilan {{ $i }} Kali Uang Muka 40 %</option>
                                                                 @endfor
                                                             </select>
-                                                            <select name="cicilanUM" id="50" style="display: none" class="form-control">
+                                                            <select name="cicilanUM" id="50" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 50%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
@@ -804,33 +806,50 @@
     function Display(){
         var index = document.getElementById("uangMuka").selectedIndex;
 
+        var in10 = document.getElementById('10');
+        var in20 = document.getElementById('20');
+        var in30 = document.getElementById('30');
+        var in40 = document.getElementById('40');
+        var in50 = document.getElementById('50');
         switch(index) {
             case 0:
-            document.getElementById('10').style.display = "block";
-            document.getElementById('20').style.display = "none";
-            document.getElementById('30').style.display = "none";
-            document.getElementById('40').style.display = "none";
+            in10.style.display = "block";
+            in20.remove();
+            in30.remove();
+            in40.remove();
+            in50.remove();
               break;
             case 1:
-            document.getElementById('10').style.display = "none";
+            in10.remove();
             document.getElementById('20').style.display = "block";
-            document.getElementById('30').style.display = "none";
-            document.getElementById('40').style.display = "none";
-
+            in30.remove();
+            in40.remove();
+            in50.remove();
               // code block
               break;
             case 3:
-            document.getElementById('10').style.display = "none";
-            document.getElementById('20').style.display = "none";
+            in10.remove();
+            in20.remove();
             document.getElementById('30').style.display = "block";
-            document.getElementById('40').style.display = "none";
+            in40.remove();
+            in50.remove();
                 // code block
                 break;
             case 4:
-            document.getElementById('10').style.display = "none";
-            document.getElementById('20').style.display = "none";
-            document.getElementById('30').style.display = "none";
+            in10.remove();
+            in20.remove();
+            in30.remove();
             document.getElementById('40').style.display = "block";
+            in50.remove();
+
+                  // code block
+                  break;
+            case 5:
+            in10.remove();
+            in20.remove();
+            in30.remove();
+            in40.remove();
+            document.getElementById('50').style.display = "block";
 
                   // code block
                   break;

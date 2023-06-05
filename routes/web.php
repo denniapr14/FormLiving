@@ -83,7 +83,7 @@ Route::get('/WASend', [Home::class, 'SendWA']);
 
 // ------------= END SIMULATION =----------------
 
-Route::get('/kalm', [Home::class, 'Kalm']);
+Route::get('/kalm', [Home::class, 'kalm']);
 
 // FOOTER
 
@@ -213,10 +213,11 @@ Route::get('/agent-company', function () {
 
 Route::get('/dashboard-admin-accounting', [AdminAccounting::class, 'index']);
 Route::get('/formulirPesanan/{id_formulir}', [AdminAccounting::class, 'formulirPesanan']);
+Route::get('/formulirPesanan/store/{id_formulir}', [AdminAccounting::class, 'formulirPesananAction'])->name('ubah-formulir-pesanan.action');
 Route::get('/ubah-pembayaran/{id_pembayaran}', [AdminAccounting::class, 'editPembayaran']);
-Route::post('/ubah-pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'editPembayaranAction'])->name('ubah-pembayaran.action');;
+Route::post('/ubah-pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'editPembayaranAction'])->name('ubah-pembayaran.action');
 Route::get('/pembayaran/{id_pembayaran}', [AdminAccounting::class, 'pembayaran']);
-Route::post('/pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'pembayaranAction'])->name('pembayaran.action');;;
+Route::post('/pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'pembayaranAction'])->name('pembayaran.action');
 
 
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<

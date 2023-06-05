@@ -928,7 +928,7 @@ h1 {
   position: absolute;
   right: 1rem;
   bottom: 20px;
-  z-index: 2;
+  z-index: 3;
 }
 .cta-mobile .sliders-mobile .item .float-button:before {
   z-index: -1;

@@ -37,61 +37,62 @@
                 <div class="forms">
                     <form method="POST" action="{{ route('sign-up.action') }}">
                         @csrf
-                    <h5>Create Sales/Agent Account</h5>
+                    <h5>Register Account</h5>
+                    <h6>NB : Required *</h6>
                     <div class="mb-3 form-group">
-                        <label for="full-name" class="form-label">Full Name</label>
+                        <label for="full-name" class="form-label">Full Name <span>*</span></label>
                         <input type="text" class="form-control" name="nama" id="full-name" value=""
                             placeholder="Full Name">
-                            <span>*Required</span>
+
                     </div>
                     <div class="mb-3 form-group">
-                        <label for="username" class="form-label">Username</label>
+                        <label for="username" class="form-label">Username <span>*</span></label>
                         <input type="text" class="form-control" name="username" placeholder="Username">
-                        <span>*Required</span>
+
                     </div>
                     <div class="mb-3 form-group">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label">Email <span>*</span></label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-                        <span>*Required</span>
+
                     </div>
                     <div class="mb-3 form-group">
-                        <label for="phone" class="form-label">Phone Number</label>
+                        <label for="phone" class="form-label">Phone Number <span>*</span></label>
                         <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone Number">
-                        <span>*Required</span>
+
                     </div>
                     <div class="mb-3 form-group">
-                        <label for="phone" class="form-label">Born</label>
+                        <label for="phone" class="form-label">Birth of Date <span>*</span></label>
                         <input type="date" class="form-control" name="tanggalLahir" id="" placeholder="">
-                        <span>*Required</span>
+
                     </div>
 
                     <div class="mb-3 form-group">
-                        <label for="kelamin" class="form-label">Gender</label>
+                        <label for="kelamin" class="form-label">Gender <span>*</span></label>
                         <select name="kelamin" class="form-select form-control" id="">
                             <option value=""> - Select Gender - </option>
                             <option value="Laki - Laki"> Male </option>
                             <option value="Wanita"> Female </option>
                         </select>
-                        <span>*Required</span>
+
                     </div>
                     <div class="mb-3 form-group">
-                        <label for="kelamin" class="form-label">Gender</label>
-                        <select name="tipeUser" class="form-select form-control" id="">
-                            <option value=""> - Select Gender - </option>
+                        <label for="kelamin" class="form-label">Affiliation <span>*</span></label>
+                        <select name="userTipe" class="form-select form-control" id="">
+                            <option value=""> - Select Affiliation - </option>
                             <option value="pelanggan">Pelanggan</option>
                             <option value="sales">Sales Inhouse</option>
-                            <option value="agentWithCompany"> Agen dengan Company</option>
+                            <option value="agentWithCompany"> Agen dengan Company (Xavier)</option>
                             <option value="agentWithoutCompany"> Agen tidak dengan Company </option>
                         </select>
-                        <span>*Required</span>
+
                     </div>
 
 
                     <div class="mb-3 form-group">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">Password <span>*</span></label>
                         <input type="password" class="form-control" name="password" id="password"
                             placeholder="Password" onkeypress="validatePassword('password','spanPwd')">
-                            <span id="spanPwd">*Required</span>
+                            <span id="spanPwd"></span>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mb-3">Sign Up</button>
                     <p class="light-grey-color mb-0">Already have an account?

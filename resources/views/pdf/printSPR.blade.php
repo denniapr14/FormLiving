@@ -327,7 +327,13 @@
     <div class="container">
 
         <center>
-            <img style="width: 20%" src="{{ public_path('Home') }}/images/logotidargreen.png" alt=""></img>
+           <table class="table table-borderless no-space">
+                <tr>
+
+                    <td><img style="" src="{{ asset('Dashboard') }}/images/content/logo-forms-living1.png" alt=""></td>
+                    <td><img style="float: right;" class="float-right" src="{{ asset('Dashboard') }}/images/content/logo-tidar-gray.png" alt=""></td>
+                </tr>
+            </table>
             <br>
             <h4> SURAT PEMESANAN RUMAH </h4>
             <p>Nomor : - </p>
@@ -360,7 +366,7 @@
             </tr>
             <tr>
                 <td>Sumber Dana</td>
-                <td>: {{ $fp->sumber_dana_plgn }}</td>
+                <td>: </td>
             </tr>
             <tr>
                 <td>Tujuan transaksi</td>
@@ -406,11 +412,8 @@
                     diperhitungkan sebagai berikut :</p>
                 <p style="text-indent: 0pt;text-align: left;"><br /></p>
 
-                @if ($fp->id_promo != null)
+                @if (empty($promo))
 
-
-
-                @if ($promo->BPHTB_promo == "yes")
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                     <tr style="height:14pt">
                         <td style="width:215pt">
@@ -429,7 +432,7 @@
                         <td style="width:86pt">
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                {{ rupiah(($fp->harga_total+3000000)/1.16 )}},-</p>
+                                {{ rupiah($fp->total_harga/1.11 )}},-</p>
                         </td>
                     </tr>
                     <tr style="height:16pt">
@@ -449,115 +452,7 @@
                         <td style="width:86pt">
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                {{ rupiah((11/100)*(($fp->harga_total+3000000)/1.16) )}},-</p>
-                        </td>
-                    </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
-                                BPHTB</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
-                                {{ rupiah(( (($fp->harga_total+3000000)/1.16) *(5/100)) - 3000000)}},-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
-                                Biaya Surat
-                                (BBN dan AJB) PPAT</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:17pt">
-                        <td style="width:215pt">
-                            <p class="s2"
-                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                e.
-                                Biaya
-                                Administrasi</p>
-                        </td>
-                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                Rp.
-                            </p>
-                        </td>
-                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                0,-</p>
-                        </td>
-                    </tr>
-                    <tr style="height:17pt">
-                        <td style="width:215pt">
-                            <p class="s2"
-                                style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                                Sehinggal TOTAL harga sebesar</p>
-                        </td>
-                        <td style="width:29pt;border-top-style:solid;border-top-width:1pt">
-                            <p class="s2"
-                                style="padding-top: 3pt;padding-left: 3pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                                Rp.</p>
-                        </td>
-                        <td style="width:86pt;border-top-style:solid;border-top-width:1pt">
-                            <p class="s2"
-                                style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
-                                {{ rupiah($fp->harga_total) }},-</p>
-                        </td>
-                    </tr>
-                </table>
-                @elseif ($promo->BPHTB_promo == "no")
-                <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
-                    <tr style="height:14pt">
-                        <td style="width:215pt">
-                            <p class="s2"
-                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                a.
-                                Harga
-                                Netto</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2"
-                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                Rp.
-                            </p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2"
-                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                {{ rupiah($fp->harga_total/1.11 )}},-</p>
-                        </td>
-                    </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2"
-                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                b.
-                                PPN (
-                                Pajak Pertambahan Nilai)</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2"
-                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                Rp.
-                            </p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2"
-                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                {{ rupiah((11/100)*(($fp->harga_total)/1.11) )}},-</p>
+                                {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
                         </td>
                     </tr>
                     <tr style="height:16pt">
@@ -622,13 +517,15 @@
                         <td style="width:86pt;border-top-style:solid;border-top-width:1pt">
                             <p class="s2"
                                 style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
-                                {{ rupiah($fp->harga_total) }},-</p>
+                                {{ rupiah($fp->total_harga) }},-</p>
                         </td>
                     </tr>
                 </table>
-                @endif
+
 
                 @else
+
+                 @if ($promo->BPHTB_promo == "yes")
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                     <tr style="height:14pt">
                         <td style="width:215pt">
@@ -647,7 +544,7 @@
                         <td style="width:86pt">
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                1.781.034.483,-</p>
+                                {{ rupiah(($fp->total_harga+3000000)/1.16 )}},-</p>
                         </td>
                     </tr>
                     <tr style="height:16pt">
@@ -667,7 +564,7 @@
                         <td style="width:86pt">
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                195.913.793,-</p>
+                                {{ rupiah((11/100)*(($fp->total_harga+3000000)/1.16) )}},-</p>
                         </td>
                     </tr>
                     <tr style="height:16pt">
@@ -680,7 +577,7 @@
                         </td>
                         <td style="width:86pt">
                             <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
-                                86.051.724,-
+                                {{ rupiah(( (($fp->total_harga+3000000)/1.16) *(5/100)) - 3000000)}},-
                             </p>
                         </td>
                     </tr>
@@ -732,10 +629,121 @@
                         <td style="width:86pt;border-top-style:solid;border-top-width:1pt">
                             <p class="s2"
                                 style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
-                                2.063.000.000,-</p>
+                                {{ rupiah($fp->total_harga) }},-</p>
                         </td>
                     </tr>
                 </table>
+                @elseif ($promo->BPHTB_promo == "no")
+                <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                a.
+                                Harga
+                                Netto</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
+                                {{ rupiah($fp->total_harga/1.11 )}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                b.
+                                PPN (
+                                Pajak Pertambahan Nilai)</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
+                                {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
+                                BPHTB</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
+                                - ,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
+                                Biaya Surat
+                                (BBN dan AJB) PPAT</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:17pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                e.
+                                Biaya
+                                Administrasi</p>
+                        </td>
+                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
+                                0,-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:17pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
+                                Sehinggal TOTAL harga sebesar</p>
+                        </td>
+                        <td style="width:29pt;border-top-style:solid;border-top-width:1pt">
+                            <p class="s2"
+                                style="padding-top: 3pt;padding-left: 3pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
+                                Rp.</p>
+                        </td>
+                        <td style="width:86pt;border-top-style:solid;border-top-width:1pt">
+                            <p class="s2"
+                                style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
+                                {{ rupiah($fp->total_harga) }},-</p>
+                        </td>
+                    </tr>
+                </table>
+                @endif
+
+
                 @endif
 
 
@@ -1251,7 +1259,7 @@
             </li>
         </ol>
 
-
+        <div class="page-break"></div>
         <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">JADWAL PEMBAYARAN ANGSURAN</p>
         <p style="text-indent: 0pt;text-align: left;"><br /></p>
         <table style="border-collapse:collapse;margin-left:5.25pt" cellspacing="0">
@@ -1364,6 +1372,7 @@
         </table>
 
         <br>
+        <br><br>
 
         <table style="width: 100%">
             <tr>
@@ -1385,7 +1394,7 @@
     <?php
     function rupiah($angka)
     {
-        $hasil_rupiah = 'Rp ' . number_format($angka, 0, ',', '.') . ',-';
+        $hasil_rupiah = number_format($angka, 0, ',', '.') ;
         return $hasil_rupiah;
     } ?>
 

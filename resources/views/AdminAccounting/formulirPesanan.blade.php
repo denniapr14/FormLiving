@@ -113,6 +113,8 @@
 
             <!-- /.col -->
             <!-- /.card-header -->
+            <form action="{{ route('ubah-formulir-pesanan.action', $fp->id_formulir) }}" method="post">
+                @csrf
             <div class="card-body print">
                 <div class="row">
                     <div class="col-md-6">
@@ -261,12 +263,12 @@
                                         </td>
                                         <td></td>
                                     </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <td class="text-left">Terbilang</td>
                                         <td class="text-left" colspan="2" id="">: &nbsp;<input type="text" name="terisi"
                                                 id="terisi" readonly value="<?= $fp->terbilang ?>" style="width: 95%;">
                                         </td>
-                                    </tr>
+                                    </tr> --}}
                                 </table>
                             </div>
                             <div class="col-md-12">
@@ -384,7 +386,7 @@
                                             <td style="width: 40%; border:1px solid black; ">
 
 
-                                                    {{ $dfp->detail_pr }}
+                                                {{ $dfp->detail_pr }}
                                             </td>
                                             <td style="border:1px solid black;">
                                                 {{ date("d M Y", strtotime($dfp->tgl_pr)) }}
@@ -392,8 +394,10 @@
                                             <td style="border:1px solid black;"> {{ rupiah($dfp->harga_pr) }}
                                             </td>
                                             <td style="border:1px solid black;">
-                                                <a href="/ubah-pembayaran/{{ $dfp->id_pem_rumah }} "class="btn btn-outline-primary">Edit</a>
-                                                <a href="/pembayaran/{{ $dfp->id_pem_rumah }} "class="btn btn-outline-primary">bayar</a>
+                                                <a href="/ubah-pembayaran/{{ $dfp->id_pem_rumah }} "
+                                                    class="btn btn-outline-primary">Edit</a>
+                                                <a href="/pembayaran/{{ $dfp->id_pem_rumah }} "
+                                                    class="btn btn-outline-primary">bayar</a>
                                             </td>
                                         </tr>
                                         <?php
@@ -593,6 +597,7 @@
                     <br class="noprint"><br class="noprint">
                     <div class="">
                         <center>
+
                             <select class="form-control noprint" name="validasi" required id="" style="width: 60%;">
                                 <option value="">--Pilih--</option>
                                 <option value="accept">di terima</option>
@@ -600,13 +605,17 @@
                             </select><br>
                             <button type="submit" class="btn btn-success noprint"><i class="fa fa-save fa-2x">
                                     Simpan</i></button>
+
+
                         </center>
                     </div>
 
             </div>
+            </form>
             <div
                 style="background-color: gray; width: 100%; text-align: center;color:white;height: 50px; font-size: 32px ">
-                <i>FORMLIVING.COM</i></div>
+                <i>FORMLIVING.COM</i>
+            </div>
             <!-- /.card-body -->
 
         </div>
