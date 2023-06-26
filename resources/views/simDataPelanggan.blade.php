@@ -3,7 +3,7 @@
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footer')
 @extends('flashdata')
-@section('tittle', 'Forms | Simulasi Pemesanan')
+@section('tittle', 'Forms | Data pelanggan')
 @section('body', '')
 
 
@@ -19,9 +19,9 @@
             <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
         </div>
         <div class="nav-header">
-            <div class="ic-back">
-                <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
-            </div>
+            <!--<div class="ic-back">-->
+            <!--    <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">-->
+            <!--</div>-->
             <h2 class="title">
                 Miliki Unit
             </h2>
@@ -55,10 +55,11 @@
                 <div class="row">
                     <div class="col-12 order-2 order-lg-1">
                         <h2 class="title">
-                            Form Pemesanan
+                            Pengisian Data Pelanggan
                         </h2>
                     </div>
                     <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
+                       
                         <div class="mod-type">
                             <div class="type-image">
                                 <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
@@ -97,30 +98,31 @@
 
                     @if (!empty(Session::get('guest')))
                     <div class="col-12 col-lg-8 right-column order-3">
+                        <small style="color:red;">Diperlukan*</small><br>
+                        <small style="color:red;">Sangat Diperlukan**</small>
+                        <br>
                         <form
                             action="{{ route('dataPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}"
                             method="POST">
                             @csrf
-
-                            <h5>NB : Required <span style="color: red">*</span></h5>
                             <div class="row form-order">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Nama (Sesuai KTP) <span style="color: red">*</span></label>
+                                        <label for="name" class="form-label">Nama (Sesuai KTP)<small style="color:red;">*</small></label>
                                         <input type="text" class="input form-control" name="nama" id="name"
                                             value="{{ old('name') }}" placeholder="Nama (Sesuai KTP)">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label">NIK <span style="color: red">*</span></label>
+                                        <label for="nik" class="form-label">NIK<small style="color:red;">*</small></label>
                                         <input type="text" class="input form-control" name="nik" id="nik"
                                             value="{{ old('nik') }}" placeholder="NIK">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label">Pekerjaan <span style="color: red">*</span></label>
+                                        <label for="nik" class="form-label">Pekerjaan</label>
                                         <input type="text" class="input form-control" name="pekerjaan" id="pekerjaan"
                                             value="{{ old('pekerjaan') }}" placeholder="pekerjaan">
                                     </div>
@@ -134,7 +136,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="telp" class="form-label">No. Telepon <span style="color: red">*</span></label>
+                                        <label for="telp" class="form-label">No. Telepon<small style="color:red;">*</small> </label>
                                         <input type="text" class="input form-control" name="telp" id="telp"
                                             placeholder="No. Telp" value="{{ old('telp') }}">
 
@@ -142,63 +144,68 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="wa" class="form-label">No. Whataspp (Aktif) <span style="color: red">*</span></label>
+                                        <label for="wa" class="form-label">No. Whataspp (Aktif)</label>
                                         <input type="text" class="input form-control" name="wa" id="wa"
                                             value="{{ old('wa') }}" placeholder="No. Whataspp (Aktif)">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="" class="form-label">Provinsi <span style="color: red">*</span></label>
-                                        <input type="text" class="input form-control" name="pulau" id="provinsi"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="alamat" class="form-label">Kota <span style="color: red">*</span></label>
-                                        <input type="text" class="input form-control" name="kota" id="kota"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="alamat" class="form-label">Kecamatan <span style="color: red">*</span></label>
-                                        <input type="text" class="input form-control" name="kecamatan" id="kecamatan"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="alamat" class="form-label">Kelurahan <span style="color: red">*</span></label>
-                                        <input type="text" class="input form-control" name="kelurahan" id="kelurahan"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="alamat" class="form-label">Jalan <span style="color: red">*</span></label>
+                                        <label for="" class="form-label">Jalan</label>
                                         <input type="text" class="input form-control" name="jalan" id="jalan"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
+                                            value="{{ old('alamat') }}" placeholder="jalan">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="email" class="form-label">Email <span style="color: red">*</span></label>
+                                        <label for="alamat" class="form-label">Kelurahan</label>
+                                        <input type="text" class="input form-control" name="kelurahan" id="kelurahan"
+                                            value="{{ old('alamat') }}" placeholder="Kelurahan">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="alamat" class="form-label">Kecamatan</label>
+                                        <input type="text" class="input form-control" name="kecamatan" id="kecamatan"
+                                            value="{{ old('alamat') }}" placeholder="Kecamatan">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="alamat" class="form-label">Kota</label>
+                                        <input type="text" class="input form-control" name="kota" id="kota"
+                                            value="{{ old('alamat') }}" placeholder="kota">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="alamat" class="form-label">Provinsi</label>
+                                        <input type="text" class="input form-control" name="pulau" id="provinsi"
+                                            value="{{ old('alamat') }}" placeholder="Provinsi">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Email<small style="color:red;">**</small></label>
                                         <input type="text" class="input form-control" name="email" id="email"
-                                            value="{{ old('email') }}" placeholder="Email">
+                                            value="{{ old('email') }}" placeholder="Email untuk dikirim Surat Pemesanan Rumah">
                                     </div>
+                                </div>
+                                <div class="col-12 col-lg-6 form-group">
+                                    <label for="date" class="form-label">Tempat dan Tanggal Lahir <span>*</span></label>
+                                    <input type="text" class="form-control" name="tempatLahir"  id="" placeholder="Tempat Lahir"> <br>
+                                    <input type="text" class="form-control" name="tanggalLahir"  onfocus="(this.type='date')" onblur="(this.type='text')" id="" placeholder="Tanggal Lahir">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="npwp" class="form-label">No. NPWP <span style="color: red">*</span></label>
+                                        <label for="npwp" class="form-label">Nomor NPWP<small style="color:red;">*</small></label>
                                         <input type="text" class="input form-control" name="npwp" id="npwp"
                                             value="{{ old('npwp') }}" placeholder="No. NPWP">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="gender" class="form-label">Jenis Kelamin <span style="color: red">*</span></label>
+                                        <label for="gender" class="form-label">Jenis Kelamin</label>
                                         <select class="input form-select" name="gender" id="gender">
                                             <option disabled selected>Jenis Kelamin</option>
                                             <option>Laki Laki</option>
@@ -208,7 +215,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="gender" class="form-label">Status Pernikahan <span style="color: red">*</span></label>
+                                        <label for="gender" class="form-label">Status Pernikahan</label>
                                         <select class="input form-select" name="statusPernikahan" id="statusPernikahan">
                                             <option disabled selected>Pilih Status Penikahan</option>
                                             <option>Sudah Menikah</option>
@@ -216,6 +223,7 @@
                                         </select>
                                     </div>
                                 </div>
+
 
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
@@ -233,137 +241,13 @@
                                         <div id="myAlert"  role="alert">
 
                                         </div>
-                                        <div class="modal fade promo" id="modelId" tabindex="-1" role="dialog"
-                                            aria-labelledby="modelTitleId" aria-hidden="true">
-                                            <div class="modal-dialog  modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body promo-modal">
-                                                        <h5 class="promo-title">
-                                                            Pakai Promo
-                                                        </h5>
-
-                                                        <div class="promo-input">
-                                                            <input type="text" class="form-control" name="promo"
-                                                                id="promo" placeholder="Masukkan kode promo">
-
-                                                            <a id="cariPromo" class="btn">Terapkan</a>
-                                                        </div>
-                                                        <!-- STATE PROMO -->
-                                                        <div class=" d-block ">
-
-                                                            <h5 class="mb-4">Pilih Promo</h5>
-
-                                                            @if (empty($promoRumah))
-                                                            <h5>Promo Rumah</h5>
-                                                            Tidak ada promo Rumah
-                                                            @else
-                                                            <h5>Promo Rumah</h5>
-                                                            @foreach ($promoRumah as $promoRumah)
-                                                            <div class="promo-item ">
-                                                                <div class="row ">
-                                                                    <div class="promo-icon col-md-1">
-                                                                        <img src="{{ asset('Home') }}/images/ic-promo.png"
-                                                                            alt="Promo">
-                                                                    </div>
-                                                                    <div class="promo-text col-md-8">
-
-                                                                        <h6 id='keteranganPromo'>{{ $promoRumah->promo
-                                                                            }}</h6>
-                                                                        <p>Berlaku hingga:
-                                                                            {{ date('d M Y',
-                                                                            strtotime($promoRumah->tgl_berakhir)) }}
-                                                                        </p>
-                                                                        <div class="hemat">
-                                                                            <p class="light-grey-color">Anda bisa hemat
-                                                                            </p>
-                                                                            <h5>Rp.
-                                                                                {{rupiah($promoRumah->diskon_promo)}}
-                                                                            </h5>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="promo-button col-md-2">
-
-                                                                        <a class="promoCodeBtn btn btn-outline-success"
-                                                                            data-promo-code="{{ $promoRumah->kode_promo }}"
-                                                                            data-promo="{{ $promoRumah->promo }}">{{
-                                                                            $promoRumah->kode_promo }} </a>
-
-
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            @endforeach
-                                                            @endif
-
-
-                                                            @if (empty($promo))
-                                                            <h5>Promo Cluster</h5>
-                                                            Tidak ada promo cluster
-                                                            @else
-                                                            <h5>Promo Cluster</h5>
-                                                            @foreach ($promo as $promo)
-                                                            <div class="promo-item ">
-                                                                <div class="row ">
-                                                                    <div class="promo-icon col-md-1">
-                                                                        <img src="{{ asset('Home') }}/images/ic-promo.png"
-                                                                            alt="Promo">
-                                                                    </div>
-                                                                    <div class="promo-text col-md-8">
-
-                                                                        <h6 id='keteranganPromo'>{{ $promo->promo }}
-                                                                        </h6>
-                                                                        <p>Berlaku hingga:
-                                                                            {{ date('d M Y',
-                                                                            strtotime($promo->tgl_berakhir)) }}
-                                                                        </p>
-                                                                        <div class="hemat">
-                                                                            <p class="light-grey-color">Anda bisa hemat
-                                                                            </p>
-                                                                            <h5>Rp. {{rupiah($promo->diskon_promo)}}
-                                                                            </h5>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="promo-button col-md-2">
-
-                                                                        <a class="promoCodeBtn btn btn-outline-success"
-                                                                            data-promo-code="{{ $promo->kode_promo }}"
-                                                                            data-promo="{{ $promo->promo }}">{{
-                                                                            $promo->kode_promo }} </a>
-
-
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            @endforeach
-                                                            @endif
-
-                                                        </div>
-                                                        <!-- STATE NO PROMO -->
-                                                        <div class="no-promo text-center d-none">
-                                                            <img src="{{ asset('Home') }}/images/img-illustration4.png"
-                                                                class="w-100" alt="">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="modal-footer promo-footer">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
+                                        
                                         <br>
                                         <div class="form-group">
                                             <input type="text" name="promo" value="Tidak Ada Promo"
                                                 id="selectedPromoCode" class="form-control" readonly>
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="btn-groups">
@@ -375,31 +259,34 @@
                                 </div>
                         </form>
                     </div>
+                    
                     @elseif (session::get('user'))
                     <div class="col-12 col-lg-8 right-column order-3">
+                        <small style="color:red;">Diperlukan*</small><br>
+                        <small style="color:red;">Sangat Diperlukan**</small>
+                        <br>
                         <form
                             action="{{ route('dataPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}"
                             method="POST">
                             @csrf
-                            <h5>NB : Required <span style="color: red">*</span></h5>
                             <div class="row form-order">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Nama (Sesuai KTP) <span style="color: red">*</span></label>
+                                        <label for="name" class="form-label">Nama (Sesuai KTP)<small style="color:red;">*</small></label>
                                         <input type="text" class="input form-control" name="nama" id="name"
                                             value="{{ old('name') }}" placeholder="Nama (Sesuai KTP)">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label">NIK <span style="color: red">*</span></label>
+                                        <label for="nik" class="form-label">NIK<small style="color:red;">*</small></label>
                                         <input type="text" class="input form-control" name="nik" id="nik"
                                             value="{{ old('nik') }}" placeholder="NIK">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label">Pekerjaan <span style="color: red">*</span></label>
+                                        <label for="nik" class="form-label">Pekerjaan</label>
                                         <input type="text" class="input form-control" name="pekerjaan" id="pekerjaan"
                                             value="{{ old('pekerjaan') }}" placeholder="pekerjaan">
                                     </div>
@@ -413,7 +300,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="telp" class="form-label">No. Telepon <span style="color: red">*</span></label>
+                                        <label for="telp" class="form-label">No. Telepon<small style="color:red;">*</small></label>
                                         <input type="text" class="input form-control" name="telp" id="telp"
                                             placeholder="No. Telp" value="{{ old('telp') }}">
 
@@ -421,63 +308,68 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="wa" class="form-label">No. Whataspp (Aktif) <span style="color: red">*</span></label>
+                                        <label for="wa" class="form-label">No. Whataspp (Aktif<small style="color:red;">*</small></label>
                                         <input type="text" class="input form-control" name="wa" id="wa"
                                             value="{{ old('wa') }}" placeholder="No. Whataspp (Aktif)">
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
+                              <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="" class="form-label">Provinsi <span style="color: red">*</span></label>
-                                        <input type="text" class="input form-control" name="pulau" id="provinsi"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="alamat" class="form-label">Kota <span style="color: red">*</span></label>
-                                        <input type="text" class="input form-control" name="kota" id="kota"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="alamat" class="form-label">Kecamatan <span style="color: red">*</span></label>
-                                        <input type="text" class="input form-control" name="kecamatan" id="kecamatan"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="alamat" class="form-label">Kelurahan <span style="color: red">*</span></label>
-                                        <input type="text" class="input form-control" name="kelurahan" id="kelurahan"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="alamat" class="form-label">Jalan <span style="color: red">*</span></label>
+                                        <label for="" class="form-label">Jalan</label>
                                         <input type="text" class="input form-control" name="jalan" id="jalan"
-                                            value="{{ old('alamat') }}" placeholder="Alamat">
+                                            value="{{ old('alamat') }}" placeholder="jalan">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="email" class="form-label">Email <span style="color: red">*</span></label>
+                                        <label for="alamat" class="form-label">Kelurahan</label>
+                                        <input type="text" class="input form-control" name="kelurahan" id="kelurahan"
+                                            value="{{ old('alamat') }}" placeholder="Kelurahan">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="alamat" class="form-label">Kecamatan</label>
+                                        <input type="text" class="input form-control" name="kecamatan" id="kecamatan"
+                                            value="{{ old('alamat') }}" placeholder="Kecamatan">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="alamat" class="form-label">Kota</label>
+                                        <input type="text" class="input form-control" name="kota" id="kota"
+                                            value="{{ old('alamat') }}" placeholder="kota">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="alamat" class="form-label">Provinsi</label>
+                                        <input type="text" class="input form-control" name="pulau" id="provinsi"
+                                            value="{{ old('alamat') }}" placeholder="Provinsi">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Email<small style="color:red;">**</small></label>
                                         <input type="text" class="input form-control" name="email" id="email"
-                                            value="{{ old('email') }}" placeholder="Email">
+                                            value="{{ old('email') }}" placeholder="Email untuk dikirim Surat Pemesanan Rumah">
                                     </div>
+                                </div>
+                                <div class="col-12 col-lg-6 form-group">
+                                    <label for="date" class="form-label">Tempat dan Tanggal Lahir <small style="color:red;">*</small></label>
+                                    <input type="text" class="form-control" name="tempatLahir"  id="" placeholder="Tempat Lahir"> <br>
+                                    <input type="text" class="form-control" name="tanggalLahir"  onfocus="(this.type='date')" onblur="(this.type='text')" id="" placeholder="Tanggal Lahir">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="npwp" class="form-label">No. NPWP <span style="color: red">*</span></label>
+                                        <label for="npwp" class="form-label">Nomor NPWP <small style="color:red;">*</small></label>
                                         <input type="text" class="input form-control" name="npwp" id="npwp"
                                             value="{{ old('npwp') }}" placeholder="No. NPWP">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="gender" class="form-label">Jenis Kelamin <span style="color: red">*</span></label>
+                                        <label for="gender" class="form-label">Jenis Kelamin</label>
                                         <select class="input form-select" name="gender" id="gender">
                                             <option disabled selected>Jenis Kelamin</option>
                                             <option>Laki Laki</option>
@@ -487,7 +379,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="gender" class="form-label">Status Pernikahan <span style="color: red">*</span></label>
+                                        <label for="gender" class="form-label">Status Pernikahan</label>
                                         <select class="input form-select" name="statusPernikahan" id="statusPernikahan">
                                             <option disabled selected>Pilih Status Penikahan</option>
                                             <option>Sudah Menikah</option>
@@ -513,135 +405,11 @@
                                         <div id="myAlert"  role="alert">
 
                                         </div>
-                                        <div class="modal fade promo" id="modelId" tabindex="-1" role="dialog"
-                                            aria-labelledby="modelTitleId" aria-hidden="true">
-                                            <div class="modal-dialog  modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body promo-modal">
-                                                        <h5 class="promo-title">
-                                                            Pakai Promo
-                                                        </h5>
 
-                                                        <div class="promo-input">
-                                                            <input type="text" class="form-control" name="promo"
-                                                                id="promo" placeholder="Masukkan kode promo">
-
-                                                            <a id="cariPromo" class="btn">Terapkan</a>
-                                                        </div>
-                                                        <!-- STATE PROMO -->
-                                                        <div class=" d-block ">
-
-                                                            <h5 class="mb-4">Pilih Promo</h5>
-
-                                                            @if (empty($promoRumah))
-                                                            <h5>Promo Rumah</h5>
-                                                            Tidak ada promo Rumah
-                                                            @else
-                                                            <h5>Promo Rumah</h5>
-                                                            @foreach ($promoRumah as $promoRumah)
-                                                            <div class="promo-item ">
-                                                                <div class="row ">
-                                                                    <div class="promo-icon col-md-1">
-                                                                        <img src="{{ asset('Home') }}/images/ic-promo.png"
-                                                                            alt="Promo">
-                                                                    </div>
-                                                                    <div class="promo-text col-md-8">
-
-                                                                        <h6 id='keteranganPromo'>{{ $promoRumah->promo
-                                                                            }}</h6>
-                                                                        <p>Berlaku hingga:
-                                                                            {{ date('d M Y',
-                                                                            strtotime($promoRumah->tgl_berakhir)) }}
-                                                                        </p>
-                                                                        <div class="hemat">
-                                                                            <p class="light-grey-color">Anda bisa hemat
-                                                                            </p>
-                                                                            <h5>Rp.
-                                                                                {{rupiah($promoRumah->diskon_promo)}}
-                                                                            </h5>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="promo-button col-md-2">
-
-                                                                        <a class="promoCodeBtn btn btn-outline-success"
-                                                                            data-promo-code="{{ $promoRumah->kode_promo }}"
-                                                                            data-promo="{{ $promoRumah->promo }}">{{
-                                                                            $promoRumah->kode_promo }} </a>
-
-
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            @endforeach
-                                                            @endif
-
-
-                                                            @if (empty($promo))
-                                                            <h5>Promo Cluster</h5>
-                                                            Tidak ada promo cluster
-                                                            @else
-                                                            <h5>Promo Cluster</h5>
-                                                            @foreach ($promo as $promo)
-                                                            <div class="promo-item ">
-                                                                <div class="row ">
-                                                                    <div class="promo-icon col-md-1">
-                                                                        <img src="{{ asset('Home') }}/images/ic-promo.png"
-                                                                            alt="Promo">
-                                                                    </div>
-                                                                    <div class="promo-text col-md-8">
-
-                                                                        <h6 id='keteranganPromo'>{{ $promo->promo }}
-                                                                        </h6>
-                                                                        <p>Berlaku hingga:
-                                                                            {{ date('d M Y',
-                                                                            strtotime($promo->tgl_berakhir)) }}
-                                                                        </p>
-                                                                        <div class="hemat">
-                                                                            <p class="light-grey-color">Anda bisa hemat
-                                                                            </p>
-                                                                            <h5>Rp. {{rupiah($promo->diskon_promo)}}
-                                                                            </h5>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="promo-button col-md-2">
-
-                                                                        <a class="promoCodeBtn btn btn-outline-success"
-                                                                            data-promo-code="{{ $promo->kode_promo }}"
-                                                                            data-promo="{{ $promo->promo }}">{{
-                                                                            $promo->kode_promo }} </a>
-
-
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            @endforeach
-                                                            @endif
-
-                                                        </div>
-                                                        <!-- STATE NO PROMO -->
-                                                        <div class="no-promo text-center d-none">
-                                                            <img src="{{ asset('Home') }}/images/img-illustration4.png"
-                                                                class="w-100" alt="">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="modal-footer promo-footer">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <br>
                                         <div class="form-group">
                                             <input type="text" name="promo" value="Tidak Ada Promo"
                                                 id="selectedPromoCode" class="form-control" readonly>
-
                                         </div>
 
                                     </div>
@@ -664,11 +432,133 @@
     </div>
 </div>
 </div>
+
+<div class="modal fade promo" id="modelId" tabindex="-1" role="dialog"
+                                            aria-labelledby="modelTitleId" aria-hidden="true">
+     <div class="modal-dialog  modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body promo-modal">
+                                                        <h5 class="promo-title">
+                                                            Pakai Promo
+                                                        </h5>
+
+                                                        <div class="promo-input">
+                                                            <input type="text" class="form-control" name="promo"
+                                                                id="promo" placeholder="Masukkan kode promo">
+
+                                                            <a id="cariPromo" class="btn">Terapkan</a>
+                                                        </div>
+                                                        <!-- STATE PROMO -->
+                                                        <div class=" d-block ">
+
+                                                            <h5 class="mb-4">Pilih Promo</h5>
+
+                                                            @if (empty($promoRumah))
+                                                            <h5>Promo Rumah</h5>
+                                                            Tidak ada promo Rumah
+                                                            @else
+                                                            <h5>Promo Rumah</h5>
+                                                            @foreach ($promoRumah as $promoRumah)
+                                                            <div class="promo-item ">
+                                                                <div class="row ">
+                                                                    <div class="promo-icon col-md-1">
+                                                                        <img src="{{ asset('Home') }}/images/ic-promo.png"
+                                                                            alt="Promo">
+                                                                    </div>
+                                                                    <div class="promo-text col-md-8">
+
+                                                                        <h6 id='keteranganPromo'>{{ $promoRumah->promo
+                                                                            }}</h6>
+                                                                        <p>Berlaku hingga:
+                                                                            {{ date('d M Y',
+                                                                            strtotime($promoRumah->tgl_berakhir)) }}
+                                                                        </p>
+                                                                        <div class="hemat">
+                                                                            <p class="light-grey-color">Anda bisa hemat
+                                                                            </p>
+                                                                            <h5>Rp.
+                                                                                {{rupiah($promoRumah->diskon_promo)}}
+                                                                            </h5>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="promo-button col-md-2">
+
+                                                                        <a class="promoCodeBtn btn btn-outline-success"
+                                                                            data-promo-code="{{ $promoRumah->kode_promo }}"
+                                                                            data-promo="{{ $promoRumah->promo }}">{{
+                                                                            $promoRumah->kode_promo }} </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @endforeach
+                                                            @endif
+
+
+                                                            @if (empty($promo))
+                                                            <h5>Promo Cluster</h5>
+                                                            Tidak ada promo cluster
+                                                            @else
+                                                            <h5>Promo Cluster</h5>
+                                                            @foreach ($promo as $promo)
+                                                            <div class="promo-item ">
+                                                                <div class="row ">
+                                                                    <div class="promo-icon col-md-1">
+                                                                        <img src="{{ asset('Home') }}/images/ic-promo.png"
+                                                                            alt="Promo">
+                                                                    </div>
+                                                                    <div class="promo-text col-md-8">
+
+                                                                        <h6 id='keteranganPromo'>{{ $promo->promo }}
+                                                                        </h6>
+                                                                        <p>Berlaku hingga:
+                                                                            {{ date('d M Y',
+                                                                            strtotime($promo->tgl_berakhir)) }}
+                                                                        </p>
+                                                                        <div class="hemat">
+                                                                            <p class="light-grey-color">Anda bisa hemat
+                                                                            </p>
+                                                                            <h5>Rp. {{rupiah($promo->diskon_promo)}}
+                                                                            </h5>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="promo-button col-md-2">
+
+                                                                        <a class="promoCodeBtn btn btn-outline-success"
+                                                                            data-promo-code="{{ $promo->kode_promo }}"
+                                                                            data-promo="{{ $promo->promo }}">{{
+                                                                            $promo->kode_promo }} </a>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            @endforeach
+                                                            @endif
+
+                                                        </div>
+                                                        <!-- STATE NO PROMO -->
+                                                        <div class="no-promo text-center d-none">
+                                                            <img src="{{ asset('Home') }}/images/img-illustration4.png"
+                                                                class="w-100" alt="">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer promo-footer">
+
+                                                    </div>
+            </div>
+         </div>
+</div>
 <script>
     const name              = document.getElementById('name');
         const nik               = document.getElementById('nik');
         const pekerjaan         = document.getElementById('pekerjaan');
-
+        const sumberDana        = document.getElementById('sumberDana');
         const telp              = document.getElementById('telp');
         const wa                = document.getElementById('wa');
         const provinsi          = document.getElementById('provinsi');
@@ -686,7 +576,7 @@
         name.addEventListener('input',checkInputs);
         nik.addEventListener('input',checkInputs);
         pekerjaan.addEventListener('input',checkInputs);
-
+        sumberDana.addEventListener('input',checkInputs);
         telp.addEventListener('input',checkInputs);
         wa.addEventListener('input',checkInputs);
         provinsi.addEventListener('input',checkInputs);
@@ -704,6 +594,7 @@
                 name.value !== '' &&
                 nik.value !== '' &&
                 pekerjaan.value !== '' &&
+                sumberDana.value !== '' &&
                 telp.value !== '' &&
                 wa.value !== '' &&
                 provinsi.value !== '' &&

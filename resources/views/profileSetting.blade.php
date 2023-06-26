@@ -225,13 +225,30 @@
                         @if (!empty(Session::get('user')))
                         <div class="user-detail">
                             <h5>{{ $user->nama_ua }}</h5>
-                            <p>{{ $user->kategori }}</p>
+                            <p>
+
+                                @if (!empty($user->nama_ktgr))
+                                {{ $user->nama_ktgr }}
+                                @else
+                                {{ $user->kategori }}
+                                @endif
+                            </p>
                             @switch($user->kategori)
                             @case('AdminAccounting')
                             <a href="/dashboard-admin-accounting" class="btn btn-primary">Form One</a>
                             @break
 
-                            @case(2)
+                            @case('AdminFormsLiving')
+                            <a href="AdminFormsLiving/dashboard" class="btn btn-primary">Form One</a>
+                            @break
+
+
+                            @case("CEO")
+                            <a href="CEO/dashboard" class="btn btn-primary">Form One</a>
+                            @break
+
+                            @case('Direktur')
+                            <a href="Direktur/dashboard" class="btn btn-primary">Form One</a>
                             @break
 
                             @default

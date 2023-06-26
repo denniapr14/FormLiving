@@ -59,7 +59,7 @@ class Home extends Controller
 
     public function housing()
     {
-        $cluster1 = DB::table('rumah')
+        $cluster = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
             ->where('status', '=', 'available')
@@ -89,7 +89,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('housing', compact('user', 'cluster1', 'cluster2'));
+            return view('housing', compact('user', 'cluster', 'cluster2'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -97,9 +97,9 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('housing', compact('userPelanggan', 'cluster1', 'cluster2'));
+            return view('housing', compact('userPelanggan', 'cluster', 'cluster2'));
         }
-        return view('housing', 'cluster1', 'cluster2');
+        return view('housing', 'cluster', 'cluster2');
     }
 
     // KALM SEMENTARA
@@ -210,18 +210,14 @@ class Home extends Controller
 
                 switch ($userRole) {
                     case 'AdminAccounting':
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "You're Sign in!");;
                         break;
                     case 'Admin':
-                        return redirect('/')->with('success', "You're Sign in!");
-                        break;
-
-                    case 'CEO':
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "You're Sign in!");;
                         break;
 
                     default:
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "You're Sign in!");;
                         break;
                 }
             }
@@ -344,7 +340,7 @@ class Home extends Controller
 
     public function LoadingPage()
     {
-        return view('greenland');
+        return view('loadingPage');
         # code...
     }
     public function VirtualTour()
@@ -754,18 +750,8 @@ class Home extends Controller
             ->where('username_ua', '=', $request->username)
             ->first();
 
-        $userEmail = \App\Models\UserPelanggan::where([
-            'email_plgn' => $request->email,
-        ])->first();
-        $userUAEmail = DB::table('user_admin')
-            ->where('email_ua', '=', $request->email)
-            ->first();
-
         if (!empty($userP) && !empty($userUA)) {
             return redirect('/sign-up')->with('error', 'Username is use!');
-        }
-        if (!empty($userEmail) && !empty($userUAEmail)) {
-            return redirect('/sign-up')->with('error', 'Email is use!');
         }
         if ($request->userTipe == "pelanggan") {
             $dataInput = array(
@@ -792,12 +778,12 @@ class Home extends Controller
                 'id_kategori' => 24,
                 'code_id_ua' => "XMP" . date("dmy", strtotime($request->tanggalLahir)) . "AGC",
                 'username_ua' => $request->username,
-                'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tanggalLahir,
+                'nama_ua'   => $request->nama,
+                'tgl_lahir_ua'  => $request->tanggalLahir,
                 'password_ua' => md5($request->password),
                 'email_ua' => $request->email,
                 'no_tlp_ua' => $request->phone,
-                'status_ua' => "Aktif",
+                'status_ua' => "Aktif"
                 // 'no_wa_plgn'            => $request->wa,
                 // 'jenis_kelamin_status' => $request->kelamin,
             );
@@ -810,12 +796,12 @@ class Home extends Controller
                 'id_kategori' => 5,
                 'code_id_ua' => "MDT" . date("dmy", strtotime($request->tanggalLahir)) . "AG",
                 'username_ua' => $request->username,
-                'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tanggalLahir,
+                'nama_ua'   => $request->nama,
+                'tgl_lahir_ua'  => $request->tanggalLahir,
                 'password_ua' => md5($request->password),
                 'email_ua' => $request->email,
                 'no_tlp_ua' => $request->phone,
-                'status_ua' => "Aktif",
+                'status_ua' => "Aktif"
                 // 'no_wa_plgn'            => $request->wa,
                 // 'jenis_kelamin_status' => $request->kelamin,
             );
@@ -828,12 +814,12 @@ class Home extends Controller
                 'id_kategori' => 4,
                 'code_id_ua' => "GL" . date("dmy", strtotime($request->tanggalLahir)) . "SL",
                 'username_ua' => $request->username,
-                'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tanggalLahir,
+                'nama_ua'   => $request->nama,
+                'tgl_lahir_ua'  => $request->tanggalLahir,
                 'password_ua' => md5($request->password),
                 'email_ua' => $request->email,
                 'no_tlp_ua' => $request->phone,
-                'status_ua' => "Aktif",
+                'status_ua' => "Aktif"
                 // 'no_wa_plgn'            => $request->wa,
                 // 'jenis_kelamin_status' => $request->kelamin,
             );
@@ -973,21 +959,19 @@ class Home extends Controller
             $fp = DB::table('formulir_pesanan')
                 ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
                 ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
-                ->join('cluster','rumah.codecluster','=','cluster.codecluster')
                 ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
                 ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
                 ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
                 ->where('id_formulir', '=', $id_formulir)
                 ->first();
-            $promo ="";
             $dtPembayaran = DB::table('pembayaran_rumah')
                 ->where('id_formulir', '=', $id_formulir)
                 ->get();
 
             // dd($fpCount);
             // die();
-            return view('formulirPesanan', compact('user', 'fp', 'dtPembayaran','promo'));
+            return view('formulirPesanan', compact('user', 'fp', 'dtPembayaran'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1025,7 +1009,7 @@ class Home extends Controller
             $fp = DB::table('formulir_pesanan')
                 ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
                 ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
-                ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+                ->join('cluster','rumah.codecluster','=','cluster.codecluster')
                 ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
                 ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
                 ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
@@ -1366,8 +1350,8 @@ class Home extends Controller
                 'jenis_img' => 'denah',
             ])
             ->get();
-        // dd($imgDenah);
-        // die();
+        dd($imgDenah);
+        die();
 
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -1382,8 +1366,8 @@ class Home extends Controller
 
                 ->first();
 
-            // dd($user);
-            // die();
+            dd($rumah);
+            die();
             // return view('underMT');
             return view('simDetailType', compact('user', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgRumah2', 'imgDenah'));
         }
@@ -1395,7 +1379,7 @@ class Home extends Controller
             // dd($userPelanggan);
             // die();
             // return view('underMT');
-            return view('simDetailType', compact('userPelanggan', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgRumah2', 'imgDenah'));
+            return view('simDetailType', compact('userPelanggan', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgRumah2'));
         }
         return view('simDetailType', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgDenah');
 
@@ -1478,7 +1462,7 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('underMT', compact('rumah', 'tipeRumah'));
+            return view('underMT',compact('rumah','tipeRumah'));
             // return view('simDataPelanggan', compact('user', 'tipeRumah', 'rumah', 'promo', 'promoRumah'));
         }
         if (session()->has('guest')) {
@@ -1487,7 +1471,7 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('underMT', compact('rumah', 'tipeRumah'));
+            return view('underMT',compact('rumah','tipeRumah'));
             // return view('simDataPelanggan', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo'));
         }
         return view('login');
@@ -2241,7 +2225,8 @@ class Home extends Controller
 
                 ->first();
         }
-        $template = 'mail.mailFP';
+        $template = 'mail.coba';
+        $template2 = 'pdf.salesFP';
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -2406,54 +2391,51 @@ class Home extends Controller
                     );
                 }
             }
-            DB::table('pembayaran_rumah')->insert(
-                $dtPembayaran
-            );
-
             $fpJadi = DB::table('formulir_pesanan')
-                ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
-                ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-                ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
-                ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
-                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-                ->where('id_formulir', '=', $fp)
-                ->first();
-
-            // dd($fpJadi);
-            $dataPembayaran = DB::table('pembayaran_rumah')
-                ->where('id_formulir', '=', $fp)
-                ->get();
+            ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+            ->join('cluster','rumah.codecluster','=','cluster.codecluster')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+            ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+            ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+            ->where('id_formulir', '=', $fp)
+            ->first();
+            $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_formulir', '=', $fp)
+            ->get();
             $promo = "";
             if (!empty($fpJadi->id_promo)) {
                 $promo = DB::table('promo')
-                    ->where('id_promo', '=', $fpJadi->id_promo)
-                    ->first();
+                ->where('id_promo', '=', $fpJadi->id_promo)
+                ->first();
             }
 
-            // $dtUpdate = [
-            //     'status' => "Keep"
-            // ];
-            // DB::table('rumah')
-            // ->where('id_rumah',"=",$id_rumah)
-            // ->update(
-            //     $dtUpdate
-            // );
+            $dtUpdate = [
+                'status' => "Keep"
+            ];
+            DB::table('rumah')
+            ->where('id_rumah',"=",$id_rumah)
+            ->update(
+                $dtUpdate
+            );
+
 
             $accounting = DB::table('user_admin')
-                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-                ->join('departemen', 'ktgr_admin.id_departemen', '=', 'departemen.id_departemen')
-                ->where('departemen.departemen', '=', "Accounting")
-                ->where('user_admin.email_ua', '!=', null)
-                ->get();
+            ->join('ktgr_admin','user_admin.id_kategori','=','ktgr_admin.id_kategori')
+            ->join('departemen','ktgr_admin.id_departemen','=','departemen.id_departemen')
+            ->where('departemen.departemen', '=', "Accounting")
+            ->where('user_admin.email_ua', '!=', null)
+            ->get();
 
-            // ->where('tgl_aktif', '<=', NOW())
+
+
+        // ->where('tgl_aktif', '<=', NOW())
             // dd($fpJadi);
 
-            // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
+        // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
 
-            $pdf = PDF::loadView('pdf.printSPR', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
+            $pdf = PDF::loadView('pdf.printSPR', ['fp' => $fpJadi, 'dtPembayaran' => $dtPembayaran,'promo'=>$promo]);
             // $pdf = PDF::loadView('mail.index');
             $pdf->setPaper('F4', 'potrait');
             // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
@@ -2464,13 +2446,13 @@ class Home extends Controller
             // dd($filename);
             $path = './Home/pdf/';
             $pdf->save($path . 'FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf');
-            $filename = $path . 'FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf';
+            $filename =  $path.'FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf';
 
             $dataEmail1 = [
                 'to' => $pelanggan->email_plgn,
                 "subject" => "Form Living",
                 "body" => "",
-                'nama' => $pelanggan->nama_plgn,
+                'nama'  => $pelanggan->nama_plgn,
                 'attachment' => $filename,
             ];
             $dataEmail2 = [
@@ -2478,7 +2460,7 @@ class Home extends Controller
                 "subject" => "Form Living",
                 "body" => "",
                 "body" => "",
-                'nama' => $pelanggan->nama_plgn,
+                'nama'  => $pelanggan->nama_plgn,
                 'attachment' => $filename,
             ];
             $dataEmail3 = null;
@@ -2488,7 +2470,7 @@ class Home extends Controller
                     "subject" => "Form Living",
                     "body" => "",
                     "body" => "",
-                    'nama' => $pelanggan->nama_plgn,
+                    'nama'  => $pelanggan->nama_plgn,
                     'attachment' => $filename,
                 ];
                 try {
@@ -2502,7 +2484,8 @@ class Home extends Controller
                 }
             }
 
-            // $template = 'mail.mailFP';
+
+            $template = 'mail.mailFP';
             // $template2 = 'pdf.salesFP';
             // MailNotify class that is extend from Mailable class.
             try {
@@ -2518,6 +2501,7 @@ class Home extends Controller
             return redirect('/congratulation')->with('success', 'Data has been send!');
             // dd($user);
             // die();
+
 
         }
         if (session()->has('guest')) {
@@ -2680,29 +2664,30 @@ class Home extends Controller
             }
 
             $fpJadi = DB::table('formulir_pesanan')
-                ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-                ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
-                ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-                ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-                ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
-                ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
-                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-                ->where('id_formulir', '=', $fp)
-                ->first();
-            $dtPembayaran = DB::table('pembayaran_rumah')
-                ->where('id_formulir', '=', $fp)
-                ->get();
+            ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+            ->join('cluster','rumah.codecluster','=','cluster.codecluster')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+            ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+            ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+            ->where('id_formulir', '=', $fp)
+            ->first();
+        $dtPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_formulir', '=', $fp)
+            ->get();
             $promo = "";
             if (!empty($fpJadi->id_promo)) {
                 $promo = DB::table('promo')
-                    ->where('id_promo', '=', $fpJadi->id_promo)
-                    ->first();
+                ->where('id_promo', '=', $fpJadi->id_promo)
+                ->first();
             }
 
-            // ->where('tgl_aktif', '<=', NOW())
+        // ->where('tgl_aktif', '<=', NOW())
 
-            // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
-            $pdf = PDF::loadView('pdf.PrintSPR', ['fp' => $fpJadi, 'dtPembayaran' => $dtPembayaran, 'promo' => $promo]);
+
+        // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
+             $pdf = PDF::loadView('pdf.PrintSPR', ['fp' => $fpJadi, 'dtPembayaran' => $dtPembayaran,'promo'=>$promo]);
             // $pdf = PDF::loadView('mail.index');
             $pdf->setPaper('F4', 'potrait');
             // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
@@ -2713,13 +2698,13 @@ class Home extends Controller
             // dd($filename);
             $path = './Home/pdf/';
             $pdf->save($path . 'FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf');
-            $filename = $path . 'FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf';
+            $filename =  $path.'FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf';
 
             $dataEmail1 = [
                 'to' => $pelanggan->email_plgn,
                 "subject" => "Form Living",
                 "body" => "",
-                'nama' => $pelanggan->nama_plgn,
+                'nama'  => $pelanggan->nama_plgn,
                 'attachment' => $filename,
             ];
 
@@ -2927,7 +2912,7 @@ class Home extends Controller
         $fp = DB::table('formulir_pesanan')
             ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
             ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
-            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('cluster','rumah.codecluster','=','cluster.codecluster')
             ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
             ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
             ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
@@ -2943,9 +2928,9 @@ class Home extends Controller
 
             ->first();
         // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
-        $pdf = PDF::loadView('pdf.PrintSPR', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran, 'promo' => $promo]);
+        $pdf = PDF::loadView('pdf.PrintSPR', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran,'promo'=>$promo]);
         $pdf->setPaper('F4', 'potrait');
-        return $pdf->download('FP-' . $fp->blok . "-" . $fp->nomor . '.pdf');
+        return $pdf->download('FP-'.$fp->blok."-".$fp->nomor.'.pdf');
     }
     public function rupiah($angka)
     {

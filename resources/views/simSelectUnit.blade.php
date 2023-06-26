@@ -14,9 +14,9 @@
                 <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
             </div>
             <div class="nav-header">
-                <div class="ic-back">
-                    <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
-                </div>
+                <!--<div class="ic-back">-->
+                <!--    <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">-->
+                <!--</div>-->
                 <h2 class="title">
                     Miliki Unit
                 </h2>
@@ -57,7 +57,7 @@
 
                 {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
                 {{-- @include('map.svg') --}}
-                {!! file_get_contents(resource_path('views/map.svg')) !!}
+                {!! file_get_contents(resource_path('views/maps-baru.svg')) !!}
                 <script>
                     var data = {!! json_encode($rumah) !!};
                     $(document).ready(function(){

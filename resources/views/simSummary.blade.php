@@ -4,7 +4,11 @@
 @extends('HomeLayout.footer')
 @section('tittle', 'Forms | Simulasi Ringkasan')
 @section('body', '')
-
+<style>
+ol > li::marker {
+  font-weight: bold;
+}    
+</style>
 
 @section('content')
 
@@ -14,9 +18,9 @@
                 <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
             </div>
             <div class="nav-header">
-                <div class="ic-back">
-                    <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
-                </div>
+                <!--<div class="ic-back">-->
+                <!--    <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">-->
+                <!--</div>-->
                 <h2 class="title">
                     Miliki Unit
                 </h2>
@@ -61,7 +65,18 @@
                                 <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                                     <div class="mod-type">
                                         <div class="type-image">
-                                          <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
+                                          <?php
+                                            if(!empty($rumah->img_rumah)){
+                                                ?>
+                                                <img src="{{ asset('Home') }}/images/rumah/{{$rumah->img_rumah}}" alt="">
+                                                <?php
+                                            }else{
+                                            ?>
+            
+                                           <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                                            <?php
+                                            }
+                                        ?>
                                         </div>
                                         <div class="items">
                                             <div class="type-item">
@@ -160,7 +175,7 @@
                                         </div>
 
                                         <div class="col-5 col-lg-4">
-                                            <p>Promo Digunakan</p>
+                                            <p>Diskon Promo</p>
                                         </div>
 
                                         @if (!empty($promo))
@@ -168,7 +183,7 @@
                                             <p>Rp. {{  rupiah($promo->diskon_promo) }}</p>
                                         </div>
                                             <div class="col-5 col-lg-4">
-                                                <p>Keterangan</p>
+                                                <p>Keterangan Promo</p>
                                             </div>
 
                                             <div class="col-7 col-lg-8">
@@ -343,7 +358,7 @@
                                             <p>Rp. {{ rupiah($tipeRumah->harga_tr) }}</p>
                                         </div>
                                         <div class="col-5 col-lg-4">
-                                            <p>Promo Digunakan</p>
+                                            <p>Diskon Promo</p>
                                         </div>
                                         @if (!empty($promo))
                                             <div class="col-7 col-lg-8">
@@ -494,104 +509,346 @@
                     <div>
                         <div class="section">
                             <h5 class="modal-title">
-                                Syarat dan Ketentuan <br>
-                                Transaksi Pembelian Rumah di Greenland At Tidar
+                               Untuk pemesanan tersebut diatas, maka dengan ini pemesan menyetujui syarat dan ketentuan sebagai berikut :
                             </h5>
+                            <p align="justify">
+                                <ol type="I">
+                                    <li>
+                                                Menandatangani Perjanjian Pengikatan Jual Beli (PPJB) Tanah dan
+                                        Bangunan/ Kavling dalam waktu 30 (tiga puluh) hari sejak tanggal Surat
+                                        Pemesanan ini. Apabila setelah lewatnya jangka waktu tersebut, maka PT.
+                                        CITRA ARGO TIRTA berhak membatalkan Surat Pemesanan ini sesuai
+                                        butir XI di bawah, maka seluruh pembayaran yang telah dilakukan
+                                        pemesan tidak dapat dituntut kembali atau ditarik dari PT. CITRA ARGO
+                                        TIRTA.
+                                    </li>
+                                    <li>
+                                             Dalam hal pemesan telah membayar sebagian atau seluruh pembayaran
+                                        kepada PT. CITRA ARGO TIRTA dan pemesan membatalkan
+                                        pemesanannya dengan alasan apapun selain penolakan
+                                        permohonan fasilitas kredit sebagaimana butir X di bawah, Maka seluruh
+                                        pembayaran yang telah dilakukan pemesan tidak dapat dituntut kembali
+                                        atau ditarik dari PT. CITRA ARGO TIRTA.
+                                    </li>
+                                    <li>
+                                            Untuk melaksanakan penandatangan Akta Jual Beli (AJB) di hadapan
+                                        Pejabat Pembuat Akta Tanah (PPAT) yang ditunjuk oleh PT. CITRA
+                                        ARGO TIRTA, pemesan wajib terlebih dahulu membayar seluruh
+                                        bea/pajak dan biaya yang belum termasuk dalam Harga Tanah &
+                                        Bangunan/ Kavling.
+                                    </li>
+                                    <li>
+                                        Sebelum dilaksanakannya AJB di hadapan PPAT (untuk selanjutnya akan disebut AJB PPAT), apabila terjadi antara lain:
+                                        <ol type="a">
+                                            <li>kenaikan tarif dan/atau pengenaan baru berdasarkan suatu
+                                                perubahan atau peraturan baru yang dikeluarkan/diberlakukan oleh
+                                                Pemerintah atas suatu pajak/bea dan biaya seperti namun tidak
+                                                terbatas pada Pajak Pertambahan Nilai (PPN), Bea Perolehan Hak
+                                                atas Tanah dan Bangunan (BPHTB); atau
+                                            </li>
+                                            <li>
+                                                kenaikan tarif Nilai Jual Obyek Pajak (NJOP) dimana Pajak
+                                                Penghasilan (PPh) yang menjadi kewajiban PT. CITRA ARGO
+                                                TIRTA menjadi lebih besar dari PPh yang telah dibayarkan oleh
+                                                PT. CITRA ARGO TIRTA berdasarkan Harga Tanah dan
+                                                Bangunan/Kavling dalam Surat Pemesanan ini, sejauh hal tersebut
+                                                tidak disebabkan oleh PT. CITRA ARGO TIRTA, maka seluruhnya
+                                                wajib ditanggung dan dibayar sepenuhnya oleh pemesan sebelum
+                                                penandatanganan AJB PPAT.
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li>
+                                        Dalam hal pemesan belum membayar seluruh pajak/bea dan biaya
+                                        sebagaimana butir III sebelum dilaksanakannya penandatanganan AJB
+                                        PPAT, maka PT. CITRA ARGO TIRTA tidak wajib melaksanakan
+                                        penandatanganan AJB PPAT, dan segala risiko serta akibatnya menjadi
+                                        tanggungan pemesan sepenuhnya.
+                                    </li>
+                                    <li>
+                                        Apabila pemesan lalai dalam hal kurang atau terlambat melakukan suatu
+                                        pembayaran berdasarkan Surat Pemesanan ini, maka pemesan
+                                        dikenakan dan wajib membayar kepada PT. CITRA ARGO TIRTA denda
+                                        sebesar 1%O (satu permil) per setiap hari keterlambatan dari jumlah
+                                        terhutang sejak tanggal seharusnya dibayar sampai dilunasi seluruhnya.
+                                    </li>
+                                    <li>
+                                        Selain yang telah diatur dalam butir V di atas, apabila pemesan lalai dalam
+                                        hal kurang atau terlambat melakukan suatu pembayaran baik uang muka
+                                        (DP) maupun angsuran yang berlangsung hingga 3 (tiga) bulan berturutturut terhitung sejak tanggal permulaan kelalaian terjadi, maka PT. CITRA
+                                        ARGO TIRTA. dapat membatalkan Surat Pemesanan ini sesuai butir XI di
+                                        bawah, dan seluruh pembayaran yang telah dilakukan pemesan tidak
+                                        dapat dituntut kembali atau ditarik dari PT. CITRA ARGO TIRTA.
+                                    </li>
+                                    <li>
+                                        Untuk setiap pembayaran, apabila ternyata cek/giro atau pengiriman/transfer
+                                        yang ditolak oleh Bank, maka pemesan dikenakan dan wajib membayar
+                                        kepada PT. CITRA ARGO TIRTA biaya administrasi sebesar Rp.
+                                        100.000,- (seratus ribu rupiah) per setiap kejadian dan berlaku pula
+                                        ketentuan butir IX dan butir X.
+                                    </li>
+                                    <li>
+                                        Pembayaran kepada PT. CITRA ARGO TIRTA dibedakan menjadi 2 yakni :
+                                        <ol type="a">
+                                            <li>Secara Cash atau Cash Bertahap (inhouse) dapat melalui transfer
+                                                        ke rekening BANK CENTRAL ASIA<br>
+                                                        Cabang Galunggung, Malang<br>
+                                                        Atas Nama : PT CITRA ARGO TIRTA<br>
+                                                        Nomor Rekening : 4403014000, atau melalui virtual account:<br>
+                                                        Nomor Virtual Account NISP : 711021105313770
+                                            </li>
+                                            <li>
+                                               Secara KPR wajib dilakukan oleh pemesan dengan menggunakan
+                                                debet card/transfer/virtual account/pemindahbukuan/ giro/cek dari
+                                                rekening atas nama pemesan sendiri (Jika rekening atas nama
+                                                suami/istri/anak harus dibuktikan dengan dokumen legalitas yang
+                                                berupa Kartu Keluarga, Akta Nikah, Akta Lahir Anak), dengan
+                                                mencantumkan nama pemesan, Nomor
+                                                Blok/Kavling, pembayaran ditujukan ke :<br>
+                                                BANK CENTRAL ASIA<br>
+                                                Cabang Galunggung, Malang<br>
+                                                Atas Nama : PT CITRA ARGO TIRTA<br>
+                                                Nomor Rekening : 4403014000, atau melalui virtual account:<br>
+                                                Nomor Virtual Account NISP : 711021105313770 <br>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li>
+                                        PENGURUSAN FASILITAS KREDIT MELALUI BANK/LEMBAGA KEUANGAN/PEMBIAYAAN
+                                        <ol type="a">
+                                            <li>Pemesan wajib melengkapi data-data yang diperlukan oleh
+                                                    Bank/Lembaga
+                                                    Keuangan/Pembiayaan selambat-lambatnya : 7 (Tujuh)
+                                                    Hari setelah tanda jadi (booking fee) untuk KPR PERTAMA,
+                                                    KEDUA, KETIGA, KEEMPAT dan KELIMA 3 (tiga) bulan sebelum
+                                                    DP Lunas untuk KPR PERTAMA,KEDUA, KETIGA, KEEMPAT,
+                                                    KELIMA, KEENAM dan
+                                                    seterusnya dengan cicilan Uang Muka (DP) lebih dari 3 (tiga)
+                                                    bulan. Apabila lewat dari waktu tersebut, pemesan telah lalai
+                                                    dengan alasan apapun maka PT. CITRA ARGO TIRTA berhak
+                                                    membatalkan Surat Pemesanan ini sesuai butir II dan butir XI di
+                                                    bawah.
+                                            </li>
+                                            <li>
+                                                Apabila pemesan tidak memenuhi undangan untuk wawancara,
+                                                dan/atau apabila pemesan sudah mendapatkan persetujuan kredit
+                                                dari Bank/Lembaga Keuangan/Pembiayaan namun belum
+                                                melakukan akad kredit dengan Bank/Lembaga
+                                                Keuangan/Pembiayaan dihadapan Notaris, dan PT. CITRA ARGO
+                                                TIRTA, telah melakukan pemberitahuan sebanyak 3 (tiga) kali, baik
+                                                lisan maupun tertulis, maka pemesan telah lalai dan PT. CITRA
+                                                ARGO TIRTA berhak
+                                                membatalkan Surat Pemesanan ini sesuai butir XI di bawah.
+                                            </li>
+                                            <li>
+                                                Apabila setelah persetujuan kredit dari Bank/Lembaga
+                                                Keuangan/Pembiayaan kepada
+                                                pemesan telah diberikan, ternyata pemesan harus
+                                                menambah/membayar Uang Muka, maka pemesan wajib melunasi
+                                                penambahan Uang Muka dimaksud selambat-lambatnya 14
+                                                (empat belas) hari setelah tanggal surat persetujuan fasilitas kredit
+                                                dari Bank/Lembaga
+                                                Keuangan/Pembiayaan tersebut. Apabila lewat dari dalam jangka
+                                                waktu tersebut, maka PT. CITRA ARGO TIRTA berhak untuk :
+                                                <ol type="i">
+                                                    <li>memberikan waktu kepada pemesan untuk mengangsur
+                                                        Uang Muka yang harus ditambahkan dengan
+                                                        memperhitungkan biaya tambahan akibat mundurnya
+                                                        pelaksanaan akad kredit,atau
+                                                    </li>
+                                                    <li>
+                                                        membatalkan Surat Pemesanan ini sesuai butir XI dibawah.
+                                                    </li>
+                                                </ol>
+                                            <li>
+                                                Apabila permohonan fasilitas kredit pemesan ditolak oleh minimal 2
+                                                (dua)Bank/Lembaga Keuangan/Pembiayaan yang dituju, yang
+                                                dibuktikan dengan surat penolakan dari
+                                                Bank/Lembaga Keuangan/Pembiayaan dimaksud, maka PT.
+                                                CITRA ARGO TIRTA berhak
+                                                membatalkan Surat Pemesanan ini sesuai butir XI di bawah, dan
+                                                uang yang sudah dibayarkan oleh pemesan kepada PT. CITRA
+                                                ARGO TIRTA akan dikembalikan dengan syarat pemesan wajib
+                                                mengembalikan kepada PT. CITRA ARGO TIRTA Asli Surat
+                                                Pemesanan ini dan seluruh
+                                                Asli kwitansi pembayaran terkait. Seluruh pengembalian tersebut
+                                                adalah tanpa diberikan bunga apapun juga, setelah dipotong
+                                                sebagai berikut:
+                                                <ol type="i">
+                                                    <li>Tanda jadi (booking fee) dan pajak - pajak yang sudah
+                                                        disetor ke negara untuk KPR PERTAMA, KEDUA, KETIGA,
+                                                        KEEMPAT dan KELIMA.
+                                                    </li>
+                                                    <li>
+                                                        50% (lima puluh persen) dari seluruh uang yang sudah
+                                                        dibayarkan oleh pemesan untuk KPR PERTAMA, KEDUA,
+                                                        KETIGA, KEEMPAT, dan KELIMA dengan cicilan down
+                                                        payment lebih dari atau sama dengan 12 (dua belas) bulan.
+                                                    </li>
+                                                    <li>
+                                                        50% (lima puluh persen) dari seluruh uang yang sudah
+                                                        dibayarkan oleh pemesan untuk KPR KEENAM dan
+                                                        seterusnya.
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                                    <li>Apabila diperjanjikan sebelumnya oleh PT. CITRA ARGO TIRTA
+                                                        dan pemesan bahwa seluruh/sebagian pembayaran Uang Muka,
+                                                        dibiayai oleh instansi/perusahaan seperti namun tidak terbatas PT.
+                                                        (Persero) Jamsostek, Yayasan Kesejahteraan Perumahan Prajurit
+                                                        dan
+                                                        Pegawai Negeri Sipil Departemen Pertahanan (YKPP DEPHAN)
+                                                        atau Badan Pertimbangan Tabungan Perumahan Pegawai Negeri
+                                                        Sipil (BAPERTARUM) dan ketentuan mengenai Fasilitas Likuiditas
+                                                        Pembiayaan Perumahan (FLPP), maka pemesan menjamin
+                                                        sepenuhnya
+                                                        bertanggung jawab atas pelunasan pembayaran Uang Muka
+                                                        tersebut kepada PT. CITRA ARGO TIRTA jika instansi/perusahaan
+                                                        dimaksud batal membayar Uang Muka dimaksud dalam
+                                                        waktu 1 (satu) bulan sejak tanggal jatuh temponya sebagaimana
+                                                        jadwal pembayaran di atas, maka PT. CITRA ARGO TIRTA berhak
+                                                        membatalkan Perjanjian ini sesuai butir XI dibawah dan uang yang
+                                                        sudah dibayarkan oleh pemesan kepada PT. CITRA ARGO TIRTA
+                                                        akan dikembalikan dengan syarat pemesan mengembalikan
+                                                        kepada PT. CITRA ARGO TIRTA asli Surat Pemesanan ini dan
+                                                        seluruh asli kwitansi pembayaran terkait. Seluruh pengembalian
+                                                        tersebut tanpa
+                                                        diberikan bunga apapun juga, setelah dipotong biaya pembatalan
+                                                        sebagaimana yang diatur didalambutir X huruf d.
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                    <li>
+                                        Untuk pembatalan Surat Pemesanan ini, maka Para Pihak dengan ini setuju
+                                        dan sepakat untuk
+                                        melepaskan ketentuan ketentuan Pasal 1265, 1266, 1267 Kitab UndangUndang Hukum Perdata dan pemesan dengan ini memberikan kuasa
+                                        sepenuhnya kepada PT. CITRA ARGO TIRTA dengan hak substitusi
+                                        untuk menandatangani surat pembatalannya dan surat tersebut berlaku
+                                        efektif dan sah dengan PT. CITRA ARGO TIRTA mengirim surat
+                                        pembatalannya kepada pemesan, tanpa perlu melalui proses Pengadilan
+                                        dan berlaku terhitung tanggal pengiriman surat pembatalan tersebut oleh
+                                        PT.
+                                        CITRA ARGO TIRTA yang dibuktikan dengan tanda terima yang
+                                        dikeluarkan oleh kantor pos/perusahaan jasa kurir/kurir.
 
-                            <h6>I. Pemesanan</h6>
-                            <p align="justify">
-                                1.	Pembeli dan PT. Citra Argo Tirta sepakat apabila luas tanah yang dicantumkan dalam Formulir Pesanan berbeda dengan luas yang dicantumkan dalam Sertifikat Tanah yang diterbitkan oleh Kantor Badan Pertanahan Nasional, dimana ada selisih kelebihan/kekurangan luas tanah, maka akan diperhitungkan sebesar Rp……………………per meter persegi.
-                            </p>
-                             <h6>II. Cara Pembayaran dan Pengumpulan Data KPR</h6>
-                            <p align="justify">
-                                <ol>
-                                    <li>Pembeli berkewajiban untuk membayar angsuran sesuai dengan tanggal yang telah ditetapkan dalam Formulir Pesanan.</li>
-                                    <li>Pembayaran angsuran dapat dilakukan secara tunai, transfer ataupun dengan cek/bilyet giro dan disetorkan pada rekening PT. Citra Argo Tirta yang telah ditentukan.</li>
-                                    <li>Pembayaran angsuran dengan cek/bilyet giro ataupun dengan cara pembayaran lainnya tersebut di atas, baru dianggap sah apabila dana tersebut telah masuk rekening PT. Citra Argo Tirta.</li>
-                                    <li>Untuk setiap hari keterlambatan pembayaran angsuran sebagaimana ditentukan dalam Formulir Pesanan, Pembeli dikenakan denda keterlambatan sebesar Rp. 150.000 per hari. Ketentuan besarnya denda ini hanya berlaku untuk keterlambatan sampai dengan 30 (tiga puluh) hari sejak jatuh tempo pembayaran angsuran.</li>
-                                    <li>Terjadinya keterlambatan pembayaran angsuran sudah merupakan bukti yang cukup akan kelalaian Pembeli, dan apabila keterlambatan pembayaran tersebut telah melewati jangka waktu 30 hari maka Formulir Pesanan menjadi batal.</li>
-                                    <li>Pembayaran atas Formulir Pesanan yang menggunakan Fasilitas Kredit dari Bank adalah merupakan inisiatif dan tanggung jawab Pembeli.PT. Citra Argo Tirta hanya membantu melengkapi data yang dibutuhkan Bank, selanjutnya Pembeli wajib melengkapi persyaratan fasilitas kredit melalui PT. Citra Argo Tirta.</li>
-                                    <li>Khusus cara bayar KPR, syarat dan ketentuan sesuai dengan Peraturan BI dan Bank Pemberi fasilitas KPR yang berlaku pada saat realisasi KPR.</li>
-                                    <li>Program promo khusus hanya berlaku untuk bank yang sudah bekerjasama dengan PT.Citra Argo Tirta, dan tidak berlaku di bank lain.</li>
-                                    <li>Apabila dikemudian hari terjadi perubahan nilai nominal pemberian fasilitas kredit oleh Bank, maka Pembeli bersedia membayar dan melunasi kekurangan nilai nominal fasilitas kredit tersebut sesuai metode pembayaran dari PT. Citra Argo Tirta.</li>
-                                </ol>
-                            </p>
-                            <h6>III. Pembatalan</h6>
-                            <p align="justify">
-                                <ol>
-                                    <li>Surat Pesanan ini menjadi batal dan selanjutnya hak atas kavling tersebut menjadi hak PT. Citra Argo Tirta untuk menjual ke orang lain, apabila :
-                                        <ol style="list-style-type:lower-alpha" style:"border-left:3px;">
-                                            <li>Keterlambatan pembayaran sebagaimana dimaksud dalam butir II.5.</li>
-                                            <li>Pihak Kedua membatalkan sendiri pesanannya.</li>
-                                            <li>Keterlambatan dalam melengkapi syarat-syarat fasilitas kredit.</li>
+                                    </li>
+                                    <li>
+                                        KETENTUAN PINDAH BLOK DAN NOM0R TANAH BESERTA BANGUNAN
+                                        <ol type="a">
+                                            <li>Pemindahan Blok/Kavling oleh PT. CITRA ARGO TIRTA karena
+                                                perubahan peruntukan blok atau karena sesuatu dan lain hal
+                                                sesuai dengan ketentuan yang berlaku, tidak dikenakan biaya
+                                                apapun dan untuk itu PT. CITRA ARGO TIRTA akan
+                                                memberitahukan terlebih dahulu.
+                                            </li>
+                                            <li>
+                                                Pemindahan Blok/Kavling atas keinginan pemesan diperbolehkan
+                                                dengan ketentuan :
+                                                    <ol type="i">
+                                                        <li>
+                                                             Harus mengajukan surat permohonan pindah Blok/ Kavling
+                                                                dan disetujui oleh PT. CITRA ARGO TIRTA.
+                                                        </li>
+                                                        <li>
+                                                            Dikenakan biaya adminstrasi sebesar 2 % (dua persen) dari harga jual sebelum PPN berdasarkan Surat Pemesanan ini.
+                                                        </li>
+                                                        <li>
+                                                            Jumlah pembayaran yang telah dibayarkan untuk Blok sebelumnya, setelah dikurangi nilai PPN dan PPh atas
+                                                            jumlah pembayaran yang telah dilakukan pemesan kepada PT. CITRA ARGO TIRTA , akan diperhitungkan sebagai 
+                                                            pembayaran Blok yang baru
+                                                        </li>
+                                                        <li>
+                                                            Pemesan bertanggung jawab atas segala kewajiban perpajakan yang mungkin timbul dari pindah Blok/Kavling tersebut;
+                                                        </li>
+                                                        <li>
+                                                            Harga Tanah dan Bangunan/ Kavling yang lama diperhitungkan dari harga pada saat pemesanan, dan 
+                                                            harga Tanah dan Bangunan/ Kavling yang baru diperhitungkan dari harga yang berlaku pada saat pindah Blok/Kavling.
+                                                        </li>
+                                                        <li>
+                                                            Menandatangani dan menyerahkan seluruh akta, perjanjian, surat, formulir, dan dokumen lainnya yang dipersyaratkan 
+                                                            oleh PT. CITRA ARGO TIRTA;
+                                                        </li>
+                                                    </ol>
+                                            </li>
                                         </ol>
                                     </li>
-                                    <li>Apabila Pembeli dengan alasan apapun membatalkan transaksi pembelian rumah sebagaimana dimaksud butir III.1, maka Pembeli setuju untuk mengikuti ketentuan dari PT. Citra Argo Tirta, yaitu :
-                                        <ol style="list-style-type:lower-alpha" style:"border-left:3px;">
-                                            <li>Seluruh uang tanda jadi hangus.</li>
-                                            <li>Pembeli dikenakan biaya administrasi sebesar 30% dari jumlah total uang yang telah dibayarkan kepada PT. Citra Argo Tirta atau 3% dari harga jual rumah, mana yang lebih tinggi.</li>
-                                            <li>Keterlambatan dalam melengkapi syarat-syarat fasilitas kredit.</li>
+                                    <li> 
+                                        KETENTUAN PENGALIHAN HAK, KEWAJIBAN DAN TANGGUNG JAWAB SERTA GANTI NAMA
+                                        <ol type="a">
+                                            <li>
+                                                Pemesan harus mengajukan permohonan secara tertulis dan bersama-sama dengan pembeli baru (PIHAK KETIGA) menghadap 
+                                                kepada PT. CITRA ARGO TIRTA.
+                                            </li>
+                                            <li>
+                                                Apabila pemesan mempergunakan fasilitas KPR dari Bank/Lembaga Keuangan/Pembiayaan, maka harus ada
+                                            persetujuan secara tertulis dari Bank/Lembaga Keuangan/Pembiayaan tersebut.
+                                            </li>
+                                            <li>
+                                                Apabila pemesan mempergunakan fasilitas pembayaran melalui developer, maka wajib melunasi seluruh sisa kewajiban 
+                                                pembayaran Tanah dan Bangunan / Kavling.
+                                            </li>
+                                            <li>
+                                                Pemesan wajib membayar biaya administrasi pengalihan hak sebesar 2.5% (dua koma lima persen) dari harga jual sebelum 
+                                                PPN berdasarkan Surat Pemesanan ini.
+                                            </li>
+                                            <li>
+                                                Pemesan wajib membayar biaya (PPh) final sebesar 2.5% (satu persen) dari 
+                                                Harga Tanah dan Bangunan berdasarkan perjanjian ini atau Nilai Jual Objek Pajak (NJOP) 
+                                                PBB Tahun berjalan, diperhitungkan nilai tertinggi.
+                                            </li>
+                                            <li>
+                                                Khusus untuk mengganti nama ke atas nama pihak keluarga, hanya terbatas pada hubungan: orang tua, istri/suami dengan harta 
+                                                campur, anak kandung yang dapat dibuktikan secara hukumdengan: akta kelahiran, akta nikah dan/atau kartu keluarga, dsbnya 
+                                                yang dianggap cukup oleh PT. CITRA ARGO TIRTA, maka pemesan wajib membayar kepada PT. CITRA ARGO TIRTA biaya administrasi 
+                                                ganti nama sebesar Rp.250.000,- (dua ratus lima puluh ribu rupiah) per kejadian dan pergantian nama hanya berlaku untuk satu kali 
+                                                pergantian nama
+                                            </li>
+                                            <li>. Pemesan dan/ atau PIHAK KETIGA tersebut, secara sendiri-sendiri maupun bersama-sama bertanggung jawab 
+                                            atas segala kewajiban perpajakan yang mungkin timbul dari pengalihan hak tersebut.
+                                            </li>
+                                            <li>
+                                                Semua ketentuan yang berlaku pada Surat Pemesanan ini tetap berlaku 
+                                                terhadap pemesan dan/atau PIHAK KETIGA tersebut;
+                                            </li>
+                                            <li>
+                                                Menandatangani dan menyerahkan seluruh akta, perjanjian, surat, formulir, 
+                                                dan dokumen lainnya yang dipersyaratkan oleh PT.CITRA ARGO TIRTA
+                                            </li>
                                         </ol>
                                     </li>
-                                    <li>Pengembalian uang kepada Pembeli akan dilakukan setelah PT. Citra Argo Tirta berhasil menjual rumah tersebut kepada Pihak ketiga yang mana pengembalian uang tersebut dilakukan secara bertahap setelah dipotong biaya administrasi yaitu :
-                                        <ol style="list-style-type:lower-alpha" style:"border-left:3px;">
-                                            <li>Tahap I : 20% dari uang yang telah dibayarkan kepada PT. Citra Argo Tirta.</li>
-                                            <li>Tahap II  : 30% dari uang yang telah dibayarkan kepada PT. Citra Argo Tirta.</li>
-                                            <li>Tahap III : 50% dari uang yang telah dibayarkan kepada PT. Citra Argo Tirta.</li>
+                                    <li>
+                                        FORCE MAJEURE <br>
+                                        Para pihak setuju untuk mengadakan perubahan/penambahan atas Surat Pemesanan ini apabila di kemudian hari terjadi Force Majeure. Yang 
+                                        dimaksud dengan Force Majeure adalah hal-hal yang dapat mempengaruhi jalannya pelaksanaan pekerjaan PT. CITRA ARGO TIRTA antara lain: 
+                                        gempa bumi, banjir, bencana alam lainnya, huru-hara, perang, tindakan kekerasan oleh pihak lain baik 
+                                        secara perorangan atau massal, termasuk tindakan, kebijakan/peraturan Pemerintah termasuk di bidang fiskal atau moneter, .
+                                        keadaan politik atau keadaan langka bahan bangunan yang mempengaruhi kegiatan usaha di bidang properti dan turunannya.
+                                    </li>
+                                    <li>
+                                        ARBITRASE
+                                        <ol type="a">
+                                            <li>
+                                                Jika timbul perselisihan dalam melaksanakan Surat Pemesanan ini, maka akan diselesaikan oleh para pihak secara musyawarah.
+
+                                            </li>
+                                            <li>
+                                                 Apabila dalam jangka waktu 60 (enam puluh) hari sejak sengketa atau beda pendapat tersebut, penyelesaian secara musyawarah 
+                                                 tidak tercapai, maka para pihak sepakat untuk menyelesaikannya pada tingkat pertama dan terakhir dengan cara arbitrase melalui 
+                                                 Badan Arbitrase Nasional Indonesia (BANI) di Jakarta, sesuai dengan Undang-Undang Republik nomor 30 tahun 1999 tentang 
+                                                 Arbitrase dan Alternatif Penyelesaian Sengketa, berikut perubahan dan penambahannya di kemudian hari. Indonesia
+                                            </li>
+                                            <li>
+                                                Kesepakatan para pihak untuk menyelesaikan sengketa dengan cara arbitrase meniadakan hak para pihak untuk mengajukan penyelesaian sengketa ke Pengadilan Negeri.
+                                            </li>
+                                            <li>
+                                                Para pihak setuju bahwa keputusan BANI adalah final dan mengikat para pihak, serta untuk pelaksanaan keputusan BANI dapat 
+                                                dimintakan fiat eksekusinya ke Pengadilan Negeri setempat.
+                                            </li>
                                         </ol>
                                     </li>
-                                    <li>Dengan membatalkan seperti yang dimaksud dalam butir III.1 maka semua kwitansi dan dokumen apapun yang pernah diterima oleh Pembeli dari PT. Citra Argo Tirta  tidak dapat dijadikan sebagai bukti bagi Pembeli.</li>
-                                </ol>
-                            </p>
-                            <h6>IV. Ketentuan Selama Pembangunan</h6>
-                            <p align="justify">
-                                 <ol>
-                                     <li>Pelaksanaan pembangunan didasarkan pada spesifikasi teknik dan gambar rumah yang telah dikeluarkan oleh PT. Citra Argo Tirta.</li>
-                                     <li>Untuk pembelian rumah dengan kavling khusus, untuk pelaksanaan pembangunan diperkenankan free design dan tetap berpedoman sesuai dengan prosedur PT. Citra Argo Tirta.</li>
-                                     <li>Adanya pekerjaan tambahan atau perubahan spesifikasi teknik dan gambar harap diinformasikan di awal pemesanan.</li>
-                                     <li>Selama masa pembangunan, Pembeli tidak diperkenankan untuk melakukan pekerjaan tambahan atau perubahan spesifikasi teknik dan gambar tanpa persetujuan dari PT. Citra Argo Tirta.</li>
-                                     <li>Pengajuan order pembangunan akan dilakukan setelah Pembeli menyelesaikan pembayaran 50% dari harga jual dan penyelesaian bangunan akan dilaksanakan oleh PT. Citra Argo Tirta selambat-lambatnya 8 bulan untuk type dibawah 70, sedangkan untuk type diatas 70 akan disepakati oleh kedua belah pihak.</li>
-                                </ol>
-                            </p>
-                           <h6>V. Serah Terima Kavling</h6>
-                            <p align="justify">
-                                 <ol>
-                                     <li>Serah Terima Kavling akan dilaksanakan setelah Pembeli membayar lunas seluruh harga Tanah dan Bangunan dan pembangunan telah selesai 100%</li>
-                                     <li>Serah Terima Sepihak akan dilaksanakan jika pembeli tidak dapat melakukan serah terima kavling dalam waktu yang telah ditentukan oleh PT.Citra Argo Tirta.</li>
-                                     <li>Pembeli berjanji serta mengikatkan diri untuk tetap menggunakan tanah dan bangunan sebagai rumah tinggal. </li>
-                                     <li>Biaya Pemeliharaan dan Perbaikan Lingkungan serta penggunaan air bersih dimulai sejak tanggal ditandatanganinya BAST yang besarnya ditentukan oleh PT.Citra Argo Tirta.</li>
-                                 </ol>
-                            </p>
-                            <h6>VI. Pelaksanaan Penandatanganan Akte Jual Beli (AJB) dan Pengambilan Sertifikat</h6>
-                            <p align="justify">
-                                 <ol>
-                                     <li>Pelaksanaan penandatanganan Akte Jual Beli (AJB) akan dilakukan di hadapan Pejabat Pembuat Akta Tanah (PPAT) yang ditunjuk PT. Citra Argo Tirta setelah pembeli melunasi seluruh harga tanah dan bangunan.</li>
-                                     <li>Pengambilan Sertifikat yang sudah selesai balik nama dilakukan di PT. Citra Argo Tirta disertai dengan mengembalikan Asli Formulir Pesanan, Asli Kwitansi-kwitansi.</li>
-                                 </ol>
-                            </p>
-                            <h6>VII. Peralihan/Pengoperan Hak</h6>
-                            <p align="justify">
-                                 <ol>
-                                     <li>Pengalihan/pengoperan hak kepada pihak lain oleh Pembeli yang dilaksanakan sebelum penandatanganan Akta Jual Beli (AJB) dihadapan Notaris/PPAT adalah batal kecuali telah mendapat persetujuan secara tertulis terlebih dahulu dari PT. Citra Argo Tirta.</li>
-                                     <li>2Pembeli diwajibkan untuk membayar biaya administrasi 5% (lima persen) dari harga jual rumah, yang harus dibayar sebelum pengalihan/pengoperan hak dilaksanakan.</li>
-                                 </ol>
-                            </p>
-                            <h6>VIII. Pemberitahuan dan Perubahan Alamat</h6>
-                            <p align="justify">
-                                 <ol>
-                                     <li>Pembeli wajib memberitahukan kepada PT. Citra Argo Tirta apabila mengalami perubahan alamat dan lain sebagainya. Pemberitahuan mengenai perubahan alamat dan lain sebagainya tersebut dapat ditujukan kepada :
-                                         <ul style="list-style-type: none;">
-                                             <li>PT. Citra Argo Tirta </li>
-                                             <li>Jalan Raya Candi VIC Perumahan Greenland At Tidar Blok A-1 Malang</li>
-                                             <li>No. Telepon : 0341-588805</li>
-                                         </ul>
-                                     </li>
-                                     <li>Segala akibat yang timbul karena tidak adanya pemberitahuan perubahan alamat Pembeli menjadi tanggung jawab Pembeli sepenuhnya.</li>
-                                 </ol>
-                            </p>
                             <br>
                             <p align=justify style = "text-indent:1.5cm;">
-                                Dengan menandatangani formulir ini, saya selaku pembeli di Perumahan Greenland At Tidar menyatakan telah membaca, memahami dan menyetujui hal - hal yang tercantum pada Syarat dan Ketentuan Transaksi Pembelian Rumah di Greenland At Tidar beserta Buku Tata Tertib dan Pedoman Desain dari PT. Citra Argo Tirta.
+                                Dengan menyetujui Syarat dan Ketentuan ini, saya selaku pembeli di Perumahan Greenland At Tidar menyatakan telah membaca dan memahami hal - hal yang tercantum pada Syarat dan Ketentuan Transaksi Pembelian Rumah di Greenland At Tidar beserta Buku Tata Tertib dan Pedoman Desain dari PT. Citra Argo Tirta.
                             </p>
                         </div>
 

@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\AdminAccounting;
+use App\Http\Controllers\Ceo_Dashboard;
+use App\Http\Controllers\Direktur_Dashboard;
+use App\Http\Controllers\AdminFormsLiving_Dashboard;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -209,7 +213,7 @@ Route::get('/agent-company', function () {
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-// >>>>>>>>>>>>>>> DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// >>>>>>>>>>>>>>> DASHBOARD ACCOUNTING <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('/dashboard-admin-accounting', [AdminAccounting::class, 'index']);
 Route::get('/formulirPesanan/{id_formulir}', [AdminAccounting::class, 'formulirPesanan']);
@@ -220,6 +224,38 @@ Route::get('/pembayaran/{id_pembayaran}', [AdminAccounting::class, 'pembayaran']
 Route::post('/pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'pembayaranAction'])->name('pembayaran.action');
 
 
+// >>>>>>>>>>>>>>> END DASHBOARD ACCOUNTING <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+// >>>>>>>>>>>>>>> START DASHBOARD DIREKTUR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+Route::get('Direktur/dashboard', [Direktur_Dashboard::class, 'index']);
+
+
+
+// >>>>>>>>>>>>>>> END DASHBOARD DIREKTUR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+// >>>>>>>>>>>>>>> DASHBOARD CEO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Route::get('CEO/dashboard', [Ceo_Dashboard::class, 'index']);
+
+Route::get('CEO/promo', [Ceo_Dashboard::class, 'getPromo']);
+Route::get('CEO/tambah-rumah-promo', [Ceo_Dashboard::class, 'addPromoRumah']);
+Route::post('CEO/tambah-rumah-promo', [Ceo_Dashboard::class, 'addPromoRumahAction'])->name('promo-rumah.action');
+Route::post('CEO/tambah-promo', [Ceo_Dashboard::class, 'addPromoAction'])->name('promo.action');
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+
+// >>>>>>>>>>>>>>   DASHBOARD ADMIN FORMS LIVING    <<<<<<<<<<<<<
+Route::get('AdminFormsLiving/dashboard', [AdminFormsLiving_Dashboard::class,'index']);
+
+// >>>>>>>>>>>>>>       END ADMIN FORMS LIVING      <<<<<<<<<<<<<
 
 Route::get('/email/{id_formulir}', [Home::class, 'email']);

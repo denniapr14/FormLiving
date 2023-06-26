@@ -5,7 +5,6 @@
 @section('tittle','Forms | Simulasi Kluster')
 @section('body','')
 
-
 @section('content')
 <div class="cluster">
     <div class="header-simulation mobile-only">
@@ -13,7 +12,7 @@
             <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
         </div>
         <div class="nav-header">
-            <a href="/k-cluster.html" class="ic-back">
+            <a href="/Greenland" class="ic-back">
                 <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
             </a>
             <h2 class="title">
@@ -29,11 +28,13 @@
             <div class="step">4</div>
             <div class="step">5</div>
             <div class="step">6</div>
-            <div class="step last">7</div>
+             <div class="step">7</div>
+            <div class="step last">8</div>
         </div>
-
     </div>
+    
     <div class="container">
+       
         <div class="steps">
             <div class="step active">1</div>
             <div class="step">2</div>
@@ -42,7 +43,8 @@
             <div class="step">4</div>
             <div class="step">5</div>
             <div class="step">6</div>
-            <div class="step last">7</div>
+             <div class="step">7</div>
+            <div class="step last">8</div>
         </div>
 
         <div class="choose-cluster">
@@ -51,10 +53,7 @@
             </h2>
             <div class="row">
                 @foreach ($cluster as $cluster)
-
-
                 <div class="col-6 col-lg-3">
-
                     <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
                     <div class="item">
                         <div class="item-image">
@@ -76,8 +75,6 @@
                         <h5 class="item-title">{{ $cluster->nama_cluster }}</h5>
                         <p class="item-sub">Cluster</p>
                     </div>
-
-
                 </a>
                 </div>
                 @endforeach

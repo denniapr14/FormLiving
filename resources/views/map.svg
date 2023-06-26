@@ -11,14 +11,14 @@
 	.st6{fill:none;stroke:#000000;stroke-width:0.1976;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2.6131;}
 	.st7{fill:none;stroke:#000000;stroke-width:8.620000e-02;stroke-miterlimit:2.6131;}
 	.st8{fill:none;stroke:#000000;stroke-width:0.216;stroke-miterlimit:2.6131;}
-	
+
 		.st9{clip-path:url(#SVGID_2_);fill:none;stroke:#000000;stroke-width:0.2426;stroke-miterlimit:2.6131;stroke-dasharray:1.213,1.213;}
 	.st10{clip-path:url(#SVGID_4_);fill:none;stroke:#000000;stroke-width:8.090000e-02;stroke-miterlimit:2.6131;}
 	.st11{clip-path:url(#SVGID_6_);fill:none;stroke:#000000;stroke-width:1.2938;stroke-miterlimit:2.6131;}
 	.st12{clip-path:url(#SVGID_8_);}
-	
+
 		.st13{clip-path:url(#SVGID_10_);fill:none;stroke:#000000;stroke-width:0.4852;stroke-miterlimit:2.6131;stroke-dasharray:2.426,2.426;}
-	
+
 		.st14{clip-path:url(#SVGID_12_);fill:none;stroke:#000000;stroke-width:0.4852;stroke-miterlimit:2.6131;stroke-dasharray:2.426,2.426;}
 	.st15{fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;}
 	.st16{fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:2.6131;}
@@ -223,14 +223,14 @@
 <rect id="AD-40" x="341.9" y="618.5" class="st5" width="15" height="18.3"/>
 <path id="PANAH_2" class="st6" d="M165.8,603.8l12.7,2.6l-1.9-2 M178.4,606.4l-1.9,1.1"/>
 <path id="PANAH_1" class="st6" d="M290.5,664l-2.9,0.2 M278.4,657.9l12.1,6.1l-2.3-2.3"/>
-<polygon id="AREA_P3" class="st0" points="109.7,446.7 69.1,450.6 69.2,491 53.3,491.8 57.2,534.8 59,584.7 60.6,596.6 102.7,595.5 
+<polygon id="AREA_P3" class="st0" points="109.7,446.7 69.1,450.6 69.2,491 53.3,491.8 57.2,534.8 59,584.7 60.6,596.6 102.7,595.5
 	"/>
 <rect id="AA-15A" x="167.4" y="420.9" class="st0" width="13.3" height="28.3"/>
 <rect id="AA-15" x="180.8" y="420.9" class="st7" width="13.3" height="28.3"/>
 <rect id="AA-14" x="194.1" y="420.9" class="st7" width="13.3" height="28.3"/>
 <rect id="AA-2" x="366.3" y="420.9" class="st0" width="13.3" height="28.3"/>
 <rect id="AA-1" x="379.6" y="420.9" class="st0" width="13.3" height="28.3"/>
-<polygon id="AREA_P" class="st0" points="207.4,420.9 366.3,420.9 366.3,448 366.3,449.2 369.6,449.2 369.8,474 351.1,474 
+<polygon id="AREA_P" class="st0" points="207.4,420.9 366.3,420.9 366.3,448 366.3,449.2 369.6,449.2 369.8,474 351.1,474
 	351.1,488.5 359.1,488.5 359.1,513.9 222.2,513.9 222.2,489 224.8,489 224.8,473.8 215.2,473.8 215.2,449.2 207.4,449.2 "/>
 <path id="AREA_P2" class="st0" d="M359.1,509.1l-16.1,4.8 M359.1,501.7l-40.9,12.2 M359.1,494.3L293.3,514 M353.6,488.5l-85.1,25.4
 	 M351.1,481.8l-107.5,32.1 M369.8,468.8l-17.3,5.2 M351.1,474.4l-129,38.5 M369.7,461.4l-147.5,44.1 M369.7,454l-147.5,44.1
@@ -769,7 +769,7 @@
 	 M780.3,208h5v8.4h-5V208L780.3,208z M790.3,208h5v8.4h-5V208L790.3,208z M800.3,208h5v8.4h-5V208L800.3,208z M810.3,208h5v8.4h-5
 	V208L810.3,208z M820.2,208h5v8.4h-5V208L820.2,208z M830.2,208h5v8.4h-5V208L830.2,208z M840.2,208h5v8.4h-5V208L840.2,208z
 	 M850.2,208h5v8.4h-5V208L850.2,208z M860.2,208h5v8.4h-5V208z"/>
-<polygon id="S-22" class="st3" points="383.2,266.2 393.7,266.2 394.4,236.2 384.5,236.2 384.5,240.4 354.4,240.4 354.4,241.2 
+<polygon id="S-22" class="st3" points="383.2,266.2 393.7,266.2 394.4,236.2 384.5,236.2 384.5,240.4 354.4,240.4 354.4,241.2
 	353.2,241.2 353.2,242.9 383.2,242.9 "/>
 <path id="E-16" class="st0" d="M1129.9,188.1h23.3c0,0-0.5,11.9,1.8,14.5s7.1,10.4,7.1,10.4H1130L1129.9,188.1L1129.9,188.1z"/>
 <g id="BLOK_N">
@@ -792,7 +792,7 @@
 														<clipPath id="SVGID_2_">
 															<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
 														</clipPath>
-														<polygon class="st9" points="1328.7,616.2 1329.7,590 1290.7,583.8 1292.5,556.4 1290.9,528.6 1339.3,514.9 
+														<polygon class="st9" points="1328.7,616.2 1329.7,590 1290.7,583.8 1292.5,556.4 1290.9,528.6 1339.3,514.9
 															1346.2,543.3 1350.4,573.5 1361.3,571.8 1366.8,604.1 1352.4,610.9 1349.7,611 1342.7,616.8 														"/>
 													</g>
 												</g>

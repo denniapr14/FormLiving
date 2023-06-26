@@ -40,13 +40,13 @@
                     <h5>Register Account</h5>
                     <h6>NB : Required *</h6>
                     <div class="mb-3 form-group">
-                        <label for="full-name" class="form-label">Full Name <span>*</span></label>
+                        <label for="full-name" class="form-label">Nama Lengkap <span>*</span></label>
                         <input type="text" class="form-control" name="nama" id="full-name" value=""
                             placeholder="Full Name">
 
                     </div>
                     <div class="mb-3 form-group">
-                        <label for="username" class="form-label">Username <span>*</span></label>
+                        <label for="username" class="form-label">Username<span>*</span></label>
                         <input type="text" class="form-control" name="username" placeholder="Username">
 
                     </div>
@@ -56,33 +56,34 @@
 
                     </div>
                     <div class="mb-3 form-group">
-                        <label for="phone" class="form-label">Phone Number <span>*</span></label>
-                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone Number">
+                        <label for="phone" class="form-label">Nomor Telepon <span>*</span></label>
+                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Nomor Handphone Aktif">
 
                     </div>
+                    
                     <div class="mb-3 form-group">
-                        <label for="phone" class="form-label">Birth of Date <span>*</span></label>
-                        <input type="date" class="form-control" name="tanggalLahir" id="" placeholder="">
-
+                        <label for="date" class="form-label">Tempat dan Tanggal Lahir <span>*</span></label>
+                        <input type="text" class="form-control" name="tempatLahir"  id="" placeholder="Tempat Lahir"> <br>
+                        <input type="text" class="form-control" name="tanggalLahir"  onclick="(this.type='date')" onblur="(this.type='text')" id="" placeholder="Tanggal Lahir" style="cursor:pointer">
                     </div>
 
                     <div class="mb-3 form-group">
-                        <label for="kelamin" class="form-label">Gender <span>*</span></label>
+                        <label for="kelamin" class="form-label">Jenis Kelamin <span>*</span></label>
                         <select name="kelamin" class="form-select form-control" id="">
-                            <option value=""> - Select Gender - </option>
-                            <option value="Laki - Laki"> Male </option>
-                            <option value="Wanita"> Female </option>
+                            <option value=""> - Pilih jenis Kelamin - </option>
+                            <option value="Laki - Laki"> Laki - Laki </option>
+                            <option value="Wanita"> Perempuan </option>
                         </select>
 
                     </div>
                     <div class="mb-3 form-group">
-                        <label for="kelamin" class="form-label">Affiliation <span>*</span></label>
+                        <label for="kelamin" class="form-label">Affiliasi <span>*</span></label>
                         <select name="userTipe" class="form-select form-control" id="">
-                            <option value=""> - Select Affiliation - </option>
-                            <option value="pelanggan">Pelanggan</option>
+                            <option value=""> - Pilih Afiliasi - </option>
+                            <option value="pelanggan">Self Service</option>
                             <option value="sales">Sales Inhouse</option>
-                            <option value="agentWithCompany"> Agen dengan Company (Xavier)</option>
-                            <option value="agentWithoutCompany"> Agen tidak dengan Company </option>
+                            <option value="agentWithCompany"> Agen(Xavier marks premier)</option>
+                            <option value="agentWithoutCompany"> Non Affiliated Agent</option>
                         </select>
 
                     </div>
@@ -94,7 +95,11 @@
                             placeholder="Password" onkeypress="validatePassword('password','spanPwd')">
                             <span id="spanPwd"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 mb-3">Sign Up</button>
+                     <div mb-3 form-group> 
+                    <input type="checkbox"  onclick="javacript:EnableDisableButton(this);" />
+                    <small>saya menyetujui dan mengisi data saya dengan benar untuk dipergunakan sebagai registrasi</small>
+                    </div>
+                    <button type="submit" id="btnsignup" class="btn btn-primary w-100 mb-3" disabled>Sign Up</button>
                     <p class="light-grey-color mb-0">Already have an account?
                         <a href="/login" class="primary-color">Sign In</a>
                     </p>
@@ -105,4 +110,38 @@
     </div>
 </div>
 <br><br>
+
+<script type="text/javascript">
+
+    const inputFields = document.querySelectorAll("input, select");
+    const submitButton = document.getElementById("btnsignup");
+    
+    for (let i = 0; i < inputFields.length; i++) {
+      inputFields[i].addEventListener("input", () => {
+        let allFilled = true;
+        for (let j = 0; j < inputFields.length; j++) {
+          if (!inputFields[j].value) {
+            allFilled = false;
+            break;
+          }
+        }
+        if (allFilled) {
+          submitButton.removeAttribute("disabled");
+        } else {
+          submitButton.setAttribute("disabled", "");
+        }
+      });
+    }
+
+  function EnableDisableButton(cb) {
+
+    if (cb.checked == 1) {
+         document.getElementById('btnsignup').disabled = false;
+    }
+
+    if (cb.checked == 0) {
+       document.getElementById('btnsignup').disabled = true;
+    }
+  }
+ </script>
 @endsection

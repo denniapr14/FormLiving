@@ -48,8 +48,7 @@
                                 var name = response[i].nama_bank;
                                 var persen = response[i].persentase;
 
-                                var option = "<option value='" + id + "|" + persen + "'>Bank " +
-                                    name + " Bunga " + persen + "%</option>";
+                                var option = "<option value='" + id + "|" + persen + "'>" + " Bunga " + persen + "%</option>";
 
                                 $("#namaBank").append(option);
                             }
@@ -66,8 +65,18 @@
 
                 var uangMuka = $(this).val();
                 console.log(uangMuka);
-
-
+                var jml = document.getElementById('jumlahHarga').value;
+                jml = jml.replace(/\D/g, '');
+                console.log(jml);
+                console.log("UangMUKATT");
+                console.log(uangMuka);
+                console.log("HASIL KPRRRRRRRRR");
+                var jt =  parseInt(uangMuka)+parseInt( 10000000) ;
+                console.log("HASIL JT");
+                console.log(jt);
+                var hasilKPRR = jml - jt ;
+                console.log(hasilKPRR);
+                document.getElementById('hasilKPR').value = ChangeRupiah( hasilKPRR ) ;
                 const existingDiv = document.getElementById('UMText');
                 existingDiv.innerHTML ='' ;
 
@@ -75,14 +84,15 @@
                 // Set some attributes for the new div
 
                 row.className = 'row';
-                row.innerHTML = '<label> Cicilan Uang Muka </label>';
+                row.innerHTML = '<label> Contoh Rincian Cicilan Uang Muka (per 30 Hari dan 6 kali cicilan) </label>';
 
                 existingDiv.appendChild(row);
 
                 const col1 = document.createElement('div');
 
                 col1.className = 'col';
-                col1.innerHTML = 'Rp ' + ChangeRupiah(uangMuka / 4);
+                col1.innerHTML = 'Rp ' + ChangeRupiah(Math.ceil( (uangMuka / 6) / 100000) * 100000);
+                console.log(col1);
 
                 row.appendChild(col1);
 
@@ -115,12 +125,14 @@
                 let monthName = monthNames[month];
 
                 let formattedDateID = `${day} ${monthName} ${year}`;
+                
+                
                 col2.className = 'col';
                 col2.innerHTML = formattedDateID;
 
                 row.appendChild(col2);
 
-                for (um = 1; um < 4; um++) {
+                for (um = 1; um < 5; um++) {
 
                     // Create a new div element
 
@@ -135,7 +147,7 @@
                     const col1 = document.createElement('div');
 
                     col1.className = 'col';
-                    col1.innerHTML = 'Rp ' + ChangeRupiah(uangMuka / 4);
+                    col1.innerHTML = 'Rp ' + ChangeRupiah(Math.ceil( (uangMuka / 6) / 100000) * 100000);
 
                     row.appendChild(col1);
 
@@ -179,17 +191,58 @@
                     row.appendChild(col2);
                     // Append the new div to the existing div
 
-                    {{--  <div class="row">
-                        <div class="col">
-                            Rp.
-                            {{ rupiah(($tipeRumah->harga_tr * (10*$in / 100) - 10000000) / 4) }}
-                        </div>
-                        <div class="col">
+// COLL 3
+            
+                
 
-                            {{ date('d M Y', $date) }}
-                        </div>
-                    </div>  --}}
+                    
+                    
+                   
                 }
+                    
+                    
+                    var hasilCeil = Math.ceil( (uangMuka / 6) / 100000) * 100000;
+                    var sumCeil = (hasilCeil * 5);
+                    
+                    const row2 = document.createElement('div');
+                // Set some attributes for the new div
+
+                    row2.className = 'row';
+                    // row2.innerHTML = '<label> Contoh Rincian Cicilan Uang Muka (per 30 Hari dan 6 kali cicilan) </label>';
+    
+                    existingDiv.appendChild(row2);
+                   
+                    // Set some attributes for the new div
+
+                    // row.className = 'row';
+                    // row.innerHTML = '';
+
+                    // existingDiv.appendChild(row);
+
+                    const col3 = document.createElement('div');
+
+                    col3.className = 'col';
+                    col3.innerHTML = 'Rp ' + ChangeRupiah(uangMuka - sumCeil);
+
+                    row2.appendChild(col3);
+
+                    nextMonthDate = new Date(date.getTime() + ((30 * 24 * 60 * 60 * 1000) * 6)  + (7 *
+                        24 * 60 * 60 * 1000));
+                  
+
+                    const col4 = document.createElement('div');
+
+                    day = nextMonthDate.getDate();
+                    month = nextMonthDate.getMonth(); // Add 1 to adjust for zero-based indexing
+                    year = nextMonthDate.getFullYear() % 100; // Get the last two digits of the year
+                    // Get the month name from the array
+                    monthName = monthNames[month];
+
+                    formattedDateID = `${day} ${monthName} ${year}`;
+                    col4.className = 'col';
+                    col4.innerHTML = formattedDateID;
+
+                    row2.appendChild(col4);
 
             });
         });
@@ -219,9 +272,9 @@
                 <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
             </div>
             <div class="nav-header">
-                <div class="ic-back">
-                    <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
-                </div>
+                <!--<div class="ic-back">-->
+                <!--    <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">-->
+                <!--</div>-->
                 <h2 class="title">
                     Miliki Unit
                 </h2>
@@ -347,18 +400,19 @@
                                             </div>
                                             <div class="">
                                                 <select name="uangMuka" id="uangMuka" onclick="Display()" class="form-control">
+                                                    <option>--Pilih Uang Muka-- </option>
                                                     @if (!empty($promo))
                                                     @for ($i = 1; $i < 6; $i++)
                                                     <option
-                                                        value="{{ ($tipeRumah->harga_tr - $promo->diskon_promo) * ((10 * $i) / 100) - 10000000 }}">
-                                                        {{ rupiah(($tipeRumah->harga_tr - $promo->diskon_promo) * ((10 * $i) / 100) - 10000000) }}
+                                                        value="{{ (($tipeRumah->harga_tr - $promo->diskon_promo) * ((10 * $i) / 100)-10000000) }}">
+                                                        {{ rupiah((($tipeRumah->harga_tr - $promo->diskon_promo) * ((10 * $i) / 100)-10000000)) }}
                                                         Uang muka {{ 10 * $i }} %</option>
                                                         @endfor
                                                     @else
                                                     @for ($i = 1; $i < 6; $i++)
                                                     <option
-                                                        value="{{ $tipeRumah->harga_tr * ((10 * $i) / 100) - 10000000 }}">
-                                                        {{ rupiah($tipeRumah->harga_tr * ((10 * $i) / 100) - 10000000) }}
+                                                        value="{{ ($tipeRumah->harga_tr * ((10 * $i) / 100)) - 10000000  }}">
+                                                        {{ rupiah(($tipeRumah->harga_tr * ((10 * $i) / 100)) -10000000) }}
                                                         Uang muka {{ 10 * $i }} %</option>
                                                         @endfor
                                                     @endif
@@ -381,102 +435,98 @@
                                                 @if ($rumah->status_stock == 'Inden')
                                                     <div class="card-shadow">
 
-                                                        <label for="">Cicilan Uang Muka</label>
+                                                        <label for="">Jumlah Cicilan Uang Muka</label>
 
                                                         @if (!empty($promo))
-                                                        <select name="cicilanUM" id="10" style="display:none;" class="form-control">
+                                                        <select name="cicilanUMBeta" id="10" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 10%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
-                                                                {{ rupiah(( ($tipeRumah->harga_tr - $promo->diskon_promo)  * (10 / 100) - 10000000)/$i) }}
+                                                                {{ rupiah(ceil( ((($tipeRumah->harga_tr - $promo->diskon_promo)  * (10 / 100) - 10000000)/$i) / 100000  ) * 100000) }}
                                                                 Per Bulan Cicilan {{ $i }} Kali Uang Muka 10 %</option>
                                                             @endfor
                                                         </select>
 
-                                                        <select name="cicilanUM" id="20" style="display:none;" class="form-control">
+                                                        <select name="cicilanUMBeta" id="20" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 20%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
-                                                                {{ rupiah(( ($tipeRumah->harga_tr - $promo->diskon_promo)  * (20 / 100) - 10000000)/$i) }}
+                                                                {{ rupiah(ceil( ((($tipeRumah->harga_tr - $promo->diskon_promo)  * (20 / 100) - 10000000)/$i) / 100000  ) * 100000) }}
                                                                 Per Bulan Cicilan {{ $i }} Kali Uang Muka 20 %</option>
                                                             @endfor
                                                         </select>
 
-                                                        <select name="cicilanUM" id="30" style="display:none;" class="form-control">
+                                                        <select name="cicilanUMBeta" id="30" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 30%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
-                                                                {{ rupiah(( ($tipeRumah->harga_tr - $promo->diskon_promo)  * (30 / 100) - 10000000)/$i) }}
+                                                                {{ rupiah(ceil( ((($tipeRumah->harga_tr - $promo->diskon_promo)  * (30 / 100) - 10000000)/$i) / 100000  ) * 100000) }}
                                                                 Per Bulan Cicilan {{ $i }} Kali Uang Muka 30 %</option>
                                                             @endfor
                                                         </select>
 
-                                                        <select name="cicilanUM" id="40" style="display:none;" class="form-control">
+                                                        <select name="cicilanUMBeta" id="40" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 40%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
-                                                                {{ rupiah(( ($tipeRumah->harga_tr - $promo->diskon_promo)  * (40 / 100) - 10000000)/$i) }}
+                                                                {{ rupiah(ceil( ((($tipeRumah->harga_tr - $promo->diskon_promo)  * (40 / 100) - 10000000)/$i) / 100000  ) * 100000) }}
                                                                 Per Bulan Cicilan {{ $i }} Kali Uang Muka 40 %</option>
                                                             @endfor
                                                         </select>
-                                                        <select name="cicilanUM" id="50" style="display:none;" class="form-control">
+                                                        <select name="cicilanUMBeta" id="50" style="display:none;" class="form-control">
                                                             <option value="" selected>--Pilih Cicilan 50%--</option>
                                                             @for ($i = 1; $i < 7; $i++)
                                                             <option value="{{ $i }}">Rp.
-                                                                {{ rupiah(( ($tipeRumah->harga_tr - $promo->diskon_promo)  * (50 / 100) - 10000000)/$i) }}
+                                                                {{ rupiah(ceil( ((($tipeRumah->harga_tr - $promo->diskon_promo)  * (50 / 100) - 10000000)/$i) / 100000  ) * 100000) }}
                                                                 Per Bulan Cicilan {{ $i }} Kali Uang Muka 50 %</option>
                                                             @endfor
                                                         </select>
                                                         @else
-                                                            <select name="cicilanUM" id="10" style="display:none;" class="form-control">
+                                                            <select name="cicilanUMBeta" id="10" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 10%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
-                                                                    {{ rupiah(( ($tipeRumah->harga_tr)  * (10 / 100) - 10000000)/$i) }}
+                                                                    {{ rupiah( ceil( ((($tipeRumah->harga_tr * (10 / 100)) - 10000000)/$i) / 100000  ) * 100000  ) }}
                                                                     Per Bulan Cicilan {{ $i }} Kali Uang Muka 10 %</option>
                                                                 @endfor
                                                             </select>
 
-                                                            <select name="cicilanUM" id="20" style="display:none;" class="form-control">
+                                                            <select name="cicilanUMBeta" id="20" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 20%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
-                                                                    {{ rupiah((  $tipeRumah->harga_tr * (20 / 100) - 10000000 )/$i) }}
+                                                                    {{ rupiah( ceil( ((($tipeRumah->harga_tr * (20 / 100)) - 10000000)/$i) / 100000  ) * 100000  ) }}
                                                                     Per Bulan Cicilan {{ $i }} Kali Uang Muka 20 %</option>
                                                                 @endfor
                                                             </select>
 
-                                                            <select name="cicilanUM" id="30" style="display:none;" class="form-control">
+                                                            <select name="cicilanUMBeta" id="30" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 30%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
-                                                                    {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000)/$i) }}
+                                                                   {{ rupiah( ceil( ((($tipeRumah->harga_tr * (30 / 100)) - 10000000)/$i) / 100000  ) * 100000  ) }}
                                                                     Per Bulan Cicilan {{ $i }} Kali Uang Muka 30 %</option>
                                                                 @endfor
                                                             </select>
 
-                                                            <select name="cicilanUM" id="40" style="display:none;" class="form-control">
+                                                            <select name="cicilanUMBeta" id="40" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 40%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
-                                                                    {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000)/$i) }}
+                                                                    {{ rupiah( ceil( ((($tipeRumah->harga_tr * (40 / 100)) - 10000000)/$i) / 100000  ) * 100000  ) }}
                                                                     Per Bulan Cicilan {{ $i }} Kali Uang Muka 40 %</option>
                                                                 @endfor
                                                             </select>
-                                                            <select name="cicilanUM" id="50" style="display:none;" class="form-control">
+                                                            <select name="cicilanUMBeta" id="50" style="display:none;" class="form-control">
                                                                 <option value="" selected>--Pilih Cicilan 50%--</option>
                                                                 @for ($i = 1; $i < 7; $i++)
                                                                 <option value="{{ $i }}">Rp.
-                                                                    {{ rupiah(($tipeRumah->harga_tr * (10 / 100) - 10000000)/$i) }}
+                                                                   {{ rupiah( ceil( ((($tipeRumah->harga_tr * (50 / 100)) - 10000000)/$i) / 100000  ) * 100000  ) }}
                                                                     Per Bulan Cicilan {{ $i }} Kali Uang Muka 50 %</option>
                                                                 @endfor
                                                             </select>
 
                                                         @endif
-
-
-
-
                                                     </div>
 
                                                 @endif
@@ -524,32 +574,51 @@
                                                 @endfor  --}}
                                                 @endif
                                             @endif
-
                                             <div class="card-shadow">
-                                                <label for="">Jumlah Plafon KPR</label>
+                                                <label for="">Jumlah harga</label>
                                             </div>
-                                            @if (!empty($promo))
+                                             @if (!empty($promo))
                                             <div class="">
                                                 <input type="text" readonly class="form-control card-shadow"
                                                     name="jumlah" id="jumlahHarga" aria-describedby="helpId" placeholder=""
                                                     onkeyup="getValue('jumlahHarga')"
-                                                    value="{{ rupiah(($tipeRumah->harga_tr -  $promo->diskon_promo) - ((($tipeRumah->harga_tr-  $promo->diskon_promo) * (10 / 100)) - 10000000)) }}">
+                                                    value="{{ rupiah(($tipeRumah->harga_tr - $promo->diskon_promo)) }}">
                                             </div>
                                             @else
                                             <div class="">
                                                 <input type="text" readonly class="form-control card-shadow"
                                                     name="jumlah" id="jumlahHarga" aria-describedby="helpId" placeholder=""
                                                     onkeyup="getValue('jumlahHarga')"
-                                                    value="{{ rupiah($tipeRumah->harga_tr - ($tipeRumah->harga_tr * (10 / 100) - 10000000)) }}">
+                                                    value="{{ rupiah($tipeRumah->harga_tr ) }}">
                                             </div>
                                             @endif
+                                            <div class="card-shadow">
+                                                <label for="">Jumlah Plafon KPR</label>
+                                            </div>
+                                            @if (!empty($promo))
+                                            <div class="">
+                                                <input type="text" readonly class="form-control card-shadow"
+                                                    name="HasilKPR" id="hasilKPR" aria-describedby="helpId" placeholder="" value="{{ rupiah(($tipeRumah->harga_tr - $promo->diskon_promo) - (10 / 100)) }}"
+                                                    >
+                                            
+                                            </div>
+                                            @else
+                                            <div class="">
+                                                <input type="text" readonly class="form-control card-shadow"
+                                                    name="HasilKPR" id="hasilKPR" aria-describedby="helpId" placeholder="" value="{{ rupiah(($tipeRumah->harga_tr) - (10 / 100)) }}"
+                                                    >
+                                            </div>
+                                            @endif
+                                             
+                                               
+                                           
 
 
 
                                         </div>
                                         <div class="btn-groups">
                                             <a type="button"
-                                                onclick="hitung('jumlahHarga','uangMuka','namaBank','hasil','hasil2','hasil3','hasil4')"
+                                                onclick="hitung('hasilKPR','uangMuka','namaBank','hasil','hasil2','hasil3','hasil4')"
                                                 class="btn btn-primary">Hitung Simulasi</a>
                                         </div>
                                         @if ($payment == 'KPR')
@@ -581,9 +650,9 @@
                                              Rp {{ rupiah(10000000) }}
                                             </div>
                                             <br>
-                                            @for ($i = 1; $i < 5; $i++)
+                                            @for ($i = 1; $i < 9; $i++)
                                             <?php
-                                            $thn = (($tipeRumah->harga_tr - $promo->diskon_promo)-10000000)/ (3 * $i);
+                                            $thn = (($tipeRumah->harga_tr - $promo->diskon_promo)-10000000)/ ($i);
 
                                             ?>
 
@@ -591,15 +660,15 @@
                                                 <a class="card-shadow" data-bs-toggle="collapse"
                                                     href="#bank{{ $i }}" role="button"
                                                     aria-expanded="false" aria-controls="bank">
-                                                    Cicilan {{ 3 * $i }} Bulan
+                                                    Cicilan {{ $i }} Bulan
                                                 </a>
                                                 <div class="" id="bank{{ $i }}">
                                                     <div class="card card-body">
                                                         <div class="form-check form-radio">
                                                             <input type="radio" id="age1" name="cicilan"
-                                                                value="{{ 3 * $i }}">
+                                                                value="{{ $i }}">
                                                             <label class="form-check-label">
-                                                                Rp {{ pembulatan(round($thn, -3) + 1000) }} Per Bulan
+                                                                Rp {{ rupiah($thn) }} Per Bulan
 
                                                             </label>
                                                         </div>
@@ -615,9 +684,9 @@
                                               Rp{{ rupiah(10000000) }}
                                             </div>
                                             <br>
-                                            @for ($i = 1; $i < 5; $i++)
+                                            @for ($i = 1; $i < 9; $i++)
                                             <?php
-                                            $thn = ($tipeRumah->harga_tr - 10000000) / (3 * $i);
+                                            $thn = ($tipeRumah->harga_tr - 10000000) / ( $i);
 
                                             ?>
 
@@ -625,15 +694,15 @@
                                                 <a class="card-shadow" data-bs-toggle="collapse"
                                                     href="#bank{{ $i }}" role="button"
                                                     aria-expanded="false" aria-controls="bank">
-                                                    Cicilan {{ 3 * $i }} Bulan
+                                                    Cicilan {{ $i }} Bulan
                                                 </a>
                                                 <div class="" id="bank{{ $i }}">
                                                     <div class="card card-body">
                                                         <div class="form-check form-radio">
                                                             <input type="radio" id="age1" name="cicilan"
-                                                                value="{{ 3 * $i }}">
+                                                                value="{{ $i }}">
                                                             <label class="form-check-label">
-                                                                Rp {{ pembulatan(round($thn, -3) + 1000) }} Per Bulan
+                                                                Rp {{ rupiah($thn) }} Per Bulan
 
                                                             </label>
                                                         </div>
@@ -646,6 +715,26 @@
                                             @endif
 
                                         </div>
+                                        
+                                        <div class="card-shadow">
+                                                <label for="">Jumlah harga</label>
+                                            </div>
+                                             @if (!empty($promo))
+                                            <div class="">
+                                                <input type="text" readonly class="form-control card-shadow"
+                                                    name="jumlah" id="jumlahHarga" aria-describedby="helpId" placeholder=""
+                                                    onkeyup="getValue('jumlahHarga')"
+                                                    value="{{ rupiah(($tipeRumah->harga_tr - $promo->diskon_promo)) }}">
+                                            </div>
+                                            @else
+                                            <div class="">
+                                                <input type="text" readonly class="form-control card-shadow"
+                                                    name="jumlah" id="jumlahHarga" aria-describedby="helpId" placeholder=""
+                                                    onkeyup="getValue('jumlahHarga')"
+                                                    value="{{ rupiah($tipeRumah->harga_tr ) }}">
+                                            </div>
+                                            @endif
+                                        
                                         <div class="btn-groups">
                                             <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
@@ -688,7 +777,11 @@
         var hasil2 = document.getElementById(result2);
         var cicilan;
         var cicilan2;
-        var perngurangan = (jml - um);
+        
+        var perngurangan = jml;
+        
+        //  perngurangan = perngurangan.replace(/\D/g, '.');
+        // console.log(perngurangan+"Pengurangan");
         /*
         ir - interest rate per month
         np - number of periods (months)
@@ -803,53 +896,81 @@
 </script>
 
 <script>
+
+    
     function Display(){
         var index = document.getElementById("uangMuka").selectedIndex;
-
+      
         var in10 = document.getElementById('10');
         var in20 = document.getElementById('20');
         var in30 = document.getElementById('30');
         var in40 = document.getElementById('40');
         var in50 = document.getElementById('50');
         switch(index) {
-            case 0:
-            in10.style.display = "block";
-            in20.remove();
-            in30.remove();
-            in40.remove();
-            in50.remove();
-              break;
             case 1:
-            in10.remove();
-            document.getElementById('20').style.display = "block";
-            in30.remove();
-            in40.remove();
-            in50.remove();
+            // in10.add();
+          
+            in10.style.display = "block";
+            in10.setAttribute("name", "cicilanUM");
+            in20.style.display = "none";
+            in20.setAttribute("name", "cicilanUMBeta");
+            in30.style.display = "none";
+            in30.setAttribute("name", "cicilanUMBeta");
+            in40.style.display = "none";
+            in40.setAttribute("name", "cicilanUMBeta");
+            in50.style.display = "none";
+            in50.setAttribute("name", "cicilanUMBeta");
+              break;
+            case 2:
+            in10.style.display = "none";
+            in10.setAttribute("name", "cicilanUMBeta");
+            in20.style.display = "block";
+            in20.setAttribute("name", "cicilanUM");
+            in30.style.display = "none";
+            in30.setAttribute("name", "cicilanUMBeta");
+            in40.style.display = "none";
+            in40.setAttribute("name", "cicilanUMBeta");
+            in50.style.display = "none";
+            in50.setAttribute("name", "cicilanUMBeta");
               // code block
               break;
             case 3:
-            in10.remove();
-            in20.remove();
-            document.getElementById('30').style.display = "block";
-            in40.remove();
-            in50.remove();
-                // code block
+            in10.style.display = "none";
+            in10.setAttribute("name", "cicilanUMBeta");
+            in20.style.display = "none";
+            in20.setAttribute("name", "cicilanUMBeta");
+            in30.style.display = "block";
+            in30.setAttribute("name", "cicilanUM");
+            in40.style.display = "none";
+            in40.setAttribute("name", "cicilanUMBeta");
+            in50.style.display = "none";
+            in50.setAttribute("name", "cicilanUMBeta");
                 break;
             case 4:
-            in10.remove();
-            in20.remove();
-            in30.remove();
-            document.getElementById('40').style.display = "block";
-            in50.remove();
+            in10.style.display = "none";
+            in10.setAttribute("name", "cicilanUMBeta");
+            in20.style.display = "none";
+            in20.setAttribute("name", "cicilanUMBeta");
+            in30.style.display = "none";
+            in30.setAttribute("name", "cicilanUMBeta");
+            in40.style.display = "block";
+            in40.setAttribute("name", "cicilanUM");
+            in50.style.display = "none";
+            in50.setAttribute("name", "cicilanUMBeta");
 
                   // code block
                   break;
             case 5:
-            in10.remove();
-            in20.remove();
-            in30.remove();
-            in40.remove();
-            document.getElementById('50').style.display = "block";
+            in10.style.display = "none";
+            in10.setAttribute("name", "cicilanUMBeta");
+            in20.style.display = "none";
+            in20.setAttribute("name", "cicilanUMBeta");
+            in30.style.display = "none";
+            in30.setAttribute("name", "cicilanUMBeta");
+            in40.style.display = "none";
+            in40.setAttribute("name", "cicilanUMBeta");
+            in50.style.display = "block";
+            in50.setAttribute("name", "cicilanUM");
 
                   // code block
                   break;

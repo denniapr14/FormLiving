@@ -12,9 +12,9 @@
             <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
         </div>
         <div class="nav-header">
-            <div class="ic-back">
-                <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
-            </div>
+            <!--<div class="ic-back">-->
+            <!--    <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">-->
+            <!--</div>-->
             <h2 class="title">
                 Miliki Unit
             </h2>
@@ -30,10 +30,24 @@
             <div class="step">7</div>
             <div class="step last">8</div>
         </div>
-
     </div>
+    
     <div class="container">
-        <div class="steps">
+         <style>
+            @media screen and (max-width: 480px) {
+              .gone-mobile {
+                  
+                visibility: hidden;
+                display: none;
+              }
+              .divUp{
+                  padding-top :10%;
+                  border-radius : 10px;
+              }
+            }
+        </style>
+        <div class="divUp"></div>
+        <div class="steps gone-mobile">
             <div class="step done">1</div>
             <div class="step done">2</div>
             <div class="step done">3</div>
@@ -48,7 +62,11 @@
             <div class="sliders">
                 <div class="item">
                     <div class="item-img">
-                        <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                         @if (empty($imgRumahSingle->img_rumah))
+                               <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                                @else
+                                <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumahSingle->img_rumah }}" alt="">
+                                @endif
                     </div>
                 </div>
             </div>
@@ -178,7 +196,7 @@
         <div class="content">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h3>The Mainroad Cluster</h3>
+                    <h3>{{$rumah->nama_cluster}} Cluster - {{$rumah->blok}}-{{$rumah->nomor}}</h3>
                 </div>
                 <div class="text-end desktop-only">
                     <p class="mb-2">Harga Total</p>
@@ -190,10 +208,10 @@
                     <p>Type: {{ $tipeRumah->jenis_tr }}</p>
                     <div class="d-flex">
                         <div class="small-info me-3">
-                            <img src="{{ asset('Home') }}/images/ic_bedroom.png" alt=""> 2 Kamar Tidur
+                            <img src="{{ asset('Home') }}/images/ic_bedroom.png" alt="">{{$tipeRumah->kmr_tidur_tr}} Kamar Tidur
                         </div>
                         <div class="small-info">
-                            <img src="{{ asset('Home') }}/images/ic_bathroom.png" alt=""> 1 Kamar Mandi
+                            <img src="{{ asset('Home') }}/images/ic_bathroom.png" alt="">{{$tipeRumah->kmr_mandi_tr}} Kamar Mandi
                         </div>
                     </div>
                 </div>
@@ -264,12 +282,44 @@
                                         <td>{{ $tipeRumah->dinding_luar_tr }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Dinding kamar mandi</td>
+                                        <td>Dinding kamar mandi Utama</td>
                                         <td>{{ $tipeRumah->dinding_kmr_mnd_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dinding meja Dapur</td>
+                                        <td>{{ $tipeRumah->dd_meja_dapur_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lantai Ruang Tidur</td>
+                                        <td>{{ $tipeRumah->lt_ruang_tidur_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lantai Ruang keluarga</td>
+                                        <td>{{ $tipeRumah->lt_ruang_keluarga_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lantai kamar mandi Utama</td>
+                                        <td>{{ $tipeRumah->lt_kmr_mnd_utama_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lantai Teras Utama</td>
+                                        <td>{{ $tipeRumah->lt_teras_utama_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Rangka atap</td>
                                         <td>{{ $tipeRumah->rangka_atap_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>kusen</td>
+                                        <td>{{ $tipeRumah->kusen_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Daun Pintu</td>
+                                        <td>{{ $tipeRumah->daun_pintu_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sanitary</td>
+                                        <td>{{ $tipeRumah->sanitary_tr }}</td>
                                     </tr>
                                     <tr>
                                         <td>Penutup atap</td>
@@ -280,14 +330,25 @@
                                         <td>{{ $tipeRumah->plafon_dlm_tr }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Plafon Luar</td>
-                                        <td>{{ $tipeRumah->dinding_luar_tr }}</td>
+                                        <td>Handle</td>
+                                        <td>{{ $tipeRumah->handle_tr }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Lantai Ruang Utama</td>
-                                        <td>{{ $tipeRumah->lantai_ru_tr }}</td>
+                                        <td>Lighting</td>
+                                        <td>{{ $tipeRumah->lighting_tr }}</td>
                                     </tr>
-
+                                    <tr>
+                                        <td>Daya Listrik</td>
+                                        <td>{{ $tipeRumah->daya_listrik_tr }}</td>
+                                    </tr>
+                                  <tr>
+                                        <td>Carport</td>
+                                        <td>{{ $tipeRumah->carport_tr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tangga</td>
+                                        <td>{{ $tipeRumah->tangga_tr }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -295,10 +356,26 @@
                 </div>
             </div>
             <div class="mobile-only">
-                <div class="content-footer">
+                <div class="content-footer" style="padding-bottom:0; border-radius:10px;">
                     <div>
-                        <p class="mb-2">Harga</p>
-                        <h5>975 jt</h5>
+                        <table style="border: 1px solid transparent">
+                            <tr>
+                                <td>
+                                    <small class="mb-2">Harga Jual</small>
+                                    <p><b>{{ $tipeRumah->harga_text_tr }}</b></p>
+                                </td>
+                                <td style="padding-bottom:0;padding-right:10%;width:20px;"></td>
+                                <td>
+                                     <small class="mb-2">Luas Tanah</small>
+                                     <p><b>{{ $rumah->luas_tanah }} m²</b></p>
+                                </td>
+                                <td style="padding-bottom:0;padding-right:10%;width:20px;"> </td>
+                                  <td>
+                                     <small class="mb-2">Luas Bangunan</small>
+                                     <p><b>{{ $tipeRumah->luas_bangunan_tr }} m²</b></p>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     {{--  <div>
                         <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}" type="button" class="btn btn-primary">Miliki Unit
