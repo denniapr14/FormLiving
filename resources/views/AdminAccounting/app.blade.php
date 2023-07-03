@@ -55,7 +55,9 @@
                     </a>
                 </div>
                 <div class="divider"></div>
+                <a class="" href="/">
                 <div class="profile__box">
+
                     <div class="profile__info">
                         <div class="profile__name">{{ $user->nama_ua }}</div>
                         <div class="profile__role">{{ $user->nama_ktgr }}</div>
@@ -64,6 +66,7 @@
                         <img src="{{ url('Dashboard') }}/images/content/avatar.png" alt="user-avatar">
                     </div>
                 </div>
+            </a>
             </div>
         </div>
     @yield('content')

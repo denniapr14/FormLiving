@@ -11,7 +11,7 @@
     <div class="sidebar__nav">
         <ul class="nav__links">
             <li class="nav__divider">
-                <div class="divider__title">Home </div>
+                <div class="divider__title">Projek </div>
                 <hr class="separate">
             </li>
             @foreach ($projekUser as $projekUser)
@@ -88,16 +88,7 @@
 
 
             @endforeach
-            <li class="nav__divider">
-                <div class="divider__title">Properties</div>
-                <hr class="separate">
-            </li>
-            <li class="nav__item">
-                <a class="nav__link" href="/projects.html">
-                    <i class="bi bi-house"></i>
-                    <span>Projects</span>
-                </a>
-            </li>
+
         </ul>
     </div>
 </aside>

@@ -209,108 +209,15 @@
     </div>
     <div class="container">
         <div class="second-layout">
+
             <div class="row">
-                <!-- PROFILE -->
-                <div class="col-12 col-lg-4 left-column ">
-                    <div class="user-profile">
-                        <div class="user-image">
-                            <img src="{{ asset('Home') }}/images/img-profile-medium.png" alt="">
-                        </div>
-                        @if (!empty(Session::get('guest')))
-                        <div class="user-detail">
-                            <h5>{{ $userPelanggan->nama_plgn }}</h5>
-                            <p>Pelanggan</p>
-                        </div>
-                        @endif
-                        @if (!empty(Session::get('user')))
-                        <div class="user-detail">
-                            <h5>{{ $user->nama_ua }}</h5>
-                            <p>
-
-                                @if (!empty($user->nama_ktgr))
-                                {{ $user->nama_ktgr }}
-                                @else
-                                {{ $user->kategori }}
-                                @endif
-                            </p>
-                            @switch($user->kategori)
-                            @case('AdminAccounting')
-                            <a href="/dashboard-admin-accounting" class="btn btn-primary">Form One</a>
-                            @break
-
-                            @case('AdminFormsLiving')
-                            <a href="AdminFormsLiving/dashboard" class="btn btn-primary">Form One</a>
-                            @break
+                <div class="col-12 col-lg-12 ">
+                    <div class="">
 
 
-                            @case("CEO")
-                            <a href="CEO/dashboard" class="btn btn-primary">Form One</a>
-                            @break
+                            <div class="col-md-6"><h5 class="float-right">Dashboard</h5></div>
 
-                            @case('Direktur')
-                            <a href="Direktur/dashboard" class="btn btn-primary">Form One</a>
-                            @break
-
-                            @default
-                            @endswitch
-                        </div>
-                        @endif
-                    </div>
-
-                    <div class="profile-nav">
-                        <a href="/dashboard-profile" class="item">
-                            <div class="d-flex">
-                                <div class="icon">
-                                    <img src="{{ asset('Home') }}/images/ic-dashboard.png" alt="">
-                                </div>
-                                <p>Dashboard</p>
-                            </div>
-                            <div class="ic-chevron">
-                                <i class="bi-chevron-right"></i>
-                            </div>
-                        </a>
-                        @if(!empty(Session::get('user')))
-                        <a href="/komisi-sales" class="item">
-                            <div class="d-flex">
-                                <div class="icon">
-                                    <i class="fa fa-diamond mycolor" aria-hidden="true"></i>
-                                </div>
-                                <p> &nbsp;Komisi</p>
-                            </div>
-                            <div class="ic-chevron">
-                                <i class="bi-chevron-right"></i>
-                            </div>
-                        </a>
-                        @endif
-                        <a href="/edit-profile" class="item">
-                            <div class="d-flex">
-                                <div class="icon">
-                                    <img src="{{ asset('Home') }}/images/ic-profile.png" alt="">
-                                </div>
-                                <p>Edit Profile</p>
-                            </div>
-                            <div class="ic-chevron">
-                                <i class="bi-chevron-right"></i>
-                            </div>
-                        </a>
-
-                        <a href="/logout" class="item">
-                            <div class="d-flex">
-                                <div class="icon">
-                                    <img src="{{ asset('Home') }}/images/ic-logout.png" alt="">
-                                </div>
-                                <p>Logout</p>
-                            </div>
-                            <div class="ic-chevron">
-                                <i class="bi-chevron-right"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- EDIT PROFILE MOBILE STATE -->
-                <div class="col-12 col-lg-8 right-column d-none d-lg-block">
-                    <div class="edit-profile">
-                        <h5>Dashboard</h5>
+<br>
                         @if (!empty(Session::get('guest')))
                         <div class="choose-cluster">
                             <form action="{{ route('search.action') }}" method="get">
@@ -362,8 +269,12 @@
 
                                 </div>
                             </form>
+                            <br>
                             <div class="row">
+
+
                                 @foreach ($fp as $fp)
+                                @if(!empty($fp->id_formulir))
                                 <div class="col-6 col-lg-3">
 
                                     <a href="/profile/formulir-pesanan/{{ $fp->id_formulir }}">
@@ -385,9 +296,13 @@
                                             </div>
                                             <h6 class="item-title">{{ $fp->blok }} - {{ $fp->nomor }}
                                             </h6>
-                                            <div class="item-avail">
+                                            <div class="">
 
                                                 <p> Nama User : {{ $fp->nama_plgn }}</p>
+                                                <span>
+                                                    <?= date('d M y', strtotime($fp->tgl_input_fp)) ?>
+                                                </span>
+                                                <br>
                                                 @if ($fp->status_market_fp == 'accept')
                                                 <p class="btn btn-success"><i class="bi bi-check"></i></p>
                                                 @else
@@ -400,10 +315,25 @@
                                         </div>
                                     </a>
                                 </div>
+                                @else
+
+
+                                <div class="alert alert-danger" role="alert">
+                                    <h4 class="alert-heading">Data tidak ada</h4>
+                                    <p>Aww ,
+                                        Anda tidak melakukan pembelian saat itu
+                                    </p>
+
+                                  </div>
+                                @endif
+
+
                                 @endforeach
+
+
+
                             </div>
                         </div>
-
                         @endif
 
                         @if (!empty(Session::get('user')))
@@ -414,7 +344,7 @@
                                     <div class="col-md-4 mypad">
                                         <center class="border rounded mypad">
                                             <div class="">
-                                                <i class="fa fa-calendar-minus-o fa-4x mycolor" aria-hidden="true"></i>
+                                                <i class="fa fa-money fa-4x mycolor" aria-hidden="true"></i>
 
                                             </div>
                                             <div>
@@ -425,7 +355,7 @@
                                             </div>
                                             <div>
                                                 <strong class="mycolor">
-                                                    {{ $fpCountLast->count }}
+                                                    Rp. 10.000.000
                                                 </strong>
                                             </div>
 
@@ -435,7 +365,7 @@
                                     <div class="col-md-4 mypad">
                                         <center class="border rounded mypad">
                                             <div class="">
-                                                <i class="fa fa-calendar-o fa-4x mycolor" aria-hidden="true"></i>
+                                                <i class="fa fa-money fa-4x mycolor" aria-hidden="true"></i>
 
                                             </div>
                                             <div>
@@ -446,7 +376,7 @@
                                             </div>
                                             <div>
                                                 <strong class="mycolor">
-                                                    {{ $fpCount->count }}
+                                                    Rp. 10.000.000
                                                 </strong>
                                             </div>
 
@@ -456,19 +386,19 @@
                                     <div class="col-md-4 mypad">
                                         <center class="border rounded mypad">
                                             <div class="">
-                                                <i class="fa fa-calendar-check-o fa-4x mycolor" aria-hidden="true"></i>
+                                                <i class="fa fa-money fa-4x mycolor" aria-hidden="true"></i>
 
                                             </div>
                                             <div>
                                                 <strong class="mycolor">
-                                                    Jumlah Closing <br>
+                                                    Jumlah Komisi <br>
                                                     Keseluruhan
 
                                                 </strong>
                                             </div>
                                             <div>
                                                 <strong class="mycolor">
-                                                    {{ $fpCountAll->count }}
+                                                    Rp. 10.000.000
                                                 </strong>
                                             </div>
 
@@ -486,7 +416,6 @@
 
 
                         <br>
-
                         <div class="choose-cluster">
                             <form action="{{ route('search.action') }}" method="get">
                                 <div class="row col-md-12">
@@ -537,6 +466,7 @@
 
                                 </div>
                             </form>
+                            <br>
                             <div class="row">
                                 @foreach ($fp as $fp)
                                 <div class="col-6 col-lg-3">
@@ -560,15 +490,18 @@
                                             </div>
                                             <h6 class="item-title">{{ $fp->blok }} - {{ $fp->nomor }}
                                             </h6>
-                                            <div class="item-avail">
-                                                {{ $fp->id_formulir }}
+                                            <div class="">
+
+
                                                 <p> Nama User : {{ $fp->nama_plgn }}</p>
                                                 @if ($fp->status_market_fp == 'accept')
                                                 <p class="btn btn-success"><i class="bi bi-check"></i></p>
                                                 @else
                                                 <p class="btn btn-danger"><i class="bi bi-x"></i></p>
                                                 @endif
-
+                                                <span>
+                                                    <?= date('d-m-y', strtotime($fp->tgl_input_fp)) ?>
+                                                </span>
                                             </div>
 
 
@@ -582,6 +515,7 @@
                         @endif
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

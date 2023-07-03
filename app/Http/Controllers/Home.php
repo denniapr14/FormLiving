@@ -717,6 +717,54 @@ class Home extends Controller
         # code...
     }
 
+    function Commission() {
+        if (session()->has('user')) {
+
+            // $lastMonth = \Carbon\Carbon::now()->subMonth();
+            $fp = DB::table('formulir_pesanan')
+            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+        // ->select('logo_img','nama_img','cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+        // ->groupBy('cluster.nama_cluster')
+            ->where([
+                'formulir_pesanan.id_user_admin' => session::get('user'),
+            ])
+            ->whereMonth('formulir_pesanan.tgl_input_fp', now()->month)
+        // ->where(
+        //         "MONTH('formulir_pesanan'.'tgl_input_fp')",'=','MONTH(CURRENT_DATE())'
+        //         )
+            ->get();
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+                ->where(['id_user_admin' => session::get('user')])
+                ->first();
+
+
+            // dd($bulan);
+            // dd($tahun);
+            // dd($fp);
+            // die();
+            return view('commission', compact('user','fp'));
+        }
+        if (session()->has('guest')) {
+
+            // $lastMonth = \Carbon\Carbon::now()->subMonth();
+
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+
+
+
+            // dd($bulan);
+            // dd($tahun);
+            // dd($fp);
+            // die();
+            return view('commission', compact('userPelanggan','fp'));
+        } else {
+            return redirect()->route('login');
+        }
+    }
     public function SearchItem()
     {
         return view('searchItem');

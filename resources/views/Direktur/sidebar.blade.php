@@ -54,17 +54,7 @@
 
 
             @endforeach
-            <li class="nav__divider">
-                <div class="divider__title">Properties</div>
-                <hr class="separate">
-            </li>
-            <li class="nav__item">
-                <a class="nav__link" href="/projects.html">
-                    <i class="bi bi-house"></i>
-                    <span>Projects</span>
-                </a>
-            </li>
-        </ul>
+
     </div>
 </aside>
 <!-- end: sidebar -->

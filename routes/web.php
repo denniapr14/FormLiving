@@ -42,6 +42,8 @@ Route::get('/profile/cetak/{id_formulir}', [Home::class, 'cetak']);
 Route::get('/cari-user', [Home::class, 'Search'])->name('search.action');
 Route::post('/profile-setting/update', [Home::class, 'ProfileSettingAction'])->name('profileSetting.action');
 
+Route::get('/komisi-sales', [Home::class, 'Commission']);
+
 Route::get('/edit-profile', [Home::class, 'editProfile']);
 Route::get('/filter-result', [Home::class, 'filterResult']);
 Route::get('/search-item', [Home::class, 'SearchItem']);
@@ -222,7 +224,7 @@ Route::get('/ubah-pembayaran/{id_pembayaran}', [AdminAccounting::class, 'editPem
 Route::post('/ubah-pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'editPembayaranAction'])->name('ubah-pembayaran.action');
 Route::get('/pembayaran/{id_pembayaran}', [AdminAccounting::class, 'pembayaran']);
 Route::post('/pembayaran/post/{id_pembayaran}', [AdminAccounting::class, 'pembayaranAction'])->name('pembayaran.action');
-
+Route::get('/komisi', [AdminAccounting::class, 'Commission']);
 
 // >>>>>>>>>>>>>>> END DASHBOARD ACCOUNTING <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

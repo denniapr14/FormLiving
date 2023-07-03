@@ -209,8 +209,8 @@
 
 
                         </div>
-                        <button onclick="zoom(1.5)">Zoom in</button>
-                        <button onclick="zoom(0.5)">Zoom out</button>
+                        {{--  <button onclick="zoom(1.5)">Zoom in</button>
+                        <button onclick="zoom(0.5)">Zoom out</button>  --}}
                     </div>
 
                 </div>
