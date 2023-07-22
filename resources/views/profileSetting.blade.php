@@ -242,6 +242,9 @@
                             <a href="AdminFormsLiving/dashboard" class="btn btn-primary">Form One</a>
                             @break
 
+                            @case('AdminAdv')
+                            <a href="AdminADV/dashboard" class="btn btn-primary">Form One</a>
+                            @break
 
                             @case("CEO")
                             <a href="CEO/dashboard" class="btn btn-primary">Form One</a>

@@ -30,7 +30,8 @@ class AdminAccounting extends Controller
             ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
             ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
             ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-            ->sortByDesc('formulir_pesanan.tgl_input_fp');
+
+            ->orderBy('formulir_pesanan.tgl_input_fp', 'desc')
             ->get();
 
             $rumah = DB::table('rumah')

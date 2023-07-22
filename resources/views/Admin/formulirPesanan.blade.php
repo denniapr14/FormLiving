@@ -13,6 +13,10 @@
         height: 30px;
     }
 
+    .container h2 {
+        text-align: center;
+    }
+
     table,
     tr,
     td,

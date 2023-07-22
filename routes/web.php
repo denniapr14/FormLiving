@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\AdminAccounting;
 use App\Http\Controllers\Ceo_Dashboard;
+use App\Http\Controllers\AdminADV_Dashboard;
 use App\Http\Controllers\Direktur_Dashboard;
 use App\Http\Controllers\AdminFormsLiving_Dashboard;
 
@@ -252,7 +253,16 @@ Route::post('CEO/tambah-promo', [Ceo_Dashboard::class, 'addPromoAction'])->name(
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
+//  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DASHBOARD ADMIN ADV <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+Route::get('AdminADV/dashboard', [AdminADV_Dashboard::class,'index']);
+Route::get('AdminADV/tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class,'TipeRumah']);
+Route::get('AdminADV/tambah-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class,'addTipeRumah']);
+
+Route::get('AdminADV/gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class,'listImageTipeRumah']);
+Route::get('AdminADV/tambah-gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class,'addImgTipeRumah']);
+
+//  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END DASHBOARD ADMIN ADV <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 // >>>>>>>>>>>>>>   DASHBOARD ADMIN FORMS LIVING    <<<<<<<<<<<<<

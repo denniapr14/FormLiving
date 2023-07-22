@@ -15,7 +15,7 @@ use PDF;
 
 
 
-class Direktur_Dashboard extends Controller
+class AdminADV_Dashboard extends Controller
 {
     //
     public function __construct()
@@ -41,6 +41,13 @@ class Direktur_Dashboard extends Controller
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
 
             ->get();
+        $getRumah = DB::table('rumah')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->where('rumah.status','=','available')
+
+            ->get();
+
+
 
         $agentWithCompany = DB::table('user_admin')
             ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
@@ -104,7 +111,7 @@ class Direktur_Dashboard extends Controller
                 ->where('user_admin.id_user_admin', '=', session::get('user'))
                 ->get();
 
-            return view('Direktur.dashboard', compact(
+            return view('AdminAdv.dashboard', compact(
                 'user',
                 'fp',
                 'promo',
@@ -115,6 +122,7 @@ class Direktur_Dashboard extends Controller
                 'remainHouse',
                 'projekUser',
                 'rumah',
+                'getRumah',
             ));
         } else {
 
@@ -123,15 +131,19 @@ class Direktur_Dashboard extends Controller
         # code...
     }
 
-    public function addPromoRumah()
-    {
+    function TipeRumah($id_rumah) {
+        $getRumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
 
-        // $cluster = DB::table('cluster')
-        //     ->get();
-        $rumah = DB::table('rumah')
-            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->where('status', '=', 'Available')
-            ->get();
+        ->first();
+
+        $getTipeRumah =  DB::table('tipe_rumah')
+
+        ->where([
+
+            'id_rumah' => $id_rumah,
+        ])
+        ->get();
 
         if (session()->has('user')) {
 
@@ -147,74 +159,22 @@ class Direktur_Dashboard extends Controller
                 ->where('user_admin.id_user_admin', '=', session::get('user'))
                 ->get();
 
-            return view('Direktur.addPromoRumah', compact(
+            return view('AdminAdv.tipeRumah', compact(
                 'user',
-
-                'rumah',
-                'projekUser'
-            ));
-        } else {
-
-            return redirect('/login');
-        }
-    }
-
-    public function addPromoRumahAction(Request $request)
-    {
-        if (session()->has('user')) {
-
-            $user = DB::table('user_admin')
-                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-
-                ->where('user_admin.id_user_admin', '=', session::get('user'))
-
-                ->first();
-            $projekUser = DB::table('user_projek')
-                ->join('projek', 'user_projek.id_projek', '=', 'projek.id_projek')
-                ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')
-                ->where('user_admin.id_user_admin', '=', session::get('user'))
-                ->get();
-            $dataInputRumahPromo = "";
-            for ($i = 1; $i < count($request->rumah); $i++) {
-
-                $rumah = DB::table('rumah')
-                    ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-                    ->whereIn('id_rumah', $request->rumah)
-                    ->get();
-
-
-                $dataInputRumahPromo = array(
-                    'id_rumah'  => $request->rumah,
-
-                );
-            }
-            // dd($rumah);
-            return view('Direktur.addPromo', compact(
-                'user',
-                'rumah',
                 'projekUser',
-                'dataInputRumahPromo'
+                'getRumah',
+                'getTipeRumah',
             ));
-            // dd($dataInputRumahPromo);
-
         } else {
 
             return redirect('/login');
         }
     }
+    function addTipeRumah($id_rumah) {
+        $getRumah = DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
 
-    public function getPromo()
-    {
-
-        $promo = DB::table('promo')
-            ->leftJoin('cluster', 'promo.codecluster', '=', 'cluster.codecluster')
-            ->leftJoin('rumah', 'promo.id_rumah', '=', 'rumah.id_rumah')
-            ->leftJoin('formulir_pesanan', 'promo.id_promo', '=', 'formulir_pesanan.id_promo')
-            ->leftJoin('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-            ->leftJoin('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
-            ->leftJoin('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-            // ->where('formulir_pesanan.status_fp','!=','nonactive')
-            ->get();
+        ->first();
 
         if (session()->has('user')) {
 
@@ -230,22 +190,27 @@ class Direktur_Dashboard extends Controller
                 ->where('user_admin.id_user_admin', '=', session::get('user'))
                 ->get();
 
-            return view('Direktur.promo', compact(
+            return view('AdminAdv.addTipeRumah', compact(
                 'user',
-                'promo',
                 'projekUser',
+                'getRumah',
+
             ));
         } else {
 
             return redirect('/login');
         }
     }
-    public function AddPromoAction(Request $request)
-    {
 
-        // $cluster = DB::table('cluster')
-        //     ->get();
-
+    function listImageTipeRumah($id_tipe_rumah)  {
+        $getRumah = DB::table('tipe_rumah')
+        ->join('rumah','tipe_rumah.id_rumah','=','rumah.id_rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('tipe_rumah.id_tipe_rumah','=',$id_tipe_rumah)
+        ->first();
+        $getImageTipeRumah = DB::table('gambar_rumah')
+        ->where('id_tipe','=',$id_tipe_rumah)
+        ->get();
 
 
         if (session()->has('user')) {
@@ -256,43 +221,52 @@ class Direktur_Dashboard extends Controller
                 ->where('user_admin.id_user_admin', '=', session::get('user'))
 
                 ->first();
-            $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
+            $projekUser = DB::table('user_projek')
+                ->join('projek', 'user_projek.id_projek', '=', 'projek.id_projek')
+                ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')
+                ->where('user_admin.id_user_admin', '=', session::get('user'))
+                ->get();
 
-            $imageName = time() . '.' . $request->image->extension();
-
-            $request->image->move(public_path('images'), $imageName);
-            $dataInputPromo = [];
-            for ($i = 1; $i < count($request->id_rumah); $i++) {
-                array_push( $dataInputPromo ,array(
-                    'codecluster'   => $request->codecluster[$i],
-                    'id_rumah'      => $request->id_rumah[$i],
-                    'promo'         => $request->nama_promo,
-                    'kode_promo'    => $request->kode_promo,
-                    'keterangan'    => $request->ket_promo,
-                    'tipe_promo'    => $request->tipe_promo,
-                    'kuota_promo'   => $request->kuota_promo,
-                    'img_promo'     => $imageName,
-                    'tgl_aktif'     => $request->tgl_mulai,
-                    'tgl_berakhir'  => $request->tgl_berakhir
-
-                ));
-
-
-                # code...
-            }
-            DB::table('promo')
-            ->insert($dataInputPromo);
-
-
-
-            return redirect('/Direktur/promo');
-            // return view('Direktur.addPromo', compact('user', 'cluster', 'rumah'));
+            return view('AdminAdv.listImageTipeRumah', compact(
+                'user',
+                'projekUser',
+                'getRumah',
+                'getImageTipeRumah',
+            ));
         } else {
 
             return redirect('/login');
         }
-        # code...
+    }
+
+    function addImgTipeRumah($id_rumah)  {
+        $getRumah = DB::table('tipe_rumah')
+        ->join('rumah','tipe_rumah.id_rumah','=','rumah.id_rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where('rumah.id_rumah','=',$id_rumah)
+        ->first();
+        if (session()->has('user')) {
+
+            $user = DB::table('user_admin')
+                ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+
+                ->where('user_admin.id_user_admin', '=', session::get('user'))
+
+                ->first();
+            $projekUser = DB::table('user_projek')
+                ->join('projek', 'user_projek.id_projek', '=', 'projek.id_projek')
+                ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')
+                ->where('user_admin.id_user_admin', '=', session::get('user'))
+                ->get();
+
+            return view('AdminAdv.addImageTipeRumah', compact(
+                'user',
+                'projekUser',
+                'getRumah',
+            ));
+        } else {
+
+            return redirect('/login');
+        }
     }
 }
