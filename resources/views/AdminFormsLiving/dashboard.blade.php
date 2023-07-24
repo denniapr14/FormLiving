@@ -200,6 +200,66 @@
                 </div>
             </div>
 
+            <div class="content__row mb-3">
+                <div class="card__box">
+                    <div class="card__header">
+                        <div class="card__title">
+                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                          <span>Rumah</span>
+
+                        </div>
+
+                      </div>
+                    <div class="table-responsive">
+                        <table id="rumah" class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Rumah</th>
+                                    <th>Status</th>
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $noRumah = 1;
+                                ?>
+                                @foreach ($getRumah as $rumah)
+                                    <tr>
+                                        <td>{{ $noRumah }}</td>
+                                        <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</td>
+                                        <td>
+                                            @switch($rumah->status)
+                                                @case("onProgress")
+                                                <div class="btn btn-warning">{{ $rumah->status }}</div>
+                                                @break
+                                                @case("Sold")
+                                                <div class="btn btn-success">{{ $rumah->status }}</div>
+                                                @break
+                                                @case("Available")
+                                                <div class="btn btn-info">{{ $rumah->status }}</div>
+                                                @break
+
+                                                @default
+                                                {{ $rumah->status }}
+
+                                            @endswitch
+
+
+                                        </td>
+<?php $noRumah++ ?>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
 
             <div class="content__row mb-3">
                 <div class="card__box">
@@ -419,6 +479,9 @@
     <script>
         $(document).ready(function() {
             $('#formulirPesanan').DataTable();
+        });
+        $(document).ready(function() {
+            $('#rumah').DataTable();
         });
 
     </script>

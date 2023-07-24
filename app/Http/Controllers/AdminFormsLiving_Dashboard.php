@@ -44,15 +44,29 @@ class AdminFormsLiving_Dashboard extends Controller
             ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
             ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
             ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-             ->where('formulir_pesanan.status_fp','!=','nonactive')
-             ->orderBy('formulir_pesanan.tgl_input_fp', 'desc')
+            ->where('formulir_pesanan.status_fp','!=','nonactive')
+            ->orderBy('formulir_pesanan.tgl_input_fp', 'desc')
             ->get();
 
+        $rumah =  DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        // ->orderBy('rumah.status', 'asc')
+        ->get();
+        $getRumah =  DB::table('rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->orderBy('rumah.status', 'asc')
+        ->get();
+        // $GEt =  DB::table('rumah')
+        // ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
 
-            $rumah = DB::table('rumah')
-            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        // ->get();
 
-            ->get();
+
+        // $getRumah = $rumah->GetRumah();
+        //     // $rumah = DB::table('rumah')
+        //     // ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+
+        //     // ->get();
 
         $agentWithCompany = DB::table('user_admin')
             ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
@@ -119,7 +133,8 @@ class AdminFormsLiving_Dashboard extends Controller
                 'closingAll',
                 'closing',
                 'remainHouse',
-                'rumah'
+                'rumah',
+                'getRumah'
             ));
 
         } else {
@@ -128,5 +143,6 @@ class AdminFormsLiving_Dashboard extends Controller
         }
         # code...
     }
+
     //
 }
