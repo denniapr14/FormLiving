@@ -33,6 +33,7 @@ class AdminFormsLiving_User extends Controller
     function listUser() {
         $getUserSales = DB::table('user_admin')
         ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->whereIn('ktgr_admin.kategori',['Sales','SalesAgent'])
         ->get();
         $projekUser = DB::table('user_projek')
         ->join('projek', 'user_projek.id_projek', '=', 'projek.id_projek')

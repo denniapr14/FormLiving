@@ -11,25 +11,34 @@
     <div class="sidebar__nav">
         <ul class="nav__links">
             <li class="nav__divider">
-                <div class="divider__title">Home </div>
+                <div class="divider__title">Project </div>
                 <hr class="separate">
             </li>
 
+            @foreach ($projekUser as $projekUser)
+            @if ($projekUser->nama_projek == "Greenland")
             <li class="nav__item dropdown">
                 <a class="nav__link" href="#">
                    Greenland
                 </a>
                 <ul class=" dropdown__menu">
                     <li class="nav__item">
-                        <a class="nav__link" href="/CEO/dashboard">
+                        <a class="nav__link" href="/AdminFormsLiving/dashboard">
                             <i class="fa fa-file" aria-hidden="true"></i>
-                            <span class="" >SPR</span>
+                            <span class="" >Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a class="nav__link" href="/AdminFormsLiving/list-user">
+                            <i class="fa fa-file" aria-hidden="true"></i>
+                            <span class="" >List User</span>
                         </a>
                     </li>
 
-
                 </ul>
             </li>
+            @endif
+            @if ($projekUser->nama_projek == "Kalm")
 
             <li class="nav__item dropdown">
                 <a class="nav__link" href="#">
@@ -38,25 +47,18 @@
                 <ul class=" dropdown__menu">
                     <li class="nav__item">
                         <a class="nav__link" href="#">
-                            <i class="fa fa-file" aria-hidden="true"></i>
-                            <span class="" href="/Promo">SPR</span>
+                            <i class="fas fa-award    "></i>
+                            <span class="" href="/Promo">Promo</span>
                         </a>
                     </li>
 
 
                 </ul>
             </li>
+            @endif
 
-            <li class="nav__divider">
-                <div class="divider__title">Properties</div>
-                <hr class="separate">
-            </li>
-            <li class="nav__item">
-                <a class="nav__link" href="/projects.html">
-                    <i class="bi bi-house"></i>
-                    <span>Projects</span>
-                </a>
-            </li>
+
+            @endforeach
         </ul>
     </div>
 </aside>

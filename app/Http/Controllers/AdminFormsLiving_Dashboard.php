@@ -117,6 +117,11 @@ class AdminFormsLiving_Dashboard extends Controller
             ->leftJoin('rumah', 'promo.id_rumah', '=', 'rumah.id_rumah')
             ->get();
 
+        $projekUser = DB::table('user_projek')
+        ->join('projek', 'user_projek.id_projek', '=', 'projek.id_projek')
+        ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')
+        ->where('user_admin.id_user_admin', '=', session::get('user'))
+        ->get();
         if (session()->has('user')) {
 
             $user = DB::table('user_admin')
@@ -134,7 +139,8 @@ class AdminFormsLiving_Dashboard extends Controller
                 'closing',
                 'remainHouse',
                 'rumah',
-                'getRumah'
+                'getRumah',
+                'projekUser'
             ));
 
         } else {

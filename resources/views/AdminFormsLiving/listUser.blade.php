@@ -29,14 +29,14 @@
 
                       </div>
                     <div class="table-responsive">
-                        <table id="formulirPesanan" class="table">
+                        <table id="list-user" class="table">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No FP</th>
+
                                     <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Tanggal Order</th>
+                                    <th>Kategori</th>
+                                    <th>Tanggal Daftar</th>
 
 
                                 </tr>
@@ -45,19 +45,19 @@
                                 <?php
                                 $no = 1;
                                 ?>
-                                @foreach ($fp as $fp)
+                                @foreach ($getUserSales as $user)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $fp->no_fp }}</td>
                                         <td>
-                                        <span class="client__name">{{ $fp->nama_plgn }}</span>
-                                        <span class="client__handled">Dari {{ $fp->nama_ktgr }} ({{ $fp->nama_ua }})</span>
+                                            <span class="client__name">{{ $user->nama_ua }}</span>
+                                            <span class="client__handled"> Kode</span>
+                                            </td>
+
+                                        <td>
+                                            {{ $user->kategori }}
                                         </td>
                                         <td>
-                                            {{ $fp->email_plgn }}
-                                        </td>
-                                        <td>
-                                            {{ date("d M Y", strtotime($fp->tgl_input_fp)) }}
+                                            {{ date("d M Y", strtotime($user->tgl_input_ua)) }}
                                         </td>
 
 
@@ -235,7 +235,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#formulirPesanan').DataTable();
+            $('#list-user').DataTable();
         });
         $(document).ready(function() {
             $('#rumah').DataTable();

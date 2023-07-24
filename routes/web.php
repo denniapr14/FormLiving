@@ -270,7 +270,7 @@ Route::get('AdminADV/tambah-gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::
 
 // >>>>>>>>>>>>>>   DASHBOARD ADMIN FORMS LIVING    <<<<<<<<<<<<<
 Route::get('AdminFormsLiving/dashboard', [AdminFormsLiving_Dashboard::class,'index']);
-
+Route::get('AdminFormsLiving/list-user', [AdminFormsLiving_User::class,'listUser']);
 // >>>>>>>>>>>>>>       END ADMIN FORMS LIVING      <<<<<<<<<<<<<
 
 Route::get('/email/{id_formulir}', [Home::class, 'email']);
