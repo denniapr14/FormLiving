@@ -128,8 +128,10 @@
 
                             {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
                             {{-- @include('map.svg') --}}
-                            {!! file_get_contents(resource_path('views/map.svg')) !!}
+                            {!! file_get_contents(resource_path('views/maps-baru.svg')) !!}
                             <script>
+
+
                                 var svg = document.getElementById('Layer_1');
 
 
@@ -143,14 +145,16 @@
 
                                 var data = {!! json_encode($rumah) !!};
                                 $(document).ready(function(){
+
+
+
                                     data.forEach(function(item) {
-                                    var block = item.blok;
-                                    var nomor = item.nomor;
-                                    var blockNomor = block+"-"+nomor;
-                                    {{--  blockNomor.toString()  --}}
+                                        var block = item.blok;
+                                        var nomor = item.nomor;
+                                        var blockNomor = block+"-"+nomor;
                                     var idrumah = document.getElementById(blockNomor);
 
-
+                                    console.log(blockNomor);
                                     idrumah.style.fill = color(item.status);
                                     idrumah.setAttribute('fill',color(item.status));
 
