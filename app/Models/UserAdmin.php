@@ -21,4 +21,30 @@ class UserAdmin extends Authenticatable
     {
         return bcrypt($this->password_ua);
     }
+
+    function getUserKategoriWhere($where, $eq, $value){
+        return Useradmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->where($where, $eq, $value)
+        ->first();
+    }
+
+
+
+    function getUserJoinCountWhere($where)  {
+        return UserAdmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->select(UserAdmin::raw('COUNT(user_admin.id_user_admin) as userCount'))
+        ->where(
+           $where
+        )
+        ->first();
+    }
+    // function getUserJoinWithCompanyCount(){
+    //     return UserAdmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+    //     ->select(UserAdmin::raw('COUNT(user_admin.id_user_admin) as userCount'))
+    //     ->where([
+    //        $where
+    //     ])
+    //     ->first();
+    // }
+
 }

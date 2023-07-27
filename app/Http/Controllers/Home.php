@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\WhatsappAPI;
+
 use App\Mail\MailAttachment;
 use App\Mail\MailNotify;
 // use App\Mail\MailAttachment;
@@ -219,6 +219,10 @@ class Home extends Controller
                     case 'CEO':
                         return redirect('/')->with('success', "You're Sign in!");
                         break;
+
+                    case 'SuperAdmin':
+                        return redirect('/dasboard')->with('success',"You're Sign in!");
+                    break;
 
                     default:
                         return redirect('/')->with('success', "You're Sign in!");

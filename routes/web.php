@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+// NEW
+use App\Http\Controllers\C_Login;
+// ======================================
+
 use App\Http\Controllers\Home;
 use App\Http\Controllers\AdminAccounting;
 use App\Http\Controllers\Ceo_Dashboard;
@@ -10,6 +15,11 @@ use App\Http\Controllers\Direktur_Dashboard;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\AdminFormsLiving_Dashboard;
 use App\Http\Controllers\AdminFormsLiving_User;
+
+
+// ADMIN
+use App\Http\Controllers\C_Dashboard;
+use App\Http\Controllers\C_Rumah;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +37,9 @@ use App\Http\Controllers\AdminFormsLiving_User;
 Route::get('/', [Home::class, 'index']);
 Route::get('/housing', [Home::class, 'housing']);
 Route::get('/my-cart', [Home::class, 'MyCart']);
-Route::get('/login', [Home::class, 'login']);
-Route::post('/login', [Home::class, 'loginAction'])->name('login.action');
-Route::get('/logout', [Home::class, 'logout']);
+Route::get('/login', [C_Login::class, 'login']);
+Route::post('/login', [C_Login::class, 'loginAction'])->name('login.action');
+Route::get('/logout', [C_Login::class, 'logout']);
 
 Route::get('/cluster/{id_cluster}', [Home::class, 'Cluster']);
 Route::get('/detail-cluster', [Home::class, 'DetailCluster']);
@@ -196,25 +206,25 @@ Route::get('/kiosk/splash-screen', function () {
 
 // >>>>>>>>>>>>>>> DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-Route::get('/dashboard-admin', function () {
-    return view('Dashboard.dashboard');
-});
+// Route::get('/dashboard-admin', function () {
+//     return view('Dashboard.dashboard');
+// });
 
-Route::get('/sales-analytic', function () {
-    return view('Dashboard.sales_analytic');
-});
+// Route::get('/sales-analytic', function () {
+//     return view('Dashboard.sales_analytic');
+// });
 
-Route::get('/schedule', function () {
-    return view('Dashboard.schedule');
-});
+// Route::get('/schedule', function () {
+//     return view('Dashboard.schedule');
+// });
 
-Route::get('/access-control', function () {
-    return view('Dashboard.access_control');
-});
+// Route::get('/access-control', function () {
+//     return view('Dashboard.access_control');
+// });
 
-Route::get('/agent-company', function () {
-    return view('Dashboard.agent_company');
-});
+// Route::get('/agent-company', function () {
+//     return view('Dashboard.agent_company');
+// });
 
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -268,9 +278,16 @@ Route::get('AdminADV/tambah-gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::
 //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END DASHBOARD ADMIN ADV <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
+
 // >>>>>>>>>>>>>>   DASHBOARD ADMIN FORMS LIVING    <<<<<<<<<<<<<
 Route::get('AdminFormsLiving/dashboard', [AdminFormsLiving_Dashboard::class,'index']);
 Route::get('AdminFormsLiving/list-user', [AdminFormsLiving_User::class,'listUser']);
 // >>>>>>>>>>>>>>       END ADMIN FORMS LIVING      <<<<<<<<<<<<<
 
 Route::get('/email/{id_formulir}', [Home::class, 'email']);
+
+
+
+// SUPER ADMIN NEW
+Route::get('/dashboard-admin', [C_Dashboard::class,'index']);
+Route::get('/rumah-admin', [C_Rumah::class,'index']);
