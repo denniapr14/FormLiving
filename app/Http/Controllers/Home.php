@@ -65,7 +65,7 @@ class Home extends Controller
             ->where('status', '=', 'available')
             ->groupBy('cluster.nama_cluster')
             ->get();
-        //   dd($cluster);
+        // dd($cluster1);
         // die();
         $cluster2 = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
@@ -74,32 +74,32 @@ class Home extends Controller
             ->groupBy('cluster.nama_cluster')
             ->get();
 
-        if (!session()->has('guest') && !session()->has('user')) {
-            // $hasilSess = Session::get('guest');
-            // response()->json('hasilSess');
-            return redirect("/login")->with('error', "You not sign in or sign up!");
-            # code...
+        // if (!session()->has('guest') && !session()->has('user')) {
+        //     // $hasilSess = Session::get('guest');
+        //     // response()->json('hasilSess');
+        //     return redirect("/login")->with('error', "You not sign in or sign up!");
+        //     # code...
 
-        }
+        // }
 
-        if (session()->has('user')) {
-            $user = \App\Models\UserAdmin::where([
-                'id_user_admin' => session::get('user'),
-            ])->first();
+        // if (session()->has('user')) {
+        //     $user = \App\Models\UserAdmin::where([
+        //         'id_user_admin' => session::get('user'),
+        //     ])->first();
 
-            // dd($user);
-            // die();
-            return view('housing', compact('user', 'cluster1', 'cluster2'));
-        }
-        if (session()->has('guest')) {
-            $userPelanggan = \App\Models\UserPelanggan::where([
-                'id_pelanggan' => session::get('guest'),
-            ])->first();
-            // dd($userPelanggan);
-            // die();
-            return view('housing', compact('userPelanggan', 'cluster1', 'cluster2'));
-        }
-        return view('housing', 'cluster1', 'cluster2');
+        //     // dd($user);
+        //     // die();
+        //     return view('housing', compact('user', 'cluster1', 'cluster2'));
+        // }
+        // if (session()->has('guest')) {
+        //     $userPelanggan = \App\Models\UserPelanggan::where([
+        //         'id_pelanggan' => session::get('guest'),
+        //     ])->first();
+        //     // dd($userPelanggan);
+        //     // die();
+        //     return view('housing', compact('userPelanggan', 'cluster1', 'cluster2'));
+        // }
+        return view('housing', compact( 'cluster1', 'cluster2'));
     }
 
     // KALM SEMENTARA

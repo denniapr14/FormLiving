@@ -2,7 +2,6 @@
 @extends('HomeLayout.navbar')
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footerbranch')
-@extends('flashdata')
 {{-- @extends('HomeLayout.footer') --}}
 @section('tittle', 'Forms | Login')
 @section('body', 'index')
@@ -34,18 +33,19 @@
                         <div class="forms">
                             <h5>Login</h5>
                             <div class="mb-3 form-group">
-                                <label for="email-phone" class="form-label">Email/Phone Number</label>
+                                <label for="email-phone" class="form-label">Username</label>
                                 <input type="text" class="form-control" name="username" id="email-phone"
-                                    placeholder="Email/Phone Number">
+                                    placeholder="Username">
                             </div>
                             <div class="mb-2 form-group">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" name="password" id="password"
                                     placeholder="Password">
                             </div>
-                            <div class="text-end mb-4">
-                                <a href="#" class="recovery">Recovery Password</a>
-                            </div>
+                            <br>
+                            <!--<div class="text-end mb-4">-->
+                            <!--    <a href="#" class="recovery">Recovery Password</a>-->
+                            <!--</div>-->
                             <button href="/profile-setting.html" type="submit" class="btn btn-primary w-100 mb-5 mb-lg-3">Sign
                                 In</button>
                             {{--  <p class="light-grey-color">or continue with</p>  --}}
@@ -59,11 +59,13 @@
                                         src="{{ asset('Home') }}/images/ic-google.png" alt="">
                                     Login with Google</button>
                             </div>  --}}
-                            <p class="light-grey-color contact">Hubungi admin WA: +62134567890 jika akun anda bermasalah.
+                            <p class="mb-0 light-grey-color">Belum mempunyai Akun?   <a href="/sign-up" style="font-size:20px;color:blue;">Sign Up</a> </p>
+                            <div style="padding-top:40%;padding-bottom:0%">
+                                 <p class="contact" style="font-size:12px;">Hubungi Admin di <a aria-label="WhatsApp" href="https://wa.me/6282125090005?text=Permisi, Saya%20memiliki%20gangguan%20di%20formsliving"> <img  alt="Chat on WhatsApp" style="width:30px;height:30px;" src="{{ asset('Home') }}/images/icons/icon-whatsapp.svg" />
+                                <a/> jika akun anda bermasalah.
                             </p>
-                            <p class="mb-0 light-grey-color">Didn't have an account? <a href="/sign-up"
-                                    class="btn btn-success">Sign
-                                    Up</a></p>
+                            </div>
+                           
                         </div>
 
                     </form>

@@ -6,79 +6,77 @@
 @section('tittle','Forms | Home')
 @section('body','index')
 @section('content')
-<div class="projects">
-    <div class="container">
-        <h2 class="title">
-            Our Projects
-        </h2>
-        <div class="row items">
-            <div class="col-6 col-md-6">
-                <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/greenland-project.jpeg" alt="">
-                    <div class="item-text">
-                        <h4>Greenland</h4>
-                        <p>Greenland at Tidar</p>
-                        <a href="/housing" class="more">
-                            Learn More <i class="bi bi-chevron-right"></i>
-                        </a>
+{{-- <div class="cta">
+    <div class="container-fluid left-side">
+        <div class="row align-items-center">
+
+            <div class="col-lg-12 " data-aos="fade-left" data-aos-delay="400">
+                <div class="image-sliders">
+                    {{-- <div>
+                        <img src="{{ asset('Home') }}/images/60.jpg" class="w-100" alt="">
+                    </div> --}}
+                    <div>
+                        <img src="{{ asset('Home') }}/images/greenland-project.jpeg" class="w-100" alt="">
                     </div>
+                    <div>
+                        <img src="{{ asset('Home') }}/images/kalm-project.jpeg" class="w-100" alt="">
+                    </div>
+
+                    {{-- <div>
+                        <img src="{{ asset('Home') }}/images/img4.jpeg" class="w-100" alt="">
+                    </div> --}}
+                </div>
+                <div class="text-blur-bg text-sliders">
+                    <div>
+                        <h5>Greenland</h5>
+                        <small>Hunian hijau di Greenland at Tidar </small><br>
+                        <a href="" style="width: 30%" class="btn btn-primary d-lg-block">Buy Now</a>
+                    </div>
+                    <div>
+                        <h5>Kalm</h5>
+                        <small>Project Coming Soon </small>
+                    </div>
+                    {{-- <div>
+                        <h5>Hotel</h5>
+                        <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim interdum neque
+                            vel euismod. </small>
+                    </div> --}}
                 </div>
             </div>
-            <div class="col-6 col-lg-6">
-                <div class="item" data-aos="fade-left">
-                    <img src="{{ asset('Home') }}/images/kalm-project.jpeg" alt="">
-                    <div class="item-text">
-                        <h4>Kalm</h4>
-                        <p>-- COMING SOON --</p>
-                        <div class="more">
-                            Learn More <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- <div class="col-12 col-lg-6">
-                <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/img-hotel.png" alt="">
-                    <div class="item-text">
-                        <h4>Project C</h4>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
-                            inventore,
-                            aperiam esse animi.</p>
-                        <div class="more">
-                            Learn More <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            {{-- <div class="col-12 col-lg-6">
-                <div class="item" data-aos="fade-left">
-                    <img src="{{ asset('Home') }}/images/img-mall.png" alt="">
-                    <div class="item-text">
-                        <h4>Project D</h4>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
-                            inventore,
-                            aperiam esse animi.</p>
-                        <div class="more">
-                            Learn More <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            {{-- <div class="col-12">
-                <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary">Tampilkan Semua</button>
-                </div>
-            </div> --}}
         </div>
-
     </div>
-</div>
+</div> --}}
 
-{{-- <div class="mobile-only">
+<script>
+    $('.image-sliders').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        asNavFor: '.text-sliders'
+    });
+
+    $('.text-sliders').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        dots: true,
+        asNavFor: '.image-sliders'
+    });
+</script>
+
+<div class="mobile-only">
     <div class="cta-mobile">
         <div class="container">
             <div class="sliders-mobile">
                 <div class="item">
+
+
                     <div class="logo">
                         <img src="{{ asset('Home') }}/images/logo-tidar-white.png" alt="">
                     </div>
@@ -106,7 +104,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <div class="search-unit">
         <div class="container">
@@ -298,7 +296,76 @@
         </div>
     </div>
 </div>
+<div class="projects">
+    <div class="container">
+        <h5 class="subtitle">
+            Projects
+        </h5>
+        <h2 class="title">
+            Our Projects
+        </h2>
+        <div class="row items">
+            <div class="col-6 col-md-6">
+                <div class="item" data-aos="fade-right">
+                    <img src="{{ asset('Home') }}/images/greenland-project.jpeg" alt="">
+                    <div class="item-text">
+                        <h4>Greenland</h4>
+                        <p>Greenland at Tidar</p>
+                        <a href="/housing" class="more">
+                            Learn More <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-6">
+                <div class="item" data-aos="fade-left">
+                    <img src="{{ asset('Home') }}/images/kalm-project.jpeg" alt="">
+                    <div class="item-text">
+                        <h4>Kalm</h4>
+                        <p>-- COMING SOON --</p>
+                        <div class="more">
+                            Learn More <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-12 col-lg-6">
+                <div class="item" data-aos="fade-right">
+                    <img src="{{ asset('Home') }}/images/img-hotel.png" alt="">
+                    <div class="item-text">
+                        <h4>Project C</h4>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
+                            inventore,
+                            aperiam esse animi.</p>
+                        <div class="more">
+                            Learn More <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+            {{-- <div class="col-12 col-lg-6">
+                <div class="item" data-aos="fade-left">
+                    <img src="{{ asset('Home') }}/images/img-mall.png" alt="">
+                    <div class="item-text">
+                        <h4>Project D</h4>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita impedit quas at
+                            inventore,
+                            aperiam esse animi.</p>
+                        <div class="more">
+                            Learn More <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+            {{-- <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary">Tampilkan Semua</button>
+                </div>
+            </div> --}}
+        </div>
 
+    </div>
+</div>
 
 <div class="sliders-index container-fluid" data-aos="zoom-in">
     <div class="sliders">
@@ -341,7 +408,7 @@
 
 
 
-{{-- <div class="apps" data-aos="fade-up" data-aos-offset="0">
+<div class="apps" data-aos="fade-up" data-aos-offset="0">
     <div class="container">
         <div class="ornament one">
             <img src="{{ asset('Home') }}/images/img-ornament3.png" alt="">
@@ -384,7 +451,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
 
 @endsection

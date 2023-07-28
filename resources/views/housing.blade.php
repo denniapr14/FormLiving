@@ -1,9 +1,10 @@
 @extends('HomeLayout.app')
 @extends('HomeLayout.navbar')
+@extends('HomeLayout.navbarProfile')
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footerbranch')
 {{-- @extends('HomeLayout.footer') --}}
-@section('tittle','Forms | Home')
+@section('tittle','Forms | Greenland')
 @section('body','index')
 
 @section('content')
@@ -75,8 +76,8 @@
                         <img src="{{ asset('Home') }}/images/cluster/A-11.jpg" class="w-100" alt="">
                     </div>
                     <div class="text-blur-bg d-none d-lg-block">
-                        <h5>The Icon Cluster</h5>
-                        <p>The Icon mengkombinasikan gaya arsitektur kontemporer dengan alam yang memanjakan
+                        <h5>Beautiful Green themed House</h5>
+                        <p>TGreenlandmengkombinasikan gaya arsitektur kontemporer dengan alam yang memanjakan
                             pemiliknya
                         </p>
                     </div>
@@ -87,49 +88,88 @@
 </div>
 
 <div class="mobile-only">
-    <div class="hunian">
-        <div class="container">
+    <!--<div class="hunian">-->
+    <!--     <h2 class="title" style="padding-left:5%;">-->
+    <!--            Hunian di Greenland-->
+    <!--        </h2>-->
+    <!--    <div class="container-fluid ">-->
+           
+    <!--            <div class="items" style="height:260px;width:1500px">-->
+    <!--            @foreach ($cluster1 as $cluster)-->
+    <!--            <a href="/simulation-select-unit/{{ $cluster->codecluster }}">-->
+                   
+    <!--            <div style="" class="item">-->
+    <!--                <div class="item-image">-->
+    <!--                    <?php-->
+    <!--                if(!empty($cluster->nama_img))-->
+    <!--                {-->
+    <!--                    ?>-->
+    <!--                    <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">-->
+    <!--                    <?php-->
+    <!--                }else{-->
+    <!--                ?>-->
+
+    <!--                    <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">-->
+
+    <!--                    <?php-->
+    <!--                }-->
+    <!--                ?>-->
+    <!--                </div>-->
+    <!--                <div class="item-text">-->
+    <!--                        @if(!empty($cluster->logo_img))-->
+    <!--                       <a href="/simulation-select-unit/{{ $cluster->codecluster }}"> <img style="width: 50%;filter: invert(100%);" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>-->
+    <!--                        @else-->
+    <!--                        <a href="/simulation-select-unit/{{ $cluster->codecluster }}">-->
+    <!--                            {{ $cluster->nama_cluster }}-->
+    <!--                        </a>-->
+    <!--                        @endif-->
+    <!--                </div>-->
+                    
+    <!--            </div>-->
+    <!--            </a>-->
+    <!--            @endforeach-->
+    <!--            </div>-->
+
+    <!--        </div>-->
+    <!--    </div>-->
+            <div class="choose-cluster">
             <h2 class="title">
-                Hunian di Greenland
+                Pilih Cluster
             </h2>
-            <div class="items">
-                @foreach ($cluster as $cluster)
+            <div class="row">
+                @foreach ($cluster1 as $cluster)
+                <div class="col-6 col-lg-3">
+                    <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
+                    <div class="item">
+                        <div class="item-image">
+                            <?php
+                            if(!empty($cluster->nama_img)){
+                                ?>
+                                <img  src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
+                                <?php
+                            }else{
+                            ?>
 
+                            <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
+                            <?php
+                            }
+                            ?>
 
-                <a href="/simulation-select-unit/{{ $cluster->codecluster }}" class="item">
-                    <div class="item-image">
-                        <?php
-                    if(!empty($cluster->nama_img))
-                    {
-                        ?>
-                        <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
-                        <?php
-                    }else{
-                    ?>
-
-                        <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">
-
-                        <?php
-                    }
-                    ?>
+                        </div>
+                        <div class="item-avail">{{ $cluster->count }} Available</div>
+                        <div class="item-image" style="border-bottom:0px; padding-bottom:0px;"><img style="width:50%;height:50%;filter: invert(100%);" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""></div>
                     </div>
-                    <div class="item-avail">{{ $cluster->count }} Available</div>
-                    <h5 class="item-title">
-                        @if(!empty($cluster->logo_img))
-                        <img src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt="">
-                        @else
-                        {{ $cluster->nama_cluster }}
-                        @endif
 
-                    </h5>
-                    <p class="item-sub">Cluster</p>
+
                 </a>
+                </div>
                 @endforeach
-
             </div>
         </div>
-    </div>
 </div>
+
+
+
 
 <div class="projects">
     <div class="container">
@@ -623,7 +663,7 @@
                         <p class="type">Layanan Kesehatan</p>
                         <div class="eta">
                             <img src="{{ asset('Home') }}/images/ic-car.png" alt="">
-                            <p>7 Minutes</p>
+                            <p>27 Minutes</p>
                         </div>
                     </div>
                 </div>
