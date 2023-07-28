@@ -45,10 +45,10 @@ class C_Dashboard extends Controller
         $this->formulirPesanan = new FormulirPesanan;
         $this->userAdmin = new UserAdmin;
         $this->userProject = new UserProjek;
-
     }
 
-    function index() {
+    function index()
+    {
 
         $fp = $this->formulirPesanan->getFormulirPesananJoin5Where(
             'formulir_pesanan.status_fp',
@@ -67,44 +67,44 @@ class C_Dashboard extends Controller
             'ktgr_admin.kategori' => "AgentWithoutCompany",
             'user_admin.status_ua' => "aktif",
         );
-    $agentWithCompany = $this->userAdmin->getUserJoinCountWhere($arrWithCompany);
-    $agentWithoutCompany = $this->userAdmin->getUserJoinCountWhere($arrWithoutCompany);
+        $agentWithCompany = $this->userAdmin->getUserJoinCountWhere($arrWithCompany);
+        $agentWithoutCompany = $this->userAdmin->getUserJoinCountWhere($arrWithoutCompany);
         // dd($agentWithoutCompany);
 
-    $closingAll = $this->formulirPesanan->getFormulirPesananJoin5Count();
+        $closingAll = $this->formulirPesanan->getFormulirPesananJoin5Count();
 
 
-    $closing = $this->formulirPesanan->getFormulirPesananJoin5CountWhere('formulir_pesanan.tgl_input_fp',now()->month);
+        $closing = $this->formulirPesanan->getFormulirPesananJoin5CountWhere('formulir_pesanan.tgl_input_fp', now()->month);
 
 
-    $remainHouse = $this->rumah->RemainHouse('status','available');
+        $remainHouse = $this->rumah->RemainHouse('status', 'available');
 
 
         if (session()->has('user')) {
 
-            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin','=',session::get('user'));
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            $projekUser = $this->userProject->getProjectUserWhere('user_admin.id_user_admin','=',session::get('user'));
+            $projekUser = $this->userProject->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            return view('V_Admin.dashboard',
-            compact(
-                'user',
-                'projekUser',
-                'fp',
+            return view(
+                'V_Admin.dashboard',
+                compact(
+                    'user',
+                    'projekUser',
+                    'fp',
 
-                'agentWithCompany',
-                'agentWithoutCompany',
-                'closingAll',
-                'closing',
-                'remainHouse',
-                'getRumah',
+                    'agentWithCompany',
+                    'agentWithoutCompany',
+                    'closingAll',
+                    'closing',
+                    'remainHouse',
+                    'getRumah',
 
-            ));
-
+                )
+            );
         } else {
 
             return redirect('/login');
         }
-
     }
 }

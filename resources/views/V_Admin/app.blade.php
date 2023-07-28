@@ -13,6 +13,7 @@
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=1920, shrink-to-fit=no">
 
+
   <!-- Favicons -->
   <link rel="icon" href="favicon.ico">
 
@@ -24,6 +25,8 @@
   <link rel="stylesheet" href="{{url('Dashboard')}}/css/style.css" type="text/css">
 
   <script src="{{url('Dashboard')}}/js/jquery.min.js"></script>
+
+
   {{--  Datatabless  --}}
 
   <link rel="stylesheet" href="{{url('Dashboard')}}/css/jquery.dataTables.css" />
@@ -71,6 +74,6 @@
     @yield('script')
 
 </body>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript" src="{{url('Dashboard')}}/js/jquery.dataTables.js"></script>
 </html>

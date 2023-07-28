@@ -29,19 +29,19 @@
                         </div>
 
                         <div class="invoices__actions">
-                            <a href="/AdminADV/tambah-tipe-rumah/" class="btn-fd-outline btn--small">Tambah Tipe Rumah</a>
+                            <a href="/tambah-rumah-admin" class="btn-fd-outline btn--small">Tambah Rumah</a>
                         </div>
                     </div>
 
                     <div class="table-responsive">
 
-                        <table id="formulirPesanan" class="table">
+                        <table id="rumah" class="table">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Tipe Rumah</th>
-                                    <th>Luas <br> Bangunan</th>
-                                    <th>Harga</th>
+                                    <th>Luas <br> Tanah</th>
+                                    <th>Status</th>
                                     <th>Pengaturan</th>
                                 </tr>
                             </thead>
@@ -49,6 +49,19 @@
                                 <?php
                                 $no = 1;
                                 ?>
+                                @foreach ($getRumah as $rumah)
+
+                                    <tr>
+                                        <td>{{ $no }}</td>
+                                        <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</td>
+                                        <td>{{ $rumah->luas_tanah }}</td>
+                                        <td>{{ $rumah->status }}</td>
+                                        <td>edit</td>
+                                    </tr>
+                                <?php
+                                $no++;
+                                ?>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -226,7 +239,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#formulirPesanan').DataTable();
+            $('#rumah').DataTable();
         });
     </script>
 

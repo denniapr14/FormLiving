@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -7,4 +7,9 @@ class Cluster extends Model{
     protected $table = "cluster";
 
     protected $primaryKey = "codecluster";
+
+    function getClusterAll() {
+        return Cluster::select('*')
+        ->get();
+    }
 }
