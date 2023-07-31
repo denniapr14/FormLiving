@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 
 class AdminAccounting extends Controller

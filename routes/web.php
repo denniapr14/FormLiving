@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminFormsLiving_User;
 // ADMIN
 use App\Http\Controllers\C_Dashboard;
 use App\Http\Controllers\C_Rumah;
+use App\Http\Controllers\C_TipeRumah;
 
 /*
 |--------------------------------------------------------------------------
@@ -290,7 +291,10 @@ Route::get('/email/{id_formulir}', [Home::class, 'email']);
 
 // SUPER ADMIN NEW
 Route::get('/dashboard-admin', [C_Dashboard::class,'index']);
+
 Route::get('/rumah-admin', [C_Rumah::class,'index']);
 Route::get('/tambah-rumah-admin', [C_Rumah::class,'storeRumah']);
 Route::post('/tambah-rumah-action-admin', [C_Rumah::class,'storeRumahAction'])->name('postRumah');
 Route::post('/ubah-rumah-action-admin/{id}', [C_Rumah::class,'updateRumahAction']);
+
+route::post('/tambah-tipe-rumah',[C_TipeRumah::class,'storeTipeRumahAction'])->name('postTipeRumah');
