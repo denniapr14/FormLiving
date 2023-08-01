@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('checklist', function (Blueprint $table) {
             $table->integer('id_checklist', true);
             $table->integer('id_joblist')->nullable()->index('id_ceklist');
-            $table->integer('id_pengawas1')->nullable()->index('id_pengawas1');
+            $table->integer('id_pengawas1')->nullable()->index('id_pengawas1_2');
             $table->integer('id_pengawas2')->nullable()->index('id_pengawas2_2');
-            $table->integer('id_rumah')->nullable()->index('id_rumah_2');
+            $table->integer('id_rumah')->nullable()->index('id_rumah');
             $table->integer('id_subkon')->nullable()->index('id_subkon');
             $table->string('foto', 300)->nullable();
             $table->enum('status_cek_pengawas1', ['selesai', 'belum selesai'])->nullable()->default('belum selesai');
@@ -36,11 +36,11 @@ return new class extends Migration
             $table->string('status_ceo', 10)->nullable();
             $table->string('status_owner', 10)->nullable();
 
+            $table->index(['id_pengawas1'], 'id_pengawas1');
+            $table->index(['id_rumah'], 'id_rumah_2');
             $table->index(['id_joblist'], 'id_ceklist_2');
             $table->index(['id_pengawas2'], 'id_pengawas2');
             $table->index(['id_subkon'], 'id_subkon_2');
-            $table->index(['id_pengawas1'], 'id_pengawas1_2');
-            $table->index(['id_rumah'], 'id_rumah');
         });
     }
 

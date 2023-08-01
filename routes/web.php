@@ -1,26 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AdminAccounting;
 // NEW
-use App\Http\Controllers\C_Login;
+use App\Http\Controllers\AdminADV_Dashboard;
 // ======================================
 
-use App\Http\Controllers\Home;
-use App\Http\Controllers\AdminAccounting;
-use App\Http\Controllers\Ceo_Dashboard;
-use App\Http\Controllers\AdminADV_Dashboard;
-use App\Http\Controllers\Direktur_Dashboard;
-
-// ADMIN FORMS LIVING
 use App\Http\Controllers\AdminFormsLiving_Dashboard;
 use App\Http\Controllers\AdminFormsLiving_User;
-
-
-// ADMIN
 use App\Http\Controllers\C_Dashboard;
+use App\Http\Controllers\C_Login;
 use App\Http\Controllers\C_Rumah;
+// ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
+use App\Http\Controllers\Ceo_Dashboard;
+// ADMIN
+use App\Http\Controllers\Direktur_Dashboard;
+use App\Http\Controllers\Home;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +42,6 @@ Route::get('/cluster/{id_cluster}', [Home::class, 'Cluster']);
 Route::get('/detail-cluster', [Home::class, 'DetailCluster']);
 Route::get('/virtual-tour', [Home::class, 'VirtualTour']);
 
-
-
 // >>>>>>>>>>>>>>>>>>> PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('/profile-setting', [Home::class, 'ProfileSetting']);
@@ -66,8 +60,6 @@ Route::get('/search-item', [Home::class, 'SearchItem']);
 Route::get('/sign-up', [Home::class, 'SignUp']);
 Route::post('/sign-up/create', [Home::class, 'SignUpAction'])->name('sign-up.action');
 // >>>>>>>>>>>>>>>>>>> END PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
-
-
 
 // ---------------= SIMULATION =-----------------
 
@@ -92,15 +84,12 @@ Route::post('/simulation-price-payment/action/{id_rumah}/{id_tipe}/{id_pelanggan
 // Route::post('/simulation-order/store/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}', [Home::class, 'simOrderAction'])->name('simulation-order.action');
 // Route::get('/simulation-order/cariKupon/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}/{kode_promo}', [Home::class, 'findKupon']);
 
-
 Route::get('/simulation-summary/{id_rumah}/{id_tipe}/{id_pelanggan}/{kdPromo}/{payment}/{id_kkpr}', [Home::class, 'simSummary']);
 Route::post('/simulation-summary/store/{id_rumah}/{id_tipe}/{id_pelanggan}/{kdPromo}/{payment}/{id_kkpr}', [Home::class, 'simSummaryAction'])->name('simulation-sumary.action');
 Route::get('/congratulation', [Home::class, 'congratulation']);
 
-
 Route::get('/MailSend', [Home::class, 'Send']);
 Route::get('/WASend', [Home::class, 'SendWA']);
-
 
 // ------------= END SIMULATION =----------------
 
@@ -116,8 +105,6 @@ Route::get('/cetak/{id_formulir}', [Home::class, 'PrintFP']);
 // END FOOTER
 
 // >>>>>>>>>>>>>>>>>>> END HOME <<<<<<<<<<<<<<<<<<<<<<<<
-
-
 
 // >>>>>>>>>>>>>>>>>>>> KIOS K <<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -137,15 +124,14 @@ Route::get('/kiosk/unit', function () {
 Route::get('/kiosk/simulasi-kluster', function () {
     return view('kiosk/k_simCluster');
 });
-//2
+// 2
 Route::get('/kiosk/simulasi-pilih-unit', function () {
     return view('kiosk/k_simSelectUnit');
 });
-//3
+// 3
 Route::get('/kiosk/simulasi-tipe', function () {
     return view('kiosk/k_simType');
 });
-
 
 Route::get('/kiosk/simulasi-modifikasi', function () {
     return view('kiosk/k_simModification');
@@ -159,7 +145,6 @@ Route::get('/kiosk/simulasi-pembayaran', function () {
 Route::get('/kiosk/simulasi-harga', function () {
     return view('kiosk/k_simPrice');
 });
-
 
 Route::get('/kiosk/simulasi-unit', function () {
     return view('kiosk/k_simUnit');
@@ -204,7 +189,6 @@ Route::get('/kiosk/splash-screen', function () {
 });
 // >>>>>>>>>>>>>>>>>>>> END KIOS K <<<<<<<<<<<<<<<<<<<<<<<<<<
 
-
 // >>>>>>>>>>>>>>> DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 // Route::get('/dashboard-admin', function () {
@@ -229,7 +213,6 @@ Route::get('/kiosk/splash-screen', function () {
 
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-
 // >>>>>>>>>>>>>>> DASHBOARD ACCOUNTING <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('/dashboard-admin-accounting', [AdminAccounting::class, 'index']);
@@ -243,19 +226,11 @@ Route::get('/komisi', [AdminAccounting::class, 'Commission']);
 
 // >>>>>>>>>>>>>>> END DASHBOARD ACCOUNTING <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-
-
-
 // >>>>>>>>>>>>>>> START DASHBOARD DIREKTUR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('Direktur/dashboard', [Direktur_Dashboard::class, 'index']);
 
-
-
 // >>>>>>>>>>>>>>> END DASHBOARD DIREKTUR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
 
 // >>>>>>>>>>>>>>> DASHBOARD CEO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Route::get('CEO/dashboard', [Ceo_Dashboard::class, 'index']);
@@ -266,35 +241,34 @@ Route::post('CEO/tambah-rumah-promo', [Ceo_Dashboard::class, 'addPromoRumahActio
 Route::post('CEO/tambah-promo', [Ceo_Dashboard::class, 'addPromoAction'])->name('promo.action');
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-
 //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DASHBOARD ADMIN ADV <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-Route::get('AdminADV/dashboard', [AdminADV_Dashboard::class,'index']);
-Route::get('AdminADV/tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class,'TipeRumah']);
-Route::get('AdminADV/tambah-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class,'addTipeRumah']);
+Route::get('AdminADV/dashboard', [AdminADV_Dashboard::class, 'index']);
+Route::get('AdminADV/tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class, 'TipeRumah']);
+Route::get('AdminADV/tambah-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class, 'addTipeRumah']);
 
-Route::get('AdminADV/gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class,'listImageTipeRumah']);
-Route::get('AdminADV/tambah-gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class,'addImgTipeRumah']);
+Route::get('AdminADV/gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class, 'listImageTipeRumah']);
+Route::get('AdminADV/tambah-gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::class, 'addImgTipeRumah']);
 
 //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END DASHBOARD ADMIN ADV <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-
-
 // >>>>>>>>>>>>>>   DASHBOARD ADMIN FORMS LIVING    <<<<<<<<<<<<<
-Route::get('AdminFormsLiving/dashboard', [AdminFormsLiving_Dashboard::class,'index']);
-Route::get('AdminFormsLiving/list-user', [AdminFormsLiving_User::class,'listUser']);
+Route::get('AdminFormsLiving/dashboard', [AdminFormsLiving_Dashboard::class, 'index']);
+Route::get('AdminFormsLiving/list-user', [AdminFormsLiving_User::class, 'listUser']);
 // >>>>>>>>>>>>>>       END ADMIN FORMS LIVING      <<<<<<<<<<<<<
 
 Route::get('/email/{id_formulir}', [Home::class, 'email']);
 
-
-
 // SUPER ADMIN NEW
-Route::get('/dashboard-admin', [C_Dashboard::class,'index']);
+Route::get('/dashboard-admin', [C_Dashboard::class, 'index']);
 
-Route::get('/rumah-admin', [C_Rumah::class,'index']);
-Route::get('/tambah-rumah-admin', [C_Rumah::class,'storeRumah']);
-Route::post('/tambah-rumah-action-admin', [C_Rumah::class,'storeRumahAction'])->name('postRumah');
-Route::post('/ubah-rumah-action-admin/{id}', [C_Rumah::class,'updateRumahAction']);
+Route::get('/rumah-admin', [C_Rumah::class, 'index']);
+Route::get('/tambah-rumah-admin', [C_Rumah::class, 'storeRumah']);
+Route::post('/tambah-rumah-action-admin', [C_Rumah::class, 'storeRumahAction'])->name('postRumah');
+Route::post('/ubah-rumah-action-admin/{id}', [C_Rumah::class, 'updateRumahAction']);
 
-route::post('/tambah-tipe-rumah',[C_TipeRumah::class,'storeTipeRumahAction'])->name('postTipeRumah');
+route::post('/tambah-tipe-rumah', [C_TipeRumah::class, 'storeTipeRumahAction'])->name('postTipeRumah');
+
+Route::get('/tipe-rumah-admin/{id}', [C_TipeRumah::class, 'tipeRumah'])->name('tipeRumah.admin');
+Route::get('/tambah-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'storeTipeRumah'])->name('storeTipeRumah.admin');
+

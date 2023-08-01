@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('keep_log', function (Blueprint $table) {
+            $table->foreign(['id_rumah'], 'keep_log_ibfk_1')->references(['id_rumah'])->on('rumah');
             $table->foreign(['id_pelanggan'], 'keep_log_ibfk_3')->references(['id_pelanggan'])->on('user_pelanggan');
             $table->foreign(['id_user_admin'], 'keep_log_ibfk_2')->references(['id_user_admin'])->on('users');
-            $table->foreign(['id_rumah'], 'keep_log_ibfk_1')->references(['id_rumah'])->on('rumah');
         });
     }
 
@@ -28,9 +28,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('keep_log', function (Blueprint $table) {
+            $table->dropForeign('keep_log_ibfk_1');
             $table->dropForeign('keep_log_ibfk_3');
             $table->dropForeign('keep_log_ibfk_2');
-            $table->dropForeign('keep_log_ibfk_1');
         });
     }
 };

@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('checklist', function (Blueprint $table) {
-            $table->foreign(['id_pengawas1'], 'checklist_ibfk_2')->references(['id_user_admin'])->on('users');
             $table->foreign(['id_rumah'], 'checklist_ibfk_4')->references(['id_rumah'])->on('rumah');
             $table->foreign(['id_joblist'], 'checklist_ibfk_1')->references(['id_joblist'])->on('joblist');
             $table->foreign(['id_pengawas2'], 'checklist_ibfk_3')->references(['id_user_admin'])->on('users');
+            $table->foreign(['id_pengawas1'], 'checklist_ibfk_2')->references(['id_user_admin'])->on('users');
         });
     }
 
@@ -29,10 +29,10 @@ return new class extends Migration
     public function down()
     {
         Schema::table('checklist', function (Blueprint $table) {
-            $table->dropForeign('checklist_ibfk_2');
             $table->dropForeign('checklist_ibfk_4');
             $table->dropForeign('checklist_ibfk_1');
             $table->dropForeign('checklist_ibfk_3');
+            $table->dropForeign('checklist_ibfk_2');
         });
     }
 };
