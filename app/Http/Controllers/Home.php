@@ -153,7 +153,6 @@ class Home extends Controller
     // LOGIN
     public function Login()
     {
-
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -161,7 +160,6 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('login', compact('user'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -223,7 +221,9 @@ class Home extends Controller
                     case 'SuperAdmin':
                         return redirect('/dasboard')->with('success',"You're Sign in!");
                     break;
-
+                    case 'AdminFormsLiving':
+                        return redirect('AdminFormsLiving/dasboard')->with('success',"You're Sign in!");
+                    break;
                     default:
                         return redirect('/')->with('success', "You're Sign in!");
                         break;

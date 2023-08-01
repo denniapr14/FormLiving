@@ -28,7 +28,12 @@ class UserAdmin extends Authenticatable
         ->first();
     }
 
-
+    function getUserAdminOrderbyWhere($select, $where, $eq, $value, $order, $by) {
+        return UserAdmin::select($select)
+        ->where($where,$eq,$value)
+        ->orderBy($order,$by)
+        ->get();
+    }
 
     function getUserJoinCountWhere($where)  {
         return UserAdmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')

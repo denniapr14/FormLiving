@@ -61,7 +61,6 @@ class C_Rumah extends Controller
                     'user',
                     'projekUser',
                     'getRumah',
-
                 )
             );
         } else {

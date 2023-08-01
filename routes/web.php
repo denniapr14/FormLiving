@@ -36,7 +36,7 @@ use App\Http\Controllers\C_TipeRumah;
 // >>>>>>>>>>>>>>>>>>> HOME <<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('/', [Home::class, 'index']);
-Route::get('/housing', [Home::class, 'housing']);
+Route::get('/Greenland', [Home::class, 'housing']);
 Route::get('/my-cart', [Home::class, 'MyCart']);
 Route::get('/login', [C_Login::class, 'login']);
 Route::post('/login', [C_Login::class, 'loginAction'])->name('login.action');
