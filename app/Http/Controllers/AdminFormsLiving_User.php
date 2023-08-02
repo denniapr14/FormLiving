@@ -30,7 +30,14 @@ use Intervention\Image\Facades\Image;
 class AdminFormsLiving_User extends Controller
 {
     //
+    public function __construct() {
+        $this->userList = new UserAdmin;
+    }
     function listUser() {
+        // $listDataAdmin = array(
+        //     'code_ui_ua' = $request -> 
+        // );
+        // $getUserAdmin = $this->UserAdmin->getUserAdminOrderbyWhere()
         $getUserSales = DB::table('user_admin')
         ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
         ->whereIn('ktgr_admin.kategori',['Sales','SalesAgent'])

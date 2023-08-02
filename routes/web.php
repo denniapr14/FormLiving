@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 // >>>>>>>>>>>>>>>>>>> HOME <<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('/', [Home::class, 'index']);
-Route::get('/housing', [Home::class, 'housing']);
+Route::get('/Greenland', [Home::class, 'housing']);
 Route::get('/my-cart', [Home::class, 'MyCart']);
 Route::get('/login', [C_Login::class, 'login']);
 Route::post('/login', [C_Login::class, 'loginAction'])->name('login.action');
@@ -275,3 +275,5 @@ route::post('/tambah-tipe-rumah', [C_TipeRumah::class, 'storeTipeRumahAction'])-
 Route::get('/tipe-rumah-admin/{id}', [C_TipeRumah::class, 'tipeRumah'])->name('tipeRumah.admin');
 Route::get('/tambah-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'storeTipeRumah'])->name('storeTipeRumah.admin');
 
+
+route::post('/tambah-tipe-rumah',[C_TipeRumah::class,'storeTipeRumahAction'])->name('postTipeRumah');

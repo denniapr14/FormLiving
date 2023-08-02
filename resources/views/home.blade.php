@@ -18,7 +18,7 @@
                     <div class="item-text">
                         <h4>Greenland</h4>
                         <p>Greenland at Tidar</p>
-                        <a href="/housing" class="more">
+                        <a href="/Greenland" class="more">
                             Learn More <i class="bi bi-chevron-right"></i>
                         </a>
                     </div>
@@ -74,7 +74,8 @@
     </div>
 </div>
 
-{{-- <div class="mobile-only">
+<div class="mobile-only">
+    {{-- 
     <div class="cta-mobile">
         <div class="container">
             <div class="sliders-mobile">
@@ -141,8 +142,8 @@
                             <div class="item-img">
                                 <img src="{{ asset('Home') }}/images/img-apartement.png" alt="">
                             </div>
-                            <h6>Austinville</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <h6>kalm</h6>
+                            <p>Coming Soon in August</p>
                         </a>
 
                     </div>
