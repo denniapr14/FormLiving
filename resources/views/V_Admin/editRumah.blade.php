@@ -36,27 +36,28 @@
                 </div>
                 <form id="formRumah " method="POST" action="{{ route('updateRumahActionNoJS.admin',$getRumah->id_rumah) }}" enctype="multipart/form-data">
                     @csrf
+
                     <input type="text" name="id_rumah" id="inputID" value="{{ $getRumah->id_rumah }}" class="form form-control" >
 
                     <div class="form-group">
 
                         <select name="cluster" class="form-control" id="inputCluster">
-                            <option value="">--Pilih Cluster--</option>
-                            @foreach ($getCluster as $cluster)
-                                <option value="{{ $cluster->codecluster }}">{{ $cluster->nama_cluster }}</option>
-                            @endforeach
+
+
+                                <option value="{{ $getCluster->codecluster }}">{{ $getCluster->nama_cluster }}</option>
+
                         </select>
                     </div>
                     <div class="form-inline">
                         <div class="form-group mb-3 ">
                             <input type="text" name="blok" style="width: 100%" id="inputBlok" class="form-control"
-                                placeholder="Masukan Blok Rumah" aria-describedby="helpId">
+                                placeholder="Masukan Blok Rumah" value="{{ $getRumah->blok }}" aria-describedby="helpId">
                         </div>
                         &nbsp;
                         <div class="form-group mb-3">
                             - &nbsp;
-                            <input type="text" name="nomor" id="inputNomor" class="form-control"
-                                placeholder="Masukan Nomor Rumah" aria-describedby="helpId">
+                            <input type="text" name="nomor"  id="inputNomor"  class="form-control"
+                                placeholder="Masukan Nomor Rumah" value="{{ $getRumah->nomor }}" aria-describedby="helpId">
                         </div>
                     </div>
 
