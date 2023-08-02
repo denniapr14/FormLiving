@@ -265,7 +265,10 @@ Route::get('/dashboard-admin', [C_Dashboard::class, 'index']);
 Route::get('/rumah-admin', [C_Rumah::class, 'index']);
 Route::get('/tambah-rumah-admin', [C_Rumah::class, 'storeRumah']);
 Route::post('/tambah-rumah-action-admin', [C_Rumah::class, 'storeRumahAction'])->name('postRumah');
-Route::post('/ubah-rumah-action-admin/{id}', [C_Rumah::class, 'updateRumahAction']);
+
+Route::get('/ubah-rumah-admin/{id}', [C_Rumah::class, 'updateRumah'])->name('updateRumah.admin');
+Route::post('/ubah-rumah-action-admin/ubah/{id}', [C_Rumah::class, 'updateRumahActionNoJS'])->name('updateRumahActionNoJS.admin');
+Route::post('/ubah-rumah-action-admin/{id}', [C_Rumah::class, 'updateRumahAction'])->name('updateRumahAction.admin');
 
 route::post('/tambah-tipe-rumah', [C_TipeRumah::class, 'storeTipeRumahAction'])->name('postTipeRumah');
 

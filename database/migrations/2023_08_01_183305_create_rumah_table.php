@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('id_user_admin')->nullable()->index('id_user_admin');
             $table->integer('tipe')->nullable();
             $table->integer('luas_tanah')->nullable();
+            $table->string('img_rumah',200)->nullable();
             $table->enum('status', ['Available', 'Sold', 'Keep', 'onProgress', 'Undeveloped', 'Hold']);
             $table->enum('status_stock', ['Ready', 'Inden'])->nullable();
             $table->enum('status_pembangunan', ['No', 'Yes', 'Finish']);

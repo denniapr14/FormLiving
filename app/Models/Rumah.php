@@ -34,6 +34,7 @@ class Rumah extends Model
             ->first();
     }
 
+
     public function getRumahJoinClusterWhere($select, $where, $eq, $value)
     {
         return Rumah::select($select)
