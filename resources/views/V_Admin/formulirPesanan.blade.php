@@ -1,6 +1,7 @@
-@extends('AdminAccounting.app')
-@extends('DashboardLayout.sidebar')
-@extends('AdminAccounting.footer')
+@extends('V_Admin.app')
+@extends('V_Admin.sidebar')
+@extends('flashdata')
+@extends('V_Admin.footer')
 
 @section('tittle', 'FORMS ONE | Formulir')
 @section('content')

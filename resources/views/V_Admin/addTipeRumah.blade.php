@@ -17,71 +17,6 @@
 
     <div class="content__wrapper">
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
-                    <div class="card__title">
-
-                        <h1>Tambah Rumah </h1>
-
-                    </div>
-
-                </div>
-                <div class="alert alert-success" role="alert" id="successMsg" style="display: none">
-                    Data Sudah Tersimpan
-                </div>
-                <div class="alert alert-success" role="alert" id="successEdit" style="display: none">
-                    Data Sudah Diubah
-                </div>
-                <form id="formRumah">
-                    @csrf
-                    <input type="text" name="id_rumah" id="inputID" class="form form-control" readonly hidden>
-
-                    <div class="form-group">
-
-                        <select name="cluster" class="form-control" id="inputCluster">
-                            <option value="">--Pilih Cluster--</option>
-                            @foreach ($getCluster as $cluster)
-                                <option value="{{ $cluster->codecluster }}">{{ $cluster->nama_cluster }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-inline">
-                        <div class="form-group mb-3 ">
-                            <input type="text" name="blok" style="width: 100%" id="inputBlok" class="form-control"
-                                placeholder="Masukan Blok Rumah" aria-describedby="helpId">
-                        </div>
-                        &nbsp;
-                        <div class="form-group mb-3">
-                            - &nbsp;
-                            <input type="text" name="nomor" id="inputNomor" class="form-control"
-                                placeholder="Masukan Nomor Rumah" aria-describedby="helpId">
-                        </div>
-                    </div>
-
-
-
-                    <div class="form-group">
-                        <select name="status" class="form-control" id="inputStatus">
-                            <option value="">--Pilih Status Rumah--</option>
-                            <option value="Available">Available</option>
-                            <option value="Undeveloped">Undeveloped</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-
-                        <select name="status_stock" class="form-control" id="inputStock">
-                            <option value="">--Pilih Status Stok--</option>
-                            <option value="Ready">Ready</option>
-                            <option value="Inden">Inden</option>
-                        </select>
-                    </div>
-                    <button type="submit" id="rumahSubmit" class="btn btn-primary">Submit</button>
-                    <button style="display: none" type="submit" id="rumahEdit" class="btn btn-success">Edit</button>
-                    <br>
-                </form>
-            </div>
-        </div>
 
 
 
@@ -97,7 +32,7 @@
                 </div>
                 <form action="{{ route('postTipeRumah') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="text" name="inputID" id="inputIDRumah" class="form form-control" hidden readonly>
+                    <input type="text" name="inputID" id="inputIDRumah" value="{{ $getRumah->id_rumah }}" class="form form-control" hidden readonly>
                 <div class="form-group">
 
                     <input type="text" name="tipe[]" id="" class="form-control"
@@ -261,7 +196,7 @@
                     <label for="fileInput">Select a file:</label>
                     <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
                     <input type="file" id="fileInput" name="fileInput[]">
-                    <button type="button" onclick="deleteFile(id)">Delete</button>
+
                     <select name="jenisGambar[]" id="" class="form form-control">
                         <option value="">---Pilih Jenis Gambar---</option>
                         <option value="Denah">Denah</option>
@@ -270,13 +205,13 @@
 
                 </div>
 
-                <button type="button" onclick="addFile(id= 0)">Add File Input</button>
+                <button type="button" class="btn btn-success" onclick="addFile(id= 0)">Add File Input</button>
                 <br><br>
 
-                <button type="button" onclick="createForm()">Create Form</button>
+                <button type="button" class="btn btn-info" onclick="createForm()">Create Form</button>
                 <div id="formsContainer"></div>
 
-
+<br>
                 <button class="btn btn-primary" type="submit">Submit</button>
 
                 </form>
@@ -357,7 +292,7 @@
                     <input type="text" name="counter[]" id="counterID" value="`+id+`"  readonly hidden>
                     <label for="fileInput">Select a file:</label>
                     <input type="file" name="fileInput[]">
-                    <button type="button" onclick="deleteFile()">Delete</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteFile()"><i class="fa fa-times" aria-hidden="true"></i></button>
                     <select name="jenisGambar[]" id="" class="form form-control">
                         <option value="">---Pilih Jenis Gambar---</option>
                         <option value="Denah">Denah</option>

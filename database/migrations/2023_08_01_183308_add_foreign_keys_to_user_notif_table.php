@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('user_notif', function (Blueprint $table) {
+            $table->foreign(['id_user_admin'], 'user_notif_ibfk_1')->references(['id_user_admin'])->on('users');
             $table->foreign(['id_departemen'], 'user_notif_ibfk_3')->references(['id_departemen'])->on('departemen');
             $table->foreign(['id_kategori'], 'user_notif_ibfk_2')->references(['id_kategori'])->on('ktgr_admin');
-            $table->foreign(['id_user_admin'], 'user_notif_ibfk_1')->references(['id_user_admin'])->on('users');
         });
     }
 
@@ -28,9 +28,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('user_notif', function (Blueprint $table) {
+            $table->dropForeign('user_notif_ibfk_1');
             $table->dropForeign('user_notif_ibfk_3');
             $table->dropForeign('user_notif_ibfk_2');
-            $table->dropForeign('user_notif_ibfk_1');
         });
     }
 };

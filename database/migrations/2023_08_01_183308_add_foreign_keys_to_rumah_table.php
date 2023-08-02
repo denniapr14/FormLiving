@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('rumah', function (Blueprint $table) {
-            $table->foreign(['id_user_admin'], 'rumah_ibfk_2')->references(['id_user_admin'])->on('users');
             $table->foreign(['codecluster'], 'rumah_ibfk_1')->references(['codecluster'])->on('cluster');
+            $table->foreign(['id_user_admin'], 'rumah_ibfk_2')->references(['id_user_admin'])->on('users');
         });
     }
 
@@ -27,8 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('rumah', function (Blueprint $table) {
-            $table->dropForeign('rumah_ibfk_2');
             $table->dropForeign('rumah_ibfk_1');
+            $table->dropForeign('rumah_ibfk_2');
         });
     }
 };

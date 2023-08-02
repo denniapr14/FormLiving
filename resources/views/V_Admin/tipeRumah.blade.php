@@ -17,112 +17,31 @@
         <!-- start: content -->
         <div class="content__wrapper">
 
-            <div class="content__row">
-                <div class="content__column">
-                    <div class="card__box greeting__box">
-                        <div class="greeting__text">
-                            <?php
-                            $time = date('H:i');
 
-                            if ($time >= '05:00' && $time < '11:00') {
-                                echo 'Good morning 🌅';
-                            } elseif ($time >= '11:00' && $time < '15:00') {
-                                echo 'Good afternoon 🌤️';
-                            } elseif ($time >= '15:00' && $time < '19:00') {
-                                echo 'Good evening 🌄';
-                            } else {
-                                echo 'Good night 🌙';
-                            }
-                            ?>
-                            , {{ $user->nama_ktgr }}
-                        </div>
-                        <div class="greeting__date">{{ date('l, j F Y') }}</div>
-                        <div class="greeting__question">Would you like to see today s sales analysis?</div>
-
-                        <?php
-
-
-                    if ($time >= '04:00' && $time < '17:00') {
-                        ?>
-
-                        <img style="width: 25%" src="{{ url('Dashboard') }}/images/content/sun_illustration.png" alt="sun_illustration">
-                        <?php
-                    } else {
-                        ?>
-                        <img style="width: 25%" src="{{ url('Dashboard') }}/images/content/night.png" alt="night">
-                        <?php
-                    }
-                    ?>
-
-                        <span class="btn btn-outline-primary float-right" id="clock"></span>
-                    </div>
-                </div>
-                <div class="content__column">
-                    <div class="card__box dashboard__box">
-                        <div class="card__header">
-                            <div class="card__title">
-                                <i class="bi bi-lightning-charge"></i>
-                                <span>Summary</span>
-                            </div>
-
-                        </div>
-                        <div class="transaction__listing">
-                            <div class="transaction__column">
-                                <div class="transaction__icon transaction__icon--web-page">
-                                    <i class="bi bi-file-earmark-code"></i>
-                                </div>
-                                <div class="transaction__count">14</div>
-                                <div class="transaction__title">Unit Sold</div>
-                            </div>
-                            <div class="transaction__column">
-                                <div class="transaction__icon transaction__icon--customer">
-                                    <i class="bi bi-person"></i>
-                                </div>
-                                <div class="transaction__count">51</div>
-                                <div class="transaction__title">Customer</div>
-                            </div>
-                            <div class="transaction__column">
-                                <div class="transaction__icon transaction__icon--agents">
-                                    <i class="bi bi-person-workspace"></i>
-                                </div>
-                                <div class="transaction__count">5</div>
-                                <div class="transaction__title">Agents</div>
-                            </div>
-                            <div class="transaction__column">
-                                <div class="transaction__icon transaction__icon--invoice">
-                                    <i class="bi bi-file-earmark-pdf"></i>
-                                </div>
-                                <div class="transaction__count">30</div>
-                                <div class="transaction__title">Sales Inhouse</div>
-                            </div>
-                            <div class="transaction__column">
-                                <div class="transaction__icon transaction__icon--order-forms">
-                                    <i class="bi bi-file-earmark-font"></i>
-                                </div>
-                                <div class="transaction__count">16</div>
-                                <div class="transaction__title">Invoice Sent</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="content__row">
-
-            </div>
             <div class="content__row mb-3">
                 <div class="card__box">
 
+                    <br>
+                    <div class="card__header">
+                        <div class="card__title">
+                            <i class="bi bi-clipboard2-plus"></i>
+                          <span>Tipe Rumah {{ $getRumah->nama_cluster }} / {{ $getRumah->blok }} - {{ $getRumah->nomor }} </span>
+
+                        </div>
+
+                        <div class="invoices__actions">
+                            <a href="{{ route('storeTipeRumah.admin',Crypt::encrypt($getRumah->id_rumah)) }}" class="btn-fd-outline btn--small">Tambah Tipe Rumah</a>
+                        </div>
+                    </div>
+
                     <div class="table-responsive">
-                        <table id="formulirPesanan" class="table">
+
+                        <table id="rumah" class="table">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No FP</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Tanggal Order</th>
+                                    <th>Tipe Rumah</th>
+                                    <th>Luas <br> Tanah</th>
                                     <th>Status</th>
                                     <th>Pengaturan</th>
                                 </tr>
@@ -131,33 +50,25 @@
                                 <?php
                                 $no = 1;
                                 ?>
-                                @foreach ($fp as $fp)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $fp->no_fp }}</td>
-                                        <td>
-                                        <span class="client__name">{{ $fp->nama_plgn }}</span>
-                                        <span class="client__handled">Dari {{ $fp->nama_ktgr }} ({{ $fp->nama_ua }})</span>
-                                        </td>
-                                        <td>
-                                            {{ $fp->email_plgn }}
-                                        </td>
-                                        <td>
-                                            {{ date("d M Y", strtotime($fp->tgl_input_fp)) }}
-                                        </td>
-                                        <td></td>
-                                        <td>
-                                            <div class="d-flex flex-nowrap">
-                                                <a href="/formulirPesanan/{{ $fp->id_formulir }}" class="btn-fd-icon-outline">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                </a>
+                                @if(!empty($getTipeRumah))
+                                @foreach ($getTipeRumah as $tipeRumah)
 
-                                              </div>
+                                <tr>
+                                    <td>{{ $no }}</td>
+                                    <td>{{ $tipeRumah->nama_cluster }} / {{ $tipeRumah->blok }} - {{ $tipeRumah->nomor }}</td>
+                                    <td>{{ $tipeRumah->luas_tanah }}</td>
+                                    <td>{{ $tipeRumah->status }}</td>
+                                    <td>edit</td>
+                                </tr>
+                            <?php
+                            $no++;
+                            ?>
+                            @endforeach
+                                @else
 
-                                            </td>
+                                <div class="alert alert-danger">Tidak ada data</div>
+                                @endif
 
-                                    </tr>
-                                @endforeach
 
                             </tbody>
                         </table>
@@ -315,7 +226,12 @@
             </div>
         </div>
     </div>
-
+    <?php
+    function rupiah($angka)
+    {
+      $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.') . ',-';
+      return $hasil_rupiah;
+    } ?>
     <script>
         function updateTime() {
             const now = new Date();
@@ -330,7 +246,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#formulirPesanan').DataTable();
+            $('#rumah').DataTable();
         });
     </script>
 

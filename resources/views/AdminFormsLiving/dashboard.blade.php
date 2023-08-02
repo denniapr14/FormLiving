@@ -63,13 +63,7 @@
                                 <i class="bi bi-lightning-charge"></i>
                                 <span>Summary</span>
                             </div>
-                            <div class="custom__select custom__select--outline custom__select--outline-small mr-3">
-                                <select name="sort" id="sort">
-                                    <option selected>Monthly</option>
-                                    <option>Yearly</option>
-                                </select>
-                                <span class="custom-arrow"></span>
-                            </div>
+
                         </div>
                         <div class="transaction__listing">
                             <div class="transaction__column">

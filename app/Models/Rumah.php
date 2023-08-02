@@ -6,56 +6,84 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rumah extends Model
 {
-    protected $table = "rumah";
+    protected $table = 'rumah';
 
-    protected $primaryKey = "id_tipe_rumah";
-
-
-    // INSERT
-
-    function insertRumah($dataInput)
-    {
-        return Rumah::insert(
-            $dataInput
-        );
-    }
-    function insertRumahId($dataInput)
-    {
-        return Rumah::insertGetId(
-            $dataInput
-        );
-    }
+    protected $primaryKey = 'id_tipe_rumah';
 
     // SELECT
-    function getRumahAll()
+    public function getRumahAll()
     {
-
         return Rumah::join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
 
             ->get();
     }
 
-    function updateRumah($id, $dataInput)
+    public function getRumahSelectCountGroupBy()
     {
-        return Rumah::where('id_rumah', $id)
-            ->update(
-                $dataInput
-            );
+        return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(tipe_rumah.id_tipe_rumah) as countTipe"))
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->leftJoin('tipe_rumah', 'rumah.id_rumah', '=', 'tipe_rumah.id_rumah')
+            ->groupBy('rumah.id_rumah')
+            ->get();
     }
 
-    function getRumahWhere($where, $eq, $value)
+    public function getRumahWhere($where, $eq, $value)
     {
         return Rumah::select('*')
             ->where($where, $eq, $value)
             ->first();
     }
-    function RemainHouse($where, $value)
+
+    public function getRumahJoinClusterWhere($select, $where, $eq, $value)
+    {
+        return Rumah::select($select)
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->where($where, $eq, $value)
+        ->first();
+
+        // $rumah = new Rumah;
+
+        // $rumah->remainHouse();
+    }
+
+    public function getRumahJoin($select, $table, $join, $join2)
+    {
+        return Rumah::select($select)
+        ->join($table, $join, '=', $join2)
+        ->get();
+    }
+
+    public function RemainHouse($where, $value)
     {
         return Rumah::select(Rumah::raw('COUNT(rumah.id_rumah) as count'))
             ->where([
-
                 $where => $value,
             ])
             ->first();
+    }
+
+     // INSERT
+
+     public function insertRumah($dataInput)
+     {
+         return Rumah::insert(
+             $dataInput
+         );
+     }
+
+     public function insertRumahId($dataInput)
+     {
+         return Rumah::insertGetId(
+             $dataInput
+         );
+     }
+
+    //  UPDATE
+    public function updateRumah($id, $dataInput)
+    {
+        return Rumah::where('id_rumah', $id)
+            ->update(
+                $dataInput
+            );
     }
 }
