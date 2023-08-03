@@ -28,8 +28,7 @@
             <div class="step">4</div>
             <div class="step">5</div>
             <div class="step">6</div>
-             <div class="step">7</div>
-            <div class="step last">8</div>
+             <div class="step last">7</div>
         </div>
     </div>
     
@@ -43,15 +42,14 @@
             <div class="step">4</div>
             <div class="step">5</div>
             <div class="step">6</div>
-             <div class="step">7</div>
-            <div class="step last">8</div>
+             <div class="step last">7</div>
         </div>
 
         <div class="choose-cluster">
             <h2 class="title">
                 Pilih Cluster
             </h2>
-            <div class="row">
+            {{-- <div class="row">
                 @foreach ($cluster as $cluster)
                 <div class="col-6 col-lg-3">
                     <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
@@ -76,9 +74,64 @@
                         <p class="item-sub">Cluster</p>
                     </div>
                 </a>
-                </div>
+                </div>              
                 @endforeach
+            </div> --}}
+
+            @foreach ( $cluster as $cluster )
+            <div>
+                <div id="card-cluster" class="card simulation-price desktop-only" style="margin-bottom: 20px">
+                    <div class="card-header bg-success">
+                        <a href="#collapse-card-cluster" data-toggle="collapse">
+                            <img style="max-height: 60px; filter: invert(100%);" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt="">
+                        </a>              
+                    </div>                   
+                        <div id="collapse-card-cluster" class="card-body collapse-item">
+                            <div class="row">
+                            @foreach ($rumah as $home)
+                                @if ($home->codecluster = $cluster->codecluster)                           
+                                    <div class="col-6 col-lg-3">
+                                        <a href="/simulation-type/{{ $home->id_rumah }}">
+                                            <div class="item">
+                                                <div class="item-image">
+                                                    @if ($home->nama_img != NULL)
+                                                    <img src="{{ asset('home')}}/images/rumah/{{ $home->nama_img}}" alt="">
+                                                    @else
+                                                    <img src="{{ asset('home')}}/images/60.jpg" alt="">
+                                                    @endif
+                                                </div>
+                                                <div class="item-title">{{ $home->blok }} - {{ $home->nomor }}</div>
+                                                <div class="avail">Luas Tanah : {{ $home->luas_tanah }}m<sup>2</sup></div>
+                                            </div>
+                                        </a>
+                                    </div>                                       
+                                    @endif
+                                    @endforeach
+                            </div>   
+                        </div>
+                    <div class="card-footer"></div>
+                </div> 
             </div>
+
+            <div class="mobile-only">
+                <div id="card-cluster" class="card" style="margin-bottom: 20px" onload="randomizeCard()">
+                    <div class="card-header bg-success mb-3">
+                        <img style="max-height: 60px; filter: invert(100%);" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt="">
+                    </div>
+                    <div class="card-body">
+                        <h1>Hellow</h1>
+                        {{-- @foreach ($rumah as $home)
+                        @if ($home->codecluster = $cluster->codecluster)
+                        <p>{{ $home->blok }} - {{ $home->nomor }}</p>
+                        @endif
+                        @endforeach --}}
+    
+                    </div>
+                    <div class="card-footer"> end of text</div>
+                </div>
+            </div>
+            @endforeach
+            
         </div>
 
         {{--  <div class="btn-groups">

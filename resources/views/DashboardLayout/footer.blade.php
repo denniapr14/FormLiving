@@ -8,5 +8,23 @@
 
 <!-- Custom JS -->
 <script src="{{url('Dashboard')}}/js/app.js"></script>
+<script>
+  var randomNumber = Math.ceil(Math.random() * 2);
+  var cardin = getElementById("card-cluster");
+  cardin.addEventListener("load",randomizeCard,false)
+
+  function randomizeCard (randomNumber){
+    switch(randomNumber){
+      case 1 :
+        element.ClassList.add("bg-primary");
+        break;
+      case 2 :
+        element.ClassList.add("bg-success");
+      default :
+      element.ClassList.add("bg-primary");
+    }
+  }
+
+</script>
 
 @endsection

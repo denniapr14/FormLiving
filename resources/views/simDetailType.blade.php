@@ -135,7 +135,7 @@
 
                 </div>
 
-                <div class="thumbnails-container">
+                {{-- <div class="thumbnails-container">
                     <div class="thumbnails">
                         @foreach ($imgRumah2 as $gambarRumah)
 
@@ -152,7 +152,7 @@
 
                     @endforeach
                     </div>
-                </div>
+                </div> --}}
             </div>
 
         </div>
@@ -165,21 +165,30 @@
                     $('.gallery-popup').removeClass('active');
                     $('.main-images').slick('destroy');
                     $('.thumbnails').slick('destroy');
-
                 });
+
+                // $('.gallery-popup').click(function(e){
+                //     $('.gallery-popup').removeClass('active');
+                //      $('.main-images').slick('destroy');
+                //     $('.thumbnails').slick('destroy');
+                // });
+
                 $('.see-more').click(function (e) {
                     e.preventDefault();
                     $('.gallery-popup').addClass('active');
-
                     $('.main-images').slick({
                         slidesToShow: 1,
                         slidesToScroll: 1,
-                        arrows: false,
-                        asNavFor: '.thumbnails'
+                        arrows: true,
+                        dots : false,
+                        // asNavFor: '.thumbnails'
+                        // asNavFor: '.main-images',
                     });
 
+                    $()
+
                     $('.thumbnails').slick({
-                        slidesToShow: 4,
+                        slidesToShow: 1,
                         arrows: true,
                         slidesToScroll: 1,
                         dots: false,
@@ -234,13 +243,16 @@
                             aria-selected="false">Spesifikasi
                             Umum</button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="kalkulator-tab" data-bs-toggle="tab"
+                            data-bs-target="#kalkulator" type="button" role="tab" aria-controls="kalkulator"
+                            aria-selected="false">Simulasi Kalkulator KPR</button>
+                    </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="denah" role="tabpanel" aria-labelledby="denah-tab">
                         <div class="denah-sliders mt-4">
                             @foreach ($imgDenah as $denah)
-
-
                             <div class="img-denah">
                                 @if (empty($denah->img_rumah))
                                 <img src="{{ asset('Home') }}/images/NoImg.jpg" alt="">
@@ -248,7 +260,6 @@
                                 <img src="{{ asset('Home') }}/images/denah/{{ $denah->img_rumah }}" alt="">
                                 @endif
                             </div>
-
                             @endforeach
                         </div>
                     </div>
