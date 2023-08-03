@@ -59,9 +59,14 @@
                                     <td>
 
                                         <div class="d-flex flex-nowrap">
-                                            <a href="{{ route('tipeRumah.admin', Crypt::encrypt($rumah->id_rumah) )  }}" class="btn btn-outline-info"><i class="fa fa-eye"
+                                            <a href="{{ route('tipeRumah.admin', Crypt::encrypt($rumah->id_rumah)) }}"
+                                                class="btn btn-outline-info"><i class="fa fa-eye"
                                                     aria-hidden="true"></i><span class="badge badge-pill badge-info">
-                                                        {{ $rumah->countTipe }}</span></a>
+                                                    {{ $rumah->countTipe }}</span></a>
+                                            <a href="{{ route('updateRumah.admin', $rumah->id_rumah) }}"
+                                                class="btn btn-outline-info">
+                                                <i class="fa fa-edit" aria-hidden="true"></i>
+                                                </a>
 
                                         </div>
                                     </td>
