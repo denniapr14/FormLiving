@@ -6,9 +6,6 @@ class Projek extends Model{
     protected $table = "projek";
 
     function getProjekAll() {
-        return Projek::get();
+        return Projek::select(*);
     }
-
-
-
 }
