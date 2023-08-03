@@ -80,13 +80,13 @@
 
             @foreach ( $cluster as $cluster )
             <div>
-                <div id="card-cluster" class="card collapse-item desktop-only" style="margin-bottom: 20px">
-                    <div class="card-header bg-success mb-3">
+                <div id="card-cluster" class="card simulation-price desktop-only" style="margin-bottom: 20px">
+                    <div class="card-header bg-success">
                         <a href="#collapse-card-cluster" data-toggle="collapse">
                             <img style="max-height: 60px; filter: invert(100%);" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt="">
                         </a>              
                     </div>                   
-                        <div id="collapse-card-cluster" class="card-body">
+                        <div id="collapse-card-cluster" class="card-body collapse-item">
                             <div class="row">
                             @foreach ($rumah as $home)
                                 @if ($home->codecluster = $cluster->codecluster)                           
@@ -109,7 +109,7 @@
                                     @endforeach
                             </div>   
                         </div>
-                    <div class="card-footer"> end of text</div>
+                    <div class="card-footer"></div>
                 </div> 
             </div>
 

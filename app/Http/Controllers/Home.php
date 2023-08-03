@@ -1396,6 +1396,7 @@ class Home extends Controller
             ->where([
                 'jenis_img' => 'gambar',
             ])
+            ->where('status_gr','=','aktif')
             ->get();
         $imgRumah2 = DB::table('gambar_rumah')
             ->where([
@@ -1407,6 +1408,7 @@ class Home extends Controller
             ->where([
                 'jenis_img' => 'gambar',
             ])
+            ->where('status_gr','=','aktif')
             ->get();
         $imgDenah = DB::table('gambar_rumah')
             ->where([
