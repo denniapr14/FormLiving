@@ -10,8 +10,6 @@ use App\Models\UserProjek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class C_Rumah extends Controller
@@ -83,6 +81,15 @@ class C_Rumah extends Controller
             'status' => 'required',
             'stock' => 'required',
         ]);
+        // $img = $request->file('imgRumah');
+
+        // // Generate a unique filename based on the current timestamp and the original file extension
+        // $filename = $request->blok.'-'.$request->nomor.'-'.time().'.'.$img->getClientOriginalExtension();
+
+        // // Store the image in the 'images' folder under the 'public' disk
+        // $path = 'Home/images/rumah/';
+        // $img = Image::make($img);
+        // $img->save(public_path($path.$filename));
 
         $dataRumah = [
             'codecluster' => $request->cluster,
@@ -90,6 +97,7 @@ class C_Rumah extends Controller
             'nomor' => $request->nomor,
             'status' => $request->status,
             'status_stock' => $request->stock,
+            // 'img_rumah' => $filename,
         ];
 
         // $id = DB::table('rumah')->insert(
@@ -101,9 +109,9 @@ class C_Rumah extends Controller
 
         return response()->json($getRumah);
     }
-    function updateRumah($id)
-    {
 
+    public function updateRumah($id)
+    {
         $getCluster = $this->rumah->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $id);
         // dd($getCluster);
@@ -127,13 +135,11 @@ class C_Rumah extends Controller
         }
     }
 
-    function updateRumahActionNoJS(Request $request, $id)
+    public function updateRumahActionNoJS(Request $request, $id)
     {
-
         // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         // dd($getRumah);
         if (session()->has('user')) {
-
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -144,22 +150,20 @@ class C_Rumah extends Controller
             $img = $request->file('imgRumah');
 
             // Generate a unique filename based on the current timestamp and the original file extension
-            $filename = $request->blok.'-'.$request->nomor.'-'.time() . '.' . $img->getClientOriginalExtension();
+            $filename = $request->blok.'-'.$request->nomor.'-'.time().'.'.$img->getClientOriginalExtension();
 
             // Store the image in the 'images' folder under the 'public' disk
             $path = 'Home/images/rumah/';
             $img = Image::make($img);
-            $img->save(public_path($path . $filename));
-
-
+            $img->save(public_path($path.$filename));
 
             $dataRumah = [
                 'codecluster' => $request->cluster,
                 'blok' => $request->blok,
                 'nomor' => $request->nomor,
                 'status' => $request->status,
-                'status_stock' => $request->stock,
-                'img_rumah'           => $filename
+                'status_stock' => $request->status_stock,
+                'img_rumah' => $filename,
             ];
             DB::table('rumah')
             ->where('id_rumah', $id)
@@ -169,17 +173,15 @@ class C_Rumah extends Controller
 
             // dd($dataRumah);
 
-
-
-return redirect('/rumah-admin')->with('success','Data rumah '.$request->blok.'-'.$request->nomor.' telah berhasil diubah');
-            // return view(
+            return redirect('/rumah-admin')->with('success', 'Data rumah '.$request->blok.'-'.$request->nomor.' telah berhasil diubah');
+        // return view(
             //     'V_Admin.rumah',
             //     compact(
             //         'user',
             //         'projekUser',
             //         'getRumah',
             //     )
-            // );
+        // );
         } else {
             return redirect('/login');
         }

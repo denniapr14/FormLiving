@@ -78,7 +78,6 @@
                     </div>
 
                     <div class="form-groub">
-                    <input type="file" id="imgRumah" name="imgRumah" placeholder="Masukan gambar Rumah" class="form-control">
 
                 </div>
                 <br>
@@ -562,8 +561,8 @@
                     let nomor = $('#inputNomor').val();
                     let status = $('#inputStatus').val();
                     let stock = $('#inputStock').val();
-                    let imgRumah = $('#imgRumah').prop('files')[0];
-                    console.log(imgRumah);
+
+
 
 
                     $.ajax({
@@ -576,7 +575,7 @@
                             nomor: nomor,
                             status: status,
                             stock: stock,
-                            imgRumah: imgRumah,
+
                         },
                         success: function(response) {
                             $('#successMsg').show();
@@ -610,7 +609,7 @@
                     let nomor = $('#inputNomor').val();
                     let status = $('#inputStatus').val();
                     let stock = $('#inputStock').val();
-                    let imgRumah = $('#imgRumah').prop('files')[0];
+
 
                     console.log(id_rumah);
 
@@ -628,7 +627,7 @@
                             nomor: nomor,
                             status: status,
                             stock: stock,
-                            imgRumah:imgRumah,
+
                         },
                         success: function(response) {
                             $('#successEdit').show();

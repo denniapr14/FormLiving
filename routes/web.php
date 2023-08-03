@@ -191,25 +191,25 @@ Route::get('/kiosk/splash-screen', function () {
 
 // >>>>>>>>>>>>>>> DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-// Route::get('/dashboard-admin', function () {
-//     return view('Dashboard.dashboard');
-// });
+Route::get('/dashboard-admin-template', function () {
+    return view('Dashboard.dashboard');
+});
 
-// Route::get('/sales-analytic', function () {
-//     return view('Dashboard.sales_analytic');
-// });
+Route::get('/sales-analytic', function () {
+    return view('Dashboard.sales_analytic');
+});
 
-// Route::get('/schedule', function () {
-//     return view('Dashboard.schedule');
-// });
+Route::get('/schedule', function () {
+    return view('Dashboard.schedule');
+});
 
-// Route::get('/access-control', function () {
-//     return view('Dashboard.access_control');
-// });
+Route::get('/access-control', function () {
+    return view('Dashboard.access_control');
+});
 
-// Route::get('/agent-company', function () {
-//     return view('Dashboard.agent_company');
-// });
+Route::get('/agent-company', function () {
+    return view('Dashboard.agent_company');
+});
 
 // >>>>>>>>>>>>>>> END DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -274,6 +274,7 @@ route::post('/tambah-tipe-rumah', [C_TipeRumah::class, 'storeTipeRumahAction'])-
 
 Route::get('/tipe-rumah-admin/{id}', [C_TipeRumah::class, 'tipeRumah'])->name('tipeRumah.admin');
 Route::get('/tambah-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'storeTipeRumah'])->name('storeTipeRumah.admin');
-
-
-route::post('/tambah-tipe-rumah',[C_TipeRumah::class,'storeTipeRumahAction'])->name('postTipeRumah');
+route::post('/tambah-tipe-rumah', [C_TipeRumah::class, 'storeTipeRumahAction'])->name('postTipeRumah');
+Route::get('/ubah-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'updateTipeRumah'])->name('updateTipeRumah.admin');
+Route::post('/tambah-tipe-rumah-admin/action/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
+    ->name('updateTipeRumahAction.admin');
