@@ -23,7 +23,7 @@
                 <div class="card__header">
                     <div class="card__title">
 
-                        <h1>Tambah Rumah </h1>
+                        <h1>Ubah Rumah {{ $getRumah->blok }} - {{ $getRumah->nomor }}</h1>
 
                     </div>
 
@@ -44,7 +44,8 @@
                         <select name="cluster" class="form-control" id="inputCluster">
 
 
-                                <option value="{{ $getCluster->codecluster }}">{{ $getCluster->nama_cluster }}</option>
+
+                            <option value="{{ $getCluster->codecluster }}">{{ $getCluster->nama_cluster }}</option>
 
                         </select>
                     </div>

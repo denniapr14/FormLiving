@@ -233,6 +233,12 @@
                                                     alt="product-1">
                                             </div>
                                             <p> {{ $gambar->jenis_img }}</p>
+                                            @if ($gambar->status_gr != "nonaktif")
+
+                                            <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}" class="btn btn-danger"><i class="fa fa-toggle-off" aria-hidden="true"></i> Nonaktif</a>
+                                            @else
+                                            <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}" class="btn btn-primary"><i class="fa fa-toggle-on" aria-hidden="true"></i> Aktif</a>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -246,6 +252,12 @@
                                                     alt="product-1">
                                             </div>
                                             <p> {{ $gambar->jenis_img }}</p>
+                                            @if ($gambar->status_gr != "nonaktif")
+
+                                            <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}" class="btn btn-danger"><i class="fa fa-toggle-off" aria-hidden="true"></i> Nonaktif</a>
+                                            @else
+                                            <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}" class="btn btn-primary"><i class="fa fa-toggle-on" aria-hidden="true"></i> Aktif</a>
+                                            @endif
                                         </div>
                                     </div>
                                     @endif

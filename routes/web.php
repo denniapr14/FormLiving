@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminFormsLiving_User;
 use App\Http\Controllers\C_Dashboard;
 use App\Http\Controllers\C_Login;
 use App\Http\Controllers\C_Rumah;
+use App\Http\Controllers\C_GambarRumah;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
 use App\Http\Controllers\Ceo_Dashboard;
@@ -278,3 +279,7 @@ route::post('/tambah-tipe-rumah', [C_TipeRumah::class, 'storeTipeRumahAction'])-
 Route::get('/ubah-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'updateTipeRumah'])->name('updateTipeRumah.admin');
 Route::post('/tambah-tipe-rumah-admin/action/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
     ->name('updateTipeRumahAction.admin');
+Route::post('/tambah-tipe-rumah-admin/action/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
+    ->name('updateTipeRumahAction.admin');
+
+Route::get('/gambar-rumah/status/{status}/{id}',[C_GambarRumah::class,'changeGambarRumahStatus']);

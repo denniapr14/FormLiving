@@ -19,6 +19,11 @@ class GambarRumah extends Model{
         ->first();
 
     }
+    function getGambarRumahWhereArr($select,$where)  {
+        return GambarRumah::select($select)
+        ->where($where)
+        ->get();
+    }
     // public function getGambarRumahSelectCountGroupBy()
     // {
     //     return GambarRumah::select('*',TipeRumah::raw("COUNT(tipe_rumah.id_tipe_rumah) as countGambar"))
@@ -33,4 +38,6 @@ class GambarRumah extends Model{
             $dataInput
         );
     }
+
+
 }

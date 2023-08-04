@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 use App\Models\Cluster;
 use App\Models\Rumah;
 use App\Models\UserAdmin;
+use App\Models\UserNotif;
 use App\Models\UserProjek;
+use App\Models\Projek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -18,9 +20,12 @@ class C_Rumah extends Controller
     public $cluster;
     public $userAdmin;
     public $userProjek;
-
+    public $userNotif;
+    public $projek;
     public function __construct()
     {
+        $this->userNotif = new UserNotif;
+        $this->projek = new Projek();
         $this->rumah = new Rumah();
         $this->cluster = new Cluster();
         $this->userAdmin = new UserAdmin();
@@ -51,6 +56,7 @@ class C_Rumah extends Controller
 
     public function storeRumah()
     {
+        $getProjek = $this->projek->getProjekAll();
         // $getRumah = $this->rumah->getRumahAll();
         $getCluster = $this->cluster->getClusterAll();
         // dd($getRumah);
@@ -65,6 +71,7 @@ class C_Rumah extends Controller
                     'user',
                     'projekUser',
                     'getCluster',
+                    'getProjek'
                 )
             );
         } else {
@@ -74,6 +81,15 @@ class C_Rumah extends Controller
 
     public function storeRumahAction(Request $request)
     {
+        $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+        $dataNotif = [
+            'msg_notif'  => "User ".$user->nama_ua." telah memasukan rumah ".$request->blok.'-'.$request->nomor,
+            'status_notif'  => "aktif",
+
+        ];
+
+        $this->userNotif->insertUserNotif($dataNotif);
+
         $request->validate([
             'cluster' => 'required',
             'blok' => 'required',
@@ -81,25 +97,20 @@ class C_Rumah extends Controller
             'status' => 'required',
             'stock' => 'required',
         ]);
-        // $img = $request->file('imgRumah');
 
-        // // Generate a unique filename based on the current timestamp and the original file extension
-        // $filename = $request->blok.'-'.$request->nomor.'-'.time().'.'.$img->getClientOriginalExtension();
 
-        // // Store the image in the 'images' folder under the 'public' disk
-        // $path = 'Home/images/rumah/';
-        // $img = Image::make($img);
-        // $img->save(public_path($path.$filename));
 
         $dataRumah = [
+            'id_projek'   => $request->projek,
             'codecluster' => $request->cluster,
             'blok' => $request->blok,
             'nomor' => $request->nomor,
             'status' => $request->status,
             'status_stock' => $request->stock,
-            // 'img_rumah' => $filename,
+            // 'imgRumah' => $filename,
         ];
 
+        // $this->userNotif->insertUserNotif($dataNotif);
         // $id = DB::table('rumah')->insert(
         //     $dataRumah
         // );
@@ -139,11 +150,19 @@ class C_Rumah extends Controller
     {
         // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         // dd($getRumah);
+        $getRumah = $this->rumah->getRumahWhere('id_rumah','=',$id);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
+            $dataNotif = [
+                'msg_notif'  => "User ".$user->nama_ua." telah merubah rumah ".$getRumah->blok.'-'.$getRumah->nomor,
+                'status_notif'  => "aktif",
+
+            ];
+
+            $this->userNotif->insertUserNotif($dataNotif);
             // dd($request->imgRumah);
             // $filename = "";
 
@@ -157,7 +176,9 @@ class C_Rumah extends Controller
             $img = Image::make($img);
             $img->save(public_path($path.$filename));
 
+
             $dataRumah = [
+                'id_projek'   => $request->projek,
                 'codecluster' => $request->cluster,
                 'blok' => $request->blok,
                 'nomor' => $request->nomor,
@@ -189,6 +210,16 @@ class C_Rumah extends Controller
 
     public function updateRumahAction(Request $request, $id)
     {
+        // $getRumah = $this->rumah->getRumahWhere('id_rumah','=',$id);
+        // $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+        // $dataNotif = [
+        //     'msg_notif'  => "User ".$user->nama_ua." telah merubah rumah ".$getRumah->blok.'-'.$getRumah->nomor,
+        //     'status_notif'  => "aktif",
+
+        // ];
+
+        // $this->userNotif->insertUserNotif($dataNotif);
+
         $request->validate([
             'cluster' => 'required',
             'blok' => 'required',

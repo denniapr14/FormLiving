@@ -41,15 +41,7 @@
                 </li>
                 @endif
 
-                @if ($user->kategori == "SuperAdmin")
-                <li class="nav__item">
-                    <a class="nav__link" href="/AdminFormsLiving/list-user">
-                        <i class="fa fa-file" aria-hidden="true"></i>
-                        <span class="" >List User</span>
-                    </a>
-                </li>
 
-                @endif
             </ul>
         </li>
         @endif

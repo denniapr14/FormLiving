@@ -254,6 +254,10 @@
                             <a href="Direktur/dashboard" class="btn btn-primary">Form One</a>
                             @break
 
+                            @case('SuperAdmin')
+                            <a href="/dashboard-admin" class="btn btn-primary">Form One</a>
+                            @break
+
                             @default
                             @endswitch
                         </div>

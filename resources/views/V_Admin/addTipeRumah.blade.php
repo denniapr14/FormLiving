@@ -32,7 +32,7 @@
                 </div>
                 <form action="{{ route('postTipeRumah') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="text" name="id_rumah" id="inputIDRumah" value="{{ $getRumah->id_rumah }}" class="form form-control" hidden readonly>
+                    <input type="text" name="inputID" id="inputIDRumah" value="{{ $getRumah->id_rumah }}" class="form form-control" hidden readonly>
                 <div class="form-group">
 
                     <input type="text" name="tipe[]" id="" class="form-control"

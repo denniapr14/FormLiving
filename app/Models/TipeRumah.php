@@ -31,6 +31,7 @@ class TipeRumah extends Model
             ->join('rumah', 'tipe_rumah.id_rumah', '=', 'rumah.id_rumah')
             ->leftJoin('gambar_rumah', 'gambar_rumah.id_tipe', '=', 'tipe_rumah.id_tipe_rumah')
             ->groupBy('tipe_rumah.id_tipe_rumah')
+            // ->where('gambar_rumah.status_gr','!=','nonaktif')
             ->where($where,$eq,$value)
             ->get();
     }

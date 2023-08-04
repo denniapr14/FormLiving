@@ -49,7 +49,11 @@ class C_TipeRumah extends Controller
 
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
         $getTipeRumah = $this->tipeRumah->getGambarTipeRumahSelectCountGroupByWhere('rumah.id_rumah', '=', $decryptedID);
-        $getGambar = $this->gambarRumah->getGambarRumahWhereAll('*', 'id_rumah', '=', $decryptedID);
+        $whereGambar = [
+            // 'status_gr' => "aktif",
+            "id_rumah" =>  $decryptedID
+        ];
+        $getGambar = $this->gambarRumah->getGambarRumahWhereArr('*', $whereGambar);
         // dd($getGambar);
 
         if (session()->has('user')) {
@@ -106,7 +110,7 @@ class C_TipeRumah extends Controller
             $dataidTipeRumah = [];
             for ($i = 0; $i < count($request->tipe); ++$i) {
                 $dataTipeRumah[] = [
-                    'id_rumah' => $request->id_rumah,
+                    'id_rumah' => $request->inputID,
                     'jenis_tr' => $request->tipe[$i],
                     'luas_bangunan_tr' => $request->luasBangunan[$i],
                     'kmr_mandi_tr' => $request->kamarMandi[$i],
@@ -139,6 +143,7 @@ class C_TipeRumah extends Controller
                     [
                         'no' => $i,
                         'id_tipe_rumah' => DB::table('tipe_rumah')->insertGetId($dataTipeRumah[$i]),
+
                     ];
             }
 
@@ -205,7 +210,7 @@ class C_TipeRumah extends Controller
                             // echo "</pre>";
 
                             $dataGambarTipe[] = [
-                                'id_rumah' => $request->id_rumah,
+                                'id_rumah' => $request->inputID,
                                 'id_tipe' => $dataidTipeRumah[$i]['id_tipe_rumah'],
                                 'jenis_img' => $request->jenisGambar[$counter],
                                 'status_gr' => 'aktif',
@@ -213,10 +218,10 @@ class C_TipeRumah extends Controller
                             ];
                         }
 
-                        $this->gambarRumah->insertGambarRumah($dataGambarTipe);
                     }
                 }
             }
+            $this->gambarRumah->insertGambarRumah($dataGambarTipe);
             // echo "<pre>";
             // print_r($dataTipeRumah);
             // dd($dataGambarTipe);
