@@ -71,36 +71,36 @@
                                 <div class="transaction__icon transaction__icon--web-page">
                                     <i class="bi bi-file-earmark-code"></i>
                                 </div>
-                                <div class="transaction__count">14</div>
-                                <div class="transaction__title">Unit Sold</div>
+                                <div class="transaction__count">{{ $closingAll->count }}</div>
+                                <div class="transaction__title">Semua Closing</div>
                             </div>
                             <div class="transaction__column">
                                 <div class="transaction__icon transaction__icon--customer">
                                     <i class="bi bi-person"></i>
                                 </div>
-                                <div class="transaction__count">51</div>
-                                <div class="transaction__title">Customer</div>
+                                <div class="transaction__count">{{ $closing->count }}</div>
+                                <div class="transaction__title">Bulanan Closing</div>
                             </div>
                             <div class="transaction__column">
                                 <div class="transaction__icon transaction__icon--agents">
                                     <i class="bi bi-person-workspace"></i>
                                 </div>
-                                <div class="transaction__count">5</div>
-                                <div class="transaction__title">Agents</div>
+                                <div class="transaction__count">   {{ $agentWithCompany->userCount }}</div>
+                                <div class="transaction__title">Agen Dengan Company</div>
                             </div>
                             <div class="transaction__column">
                                 <div class="transaction__icon transaction__icon--invoice">
                                     <i class="bi bi-file-earmark-pdf"></i>
                                 </div>
-                                <div class="transaction__count">30</div>
-                                <div class="transaction__title">Sales Inhouse</div>
+                                <div class="transaction__count">{{ $agentWithoutCompany->userCount }}</div>
+                                <div class="transaction__title">Agen</div>
                             </div>
                             <div class="transaction__column">
                                 <div class="transaction__icon transaction__icon--order-forms">
                                     <i class="bi bi-file-earmark-font"></i>
                                 </div>
-                                <div class="transaction__count">16</div>
-                                <div class="transaction__title">Invoice Sent</div>
+                                <div class="transaction__count">{{ $remainHouse->count }}</div>
+                                <div class="transaction__title">Sisa Rumah</div>
                             </div>
                         </div>
                     </div>
@@ -108,64 +108,7 @@
             </div>
 
 
-            <div class="content__row">
 
-            </div>
-            <div class="content__row mb-3">
-                <div class="card__box">
-
-                    <div class="table-responsive">
-                        <table id="formulirPesanan" class="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>No FP</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Tanggal Order</th>
-                                    <th>Status</th>
-                                    <th>Pengaturan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $no = 1;
-                                ?>
-                                @foreach ($fp as $fp)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $fp->no_fp }}</td>
-                                        <td>
-                                        <span class="client__name">{{ $fp->nama_plgn }}</span>
-                                        <span class="client__handled">Dari {{ $fp->nama_ktgr }} ({{ $fp->nama_ua }})</span>
-                                        </td>
-                                        <td>
-                                            {{ $fp->email_plgn }}
-                                        </td>
-                                        <td>
-                                            {{ date("d M Y", strtotime($fp->tgl_input_fp)) }}
-                                        </td>
-                                        <td></td>
-                                        <td>
-                                            <div class="d-flex flex-nowrap">
-                                                <a href="/formulirPesanan/{{ $fp->id_formulir }}" class="btn-fd-icon-outline">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                </a>
-
-                                              </div>
-
-                                            </td>
-
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                </div>
-            </div>
             <!-- end: content -->
 
             <!-- start: footer -->

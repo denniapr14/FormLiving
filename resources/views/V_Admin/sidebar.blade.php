@@ -41,6 +41,20 @@
                 </li>
                 @endif
 
+                @if (
+                    $user->kategori == "SuperAdmin" ||
+                    $user->kategori =="AdminAccounting"
+                    )
+                <li class="nav__item">
+                    <a class="nav__link" href="/surat-pemesanan-rumah-admin">
+                        <i class="bi bi-file"></i>
+                        <span class="" >Surat Pemesanan Rumah</span>
+                    </a>
+                </li>
+                @endif
+
+
+
 
             </ul>
         </li>

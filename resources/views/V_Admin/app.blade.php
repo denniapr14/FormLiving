@@ -73,7 +73,9 @@
                 </div>
             </div>
         </div>
+        @yield('board')
         @yield('flashdata')
+
         @yield('content')
     </section>
     @yield('footer')

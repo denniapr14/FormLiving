@@ -139,17 +139,17 @@
                     </div>
                     <div class="form-group">
 
-                        <input type="text" name="kamarMandi[]" id="" class="form-control"
+                        <input type="number" name="kamarMandi[]" id="" class="form-control"
                             placeholder="Masukan Jumlah Kamar Mandi" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
 
-                        <input type="text" name="kamarTidur[]" id="" class="form-control"
+                        <input type="number" name="kamarTidur[]" id="" class="form-control"
                             placeholder="Masukan Jumlah Kamar Tidur" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
 
-                        <input type="text" name="harga[]" id="" class="form-control"
+                        <input type="number" name="harga[]" id="" class="form-control"
                             placeholder="Masukan Harga" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
@@ -430,16 +430,16 @@
                 </div>
                 <div class="form-group">
 
-                    <input type="text" name="kamarMandi[]" id="" class="form-control" placeholder="Masukan Jumlah Kamar Mandi"
+                    <input type="number" name="kamarMandi[]" id="" class="form-control" placeholder="Masukan Jumlah Kamar Mandi"
                             aria-describedby="helpId">
                 </div>
 
                 <div class="form-group">
-                    <input type="text" name="kamarTidur[]" id="" class="form-control" placeholder="Masukan Jumlah Kamar Tidur"
+                    <input type="number" name="kamarTidur[]" id="" class="form-control" placeholder="Masukan Jumlah Kamar Tidur"
                     aria-describedby="helpId">
                     </div>
                 <div class="form-group">
-                    <input type="text" name="harga[]" id="" class="form-control" placeholder="Masukan Harga"
+                    <input type="number" name="harga[]" id="" class="form-control" placeholder="Masukan Harga"
                         aria-describedby="helpId">
                 </div>
                 <div class="form-group">

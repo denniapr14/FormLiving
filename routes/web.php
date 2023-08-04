@@ -7,16 +7,23 @@ use App\Http\Controllers\AdminADV_Dashboard;
 
 use App\Http\Controllers\AdminFormsLiving_Dashboard;
 use App\Http\Controllers\AdminFormsLiving_User;
+
+
 use App\Http\Controllers\C_Dashboard;
 use App\Http\Controllers\C_Login;
 use App\Http\Controllers\C_Rumah;
 use App\Http\Controllers\C_GambarRumah;
+use App\Http\Controllers\C_SuratPemesananRumah;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
+
+
 use App\Http\Controllers\Ceo_Dashboard;
 // ADMIN
 use App\Http\Controllers\Direktur_Dashboard;
 use App\Http\Controllers\Home;
+
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -283,3 +290,7 @@ Route::post('/tambah-tipe-rumah-admin/action/{id}', [C_TipeRumah::class, 'update
     ->name('updateTipeRumahAction.admin');
 
 Route::get('/gambar-rumah/status/{status}/{id}',[C_GambarRumah::class,'changeGambarRumahStatus']);
+
+Route::get('/surat-pemesanan-rumah-admin',[C_SuratPemesananRumah::class,'suratPemesananRumah'])->name('suratPemesananRumah.admin');
+Route::get('/ubah-surat-pemesanan-rumah/{id}',[C_SuratPemesananRumah::class,'editSuratPemesananRumah'])->name('editSuratPemesananRumah.admin');
+Route::post('/ubah-surat-pemesanan-rumah',[C_SuratPemesananRumah::class,'editSuratPemesananRumahAction'])->name('editSuratPemesananRumahAction.admin');

@@ -46,17 +46,17 @@
                 </div>
                 <div class="form-group">
 
-                    <input type="text" name="kamarMandi[]" id="" value="{{ $getTipeRumah->kmr_mandi_tr }}" class="form-control"
+                    <input type="number" name="kamarMandi[]" id="" value="{{ $getTipeRumah->kmr_mandi_tr }}" class="form-control"
                         placeholder="Masukan Jumlah Kamar Mandi" aria-describedby="helpId">
                 </div>
                 <div class="form-group">
 
-                    <input type="text" name="kamarTidur[]" id="" value="{{ $getTipeRumah->kmr_tidur_tr }}" class="form-control"
+                    <input type="number" name="kamarTidur[]" id="" value="{{ $getTipeRumah->kmr_tidur_tr }}" class="form-control"
                         placeholder="Masukan Jumlah Kamar Tidur" aria-describedby="helpId">
                 </div>
                 <div class="form-group">
 
-                    <input type="text" name="harga[]" id="" value="{{ $getTipeRumah->harga_tr }}" class="form-control" placeholder="Masukan Harga"
+                    <input type="number" name="harga[]" id="" value="{{ $getTipeRumah->harga_tr }}" class="form-control" placeholder="Masukan Harga"
                         aria-describedby="helpId">
                 </div>
                 <div class="form-group">
