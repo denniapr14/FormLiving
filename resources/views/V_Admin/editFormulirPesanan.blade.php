@@ -1,6 +1,6 @@
-@extends('AdminAccounting.app')
-@extends('AdminAccounting.sidebar')
-@extends('AdminAccounting.footer')
+@extends('V_Admin.app')
+@extends('V_Admin.sidebar')
+@extends('V_Admin.footer')
 @extends('flashdata')
 @section('tittle', 'FORMS ONE | Formulir')
 
@@ -1566,7 +1566,7 @@
                         </tr>
 
                         <?php $no = 1; ?>
-                        @foreach ($dtPembayaran as $dtpem)
+                        @foreach ($getPembayaranRumah as $dtpem)
                             <tr style="height:16pt">
                                 <td
                                     style="width:28pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
@@ -1600,10 +1600,10 @@
                                 </td>
                                 <td
                                     style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                                    <a href="/pembayaran/{{ $dtpem->id_pem_rumah }}" class="btn btn-info">
+                                    <a href="" class="btn btn-info">
                                         <i class="bi bi-calendar2-check"></i> Pembayaran
                                     </a>
-                                    <a href="/ubah-pembayaran/{{ $dtpem->id_pem_rumah }}" class="btn btn-info">
+                                    <a href="{{ route('editPembayaranRumah.admin', Crypt::encrypt($dtpem->id_pem_rumah)) }}" class="btn btn-info">
                                         <i class="bi bi-pencil-square"> </i> Edit Pembayaran
                                     </a>
 
@@ -1714,7 +1714,10 @@
             </div>
         </div>
 
+        <?php
 
+
+        ?>
 
     </body>
 

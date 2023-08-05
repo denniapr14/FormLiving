@@ -19,6 +19,34 @@ class FormulirPesanan extends Model
             ->orderBy($order, $orderby)
             ->get();
     }
+
+    function getFormulirPesananProjekJoin6Where($where,$eq,$value,$order, $orderby)
+    {
+        return  FormulirPesanan::join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+            ->join('rumah','formulir_pesanan.id_rumah','=','rumah.id_rumah')
+            ->join('projek','rumah.id_projek','=','projek.id_projek')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+            ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+            ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+            ->where($where,$eq,$value)
+            ->orderBy($order, $orderby)
+            ->get();
+    }
+    function getFormulirPesananProjekJoin6Where2($where, $eq, $value,$where2,$eq2,$value2, $order, $orderby){
+        return  FormulirPesanan::join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+        ->join('rumah','formulir_pesanan.id_rumah','=','rumah.id_rumah')
+        ->join('projek','rumah.id_projek','=','projek.id_projek')
+        ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+        ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+        ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->where($where, $eq, $value)
+        ->where($where2,$eq2, $value2)
+        ->orderBy($order, $orderby)
+        ->get();
+
+    }
     function getFormulirPesananJoin5($order, $orderby)
     {
         return  FormulirPesanan::join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
@@ -30,6 +58,7 @@ class FormulirPesanan extends Model
             ->orderBy($order, $orderby)
             ->get();
     }
+
 
     function getFormulirPesananJoin5Count()
     {

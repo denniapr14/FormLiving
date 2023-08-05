@@ -87,7 +87,7 @@ class C_Login extends Controller
                         break;
 
                     case 'SuperAdmin':
-                        return redirect('/dashboard-admin')->with('success',"You're Sign in!");
+                        return redirect('/dashboard-admin/Greenland')->with('success',"You're Sign in!");
                     break;
 
                     default:

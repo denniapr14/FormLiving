@@ -16,7 +16,10 @@
         <!-- start: content -->
         <div class="content__wrapper">
 
-
+            @if ($rumah != null && $rumah !="")
+            @php
+            $fileSVG = "views/".$getProjek->nama_projek.'.svg';
+            @endphp
             <div class="content__row mb-3">
                 <div class="card__box">
                     <div class="card__header">
@@ -33,7 +36,7 @@
 
                             {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
                             {{-- @include('map.svg') --}}
-                            {!! file_get_contents(resource_path('views/map.svg')) !!}
+                            {!! file_get_contents(resource_path( $fileSVG)) !!}
                             <script>
                                 var svg = document.getElementById('Layer_1');
 
@@ -104,6 +107,8 @@
 
                 </div>
             </div>
+            @endif
+
 
             <div class="content__row mb-3">
                 <div class="card__box">

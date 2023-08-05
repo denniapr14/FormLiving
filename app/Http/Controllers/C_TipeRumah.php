@@ -14,6 +14,7 @@ use App\Models\Rumah;
 use App\Models\TipeRumah;
 use App\Models\UserAdmin;
 use App\Models\UserProjek;
+use App\Models\Projek;
 use Illuminate\Http\Request;
 // =======================
 
@@ -32,9 +33,11 @@ class C_TipeRumah extends Controller
 
     public $userAdmin;
     public $userProjek;
+    public $projek;
 
     public function __construct()
     {
+        $this->projek = new Projek;
         $this->rumah = new Rumah();
         $this->tipeRumah = new TipeRumah();
         $this->gambarRumah = new GambarRumah();
@@ -43,8 +46,9 @@ class C_TipeRumah extends Controller
         // $this->cluster = new Cluster;
     }
 
-    public function tipeRumah($id)
+    public function tipeRumah($projek,$id)
     {
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         $decryptedID = Crypt::decrypt($id);
 
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
@@ -68,7 +72,8 @@ class C_TipeRumah extends Controller
                     'projekUser',
                     'getRumah',
                     'getTipeRumah',
-                    'getGambar'
+                    'getGambar',
+                    'getProjek'
                 )
             );
         } else {
@@ -76,10 +81,10 @@ class C_TipeRumah extends Controller
         }
     }
 
-    public function storeTipeRumah($id)
+    public function storeTipeRumah($projek,$id)
     {
         $decryptedID = Crypt::decrypt($id);
-
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
         // dd($getRumah);
         $getTipeRumah = $this->tipeRumah->getTipeRumahWhere('*', 'id_rumah', '=', $decryptedID);
@@ -96,6 +101,7 @@ class C_TipeRumah extends Controller
                     'projekUser',
                     'getRumah',
                     'getTipeRumah',
+                    'getProjek',
                 )
             );
         } else {
@@ -103,8 +109,9 @@ class C_TipeRumah extends Controller
         }
     }
 
-    public function storeTipeRumahAction(Request $request)
+    public function storeTipeRumahAction(Request $request,$projek)
     {
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         if (session()->has('user')) {
             $dataTipeRumah = [];
             $dataidTipeRumah = [];
@@ -235,9 +242,10 @@ class C_TipeRumah extends Controller
 
     }
 
-    public function updateTipeRumah($id_tipe)
+    public function updateTipeRumah($projek,$id_tipe)
     {
         $decryptID = Crypt::decrypt($id_tipe);
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptID);
         $getTipeRumah = $this->tipeRumah->getTipeRumahWhere('*', 'id_tipe_rumah', '=', $decryptID);
         $getGambar = $this->gambarRumah->getGambarRumahWhereAll('*', 'id_tipe', '=', $decryptID);
@@ -258,6 +266,7 @@ class C_TipeRumah extends Controller
                     'getRumah',
                     'getTipeRumah',
                     'getGambar',
+                    'getProjek'
                 )
             );
         } else {
@@ -265,10 +274,10 @@ class C_TipeRumah extends Controller
         }
     }
 
-    public function updateTipeRumahAction(Request $request, $id_tipe)
+    public function updateTipeRumahAction(Request $request,$projek, $id_tipe)
     {
         $decryptID = Crypt::decrypt($id_tipe);
-
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         if (session()->has('user')) {
             $dataTipeRumah = [];
             $dataidTipeRumah = [];
@@ -388,7 +397,8 @@ class C_TipeRumah extends Controller
             }
             // dd($dataGambarTipe);
             // dd($dataGambarTipe);
-            return redirect('/rumah-admin')->with('success', 'Data rumah dan tipe rumah telah berhasil di simpan');
+            return redirect('/tipe-rumah-admin/'.$getProjek->nama_projek.'/'.
+            Crypt::encrypt($request->id_rumah))->with('success', 'Data tipe rumah telah berhasil diubah');
         } else {
             return redirect('/login');
         }

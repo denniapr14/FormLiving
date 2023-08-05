@@ -17,7 +17,7 @@ use App\Models\Rumah;
 use App\Models\FormulirPesanan;
 use App\Models\UserAdmin;
 use App\Models\UserProjek;
-
+use App\Models\Projek;
 
 use Illuminate\Contracts\Auth\Guard;
 
@@ -37,7 +37,7 @@ class C_Dashboard extends Controller
     public $formulirPesanan;
     public $userAdmin;
     public $userProject;
-
+    public $projek;
 
     public function __construct()
     {
@@ -45,20 +45,24 @@ class C_Dashboard extends Controller
         $this->formulirPesanan = new FormulirPesanan;
         $this->userAdmin = new UserAdmin;
         $this->userProject = new UserProjek;
+        $this->projek = new Projek;
     }
 
-    function index()
+    function index($projek)
     {
-
-        $fp = $this->formulirPesanan->getFormulirPesananJoin5Where(
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $fp = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
             'formulir_pesanan.status_fp',
             '!=',
             'nonactive',
+            'projek.nama_projek',
+            '=',
+            $projek,
             'formulir_pesanan.tgl_input_fp',
             'desc'
         );
-        $getRumah = $this->rumah->getRumahAll();;
-
+        $getRumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek','=',$projek);
+        $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek','=',$projek);
         $arrWithCompany = array(
             'ktgr_admin.kategori' => "AgentWithCompany",
             'user_admin.status_ua' => "aktif",
@@ -93,13 +97,14 @@ class C_Dashboard extends Controller
                     'user',
                     'projekUser',
                     'fp',
-
+                    'rumah',
                     'agentWithCompany',
                     'agentWithoutCompany',
                     'closingAll',
                     'closing',
                     'remainHouse',
                     'getRumah',
+                    'getProjek'
 
                 )
             );

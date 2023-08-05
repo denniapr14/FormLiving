@@ -30,7 +30,7 @@
                 </div>
 
             </div>
-            <form action="{{ route('updateTipeRumahAction.admin', Crypt::encrypt($getTipeRumah->id_tipe_rumah) ) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('updateTipeRumahAction.admin', [$getProjek->nama_projek,Crypt::encrypt($getTipeRumah->id_tipe_rumah)] ) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="text" name="id_rumah" id="inputIDRumah" value="{{ $getTipeRumah->id_rumah }}" hidden readonly
                     class="form form-control" >

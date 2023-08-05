@@ -22,12 +22,12 @@ class PembayaranRumah extends Model{
         ->get();
     }
 
-    function getPembayaranRumahWhere($select,$where,$eq,$value) {
+    function firstPembayaranRumahWhere($select,$where,$eq,$value) {
         return PembayaranRumah::select($select)
         ->where($where,$eq,$value)
         ->first();
         }
-    function getPembayaranRumahWhereArr($select,$where) {
+    function firstPembayaranRumahWhereArr($select,$where) {
         return PembayaranRumah::select($select)
         ->where($where)
         ->first();

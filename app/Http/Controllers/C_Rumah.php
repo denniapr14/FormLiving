@@ -32,10 +32,13 @@ class C_Rumah extends Controller
         $this->userProjek = new UserProjek();
     }
 
-    public function index()
+    public function index($projek)
     {
-        $getRumah = $this->rumah->getRumahSelectCountGroupBy();
+        $getRumah = $this->rumah->getRumahSelectCountGroupByWhereAll('projek.nama_projek','=', $projek);
         // dd($getRumah);
+
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
@@ -47,6 +50,7 @@ class C_Rumah extends Controller
                     'user',
                     'projekUser',
                     'getRumah',
+                    'getProjek'
                 )
             );
         } else {
@@ -54,11 +58,11 @@ class C_Rumah extends Controller
         }
     }
 
-    public function storeRumah()
+    public function storeRumah($projek)
     {
-        $getProjek = $this->projek->getProjekAll();
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         // $getRumah = $this->rumah->getRumahAll();
-        $getCluster = $this->cluster->getClusterAll();
+        $getCluster = $this->cluster->getClusterProjekWhere('*','projek.nama_projek','=',$projek);
         // dd($getRumah);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -121,11 +125,12 @@ class C_Rumah extends Controller
         return response()->json($getRumah);
     }
 
-    public function updateRumah($id)
+    public function updateRumah($projek,$id)
     {
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         $getCluster = $this->rumah->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $id);
-        // dd($getCluster);
+        // dd($getRumah);
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -139,6 +144,7 @@ class C_Rumah extends Controller
                     'projekUser',
                     'getRumah',
                     'getCluster',
+                    'getProjek'
                 )
             );
         } else {
@@ -146,8 +152,9 @@ class C_Rumah extends Controller
         }
     }
 
-    public function updateRumahActionNoJS(Request $request, $id)
+    public function updateRumahActionNoJS(Request $request,$projek, $id)
     {
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         // dd($getRumah);
         $getRumah = $this->rumah->getRumahWhere('id_rumah','=',$id);
@@ -164,9 +171,9 @@ class C_Rumah extends Controller
 
             $this->userNotif->insertUserNotif($dataNotif);
             // dd($request->imgRumah);
-            // $filename = "";
-
-            $img = $request->file('imgRumah');
+            $filename = $getRumah->img_rumah;
+            if ($request->file('imgRumah') ) {
+                $img = $request->file('imgRumah');
 
             // Generate a unique filename based on the current timestamp and the original file extension
             $filename = $request->blok.'-'.$request->nomor.'-'.time().'.'.$img->getClientOriginalExtension();
@@ -175,10 +182,12 @@ class C_Rumah extends Controller
             $path = 'Home/images/rumah/';
             $img = Image::make($img);
             $img->save(public_path($path.$filename));
+            }
+
 
 
             $dataRumah = [
-                'id_projek'   => $request->projek,
+                'id_projek'   => $getProjek->id_projek,
                 'codecluster' => $request->cluster,
                 'blok' => $request->blok,
                 'nomor' => $request->nomor,
@@ -186,6 +195,7 @@ class C_Rumah extends Controller
                 'status_stock' => $request->status_stock,
                 'img_rumah' => $filename,
             ];
+            // dd($dataRumah);
             DB::table('rumah')
             ->where('id_rumah', $id)
             ->update(
@@ -194,7 +204,7 @@ class C_Rumah extends Controller
 
             // dd($dataRumah);
 
-            return redirect('/rumah-admin')->with('success', 'Data rumah '.$request->blok.'-'.$request->nomor.' telah berhasil diubah');
+            return redirect('/rumah-admin/'.$projek)->with('success', 'Data rumah '.$request->blok.'-'.$request->nomor.' telah berhasil diubah')   ;
         // return view(
             //     'V_Admin.rumah',
             //     compact(

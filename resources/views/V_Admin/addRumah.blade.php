@@ -40,10 +40,10 @@
                     <div class="form-group">
                         <select name="projek" id="projek" class="form-control">
 
-                            <option value="">--Pilih Projek--</option>
-                            @foreach ($getProjek as $projek)
-                                <option value="{{ $projek->id_projek }}">{{ $projek->nama_projek }}</option>
-                            @endforeach
+
+
+                                <option value="{{ $getProjek->id_projek }}">{{ $getProjek->nama_projek }}</option>
+
                         </select>
 
                         <small id="errorMsgProjek" class="" >Wajib di isi</small>
@@ -53,7 +53,7 @@
                         <select name="cluster" class="form-control" id="inputCluster">
                             <option value="">--Pilih Cluster--</option>
                             @foreach ($getCluster as $cluster)
-                                <option value="{{ $cluster->codecluster }}">{{ $cluster->nama_cluster }}</option>
+                                <option value="{{ $cluster->codecluster }}">{{ $cluster->nama_cluster }} - {{ $cluster->nama_projek }}</option>
                             @endforeach
                         </select>
 
@@ -123,7 +123,7 @@
                     </div>
 
                 </div>
-                <form action="{{ route('postTipeRumah') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('postTipeRumah',$getProjek->nama_projek) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="inputID" id="inputIDRumah" class="form form-control" hidden readonly>
                     <div class="form-group">
@@ -368,12 +368,7 @@
 
         <!-- Modal order information-->
 
-        <?php
-        function rupiah($angka)
-        {
-            $hasil_rupiah = 'Rp ' . number_format($angka, 0, ',', '.') . ',-';
-            return $hasil_rupiah;
-        } ?>
+
 
 
         <script>

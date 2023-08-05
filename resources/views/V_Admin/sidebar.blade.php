@@ -24,7 +24,7 @@
             <ul class=" dropdown__menu">
                 @if ($user->kategori == "SuperAdmin")
                 <li class="nav__item">
-                    <a class="nav__link" href="/dashboard-admin">
+                    <a class="nav__link" href="/dashboard-admin/{{ $projekUser->nama_projek }}">
                         <i class="bi bi-speedometer2"></i>
                         <span class="" >Dashboard</span>
                     </a>
@@ -34,7 +34,7 @@
                 @endif
                 @if ($user->kategori == "SuperAdmin")
                 <li class="nav__item">
-                    <a class="nav__link" href="/rumah-admin">
+                    <a class="nav__link" href="/rumah-admin/{{ $projekUser->nama_projek }}">
                         <i class="fa fa-home" aria-hidden="true"></i>
                         <span class="" >Rumah</span>
                     </a>
@@ -46,16 +46,12 @@
                     $user->kategori =="AdminAccounting"
                     )
                 <li class="nav__item">
-                    <a class="nav__link" href="/surat-pemesanan-rumah-admin">
+                    <a class="nav__link" href="/surat-pemesanan-rumah-admin/{{ $projekUser->nama_projek }}">
                         <i class="bi bi-file"></i>
                         <span class="" >Surat Pemesanan Rumah</span>
                     </a>
                 </li>
                 @endif
-
-
-
-
             </ul>
         </li>
         @endif
@@ -66,14 +62,36 @@
                Kalm
             </a>
             <ul class=" dropdown__menu">
+                @if ($user->kategori == "SuperAdmin")
                 <li class="nav__item">
-                    <a class="nav__link" href="#">
-                        <i class="fas fa-award    "></i>
-                        <span class="" href="/Promo">Promo</span>
+                    <a class="nav__link" href="/dashboard-admin/{{ $projekUser->nama_projek }}">
+                        <i class="bi bi-speedometer2"></i>
+                        <span class="" >Dashboard</span>
                     </a>
                 </li>
 
 
+                @endif
+                @if ($user->kategori == "SuperAdmin")
+                <li class="nav__item">
+                    <a class="nav__link" href="/rumah-admin/{{ $projekUser->nama_projek }}">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span class="" >Rumah</span>
+                    </a>
+                </li>
+                @endif
+
+                @if (
+                    $user->kategori == "SuperAdmin" ||
+                    $user->kategori =="AdminAccounting"
+                    )
+                <li class="nav__item">
+                    <a class="nav__link" href="/surat-pemesanan-rumah-admin/{{ $projekUser->nama_projek }}">
+                        <i class="bi bi-file"></i>
+                        <span class="" >Surat Pemesanan Rumah</span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </li>
         @endif

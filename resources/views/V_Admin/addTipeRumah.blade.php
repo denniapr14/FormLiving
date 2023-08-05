@@ -30,7 +30,7 @@
                     </div>
 
                 </div>
-                <form action="{{ route('postTipeRumah') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('postTipeRumah',$getProjek->nama_projek) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="inputID" id="inputIDRumah" value="{{ $getRumah->id_rumah }}" class="form form-control" hidden readonly>
                 <div class="form-group">
@@ -273,14 +273,6 @@
             </div>
 
             <!-- Modal order information-->
-
-            <?php
-            function rupiah($angka)
-            {
-                $hasil_rupiah = 'Rp ' . number_format($angka, 0, ',', '.') . ',-';
-                return $hasil_rupiah;
-            } ?>
-
 
             <script>
 

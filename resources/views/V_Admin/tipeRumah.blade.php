@@ -27,11 +27,11 @@
                         <i class="bi bi-clipboard2-plus"></i>
                         <span>Tipe Rumah {{ $getRumah->nama_cluster }} / {{ $getRumah->blok }} - {{ $getRumah->nomor }}
                         </span>
-                        <button id="showToastButton">Show Toast</button>
+
                     </div>
 
                     <div class="invoices__actions">
-                        <a href="{{ route('storeTipeRumah.admin', Crypt::encrypt($getRumah->id_rumah)) }}"
+                        <a href="{{ route('storeTipeRumah.admin', [$getProjek->nama_projek,Crypt::encrypt($getRumah->id_rumah)]) }}"
                             class="btn-fd-outline btn--small">Tambah Tipe Rumah</a>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                                         <td>
                                             <div class="d-flex flex-nowrap">
 
-                                                <a href="{{ route('updateTipeRumah.admin', Crypt::encrypt($tipeRumah->id_tipe_rumah)) }}"
+                                                <a href="{{ route('updateTipeRumah.admin', [$getProjek->nama_projek,Crypt::encrypt($tipeRumah->id_tipe_rumah)]) }}"
                                                     class="btn btn-outline-info">
                                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                                 </a>

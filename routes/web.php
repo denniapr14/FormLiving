@@ -11,9 +11,12 @@ use App\Http\Controllers\AdminFormsLiving_User;
 
 use App\Http\Controllers\C_Dashboard;
 use App\Http\Controllers\C_Login;
+use App\Http\Controllers\C_PembayaranRumah;
 use App\Http\Controllers\C_Rumah;
 use App\Http\Controllers\C_GambarRumah;
+
 use App\Http\Controllers\C_SuratPemesananRumah;
+
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
 
@@ -268,29 +271,29 @@ Route::get('AdminFormsLiving/list-user', [AdminFormsLiving_User::class, 'listUse
 Route::get('/email/{id_formulir}', [Home::class, 'email']);
 
 // SUPER ADMIN NEW
-Route::get('/dashboard-admin', [C_Dashboard::class, 'index']);
+Route::get('/dashboard-admin/{projek}', [C_Dashboard::class, 'index']);
 
-Route::get('/rumah-admin', [C_Rumah::class, 'index']);
-Route::get('/tambah-rumah-admin', [C_Rumah::class, 'storeRumah']);
+Route::get('/rumah-admin/{projek}', [C_Rumah::class, 'index']);
+Route::get('/tambah-rumah-admin/{projek}', [C_Rumah::class, 'storeRumah']);
 Route::post('/tambah-rumah-action-admin', [C_Rumah::class, 'storeRumahAction'])->name('postRumah');
 
-Route::get('/ubah-rumah-admin/{id}', [C_Rumah::class, 'updateRumah'])->name('updateRumah.admin');
-Route::post('/ubah-rumah-action-admin/ubah/{id}', [C_Rumah::class, 'updateRumahActionNoJS'])->name('updateRumahActionNoJS.admin');
+Route::get('/ubah-rumah-admin/{projek}/{id}', [C_Rumah::class, 'updateRumah'])->name('updateRumah.admin');
+Route::post('/ubah-rumah-action-admin/ubah/{projek}/{id}', [C_Rumah::class, 'updateRumahActionNoJS'])->name('updateRumahActionNoJS.admin');
 Route::post('/ubah-rumah-action-admin/{id}', [C_Rumah::class, 'updateRumahAction'])->name('updateRumahAction.admin');
 
-route::post('/tambah-tipe-rumah', [C_TipeRumah::class, 'storeTipeRumahAction'])->name('postTipeRumah');
+route::post('/tambah-tipe-rumah/{projek}', [C_TipeRumah::class, 'storeTipeRumahAction'])->name('postTipeRumah');
 
-Route::get('/tipe-rumah-admin/{id}', [C_TipeRumah::class, 'tipeRumah'])->name('tipeRumah.admin');
-Route::get('/tambah-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'storeTipeRumah'])->name('storeTipeRumah.admin');
-route::post('/tambah-tipe-rumah', [C_TipeRumah::class, 'storeTipeRumahAction'])->name('postTipeRumah');
-Route::get('/ubah-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'updateTipeRumah'])->name('updateTipeRumah.admin');
-Route::post('/tambah-tipe-rumah-admin/action/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
-    ->name('updateTipeRumahAction.admin');
-Route::post('/tambah-tipe-rumah-admin/action/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
+Route::get('/tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'tipeRumah'])->name('tipeRumah.admin');
+Route::get('/tambah-tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'storeTipeRumah'])->name('storeTipeRumah.admin');
+route::post('/tambah-tipe-rumah/{projek}', [C_TipeRumah::class, 'storeTipeRumahAction'])->name('postTipeRumah');
+Route::get('/ubah-tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumah'])->name('updateTipeRumah.admin');
+Route::post('/tambah-tipe-rumah-admin/action/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
     ->name('updateTipeRumahAction.admin');
 
 Route::get('/gambar-rumah/status/{status}/{id}',[C_GambarRumah::class,'changeGambarRumahStatus']);
 
-Route::get('/surat-pemesanan-rumah-admin',[C_SuratPemesananRumah::class,'suratPemesananRumah'])->name('suratPemesananRumah.admin');
-Route::get('/ubah-surat-pemesanan-rumah/{id}',[C_SuratPemesananRumah::class,'editSuratPemesananRumah'])->name('editSuratPemesananRumah.admin');
+Route::get('/surat-pemesanan-rumah-admin/{projek}',[C_SuratPemesananRumah::class,'suratPemesananRumah'])->name('suratPemesananRumah.admin');
+Route::get('/ubah-surat-pemesanan-rumah/{projek}/{id}',[C_SuratPemesananRumah::class,'editSuratPemesananRumah'])->name('editSuratPemesananRumah.admin');
 Route::post('/ubah-surat-pemesanan-rumah',[C_SuratPemesananRumah::class,'editSuratPemesananRumahAction'])->name('editSuratPemesananRumahAction.admin');
+
+Route::get('/ubah-pembayaran-rumah-admin/{id_pembayaran_rumah}',[C_PembayaranRumah::class,'updatePembayaranRumah'])->name('editPembayaranRumah.admin');

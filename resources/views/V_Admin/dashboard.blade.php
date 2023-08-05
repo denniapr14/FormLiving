@@ -107,7 +107,103 @@
                 </div>
             </div>
 
+            <div class="content__wrapper">
 
+                @if ($rumah != null && $rumah !="")
+                @php
+
+
+                $fileSVG = "views/".$getProjek->nama_projek.'.svg';
+                @endphp
+                <div class="content__row mb-3">
+                    <div class="card__box">
+                        <div class="card__header">
+                            <div class="card__title">
+                                <i class="bi bi-map"></i>
+                              <span>Site Plan</span>
+
+                            </div>
+
+                          </div>
+                        <div class="table-responsive">
+
+                            <div class="map" style="background-color: white">
+
+                                {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
+                                {{-- @include('map.svg') --}}
+                                {!! file_get_contents(resource_path($fileSVG)) !!}
+                                <script>
+                                    var svg = document.getElementById('Layer_1');
+
+
+                                    function zoom(scale) {
+
+                                        svg.setAttribute('transform', 'scale(' + scale + ')');
+                                      }
+
+                                      var mouseX = 0;
+
+
+                                    var data = {!! json_encode($rumah) !!};
+                                    $(document).ready(function(){
+                                        data.forEach(function(item) {
+                                        var block = item.blok;
+                                        var nomor = item.nomor;
+                                        var blockNomor = block+"-"+nomor;
+                                        {{--  blockNomor.toString()  --}}
+                                        var idrumah = document.getElementById(blockNomor);
+
+
+                                        idrumah.style.fill = color(item.status);
+                                        idrumah.setAttribute('fill',color(item.status));
+
+
+                                    });
+                                    });
+                                    console.log(data);
+                                    function color(stat) {
+                                            var iro = 'warnaa';
+                                            switch (stat) {
+                                            case 'Available':
+                                                iro = '#28a744';
+                                                break;
+                                            case 'Keep':
+                                                iro = '#dc3546';
+                                                break;
+                                            case 'Sold':
+                                                iro = '#dc3546';
+                                                break;
+                                            case 'onProgress':
+                                                iro = '#dc3546';
+                                                break;
+                                            case 'Undeveloped':
+                                                iro = 'gray';
+                                            case 'Hold':
+                                                iro = '#dc3546';
+                                                break;
+                                            }
+                                            return iro;
+                                        }
+                                </script>
+                                {{--  <div class="control">
+                                    <div class="zoom in">
+                                        <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
+                                    </div>
+                                    <div class="zoom">
+                                        <img src="{{ asset('Home') }}/images/ic-zoom-out.png" alt="">
+                                    </div>
+                                </div>  --}}
+
+
+                            </div>
+                            {{--  <button onclick="zoom(1.5)">Zoom in</button>
+                            <button onclick="zoom(0.5)">Zoom out</button>  --}}
+                        </div>
+
+                    </div>
+                </div>
+                @endif
+            </div>
 
             <!-- end: content -->
 
