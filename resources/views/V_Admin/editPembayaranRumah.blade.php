@@ -112,7 +112,7 @@
                     Ubah Pembayaran Rumah
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="{{ route('editPembayaranRumahAction.admin',[$getProjek->nama_projek, Crypt::encrypt($getPembayaranRumah->id_pem_rumah)]) }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="">Keterangan</label>

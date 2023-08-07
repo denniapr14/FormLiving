@@ -109,12 +109,12 @@
         <div class="container-fluid ">
             <div class="card">
                 <div class="card-header">
-                    Pembayaran Rumah
+                    Pembayaran Rumah {{ $getRumah->blok }}-{{ $getRumah->nomor }} dengan sisa Rp {{ rupiah($getPembayaranRumah->sisa_pr) }}
                 </div>
 
                 <div class="card-body">
 
-                    @if (!empty($dtDetailPembayaran))
+                    @if (!empty($getRincianPembayaran))
 
                         <div class="card">
                             <h5 class="card-header">Rincian Pembayaran</h5>
@@ -130,7 +130,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($dtDetailPembayaran as $dpem)
+                                        @foreach ($getRincianPembayaran as $dpem)
                                             <tr>
                                                 <td>{{ rupiah($dpem->nominal_rp) }}</td>
                                                 <td>{{ $dpem->tgl_bayar_rp }}</td>
@@ -168,12 +168,12 @@
                         </div>
                     @endif
                     <br>
-                    <form action="{{ route('pembayaran.action', $dtPembayaran->id_pem_rumah) }}" enctype="multipart/form-data" method="post">
+                    <form action="{{ route('pembayaranRumahAction.Admin', [$getProjek->nama_projek,Crypt::encrypt($getPembayaranRumah->id_pem_rumah)]) }}" enctype="multipart/form-data" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="">Keterangan</label>
                             <input type="text" name="detail" id="" class="form-control"
-                                value="{{ $dtPembayaran->detail_pr }}" placeholder="" aria-describedby="helpId">
+                                value="{{ $getPembayaranRumah->detail_pr }}" placeholder="" aria-describedby="helpId">
                             <small id="helpId" class="text-muted"></small>
                         </div>
                         <div class="form-group">
@@ -184,21 +184,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">Tanggal Bayar</label>
-                            <input type="date" name="tanggal" id="" class="form-control" value=""
+                            <label for="">Tanggal dan Jam Bayar</label>
+                            <input type="datetime-local" name="tanggal" id="" class="form-control" value=""
                                 placeholder="" aria-describedby="helpId">
                             <small id="helpId" class="text-muted"></small>
                         </div>
-                        <div class="form-group">
-                            <label for="">Status</label>
-                            <select name="status" id="" class="form form-control">
-                                <option value="">--Pilih--</option>
-                                <option value="belum">Belum</option>
-                                <option value="kurang">Kurang</option>
-                                <option value="sudah">Sudah</option>
-                            </select>
 
-                        </div>
 
                         <div class="form-group">
                             <label for="">Bukti Pembayaran</label>
@@ -217,12 +208,7 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
-    <?php
-    function rupiah($angka)
-    {
-        $hasil_rupiah = 'Rp ' . number_format($angka, 0, ',', '.') . ',-';
-        return $hasil_rupiah;
-    } ?>
+
     <script>
         $(document).ready(function() {
             $('#dtPembayaran').DataTable();

@@ -233,7 +233,7 @@ class C_TipeRumah extends Controller
             // print_r($dataTipeRumah);
             // dd($dataGambarTipe);
             // dd($dataGambarTipe);
-            return redirect('/rumah-admin')->with('success', 'Data rumah dan tipe rumah telah berhasil di simpan');
+            return redirect('/rumah-admin/'.$projek)->with('success', 'Data rumah dan tipe rumah telah berhasil di simpan');
         } else {
             return redirect('/login');
         }

@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,6 +29,12 @@ class RincianPembayaran extends Model{
         return RincianPembayaran::select($select)
         ->where($where)
         ->first();
+    }
+
+    function insertRincianPembayaran($dataInput)  {
+        return RincianPembayaran::insert(
+            $dataInput
+        );
     }
 
 }

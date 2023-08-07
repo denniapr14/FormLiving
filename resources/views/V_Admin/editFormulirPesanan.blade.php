@@ -1596,15 +1596,19 @@
                                     style="width:122pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                                     <p class="s2"
                                         style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                        Rp {{ rupiah($dtpem->harga_pr) }}</p>
+                                        Rp {{ rupiah($dtpem->harga_pr) }}
+                                        @if ($dtpem->sisa_pr == 0 || $dtpem->sisa_pr <= 0)
+                                        <span class="badge badge-secondary"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                        @endif
+                                    </p>
                                 </td>
                                 <td
                                     style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                                    <a href="" class="btn btn-info">
+                                    <a href="{{ route('pembayaranRumah.Admin',[$getProjek->nama_projek, Crypt::encrypt($dtpem->id_pem_rumah)]) }}" class="btn btn-info">
                                         <i class="bi bi-calendar2-check"></i> Pembayaran
                                     </a>
-                                    <a href="{{ route('editPembayaranRumah.admin', Crypt::encrypt($dtpem->id_pem_rumah)) }}" class="btn btn-info">
-                                        <i class="bi bi-pencil-square"> </i> Edit Pembayaran
+                                    <a href="{{ route('editPembayaranRumah.admin', [$getProjek->nama_projek , Crypt::encrypt($dtpem->id_pem_rumah)]) }}" class="btn btn-info">
+                                        <i class="bi bi-pencil-square"> </i> Edit Jumlah Pembayaran
                                     </a>
 
                                 </td>
@@ -1714,10 +1718,6 @@
             </div>
         </div>
 
-        <?php
-
-
-        ?>
 
     </body>
 

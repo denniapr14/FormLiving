@@ -33,4 +33,12 @@ class PembayaranRumah extends Model{
         ->first();
     }
 
+    function getPembayaranRumahRincianJoinWhereAll($select,$where,$eq,$value)  {
+       return PembayaranRumah::select($select)
+       ->join('rincian_pembayaran', 'pembayaran_rumah.id_pem_rumah', '=', 'rincian_pembayaran.id_pem_rumah')
+        ->where($where, $eq, $value)
+        ->get();
+    }
+
+
 }

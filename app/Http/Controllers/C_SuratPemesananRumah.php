@@ -78,9 +78,10 @@ class C_SuratPemesananRumah extends Controller
         }
     }
 
-    function editSuratPemesananRumah($id)
+    function editSuratPemesananRumah($projek,$id)
     {
 
+        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         $decryptedID = Crypt::decrypt($id);
         $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananJoin7Where($decryptedID);
         $getPromo = "";
@@ -94,23 +95,7 @@ class C_SuratPemesananRumah extends Controller
 
         $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
 
-        //     $fp = DB::table('formulir_pesanan')
-        //     ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-        //     ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
-        //     ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-        //     ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-        //     ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
-        //     ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
-        //     ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-        //     ->where('id_formulir', '=', $id_formulir)
-        //     ->first();
-        // $promo = "";
-        // $dtPembayaran = DB::table('pembayaran_rumah')
-        //     ->where('id_formulir', '=', $id_formulir)
-        //     ->get();
 
-        // dd($dtPembayaran);
-        // die();
         if (session()->has('user')) {
 
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -123,6 +108,7 @@ class C_SuratPemesananRumah extends Controller
                 'getFormulirPesanan',
                 'getPromo',
                 'getPembayaranRumah',
+                'getProjek'
             ));
         } else {
 

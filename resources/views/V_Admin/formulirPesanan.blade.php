@@ -122,7 +122,7 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Tanggal Order</th>
-                                    <th>Status</th>
+
                                     <th>Pengaturan</th>
                                 </tr>
                             </thead>
@@ -144,12 +144,12 @@
                                         <td>
                                             {{ date("d M Y", strtotime($fp->tgl_input_fp)) }}
                                         </td>
-                                        <td></td>
+
                                         <td>
 
                                             <div class="d-flex flex-nowrap">
-                                                <a href="{{ route('editSuratPemesananRumah.admin', Crypt::encrypt($fp->id_formulir) ) }}" class="btn-fd-icon-outline">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek,Crypt::encrypt($fp->id_formulir)] ) }}" class="btn-fd-icon-outline">
+                                                   <i class="fas fa-edit    "></i>
                                                 </a>
 
                                               </div>
