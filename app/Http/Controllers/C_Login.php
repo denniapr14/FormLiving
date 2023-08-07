@@ -85,7 +85,9 @@ class C_Login extends Controller
                     case 'CEO':
                         return redirect('/')->with('success', "You're Sign in!");
                         break;
-
+                    case 'AdminFormsLiving':
+                        return redirect('AdminFormsLiving/dashboard')->with('success',"You're Sign in!");
+                    break;
                     case 'SuperAdmin':
                         return redirect('/dashboard-admin/Greenland')->with('success',"You're Sign in!");
                     break;

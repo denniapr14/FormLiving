@@ -24,13 +24,13 @@
                 <ul class=" dropdown__menu">
                     <li class="nav__item">
                         <a class="nav__link" href="/AdminFormsLiving/dashboard">
-                            <i class="fa fa-file" aria-hidden="true"></i>
+                            <i class="fa fa-home" aria-hidden="true"></i>
                             <span class="" >Dashboard</span>
                         </a>
                     </li>
                     <li class="nav__item">
                         <a class="nav__link" href="/AdminFormsLiving/list-user">
-                            <i class="fa fa-file" aria-hidden="true"></i>
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
                             <span class="" >List User</span>
                         </a>
                     </li>
@@ -38,7 +38,7 @@
                 </ul>
             </li>
             @endif
-            @if ($projekUser->nama_projek == "Kalm")
+            {{-- @if ($projekUser->nama_projek == "Kalm")
 
             <li class="nav__item dropdown">
                 <a class="nav__link" href="#">
@@ -51,14 +51,21 @@
                             <span class="" href="/Promo">Promo</span>
                         </a>
                     </li>
-
-
                 </ul>
             </li>
-            @endif
-
-
+            @endif --}}
+            
             @endforeach
+            <li class="nav__divider">
+                <div class="divider__title">Tools </div>
+                <hr class="separate">
+            </li>
+            <li class="nav__item">
+                <a class="nav__link" href="/logout">
+                  <i class="bi bi-power"></i>
+                  <span>Log Out</span>
+                </a>
+              </li>
         </ul>
     </div>
 </aside>
