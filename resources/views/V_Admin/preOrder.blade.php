@@ -115,7 +115,7 @@
                     <div class="card__header">
                         <div class="card__title">
                             <i class="bi bi-map"></i>
-                          <span>Surat Pemesanan Rumah {{ $getProjek->nama_projek }}</span>
+                          <span>Pre Order {{ $getProjek->nama_projek }}</span>
 
                         </div>
 
@@ -137,34 +137,7 @@
                                 <?php
                                 $no = 1;
                                 ?>
-                                @foreach ($getFormulirPesanan as $fp)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $fp->no_fp }}</td>
-                                        <td>
-                                        <span class="client__name">{{ $fp->nama_plgn }}</span>
-                                        <span class="client__handled">Dari {{ $fp->nama_ktgr }} ({{ $fp->nama_ua }})</span>
-                                        </td>
-                                        <td>
-                                            {{ $fp->email_plgn }}
-                                        </td>
-                                        <td>
-                                            {{ date("d M Y", strtotime($fp->tgl_input_fp)) }}
-                                        </td>
 
-                                        <td>
-
-                                            <div class="d-flex flex-nowrap">
-                                                <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek,Crypt::encrypt($fp->id_formulir)] ) }}" class="btn-fd-icon-outline">
-                                                   <i class="fas fa-edit    "></i>
-                                                </a>
-
-                                              </div>
-
-                                            </td>
-
-                                    </tr>
-                                @endforeach
 
                             </tbody>
                         </table>

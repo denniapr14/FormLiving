@@ -14,7 +14,7 @@ use App\Http\Controllers\C_Login;
 use App\Http\Controllers\C_PembayaranRumah;
 use App\Http\Controllers\C_Rumah;
 use App\Http\Controllers\C_GambarRumah;
-
+use App\Http\Controllers\C_PreOrder;
 use App\Http\Controllers\C_SuratPemesananRumah;
 
 // ADMIN FORMS LIVING
@@ -301,3 +301,7 @@ Route::post('/ubah-pembayaran-rumah-admin/action/{projek}/{id_pembayaran_rumah}'
 
 Route::get('/pembayaran-rumah/{projek}/{id}',[C_PembayaranRumah::class,'pembayaranRumah'])->name('pembayaranRumah.Admin');
 Route::post('/pembayaran-rumah/action/{projek}/{id}',[C_PembayaranRumah::class,'pembayaranRumahAction'])->name('pembayaranRumahAction.Admin');
+
+Route::get('/pre-order/{projek}',[C_PreOrder::class,'preOrder'])->name('preOrder.admin');
+Route::get('/pre-order/payment/{projek}',[C_PreOrder::class,'paymentPreorder'])->name('paymentPreOrder.admin');
+Route::post('/pre-order/payment-action/{projek}',[C_PreOrder::class,'paymentPreOrderAction'])->name('paymentPreOrderAction.admin');

@@ -92,6 +92,17 @@
                     </a>
                 </li>
                 @endif
+                @if (
+                    $user->kategori == "SuperAdmin" ||
+                    $user->kategori =="AdminAccounting"
+                    )
+                <li class="nav__item">
+                    <a class="nav__link" href="/pre-order/{{ $projekUser->nama_projek }}">
+                        <i class="bi bi-file"></i>
+                        <span class="" >Pre Order</span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </li>
         @endif

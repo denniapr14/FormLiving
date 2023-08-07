@@ -25,7 +25,7 @@
                 <div class="card__header">
                     <div class="card__title">
                         <i class="bi bi-house-fill"></i>
-                        <span>Rumah</span>
+                        <span>Rumah Projek {{ $getProjek->nama_projek }}</span>
 
                     </div>
 
