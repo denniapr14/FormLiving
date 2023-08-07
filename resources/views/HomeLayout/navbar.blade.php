@@ -20,7 +20,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item" href="/housing">
+                                <a class="dropdown-item" href="/Greenland">
                                     <div>
                                         <img src="{{ asset('Home') }}/images/logo-tidar-green.png" alt="">
 
@@ -28,7 +28,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/kalm">
+                                <a class="dropdown-item" href="/Kalm">
                                     <div>
                                         <img src="{{ asset('Home') }}/images/logo-kalm.png" alt="">
 
