@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Rumah extends Model
 {
@@ -119,4 +120,14 @@ class Rumah extends Model
                 $dataInput
             );
     }
+    
+    public function getRumahBaseProjekClusterCount($namaProjek){
+       return Rumah::join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
+            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', Rumah::raw('COUNT(rumah.id_rumah) as count'))
+            ->where('status', '=', 'available')
+            ->where('projek.nama_projek','=',$namaProjek)
+            ->groupBy('cluster.nama_cluster')
+            ->get();
+    } 
 }

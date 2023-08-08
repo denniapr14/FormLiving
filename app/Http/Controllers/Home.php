@@ -6,12 +6,13 @@ namespace App\Http\Controllers;
 use App\Mail\MailAttachment;
 use App\Mail\MailNotify;
 // use App\Mail\MailAttachment;
-use App\Models\Cluster;
 // use Spatie\PdfToText\Pdf;
 // use PDF;
 
 // Model
 use App\Models\Promo;
+use App\Models\Departemen;
+use App\Models\Rumah;
 use Illuminate\Contracts\Auth\Guard;
 
 // Controller
@@ -25,8 +26,10 @@ use PDF;
 
 class Home extends Controller
 {
+    public $clusterList;
     public function __construct()
     {
+         $this->clusterList = new Rumah();
         // $this->middleware('guest')->except('logout');
         // $this->middleware('guest:admin')->except('logout');
         // // $this->middleware('guest:writer')->except('logout');
@@ -57,26 +60,19 @@ class Home extends Controller
         return view('home');
     }
 
-    public function housing()
+    public function housing($dataProjek)
     {
-        $cluster1 = DB::table('rumah')
-            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
-            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
-            ->where('status', '=', 'available')
-            ->where('projek.nama_projek','=','Greenland')
-            ->groupBy('cluster.nama_cluster')
-            ->get();
+        $cluster1 = $this->clusterList->getRumahBaseProjekClusterCount($dataProjek);
+        // $cluster1 = DB::table('rumah')
+        //     ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        //     ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
+        //     ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+        //     ->where('status', '=', 'available')
+        //     ->where('projek.nama_projek','=','Greenland')
+        //     ->groupBy('cluster.nama_cluster')
+        //     ->get();
         // dd($cluster1);
         // die();
-        $cluster2 = DB::table('rumah')
-            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
-            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
-            ->where('status', '=', 'available')
-            ->groupBy('cluster.nama_cluster')
-            ->where('projek.nama_projek','=','Greenland')
-            ->get();
 
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -90,20 +86,9 @@ class Home extends Controller
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
             ])->first();
-
-            // dd($user);
-            // die();
-            return view('housing', compact('user', 'cluster1', 'cluster2'));
+            return view('housing', compact('user', 'cluster1', 'dataProjek'));
         }
-        // if (session()->has('guest')) {
-        //     $userPelanggan = \App\Models\UserPelanggan::where([
-        //         'id_pelanggan' => session::get('guest'),
-        //     ])->first();
-        //     // dd($userPelanggan);
-        //     // die();
-        //     return view('housing', compact('userPelanggan', 'cluster1', 'cluster2'));
-        // }
-        return view('housing', compact( 'cluster1', 'cluster2'));
+        return view('housing', compact( 'cluster1','dataProjek'));
     }
 
     // KALM SEMENTARA

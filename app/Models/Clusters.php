@@ -3,22 +3,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cluster extends Model{
+class Clusters extends Model{
     protected $table = "cluster";
 
     protected $primaryKey = "codecluster";
 
     function getClusterAll() {
-        return Cluster::select('*')
+        return Clusters::select('*')
         ->get();
     }
     function getClusterProjek($select) {
-        return Cluster::select($select)
+        return Clusters::select($select)
         ->join('projek','cluster.id_projek','=','projek.id_projek')
         ->get();
     }
     function getClusterProjekWhere($select,$where,$eq,$value) {
-        return Cluster::select($select)
+        return Clusters::select($select)
         ->join('projek','cluster.id_projek','=','projek.id_projek')
         ->where($where,$eq,$value)
         ->get();

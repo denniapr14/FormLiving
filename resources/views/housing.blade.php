@@ -4,7 +4,7 @@
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footerbranch')
 {{-- @extends('HomeLayout.footer') --}}
-@section('tittle','Forms | Greenland')
+@section('tittle','Forms | Housing')
 @section('body','index')
 
 @section('content')
@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row mb-3 mb-lg-5">
             <div class="col-12 col-lg-6">
-                <h6 data-aos="fade-right">Selamat datang di Greenland.</h6>
+                <h6 data-aos="fade-right">Selamat datang di {{ $dataProjek }}.</h6>
                 <h1 data-aos="fade-right" data-aos-delay="400">Resepsi sudah jadi, Rumahnya kapan?</h1>
             </div>
             <div class="col-12 col-lg-6 ps-lg-6" data-aos="fade-left" data-aos-delay="400">
@@ -180,7 +180,7 @@
             Hunian di Greenland
         </h2>
         <div class="row">
-            @foreach ($cluster2 as $cluster)
+            @foreach ($cluster1 as $cluster)
 
 
             <div class="col-12 col-lg-6">

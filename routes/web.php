@@ -42,7 +42,7 @@ use Illuminate\Support\Facades\Route;
 // >>>>>>>>>>>>>>>>>>> HOME <<<<<<<<<<<<<<<<<<<<<<<<
 
 Route::get('/', [Home::class, 'index']);
-Route::get('/Greenland', [Home::class, 'housing']);
+Route::get('/Housing/{dataProjek}', [Home::class, 'housing']);
 Route::get('/my-cart', [Home::class, 'MyCart']);
 Route::get('/login', [C_Login::class, 'login']);
 Route::post('/login', [C_Login::class, 'loginAction'])->name('login.action');

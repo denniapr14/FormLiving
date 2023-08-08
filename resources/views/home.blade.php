@@ -18,7 +18,7 @@
                     <div class="item-text">
                         <h4>Greenland</h4>
                         <p>Greenland at Tidar</p>
-                        <a href="/Greenland" class="more">
+                        <a href="/Housing/Greenland" class="more">
                             Learn More <i class="bi bi-chevron-right"></i>
                         </a>
                     </div>
@@ -31,6 +31,7 @@
                         <h4>Kalm</h4>
                         <p>-- COMING SOON --</p>
                         <div class="more">
+                            <a href="/Housing/Kalm"></a>
                             Learn More <i class="bi bi-chevron-right"></i>
                         </div>
                     </div>
@@ -131,7 +132,7 @@
                 <div class="tab-pane fade show active" id="semua-tab-pane" role="tabpanel" aria-labelledby="semua-tab"
                     tabindex="0">
                     <div class="units">
-                        <a href="/greenland.html" class="item">
+                        <a href="/Housing/Greenland" class="item">
                             <div class="item-img">
                                 <img src="{{ asset('Home') }}/images/img-greenland.png" alt="">
                             </div>

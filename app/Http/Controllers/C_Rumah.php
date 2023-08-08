@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 // MODELS
-use App\Models\Cluster;
+use App\Models\Clusters;
 use App\Models\Rumah;
 use App\Models\UserAdmin;
 use App\Models\UserNotif;
@@ -27,7 +27,7 @@ class C_Rumah extends Controller
         $this->userNotif = new UserNotif;
         $this->projek = new Projek();
         $this->rumah = new Rumah();
-        $this->cluster = new Cluster();
+        $this->cluster = new Clusters();
         $this->userAdmin = new UserAdmin();
         $this->userProjek = new UserProjek();
     }
