@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pembayaran_rumah', function (Blueprint $table) {
-            $table->integer('id_pem_rumah', true)->unique('id_pem_rumah');
+            $table->integer('id_pem_rumah', true);
             $table->integer('id_rumah')->nullable();
             $table->integer('id_formulir')->nullable();
             $table->integer('id_pelanggan')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('status_pr', ['belum', 'sudah', 'kurang'])->nullable();
             $table->timestamp('tgl_input_pr')->useCurrent();
 
-            $table->primary(['id_pem_rumah']);
+            $table->unique(['id_pem_rumah'], 'id_pem_rumah');
         });
     }
 

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('user_admin', function (Blueprint $table) {
             $table->integer('id_user_admin', true);
+            $table->string('code_id_ua', 50)->nullable();
             $table->integer('id_kategori')->nullable()->index('id_kategori');
             $table->integer('id_projek')->nullable();
             $table->string('username_ua', 200);
@@ -24,6 +25,8 @@ return new class extends Migration
             $table->string('email_ua', 250)->nullable();
             $table->string('no_tlp_ua', 30)->nullable();
             $table->text('alamat_ua')->nullable();
+            $table->date('tgl_lahir_ua')->nullable();
+            $table->string('tempat_lahir_ua', 200)->nullable();
             $table->enum('status_ua', ['Nonaktif', 'Aktif']);
             $table->string('foto_ua', 200)->nullable()->default('default.png');
             $table->timestamp('tgl_input_ua')->useCurrent();

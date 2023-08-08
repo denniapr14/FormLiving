@@ -32,7 +32,7 @@ class C_PreOrder extends Controller
 
         $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek','=',$projek);
-
+        // dd($getProjek);
         // $getRumah = $this->rumah->getRumahSelectCountGroupBy();
         // dd($getRumah);
         if (session()->has('user')) {
@@ -40,8 +40,7 @@ class C_PreOrder extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            return view(
-                'V_Admin.preOrder',
+            return view('V_Admin.preOrder',
                 compact(
                     'user',
                     'projekUser',

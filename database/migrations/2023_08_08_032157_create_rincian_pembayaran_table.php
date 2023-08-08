@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('rincian_pembayaran', function (Blueprint $table) {
             $table->integer('id_rp', true);
             $table->integer('id_pem_rumah')->index('id_pem_rumah');
-            $table->date('tgl_bayar_rp');
             $table->float('nominal_rp', 10, 0);
             $table->float('sisa_rp', 10, 0)->nullable();
-            $table->string('bukti_rp', 100)->nullable();
             $table->string('keterangan_rp', 100);
+            $table->string('bukti_rp', 100)->nullable();
             $table->enum('status_rp', ['belum', 'sudah', 'kurang']);
+            $table->dateTime('tgl_bayar_rp');
             $table->timestamp('tgl_input_rp')->useCurrent();
         });
     }

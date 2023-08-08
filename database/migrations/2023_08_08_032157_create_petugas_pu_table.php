@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ktgr_admin', function (Blueprint $table) {
-            $table->integer('id_kategori', true);
-            $table->string('nama_ktgr', 100)->nullable();
-            $table->string('kategori', 200);
-            $table->integer('id_departemen')->nullable()->index('id_departemen');
-            $table->timestamp('tgl_input')->useCurrent();
+        Schema::create('petugas_pu', function (Blueprint $table) {
+            $table->integer('id_petugas', true);
+            $table->string('nama_pu', 200);
+            $table->enum('status_pu', ['aktif', 'nonaktif'])->default('aktif');
+            $table->timestamp('tgl_input_pu')->useCurrent();
+
+            $table->index(['id_petugas'], 'id_petugas');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ktgr_admin');
+        Schema::dropIfExists('petugas_pu');
     }
 };

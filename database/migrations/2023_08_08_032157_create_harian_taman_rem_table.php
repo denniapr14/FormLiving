@@ -22,9 +22,9 @@ return new class extends Migration
             $table->enum('status_tanaman', ['oke', 'maintenance'])->nullable();
             $table->text('keterangan')->nullable();
 
-            $table->index(['id_LREM', 'id_BREM'], 'id_LREM_3');
             $table->index(['id_LREM', 'id_BREM'], 'id_LREM_2');
             $table->unique(['id_LREM', 'id_BREM'], 'id_LREM');
+            $table->index(['id_LREM', 'id_BREM'], 'id_LREM_3');
         });
     }
 

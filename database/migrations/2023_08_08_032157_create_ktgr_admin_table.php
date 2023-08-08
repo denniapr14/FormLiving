@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cluster', function (Blueprint $table) {
-            $table->integer('codecluster', true);
-            $table->string('nama_cluster', 40);
-            $table->string('Description', 200);
-            $table->string('nama_img', 300)->nullable();
-            $table->string('logo_img', 200)->nullable();
+        Schema::create('ktgr_admin', function (Blueprint $table) {
+            $table->integer('id_kategori', true);
+            $table->integer('id_departemen')->nullable()->index('id_departemen');
+            $table->string('kategori', 200);
+            $table->string('nama_ktgr', 100)->nullable();
+            $table->timestamp('tgl_input')->useCurrent();
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cluster');
+        Schema::dropIfExists('ktgr_admin');
     }
 };

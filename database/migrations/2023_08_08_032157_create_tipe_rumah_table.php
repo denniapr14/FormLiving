@@ -17,6 +17,10 @@ return new class extends Migration
             $table->integer('id_tipe_rumah', true);
             $table->integer('id_rumah')->nullable();
             $table->string('jenis_tr', 50);
+            $table->integer('kmr_mandi_tr')->nullable();
+            $table->integer('kmr_tidur_tr')->nullable();
+            $table->bigInteger('harga_tr')->nullable();
+            $table->string('harga_text_tr', 200)->nullable();
             $table->integer('luas_bangunan_tr')->nullable();
             $table->string('pondasi_tr', 200)->nullable();
             $table->string('struktur_tr', 200)->nullable();
@@ -39,11 +43,7 @@ return new class extends Migration
             $table->string('daya_listrik_tr', 200)->nullable();
             $table->string('carport_tr', 200)->nullable();
             $table->string('tangga_tr', 200)->nullable();
-            $table->integer('kmr_mandi_tr');
-            $table->integer('kmr_tidur_tr');
             $table->string('img_tr', 200)->nullable();
-            $table->bigInteger('harga_tr')->nullable();
-            $table->string('harga_text_tr', 200)->nullable();
             $table->dateTime('tgl_input_tr')->useCurrent();
             $table->timestamp('tgl_update_tr')->nullable();
         });

@@ -14,16 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_notif', function (Blueprint $table) {
-            $table->integer('id_notif')->primary();
-            $table->integer('id_user_admin');
-            $table->integer('id_kategori')->index('id_kategori');
-            $table->integer('id_departemen')->index('id_departemen');
-            $table->string('function', 50);
-            $table->integer('msg_code');
-            $table->text('msg_notif');
+            $table->integer('id_notif', true);
+            $table->integer('id_user_admin')->nullable();
+            $table->integer('id_kategori')->nullable()->index('id_kategori');
+            $table->integer('id_departemen')->nullable()->index('id_departemen');
+            $table->string('function', 50)->nullable();
+            $table->integer('msg_code')->nullable();
+            $table->text('msg_notif')->nullable();
+            $table->enum('status_notif', ['aktif', 'read', ''])->default('aktif');
+            $table->string('url_notif', 200)->nullable();
             $table->timestamp('tgl_notif')->useCurrent();
-            $table->enum('status_notif', ['aktif', 'read', '']);
-            $table->string('url_notif', 200);
 
             $table->index(['id_user_admin', 'id_kategori', 'id_departemen'], 'id_user_admin');
         });
