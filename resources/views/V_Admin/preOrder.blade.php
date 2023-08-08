@@ -8,7 +8,13 @@
 
     <!-- start: main -->
 
-
+<style>
+    tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+</style>
     <!-- start: navbar -->
 
     <!-- end: navbar -->
@@ -115,13 +121,14 @@
                 <div class="card__header">
                     <div class="card__title">
                         <i class="bi bi-map"></i>
-                        <span>Pre Order {{ $getProjek->nama_projek }} <a class="btn btn-warning"
-                                href="#">Pending</a></span>
+                        <span>Pre Order {{ $getProjek->nama_projek }}
+
 
                     </div>
 
                 </div>
                 <div class="table-responsive">
+
                     <table id="preOrderPending" class="table">
                         <thead>
                             <tr>
@@ -142,7 +149,7 @@
                             ?>
                             @if (!empty($getPreOrder))
                                 @foreach ($getPreOrder as $preOrder)
-                                    @if ($preOrder->status_po != 'confirmed')
+
                                         <tr>
                                             <td>
                                                 {{ $no }}
@@ -161,6 +168,11 @@
                                                         class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         {{ $preOrder->status_po }}
+                                                        </button>
+
+                                                        @elseif($preOrder->status_po == 'confirmed')
+                                                        <div class="btn btn-success">{{ $preOrder->status_po }}</div>
+
                                                         </button>
                                                         @else
                                                         <button id="btnGroupDrop1" type="button"
@@ -185,6 +197,7 @@
                                                                 ]) }}">Confirm</a>
                                                         </div>
                                                     </div>
+                                                    <p hidden>{{ $preOrder->status_po }}</p>
                                                 @endif
 
                                                 @if ($user->kategori == 'AdminFormsLiving')
@@ -208,92 +221,24 @@
                                         @php
                                             $no++;
                                         @endphp
-                                    @endif
+
                                 @endforeach
 
                             @endif
 
 
                         </tbody>
+
                     </table>
 
                 </div>
 
+
+
             </div>
         </div>
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
-                    <div class="card__title">
-                        <i class="bi bi-map"></i>
-                        <span>Pre Order {{ $getProjek->nama_projek }} <a class="btn btn-success"
-                                href="#">Confirm</a></span>
 
-                    </div>
-
-                </div>
-                <div class="table-responsive">
-                    <table id="preOrderConfirm" class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Rumah</th>
-                                <th>Status</th>
-                                <th>Tipe
-                                    <br>
-                                    Booking
-                                </th>
-                                <th>Tanggal Pre Order</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            ?>
-                            @if (!empty($getPreOrder))
-                                @foreach ($getPreOrder as $preOrder)
-                                    @if ($preOrder->status_po == 'confirmed')
-                                        <tr>
-                                            <td>
-                                                {{ $no }}
-                                            </td>
-                                            <td>
-                                                {{ $preOrder->nama_cluster }} / {{ $preOrder->blok }} -
-                                                {{ $preOrder->nomor }}
-                                            </td>
-                                            <td>
-                                                <div class="btn btn-success">{{ $preOrder->status_po }}</div>
-
-                                            </td>
-                                            <td>
-                                                @if ($preOrder->tipe_booking_po != 'refundable')
-                                                <div class="btn btn-danger"> {{ $preOrder->tipe_booking_po }}</div>
-                                            @else
-                                                <div class="btn btn-success">{{ $preOrder->tipe_booking_po }}</div>
-                                            @endif
-                                            </td>
-                                            <td>{{ date('d F Y', strtotime($preOrder->tanggal)) }}</td>
-
-                                        </tr>
-                                        @php
-                                            $no++;
-                                        @endphp
-                                    @endif
-                                @endforeach
-
-                            @endif
-
-
-                        </tbody>
-                    </table>
-
-                </div>
-
-            </div>
-        </div>
-        <!-- end: content -->
 
         <!-- start: footer -->
         <section class="footer mt-3">
@@ -327,8 +272,49 @@
             $(document).ready(function() {
                 $('#preOrderConfirm').DataTable();
             });
+
+
+            {{--  $(document).ready(function() {
+                $('#preOrderPending').DataTable({
+
+                });
+            });  --}}
+
             $(document).ready(function() {
-                $('#preOrderPending').DataTable();
+                $('#preOrderPending').DataTable({
+                    searching: true, // Enable global search bar
+                    searchCols: [
+                        null, // Column 1 (No) - No search input field
+                        null, // Column 2 (Rumah) - No search input field
+                        null, // Column 3 (Status) - No search input field
+                        null, // Column 4 (Tipe) - No search input field
+                        null  // Column 5 (Tanggal Pre Order) - No search input field
+                    ]
+                });
+            });
+
+            $(document).ready(function() {
+                var table = $('#preOrderPending').DataTable();
+
+
+                // Attach filter function to a button or event
+
+                // Add individual column search inputs
+                $('#preOrderPending thead tr').clone(true).appendTo('#preOrderPending thead');
+                $('#preOrderPending thead tr:eq(1) th').each(function(i) {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+                    $('input', this).on('keyup change', function() {
+                        if (table.column(i).search() !== this.value) {
+                            table.column(i).search(this.value).draw();
+                        }
+                    });
+                });
+                function filterPending() {
+                    table.column(2).search('pending').draw();
+                }
+                $('#filterPendingButton').on('click', filterPending);
             });
         </script>
 

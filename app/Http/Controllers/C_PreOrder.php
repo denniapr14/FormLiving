@@ -48,11 +48,13 @@ class C_PreOrder extends Controller
             '=',
             $projek
         );
-        $getPreOrder = $this->preOrder->getPreOrderWhereAllJoinProjekUserRumahCluster(
+        $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahCluster(
             '*',
             'pre_order.status_po',
             '!=',
-            null
+            null,
+            'pre_order.tgl_input_po',
+            'desc'
         );
         // dd($getPreOrder);
 

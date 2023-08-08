@@ -26,6 +26,17 @@ class PreOrder extends Model{
         ->get();
 
     }
+    function getPreOrderWhereAllOrderByJoinProjekUserRumahCluster($select,$where,$eq,$value,$order,$by) {
+        return PreOrder::select($select)
+        ->join('projek','pre_order.id_projek','=','projek.id_projek')
+        ->join('user_admin','pre_order.id_user_admin','=','user_admin.id_user_admin')
+        ->join('rumah','pre_order.id_rumah','=','rumah.id_rumah')
+        ->join('cluster','rumah.codecluster','=','cluster.codecluster')
+        ->where($where,$eq,$value)
+        ->orderBy($order,$by)
+        ->get();
+
+    }
     function firstreOrderWhereAllJoinProjekUserRumahCluster($select,$where,$eq,$value) {
         return PreOrder::select($select)
         ->join('projek','pre_order.id_projek','=','projek.id_projek')
