@@ -289,20 +289,21 @@ Route::get('/ubah-tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'updateT
 Route::post('/tambah-tipe-rumah-admin/action/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
     ->name('updateTipeRumahAction.admin');
 
-Route::get('/gambar-rumah/status/{status}/{id}',[C_GambarRumah::class,'changeGambarRumahStatus']);
+Route::get('/gambar-rumah/status/{status}/{id}', [C_GambarRumah::class, 'changeGambarRumahStatus']);
 
-Route::get('/surat-pemesanan-rumah-admin/{projek}',[C_SuratPemesananRumah::class,'suratPemesananRumah'])->name('suratPemesananRumah.admin');
-Route::get('/ubah-surat-pemesanan-rumah/{projek}/{id}',[C_SuratPemesananRumah::class,'editSuratPemesananRumah'])->name('editSuratPemesananRumah.admin');
-Route::post('/ubah-surat-pemesanan-rumah/action/{projek}/{id}',[C_SuratPemesananRumah::class,'editSuratPemesananRumahAction'])->name('editSuratPemesananRumahAction.admin');
+Route::get('/surat-pemesanan-rumah-admin/{projek}', [C_SuratPemesananRumah::class, 'suratPemesananRumah'])->name('suratPemesananRumah.admin');
+Route::get('/ubah-surat-pemesanan-rumah/{projek}/{id}', [C_SuratPemesananRumah::class, 'editSuratPemesananRumah'])->name('editSuratPemesananRumah.admin');
+Route::post('/ubah-surat-pemesanan-rumah/action/{projek}/{id}', [C_SuratPemesananRumah::class, 'editSuratPemesananRumahAction'])->name('editSuratPemesananRumahAction.admin');
 
-Route::get('/ubah-pembayaran-rumah-admin/{projek}/{id_pembayaran_rumah}',[C_PembayaranRumah::class,'updatePembayaranRumah'])->name('editPembayaranRumah.admin');
-Route::post('/ubah-pembayaran-rumah-admin/action/{projek}/{id_pembayaran_rumah}',[C_PembayaranRumah::class,'updatePembayaranRumahAction'])->name('editPembayaranRumahAction.admin');
+Route::get('/ubah-pembayaran-rumah-admin/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumah'])->name('editPembayaranRumah.admin');
+Route::post('/ubah-pembayaran-rumah-admin/action/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumahAction'])->name('editPembayaranRumahAction.admin');
 
-Route::get('/pembayaran-rumah/{projek}/{id}',[C_PembayaranRumah::class,'pembayaranRumah'])->name('pembayaranRumah.Admin');
-Route::post('/pembayaran-rumah/action/{projek}/{id}',[C_PembayaranRumah::class,'pembayaranRumahAction'])->name('pembayaranRumahAction.Admin');
+Route::get('/pembayaran-rumah/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumah'])->name('pembayaranRumah.Admin');
+Route::post('/pembayaran-rumah/action/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumahAction'])->name('pembayaranRumahAction.Admin');
 
-Route::get('/pre-order-admin/{projek}',[C_PreOrder::class,'preOrder'])->name('preOrder.admin');
-Route::get('/pre-order-admin/payment/{projek}',[C_PreOrder::class,'paymentPreorder'])->name('paymentPreOrder.admin');
-Route::post('/pre-order-admin/payment-action/{projek}',[C_PreOrder::class,'paymentPreOrderAction'])->name('paymentPreOrderAction.admin');
+Route::get('/pre-order-admin/{projek}', [C_PreOrder::class, 'preOrder'])->name('preOrder.admin');
+Route::get('/pre-order-admin/payment/{projek}', [C_PreOrder::class, 'paymentPreorder'])->name('paymentPreOrder.admin');
+Route::post('/pre-order-admin/payment-action/{projek}', [C_PreOrder::class, 'paymentPreOrderAction'])->name('paymentPreOrderAction.admin');
+Route::get('/ubah-status-pre-order/{projek}/{id}/{status}',[C_PreOrder::class,'changeStatusPreOrder'])->name('changeStatusPreOrder.admin');
 
-Route::get('/user-sales-agent-admin',[C_UserAdmin::class,'userAdminSalesAgent'])->name('userSalesAgent.admin');
+Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');

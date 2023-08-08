@@ -9,34 +9,34 @@
     <!-- start: main -->
 
 
-        <!-- start: navbar -->
+    <!-- start: navbar -->
 
-        <!-- end: navbar -->
+    <!-- end: navbar -->
 
-        <!-- start: content -->
-        <div class="content__wrapper">
+    <!-- start: content -->
+    <div class="content__wrapper">
 
-            @if ($rumah != null && $rumah !="")
+        @if ($rumah != null && $rumah != '')
             @php
-            $fileSVG = "views/".$getProjek->nama_projek.'.svg';
+                $fileSVG = 'views/' . $getProjek->nama_projek . '.svg';
             @endphp
             <div class="content__row mb-3">
                 <div class="card__box">
                     <div class="card__header">
                         <div class="card__title">
                             <i class="bi bi-map"></i>
-                          <span>Site Plan Projek {{ $getProjek->nama_projek }}</span>
+                            <span>Site Plan Projek {{ $getProjek->nama_projek }}</span>
 
                         </div>
 
-                      </div>
+                    </div>
                     <div class="table-responsive">
 
                         <div class="map" style="background-color: white">
 
-                            {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
+                            {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt="" /> --}}
                             {{-- @include('map.svg') --}}
-                            {!! file_get_contents(resource_path( $fileSVG)) !!}
+                            {!! file_get_contents(resource_path($fileSVG)) !!}
                             <script>
                                 var svg = document.getElementById('Layer_1');
 
@@ -44,31 +44,32 @@
                                 function zoom(scale) {
 
                                     svg.setAttribute('transform', 'scale(' + scale + ')');
-                                  }
+                                }
 
-                                  var mouseX = 0;
+                                var mouseX = 0;
 
 
                                 var data = {!! json_encode($rumah) !!};
-                                $(document).ready(function(){
+                                $(document).ready(function() {
                                     data.forEach(function(item) {
-                                    var block = item.blok;
-                                    var nomor = item.nomor;
-                                    var blockNomor = block+"-"+nomor;
-                                    {{--  blockNomor.toString()  --}}
-                                    var idrumah = document.getElementById(blockNomor);
+                                        var block = item.blok;
+                                        var nomor = item.nomor;
+                                        var blockNomor = block + "-" + nomor;
+                                        {{--  blockNomor.toString()  --}}
+                                        var idrumah = document.getElementById(blockNomor);
 
 
-                                    idrumah.style.fill = color(item.status);
-                                    idrumah.setAttribute('fill',color(item.status));
+                                        idrumah.style.fill = color(item.status);
+                                        idrumah.setAttribute('fill', color(item.status));
 
 
-                                });
+                                    });
                                 });
                                 console.log(data);
+
                                 function color(stat) {
-                                        var iro = 'warnaa';
-                                        switch (stat) {
+                                    var iro = 'warnaa';
+                                    switch (stat) {
                                         case 'Available':
                                             iro = '#28a744';
                                             break;
@@ -86,232 +87,249 @@
                                         case 'Hold':
                                             iro = '#dc3546';
                                             break;
-                                        }
-                                        return iro;
                                     }
+                                    return iro;
+                                }
                             </script>
-                            {{--  <div class="control">
-                                <div class="zoom in">
-                                    <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
-                                </div>
-                                <div class="zoom">
-                                    <img src="{{ asset('Home') }}/images/ic-zoom-out.png" alt="">
-                                </div>
-                            </div>  --}}
+                            {{-- <div class="control">
+                        <div class="zoom in">
+                            <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
+                        </div>
+                        <div class="zoom">
+                            <img src="{{ asset('Home') }}/images/ic-zoom-out.png" alt="">
+                        </div>
+                    </div> --}}
 
 
                         </div>
-                        {{--  <button onclick="zoom(1.5)">Zoom in</button>
-                        <button onclick="zoom(0.5)">Zoom out</button>  --}}
+                        {{-- <button onclick="zoom(1.5)">Zoom in</button>
+                <button onclick="zoom(0.5)">Zoom out</button> --}}
                     </div>
 
                 </div>
             </div>
-            @endif
+        @endif
 
-
-            <div class="content__row mb-3">
-                <div class="card__box">
-                    <div class="card__header">
-                        <div class="card__title">
-                            <i class="bi bi-map"></i>
-                          <span>Pre Order {{ $getProjek->nama_projek }}</span>
-
-                        </div>
-
-                      </div>
-                    <div class="table-responsive">
-                        <table id="formulirPesanan" class="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>No FP</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Tanggal Order</th>
-
-                                    <th>Pengaturan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $no = 1;
-                                ?>
-
-
-                            </tbody>
-                        </table>
+        <div class="content__row mb-3">
+            <div class="card__box">
+                <div class="card__header">
+                    <div class="card__title">
+                        <i class="bi bi-map"></i>
+                        <span>Pre Order {{ $getProjek->nama_projek }} <a class="btn btn-warning"
+                                href="#">Pending</a></span>
 
                     </div>
 
                 </div>
-            </div>
-            <!-- end: content -->
+                <div class="table-responsive">
+                    <table id="preOrderPending" class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Rumah</th>
+                                <th>Status</th>
+                                <th>Tipe
+                                    <br>
+                                    Booking
+                                </th>
+                                <th>Tanggal Pre Order</th>
 
-            <!-- start: footer -->
-            <section class="footer mt-3">
-                <div class="content__row">
-                    <div class="col-12 p-0">
-                        <div class="card__box">
-                            <p class="m-0">Designed by <a class="footer__link" title="Wolftagon"
-                                    href="https://www.wolftagon.com/">Wolftagon</a></p>
-                        </div>
-                    </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            ?>
+                            @if (!empty($getPreOrder))
+                                @foreach ($getPreOrder as $preOrder)
+                                    @if ($preOrder->status_po != 'confirmed')
+                                        <tr>
+                                            <td>
+                                                {{ $no }}
+                                            </td>
+                                            <td>
+                                                {{ $preOrder->nama_cluster }} / {{ $preOrder->blok }} -
+                                                {{ $preOrder->nomor }}
+                                            </td>
+                                            <td>
+
+                                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
+                                                    <div class="btn-group" role="group">
+                                                        @if ($preOrder->status_po == 'pending')
+
+                                                        <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        {{ $preOrder->status_po }}
+                                                        </button>
+                                                        @else
+                                                        <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        {{ $preOrder->status_po }}
+                                                        </button>
+                                                        @endif
+
+                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('rejected'),
+                                                                ]) }}">Reject</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('confirmed'),
+                                                                ]) }}">Confirm</a>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                                @if ($user->kategori == 'AdminFormsLiving')
+                                                    <div class="btn btn-warning">{{ $preOrder->status_po }}</div>
+                                                @endif
+
+                                            </td>
+                                            <td>
+                                                @if ($preOrder->tipe_booking_po != 'refundable')
+                                                    <div class="btn btn-danger"> {{ $preOrder->tipe_booking_po }}</div>
+                                                @else
+                                                    <div class="btn btn-success">{{ $preOrder->tipe_booking_po }}</div>
+                                                @endif
+
+                                            </td>
+                                            <td> {{ date('H:i A', strtotime($preOrder->tgl_input_po)) }}<br>
+                                                <small>{{ tgl_indo(date('Y-m-d', strtotime($preOrder->tgl_input_po))) }}</small>
+                                            </td>
+
+                                        </tr>
+                                        @php
+                                            $no++;
+                                        @endphp
+                                    @endif
+                                @endforeach
+
+                            @endif
+
+
+                        </tbody>
+                    </table>
+
                 </div>
-            </section>
-            <!-- end: footer -->
 
-
-    <!-- end: main -->
-
-    <!-- Modal -->
-    <div class="modal modal-sweet-alert modal-sweet-alert--error fade" id="delete-alert" data-backdrop="static"
-        data-keyboard="false" tabindex="-1" aria-labelledby="delete-alertLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="alert-icon">
-                        <i class="bi bi-trash"></i>
-                    </div>
-                    <h1>Delete Data?</h1>
-                    <p>You will not able to recover all this invoice!</p>
-                    <a href="#" class="btn btn-outline-danger" data-dismiss="modal">Cancel</a>
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Change Confirmation-->
-    <div class="modal modal-sweet-alert modal-sweet-alert--warning fade" id="change-alert" data-backdrop="static"
-        data-keyboard="false" tabindex="-1" aria-labelledby="change-alertLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="alert-icon">
-                        <i class="bi bi-exclamation-circle"></i>
-                    </div>
-                    <h1>Are you sure want to change status this invoice?</h1>
-                    <p>You will not able to recover all this invoice!</p>
-                    <a href="#" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</a>
-                    <a href="#" class="btn btn-warning" data-dismiss="modal">Change</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal order information-->
-    <div class="modal modal-form fade" id="order-information" data-backdrop="static" data-keyboard="false"
-        tabindex="-1" aria-labelledby="order-informationLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Order Information</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                No. Order Form
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <span>ORF-10001</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                Agent ID
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <span>AG-0000001</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                Agent Name
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <span>Bambang</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                Client Name
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <span>Client A</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                No. Hp
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <span>08965123455</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                Project Name
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <span>Araya Hotel</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                Price
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <span>1.300.000.000</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                Fee Received
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <span>1.300.000</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label align-self-center">
-                                Status
-                            </label>
-                            <div class="col-sm-8 align-self-center">
-                                <div class="badge badge--success">verified</div>
-                            </div>
-                        </div>
-                        <div class="row pt-4">
-                            <div class="col-12">
-                                <button class="btn-fd-primary w-100" type="submit" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        function updateTime() {
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-            const timeString = `${hours}:${minutes}:${seconds}`;
-            document.getElementById('clock').textContent = timeString;
-        }
-        setInterval(updateTime, 1000);
-    </script>
+        <div class="content__row mb-3">
+            <div class="card__box">
+                <div class="card__header">
+                    <div class="card__title">
+                        <i class="bi bi-map"></i>
+                        <span>Pre Order {{ $getProjek->nama_projek }} <a class="btn btn-success"
+                                href="#">Confirm</a></span>
 
-    <script>
-        $(document).ready(function() {
-            $('#formulirPesanan').DataTable();
-        });
-    </script>
+                    </div>
 
-@endsection
+                </div>
+                <div class="table-responsive">
+                    <table id="preOrderConfirm" class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Rumah</th>
+                                <th>Status</th>
+                                <th>Tipe
+                                    <br>
+                                    Booking
+                                </th>
+                                <th>Tanggal Pre Order</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            ?>
+                            @if (!empty($getPreOrder))
+                                @foreach ($getPreOrder as $preOrder)
+                                    @if ($preOrder->status_po == 'confirmed')
+                                        <tr>
+                                            <td>
+                                                {{ $no }}
+                                            </td>
+                                            <td>
+                                                {{ $preOrder->nama_cluster }} / {{ $preOrder->blok }} -
+                                                {{ $preOrder->nomor }}
+                                            </td>
+                                            <td>
+                                                <div class="btn btn-success">{{ $preOrder->status_po }}</div>
+
+                                            </td>
+                                            <td>
+                                                @if ($preOrder->tipe_booking_po != 'refundable')
+                                                <div class="btn btn-danger"> {{ $preOrder->tipe_booking_po }}</div>
+                                            @else
+                                                <div class="btn btn-success">{{ $preOrder->tipe_booking_po }}</div>
+                                            @endif
+                                            </td>
+                                            <td>{{ date('d F Y', strtotime($preOrder->tanggal)) }}</td>
+
+                                        </tr>
+                                        @php
+                                            $no++;
+                                        @endphp
+                                    @endif
+                                @endforeach
+
+                            @endif
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- end: content -->
+
+        <!-- start: footer -->
+        <section class="footer mt-3">
+            <div class="content__row">
+                <div class="col-12 p-0">
+                    <div class="card__box">
+                        <p class="m-0">Designed by <a class="footer__link" title="Wolftagon"
+                                href="https://www.wolftagon.com/">Wolftagon</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end: footer -->
+
+
+
+
+        <script>
+            function updateTime() {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const seconds = now.getSeconds();
+                const timeString = `${hours}:${minutes}:${seconds}`;
+                document.getElementById('clock').textContent = timeString;
+            }
+            setInterval(updateTime, 1000);
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $('#preOrderConfirm').DataTable();
+            });
+            $(document).ready(function() {
+                $('#preOrderPending').DataTable();
+            });
+        </script>
+
+    @endsection
