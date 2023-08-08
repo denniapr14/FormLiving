@@ -61,17 +61,21 @@ class Home extends Controller
     {
         $cluster1 = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
             ->where('status', '=', 'available')
+            ->where('projek.nama_projek','=','Greenland')
             ->groupBy('cluster.nama_cluster')
             ->get();
         // dd($cluster1);
         // die();
         $cluster2 = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
             ->where('status', '=', 'available')
             ->groupBy('cluster.nama_cluster')
+            ->where('projek.nama_projek','=','Greenland')
             ->get();
 
         if (!session()->has('guest') && !session()->has('user')) {
@@ -284,17 +288,21 @@ class Home extends Controller
 
         $cluster = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
+            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
+            ->select('projek.nama_projek', 'logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
             ->where('cluster.codecluster', '=', $id_cluster)
+            ->where('projek.nama_projek','=','Greenland')
             ->groupBy('cluster.nama_cluster')
             ->first();
 
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->where('status', '=', 'available')
             ->where('rumah.codecluster', '=', $id_cluster)
+            ->where('projek.nama_projek','=','Greenland')
             ->get();
-
+        dd($cluster);
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -1223,13 +1231,18 @@ class Home extends Controller
 
         $cluster = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->select('*')
             ->where('status', '=', 'available')
+            ->where('projek.nama_projek','=','Greenland')
             ->groupBy('cluster.nama_cluster')
+
             ->get();
         $rumah = DB::table('rumah')
         ->select('*')
+        ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
         ->join('cluster','rumah.codecluster','=','cluster.codecluster')
+        ->where('projek.nama_projek','=','Greenland')
         ->where('status','=','available')
         // ->groupBy('cluster.nama_cluster')
         ->get();

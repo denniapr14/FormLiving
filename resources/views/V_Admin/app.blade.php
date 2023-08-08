@@ -47,19 +47,7 @@
             </a>
             <div class="navbar__right">
                 <div class="navbar__items">
-                    <a href="" class="navbar__link">
-                        <i class="bi bi-search"></i>
-                    </a>
-                    <a href="" class="navbar__link">
-                        <i class="bi bi-check2-square"></i>
-                    </a>
-                    <a href="" class="navbar__link">
-                        <i class="bi bi-translate"></i>
-                    </a>
-                    <a href="" class="navbar__link">
-                        <i class="bi bi-bell"></i>
-                        <div class="badge">12</div>
-                    </a>
+
                 </div>
                 <div class="divider"></div>
                 <div class="profile__box">

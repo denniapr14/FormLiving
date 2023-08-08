@@ -109,7 +109,27 @@
 
 
         @endforeach
+
+        @if (
+            $user->kategori == "SuperAdmin" ||
+            $user->kategori =="AdminFormsLiving"
+            )
+
+            <li class="nav__divider">
+                <div class="divider__title">Optional</div>
+                <hr class="separate">
+              </li>
+              <li class="nav__item">
+                <a class="nav__link" href="/user-sales-agent-admin">
+                  <i class="fas fa-users    "></i>
+                  <span>User Sales / Agent</span>
+                </a>
+              </li>
+        @endif
+
     </ul>
+
+
 </div>
 </aside>
 <!-- end: sidebar -->

@@ -43,6 +43,26 @@ class UserAdmin extends Authenticatable
         )
         ->first();
     }
+
+    function firstUserAdminWhere($select,$where) {
+        return UserAdmin::select($select)
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->where($where)
+        ->first();
+
+    }
+    function getUserAdminWhere($select,$where){
+        return UserAdmin::select($select)
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->where($where)
+        ->get();
+    }
+    function getUserAdminWhereIn($select,$where,$value){
+        return UserAdmin::select($select)
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->whereIn($where,$value)
+        ->get();
+    }
     // function getUserJoinWithCompanyCount(){
     //     return UserAdmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
     //     ->select(UserAdmin::raw('COUNT(user_admin.id_user_admin) as userCount'))
