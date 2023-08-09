@@ -73,6 +73,7 @@ class Home extends Controller
         //     ->get();
         // dd($cluster1);
         // die();
+        $namaPage = ($dataProjek == "Greenland") ? 'housing' : 'housingKalm';
 
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -86,9 +87,9 @@ class Home extends Controller
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
             ])->first();
-            return view('housing', compact('user', 'cluster1', 'dataProjek'));
+            return view($namaPage, compact('user', 'cluster1', 'dataProjek'));
         }
-        return view('housing', compact( 'cluster1','dataProjek'));
+        return view($namaPage, compact( 'cluster1','dataProjek'));
     }
 
     // KALM SEMENTARA

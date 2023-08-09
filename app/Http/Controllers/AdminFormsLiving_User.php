@@ -11,6 +11,7 @@ use App\Models\TipeRumah;
 use App\Models\Rumah;
 use App\Models\Cluster;
 use App\Models\Promo;
+use App\Models\User_projek;
 
 
 // Controller
@@ -19,20 +20,32 @@ use App\Http\Controllers\WhatsappAPI;
 use App\Mail\MailNotify;
 use Illuminate\Support\Facades\Storage;
 use Mail;
+use PDF;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\If_;
 use Intervention\Image\Facades\Image;
+use Carbon\Carbon;
 
 
 class AdminFormsLiving_User extends Controller
 {
-    //
+    public $userAdminList;
+    public $printDataUser;
     public function __construct() {
-        $this->userList = new UserAdmin;
+        $this->userAdminList = new User_projek;
+        $this->printDataUser = new UserAdmin();
     }
+    
+    function ambilWaktu(){
+        $waktuNow = carbon::now()->locale('id');
+        $waktuNow = $waktuNow->settings(['formatFunction' => 'translatedFormat']);
+        $waktuNow = $waktuNow->format('d F Y');
+        return $waktuNow;
+    }
+
     function listUser() {
         // $listDataAdmin = array(
         //     'code_ui_ua' = $request -> 
@@ -40,13 +53,12 @@ class AdminFormsLiving_User extends Controller
         // $getUserAdmin = $this->UserAdmin->getUserAdminOrderbyWhere()
         $getUserSales = DB::table('user_admin')
         ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-        ->whereIn('ktgr_admin.kategori',['Sales','SalesAgent'])
+        ->whereNotNull('code_id_ua')
+        ->orderByDesc('tgl_input_ua')
         ->get();
-        $projekUser = DB::table('user_projek')
-        ->join('projek', 'user_projek.id_projek', '=', 'projek.id_projek')
-        ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')
-        ->where('user_admin.id_user_admin', '=', session::get('user'))
-        ->get();
+        $sesiKini = session::get('user');
+        $projekUser = $this->userAdminList->getUserAdminListAllFromSession($sesiKini);
+        
         if (session()->has('user')) {
 
             $user = DB::table('user_admin')
@@ -62,9 +74,20 @@ class AdminFormsLiving_User extends Controller
             ));
 
         } else {
-
             return redirect('/login');
         }
 
+    }
+
+    function downloadPageUser(){
+        $waktuNow = $this->ambilWaktu();
+        $sesiNow = session::get('user');
+        $userAll = $this->printDataUser->getPrintUserAdmin();
+        $pdf = PDF::loadView('AdminFormsLiving.printUser', ['userAll' => $userAll,'waktuNow'=> $waktuNow])->setPaper('a4', 'potrait');
+        // if (session()->has('user')) {
+        //     return view('AdminFormsLiving.printUser',compact('userAll','waktuNow'));
+        // }
+        return $pdf->download('Laporan User Register Formsliving Tanggal ' . $waktuNow);
+        
     }
 }

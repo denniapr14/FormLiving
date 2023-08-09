@@ -147,6 +147,7 @@ class C_PreOrder extends Controller
         }
     }
 
+<<<<<<< Updated upstream
     function preOrderForms() {
         $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser(
             '*',
@@ -186,3 +187,51 @@ class C_PreOrder extends Controller
         }
     }
 }
+=======
+    public function preOrderSelect()
+    {
+        if (!session()->has('guest') && !session()->has('user')) {
+            // $hasilSess = Session::get('guest');
+            // response()->json('hasilSess');
+            return redirect("/login")->with('error', "You not sign in or sign up!");
+            # code...
+        }
+
+        $cluster = DB::table('rumah')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
+            ->select('*')
+            ->where('status', '=', 'available')
+            ->where('projek.nama_projek','=','Greenland')
+            ->groupBy('cluster.nama_cluster')
+
+            ->get();
+        $rumah = DB::table('rumah')
+        ->select('*')
+        ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
+        ->join('cluster','rumah.codecluster','=','cluster.codecluster')
+        ->where('projek.nama_projek','=','Greenland')
+        ->where('status','=','available')
+        // ->groupBy('cluster.nama_cluster')
+        ->get();
+
+        //session check untuk user
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])
+                ->first();
+            return view('simPreOrder', compact('user','cluster','rumah'));
+        }
+        // session check untuk pelanggan
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            return view('simPreOrder', compact('userPelanggan','cluster','rumah'));
+        }
+        return view('simPreOrder', compact('cluster','rumah'));
+        # code...
+    }
+}
+>>>>>>> Stashed changes

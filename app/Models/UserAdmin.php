@@ -71,5 +71,12 @@ class UserAdmin extends Authenticatable
     //     ])
     //     ->first();
     // }
-
+    
+    function getPrintUserAdmin(){
+        return UserAdmin::select('*')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->whereNotNull('code_id_ua')
+        ->orderByDesc('tgl_input_ua')
+        ->get();
+    }
 }

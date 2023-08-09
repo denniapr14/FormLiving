@@ -268,8 +268,10 @@ Route::get('AdminADV/tambah-gambar-tipe-rumah/{id_rumah}', [AdminADV_Dashboard::
 //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END DASHBOARD ADMIN ADV <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 // >>>>>>>>>>>>>>   DASHBOARD ADMIN FORMS LIVING    <<<<<<<<<<<<<
+
 Route::get('AdminFormsLiving/dashboard', [AdminFormsLiving_Dashboard::class, 'index']);
 Route::get('AdminFormsLiving/list-user', [AdminFormsLiving_User::class, 'listUser']);
+Route::get('AdminFormsLiving/download-user', [AdminFormsLiving_User::class, 'downloadPageUser']);
 // >>>>>>>>>>>>>>       END ADMIN FORMS LIVING      <<<<<<<<<<<<<
 
 Route::get('/email/{id_formulir}', [Home::class, 'email']);
@@ -306,6 +308,8 @@ Route::post('/ubah-pembayaran-rumah-admin/action/{projek}/{id_pembayaran_rumah}'
 Route::get('/pembayaran-rumah/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumah'])->name('pembayaranRumah.Admin');
 Route::post('/pembayaran-rumah/action/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumahAction'])->name('pembayaranRumahAction.Admin');
 
+//>>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Route::get('/PreOrderSelect',[C_PreOrder::class, 'preOrderSelect']);
 Route::get('/pre-order-admin/{projek}', [C_PreOrder::class, 'preOrder'])->name('preOrder.admin');
 Route::get('/pre-order-admin/payment/{projek}', [C_PreOrder::class, 'paymentPreorder'])->name('paymentPreOrder.admin');
 Route::post('/pre-order-admin/payment-action/{projek}', [C_PreOrder::class, 'paymentPreOrderAction'])->name('paymentPreOrderAction.admin');

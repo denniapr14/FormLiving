@@ -122,6 +122,7 @@ class AdminFormsLiving_Dashboard extends Controller
         ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')
         ->where('user_admin.id_user_admin', '=', session::get('user'))
         ->get();
+        
         if (session()->has('user')) {
 
             $user = DB::table('user_admin')
