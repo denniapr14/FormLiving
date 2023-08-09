@@ -111,6 +111,7 @@ class C_Rumah extends Controller
             'nomor' => $request->nomor,
             'status' => $request->status,
             'status_stock' => $request->stock,
+            'luas_tanah'    =>$request->luasTanah
             // 'imgRumah' => $filename,
         ];
 
@@ -194,6 +195,7 @@ class C_Rumah extends Controller
                 'status' => $request->status,
                 'status_stock' => $request->status_stock,
                 'img_rumah' => $filename,
+                'luas_tanah'    => $request->luasTanah
             ];
             // dd($dataRumah);
             DB::table('rumah')
@@ -244,6 +246,7 @@ class C_Rumah extends Controller
             'nomor' => $request->nomor,
             'status' => $request->status,
             'status_stock' => $request->stock,
+            'luas_tanah'    =>$request->luasTanah
         ];
 
         // $id = DB::table('rumah')->insert(

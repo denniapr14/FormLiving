@@ -288,6 +288,17 @@
                                 <i class="bi-chevron-right"></i>
                             </div>
                         </a>
+                        <a href="{{ route('preOrderForms.sales') }}" class="item">
+                            <div class="d-flex">
+                                <div class="icon">
+                                    <i class="bi bi-bag mycolor"></i>
+                                </div>
+                                <p> &nbsp;Pre Order</p>
+                            </div>
+                            <div class="ic-chevron">
+                                <i class="bi-chevron-right"></i>
+                            </div>
+                        </a>
                         @endif
                         <a href="/edit-profile" class="item">
                             <div class="d-flex">

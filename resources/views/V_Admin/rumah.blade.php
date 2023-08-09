@@ -21,16 +21,17 @@
         <div class="content__row mb-3">
             <div class="card__box">
 
-                <br>
                 <div class="card__header">
                     <div class="card__title">
                         <i class="bi bi-house-fill"></i>
                         <span>Rumah Projek {{ $getProjek->nama_projek }}</span>
-
                     </div>
 
                     <div class="invoices__actions">
+                        @if ($user->kategori == "SuperAdmin" || $user->kategori == "AdminAccounting")
                         <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}" class="btn-fd-outline btn--small">Tambah Rumah</a>
+                        @else
+                        @endif
                     </div>
                 </div>
 
@@ -43,7 +44,12 @@
                                 <th>Tipe Rumah</th>
                                 <th>Luas <br> Tanah</th>
                                 <th>Status</th>
+                                @if ($user->kategori == "SuperAdmin" || $user->kategori == "AdminAccounting")
+
                                 <th>Pengaturan</th>
+                                @else
+                                @endif
+
                             </tr>
                         </thead>
                         <tbody>
@@ -56,6 +62,7 @@
                                     <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</td>
                                     <td>{{ $rumah->luas_tanah }}</td>
                                     <td>{{ $rumah->status }}</td>
+                                    @if ($user->kategori == "SuperAdmin" || $user->kategori == "AdminAccounting")
                                     <td>
 
                                         <div class="d-flex flex-nowrap">
@@ -70,6 +77,11 @@
 
                                         </div>
                                     </td>
+                                    @else
+
+
+                                    @endif
+
                                 </tr>
                                 <?php
                                 $no++;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cluster;
+use App\Models\Clusters;
 use App\Models\PembayaranRumah;
 use App\Models\Projek;
 use App\Models\Rumah;
@@ -32,7 +32,7 @@ class C_SuratPemesananRumah extends Controller
     public $projek;
     public function __construct()
     {
-        $this->cluster      = new Cluster;
+        $this->cluster      = new Clusters;
         $this->rumah        = new Rumah;
         $this->userAdmin    = new UserAdmin;
         $this->userNotif    = new UserNotif;

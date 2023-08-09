@@ -36,6 +36,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
         integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="{{url('Dashboard')}}/css/toastify.min.css">
+    {{-- Datatabless --}}
+
+    <link rel="stylesheet" href="{{url('Dashboard')}}/css/jquery.dataTables.css" />
 </head>
 
 <body class="@yield('body')">
@@ -61,5 +67,7 @@
         once: true,
     });
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript" src="{{url('Dashboard')}}/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{url('Dashboard')}}/js//toastify.js"></script>
 </html>

@@ -129,8 +129,11 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Tanggal Order</th>
+                                    @if ($user->kategori == "SuperAdmin" || $user->kategori == "AdminAccounting" )
 
                                     <th>Pengaturan</th>
+                                    @else
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -151,7 +154,7 @@
                                         <td>
                                             {{ date("d M Y", strtotime($fp->tgl_input_fp)) }}
                                         </td>
-
+                                        @if ($user->kategori == "SuperAdmin" || $user->kategori == "AdminAccounting" )
                                         <td>
 
                                             <div class="d-flex flex-nowrap">
@@ -162,6 +165,10 @@
                                               </div>
 
                                             </td>
+
+                                        @else
+
+                                        @endif
 
                                     </tr>
                                 @endforeach

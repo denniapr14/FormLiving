@@ -76,7 +76,7 @@ class C_Login extends Controller
 
                 switch ($userRole) {
                     case 'AdminAccounting':
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/dashboard-admin/Greenland')->with('success', "You're Sign in!");
                         break;
                     case 'Admin':
                         return redirect('/')->with('success', "You're Sign in!");
@@ -86,7 +86,7 @@ class C_Login extends Controller
                         return redirect('/')->with('success', "You're Sign in!");
                         break;
                     case 'AdminFormsLiving':
-                        return redirect('AdminFormsLiving/dashboard')->with('success',"You're Sign in!");
+                        return redirect('/dashboard-admin/Greenland')->with('success',"You're Sign in!");
                     break;
                     case 'SuperAdmin':
                         return redirect('/dashboard-admin/Greenland')->with('success',"You're Sign in!");

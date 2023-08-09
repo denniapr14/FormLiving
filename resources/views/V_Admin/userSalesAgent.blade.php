@@ -9,83 +9,80 @@
     <!-- start: main -->
 
 
-        <!-- start: navbar -->
+    <!-- start: navbar -->
 
-        <!-- end: navbar -->
+    <!-- end: navbar -->
 
-        <!-- start: content -->
-        <div class="content__wrapper">
+    <!-- start: content -->
+    <div class="content__wrapper">
+        <div class="content__row mb-3">
+            <div class="card__box">
+                <div class="card__header">
+                    <div class="card__title">
+                        <i class="bi bi-people-fill"></i>
+                        <span>User Sales/Agent</span>
+
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table id="list-user" class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>Tanggal Daftar</th>
 
 
-
-            <div class="content__row mb-3">
-                <div class="card__box">
-                    <div class="card__header">
-                        <div class="card__title">
-                            <i class="bi bi-people-fill"></i>
-                          <span>User Sales/Agent</span>
-
-                        </div>
-
-                      </div>
-                    <div class="table-responsive">
-                        <table id="list-user" class="table">
-                            <thead>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            ?>
+                            @foreach ($getUserSales as $user)
                                 <tr>
-                                    <th>No</th>
+                                    <td>{{ $no++ }}</td>
+                                    <td>
+                                        <span class="client__name">{{ $user->nama_ua }}</span>
+                                        <span class="client__handled"> Kode</span>
+                                    </td>
 
-                                    <th>Nama</th>
-                                    <th>Kategori</th>
-                                    <th>Tanggal Daftar</th>
+                                    <td>
+                                        {{ $user->kategori }}
+                                    </td>
+                                    <td>
+                                        {{ date('d M Y', strtotime($user->tgl_input_ua)) }}
+                                    </td>
 
 
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $no = 1;
-                                ?>
-                                @foreach ($getUserSales as $user)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>
-                                            <span class="client__name">{{ $user->nama_ua }}</span>
-                                            <span class="client__handled"> Kode</span>
-                                            </td>
+                            @endforeach
 
-                                        <td>
-                                            {{ $user->kategori }}
-                                        </td>
-                                        <td>
-                                            {{ date("d M Y", strtotime($user->tgl_input_ua)) }}
-                                        </td>
+                        </tbody>
+                    </table>
 
+                </div>
 
-                                    </tr>
-                                @endforeach
+            </div>
+        </div>
+        <!-- end: content -->
 
-                            </tbody>
-                        </table>
-
+        <!-- start: footer -->
+        <section class="footer mt-3">
+            <div class="content__row">
+                <div class="col-12 p-0">
+                    <div class="card__box">
+                        <p class="m-0">Designed by <a class="footer__link" title="Wolftagon"
+                                href="https://www.wolftagon.com/">Wolftagon</a></p>
                     </div>
-
                 </div>
             </div>
-            <!-- end: content -->
-
-            <!-- start: footer -->
-            <section class="footer mt-3">
-                <div class="content__row">
-                    <div class="col-12 p-0">
-                        <div class="card__box">
-                            <p class="m-0">Designed by <a class="footer__link" title="Wolftagon"
-                                    href="https://www.wolftagon.com/">Wolftagon</a></p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- end: footer -->
-
+        </section>
+        <!-- end: footer -->
+    </div>
 
     <!-- end: main -->
 
@@ -107,7 +104,6 @@
         $(document).ready(function() {
             $('#list-user').DataTable();
         });
-
     </script>
 
 

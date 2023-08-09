@@ -22,7 +22,7 @@
                Greenland
             </a>
             <ul class=" dropdown__menu">
-                @if ($user->kategori == "SuperAdmin")
+
                 <li class="nav__item">
                     <a class="nav__link" href="/dashboard-admin/{{ $projekUser->nama_projek }}">
                         <i class="bi bi-speedometer2"></i>
@@ -31,8 +31,10 @@
                 </li>
 
 
-                @endif
-                @if ($user->kategori == "SuperAdmin")
+
+                @if ($user->kategori == "SuperAdmin" ||
+                $user->kategori =="AdminAccounting" ||
+                $user->kategori =="AdminFormsLiving")
                 <li class="nav__item">
                     <a class="nav__link" href="/rumah-admin/{{ $projekUser->nama_projek }}">
                         <i class="fa fa-home" aria-hidden="true"></i>
@@ -43,7 +45,8 @@
 
                 @if (
                     $user->kategori == "SuperAdmin" ||
-                    $user->kategori =="AdminAccounting"
+                    $user->kategori =="AdminAccounting" ||
+                    $user->kategori =="AdminFormsLiving"
                     )
                 <li class="nav__item">
                     <a class="nav__link" href="/surat-pemesanan-rumah-admin/{{ $projekUser->nama_projek }}">
@@ -62,7 +65,7 @@
                Kalm
             </a>
             <ul class=" dropdown__menu">
-                @if ($user->kategori == "SuperAdmin")
+
                 <li class="nav__item">
                     <a class="nav__link" href="/dashboard-admin/{{ $projekUser->nama_projek }}">
                         <i class="bi bi-speedometer2"></i>
@@ -71,8 +74,9 @@
                 </li>
 
 
-                @endif
-                @if ($user->kategori == "SuperAdmin")
+                @if ($user->kategori == "SuperAdmin" ||
+                $user->kategori =="AdminAccounting" ||
+                $user->kategori =="AdminFormsLiving")
                 <li class="nav__item">
                     <a class="nav__link" href="/rumah-admin/{{ $projekUser->nama_projek }}">
                         <i class="fa fa-home" aria-hidden="true"></i>
@@ -83,7 +87,8 @@
 
                 @if (
                     $user->kategori == "SuperAdmin" ||
-                    $user->kategori =="AdminAccounting"
+                    $user->kategori =="AdminAccounting" ||
+                    $user->kategori =="AdminFormsLiving"
                     )
                 <li class="nav__item">
                     <a class="nav__link" href="/surat-pemesanan-rumah-admin/{{ $projekUser->nama_projek }}">
@@ -94,7 +99,8 @@
                 @endif
                 @if (
                     $user->kategori == "SuperAdmin" ||
-                    $user->kategori =="AdminAccounting"
+                    $user->kategori =="AdminAccounting"||
+                    $user->kategori =="AdminFormsLiving"
                     )
                 <li class="nav__item">
                     <a class="nav__link" href="{{ route('preOrder.admin',$projekUser->nama_projek) }}">

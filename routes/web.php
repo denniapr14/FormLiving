@@ -69,7 +69,12 @@ Route::get('/search-item', [Home::class, 'SearchItem']);
 
 Route::get('/sign-up', [Home::class, 'SignUp']);
 Route::post('/sign-up/create', [Home::class, 'SignUpAction'])->name('sign-up.action');
+Route::get('/pre-order',[C_PreOrder::class,'preOrderForms'])->name('preOrderForms.sales');
+
+
 // >>>>>>>>>>>>>>>>>>> END PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
+
+
 
 // ---------------= SIMULATION =-----------------
 

@@ -16,33 +16,39 @@ class PreOrder extends Model{
         ->get();
     }
 
-    function getPreOrderWhereAllJoinProjekUserRumahCluster($select,$where,$eq,$value) {
+    function getPreOrderWhereAllJoinProjekUserRumahClusterPelangganKategoriUser($select,$where,$eq,$value) {
         return PreOrder::select($select)
-        ->join('projek','pre_order.id_projek','=','projek.id_projek')
         ->join('user_admin','pre_order.id_user_admin','=','user_admin.id_user_admin')
+        ->join('ktgr_admin','user_admin.id_kategori','=','ktgr_admin.id_kategori')
         ->join('rumah','pre_order.id_rumah','=','rumah.id_rumah')
+        ->join('projek','rumah.id_projek','=','projek.id_projek')
         ->join('cluster','rumah.codecluster','=','cluster.codecluster')
+        ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
         ->where($where,$eq,$value)
         ->get();
 
     }
-    function getPreOrderWhereAllOrderByJoinProjekUserRumahCluster($select,$where,$eq,$value,$order,$by) {
+    function getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser($select,$where,$eq,$value,$order,$by) {
         return PreOrder::select($select)
-        ->join('projek','pre_order.id_projek','=','projek.id_projek')
         ->join('user_admin','pre_order.id_user_admin','=','user_admin.id_user_admin')
+        ->join('ktgr_admin','user_admin.id_kategori','=','ktgr_admin.id_kategori')
         ->join('rumah','pre_order.id_rumah','=','rumah.id_rumah')
+        ->join('projek','rumah.id_projek','=','projek.id_projek')
         ->join('cluster','rumah.codecluster','=','cluster.codecluster')
+        ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
         ->where($where,$eq,$value)
         ->orderBy($order,$by)
         ->get();
 
     }
-    function firstreOrderWhereAllJoinProjekUserRumahCluster($select,$where,$eq,$value) {
+    function firstreOrderWhereAllJoinProjekUserRumahClusterPelangganKategoriUser($select,$where,$eq,$value) {
         return PreOrder::select($select)
-        ->join('projek','pre_order.id_projek','=','projek.id_projek')
         ->join('user_admin','pre_order.id_user_admin','=','user_admin.id_user_admin')
+        ->join('ktgr_admin','user_admin.id_kategori','=','ktgr_admin.id_kategori')
         ->join('rumah','pre_order.id_rumah','=','rumah.id_rumah')
+        ->join('projek','rumah.id_projek','=','projek.id_projek')
         ->join('cluster','rumah.codecluster','=','cluster.codecluster')
+        ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
         ->where($where,$eq,$value)
         ->first();
 

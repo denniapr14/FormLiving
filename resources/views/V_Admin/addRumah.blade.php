@@ -77,7 +77,11 @@
   <small id="errorMsgBlokNomor" class="" >Wajib di isi</small>
 
                     </div>
+                    <div class="form-group">
 
+                      <input type="number" name="luasTanah" id="inputLuasTanah" class="form-control" placeholder="Masukan Luas Tanah" aria-describedby="helpId">
+                      <small id="helpId" class="text-muted">Wajib di isi</small>
+                    </div>
 
 
 
@@ -578,6 +582,7 @@
                 let cluster = $('#inputCluster').val();
                 let blok = $('#inputBlok').val();
                 let nomor = $('#inputNomor').val();
+                let luasTanah = $('#inputLuasTanah').val();
                 let status = $('#inputStatus').val();
                 let stock = $('#inputStock').val();
 
@@ -593,6 +598,7 @@
                         nomor: nomor,
                         status: status,
                         stock: stock,
+                        luasTanah: luasTanah
 
 
                     },
@@ -637,6 +643,7 @@
                 let cluster = $('#inputCluster').val();
                 let blok = $('#inputBlok').val();
                 let nomor = $('#inputNomor').val();
+                let luasTanah = $('#inputLuasTanah').val();
                 let status = $('#inputStatus').val();
                 let stock = $('#inputStock').val();
 
@@ -657,6 +664,7 @@
                         nomor: nomor,
                         status: status,
                         stock: stock,
+                        luasTanah: luasTanah
 
 
                     },

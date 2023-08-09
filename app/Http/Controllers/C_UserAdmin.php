@@ -28,7 +28,7 @@ class C_UserAdmin extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 //   dd($user);
-            return view('V_Admin.userSalesAgent',
+            return view('V_Admin.userListSalesAgent',
                 compact(
                     'user',
                     'projekUser',

@@ -63,6 +63,11 @@
                     </div>
 
 
+                    <div class="form-group">
+
+                        <input type="number" name="luasTanah" id="inputLuasTanah" value="{{ $getRumah->luas_tanah }}" class="form-control" placeholder="Masukan Luas Tanah" aria-describedby="helpId">
+                        <small id="helpId" class="text-muted">Wajib di isi</small>
+                    </div>
 
                     <div class="form-group">
                         <select name="status" class="form-control" id="inputStatus">

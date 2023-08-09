@@ -48,7 +48,7 @@ class C_PreOrder extends Controller
             '=',
             $projek
         );
-        $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahCluster(
+        $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser(
             '*',
             'pre_order.status_po',
             '!=',
@@ -95,7 +95,7 @@ class C_PreOrder extends Controller
         $decryptedStatus = Crypt::decrypt($status);
 
 
-        $getPreOrder = $this->preOrder->getPreOrderWhereAllJoinProjekUserRumahCluster(
+        $getPreOrder = $this->preOrder->getPreOrderWhereAllJoinProjekUserRumahClusterPelangganKategoriUser(
             '*',
             'pre_order.id_pre_order',
             '=',
@@ -128,9 +128,58 @@ class C_PreOrder extends Controller
             ->update(
                 $dataPreOrder
             );
+            $dataRumah = [
+                'status' => "Available"
+            ];
+            DB::table('rumah')
+            ->where('id_rumah', $getPreOrder[0]->id_rumah)
+            ->update(
+                $dataRumah
+            );
+
+
             return redirect()->back()->with(
                 'success',
                 'Pre order rumah ' . $getPreOrder[0]->nama_cluster.' / '.$getPreOrder[0]->blok.' - '.$getPreOrder[0]->nomor.' telah diubah'
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    function preOrderForms() {
+        $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser(
+            '*',
+            'pre_order.id_user_admin',
+            '=',
+            session::get('user'),
+            'pre_order.tgl_input_po',
+            'desc'
+        );
+        // dd(session::get('user'));
+        $getProjek = $this->projek->getProjekAll(
+            '*',
+            );
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere(
+                'user_admin.id_user_admin',
+                '=',
+                session::get('user')
+            );
+
+            $projekUser = $this->userProjek->getProjectUserWhere(
+                'user_admin.id_user_admin',
+                '=',
+                session::get('user')
+            );
+
+            return view('preOrder',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getPreOrder',
+                    'getProjek'
+                )
             );
         } else {
             return redirect('/login');
