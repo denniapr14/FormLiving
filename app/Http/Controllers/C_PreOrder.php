@@ -147,7 +147,6 @@ class C_PreOrder extends Controller
         }
     }
 
-<<<<<<< Updated upstream
     function preOrderForms() {
         $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser(
             '*',
@@ -187,8 +186,7 @@ class C_PreOrder extends Controller
         }
     }
 }
-=======
-    public function preOrderSelect()
+    function preOrderSelect()
     {
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -234,4 +232,3 @@ class C_PreOrder extends Controller
         # code...
     }
 }
->>>>>>> Stashed changes
