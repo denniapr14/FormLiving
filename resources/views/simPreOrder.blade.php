@@ -32,9 +32,8 @@
             padding: 10px;
             border-radius: 15px;
             transition: all .5s;
-
-
         }
+
     </style>
     <div class="cluster">
         <div class="header-simulation mobile-only">
@@ -89,7 +88,7 @@
                                     @foreach ($rumah as $home)
                                         @if ($home->codecluster == $cluster->codecluster)
                                             <div class="col-6 col-lg-3">
-                                                <a href="/simulation-type/{{ $home->id_rumah }}">
+                                               
                                                     <div class="item">
                                                         <div class="item-image">
                                                             @if ($home->nama_img != null)
@@ -103,36 +102,16 @@
                                                         </div>
                                                         <div class="avail">Luas Tanah :
                                                             {{ $home->luas_tanah }}m<sup>2</sup></div>
-                                                    </div>
-                                                    
-                                                        <div class="avail">
-                                                           
-                                                            <form action="/SelectUnitAction" method="get">
-                                                                <fieldset class="check-in-unit">
-                                                                    <div class="form-check">
-                                                                        <label class="form-check-label">
-                                                                          <input type="checkbox" class="form-check-input" name="check-unit" id={{ $home->id_rumah }} value="checkedValue">
-                                                                          Pilih Unit Ini
-                                                                        </label>
-                                                                      </div>
-                                                                </fieldset>
-                                                           <fieldset class="check-radio-unit" id="radio-{{ $home->id_rumah }}">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="payment1" checked>
-                                                                <label class="form-check-label" for="refundable">
-                                                                  Refundable
-                                                                </label>
-                                                              </div>
-                                                              <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="payment2">
-                                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                                  Non-Refundable
-                                                                </label>
-                                                              </div>
-                                                           </fieldset>                                                         
-                                                            </form>
-                                                        </div>      
-                                                </a>
+                                                            <hr/>
+                                                            <div class="btn-group desktop-only">
+                                                                <a href="/PreOrderUser/R" class="btn btn-sm btn-primary custom-button"> Book Refund</a>
+                                                                <a href="/PreOrderUser/NR" class="btn btn-sm btn-success custom-button"> Book Non-Refund</a>
+                                                            </div>
+                                                            <div style="" class="btn-group mobile-only">
+                                                                <a href="/PreOrderUser/R" class="btn btn-sm btn-primary custom-button"> Book Refund</a>
+                                                                <a href="/PreOrderUser/NR" class="btn btn-sm btn-success custom-button"> Book Non-Refund</a>
+                                                            </div>
+                                                    </div>                                                   
                                             </div>
                                         @endif
                                     @endforeach

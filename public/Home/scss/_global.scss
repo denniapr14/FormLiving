@@ -2,7 +2,6 @@
     text-align: center;
     color: $secondary;
     margin-bottom: 1rem;
-
     @include breakpoint(mobileonly) {
         display: none;
     }
@@ -17,12 +16,10 @@
     }
 }
 
-
 .more {
     color: $primary-normal;
     display: flex;
     align-items: center;
-
     i {
         margin-left: .25rem;
         margin-top: 1.2px;
@@ -42,7 +39,6 @@
     color: white;
     font-family: 'Montserrat';
     z-index: 2;
-
     &:before {
         content: '';
         position: absolute;
@@ -74,11 +70,9 @@
     display: flex;
     justify-content: center;
     margin-top: 4rem;
-
     >.btn {
         margin: 0 1rem;
     }
-
     @include breakpoint(mobileonly) {
         margin-top: 2rem;
     }
@@ -89,7 +83,6 @@
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 1.5rem;
     border-radius: 10px;
-
     @include breakpoint(mobileonly) {
         padding: 1rem;
         font-size: 12px;
@@ -99,15 +92,16 @@
 
 .mobile-only {
     display: none;
-
     @include breakpoint(mobileonly) {
         display: block;
+    }
+    @include breakpoint(desktoponly) {
+        display: none;
     }
 }
 
 .until-tablet {
     display: none;
-
     @include breakpoint(untilTablet) {
         display: block;
     }
@@ -115,12 +109,10 @@
 
 .desktop-only {
     display: block;
-
     @include breakpoint(mobileonly) {
         display: none;
     }
 }
-
 
 .loading {
     width: 100vw;
@@ -128,7 +120,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     @include breakpoint(mobileonly) {
         img {
             width: 75%;

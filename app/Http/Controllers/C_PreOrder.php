@@ -185,7 +185,7 @@ class C_PreOrder extends Controller
             return redirect('/login');
         }
     }
-}
+
     function preOrderSelect()
     {
         if (!session()->has('guest') && !session()->has('user')) {
