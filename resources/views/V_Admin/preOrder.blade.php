@@ -133,14 +133,14 @@
                         <thead>
                             <tr>
                                 <th style="width: 5%">No</th>
-                                <th>Rumah</th>
-                                <th>Pelanggan</th>
-                                <th>Status</th>
-                                <th>Tipe
+                                <th style="width: 10%">Rumah</th>
+                                <th style="width: 30%">Pelanggan</th>
+                                <th style="width: 10%">Status</th>
+                                <th style="width: 15%">Tipe
                                     <br>
                                     Booking
                                 </th>
-                                <th>Tanggal Pre Order</th>
+                                <th style="width: 30%">Tanggal Pre Order</th>
 
                             </tr>
                         </thead>
@@ -160,45 +160,88 @@
 
                                         </td>
                                         <td>
+                                            @if (
+                                                $user->kategori == 'Sales' ||
+                                                    $user->kategori == 'SalesAgent' ||
+                                                    $user->kategori == 'Agent' ||
+                                                    $user->kategori == 'AgentCompany' ||
+                                                    $user->kategori == 'AdminAgentCompany')
+                                                Nama : {{ $preOrder->nama_plgn }} <br>
+                                                No. KTP : {{ $preOrder->no_ktp_plgn }} <br>
+                                                No. Wa / Telepon : {{ $preOrder->no_wa_plgn }} /
+                                                {{ $preOrder->no_telp_plgn }}
+                                            @else
                                             {{ $preOrder->nama_plgn }} <br>
                                             <small>Oleh {{ $preOrder->nama_ua }} - {{ $preOrder->nama_ktgr }}</small>
+                                            @endif
+
                                         </td>
                                         <td>
 
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
                                                 <div class="btn-group" role="group">
+
                                                     @if ($preOrder->status_po == 'pending')
-                                                        <button id="btnGroupDrop1" type="button"
-                                                            class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn btn-warning dropdown-toggle"
+                                                            data-toggle="dropdown">
                                                             {{ $preOrder->status_po }}
                                                         </button>
-                                                    @elseif($preOrder->status_po == 'confirmed')
-                                                        <div class="btn btn-success">{{ $preOrder->status_po }}</div>
-
+                                                    @elseif ($preOrder->status_po == 'confirmed')
+                                                        <button type="button" class="btn btn-success dropdown-toggle"
+                                                            data-toggle="dropdown">
+                                                            {{ $preOrder->status_po }}
                                                         </button>
                                                     @else
-                                                        <button id="btnGroupDrop1" type="button"
-                                                            class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown">
                                                             {{ $preOrder->status_po }}
                                                         </button>
                                                     @endif
 
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('changeStatusPreOrder.admin', [
-                                                                $getProjek->nama_projek,
-                                                                Crypt::encrypt($preOrder->id_pre_order),
-                                                                Crypt::encrypt('rejected'),
-                                                            ]) }}">Reject</a>
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('changeStatusPreOrder.admin', [
-                                                                $getProjek->nama_projek,
-                                                                Crypt::encrypt($preOrder->id_pre_order),
-                                                                Crypt::encrypt('confirmed'),
-                                                            ]) }}">Confirm</a>
+                                                    <div class="dropdown-menu">
+                                                        @if ($preOrder->status_po == 'pending')
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('rejected'),
+                                                                ]) }}">Reject</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('confirmed'),
+                                                                ]) }}">Confirm</a>
+                                                        @elseif ($preOrder->status_po == 'confirmed')
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('pending'),
+                                                                ]) }}">Reject</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('rejected'),
+                                                                ]) }}">Pending</a>
+                                                        @else
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('confirmed'),
+                                                                    ]) }}">Confirm</a>
+                                                                    <a class="dropdown-item"
+                                                                    href="{{ route('changeStatusPreOrder.admin', [
+                                                                        $getProjek->nama_projek,
+                                                                        Crypt::encrypt($preOrder->id_pre_order),
+                                                                        Crypt::encrypt('pending'),
+                                                                ]) }}">Pending</a>
+                                                        @endif
                                                     </div>
+
+
                                                 </div>
                                                 <p hidden>{{ $preOrder->status_po }}</p>
                                             @else
@@ -237,6 +280,12 @@
                                         </td>
                                         <td> {{ date('H:i A', strtotime($preOrder->tgl_input_po)) }}<br>
                                             <small>{{ tgl_indo(date('Y-m-d', strtotime($preOrder->tgl_input_po))) }}</small>
+                                            @if ($preOrder->tgl_update_po != '')
+                                                <br>
+                                                <small>
+                                                    diubah
+                                                    {{ tgl_indo(date('Y-m-d', strtotime($preOrder->tgl_input_po))) }}</small>
+                                            @endif
                                         </td>
 
                                     </tr>
@@ -261,25 +310,12 @@
 
 
 
-        <!-- start: footer -->
-        <section class="footer mt-3">
-            <div class="content__row">
-                <div class="col-12 p-0">
-                    <div class="card__box">
-                        <p class="m-0">Designed by <a class="footer__link" title="Wolftagon"
-                                href="https://www.wolftagon.com/">Wolftagon</a></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- end: footer -->
-
-
 
 
         <script>
             $(document).ready(function() {
                 $('#preOrderPending').DataTable({
+                    lengthMenu: [25, 50, 75, 100],
                     searching: true, // Enable global search bar
                     searchCols: [
                         null, // Column 1 (No) - No search input field
@@ -287,11 +323,13 @@
                         null, // Column 3 (Status) - No search input field
                         null, // Column 4 (Tipe) - No search input field
                         null // Column 5 (Tanggal Pre Order) - No search input field
-                    ]
+                    ],
+                    autoWidth: true
+
                 });
             });
 
-            $(document).ready(function() {
+            {{--  $(document).ready(function() {
                 var table = $('#preOrderPending').DataTable();
 
 
@@ -321,7 +359,7 @@
                     table.column(2).search('pending').draw();
                 }
                 $('#filterPendingButton').on('click', filterPending);
-            });
+            });  --}}
         </script>
 
     @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserAdmin;
 use App\Models\UserProjek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 
 class C_UserAdmin extends Controller
@@ -43,6 +44,46 @@ class C_UserAdmin extends Controller
 
     function UserAdminAll() {
 
+    }
+    function updateUserProfile() {
+        $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+//   dd($user);
+            return view('V_Admin.editUserProfile',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getUser'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
+    function updateUserProfileAction($id) {
+
+        $decryptedID = Crypt::decrypt($id);
+
+
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+//   dd($user);
+            return view('V_Admin.userListSalesAgent',
+                compact(
+                    'user',
+                    'projekUser',
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
     }
     //
 }

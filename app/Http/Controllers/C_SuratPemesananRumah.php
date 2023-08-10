@@ -46,13 +46,6 @@ class C_SuratPemesananRumah extends Controller
     {
         // Surat Pemesanan Rumah == Formulir Pesanan
 
-        $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananProjekJoin6Where(
-            'projek.nama_projek',
-            '=',
-            $projek,
-            'formulir_pesanan.tgl_input_fp',
-            'desc'
-        );
         $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek','=',$projek);
 
@@ -62,7 +55,33 @@ class C_SuratPemesananRumah extends Controller
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            if (
+                $user->kategori == 'Sales' ||
+                $user->kategori == 'SalesAgent' ||
+                $user->kategori == 'Agent' ||
+                $user->kategori == 'AgentCompany' ||
+                $user->kategori == 'AdminAgentCompany'
+            ) {
+                $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
+                    'projek.nama_projek',
+                    '=',
+                    $projek,
+                    'user_admin.id_user_admin',
+                    '=',
+                    $user->id_user_admin,
+                    'formulir_pesanan.tgl_input_fp',
+                    'desc'
+                );
+            }else{
 
+                $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananProjekJoin6Where(
+                    'projek.nama_projek',
+                    '=',
+                    $projek,
+                    'formulir_pesanan.tgl_input_fp',
+                    'desc'
+                );
+            }
             return view(
                 'V_Admin.formulirPesanan',
                 compact(

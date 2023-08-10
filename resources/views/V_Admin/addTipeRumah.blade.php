@@ -218,59 +218,6 @@
             </div>
         </div>
 
-            <!-- end: content -->
-
-            <!-- start: footer -->
-            <section class="footer mt-3">
-                <div class="content__row">
-                    <div class="col-12 p-0">
-                        <div class="card__box">
-                            <p class="m-0">Designed by <a class="footer__link" title="Wolftagon"
-                                    href="https://www.wolftagon.com/">Wolftagon</a></p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- end: footer -->
-
-
-            <!-- end: main -->
-
-            <!-- Modal -->
-            <div class="modal modal-sweet-alert modal-sweet-alert--error fade" id="delete-alert" data-backdrop="static"
-                data-keyboard="false" tabindex="-1" aria-labelledby="delete-alertLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="alert-icon">
-                                <i class="bi bi-trash"></i>
-                            </div>
-                            <h1>Delete Data?</h1>
-                            <p>You will not able to recover all this invoice!</p>
-                            <a href="#" class="btn btn-outline-danger" data-dismiss="modal">Cancel</a>
-                            <a href="#" class="btn btn-danger" data-dismiss="modal">Delete</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal Change Confirmation-->
-            <div class="modal modal-sweet-alert modal-sweet-alert--warning fade" id="change-alert" data-backdrop="static"
-                data-keyboard="false" tabindex="-1" aria-labelledby="change-alertLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="alert-icon">
-                                <i class="bi bi-exclamation-circle"></i>
-                            </div>
-                            <h1>Are you sure want to change status this invoice?</h1>
-                            <p>You will not able to recover all this invoice!</p>
-                            <a href="#" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</a>
-                            <a href="#" class="btn btn-warning" data-dismiss="modal">Change</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Modal order information-->
 

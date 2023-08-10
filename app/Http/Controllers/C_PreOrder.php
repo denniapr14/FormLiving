@@ -48,14 +48,7 @@ class C_PreOrder extends Controller
             '=',
             $projek
         );
-        $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser(
-            '*',
-            'pre_order.status_po',
-            '!=',
-            null,
-            'pre_order.tgl_input_po',
-            'desc'
-        );
+
         // dd($getPreOrder);
 
         // $getRumah = $this->rumah->getRumahSelectCountGroupBy();
@@ -72,7 +65,31 @@ class C_PreOrder extends Controller
                 '=',
                 session::get('user')
             );
-
+            if (
+                $user->kategori == 'Sales' ||
+                $user->kategori == 'SalesAgent' ||
+                $user->kategori == 'Agent' ||
+                $user->kategori == 'AgentCompany' ||
+                $user->kategori == 'AdminAgentCompany'
+            ) {
+                $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser(
+                    '*',
+                    'user_admin.id_user_admin',
+                    '=',
+                    $user->id_user_admin,
+                    'pre_order.tgl_input_po',
+                    'desc'
+                );
+            } else {
+                $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser(
+                    '*',
+                    'pre_order.status_po',
+                    '!=',
+                    null,
+                    'pre_order.tgl_input_po',
+                    'desc'
+                );
+            }
             return view(
                 'V_Admin.preOrder',
                 compact(
@@ -119,35 +136,36 @@ class C_PreOrder extends Controller
             );
             date_default_timezone_set('Asia/Jakarta'); // Set the timezone to Jakarta
             $indoTime = date('Y-m-d H:i:s');
-            $dataPreOrder =[
+            $dataPreOrder = [
                 'status_po' => $decryptedStatus,
                 'tgl_update_po' => $indoTime
             ];
             DB::table('pre_order')
-            ->where('id_pre_order', $decryptedID)
-            ->update(
-                $dataPreOrder
-            );
+                ->where('id_pre_order', $decryptedID)
+                ->update(
+                    $dataPreOrder
+                );
             $dataRumah = [
                 'status' => "Available"
             ];
             DB::table('rumah')
-            ->where('id_rumah', $getPreOrder[0]->id_rumah)
-            ->update(
-                $dataRumah
-            );
+                ->where('id_rumah', $getPreOrder[0]->id_rumah)
+                ->update(
+                    $dataRumah
+                );
 
 
             return redirect()->back()->with(
                 'success',
-                'Pre order rumah ' . $getPreOrder[0]->nama_cluster.' / '.$getPreOrder[0]->blok.' - '.$getPreOrder[0]->nomor.' telah diubah'
+                'Pre order rumah ' . $getPreOrder[0]->nama_cluster . ' / ' . $getPreOrder[0]->blok . ' - ' . $getPreOrder[0]->nomor . ' telah diubah'
             );
         } else {
             return redirect('/login');
         }
     }
 
-    function preOrderForms() {
+    function preOrderForms()
+    {
         $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUser(
             '*',
             'pre_order.id_user_admin',
@@ -159,7 +177,7 @@ class C_PreOrder extends Controller
         // dd(session::get('user'));
         $getProjek = $this->projek->getProjekAll(
             '*',
-            );
+        );
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
                 'user_admin.id_user_admin',
@@ -173,7 +191,8 @@ class C_PreOrder extends Controller
                 session::get('user')
             );
 
-            return view('preOrder',
+            return view(
+                'preOrder',
                 compact(
                     'user',
                     'projekUser',
@@ -185,7 +204,7 @@ class C_PreOrder extends Controller
             return redirect('/login');
         }
     }
-}
+
     function preOrderSelect()
     {
         if (!session()->has('guest') && !session()->has('user')) {
@@ -200,18 +219,18 @@ class C_PreOrder extends Controller
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->select('*')
             ->where('status', '=', 'available')
-            ->where('projek.nama_projek','=','Greenland')
+            ->where('projek.nama_projek', '=', 'Greenland')
             ->groupBy('cluster.nama_cluster')
 
             ->get();
         $rumah = DB::table('rumah')
-        ->select('*')
-        ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
-        ->join('cluster','rumah.codecluster','=','cluster.codecluster')
-        ->where('projek.nama_projek','=','Greenland')
-        ->where('status','=','available')
-        // ->groupBy('cluster.nama_cluster')
-        ->get();
+            ->select('*')
+            ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->where('projek.nama_projek', '=', 'Greenland')
+            ->where('status', '=', 'available')
+            // ->groupBy('cluster.nama_cluster')
+            ->get();
 
         //session check untuk user
         if (session()->has('user')) {
@@ -219,16 +238,16 @@ class C_PreOrder extends Controller
                 'id_user_admin' => session::get('user'),
             ])
                 ->first();
-            return view('simPreOrder', compact('user','cluster','rumah'));
+            return view('simPreOrder', compact('user', 'cluster', 'rumah'));
         }
         // session check untuk pelanggan
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
                 'id_pelanggan' => session::get('guest'),
             ])->first();
-            return view('simPreOrder', compact('userPelanggan','cluster','rumah'));
+            return view('simPreOrder', compact('userPelanggan', 'cluster', 'rumah'));
         }
-        return view('simPreOrder', compact('cluster','rumah'));
+        return view('simPreOrder', compact('cluster', 'rumah'));
         # code...
     }
 }

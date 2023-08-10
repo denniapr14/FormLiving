@@ -41,26 +41,7 @@
 
     @yield('sidebar')
     <section class="main-content" id="main-content">
-        <div class="navbar-content">
-            <a href="#" class="navbar__sidebar-toggler">
-                <i class="bi bi-chevron-double-left"></i>
-            </a>
-            <div class="navbar__right">
-                <div class="navbar__items">
 
-                </div>
-                <div class="divider"></div>
-                <div class="profile__box">
-                    <div class="profile__info">
-                        <div class="profile__name">{{ $user->nama_ua }}</div>
-                        <div class="profile__role">{{ $user->nama_ktgr }}</div>
-                    </div>
-                    <div class="profile__avatar">
-                        <img src="{{ url('Dashboard') }}/images/content/avatar.png" alt="user-avatar">
-                    </div>
-                </div>
-            </div>
-        </div>
         @yield('board')
         @yield('flashdata')
 
@@ -70,6 +51,21 @@
     @yield('script')
 
 </body>
+<script>
+    var uriSegment2 = '{{ request()->segment(2) }}';
+
+
+    // Loop through each project link and compare with the URI segment
+    document.querySelectorAll('.nav__link').forEach(function(link) {
+        let projekName = link.textContent.trim();
+        if (uriSegment2 === projekName) {
+            link.classList.add('active');
+            link.nextElementSibling.classList.add('show');
+            link.nextElementSibling.classList.add('active');
+        }
+    });
+
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript" src="{{url('Dashboard')}}/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="{{url('Dashboard')}}/js//toastify.js"></script>

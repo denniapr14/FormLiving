@@ -95,6 +95,15 @@ class Rumah extends Model
             ])
             ->first();
     }
+    public function RemainHouseJoinProjek($where)
+    {
+        return Rumah::select(Rumah::raw('COUNT(rumah.id_rumah) as count'))
+            ->join('projek','rumah.id_projek','=','projek.id_projek')
+            ->where(
+                $where
+            )
+            ->first();
+    }
 
      // INSERT
 
@@ -120,7 +129,7 @@ class Rumah extends Model
                 $dataInput
             );
     }
-    
+
     public function getRumahBaseProjekClusterCount($namaProjek){
        return Rumah::join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
@@ -129,5 +138,5 @@ class Rumah extends Model
             ->where('projek.nama_projek','=',$namaProjek)
             ->groupBy('cluster.nama_cluster')
             ->get();
-    } 
+    }
 }

@@ -34,10 +34,13 @@
                 <div class="alert alert-success" role="alert" id="successEdit" style="display: none">
                     Data Sudah Diubah
                 </div>
-                <form id="formRumah " method="POST" action="{{ route('updateRumahActionNoJS.admin',[$getProjek->nama_projek,$getRumah->id_rumah]) }}" enctype="multipart/form-data">
+                <form id="formRumah " method="POST"
+                    action="{{ route('updateRumahActionNoJS.admin', [$getProjek->nama_projek, $getRumah->id_rumah]) }}"
+                    enctype="multipart/form-data">
                     @csrf
 
-                    <input type="text" name="id_rumah" id="inputID" value="{{ $getRumah->id_rumah }}" class="form form-control" hidden readonly>
+                    <input type="text" name="id_rumah" id="inputID" value="{{ $getRumah->id_rumah }}"
+                        class="form form-control" hidden readonly>
 
                     <div class="form-group">
 
@@ -57,7 +60,7 @@
                         &nbsp;
                         <div class="form-group mb-3">
                             - &nbsp;
-                            <input type="text" name="nomor"  id="inputNomor"  class="form-control"
+                            <input type="text" name="nomor" id="inputNomor" class="form-control"
                                 placeholder="Masukan Nomor Rumah" value="{{ $getRumah->nomor }}" aria-describedby="helpId">
                         </div>
                     </div>
@@ -65,36 +68,55 @@
 
                     <div class="form-group">
 
-                        <input type="number" name="luasTanah" id="inputLuasTanah" value="{{ $getRumah->luas_tanah }}" class="form-control" placeholder="Masukan Luas Tanah" aria-describedby="helpId">
+                        <input type="number" name="luasTanah" id="inputLuasTanah" value="{{ $getRumah->luas_tanah }}"
+                            class="form-control" placeholder="Masukan Luas Tanah" aria-describedby="helpId">
                         <small id="helpId" class="text-muted">Wajib di isi</small>
                     </div>
 
                     <div class="form-group">
                         <select name="status" class="form-control" id="inputStatus">
-                            <option value="">--Pilih Status Rumah--</option>
-                            <option value="Available">Available</option>
-                            <option value="Undeveloped">Undeveloped</option>
+                            @php
+                                $statusOptions = ['Undeveloped', 'Available', 'Sold', 'Hold'];
+                            @endphp
+
+                            @foreach ($statusOptions as $option)
+                                @if ($option == $getRumah->status)
+                                    <option value="{{ $option }}" selected>{{ $option }}</option>
+                                @else
+                                    <option value="{{ $option }}">{{ $option }}</option>
+                                @endif
+                            @endforeach
+
                         </select>
                     </div>
                     <div class="form-group">
 
                         <select name="status_stock" class="form-control" id="inputStock">
-                            <option value="">--Pilih Status Stok--</option>
-                            <option value="Ready">Ready</option>
-                            <option value="Inden">Inden</option>
+                            @php
+                            $statusStock = ['Ready', 'Inden'];
+                        @endphp
+
+                        @foreach ($statusStock as $stock)
+                            @if ($stock == $getRumah->status_stock)
+                                <option value="{{ $stock }}" selected>{{ $stock }}</option>
+                            @else
+                                <option value="{{ $stock }}">{{ $stock }}</option>
+                            @endif
+                        @endforeach
+
                         </select>
                     </div>
 
                     <div class="form-groub">
-                    <input type="file" id="imgRumah" name="imgRumah" placeholder="Masukan gambar Rumah" class="form-control">
-                    @if (!empty($getRumah->img_rumah))
-                    <img src="{{ url('Home') }}/images/rumah/{{ $getRumah->img_rumah }}" class="img-thumbnail">
+                        <input type="file" id="imgRumah" name="imgRumah" placeholder="Masukan gambar Rumah"
+                            class="form-control">
+                        @if (!empty($getRumah->img_rumah))
+                            <img src="{{ url('Home') }}/images/rumah/{{ $getRumah->img_rumah }}" class="img-thumbnail">
+                        @endif
+                    </div>
+                    <br>
 
-                    @endif
-                </div>
-                <br>
-
-                    <button type="submit"  class="btn btn-success">Edit</button>
+                    <button type="submit" class="btn btn-success">Edit</button>
                     <br>
                 </form>
             </div>
@@ -107,14 +129,13 @@
 
 
 
-            <script>
+        <script>
+            function addFile(id) {
 
-                function addFile(id) {
-
-                    const fileInputContainer = document.createElement("div");
-                    fileInputContainer.innerHTML = `
+                const fileInputContainer = document.createElement("div");
+                fileInputContainer.innerHTML = `
                 <br>
-                    <input type="text" name="counter[]" id="counterID" value="`+id+`"  readonly hidden>
+                    <input type="text" name="counter[]" id="counterID" value="` + id + `"  readonly hidden>
                     <label for="fileInput">Select a file:</label>
                     <input type="file" name="fileInput[]">
                     <button type="button" onclick="deleteFile()">Delete</button>
@@ -124,23 +145,23 @@
                         <option value="Gambar">Gambar</option>
                     </select>
                 `;
-                    document.querySelector("#fileInput"+id).appendChild(fileInputContainer);
+                document.querySelector("#fileInput" + id).appendChild(fileInputContainer);
+            }
+
+            function deleteFile(id) {
+                const fileInputContainer = event.target.parentNode;
+                if (fileInputContainer) {
+                    fileInputContainer.remove();
                 }
+            }
+            let formCounter = 1;
 
-                function deleteFile(id) {
-                    const fileInputContainer = event.target.parentNode;
-                    if (fileInputContainer) {
-                        fileInputContainer.remove();
-                    }
-                }
-                let formCounter = 1;
+            function createForm() {
+                const formsContainer = document.getElementById("formsContainer");
+                const formId = `${formCounter}`;
 
-                function createForm() {
-                    const formsContainer = document.getElementById("formsContainer");
-                    const formId = `${formCounter}`;
-
-                    // Create a new form element with Bootstrap form styling
-                    const formHTML = `
+                // Create a new form element with Bootstrap form styling
+                const formHTML = `
                 <div id="${formId}">
                 <br>
                 <h1>
@@ -293,102 +314,102 @@
                 <div>
                 `;
 
-                    // Append the form to the container using innerHTML
-                    formsContainer.innerHTML += formHTML;
+                // Append the form to the container using innerHTML
+                formsContainer.innerHTML += formHTML;
 
-                    formCounter++;
+                formCounter++;
+            }
+
+            function deleteForm(formId) {
+                const formToRemove = document.getElementById(formId);
+                if (formToRemove) {
+                    formToRemove.remove();
                 }
+            }
+        </script>
 
-                function deleteForm(formId) {
-                    const formToRemove = document.getElementById(formId);
-                    if (formToRemove) {
-                        formToRemove.remove();
-                    }
-                }
-            </script>
+        <script type="text/javascript">
+            $('#rumahSubmit').click(function(e) {
+                e.preventDefault();
 
-            <script type="text/javascript">
-                $('#rumahSubmit').click(function(e) {
-                    e.preventDefault();
-
-                    let cluster = $('#inputCluster').val();
-                    let blok = $('#inputBlok').val();
-                    let nomor = $('#inputNomor').val();
-                    let status = $('#inputStatus').val();
-                    let stock = $('#inputStock').val();
-                    let imgRumah = $('#imgRumah').prop('files')[0];
-                    console.log(imgRumah);
+                let cluster = $('#inputCluster').val();
+                let blok = $('#inputBlok').val();
+                let nomor = $('#inputNomor').val();
+                let status = $('#inputStatus').val();
+                let stock = $('#inputStock').val();
+                let imgRumah = $('#imgRumah').prop('files')[0];
+                console.log(imgRumah);
 
 
-                    $.ajax({
-                        url: "{{ route('postRumah') }}",
-                        type: "POST",
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            cluster: cluster,
-                            blok: blok,
-                            nomor: nomor,
-                            status: status,
-                            stock: stock,
-                            imgRumah: imgRumah,
-                        },
-                        success: function(response) {
-                            $('#successMsg').show();
-                            {{--  console.log(response);  --}}
+                $.ajax({
+                    url: "{{ route('postRumah') }}",
+                    type: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        cluster: cluster,
+                        blok: blok,
+                        nomor: nomor,
+                        status: status,
+                        stock: stock,
+                        imgRumah: imgRumah,
+                    },
+                    success: function(response) {
+                        $('#successMsg').show();
+                        {{--  console.log(response);  --}}
 
 
-                            if (response != null) {
+                        if (response != null) {
 
 
-                                document.getElementById("inputID").value = response.id_rumah;
-                                document.getElementById("inputIDRumah").value = response.id_rumah;
-                                $('#rumahEdit').show();
-                                $('#rumahSubmit').hide();
-                            }
+                            document.getElementById("inputID").value = response.id_rumah;
+                            document.getElementById("inputIDRumah").value = response.id_rumah;
+                            $('#rumahEdit').show();
+                            $('#rumahSubmit').hide();
+                        }
 
-                        },
-                        error: function(response) {
-                            {{--  $('#nameErrorMsg').text(response.responseJSON.errors.name);
+                    },
+                    error: function(response) {
+                        {{--  $('#nameErrorMsg').text(response.responseJSON.errors.name);
                     $('#emailErrorMsg').text(response.responseJSON.errors.email);
                     $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
                     $('#messageErrorMsg').text(response.responseJSON.errors.message);  --}}
-                        },
-                    });
+                    },
                 });
+            });
 
-                $('#rumahEdit').click(function(e) {
-                    e.preventDefault();
-                    let id_rumah = $('#inputID').val();
-                    let cluster = $('#inputCluster').val();
-                    let blok = $('#inputBlok').val();
-                    let nomor = $('#inputNomor').val();
-                    let status = $('#inputStatus').val();
-                    let stock = $('#inputStock').val();
-                    let imgRumah = $('#imgRumah').prop('files')[0];
+            $('#rumahEdit').click(function(e) {
+                e.preventDefault();
+                let id_rumah = $('#inputID').val();
+                let cluster = $('#inputCluster').val();
+                let blok = $('#inputBlok').val();
+                let nomor = $('#inputNomor').val();
+                let status = $('#inputStatus').val();
+                let stock = $('#inputStock').val();
+                let imgRumah = $('#imgRumah').prop('files')[0];
 
-                    console.log(id_rumah);
+                console.log(id_rumah);
 
-                    $.ajax({
-                        url: '/ubah-rumah-action-admin/' + id_rumah,
-                        type: "POST",
+                $.ajax({
+                    url: '/ubah-rumah-action-admin/' + id_rumah,
+                    type: "POST",
 
 
 
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            id_rumah: id_rumah,
-                            cluster: cluster,
-                            blok: blok,
-                            nomor: nomor,
-                            status: status,
-                            stock: stock,
-                            imgRumah:imgRumah,
-                        },
-                        success: function(response) {
-                            $('#successEdit').show();
-                            console.log(response);
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id_rumah: id_rumah,
+                        cluster: cluster,
+                        blok: blok,
+                        nomor: nomor,
+                        status: status,
+                        stock: stock,
+                        imgRumah: imgRumah,
+                    },
+                    success: function(response) {
+                        $('#successEdit').show();
+                        console.log(response);
 
-                            {{--  if (response != null) {
+                        {{--  if (response != null) {
 
 
                             document.getElementById("inputID").value = response.id_rumah;
@@ -396,21 +417,21 @@
                             $('#rumahSubmit').hide();
                         }  --}}
 
-                        },
-                        error: function(response) {
-                            {{--  $('#nameErrorMsg').text(response.responseJSON.errors.name);
+                    },
+                    error: function(response) {
+                        {{--  $('#nameErrorMsg').text(response.responseJSON.errors.name);
                     $('#emailErrorMsg').text(response.responseJSON.errors.email);
                     $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
                     $('#messageErrorMsg').text(response.responseJSON.errors.message);  --}}
-                        },
-                    });
+                    },
                 });
-            </script>
+            });
+        </script>
 
-            <script>
-                $(document).ready(function() {
-                    $('#formulirPesanan').DataTable();
-                });
-            </script>
+        <script>
+            $(document).ready(function() {
+                $('#formulirPesanan').DataTable();
+            });
+        </script>
 
-        @endsection
+    @endsection

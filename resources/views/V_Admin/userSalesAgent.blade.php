@@ -60,7 +60,6 @@
 
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
 
@@ -68,23 +67,6 @@
 
             </div>
         </div>
-        <!-- end: content -->
-
-        <!-- start: footer -->
-        <section class="footer mt-3">
-            <div class="content__row">
-                <div class="col-12 p-0">
-                    <div class="card__box">
-                        <p class="m-0">Designed by <a class="footer__link" title="Wolftagon"
-                                href="https://www.wolftagon.com/">Wolftagon</a></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- end: footer -->
-    </div>
-
-    <!-- end: main -->
 
 
 

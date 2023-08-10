@@ -24,7 +24,7 @@ li {
 
 .content__wrapper {
   width: 100%;
-  padding-top: 6rem;
+  /* padding-top: 1rem; */
 }
 
 /* Dashboard */
@@ -251,6 +251,7 @@ li {
       flex-wrap: wrap;
   width: 100%;
   padding: 2rem 0 1rem;
+  justify-content: center;
 }
 
 .transaction__listing .transaction__column {

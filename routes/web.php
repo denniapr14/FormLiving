@@ -316,3 +316,6 @@ Route::post('/pre-order-admin/payment-action/{projek}', [C_PreOrder::class, 'pay
 Route::get('/ubah-status-pre-order/{projek}/{id}/{status}',[C_PreOrder::class,'changeStatusPreOrder'])->name('changeStatusPreOrder.admin');
 
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');
+
+Route::get('/ubah-user-profile/{id}',[C_UserAdmin::class, 'updateUserProfile'])->name('updateUserProfile.admin');
+Route::post('/ubah-user-profile/action/{id}',[C_UserAdmin::class,'updateUserProfileAction'])->name('updateUserProfileAction.admin');

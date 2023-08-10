@@ -2,33 +2,19 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Http\Request;
-use App\Mail\MailAttachment;
-use App\Mail\MailNotify;
-// use App\Mail\MailAttachment;
-use App\Models\Cluster;
+// use App\Models\FormulirPesanan;
 // use Spatie\PdfToText\Pdf;
-// use PDF;
-
+//
 // Model
-use App\Models\Promo;
+use App\Models\Projek;
 use App\Models\Rumah;
-use App\Models\FormulirPesanan;
 use App\Models\UserAdmin;
 use App\Models\UserProjek;
-use App\Models\Projek;
-
-use Illuminate\Contracts\Auth\Guard;
-
+use App\Models\FormulirPesanan;
 
 // =======================
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Mail;
-use PDF;
 
 class C_Dashboard extends Controller
 {
@@ -48,9 +34,9 @@ class C_Dashboard extends Controller
         $this->projek = new Projek;
     }
 
-    function index($projek)
+    public function index($projek)
     {
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $fp = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
             'formulir_pesanan.status_fp',
             '!=',
@@ -61,8 +47,8 @@ class C_Dashboard extends Controller
             'formulir_pesanan.tgl_input_fp',
             'desc'
         );
-        $getRumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek','=',$projek);
-        $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek','=',$projek);
+        $getRumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek', '=', $projek);
+        $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek', '=', $projek);
         $arrWithCompany = array(
             'ktgr_admin.kategori' => "AgentWithCompany",
             'user_admin.status_ua' => "aktif",
@@ -76,20 +62,52 @@ class C_Dashboard extends Controller
         $agentWithoutCompany = $this->userAdmin->getUserJoinCountWhere($arrWithoutCompany);
         // dd($agentWithoutCompany);
 
-        $closingAll = $this->formulirPesanan->getFormulirPesananJoin5Count();
-
-
-        $closing = $this->formulirPesanan->getFormulirPesananJoin5CountWhere('formulir_pesanan.tgl_input_fp', now()->month);
-
-
-        $remainHouse = $this->rumah->RemainHouse('status', 'available');
-
+        $whereRemainHouse = [
+            'status' => 'Available',
+            'nama_projek' => $projek,
+        ];
+        $remainHouse = $this->rumah->RemainHouseJoinProjek($whereRemainHouse);
 
         if (session()->has('user')) {
 
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProject->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+
+            if (
+                $user->kategori == 'Sales' ||
+                $user->kategori == 'SalesAgent' ||
+                $user->kategori == 'Agent' ||
+                $user->kategori == 'AgentCompany' ||
+                $user->kategori == 'AdminAgentCompany'
+            ) {
+                $whereClosing = [
+                    'user_admin.id_user_admin' => $user->id_user_admin,
+                    'projek.nama_projek'    => $projek
+                ];
+                $whereClosingAll = [
+                    'user_admin.id_user_admin'  => $user->id_user_admin,
+                    'projek.nama_projek'    => $projek
+                ];
+                $closingAll = $this->formulirPesanan->getFormulirPesananJoin5CountWhereUser($whereClosingAll);
+
+                $closing = $this->formulirPesanan->getFormulirPesananJoin5CountWhereMonth(
+                    'formulir_pesanan.tgl_input_fp',
+                    now()->month,
+                    $whereClosing
+
+                );
+
+                # code...
+            } else {
+                $closingAll = $this->formulirPesanan->getFormulirPesananJoin5CountWhereProjek(['projek.nama_projek' => $projek]);
+
+                $closing = $this->formulirPesanan->getFormulirPesananJoin5CountWhereMonthProjek(
+                    'formulir_pesanan.tgl_input_fp',
+                    now()->month,
+                    ['projek.nama_projek' => $projek]
+                );
+            }
 
             return view(
                 'V_Admin.dashboard',
