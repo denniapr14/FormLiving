@@ -87,7 +87,7 @@ class AdminFormsLiving_User extends Controller
         // if (session()->has('user')) {
         //     return view('AdminFormsLiving.printUser',compact('userAll','waktuNow'));
         // }
-        return $pdf->download('Laporan User Register Formsliving Tanggal ' . $waktuNow);
+        return $pdf->download('Laporan User Register Formsliving Tanggal ' . $waktuNow . ".pdf");
         
     }
 }
