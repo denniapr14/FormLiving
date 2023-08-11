@@ -145,9 +145,25 @@ class C_PreOrder extends Controller
                 ->update(
                     $dataPreOrder
                 );
-            $dataRumah = [
-                'status' => "Available"
-            ];
+                if ($status == "rejected") {
+                    # code...
+                    $dataRumah = [
+                        'status' => "Available"
+                    ];
+                }
+                if ($status == "pending") {
+                    # code...
+                    $dataRumah = [
+                        'status' => "Keep"
+                    ];
+                }
+                if ($status == "confirmed") {
+                    # code...
+                    $dataRumah = [
+                        'status' => "Sold"
+                    ];
+                }
+
             DB::table('rumah')
                 ->where('id_rumah', $getPreOrder[0]->id_rumah)
                 ->update(

@@ -28,9 +28,10 @@
                     </div>
 
                 </div>
-                <form action="{{ route('updateUserProfileAction.admin', Crypt::encrypt($getUser->id_user_admin)) }}" method="post">
+                <form action="{{ route('updateUserProfileAction.admin', Crypt::encrypt($getUser->id_user_admin)) }}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
-                        <input type="text" name="username" id="" class="form-control" value="{{ $getUser->username }}" readonly placeholder="Masukan Nama" aria-describedby="helpId">
+                        <input type="text" name="username" id="" class="form-control" value="{{ $getUser->username_ua }}" readonly placeholder="Masukan Nama" aria-describedby="helpId">
                       </div>
 
                     <div class="form-group">
@@ -50,13 +51,16 @@
                         <input type="text" name="tempat_lahir" id="" class="form-control" value="{{ $getUser->tempat_lahir_ua }}" placeholder="Masukan Tempat Lahir" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
-                        <input type="date" name="tgl_lahir_ua" id="" class="form-control" value="{{ $getUser->tgl_lahir_ua }}" placeholder="Masukan Tanggal Lahir" aria-describedby="helpId">
+                        <input type="date" name="tgl_lahir" id="" class="form-control" value="{{ $getUser->tgl_lahir_ua }}" placeholder="Masukan Tanggal Lahir" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
                         <input type="file" name="image" id="" class="form-file" value="" placeholder="Masukan Foto" aria-describedby="helpId">
-
+                        <br>
+                        @if (!empty($getUser->foto_ua))
+                        <img src="{{ url('Home') }}/images/foto/{{ $getUser->foto_ua }}" class="img-thumbnail">
+                         @endif
                     </div>
-
+                    <button type="submit" class="btn btn-primary">Submit</button>
 
 
 

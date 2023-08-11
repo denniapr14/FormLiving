@@ -61,6 +61,14 @@
         </div>
     </div>
     <!-- end: content -->
+    <script>
+        $(document).ready(function() {
+            $('#list-user').DataTable();
+        });
+        $(document).ready(function() {
+            $('#rumah').DataTable();
+        });
 
+    </script>
 
 @endsection
