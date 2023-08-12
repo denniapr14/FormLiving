@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\UserAdmin;
 use App\Models\UserProjek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
-
+use PDF;
 class C_UserAdmin extends Controller
 {
     public $userAdmin;
@@ -18,6 +19,13 @@ class C_UserAdmin extends Controller
     public function __construct() {
         $this->userAdmin = new UserAdmin;
         $this->userProjek  = new UserProjek;
+    }
+
+    function ambilWaktu(){
+        $waktuNow = Carbon::now()->locale('id');
+        $waktuNow = $waktuNow->settings(['formatFunction' => 'translatedFormat']);
+        $waktuNow = $waktuNow->format('d F Y');
+        return $waktuNow;
     }
     function userAdminSalesAgent() {
 
@@ -115,6 +123,18 @@ class C_UserAdmin extends Controller
         } else {
             return redirect('/login');
         }
+    }
+    function DownloadUserAdminSales() {
+        $waktuNow = $this->ambilWaktu();
+        $sesiNow = session::get('user');
+        $userAll = $this->userAdmin->getPrintUserAdmin();
+        $pdf = PDF::loadView('AdminFormsLiving.printUser', ['userAll' => $userAll,'waktuNow'=> $waktuNow])->setPaper('a4', 'potrait');
+        // if (session()->has('user')) {
+        //     return view('AdminFormsLiving.printUser',compact('userAll','waktuNow'));
+        // }
+        return $pdf->download('Laporan User Register Formsliving Tanggal ' . $waktuNow . ".pdf");
+
+
     }
     //
 }

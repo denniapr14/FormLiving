@@ -145,19 +145,20 @@ class C_PreOrder extends Controller
                 ->update(
                     $dataPreOrder
                 );
-                if ($status == "rejected") {
+                $dataRumah = [];
+                if ($decryptedStatus == "rejected") {
                     # code...
                     $dataRumah = [
                         'status' => "Available"
                     ];
                 }
-                if ($status == "pending") {
+                if ($decryptedStatus == "pending") {
                     # code...
                     $dataRumah = [
                         'status' => "Keep"
                     ];
                 }
-                if ($status == "confirmed") {
+                if ($decryptedStatus == "confirmed") {
                     # code...
                     $dataRumah = [
                         'status' => "Sold"
