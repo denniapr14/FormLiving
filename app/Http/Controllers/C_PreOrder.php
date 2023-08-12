@@ -273,10 +273,9 @@ class C_PreOrder extends Controller
         $dataFunctionUser = ([
             'idrumah' => $id
         ]);
-        dd($dataFunctionUser);
+     
         $userData = $this->pelangganData->getAllUserPelanggan();
-        dd($userData);
-        // dd($userData);
+       
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),

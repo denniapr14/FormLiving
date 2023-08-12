@@ -22,6 +22,6 @@ class UserPelanggan extends Authenticatable
     }
 
     public function getAllUserPelanggan(){
-        return UserPelanggan::all();
+        return UserPelanggan::select('*')->limit(10);
     }
 }
