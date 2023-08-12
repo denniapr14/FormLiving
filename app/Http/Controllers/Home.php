@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 use Mail;
 use PDF;
 
@@ -56,6 +57,13 @@ class Home extends Controller
             // die();
             return view('home', compact('userPelanggan'));
         }
+          if (!session()->has('guest') && !session()->has('user')) {
+            // $hasilSess = Session::get('guest');
+            // response()->json('hasilSess');
+            return redirect("/login")->with('error', "You not sign in or sign up!");
+            # code...
+
+        }
         // end sess
         return view('home');
     }
@@ -73,6 +81,7 @@ class Home extends Controller
         //     ->get();
         // dd($cluster1);
         // die();
+        // dd($cluster1);
         $namaPage = ($dataProjek == "Greenland") ? 'housing' : 'housingKalm';
 
         if (!session()->has('guest') && !session()->has('user')) {
@@ -1218,7 +1227,8 @@ class Home extends Controller
         $cluster = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
-            ->select('*')
+            // ->select()
+            ->select('*',Rumah::raw('COUNT(rumah.id_rumah) as count'))
             ->where('status', '=', 'available')
             ->where('projek.nama_projek','=','Greenland')
             ->groupBy('cluster.nama_cluster')
@@ -1532,8 +1542,8 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('underMT', compact('rumah', 'tipeRumah'));
-            // return view('simDataPelanggan', compact('user', 'tipeRumah', 'rumah', 'promo', 'promoRumah'));
+            // return view('underMT', compact('rumah', 'tipeRumah'));
+            return view('simDataPelanggan', compact('user', 'tipeRumah', 'rumah', 'promo', 'promoRumah'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1541,8 +1551,8 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('underMT', compact('rumah', 'tipeRumah'));
-            // return view('simDataPelanggan', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo'));
+            // return view('underMT', compact('rumah', 'tipeRumah'));
+            return view('simDataPelanggan', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo'));
         }
         return view('login');
 
@@ -1908,6 +1918,7 @@ class Home extends Controller
             ])
 
                 ->first();
+
             if ($payment == "KPR") {
                 // dd( $request->namaBank);
                 // die();
@@ -1919,10 +1930,10 @@ class Home extends Controller
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'tipe_kkpr' => $tipeRumah->jenis_tr,
-                        'harga_awal' => (int) preg_replace('/\D/', '', $request->jumlah) +
-                        (int) preg_replace('/\D/', '', $request->uangMuka)
+                        'harga_awal' =>  preg_replace('/\D/', '', $request->jumlah) +
+                        preg_replace('/\D/', '', $request->uangMuka)
                          + 10000000,
-                        'total_harga' => (int) preg_replace('/\D/', '', $request->jumlah),
+                        'total_harga' =>  preg_replace('/\D/', '', $request->jumlah),
                         'bunga' => $bank[1],
                         'cicilan_um' => $request->cicilanUM,
 
@@ -1935,23 +1946,24 @@ class Home extends Controller
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'tipe_kkpr' => $tipeRumah->jenis_tr,
-                        'harga_awal' => (int) preg_replace('/\D/', '', $request->jumlah) +
-                        (int) preg_replace('/\D/', '', $request->uangMuka)
+                        'harga_awal' => preg_replace('/\D/', '', $request->jumlah) +
+                        preg_replace('/\D/', '', $request->uangMuka)
                          + 10000000,
-                        'total_harga' => (int) preg_replace('/\D/', '', $request->jumlah) - $promo->diskon_promo,
+                        'total_harga' =>  preg_replace('/\D/', '', $request->jumlah) - $promo->diskon_promo,
                         'total_diskon' => $promo->diskon_promo,
                         'bunga' => $bank[1],
                         'cicilan_um' => $request->cicilanUM,
 
                     );
                 }
+                // dd($dataInput);
             }
 
             if ($payment == "Cicilan") {
                 if ($kdPromo == "Tidak Ada Promo") {
                     $dataInput = array(
                         'harga_awal' => $tipeRumah->harga_tr,
-                        'uang_muka' => 10000000,
+                        'uang_muka' => $tipeRumah->harga_tr * (10/100),
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'tipe_kkpr' => $tipeRumah->jenis_tr,
@@ -1964,7 +1976,7 @@ class Home extends Controller
                 if (!empty($promo)) {
                     $dataInput = array(
                         'harga_awal' => $tipeRumah->harga_tr,
-                        'uang_muka' => 10000000,
+                        'uang_muka' => $tipeRumah->harga_tr * (10/100),
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'tipe_kkpr' => $tipeRumah->jenis_tr,
@@ -2339,6 +2351,7 @@ class Home extends Controller
             // $id = DB::table('kalkulator_kpr')->insertGetId(
             //     $dataInputDetail
             // );
+
             if (!empty($promo)) {
                 $dataInput = array(
                     'id_pelanggan' => $pelanggan->id_pelanggan,
@@ -2370,16 +2383,29 @@ class Home extends Controller
             );
 
             $dtPembayaran = [];
+            $now = Carbon::now();
+
             if ($payment == "Cicilan") {
                 # code...
+                  $dtPembayaran[] = array(
+                    'id_rumah' => $id_rumah,
+                    'id_formulir' => $fp,
+                    'id_pelanggan' => $pelanggan->id_pelanggan,
+                    'detail_pr' => "Booking Fee",
+                    'harga_pr' => 10000000,
+                    'sisa_pr' => 10000000,
+                    'tgl_pr' => $now->addDays(7)->format("Y-m-d"),
+                    'status_pr' => "belum",
+                );
+
                 $dtPembayaran[] = array(
                     'id_rumah' => $id_rumah,
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
-                    'detail_pr' => "Uang Muka",
-                    'harga_pr' => $kkpr->uang_muka,
-                    'sisa_pr' => $kkpr->uang_muka,
-                    'tgl_pr' => date("Y-m-d", strtotime("+7 days")),
+                    'detail_pr' => "Uang Muka ",
+                    'harga_pr' => (double) $kkpr->uang_muka-10000000,
+                    'sisa_pr' => (double) $kkpr->uang_muka-10000000,
+                    'tgl_pr' => $now->addMonth()->format("Y-m-d"),
                     'status_pr' => "belum",
                 );
 
@@ -2391,9 +2417,9 @@ class Home extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "Cicilan " . $i,
-                            'harga_pr' => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) + $kkpr->total_diskon)) / $kkpr->cicilan,
-                            'sisa_pr' => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) + $kkpr->total_diskon)) / $kkpr->cicilan,
-                            'tgl_pr' => date("Y-m-d", strtotime("+1 month")),
+                            'harga_pr' => (double) ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) + $kkpr->total_diskon)) / $kkpr->cicilan,
+                            'sisa_pr' =>  (double) ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) + $kkpr->total_diskon)) / $kkpr->cicilan,
+                            'tgl_pr' =>  $now->addMonth()->format("Y-m-d"),
                             'status_pr' => "belum",
                         );
                     }
@@ -2403,23 +2429,33 @@ class Home extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "Cicilan " . $i,
-                            'harga_pr' => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100))) / $kkpr->cicilan,
-                            'sisa_pr' => ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100))) / $kkpr->cicilan,
-                            'tgl_pr' => date("Y-m-d", strtotime("+1 month")),
+                            'harga_pr' => (double) ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) ) ) / $kkpr->cicilan,
+                            'sisa_pr' => (double) ($kkpr->total_harga - ($kkpr->total_harga * (10 / 100) ) ) / $kkpr->cicilan,
+                            'tgl_pr' =>  $now->addMonth()->format("Y-m-d"),
                             'status_pr' => "belum",
                         );
                     }
                 }
             }
             if ($payment == "KPR") {
+                 $dtPembayaran[] = array(
+                    'id_rumah' => $id_rumah,
+                    'id_formulir' => $fp,
+                    'id_pelanggan' => $pelanggan->id_pelanggan,
+                    'detail_pr' => "Booking Fee",
+                    'harga_pr' => 10000000,
+                    'sisa_pr' => 10000000,
+                    'tgl_pr' => $now->addDays(7)->format("Y-m-d"),
+                    'status_pr' => "belum",
+                );
                 $dtPembayaran[] = array(
                     'id_rumah' => $id_rumah,
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => "Cicilan Uang Muka " . 1,
-                    'harga_pr' => $kkpr->uang_muka / $kkpr->cicilan_um,
-                    'sisa_pr' => $kkpr->uang_muka / $kkpr->cicilan_um,
-                    'tgl_pr' => date("Y-m-d", strtotime("+7 days")),
+                    'harga_pr' => ($kkpr->uang_muka-10000000) / $kkpr->cicilan_um,
+                    'sisa_pr' => ($kkpr->uang_muka-10000000) / $kkpr->cicilan_um,
+                    'tgl_pr' => $now->addMonth()->format("Y-m-d"),
                     'status_pr' => "belum",
                 );
                 for ($k = 1; $k < $kkpr->cicilan_um; $k++) {
@@ -2429,9 +2465,9 @@ class Home extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => "Cicilan Uang Muka " . 1 + $k,
-                        'harga_pr' => $kkpr->uang_muka / $kkpr->cicilan_um,
-                        'sisa_pr' => $kkpr->uang_muka / $kkpr->cicilan_um,
-                        'tgl_pr' => date("Y-m-d", strtotime("+1 month")),
+                        'harga_pr' => ($kkpr->uang_muka-10000000) / $kkpr->cicilan_um,
+                        'sisa_pr' => ($kkpr->uang_muka-10000000) / $kkpr->cicilan_um,
+                        'tgl_pr' => $now->addMonth()->format("Y-m-d"),
                         'status_pr' => "belum",
                     );
                 }
@@ -2440,10 +2476,10 @@ class Home extends Controller
                         'id_rumah' => $id_rumah,
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
-                        'detail_pr' => "Uang Muka",
-                        'harga_pr' => $kkpr->total_harga - ($kkpr->uang_muka + $kkpr->total_diskon),
-                        'sisa_pr' => $kkpr->total_harga - ($kkpr->uang_muka + $kkpr->total_diskon),
-                        'tgl_pr' => date("Y-m-d", strtotime("+5 years")),
+                        'detail_pr' => "KPR",
+                        'harga_pr' => (double) ($kkpr->total_harga) - ($kkpr->uang_muka + $kkpr->total_diskon),
+                        'sisa_pr' => (double)($kkpr->total_harga) - ($kkpr->uang_muka + $kkpr->total_diskon),
+                        'tgl_pr' => $now->addYears(5)->format("Y-m-d"),
                         'status_pr' => "belum",
                     );
                 }
@@ -2453,13 +2489,15 @@ class Home extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => "KPR",
-                        'harga_pr' => $kkpr->total_harga - $kkpr->uang_muka,
-                        'sisa_pr' => $kkpr->total_harga - $kkpr->uang_muka,
-                        'tgl_pr' => date("Y-m-d", strtotime("+5 years")),
+
+                        'harga_pr' =>  (double) ($kkpr->total_harga) - $kkpr->uang_muka,
+                        'sisa_pr' => (double) ($kkpr->total_harga) - $kkpr->uang_muka,
+                        'tgl_pr' => $now->addYears(5)->format("Y-m-d"),
                         'status_pr' => "belum",
                     );
                 }
             }
+            // dd($dtPembayaran);
             DB::table('pembayaran_rumah')->insert(
                 $dtPembayaran
             );

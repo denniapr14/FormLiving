@@ -170,9 +170,13 @@
                                                 No. KTP : {{ $preOrder->no_ktp_plgn }} <br>
                                                 No. Wa / Telepon : {{ $preOrder->no_wa_plgn }} /
                                                 {{ $preOrder->no_telp_plgn }}
+                                                <br>
+                                                <small>pembayaran Rp. {{ rupiah($preOrder->index_po) }} </small>
                                             @else
-                                            {{ $preOrder->nama_plgn }} <br>
-                                            <small>Oleh {{ $preOrder->nama_ua }} - {{ $preOrder->nama_ktgr }}</small>
+                                                {{ $preOrder->nama_plgn }} <br>
+                                                <small>Oleh {{ $preOrder->nama_ua }} - {{ $preOrder->nama_ktgr }}</small>
+                                                <br>
+                                                <small>pembayaran : Rp. {{ rupiah($preOrder->index_po) }} </small>
                                             @endif
 
                                         </td>
@@ -231,12 +235,12 @@
                                                                     $getProjek->nama_projek,
                                                                     Crypt::encrypt($preOrder->id_pre_order),
                                                                     Crypt::encrypt('confirmed'),
-                                                                    ]) }}">Confirm</a>
-                                                                    <a class="dropdown-item"
-                                                                    href="{{ route('changeStatusPreOrder.admin', [
-                                                                        $getProjek->nama_projek,
-                                                                        Crypt::encrypt($preOrder->id_pre_order),
-                                                                        Crypt::encrypt('pending'),
+                                                                ]) }}">Confirm</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('pending'),
                                                                 ]) }}">Pending</a>
                                                         @endif
                                                     </div>

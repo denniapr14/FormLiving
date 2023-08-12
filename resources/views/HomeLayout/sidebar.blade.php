@@ -93,7 +93,7 @@
         @elseif (!empty(Session::get('user')))
         <div class="action">
 
-            <a href="/profile-setting"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</a>
+            <a href="/dashboard-admin/Greenland"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</a>
                 {{--  <a href="/my-cart">
                     <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
                 </a>  --}}

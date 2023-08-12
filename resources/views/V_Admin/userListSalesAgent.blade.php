@@ -13,7 +13,9 @@
                 <div class="card__title">
                     <i class="bi bi-people-fill"></i>
                     <span>User Sales/Agent</span>
-
+                    <a style="position :absolute; right:10px;" href="{{ route('downloadUserAdminSales.admin') }}" class="btn btn-success">
+                        <i class="bi bi-download"></i> Download List User
+                        </a>
                 </div>
 
             </div>
