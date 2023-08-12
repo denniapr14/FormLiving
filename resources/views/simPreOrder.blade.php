@@ -76,9 +76,7 @@
                             @else
                             <b>
                                 {{ $cluster->nama_cluster }}
-
                             </b>
-
                             @endif
 
                         </button>
@@ -104,12 +102,12 @@
                                                             {{ $home->luas_tanah }}m<sup>2</sup></div>
                                                             <hr/>
                                                             <div class="btn-group desktop-only">
-                                                                <a href="/PreOrderUser/R" class="btn btn-sm btn-primary custom-button"> Book Refund</a>
-                                                                <a href="/PreOrderUser/NR" class="btn btn-sm btn-success custom-button"> Book Non-Refund</a>
+                                                                <a href="/Pre-Order-User/{{ $home->id_rumah }}/R" class="btn btn-sm btn-primary custom-button"> Book Refund</a>
+                                                                <a href="/Pre-Order-User/{{ $home->id_rumah }}/NR" class="btn btn-sm btn-success custom-button"> Book Non-Refund</a>
                                                             </div>
                                                             <div style="" class="btn-group mobile-only">
-                                                                <a href="/PreOrderUser/R" class="btn btn-sm btn-primary custom-button"> Book Refund</a>
-                                                                <a href="/PreOrderUser/NR" class="btn btn-sm btn-success custom-button"> Book Non-Refund</a>
+                                                                <a href="/Pre-Order-User/{{ $home->id_rumah }}/R" class="btn btn-sm btn-primary custom-button"> Book Refund</a>
+                                                                <a href="/Pre-Order-User/{{ $home->id_rumah }}/NR" class="btn btn-sm btn-success custom-button"> Book Non-Refund</a>
                                                             </div>
                                                     </div>                                                   
                                             </div>

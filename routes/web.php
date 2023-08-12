@@ -309,12 +309,13 @@ Route::get('/pembayaran-rumah/{projek}/{id}', [C_PembayaranRumah::class, 'pembay
 Route::post('/pembayaran-rumah/action/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumahAction'])->name('pembayaranRumahAction.Admin');
 
 //>>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Route::get('/Pre-Order-User/{id}/{code}',[C_PreOrder::class, 'preOrderDataUser']);
 Route::get('/PreOrderSelect',[C_PreOrder::class, 'preOrderSelect']);
 Route::get('/pre-order-admin/{projek}', [C_PreOrder::class, 'preOrder'])->name('preOrder.admin');
 Route::get('/pre-order-admin/payment/{projek}', [C_PreOrder::class, 'paymentPreorder'])->name('paymentPreOrder.admin');
 Route::post('/pre-order-admin/payment-action/{projek}', [C_PreOrder::class, 'paymentPreOrderAction'])->name('paymentPreOrderAction.admin');
 Route::get('/ubah-status-pre-order/{projek}/{id}/{status}',[C_PreOrder::class,'changeStatusPreOrder'])->name('changeStatusPreOrder.admin');
-
+//>>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');
 
 Route::get('/ubah-user-profile/{id}',[C_UserAdmin::class, 'updateUserProfile'])->name('updateUserProfile.admin');

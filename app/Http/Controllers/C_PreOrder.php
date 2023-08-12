@@ -8,6 +8,7 @@ use App\Models\UserProjek;
 use App\Models\Projek;
 use App\Models\Rumah;
 use App\Models\PreOrder;
+use App\Models\UserPelanggan;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -22,6 +23,7 @@ class C_PreOrder extends Controller
     public $projek;
     public $rumah;
     public $preOrder;
+    public $pelangganData;
 
     public function __construct()
     {
@@ -31,8 +33,9 @@ class C_PreOrder extends Controller
         $this->projek = new Projek;
         $this->rumah = new Rumah;
         $this->preOrder = new PreOrder;
+        $this->pelangganData = new UserPelanggan;
     }
-    //
+
     function Preorder($projek)
     {
 
@@ -264,6 +267,22 @@ class C_PreOrder extends Controller
             return view('simPreOrder', compact('userPelanggan', 'cluster', 'rumah'));
         }
         return view('simPreOrder', compact('cluster', 'rumah'));
-        # code...
+    }
+    function preOrderDataUser($id,$code){
+        $dataFunctionUser = ([
+            'idrumah' => $id
+        ]);
+        dd($dataFunctionUser);
+        $userData = $this->pelangganData->getAllUserPelanggan();
+        dd($userData);
+        // dd($userData);
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])
+                ->first();
+            return view('simPODataPelanggan', compact('user','dataFunctionUser'));
+        }
+
     }
 }

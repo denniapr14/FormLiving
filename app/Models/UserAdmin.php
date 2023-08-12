@@ -23,7 +23,7 @@ class UserAdmin extends Authenticatable
     }
 
     function getUserKategoriWhere($where, $eq, $value){
-        return Useradmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        return UserAdmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
         ->where($where, $eq, $value)
         ->first();
     }

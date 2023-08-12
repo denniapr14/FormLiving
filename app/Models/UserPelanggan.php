@@ -20,4 +20,8 @@ class UserPelanggan extends Authenticatable
     {
         return bcrypt($this->password_plgn);
     }
+
+    public function getAllUserPelanggan(){
+        return UserPelanggan::all();
+    }
 }
