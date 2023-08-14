@@ -187,7 +187,8 @@ class C_PreOrder extends Controller
             $data = [
                 "subject" => "Form Living",
                 "body" => "Form Living",
-                "data" => $getPreOrder,
+                "blok" => $getPreOrder[0]->blok,
+                "nomor" => $getPreOrder[0]->nomor,
 
             ];
             // MailNotify class that is extend from Mailable class.
@@ -315,14 +316,14 @@ class C_PreOrder extends Controller
         $pelanggan = DB::table('user_pelanggan')->where([
             'id_pelanggan' => $p,
         ])->first();
-        
+
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->where('status', '=', 'available')
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
 
-        $now = Carbon::now();     
+        $now = Carbon::now();
         $template = 'mail.mailPO';
         $this->validate($request, [
             'ktp' => 'required',
@@ -339,8 +340,8 @@ class C_PreOrder extends Controller
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
             ])->first();
-               
-                $dataInput = array(  
+
+                $dataInput = array(
                     'id_user_admin' => session::get('user'),
                     'id_rumah' => $id_rumah,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
@@ -349,10 +350,10 @@ class C_PreOrder extends Controller
                     'tipe_booking_po' => $statusPO,
                     'tgl_input_po' => $now
                 );
-            
-          
-            
-            
+
+
+
+
             DB::table('pre_order')->insert(
                 $dataInput
             );
@@ -363,13 +364,13 @@ class C_PreOrder extends Controller
                 ->where('departemen.departemen', '=', "Accounting")
                 ->where('user_admin.email_ua', '!=', null)
                 ->get();
-        
+
             $dataEmail1 = [
                 'to' => $pelanggan->email_plgn,
                 "subject" => "Forms Living",
                 "body" => "",
                 'nama' => $pelanggan->nama_plgn,
-                
+
             ];
             $dataEmail2 = [
                 'to' => $user->email_ua,
@@ -377,7 +378,7 @@ class C_PreOrder extends Controller
                 "body" => "",
                 "body" => "",
                 'nama' => $pelanggan->nama_plgn,
-               
+
             ];
             $dataEmail3 = null;
             foreach ($accounting as $accounting) {
@@ -387,7 +388,7 @@ class C_PreOrder extends Controller
                     "body" => "",
                     "body" => "",
                     'nama' => $pelanggan->nama_plgn,
-                   
+
                 ];
                 try {
                     // $MailAtt = ();
@@ -412,6 +413,6 @@ class C_PreOrder extends Controller
             // die();
 
         }
-    }  
+    }
 
 }
