@@ -41,6 +41,7 @@ class C_Promo extends Controller
         ->leftJoin('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
         ->leftJoin('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
         // ->where('formulir_pesanan.status_fp','!=','nonactive')
+        ->orderBy('promo.id_promo','desc')
         ->get();
 
     if (session()->has('user')) {
@@ -167,7 +168,7 @@ class C_Promo extends Controller
                     'keterangan'    => $request->ket_promo,
                     'tipe_promo'    => $request->tipe_promo,
                     'kuota_promo'   => $request->kuota_promo,
-
+                    'diskon_promo'   => $request->diskon_promo,
                     'tgl_aktif'     => $request->tgl_mulai,
                     'tgl_berakhir'  => $request->tgl_berakhir
                     ];
