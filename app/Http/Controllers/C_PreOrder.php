@@ -355,6 +355,111 @@ class C_PreOrder extends Controller
         return view('login');
     }
 
+    public function simPOUserAction(Request $request, $id_rumah)
+    {
+        $rumah = DB::table('rumah')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('projek','rumah.id_projek','=','projek.id_projek')
+            ->where('status', '=', 'available')
+            ->where('rumah.id_rumah', '=', $id_rumah)
+            ->first();
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])
+                ->first();
+
+            $checkPelanggan = DB::table('user_pelanggan')
+                ->where('no_ktp_plgn', '=', $request->nik)
+                ->first();
+            // dd($checkPelanggan);
+            $id = null;
+            if (!empty($checkPelanggan)) {
+                $id = $checkPelanggan->id_pelanggan;
+            }
+            if (empty($checkPelanggan)) {
+                $dataInput = array(
+                    'nama_plgn' => $request->nama,
+                    'id_user_admin' => session::get('user'),
+                    'pekerjaan_plgn' => $request->pekerjaan,
+                    // 'id_sales'              => session::get('user'),
+                    'no_ktp_plgn' => $request->nik,
+                    'no_telp_plgn' => $request->telp,                   
+                    'email_plgn' => $request->email,
+                );
+                // dd($dataInput);
+                // die();
+
+                $this->validate($request, [
+                    'nik' => 'required',
+                ]);
+
+                $id = DB::table('user_pelanggan')->insertGetId(
+                    $dataInput
+                );
+            }
+            $codeData = $request->code;
+            $ktp = $request->nik;
+            return redirect('/summary-po/' . $rumah->id_rumah . '/' . $ktp . '/'. $codeData);
+            dd($ktp);
+            // die();
+        }
+    }
+
+    public function simSummaryPO($id_rumah,$ktp,$code)
+    {
+        if (!session()->has('guest') && !session()->has('user')) {
+            // $hasilSess = Session::get('guest');
+            // response()->json('hasilSess');
+            return redirect("/login")->with('error', "You not sign in or sign up!");
+        }
+        $hargaPO;
+        $randomIndex = random_int(111,999);
+        if ($code == "R") {
+            $hargaPO = 2000000;
+        }elseif($code == "NR"){
+            $hargaPO = 5000000;
+        }
+       
+        $pelanggan = DB::table('user_pelanggan')->where([
+            'no_ktp_plgn' => $ktp,
+        ])->first();
+        // dd($pelanggan);
+        $rumah = DB::table('rumah')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->where('status', '=', 'available')
+            ->where('rumah.id_rumah', '=', $id_rumah)
+            ->first();
+        
+        $hargaPO = $hargaPO + $randomIndex;
+        
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])
+
+                ->first();
+
+            // dd($user);
+            // die();
+           
+                return view('simSummaryPO', compact('user',  'rumah', 'pelanggan','hargaPO','code'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            // dd($userPelanggan);
+            // die();
+            if ($voucher != "Tidak Ada Promo") {
+                return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'promo', 'payment', 'voucher', 'pelanggan', 'kkpr'));
+            } else {
+                return view('simSummary', compact('userPelanggan', 'tipeRumah', 'rumah', 'payment', 'voucher', 'pelanggan', 'kkpr'));
+            }
+            return view('simSummary');
+        }
+    }
+
     public function simSummaryPOAction(Request $request, $id_rumah,$harga,$p,$code)
     {
         $pelanggan = DB::table('user_pelanggan')->where([
