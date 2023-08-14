@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Pesanan Anda Ditolak</h1>
-    <p>Sayangnya, pesanan Anda untuk rumah {{ $data['getPreOrder']->blok }} - {{$data['getPreOrder']->nomor }} telah ditolak.</p>
+    <p>Sayangnya, pesanan Anda untuk rumah {{ $data['blok'] }} - {{$data['nomor']}} telah ditolak.</p>
     <p>Silakan hubungi layanan pelanggan kami jika Anda memiliki pertanyaan lebih lanjut.</p>
     <p>Terima kasih atas pengertian Anda.</p>
 </body>

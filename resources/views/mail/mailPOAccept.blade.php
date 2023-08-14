@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Pesanan Anda Telah Diterima</h1>
-    <p>Kami senang memberitahu Anda bahwa pesanan Anda untuk rumah {{ $data['getPreOrder']->blok }} - {{$data['getPreOrder']->nomor }} telah berhasil diterima.</p>
+    <p>Kami senang memberitahu Anda bahwa pesanan Anda untuk rumah {{ $data['blok'] }} - {{$data['nomor']}} telah berhasil diterima.</p>
     <p>Silakan hubungi layanan pelanggan kami jika Anda memiliki pertanyaan lebih lanjut atau memerlukan bantuan.</p>
     <p>Terima kasih atas kepercayaan Anda kepada kami.</p>
 </body>

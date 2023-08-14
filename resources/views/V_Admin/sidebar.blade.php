@@ -134,8 +134,8 @@
                         <div class="divider__title">Optional</div>
                         <hr class="separate">
                     </li>
-                    <li class="nav__item">
-                        <a class="nav__link" href="/user-sales-agent-admin">
+                    <li class="nav__item  " >
+                        <a class="nav__link @if (request()->segment(1) === 'user-sales-agent-admin') active @endif" href="/user-sales-agent-admin">
                             <i class="fas fa-users    "></i>
                             <span>User Sales / Agent</span>
                         </a>
