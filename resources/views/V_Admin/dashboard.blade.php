@@ -160,17 +160,21 @@
                                             var block = item.blok;
                                             var nomor = item.nomor;
                                             var blockNomor = block + "-" + nomor;
-                                            {{--  blockNomor.toString()  --}}
                                             var idrumah = document.getElementById(blockNomor);
 
+                                            {{--  console.log("Block-Nomor:", blockNomor);
+                                            console.log("Status:", item.status);
+                                            console.log("Color:", color(item.status)); // Check color function output  --}}
 
-                                            idrumah.style.fill = color(item.status);
-                                            idrumah.setAttribute('fill', color(item.status));
-
-
+                                            if (idrumah) {
+                                                idrumah.style.fill = color(item.status);
+                                                idrumah.setAttribute('fill', color(item.status));
+                                            } else {
+                                                console.log("Element not found:", blockNomor);
+                                            }
                                         });
                                     });
-                                    console.log(data);
+
 
                                     function color(stat) {
                                         var iro = 'warnaa';

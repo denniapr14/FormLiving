@@ -39,7 +39,7 @@
             <div class="step active">2</div>
             <div class="step last">3</div>
         </div>
-        <div class="kiosk">
+        <div class=>
                 <livewire:userpreorder></livewire:userpreorder>
         </div>
 

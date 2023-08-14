@@ -286,25 +286,27 @@
 
 <body
     style="width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
-    <div class="es-wrapper-color" >
+    <div class="es-wrapper-color" style="background-color:#F6F6F6">
         <!--[if gte mso 9]>
 			<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
 				<v:fill type="tile" color="#f6f6f6"></v:fill>
 			</v:background>
 		<![endif]-->
         <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0"
-            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;">
+            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top;background-color:#F6F6F6">
             <tr>
                 <td valign="top" style="padding:0;Margin:0">
                     <table class="es-content" cellspacing="0" cellpadding="0" align="center"
-                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;">
+                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
                         <tr>
                             <td align="center" style="padding:0;Margin:0">
-                                <table class="es-content-body" cellspacing="0" cellpadding="0" 
+                                <table class="es-content-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
                                     align="center"
-                                    style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:600px;background-image: url('{{ asset('Home') }}/images/bgemail.jpeg');background-size:100%; padding:0;Margin:0;background-repeat: no-repeat; position:center;">
+                                    style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px">
                                     <tr>
-                                        <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px;">
+                                        <td align="left"
+                                            background="https://mzlqyo.stripocdn.email/content/guids/CABINET_fd635ae99f66728ea0c1250e5a154d176c55e2bac78c24fd054ca179e930bea8/images/whatsapp_image_20230519_at_30531_pm_QIw.jpeg"
+                                            style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px;background-image:url(https://mzlqyo.stripocdn.email/content/guids/CABINET_fd635ae99f66728ea0c1250e5a154d176c55e2bac78c24fd054ca179e930bea8/images/whatsapp_image_20230519_at_30531_pm_QIw.jpeg);background-repeat:no-repeat;background-position:left top">
                                             <table cellpadding="0" cellspacing="0" width="100%"
                                                 style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                                 <tr>
@@ -339,7 +341,7 @@
                                                                         <br></p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        Halo {{$data['nama']}}</p>
+                                                                        Halo $data['nama'],</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         &nbsp; &nbsp; Kami ingin mengucapkan selamat
@@ -385,12 +387,6 @@
                                                                         rumah Anda! Semoga masa depan penuh dengan
                                                                         kegembiraan dan kesuksesan bagi Anda dan
                                                                         keluarga.</p>
-                                                                        
-                                                                        <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        &nbsp; &nbsp; Dimohon juga untuk konfirmasi pembayaran Booking Fee setelah melakukan pembayaran ke Nomor WhatsApp : 0821-250-9000-5
-                                                                        <a aria-label="WhatsApp" href="https://wa.me/6282125090005?text=Permisi, Saya%20mengirim%20bukti%20pembayaran%20Booking%20Fee%20Saya"> <img alt="Chat on WhatsApp" src="{{ asset('Home') }}/images/icon-whatsapp.svg" />
-                                                                        <a/></p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         <br></p>

@@ -10,13 +10,13 @@ use App\Models\Rumah;
 use App\Models\PreOrder;
 use App\Models\UserPelanggan;
 
-use App\Mail\MailAttachment;
-use App\Mail\MailNotify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\DB;
+use App\Mail\MailAttachment;
+use App\Mail\MailNotify;
 use Carbon\Carbon;
 use Mail;
 use PDF;
@@ -153,51 +153,31 @@ class C_PreOrder extends Controller
                 ->update(
                     $dataPreOrder
                 );
-            $dataRumah = [];
-            $template = '';
-            if ($decryptedStatus == "rejected") {
-                # code...
-                $dataRumah = [
-                    'status' => "Available"
-                ];
-                $template = 'mail.mailPOTolak';
-            }
-            if ($decryptedStatus == "pending") {
-                # code...
-                $dataRumah = [
-                    'status' => "Keep"
-                ];
-                $template = 'mail.mailPOPending';
-            }
-            if ($decryptedStatus == "confirmed") {
-                # code...
-                $dataRumah = [
-                    'status' => "Sold"
-                ];
-                $template = 'mail.mailPOAccept';
-            }
+                $dataRumah = [];
+                if ($decryptedStatus == "rejected") {
+                    # code...
+                    $dataRumah = [
+                        'status' => "Available"
+                    ];
+                }
+                if ($decryptedStatus == "pending") {
+                    # code...
+                    $dataRumah = [
+                        'status' => "Keep"
+                    ];
+                }
+                if ($decryptedStatus == "confirmed") {
+                    # code...
+                    $dataRumah = [
+                        'status' => "Sold"
+                    ];
+                }
 
             DB::table('rumah')
                 ->where('id_rumah', $getPreOrder[0]->id_rumah)
                 ->update(
                     $dataRumah
                 );
-
-
-            $data = [
-                "subject" => "Form Living",
-                "body" => "Form Living",
-                "blok" => $getPreOrder[0]->blok,
-                "nomor" => $getPreOrder[0]->nomor,
-
-            ];
-            // MailNotify class that is extend from Mailable class.
-            try {
-                Mail::to($getPreOrder[0]->email_plgn)->send(new MailNotify($data, $template));
-                // return response()->json(['Great! Successfully send in your mail']);
-            } catch (Exception $e) {
-                // return response()->json(['Sorry! Please try again latter']);
-            }
 
 
             return redirect()->back()->with(
@@ -294,23 +274,23 @@ class C_PreOrder extends Controller
         }
         return view('simPreOrder', compact('cluster', 'rumah'));
     }
+
     function preOrderDataUser($id,$code){
         $dataFunctionUser = ([
             'idrumah' => $id
         ]);
-
+     
         $userData = $this->pelangganData->getAllUserPelanggan();
-
+       
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
             ])
                 ->first();
-            return view('simPODataPelanggan', compact('user', 'dataFunctionUser'));
+            return view('simPODataPelanggan', compact('user','dataFunctionUser'));
         }
-
     }
-    
+
     public function dataUserPO($id, $code)
     {
         $dataFunctionUser = $code;
@@ -404,6 +384,56 @@ class C_PreOrder extends Controller
             dd($ktp);
             // die();
         }
+
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+
+            $checkPelanggan = DB::table('user_pelanggan')
+                ->where('no_ktp_plgn', '=', $request->nik)
+                ->first();
+
+            $id = null;
+            if (!empty($checkPelanggan)) {
+                $id = $checkPelanggan->id_pelanggan;
+            }
+            if (empty($checkPelanggan)) {
+                $dataInput = array(
+                    'nama_plgn' => $request->nama,
+                    'id_user_admin' => session::get('user'),
+                    'pekerjaan_plgn' => $request->pekerjaan,
+                    // 'id_sales'              => session::get('user'),
+                    'no_ktp_plgn' => $request->nik,
+                    'no_telp_plgn' => $request->telp,
+                    'no_wa_plgn' => $request->wa,
+                    'alamat_plgn' => $request->jalan . ', ' . $request->kelurahan . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->pulau,
+                    'email_plgn' => $request->email,
+                    'npwp_plgn' => $request->npwp,
+                    'jenis_kelamin_status' => $request->gender,
+                    'status_pernikahan_plgn' => $request->statusPernikahan,
+                    // 'id_kkpr'               => $kkpr->id_kkpr,
+
+                );
+
+                $this->validate($request, [
+                    'nama' => 'required|min:3'
+
+                ]);
+
+                $id = DB::table('user_pelanggan')->insertGetId(
+                    $dataInput
+                );
+            }
+            $codeData = $request->code;
+            $ktp = $request->nik;
+            return redirect('/summary-po/' . $rumah->id_rumah . '/' . $ktp . '/'. $codeData->code_pembayaran);
+
+
+            dd($codeData->code_pembayaran);
+            // die();
+
+        }
     }
 
     public function simSummaryPO($id_rumah,$ktp,$code)
@@ -465,15 +495,15 @@ class C_PreOrder extends Controller
         $pelanggan = DB::table('user_pelanggan')->where([
             'id_pelanggan' => $p,
         ])->first();
-
+        
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->where('status', '=', 'available')
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
 
-        $now = Carbon::now();
-        $template = 'mail.mailPOAccept';
+        $now = Carbon::now();     
+        $template = 'mail.mailPO';
         $this->validate($request, [
             'ktp' => 'required',
         ]);
@@ -489,8 +519,8 @@ class C_PreOrder extends Controller
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
             ])->first();
-
-                $dataInput = array(
+               
+                $dataInput = array(  
                     'id_user_admin' => session::get('user'),
                     'id_rumah' => $id_rumah,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
@@ -499,10 +529,10 @@ class C_PreOrder extends Controller
                     'tipe_booking_po' => $statusPO,
                     'tgl_input_po' => $now
                 );
-
-
-
-
+            
+          
+            
+            
             DB::table('pre_order')->insert(
                 $dataInput
             );
@@ -513,38 +543,32 @@ class C_PreOrder extends Controller
                 ->where('departemen.departemen', '=', "Accounting")
                 ->where('user_admin.email_ua', '!=', null)
                 ->get();
-
-                $dataEmail1 = [
-                    'to' => $pelanggan->email_plgn,
+        
+            $dataEmail1 = [
+                'to' => $pelanggan->email_plgn,
+                "subject" => "Forms Living",
+                "body" => "",
+                'nama' => $pelanggan->nama_plgn,
+                
+            ];
+            $dataEmail2 = [
+                'to' => $user->email_ua,
+                "subject" => "Forms Living",
+                "body" => "",
+                "body" => "",
+                'nama' => $pelanggan->nama_plgn,
+               
+            ];
+            $dataEmail3 = null;
+            foreach ($accounting as $accounting) {
+                $dataEmail3 = [
+                    'to' => $accounting->email_ua,
                     "subject" => "Forms Living",
                     "body" => "",
-                    'nama' => $pelanggan->nama_plgn,
-                    'blok' => $rumah->blok,
-                    'nomor' => $rumah->nomor,
-    
-                ];
-                $dataEmail2 = [
-                    'to' => $user->email_ua,
-                    "subject" => "Forms Living",
-                    "body" => "",
                     "body" => "",
                     'nama' => $pelanggan->nama_plgn,
-                    'blok' => $rumah->blok,
-                    'nomor' => $rumah->nomor,
-    
+                   
                 ];
-                $dataEmail3 = null;
-                foreach ($accounting as $accounting) {
-                    $dataEmail3 = [
-                        'to' => $accounting->email_ua,
-                        "subject" => "Forms Living",
-                        "body" => "",
-                        "body" => "",
-                        'nama' => $pelanggan->nama_plgn,
-                        'blok' => $rumah->blok,
-                    'nomor' => $rumah->nomor,
-    
-                    ];
                 try {
                     // $MailAtt = ();
                     // Mail::to($pelanggan->email_plgn)->send(new MailAttachment($dataEmail1, $template));
@@ -563,11 +587,11 @@ class C_PreOrder extends Controller
                 // return response()->json(['Sorry! Please try again latter']);
             }
 
-            return redirect('/congratulation')->with(compact('rumah','pelanggan','dataInput'),'success', 'Data has been send!');
+            return redirect('/congratulation')->with('success', 'Data has been send!');
             // dd($user);
             // die();
 
         }
-    }
+    }  
 
 }

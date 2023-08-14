@@ -36,6 +36,7 @@ class C_Dashboard extends Controller
 
     public function index($projek)
     {
+
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $fp = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
             'formulir_pesanan.status_fp',

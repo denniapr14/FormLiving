@@ -18,28 +18,30 @@ class MailAttachment extends Mailable
      *
      * @return void
      */
-    public $data=[];
+     public $data=[];
+    // protected $pdfPath;
+
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
-    {
-        $this->data= $data;
-    }
+    // protected $data;
+    protected $template;
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
+    public function __construct($data, $template)
+    {
+        $this->data = $data;
+        $this->template = $template;
+    }
     public function build()
     {
-        return $this->from('formliving@greenlandtidar.net','Formulir Pesanan')
-        ->subject($this->data["subject"])
-                    ->view('mail.test')->with("data",$this->data)
-                    ->attach($this->data["attachment"]);
+        
+        return $this->from('formliving@greenlandtidar.net','Surat Pemesanan Rumah Sementara')
+                    
+                    ->view($this->template)
+                    ->with($this->data)
+                     ->attach($this->data["attachment"]);
     }
 }
