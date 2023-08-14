@@ -310,6 +310,50 @@ class C_PreOrder extends Controller
         }
 
     }
+    
+    public function dataUserPO($id, $code)
+    {
+        $dataFunctionUser = $code;
+        
+        if (!session()->has('guest') && !session()->has('user')) {
+            // $hasilSess = Session::get('guest');
+            // response()->json('hasilSess');
+            return redirect("/login")->with('error', "You not sign in or sign up!");
+        }
+
+        // dd($kkpr);
+        // die();
+        $rumah = DB::table('rumah')
+            ->join('projek','rumah.id_projek','=','projek.id_projek')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->where('rumah.status', '=', 'available')
+            ->where('projek.nama_projek','=','Kalm')
+            ->where('rumah.id_rumah', '=', $id)
+            ->first();
+            
+        // dd($promo);
+        // die();
+        if (session()->has('user')) {
+            $user = \App\Models\UserAdmin::where([
+                'id_user_admin' => session::get('user'),
+            ])->first();
+
+            // dd($user);
+            // die();
+            // return view('underMT', compact('rumah', 'tipeRumah'));
+            return view('simPOUser', compact('user', 'rumah','dataFunctionUser'));
+        }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            // dd($userPelanggan);
+            // die();
+            // return view('underMT', compact('rumah', 'tipeRumah'));
+            return view('simPOUser', compact('userPelanggan', 'dataFunctionUser'));
+        }
+        return view('login');
+    }
 
     public function simSummaryPOAction(Request $request, $id_rumah,$harga,$p,$code)
     {
