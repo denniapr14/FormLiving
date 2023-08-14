@@ -45,7 +45,7 @@ class Home extends Controller
     public function index()
     {
         $promo = $this->promoList->getPromoWhereAll('*','status','=','aktif');
-        
+
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -360,7 +360,7 @@ class Home extends Controller
         $data = $this->userList->getAllUserPelangganFirst();
         return view('mail.mailFP',compact('data'));
     }
-    
+
     public function VirtualTour()
     {
         return view('virtualTour');
@@ -1695,7 +1695,7 @@ class Home extends Controller
         $promo = DB::table('promo')
 
             ->where('status', '=', "aktif")
-            ->where('tipe_promo', '=', "spesial")
+            ->where('tipe_promo', '=', "special")
         // ->where('tgl_aktif', '<=', NOW())
             ->where('tgl_berakhir', '>=', NOW())
             ->where([
