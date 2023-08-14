@@ -21,7 +21,11 @@ class UserPelanggan extends Authenticatable
         return bcrypt($this->password_plgn);
     }
 
-    public function getAllUserPelanggan(){
+    public function getAllUserPelanggan10(){
         return UserPelanggan::select('*')->limit(10);
+    }
+
+    public function getAllUserPelangganFirst(){
+        return UserPelanggan::select('*')->first();
     }
 }

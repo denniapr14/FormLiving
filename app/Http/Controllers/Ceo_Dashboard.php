@@ -162,7 +162,6 @@ class Ceo_Dashboard extends Controller
     public function addPromoRumahAction(Request $request)
     {
         if (session()->has('user')) {
-
             $user = DB::table('user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
 
@@ -174,7 +173,7 @@ class Ceo_Dashboard extends Controller
                 ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')
                 ->where('user_admin.id_user_admin', '=', session::get('user'))
                 ->get();
-            $dataInputRumahPromo = "";
+            $dataInputRumahPromo = array();
             for ($i = 1; $i < count($request->rumah); $i++) {
 
                 $rumah = DB::table('rumah')
@@ -185,7 +184,6 @@ class Ceo_Dashboard extends Controller
 
                 $dataInputRumahPromo = array(
                     'id_rumah'  => $request->rumah,
-
                 );
             }
             // dd($rumah);

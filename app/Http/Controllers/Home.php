@@ -13,6 +13,7 @@ use App\Mail\MailNotify;
 use App\Models\Promo;
 use App\Models\Departemen;
 use App\Models\Rumah;
+use App\Models\UserPelanggan;
 use Illuminate\Contracts\Auth\Guard;
 
 // Controller
@@ -28,9 +29,13 @@ use PDF;
 class Home extends Controller
 {
     public $clusterList;
+    public  $promoList;
+    public $userList;
     public function __construct()
     {
          $this->clusterList = new Rumah();
+         $this->promoList = new Promo();
+         $this->userList = new UserPelanggan();
         // $this->middleware('guest')->except('logout');
         // $this->middleware('guest:admin')->except('logout');
         // // $this->middleware('guest:writer')->except('logout');
@@ -39,7 +44,8 @@ class Home extends Controller
 
     public function index()
     {
-        // Session
+        $promo = $this->promoList->getPromoWhereAll('*','status','=','aktif');
+        
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -47,17 +53,17 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('home', compact('user'));
+            return view('home', compact('user','promo'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
-                'id_pelanggan' => session::get('guest'),
+                'id_pelanggan' => session::get('guest','promo'),
             ])->first();
             // dd($userPelanggan);
             // die();
             return view('home', compact('userPelanggan'));
         }
-          if (!session()->has('guest') && !session()->has('user')) {
+          if (!session()->has('guest') && !session()->has('user','promo')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
@@ -65,7 +71,7 @@ class Home extends Controller
 
         }
         // end sess
-        return view('home');
+        return view('home',compact('promo'));
     }
 
     public function housing($dataProjek)
@@ -351,9 +357,10 @@ class Home extends Controller
 
     public function LoadingPage()
     {
-        return view('greenland');
-        # code...
+        $data = $this->userList->getAllUserPelangganFirst();
+        return view('mail.mailFP',compact('data'));
     }
+    
     public function VirtualTour()
     {
         return view('virtualTour');
@@ -1477,9 +1484,7 @@ class Home extends Controller
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
-            ])
-
-                ->first();
+            ])  ->first();
 
             // dd($user);
             // die();
@@ -1516,21 +1521,23 @@ class Home extends Controller
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
         $promo = DB::table('promo')
-            ->where('status', '=', "aktif")
-            ->where('tipe_promo', '=', "standart")
-            ->where('codecluster', '=', $rumah->codecluster)
-            ->where('id_rumah', '=', null)
+            ->join('list_promo','promo.id_promo','=','list_promo.id_promo')
+            ->where('promo.status', '=', "aktif")
+            ->where('promo.tipe_promo', '=', "standart")
+            ->whereOr('list_promo.codecluster', '=', $rumah->codecluster)
+            ->where('list_promo.id_rumah', '=', null)
             ->where('tgl_aktif', '<=', NOW())
             ->where('tgl_berakhir', '>=', NOW())
             ->get();
         $promoRumah = DB::table('promo')
-            ->where('status', '=', "aktif")
-            ->where('tipe_promo', '=', "standart")
-            ->where('codecluster', '=', $rumah->codecluster)
-            ->where('id_rumah', '=', $id_rumah)
-            ->where('tgl_aktif', '<=', NOW())
-            ->where('tgl_berakhir', '>=', NOW())
-            ->get();
+        ->join('list_promo','promo.id_promo','=','list_promo.id_promo')
+        ->where('promo.status', '=', "aktif")
+        ->where('promo.tipe_promo', '=', "standart")
+        ->whereOr('list_promo.codecluster', '=', null)
+        ->where('list_promo.id_rumah', '=', $rumah->id_rumah)
+        ->where('tgl_aktif', '<=', NOW())
+        ->where('tgl_berakhir', '>=', NOW())
+        ->get();
         // dd($promo);
         // die();
         if (session()->has('user')) {

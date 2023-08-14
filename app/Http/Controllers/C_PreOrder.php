@@ -43,7 +43,6 @@ class C_PreOrder extends Controller
 
     function Preorder($projek)
     {
-
         $getProjek = $this->projek->firstProjek(
             '*',
             'nama_projek',
@@ -473,7 +472,7 @@ class C_PreOrder extends Controller
             ->first();
 
         $now = Carbon::now();
-        $template = 'mail.mailPO';
+        $template = 'mail.mailPOAccept';
         $this->validate($request, [
             'ktp' => 'required',
         ]);
@@ -514,31 +513,37 @@ class C_PreOrder extends Controller
                 ->where('user_admin.email_ua', '!=', null)
                 ->get();
 
-            $dataEmail1 = [
-                'to' => $pelanggan->email_plgn,
-                "subject" => "Forms Living",
-                "body" => "",
-                'nama' => $pelanggan->nama_plgn,
-
-            ];
-            $dataEmail2 = [
-                'to' => $user->email_ua,
-                "subject" => "Forms Living",
-                "body" => "",
-                "body" => "",
-                'nama' => $pelanggan->nama_plgn,
-
-            ];
-            $dataEmail3 = null;
-            foreach ($accounting as $accounting) {
-                $dataEmail3 = [
-                    'to' => $accounting->email_ua,
+                $dataEmail1 = [
+                    'to' => $pelanggan->email_plgn,
+                    "subject" => "Forms Living",
+                    "body" => "",
+                    'nama' => $pelanggan->nama_plgn,
+                    'blok' => $rumah->blok,
+                    'nomor' => $rumah->nomor,
+    
+                ];
+                $dataEmail2 = [
+                    'to' => $user->email_ua,
                     "subject" => "Forms Living",
                     "body" => "",
                     "body" => "",
                     'nama' => $pelanggan->nama_plgn,
-
+                    'blok' => $rumah->blok,
+                    'nomor' => $rumah->nomor,
+    
                 ];
+                $dataEmail3 = null;
+                foreach ($accounting as $accounting) {
+                    $dataEmail3 = [
+                        'to' => $accounting->email_ua,
+                        "subject" => "Forms Living",
+                        "body" => "",
+                        "body" => "",
+                        'nama' => $pelanggan->nama_plgn,
+                        'blok' => $rumah->blok,
+                    'nomor' => $rumah->nomor,
+    
+                    ];
                 try {
                     // $MailAtt = ();
                     // Mail::to($pelanggan->email_plgn)->send(new MailAttachment($dataEmail1, $template));
@@ -557,7 +562,7 @@ class C_PreOrder extends Controller
                 // return response()->json(['Sorry! Please try again latter']);
             }
 
-            return redirect('/congratulation')->with('success', 'Data has been send!');
+            return redirect('/congratulation')->with(compact('rumah','pelanggan','dataInput'),'success', 'Data has been send!');
             // dd($user);
             // die();
 
