@@ -28,9 +28,11 @@ use PDF;
 class Home extends Controller
 {
     public $clusterList;
+    public  $promoList;
     public function __construct()
     {
          $this->clusterList = new Rumah();
+         $this->promoList = new Promo();
         // $this->middleware('guest')->except('logout');
         // $this->middleware('guest:admin')->except('logout');
         // // $this->middleware('guest:writer')->except('logout');
@@ -39,7 +41,8 @@ class Home extends Controller
 
     public function index()
     {
-        // Session
+        $promo = $this->promoList->getPromoWhereAll('*','status','=','aktif');
+        
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -47,17 +50,17 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('home', compact('user'));
+            return view('home', compact('user','promo'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
-                'id_pelanggan' => session::get('guest'),
+                'id_pelanggan' => session::get('guest','promo'),
             ])->first();
             // dd($userPelanggan);
             // die();
             return view('home', compact('userPelanggan'));
         }
-          if (!session()->has('guest') && !session()->has('user')) {
+          if (!session()->has('guest') && !session()->has('user','promo')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
@@ -65,7 +68,7 @@ class Home extends Controller
 
         }
         // end sess
-        return view('home');
+        return view('home',compact('promo'));
     }
 
     public function housing($dataProjek)
@@ -1477,9 +1480,7 @@ class Home extends Controller
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
-            ])
-
-                ->first();
+            ])  ->first();
 
             // dd($user);
             // die();
