@@ -10,11 +10,14 @@ use App\Models\Rumah;
 use App\Models\PreOrder;
 use App\Models\UserPelanggan;
 
+use App\Mail\MailAttachment;
+use App\Mail\MailNotify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 class C_PreOrder extends Controller
 {
@@ -148,31 +151,50 @@ class C_PreOrder extends Controller
                 ->update(
                     $dataPreOrder
                 );
-                $dataRumah = [];
-                if ($decryptedStatus == "rejected") {
-                    # code...
-                    $dataRumah = [
-                        'status' => "Available"
-                    ];
-                }
-                if ($decryptedStatus == "pending") {
-                    # code...
-                    $dataRumah = [
-                        'status' => "Keep"
-                    ];
-                }
-                if ($decryptedStatus == "confirmed") {
-                    # code...
-                    $dataRumah = [
-                        'status' => "Sold"
-                    ];
-                }
+            $dataRumah = [];
+            $template = '';
+            if ($decryptedStatus == "rejected") {
+                # code...
+                $dataRumah = [
+                    'status' => "Available"
+                ];
+                $template = 'mail.mailPOTolak';
+            }
+            if ($decryptedStatus == "pending") {
+                # code...
+                $dataRumah = [
+                    'status' => "Keep"
+                ];
+                $template = 'mail.mailPOPending';
+            }
+            if ($decryptedStatus == "confirmed") {
+                # code...
+                $dataRumah = [
+                    'status' => "Sold"
+                ];
+                $template = 'mail.mailPOAccept';
+            }
 
             DB::table('rumah')
                 ->where('id_rumah', $getPreOrder[0]->id_rumah)
                 ->update(
                     $dataRumah
                 );
+
+
+            $data = [
+                "subject" => "Form Living",
+                "body" => "Form Living",
+                "data" => $getPreOrder,
+
+            ];
+            // MailNotify class that is extend from Mailable class.
+            try {
+                Mail::to($getPreOrder[0]->email_plgn)->send(new MailNotify($data, $template));
+                // return response()->json(['Great! Successfully send in your mail']);
+            } catch (Exception $e) {
+                // return response()->json(['Sorry! Please try again latter']);
+            }
 
 
             return redirect()->back()->with(
@@ -269,20 +291,20 @@ class C_PreOrder extends Controller
         }
         return view('simPreOrder', compact('cluster', 'rumah'));
     }
-    function preOrderDataUser($id,$code){
+    function preOrderDataUser($id, $code)
+    {
         $dataFunctionUser = ([
             'idrumah' => $id
         ]);
-     
+
         $userData = $this->pelangganData->getAllUserPelanggan();
-       
+
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
             ])
                 ->first();
-            return view('simPODataPelanggan', compact('user','dataFunctionUser'));
+            return view('simPODataPelanggan', compact('user', 'dataFunctionUser'));
         }
-
     }
 }
