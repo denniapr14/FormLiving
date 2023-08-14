@@ -1,11 +1,11 @@
-@extends('CEO.app')
-@extends('CEO.sidebar')
-@extends('CEO.footer')
+@extends('V_Admin.app')
+@extends('V_Admin.sidebar')
+@extends('V_Admin.footer')
 @extends('flashdata')
 @section('tittle', 'FORMS | Dashboard')
 
 @section('content')
-<br><br><br><br>
+
 <div class="content__row">
     <div class="content__row mb-3">
         <div class="card__box">
@@ -16,7 +16,7 @@
 
                 </div>
                 <div class="invoices__actions">
-                    <a href="/CEO/tambah-rumah-promo" class="btn-fd-outline btn--small">Tambah Promo</a>
+                    <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}" class="btn-fd-outline btn--small">Tambah Promo</a>
                 </div>
             </div>
 
@@ -28,9 +28,6 @@
                             <th>Cluster - No Rumah</th>
 
                             <th>Promo</th>
-
-
-                            <th>Aksi</th>
 
                         </tr>
                     </thead>
@@ -124,16 +121,7 @@
             </td>
 
 
-            <td>
-                <div class="d-flex flex-nowrap">
-                    <a href="CEO/lihatPromo/{{ $promo->id_promo }}" class="btn-fd-icon-outline">
-                        <i class="fa fa-eye" aria-hidden="true"></i>
-                    </a>
 
-                </div>
-
-
-            </td>
             </tr>
             @else
             <tr>
@@ -198,16 +186,6 @@
         </td>
 
 
-        <td>
-            <div class="d-flex flex-nowrap">
-                <a href="CEO/lihatPromo/{{ $promo->id_promo }}" class="btn-fd-icon-outline">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
-                </a>
-
-            </div>
-
-
-        </td>
         </tr>
         @endif
 
@@ -219,8 +197,7 @@
     </div>
 
 </div>
-</div>
-</div>
+
 
 <script>
     $(document).ready(function() {

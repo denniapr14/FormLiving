@@ -144,7 +144,7 @@
 
                             {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
                             {{-- @include('map.svg') --}}
-                            {!! file_get_contents(resource_path('views/map.svg')) !!}
+                            {!! file_get_contents(resource_path('views/Greenland.svg')) !!}
                             <script>
                                 var svg = document.getElementById('Layer_1');
 
@@ -438,11 +438,6 @@
 
     </script>
 
-    <?php
-    function rupiah($angka)
-    {
-      $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.') . ',-';
-      return $hasil_rupiah;
-    } ?>
+
 
 @endsection

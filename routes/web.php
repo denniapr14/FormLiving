@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminFormsLiving_User;
 use App\Http\Controllers\C_Dashboard;
 use App\Http\Controllers\C_Login;
 use App\Http\Controllers\C_PembayaranRumah;
+use App\Http\Controllers\C_Promo;
 use App\Http\Controllers\C_Rumah;
 use App\Http\Controllers\C_GambarRumah;
 use App\Http\Controllers\C_PreOrder;
@@ -321,6 +322,12 @@ Route::post('/po-build/store/{id_rumah}/{harga}/{pelanggan}/{code}', [C_PreOrder
 //>>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');
 Route::get('/download-user-sales-admin',[C_UserAdmin::class,'DownloadUserAdminSales'])->name('downloadUserAdminSales.admin');
+
+// PROMO
+Route::get('/promo-admin/{projek}',[C_Promo::class,'Promo'])->name('promo.admin');
+Route::get('/tambah-rumah-promo-admin/{projek}',[C_Promo::class,'addRumahPromo'])->name('addPromoRumah.admin');
+Route::post('/tambah-rumah-promo-admin/action/{projek}',[C_Promo::class,'addRumahPromoAction'])->name('addPromoRumahAction.admin');
+Route::post('/tambah-promo-admin/{projek}',[C_Promo::class,'addPromoAction'])->name('addPromoAction.admin');
 
 
 Route::get('/ubah-user-profile/{id}',[C_UserAdmin::class, 'updateUserProfile'])->name('updateUserProfile.admin');
