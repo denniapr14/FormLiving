@@ -43,7 +43,6 @@ class C_PreOrder extends Controller
 
     function Preorder($projek)
     {
-
         $getProjek = $this->projek->firstProjek(
             '*',
             'nama_projek',
