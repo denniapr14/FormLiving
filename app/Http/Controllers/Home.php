@@ -1681,7 +1681,6 @@ class Home extends Controller
             // die();
 
         }
-        # code...
     }
 
     public function FindKuponSpesial($id_rumah, $id_tipe, $id_pelanggan, $kode_promo)

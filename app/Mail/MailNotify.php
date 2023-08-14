@@ -19,7 +19,7 @@ class MailNotify extends Mailable
      * @return void
      */
     public $data=[];
-    protected $pdfPath;
+    // protected $pdfPath;
 
 
     /**
@@ -27,21 +27,20 @@ class MailNotify extends Mailable
      *
      * @return void
      */
-    public function __construct($data,$pdfPath)
+    // protected $data;
+    protected $template;
+
+    public function __construct($data, $template)
     {
         $this->data = $data;
-        $pdf = $pdfPath;
+        $this->template = $template;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
-        return $this->from('formliving@greenlandtidar.net','Formulir Pesanan')
-        ->subject($this->data["subject"])
-                    ->view('mail.test')->with("data",$this->data);
+        return $this->from('formliving@greenlandtidar.net','Forms Living Greenland')
+                    
+                    ->view($this->template)
+                    ->with($this->data);
     }
 }
