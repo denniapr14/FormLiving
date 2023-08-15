@@ -43,6 +43,8 @@ Route::get('/my-cart', [Home::class, 'MyCart']);
 Route::get('/login', [C_Login::class, 'login']);
 Route::post('/login', [C_Login::class, 'loginAction'])->name('login.action');
 Route::get('/logout', [C_Login::class, 'logout']);
+Route::get('/forgot/{email}', [C_Login::class, 'forgotPassword'])->name('forgot.utama');
+Route::post('/forgot', [C_Login::class, 'forgotAction'])->name('forgot.action');
 
 Route::get('/cluster/{id_cluster}', [Home::class, 'Cluster']);
 Route::get('/detail-cluster', [Home::class, 'DetailCluster']);

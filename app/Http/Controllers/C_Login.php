@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Mail;
 use PDF;
 
@@ -126,6 +127,44 @@ class C_Login extends Controller
         // die();
 
         return $user->kategori;
+    }
+
+    public function forgotPassword($email){
+        // if(!session()->has('guest') || session()->has('user')){
+        //     Session::flush('guest');
+        //     Session::flush('user');
+        // }
+        $user = DB::table('user_admin')
+            ->where('user_admin.email_ua', '=', $email)
+            ->first();
+            // dd($user); 
+       return view('forgotPassword',compact('user'));
+    }
+
+    public function forgotAction(request $request){
+       
+        
+        
+
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:6|confirmed'
+            // Add more validation rules as needed
+        ]);
+        
+        if ($validator->fails()) {
+            $customMessages = [
+                'required' => ':attribute Masih Kosong',
+                'min' => ' :attribute kurang dari 6',
+                'confirmed' => ' :attribute tidak sama dengan konfirmasi password'
+            ];
+        }
+
+        Session::flash('toastr', [
+            'type' => 'error',
+            'message' => 'Please fix the following issues:',
+            'options' => ['timeOut' => 5000], // Toastr options
+        ]);
+        return redirect()->back()->withErrors($validator)->withInput();
     }
 
     public function Logout()

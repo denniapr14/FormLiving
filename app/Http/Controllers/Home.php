@@ -61,14 +61,7 @@ class Home extends Controller
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('home', compact('userPelanggan'));
-        }
-          if (!session()->has('guest') && !session()->has('user','promo')) {
-            // $hasilSess = Session::get('guest');
-            // response()->json('hasilSess');
-            return redirect("/login")->with('error', "You not sign in or sign up!");
-            # code...
-
+            return view('home', compact('userPelanggan','promo'));
         }
         // end sess
         return view('home',compact('promo'));
@@ -791,22 +784,15 @@ class Home extends Controller
     }
     public function SignUpAction(Request $request)
     {
-        // dd($request->all());
-        // if (!session()->has('guest') && !session()->has('user')) {
-        //     // $hasilSess = Session::get('guest');
-        //     // response()->json('hasilSess');
-        //     return redirect("/login")->with('error', "You not sign in or sign up!");
-        //     # code...
-
-        // }
-        $this->validate($request, [
+        $validasi = $this->validate($request, [
             'nama' => 'required|min:3',
-            'username' => 'required|min:5|max:20',
-            'email' => 'required',
+            'username_ua' => 'required|min:5|max:20|unique:user_admin',
+            'email' => 'required|email',
             'phone' => 'required|numeric',
-
             'kelamin' => 'required',
             'password' => 'required|min:6',
+        ], [
+            'username_ua.unique' => 'Username sudah ada, Harap menggunakan Username yang lain'
         ]);
 
         $userP = \App\Models\UserPelanggan::where([

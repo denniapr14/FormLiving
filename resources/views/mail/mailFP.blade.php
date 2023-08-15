@@ -286,7 +286,7 @@
 
 <body
     style="width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
-    <div class="es-wrapper-color" >
+    <div class="es-wrapper-color">
         <!--[if gte mso 9]>
 			<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
 				<v:fill type="tile" color="#f6f6f6"></v:fill>
@@ -300,11 +300,11 @@
                         style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;">
                         <tr>
                             <td align="center" style="padding:0;Margin:0">
-                                <table class="es-content-body" cellspacing="0" cellpadding="0" 
-                                    align="center"
+                                <table class="es-content-body" cellspacing="0" cellpadding="0" align="center"
                                     style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:600px;background-image: url('{{ asset('Home') }}/images/bgemail.jpeg');background-size:100%; padding:0;Margin:0;background-repeat: no-repeat; position:center;">
                                     <tr>
-                                        <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px;">
+                                        <td align="left"
+                                            style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px;">
                                             <table cellpadding="0" cellspacing="0" width="100%"
                                                 style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                                 <tr>
@@ -318,28 +318,35 @@
                                                                     style="padding:0;Margin:0;padding-top:15px;padding-left:40px;padding-right:40px">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        Halo {{$data['nama']}}</p>
+                                                                        Halo {{$data}}</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         &nbsp; &nbsp; Kami ingin mengucapkan selamat
@@ -349,7 +356,8 @@
                                                                         ini.</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         &nbsp; &nbsp;Kami berharap Anda menikmati proses
@@ -359,7 +367,8 @@
                                                                         memastikan kebutuhan Anda terpenuhi.</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         &nbsp; &nbsp;Rumah baru adalah tempat di mana
@@ -369,7 +378,8 @@
                                                                         rumah ini.</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         &nbsp; &nbsp;Jika Anda memiliki pertanyaan atau
@@ -378,43 +388,56 @@
                                                                         membantu Anda.</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         &nbsp; &nbsp;Sekali lagi, selamat atas pembelian
                                                                         rumah Anda! Semoga masa depan penuh dengan
                                                                         kegembiraan dan kesuksesan bagi Anda dan
                                                                         keluarga.</p>
-                                                                        
-                                                                        <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        &nbsp; &nbsp; Dimohon juga untuk konfirmasi pembayaran Booking Fee setelah melakukan pembayaran ke Nomor WhatsApp : 0821-250-9000-5
-                                                                        <a aria-label="WhatsApp" href="https://wa.me/6282125090005?text=Permisi, Saya%20mengirim%20bukti%20pembayaran%20Booking%20Fee%20Saya"> <img alt="Chat on WhatsApp" src="{{ asset('Home') }}/images/icon-whatsapp.svg" />
-                                                                        <a/></p>
+
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        &nbsp; &nbsp; Dimohon juga untuk konfirmasi
+                                                                        pembayaran Booking Fee setelah melakukan
+                                                                        pembayaran ke Nomor WhatsApp : 0821-250-9000-5
+                                                                        <a aria-label="WhatsApp"
+                                                                            href="https://wa.me/6282125090005?text=Permisi, Saya%20mengirim%20bukti%20pembayaran%20Booking%20Fee%20Saya">
+                                                                            <img alt="Chat on WhatsApp"
+                                                                                src="{{ asset('Home') }}/images/icon-whatsapp.svg" />
+                                                                            <a />
+                                                                    </p>
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         Salam hangat,</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         Forms Living</p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        <br></p>
+                                                                        <br>
+                                                                    </p>
                                                                 </td>
                                                             </tr>
                                                         </table>
