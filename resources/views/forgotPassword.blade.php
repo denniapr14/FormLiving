@@ -3,7 +3,7 @@
 @extends('HomeLayout.sidebar')
 @extends('HomeLayout.footerbranch')
 {{-- @extends('HomeLayout.footer') --}}
-@section('tittle', 'Forms | Login')
+@section('tittle', 'Forms | Lupa Password')
 @section('body', 'index')
 
 @section('content')
