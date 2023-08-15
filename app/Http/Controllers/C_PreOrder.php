@@ -252,10 +252,7 @@ class C_PreOrder extends Controller
     function preOrderSelect()
     {
         if (!session()->has('guest') && !session()->has('user')) {
-            // $hasilSess = Session::get('guest');
-            // response()->json('hasilSess');
             return redirect("/login")->with('error', "You not sign in or sign up!");
-            # code...
         }
 
         $cluster = DB::table('rumah')
