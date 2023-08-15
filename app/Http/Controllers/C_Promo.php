@@ -6,7 +6,9 @@ use App\Models\Clusters;
 use App\Models\Projek;
 use App\Models\Rumah;
 use App\Models\UserAdmin;
+use App\Models\UserMenu;
 use App\Models\UserNotif;
+
 use App\Models\UserProjek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +22,7 @@ class C_Promo extends Controller
     public $userProjek;
     public $userNotif;
     public $projek;
-
+    public $userMenu;
     public function __construct()
     {
         $this->userNotif = new UserNotif();
@@ -29,6 +31,7 @@ class C_Promo extends Controller
         $this->cluster = new Clusters();
         $this->userAdmin = new UserAdmin();
         $this->userProjek = new UserProjek();
+        $this->userMenu = new UserMenu();
     }
 
     public function Promo($projek)
@@ -44,6 +47,25 @@ class C_Promo extends Controller
             // ->where('formulir_pesanan.status_fp','!=','nonactive')
             ->orderBy('promo.id_promo', 'desc')
             ->get();
+
+
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_user_admin' => session::get('user')
+            ])->collect();
+
+            $foundMatchingMenu = false;
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            if (!$foundMatchingMenu) {
+                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            }
 
         if (session()->has('user')) {
             $user = DB::table('user_admin')
@@ -72,6 +94,25 @@ class C_Promo extends Controller
 
     public function addRumahPromo($projek)
     {
+
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user')
+        ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+
+        if (!$foundMatchingMenu) {
+            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        }
+
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
@@ -106,7 +147,27 @@ class C_Promo extends Controller
 
     public function addRumahPromoAction(Request $request, $projek)
     {
+
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user')
+        ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+
+        if (!$foundMatchingMenu) {
+            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        }
+
         if (session()->has('user')) {
             $user = DB::table('user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
@@ -161,7 +222,28 @@ class C_Promo extends Controller
         ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
         ->where('status', '=', 'Available')
         ->get();
+
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user')
+        ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+
+        if (!$foundMatchingMenu) {
+            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        }
+
         if (session()->has('user')) {
             $user = DB::table('user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
@@ -191,6 +273,26 @@ class C_Promo extends Controller
     public function addPromoAction(Request $request, $projek)
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_user_admin' => session::get('user')
+            ])->collect();
+
+            $foundMatchingMenu = false;
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            if (!$foundMatchingMenu) {
+                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            }
+
         if (session()->has('user')) {
             $user = DB::table('user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
