@@ -270,11 +270,12 @@ Route::get('AdminFormsLiving/download-user', [AdminFormsLiving_User::class, 'dow
 Route::get('/email/{id_formulir}', [Home::class, 'email']);
 
 // SUPER ADMIN NEW
-Route::get('/dashboard-admin/{projek}', [C_Dashboard::class, 'index']);
+Route::get('/dashboard-admin/{projek}', [C_Dashboard::class, 'index'])->name('dashboard.admin');
 
-Route::get('/rumah-admin/{projek}', [C_Rumah::class, 'index']);
-Route::get('/tambah-rumah-admin/{projek}', [C_Rumah::class, 'storeRumah']);
+Route::get('/rumah-admin/{projek}', [C_Rumah::class, 'index'])->name('rumah.admin');
+Route::get('/tambah-rumah-admin/{projek}', [C_Rumah::class, 'storeRumah'])->name('postRumah.admin');
 Route::post('/tambah-rumah-action-admin', [C_Rumah::class, 'storeRumahAction'])->name('postRumah');
+Route::get('/hapus-rumah-admin/{projek}/{id}',[C_Rumah::class,'deleteRumahAction'])->name('deleteRumah.admin');
 
 Route::get('/ubah-rumah-admin/{projek}/{id}', [C_Rumah::class, 'updateRumah'])->name('updateRumah.admin');
 Route::post('/ubah-rumah-action-admin/ubah/{projek}/{id}', [C_Rumah::class, 'updateRumahActionNoJS'])->name('updateRumahActionNoJS.admin');

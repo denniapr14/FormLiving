@@ -28,8 +28,9 @@
                     </div>
 
                     <div class="invoices__actions">
-                        @if ($user->kategori == "SuperAdmin" || $user->kategori == "AdminAccounting")
-                        <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}" class="btn-fd-outline btn--small">Tambah Rumah</a>
+                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
+                            <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}"
+                                class="btn-fd-outline btn--small">Tambah Rumah</a>
                         @else
                         @endif
                     </div>
@@ -44,9 +45,8 @@
                                 <th>Tipe Rumah</th>
                                 <th>Luas <br> Tanah</th>
                                 <th>Status</th>
-                                @if ($user->kategori == "SuperAdmin" || $user->kategori == "AdminAccounting")
-
-                                <th>Pengaturan</th>
+                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
+                                    <th>Pengaturan</th>
                                 @else
                                 @endif
 
@@ -62,24 +62,25 @@
                                     <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</td>
                                     <td>{{ $rumah->luas_tanah }}</td>
                                     <td>{{ $rumah->status }}</td>
-                                    @if ($user->kategori == "SuperAdmin" || $user->kategori == "AdminAccounting")
-                                    <td>
+                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
+                                        <td>
 
-                                        <div class="d-flex flex-nowrap">
-                                            <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                class="btn btn-outline-info"><i class="fa fa-eye"
-                                                    aria-hidden="true"></i><span class="badge badge-pill badge-info">
-                                                    {{ $rumah->countTipe }}</span></a>
-                                            <a href="{{ route('updateRumah.admin',[$getProjek->nama_projek,$rumah->id_rumah]) }}"
-                                                class="btn btn-outline-info">
-                                                <i class="fa fa-edit" aria-hidden="true"></i>
+                                            <div class="d-flex flex-nowrap">
+                                                <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
+                                                    class="btn btn-outline-info"><i class="bi bi-book-fill"></i><span class="badge badge-pill badge-info">
+                                                        {{ $rumah->countTipe }}</span></a>
+                                                <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
+                                                    class="btn btn-outline-info">
+                                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="{{ route('deleteRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}" class="btn btn-outline-danger">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </a>
 
-                                        </div>
-                                    </td>
+
+                                            </div>
+                                        </td>
                                     @else
-
-
                                     @endif
 
                                 </tr>

@@ -18,10 +18,9 @@
                     <hr class="separate">
                 </li>
 
-                @foreach ($projekUser as $projekUser)
+                {{-- @foreach ($projekUser as $projekUser)
                     @if ($projekUser->nama_projek == 'Greenland')
-                        <li class="nav__item dropdown
-               ">
+                        <li class="nav__item dropdown ">
                             <a class="nav__link" href="#" alt=" {{ $projekUser->nama_projek }}">
                                 <i class="bi bi-briefcase"></i>
                                 <span>
@@ -42,7 +41,7 @@
 
 
 
-                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminFormsLiving')
+                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminFormsLiving' || $user->kategori == 'Direktur' || $user->kategori == 'CEO' || $user->kategori == 'AdminADV')
                                     <li class="nav__item">
                                         <a class="nav__link
                     @if (request()->segment(1) === 'rumah-admin' && request()->segment(2) == $projekUser->nama_projek) active @endif
@@ -73,7 +72,7 @@
                     "
                                         href="/surat-pemesanan-rumah-admin/{{ $projekUser->nama_projek }}">
                                         <i class="bi bi-file"></i>
-                                        <span class="">Surat Pemesanan Rumah</span>
+                                        <span class="">Pemesanan</span>
                                     </a>
                                 </li>
 
@@ -139,6 +138,37 @@
                             </ul>
                         </li>
                     @endif
+                @endforeach --}}
+
+                @foreach ($projekUser as $projekUser)
+                    <li class="nav__item dropdown ">
+                        <a class="nav__link" href="#" alt=" {{ $projekUser->nama_projek }}">
+                            <i class="bi bi-briefcase"></i>
+                            <span>
+                                {{ $projekUser->nama_projek }}
+                            </span>
+                        </a>
+                        <ul class="dropdown__menu">
+
+                                @foreach ($getUserMenu as $userMenu)
+                                    <li class="nav__item">
+                                        <a class="nav__link  @if (request()->segment(1) === $userMenu->url_menu && request()->segment(2) == $projekUser->nama_projek) active @endif "
+                                            href="{{ route($userMenu->nama_menu, $projekUser->nama_projek) }}">
+                                            <i class="{{ $userMenu->icon_menu }}"></i>
+                                            <span class="">{{ $userMenu->menu }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+
+
+
+
+
+
+
+
+                        </ul>
+                    </li>
                 @endforeach
 
                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminFormsLiving')
@@ -147,8 +177,7 @@
                         <hr class="separate">
                     </li>
                     <li class="nav__item  ">
-                        <a class="nav__link @if (request()->segment(1) === 'user-sales-agent-admin') active @endif"
-                            href="/user-sales-agent-admin">
+                        <a class="nav__link @if (request()->segment(1) === 'user-sales-agent-admin') active @endif" href="/user-sales-agent-admin">
                             <i class="fas fa-users    "></i>
                             <span>User Sales / Agent</span>
                         </a>

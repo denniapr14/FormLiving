@@ -9,11 +9,13 @@ namespace App\Http\Controllers;
 use App\Models\Projek;
 use App\Models\Rumah;
 use App\Models\UserAdmin;
+use App\Models\UserMenu;
 use App\Models\UserProjek;
 use App\Models\FormulirPesanan;
 
 // =======================
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 
 class C_Dashboard extends Controller
@@ -24,7 +26,7 @@ class C_Dashboard extends Controller
     public $userAdmin;
     public $userProject;
     public $projek;
-
+    public $userMenu;
     public function __construct()
     {
         $this->rumah = new Rumah;
@@ -32,6 +34,7 @@ class C_Dashboard extends Controller
         $this->userAdmin = new UserAdmin;
         $this->userProject = new UserProjek;
         $this->projek = new Projek;
+        $this->userMenu = new UserMenu;
     }
 
     public function index($projek)
@@ -75,6 +78,27 @@ class C_Dashboard extends Controller
 
             $projekUser = $this->userProject->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_user_admin' => session::get('user')
+            ])->collect();
+
+            $foundMatchingMenu = false;
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            if (!$foundMatchingMenu) {
+                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            }
+            // if (empty($getUserMenu) || $getUserMenu == '') {
+            //     return redirect('/login')->with('danger','Kamu tidak memiliki akses ke halaman ini');
+            // }
+            // dd($getUserMenu);
             if (
                 $user->kategori == 'Sales' ||
                 $user->kategori == 'SalesAgent' ||
@@ -84,11 +108,11 @@ class C_Dashboard extends Controller
             ) {
                 $whereClosing = [
                     'user_admin.id_user_admin' => $user->id_user_admin,
-                    'projek.nama_projek'    => $projek
+                    'projek.nama_projek' => $projek
                 ];
                 $whereClosingAll = [
-                    'user_admin.id_user_admin'  => $user->id_user_admin,
-                    'projek.nama_projek'    => $projek
+                    'user_admin.id_user_admin' => $user->id_user_admin,
+                    'projek.nama_projek' => $projek
                 ];
                 $closingAll = $this->formulirPesanan->getFormulirPesananJoin5CountWhereUser($whereClosingAll);
 
@@ -123,7 +147,8 @@ class C_Dashboard extends Controller
                     'closing',
                     'remainHouse',
                     'getRumah',
-                    'getProjek'
+                    'getProjek',
+                    'getUserMenu',
 
                 )
             );
