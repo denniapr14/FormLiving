@@ -7,17 +7,14 @@ use App\Http\Controllers\AdminADV_Dashboard;
 
 use App\Http\Controllers\AdminFormsLiving_Dashboard;
 use App\Http\Controllers\AdminFormsLiving_User;
-
-
 use App\Http\Controllers\C_Dashboard;
+use App\Http\Controllers\C_GambarRumah;
 use App\Http\Controllers\C_Login;
 use App\Http\Controllers\C_PembayaranRumah;
+use App\Http\Controllers\C_PreOrder;
 use App\Http\Controllers\C_Promo;
 use App\Http\Controllers\C_Rumah;
-use App\Http\Controllers\C_GambarRumah;
-use App\Http\Controllers\C_PreOrder;
 use App\Http\Controllers\C_SuratPemesananRumah;
-
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
 use App\Http\Controllers\C_UserAdmin;
@@ -25,8 +22,6 @@ use App\Http\Controllers\Ceo_Dashboard;
 // ADMIN
 use App\Http\Controllers\Direktur_Dashboard;
 use App\Http\Controllers\Home;
-
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,12 +65,9 @@ Route::get('/search-item', [Home::class, 'SearchItem']);
 
 Route::get('/sign-up', [Home::class, 'SignUp']);
 Route::post('/sign-up/create', [Home::class, 'SignUpAction'])->name('sign-up.action');
-Route::get('/pre-order',[C_PreOrder::class,'preOrderForms'])->name('preOrderForms.sales');
-
+Route::get('/pre-order', [C_PreOrder::class, 'preOrderForms'])->name('preOrderForms.sales');
 
 // >>>>>>>>>>>>>>>>>>> END PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
-
-
 
 // ---------------= SIMULATION =-----------------
 
@@ -309,26 +301,26 @@ Route::post('/ubah-pembayaran-rumah-admin/action/{projek}/{id_pembayaran_rumah}'
 Route::get('/pembayaran-rumah/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumah'])->name('pembayaranRumah.Admin');
 Route::post('/pembayaran-rumah/action/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumahAction'])->name('pembayaranRumahAction.Admin');
 
-//>>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-Route::get('/Pre-Order-User/{id}/{code}',[C_PreOrder::class, 'dataUserPO']);
-Route::get('/PreOrderSelect',[C_PreOrder::class, 'preOrderSelect']);
+// >>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Route::get('/Pre-Order-User/{id}/{code}', [C_PreOrder::class, 'dataUserPO']);
+Route::get('/PreOrderSelect', [C_PreOrder::class, 'preOrderSelect']);
 Route::get('/pre-order-admin/{projek}', [C_PreOrder::class, 'preOrder'])->name('preOrder.admin');
 Route::get('/pre-order-admin/payment/{projek}', [C_PreOrder::class, 'paymentPreorder'])->name('paymentPreOrder.admin');
 Route::post('/pre-order-admin/payment-action/{projek}', [C_PreOrder::class, 'paymentPreOrderAction'])->name('paymentPreOrderAction.admin');
-Route::get('/ubah-status-pre-order/{projek}/{id}/{status}',[C_PreOrder::class,'changeStatusPreOrder'])->name('changeStatusPreOrder.admin');
+Route::get('/ubah-status-pre-order/{projek}/{id}/{status}', [C_PreOrder::class, 'changeStatusPreOrder'])->name('changeStatusPreOrder.admin');
 Route::post('/simulation-data-pelanggan/store/{id_rumah}', [C_PreOrder::class, 'simPOUserAction'])->name('dataPO.action');
-Route::get('/summary-po/{id}/{ktp}/{code}',[C_PreOrder::class,'simSummaryPO']);
+Route::get('/summary-po/{id}/{ktp}/{code}', [C_PreOrder::class, 'simSummaryPO']);
 Route::post('/po-build/store/{id_rumah}/{harga}/{pelanggan}/{code}', [C_PreOrder::class, 'simSummaryPOAction'])->name('dataPOSummary.action');
-//>>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// >>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');
-Route::get('/download-user-sales-admin',[C_UserAdmin::class,'DownloadUserAdminSales'])->name('downloadUserAdminSales.admin');
+Route::get('/download-user-sales-admin', [C_UserAdmin::class, 'DownloadUserAdminSales'])->name('downloadUserAdminSales.admin');
 
 // PROMO
-Route::get('/promo-admin/{projek}',[C_Promo::class,'Promo'])->name('promo.admin');
+Route::get('/promo-admin/{projek}', [C_Promo::class, 'Promo'])->name('promo.admin');
 Route::get('/tambah-rumah-promo-admin/{projek}',[C_Promo::class,'addRumahPromo'])->name('addPromoRumah.admin');
 Route::post('/tambah-rumah-promo-admin/action/{projek}',[C_Promo::class,'addRumahPromoAction'])->name('addPromoRumahAction.admin');
-Route::post('/tambah-promo-admin/{projek}',[C_Promo::class,'addPromoAction'])->name('addPromoAction.admin');
+// Route::get('/tambah-promo-admin/{projek}', [C_Promo::class, 'addPromo'])->name('addPromo.admin');
+Route::post('/tambah-promo-admin/action/{projek}', [C_Promo::class, 'addPromoAction'])->name('addPromoAction.admin');
 
-
-Route::get('/ubah-user-profile/{id}',[C_UserAdmin::class, 'updateUserProfile'])->name('updateUserProfile.admin');
-Route::post('/ubah-user-profile/action/{id}',[C_UserAdmin::class,'updateUserProfileAction'])->name('updateUserProfileAction.admin');
+Route::get('/ubah-user-profile/{id}', [C_UserAdmin::class, 'updateUserProfile'])->name('updateUserProfile.admin');
+Route::post('/ubah-user-profile/action/{id}', [C_UserAdmin::class, 'updateUserProfileAction'])->name('updateUserProfileAction.admin');

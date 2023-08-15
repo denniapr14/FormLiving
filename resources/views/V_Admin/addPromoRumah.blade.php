@@ -108,37 +108,34 @@
                 <div class="card__header">
                     <div class="card__title">
                         <i class="bi bi-award-fill"></i>
-                        <span>Promo</span>
+                        <span>Promo </span>
 
                     </div>
 
                 </div>
                 <div class="table-responsive">
-                    <form action="{{ route('addPromoRumahAction.admin',$getProjek->nama_projek) }}" enctype="multipart/form-data" method="post">
+                    <h5>Pilih rumah yang akan diterapkan promo</h5>
+                    <form action="{{ route('addPromoRumahAction.admin', $getProjek->nama_projek) }}"
+                        enctype="multipart/form-data" method="post" >
                         @csrf
-                        <table id="rumah" class="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Cluster - No Rumah</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $noRumah = 1; ?>
+                        <div class="row">
+                            <?php $noRumah = 1; ?>
                                 @foreach ($rumah as $rumah)
-                                    <tr>
-                                        <td>{{ $noRumah }}</td>
-                                        <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</td>
-                                        <td>
+                                    <div class="col-sm-2" style="    padding-right: 2px;
+                                    padding-left: 2px;">
+                                        <div class="card">
+                                            <div class="card-body">
+                                              {{ $rumah->blok }} - {{ $rumah->nomor }}
+                                              <input type="checkbox" name="rumah[]" value="{{ $rumah->id_rumah }}">
+                                            </div>
+                                          </div>
+                                    </div>
 
-                                            <input type="checkbox" name="rumah[]" value="{{ $rumah->id_rumah }}"></td>
-                                    </tr>
+
+
                                     <?php $noRumah++; ?>
                                 @endforeach
-                            </tbody>
-                        </table>
-                        <br>
+                        </div>
                         <div class="float-right">
 
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -151,9 +148,7 @@
         </div>
     </div>
     <script>
-        $(document).ready(function() {
-            $('#rumah').DataTable();
-        });
+
     </script>
 
     <script>

@@ -139,7 +139,7 @@
 
                         <div class="form-group">
                             <label for="">Tipe Promo</label>
-                            <select name="tipe_promo" id="" class="form form-control">
+                            <select name="tipe_promo" id="" class="form form-control" required>
                                 <option value="">--Pilih--</option>
                                 <option value="standart">standart</option>
                                 <option value="special">special</option>
@@ -149,7 +149,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Nama promo</label>
-                            <input type="text" name="nama_promo" id="" class="form-control" placeholder=""
+                            <input type="text" name="nama_promo" required id="" class="form-control" placeholder=""
                                 aria-describedby="helpId">
 
                         </div>
@@ -157,7 +157,7 @@
                         <div class="form-group">
                             <label for="">Kode Promo</label>
                             <input type="text" name="kode_promo" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId">
+                                aria-describedby="helpId" required>
 
                         </div>
                         <div class="form-group">
@@ -169,26 +169,26 @@
 
                         <div class="form-group">
                             <label for="">Tanggal Mulai</label>
-                            <input type="date" name="tgl_mulai" id="" class="form-control" placeholder=""
+                            <input type="date" name="tgl_mulai" required id="" class="form-control" placeholder=""
                                 aria-describedby="helpId">
 
                         </div>
 
                         <div class="form-group">
                             <label for="">Tanggal Berakhir</label>
-                            <input type="date" name="tgl_berakhir" id="" class="form-control" placeholder=""
+                            <input type="date" name="tgl_berakhir" required id="" class="form-control" placeholder=""
                                 aria-describedby="helpId">
 
                         </div>
 
                         <div class="form-group">
                             <label for="">Keterangan</label>
-                            <textarea name="ket_promo" id="" cols="30" class="form-control" rows="2"></textarea>
+                            <textarea name="ket_promo" required id="" cols="30" class="form-control" rows="2"></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="">Kuota Promo</label>
-                            <input type="number" name="kuota_promo" class="form-control">
+                            <input type="number" name="kuota_promo" required class="form-control">
 
                         </div>
 
