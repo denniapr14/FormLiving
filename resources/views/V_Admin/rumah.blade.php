@@ -109,7 +109,14 @@
 
         <script>
             $(document).ready(function() {
-                $('#rumah').DataTable();
+                $('#rumah').DataTable(
+                    {
+                        columnDefs: [
+                            { targets: 3, type: 'string' } // Kolom "Status" akan diurutkan sebagai string
+                        ],
+                        order: [[3, 'asc']] // Kolom "Status" diurutkan secara ascending (A ke Z)
+                    }
+                );
             });
         </script>
 

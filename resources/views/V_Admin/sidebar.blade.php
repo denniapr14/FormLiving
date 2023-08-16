@@ -163,14 +163,6 @@
                                     </li>
                                     @endif
                                 @endforeach
-
-
-
-
-
-
-
-
                         </ul>
                     </li>
                 @endforeach

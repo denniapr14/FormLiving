@@ -48,6 +48,7 @@ class C_PreOrder extends Controller
     function Preorder($projek)
     {
 
+
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
             'user_menu.id_user_admin' => session::get('user'),
@@ -149,6 +150,20 @@ class C_PreOrder extends Controller
             '=',
             $decryptedID
         );
+
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
         // dd($getPreOrder[0]->nama_projek);
 
         if (session()->has('user')) {

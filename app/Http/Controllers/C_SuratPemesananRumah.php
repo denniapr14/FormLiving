@@ -132,9 +132,9 @@ class C_SuratPemesananRumah extends Controller
             }
         }
 
-        if (!$foundMatchingMenu) {
-            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        }
+        // if (!$foundMatchingMenu) {
+        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        // }
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);

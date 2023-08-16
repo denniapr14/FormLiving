@@ -104,9 +104,9 @@ class C_Rumah extends Controller
             }
         }
 
-        if (!$foundMatchingMenu) {
-            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        }
+        // if (!$foundMatchingMenu) {
+        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        // }
 
         // dd($getRumah);
         if (session()->has('user')) {
@@ -131,10 +131,22 @@ class C_Rumah extends Controller
 
     public function storeRumahAction(Request $request)
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+
+
+
+       $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
             'user_menu.id_user_admin' => session::get('user'),
         ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
 
         $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
         $dataNotif = [
@@ -195,9 +207,9 @@ class C_Rumah extends Controller
             }
         }
 
-        if (!$foundMatchingMenu) {
-            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        }
+        // if (!$foundMatchingMenu) {
+        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        // }
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
