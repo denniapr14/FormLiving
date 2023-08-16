@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Promo;
-use Illuminate\Contracts\Auth\Guard;
+use App\Models\UserAdmin;
+use App\Rules\noExistEmail;
 
 // Controller
 // =======================
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
+
 use Mail;
 use PDF;
 
@@ -129,6 +133,33 @@ class C_Login extends Controller
         return $user->kategori;
     }
 
+    public function emailForgot(){
+        return view('mail.mailForgot');
+    }
+
+    public function emailForgotAction(Request $request){
+        $dataEmail = UserAdmin::where('email_ua','=', $request->email_ua)->exists();
+        $dataEmailList = UserAdmin::where('email_ua','=', $request->email_ua)->first();
+        $template = 'mail.mailForgot';
+        $request->validate([
+            'email_ua' => ['required','email']
+        ],[
+            'email_ua.required' => 'Email Perlu Diisi'
+        ]);
+        
+        if(!$dataEmail){
+            Session::flash('error_message','Email belum terdaftar. Silahkan registrasi terlebih dahulu.');
+            return redirect()->back();     
+        }else{
+            Mail::to($dataEmail->email_plgn)->send(new MailNotify($dataEmailList, $template));
+        }
+
+
+
+        return redirect('/login')->with('success-forgot', 'reset password link telah dikirim ke email Anda');
+    }
+
+    //page forgot password
     public function forgotPassword($email){
         // if(!session()->has('guest') || session()->has('user')){
         //     Session::flush('guest');
@@ -141,11 +172,9 @@ class C_Login extends Controller
        return view('forgotPassword',compact('user'));
     }
 
+    //aksi dari forgot password
     public function forgotAction(request $request){
        
-        
-        
-
         $validator = Validator::make($request->all(), [
             'password' => 'required|min:6|confirmed'
             // Add more validation rules as needed
@@ -159,11 +188,6 @@ class C_Login extends Controller
             ];
         }
 
-        Session::flash('toastr', [
-            'type' => 'error',
-            'message' => 'Please fix the following issues:',
-            'options' => ['timeOut' => 5000], // Toastr options
-        ]);
         return redirect()->back()->withErrors($validator)->withInput();
     }
 
