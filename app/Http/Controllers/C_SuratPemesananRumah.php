@@ -3,21 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clusters;
+use App\Models\FormulirPesanan;
 use App\Models\PembayaranRumah;
 use App\Models\Projek;
+use App\Models\Promo;
 use App\Models\Rumah;
 use App\Models\UserAdmin;
+use App\Models\UserMenu;
 use App\Models\UserNotif;
 use App\Models\UserProjek;
-use App\Models\FormulirPesanan;
-use App\Models\Promo;
-
-
-
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\DB;
 
 class C_SuratPemesananRumah extends Controller
 {
@@ -30,24 +26,46 @@ class C_SuratPemesananRumah extends Controller
     public $promo;
     public $pembayaranRumah;
     public $projek;
+    public $userMenu;
+
     public function __construct()
     {
-        $this->cluster      = new Clusters;
-        $this->rumah        = new Rumah;
-        $this->userAdmin    = new UserAdmin;
-        $this->userNotif    = new UserNotif;
-        $this->userProjek   = new UserProjek;
-        $this->formulirPesanan = new FormulirPesanan;
-        $this->promo        = new Promo;
-        $this->pembayaranRumah = new PembayaranRumah;
-        $this->projek = new Projek;
+        $this->cluster = new Clusters();
+        $this->rumah = new Rumah();
+        $this->userAdmin = new UserAdmin();
+        $this->userNotif = new UserNotif();
+        $this->userProjek = new UserProjek();
+        $this->formulirPesanan = new FormulirPesanan();
+        $this->promo = new Promo();
+        $this->pembayaranRumah = new PembayaranRumah();
+        $this->projek = new Projek();
+        $this->userMenu = new UserMenu();
     }
+
     public function suratPemesananRumah($projek)
     {
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+
+        if (!$foundMatchingMenu) {
+            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        }
+
         // Surat Pemesanan Rumah == Formulir Pesanan
 
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
-        $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek','=',$projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek', '=', $projek);
 
         // $getRumah = $this->rumah->getRumahSelectCountGroupBy();
         // dd($getRumah);
@@ -72,8 +90,7 @@ class C_SuratPemesananRumah extends Controller
                     'formulir_pesanan.tgl_input_fp',
                     'desc'
                 );
-            }else{
-
+            } else {
                 $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananProjekJoin6Where(
                     'projek.nama_projek',
                     '=',
@@ -82,6 +99,7 @@ class C_SuratPemesananRumah extends Controller
                     'desc'
                 );
             }
+
             return view(
                 'V_Admin.formulirPesanan',
                 compact(
@@ -89,7 +107,8 @@ class C_SuratPemesananRumah extends Controller
                     'projekUser',
                     'getFormulirPesanan',
                     'rumah',
-                    'getProjek'
+                    'getProjek',
+                    'getUserMenu'
                 )
             );
         } else {
@@ -97,26 +116,41 @@ class C_SuratPemesananRumah extends Controller
         }
     }
 
-    function editSuratPemesananRumah($projek,$id)
+    public function editSuratPemesananRumah($projek, $id)
     {
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ])->collect();
 
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+
+        if (!$foundMatchingMenu) {
+            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        }
+
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
         $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananJoin7Where($decryptedID);
-        $getPromo = "";
+        $getPromo = '';
         // dd($getFormulirPesanan);
         if (!empty($getFormulirPesanan->id_promo)) {
-            # code...
+            // code...
             $getPromo = $this->promo->getPromoWhereAll('*', 'id_promo', '=', $getFormulirPesanan->id_promo);
         } else {
-            $getPromo = "";
+            $getPromo = '';
         }
 
         $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
 
-
         if (session()->has('user')) {
-
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -127,12 +161,11 @@ class C_SuratPemesananRumah extends Controller
                 'getFormulirPesanan',
                 'getPromo',
                 'getPembayaranRumah',
-                'getProjek'
+                'getProjek',
+                'getUserMenu'
             ));
         } else {
-
             return redirect('/login');
         }
     }
-    //
 }

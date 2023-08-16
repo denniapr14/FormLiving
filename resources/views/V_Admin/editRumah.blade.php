@@ -72,6 +72,12 @@
                             class="form-control" placeholder="Masukan Luas Tanah" aria-describedby="helpId">
                         <small id="helpId" class="text-muted">Wajib di isi</small>
                     </div>
+                    <div class="form-group">
+
+                        <input type="number" name="vaRumah" id="inputVA" value="{{ $getRumah->va_rumah }}"
+                            class="form-control" placeholder="Masukan Nomor VA Bank" aria-describedby="helpId">
+                        <small id="helpId" class="text-muted">Wajib di isi</small>
+                    </div>
 
                     <div class="form-group">
                         <select name="status" class="form-control" id="inputStatus">

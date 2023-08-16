@@ -82,6 +82,11 @@
                       <input type="number" name="luasTanah" id="inputLuasTanah" class="form-control" placeholder="Masukan Luas Tanah" aria-describedby="helpId">
                       <small id="helpId" class="text-muted">Wajib di isi</small>
                     </div>
+                    <div class="form-group">
+
+                        <input type="number" name="inputVA" id="inputVA" class="form-control" placeholder="Masukan Virtual Account bank" aria-describedby="helpId">
+                        <small id="helpId" class="text-muted">Wajib di isi</small>
+                      </div>
 
 
 
@@ -534,6 +539,7 @@
                 let luasTanah = $('#inputLuasTanah').val();
                 let status = $('#inputStatus').val();
                 let stock = $('#inputStock').val();
+                let va = $('#inputVA').val();
 
                 $.ajax({
                     url: "{{ route('postRumah') }}",
@@ -547,7 +553,8 @@
                         nomor: nomor,
                         status: status,
                         stock: stock,
-                        luasTanah: luasTanah
+                        luasTanah: luasTanah,
+                        va:va
 
 
                     },
@@ -595,6 +602,7 @@
                 let luasTanah = $('#inputLuasTanah').val();
                 let status = $('#inputStatus').val();
                 let stock = $('#inputStock').val();
+                let va = $('#inputVA').val();
 
 
 
@@ -613,8 +621,8 @@
                         nomor: nomor,
                         status: status,
                         stock: stock,
-                        luasTanah: luasTanah
-
+                        luasTanah: luasTanah,
+                        va:va
 
                     },
                     success: function(response) {

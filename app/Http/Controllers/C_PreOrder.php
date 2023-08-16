@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 // Model
 use App\Models\UserAdmin;
+use App\Models\UserMenu;
 use App\Models\UserProjek;
 use App\Models\Projek;
 use App\Models\Rumah;
 use App\Models\PreOrder;
 use App\Models\UserPelanggan;
+
 
 use App\Mail\MailAttachment;
 use App\Mail\MailNotify;
@@ -29,6 +31,7 @@ class C_PreOrder extends Controller
     public $rumah;
     public $preOrder;
     public $pelangganData;
+    public $userMenu;
 
     public function __construct()
     {
@@ -39,10 +42,30 @@ class C_PreOrder extends Controller
         $this->rumah = new Rumah;
         $this->preOrder = new PreOrder;
         $this->pelangganData = new UserPelanggan;
+        $this->userMenu =  new UserMenu();
     }
 
     function Preorder($projek)
     {
+
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+
+        if (!$foundMatchingMenu) {
+            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        }
+
         $getProjek = $this->projek->firstProjek(
             '*',
             'nama_projek',
@@ -104,7 +127,8 @@ class C_PreOrder extends Controller
                     'projekUser',
                     'rumah',
                     'getProjek',
-                    'getPreOrder'
+                    'getPreOrder',
+                    'getUserMenu'
                 )
             );
         } else {
@@ -306,11 +330,11 @@ class C_PreOrder extends Controller
         }
 
     }
-    
+
     public function dataUserPO($id, $code)
     {
         $dataFunctionUser = $code;
-        
+
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
@@ -326,7 +350,7 @@ class C_PreOrder extends Controller
             ->where('projek.nama_projek','=','Kalm')
             ->where('rumah.id_rumah', '=', $id)
             ->first();
-            
+
         // dd($promo);
         // die();
         if (session()->has('user')) {
@@ -380,7 +404,7 @@ class C_PreOrder extends Controller
                     'pekerjaan_plgn' => $request->pekerjaan,
                     // 'id_sales'              => session::get('user'),
                     'no_ktp_plgn' => $request->nik,
-                    'no_telp_plgn' => $request->telp,                   
+                    'no_telp_plgn' => $request->telp,
                     'email_plgn' => $request->email,
                 );
                 // dd($dataInput);
@@ -416,7 +440,7 @@ class C_PreOrder extends Controller
         }elseif($code == "NR"){
             $hargaPO = 5000000;
         }
-       
+
         $pelanggan = DB::table('user_pelanggan')->where([
             'no_ktp_plgn' => $ktp,
         ])->first();
@@ -426,9 +450,9 @@ class C_PreOrder extends Controller
             ->where('status', '=', 'available')
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
-        
+
         $hargaPO = $hargaPO + $randomIndex;
-        
+
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -438,7 +462,7 @@ class C_PreOrder extends Controller
 
             // dd($user);
             // die();
-           
+
                 return view('simSummaryPO', compact('user',  'rumah', 'pelanggan','hargaPO','code'));
         }
         if (session()->has('guest')) {
@@ -517,7 +541,7 @@ class C_PreOrder extends Controller
                     'nama' => $pelanggan->nama_plgn,
                     'blok' => $rumah->blok,
                     'nomor' => $rumah->nomor,
-    
+
                 ];
                 $dataEmail2 = [
                     'to' => $user->email_ua,
@@ -527,7 +551,7 @@ class C_PreOrder extends Controller
                     'nama' => $pelanggan->nama_plgn,
                     'blok' => $rumah->blok,
                     'nomor' => $rumah->nomor,
-    
+
                 ];
                 $dataEmail3 = null;
                 foreach ($accounting as $accounting) {
@@ -539,7 +563,7 @@ class C_PreOrder extends Controller
                         'nama' => $pelanggan->nama_plgn,
                         'blok' => $rumah->blok,
                     'nomor' => $rumah->nomor,
-    
+
                     ];
                 try {
                     // $MailAtt = ();

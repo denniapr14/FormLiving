@@ -151,6 +151,9 @@
                         <ul class="dropdown__menu">
 
                                 @foreach ($getUserMenu as $userMenu)
+                                @if($userMenu->status_menu == "fitur")
+
+
                                     <li class="nav__item">
                                         <a class="nav__link  @if (request()->segment(1) === $userMenu->url_menu && request()->segment(2) == $projekUser->nama_projek) active @endif "
                                             href="{{ route($userMenu->nama_menu, $projekUser->nama_projek) }}">
@@ -158,6 +161,7 @@
                                             <span class="">{{ $userMenu->menu }}</span>
                                         </a>
                                     </li>
+                                    @endif
                                 @endforeach
 
 

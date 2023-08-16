@@ -73,9 +73,7 @@
                                                     class="btn btn-outline-info">
                                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                                 </a>
-                                                <a href="{{ route('deleteRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}" class="btn btn-outline-danger">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </a>
+
 
 
                                             </div>

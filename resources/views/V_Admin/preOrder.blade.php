@@ -184,26 +184,50 @@
 
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
                                                 <div class="btn-group" role="group">
-
+                                                @php
+                                                    $listStatus = ['pending','confirmed','accepted','refunded','overtaken'];
+                                                @endphp
                                                     @if ($preOrder->status_po == 'pending')
-                                                        <button type="button" class="btn btn-warning dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                            {{ $preOrder->status_po }}
-                                                        </button>
-                                                    @elseif ($preOrder->status_po == 'confirmed')
-                                                        <button type="button" class="btn btn-success dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                            {{ $preOrder->status_po }}
-                                                        </button>
-                                                    @else
-                                                        <button type="button" class="btn btn-danger dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                            {{ $preOrder->status_po }}
-                                                        </button>
-                                                    @endif
+                                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                                                        {{ $preOrder->status_po }}
+                                                    </button>
+                                                @elseif ($preOrder->status_po == 'confirmed')
+                                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                                        {{ $preOrder->status_po }}
+                                                    </button>
+                                                @elseif ($preOrder->status_po == 'accepted')
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        {{ $preOrder->status_po }}
+                                                    </button>
+                                                @elseif ($preOrder->status_po == 'refunded')
+                                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                                        {{ $preOrder->status_po }}
+                                                    </button>
+                                                @elseif ($preOrder->status_po == 'overtaken')
+                                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                                                        {{ $preOrder->status_po }}
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                                                        {{ $preOrder->status_po }}
+                                                    </button>
+                                                @endif
+
 
                                                     <div class="dropdown-menu">
-                                                        @if ($preOrder->status_po == 'pending')
+                                                        @foreach ($listStatus as $listStatus)
+                                                        <a class="dropdown-item"
+                                                        href="{{ route('changeStatusPreOrder.admin', [
+                                                            $getProjek->nama_projek,
+                                                            Crypt::encrypt($preOrder->id_pre_order),
+
+                                                            Crypt::encrypt('rejected'),
+
+
+                                                        ]) }}">Reject</a>
+
+                                                        @endforeach
+                                                        {{-- @if ($preOrder->status_po == 'pending')
                                                             <a class="dropdown-item"
                                                                 href="{{ route('changeStatusPreOrder.admin', [
                                                                     $getProjek->nama_projek,
@@ -216,6 +240,24 @@
                                                                     Crypt::encrypt($preOrder->id_pre_order),
                                                                     Crypt::encrypt('confirmed'),
                                                                 ]) }}">Confirm</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('overtaken'),
+                                                                ]) }}">Overtaken</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('changeStatusPreOrder.admin', [
+                                                                    $getProjek->nama_projek,
+                                                                    Crypt::encrypt($preOrder->id_pre_order),
+                                                                    Crypt::encrypt('refunded'),
+                                                                ]) }}">Refund</a>
+                                                                 <a class="dropdown-item"
+                                                                 href="{{ route('changeStatusPreOrder.admin', [
+                                                                     $getProjek->nama_projek,
+                                                                     Crypt::encrypt($preOrder->id_pre_order),
+                                                                     Crypt::encrypt('accepted'),
+                                                                 ]) }}">Accept</a>
                                                         @elseif ($preOrder->status_po == 'confirmed')
                                                             <a class="dropdown-item"
                                                                 href="{{ route('changeStatusPreOrder.admin', [
@@ -242,7 +284,7 @@
                                                                     Crypt::encrypt($preOrder->id_pre_order),
                                                                     Crypt::encrypt('pending'),
                                                                 ]) }}">Pending</a>
-                                                        @endif
+                                                        @endif --}}
                                                     </div>
 
 

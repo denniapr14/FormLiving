@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 // MODELS
 use App\Models\Clusters;
+use App\Models\Projek;
 use App\Models\Rumah;
 use App\Models\UserAdmin;
+use App\Models\UserMenu;
 use App\Models\UserNotif;
 use App\Models\UserProjek;
-use App\Models\Projek;
-use App\Models\UserMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -24,15 +24,16 @@ class C_Rumah extends Controller
     public $userNotif;
     public $projek;
     public $userMenu;
+
     public function __construct()
     {
-        $this->userNotif = new UserNotif;
+        $this->userNotif = new UserNotif();
         $this->projek = new Projek();
         $this->rumah = new Rumah();
         $this->cluster = new Clusters();
         $this->userAdmin = new UserAdmin();
         $this->userProjek = new UserProjek();
-        $this->userMenu = new UserMenu;
+        $this->userMenu = new UserMenu();
     }
 
     public function index(Request $request, $projek)
@@ -43,12 +44,12 @@ class C_Rumah extends Controller
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user')
+            'user_menu.id_user_admin' => session::get('user'),
         ]);
         // dd($request->segment(1));
         $getUserMenuCoba = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user')
+            'user_menu.id_user_admin' => session::get('user'),
         ])->collect();
         $foundMatchingMenu = false;
 
@@ -62,7 +63,6 @@ class C_Rumah extends Controller
         if (!$foundMatchingMenu) {
             return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
         }
-
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -92,7 +92,7 @@ class C_Rumah extends Controller
 
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user')
+            'user_menu.id_user_admin' => session::get('user'),
         ])->collect();
 
         $foundMatchingMenu = false;
@@ -120,7 +120,8 @@ class C_Rumah extends Controller
                     'user',
                     'projekUser',
                     'getCluster',
-                    'getProjek'
+                    'getProjek',
+                    'getUserMenu'
                 )
             );
         } else {
@@ -130,18 +131,15 @@ class C_Rumah extends Controller
 
     public function storeRumahAction(Request $request)
     {
-
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user')
+            'user_menu.id_user_admin' => session::get('user'),
         ])->collect();
-
 
         $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
         $dataNotif = [
-            'msg_notif' => "User " . $user->nama_ua . " telah memasukan rumah " . $request->blok . '-' . $request->nomor,
-            'status_notif' => "aktif",
-
+            'msg_notif' => 'User '.$user->nama_ua.' telah memasukan rumah '.$request->blok.'-'.$request->nomor,
+            'status_notif' => 'aktif',
         ];
 
         $this->userNotif->insertUserNotif($dataNotif);
@@ -154,8 +152,6 @@ class C_Rumah extends Controller
             'stock' => 'required',
         ]);
 
-
-
         $dataRumah = [
             'id_projek' => $request->projek,
             'codecluster' => $request->cluster,
@@ -163,7 +159,8 @@ class C_Rumah extends Controller
             'nomor' => $request->nomor,
             'status' => $request->status,
             'status_stock' => $request->stock,
-            'luas_tanah' => $request->luasTanah
+            'luas_tanah' => $request->luasTanah,
+            'va_rumah' => $request->va,
             // 'imgRumah' => $filename,
         ];
 
@@ -180,43 +177,13 @@ class C_Rumah extends Controller
 
     public function updateRumah($projek, $id)
     {
-
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getCluster = $this->rumah->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $id);
         // dd($getRumah);
-
-
-
-        if (session()->has('user')) {
-            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
-
-            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
-
-            return view(
-                'V_Admin.editRumah',
-                compact(
-                    'user',
-                    'projekUser',
-                    'getRumah',
-                    'getCluster',
-                    'getProjek'
-                )
-            );
-        } else {
-            return redirect('/login');
-        }
-    }
-
-    public function updateRumahActionNoJS(Request $request, $projek, $id)
-    {
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
-        // dd($getRumah);
-
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user')
+            'user_menu.id_user_admin' => session::get('user'),
         ])->collect();
 
         $foundMatchingMenu = false;
@@ -232,6 +199,51 @@ class C_Rumah extends Controller
             return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
         }
 
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+
+            return view(
+                'V_Admin.editRumah',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getRumah',
+                    'getCluster',
+                    'getProjek',
+                    'getUserMenu'
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    public function updateRumahActionNoJS(Request $request, $projek, $id)
+    {
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
+        // dd($getRumah);
+
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+
+        // if (!$foundMatchingMenu) {
+        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        // }
+
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $id);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -239,9 +251,8 @@ class C_Rumah extends Controller
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $dataNotif = [
-                'msg_notif' => "User " . $user->nama_ua . " telah merubah rumah " . $getRumah->blok . '-' . $getRumah->nomor,
-                'status_notif' => "aktif",
-
+                'msg_notif' => 'User '.$user->nama_ua.' telah merubah rumah '.$getRumah->blok.'-'.$getRumah->nomor,
+                'status_notif' => 'aktif',
             ];
 
             $this->userNotif->insertUserNotif($dataNotif);
@@ -251,15 +262,13 @@ class C_Rumah extends Controller
                 $img = $request->file('imgRumah');
 
                 // Generate a unique filename based on the current timestamp and the original file extension
-                $filename = $request->blok . '-' . $request->nomor . '-' . time() . '.' . $img->getClientOriginalExtension();
+                $filename = $request->blok.'-'.$request->nomor.'-'.time().'.'.$img->getClientOriginalExtension();
 
                 // Store the image in the 'images' folder under the 'public' disk
                 $path = 'Home/images/rumah/';
                 $img = Image::make($img);
-                $img->save(public_path($path . $filename));
+                $img->save(public_path($path.$filename));
             }
-
-
 
             $dataRumah = [
                 'id_projek' => $getProjek->id_projek,
@@ -269,7 +278,8 @@ class C_Rumah extends Controller
                 'status' => $request->status,
                 'status_stock' => $request->status_stock,
                 'img_rumah' => $filename,
-                'luas_tanah' => $request->luasTanah
+                'luas_tanah' => $request->luasTanah,
+                'va_rumah' => $request->vaRumah,
             ];
             // dd($dataRumah);
             DB::table('rumah')
@@ -280,15 +290,15 @@ class C_Rumah extends Controller
 
             // dd($dataRumah);
 
-            return redirect('/rumah-admin/' . $projek)->with('success', 'Data rumah ' . $request->blok . '-' . $request->nomor . ' telah berhasil diubah');
-            // return view(
+            return redirect('/rumah-admin/'.$projek)->with('success', 'Data rumah '.$request->blok.'-'.$request->nomor.' telah berhasil diubah');
+        // return view(
             //     'V_Admin.rumah',
             //     compact(
             //         'user',
             //         'projekUser',
             //         'getRumah',
             //     )
-            // );
+        // );
         } else {
             return redirect('/login');
         }
@@ -320,7 +330,8 @@ class C_Rumah extends Controller
             'nomor' => $request->nomor,
             'status' => $request->status,
             'status_stock' => $request->stock,
-            'luas_tanah' => $request->luasTanah
+            'luas_tanah' => $request->luasTanah,
+            'va_rumah' => $request->va,
         ];
 
         // $id = DB::table('rumah')->insert(
@@ -347,7 +358,7 @@ class C_Rumah extends Controller
 
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user')
+            'user_menu.id_user_admin' => session::get('user'),
         ])->collect();
 
         $foundMatchingMenu = false;
@@ -362,8 +373,5 @@ class C_Rumah extends Controller
         if (!$foundMatchingMenu) {
             return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
         }
-
-
     }
-
 }

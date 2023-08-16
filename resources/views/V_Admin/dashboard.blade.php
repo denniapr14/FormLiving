@@ -137,7 +137,11 @@
                         </div>
                         <div class="table-responsive">
 
-                            <div class="map" style="background-color: white">
+                            <div class="map" style="background-color: white ;
+                            @if(request()->segment(2) == "Kalm")
+                            width:50%;
+                            @endif
+                            ">
 
                                 {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
                                 {{-- @include('map.svg') --}}
