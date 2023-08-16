@@ -18,15 +18,16 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="/housing">
+                            <a class="dropdown-item" href="/Housing/Greenland">
                                 <div>
-                                    <img style="width: 50%" src="{{ asset('Home') }}/images/logo-tidar-green.png" alt="">
+                                    <img style="width: 50%" src="{{ asset('Home') }}/images/logo-tidar-green.png"
+                                        alt="">
 
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="/kalm">
+                            <a class="dropdown-item" href="/Housing/Kalm">
                                 <div>
                                     <img style="width: 50%" src="{{ asset('Home') }}/images/logo-kalm.png" alt="">
 
@@ -84,27 +85,28 @@
 
         <div class="action">
 
-            <a href="/profile-setting" type="button" class="btn btn-outline-secondary">{{ $userPelanggan->nama_plgn }}</a>
-                <!--<a href="/my-cart">-->
-                <!--    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">-->
-                <!--</a>-->
+            <a href="/profile-setting" type="button" class="btn btn-outline-secondary">{{ $userPelanggan->nama_plgn
+                }}</a>
+            <!--<a href="/my-cart">-->
+            <!--    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">-->
+            <!--</a>-->
 
         </div>
         @elseif (!empty(Session::get('user')))
         <div class="action">
 
-            <a href="/dashboard-admin/Greenland"  class="btn btn-outline-secondary">{{ $user->nama_ua }}</a>
-                {{--  <a href="/my-cart">
-                    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
-                </a>  --}}
+            <a href="/dashboard-admin/Greenland" class="btn btn-outline-secondary">{{ $user->nama_ua }}</a>
+            {{-- <a href="/my-cart">
+                <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">
+            </a> --}}
         </div>
         @else
         <div class="action">
 
             <a href="/login" type="button" class="btn btn-outline-secondary">Login/Register</a>
-                <!--<a href="/my-cart">-->
-                <!--    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">-->
-                <!--</a>-->
+            <!--<a href="/my-cart">-->
+            <!--    <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">-->
+            <!--</a>-->
         </div>
         @endif
 
