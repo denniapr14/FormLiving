@@ -29,7 +29,7 @@ class ListPromo extends Model
         ->join('promo','list_promo.id_promo','=','promo.id_promo')
         ->join('rumah','list_promo.id_rumah','=','rumah.id_rumah')
         ->where($where,$eq,$value)
-        ->first();
+        ->get();
     }
     function deleteListPromo($where, $id) {
         return ListPromo::where($where,$id)

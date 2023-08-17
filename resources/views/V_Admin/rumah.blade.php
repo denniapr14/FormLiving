@@ -28,7 +28,13 @@
                     </div>
 
                     <div class="invoices__actions">
-                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
+                        @if (
+                            $user->kategori == 'SuperAdmin' ||
+                            $user->kategori == 'AdminAccounting' ||
+                            $user->kategori == 'AdminAdv'
+
+
+                        )
                             <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}"
                                 class="btn-fd-outline btn--small">Tambah Rumah</a>
                         @else
@@ -45,10 +51,9 @@
                                 <th>Tipe Rumah</th>
                                 <th>Luas <br> Tanah</th>
                                 <th>Status</th>
-                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
+
                                     <th>Pengaturan</th>
-                                @else
-                                @endif
+
 
                             </tr>
                         </thead>
@@ -62,7 +67,11 @@
                                     <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</td>
                                     <td>{{ $rumah->luas_tanah }}</td>
                                     <td>{{ $rumah->status }}</td>
-                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
+                                    @if (
+                                    $user->kategori == 'SuperAdmin' ||
+                                    $user->kategori == 'AdminAccounting'||
+                                    $user->kategori == 'AdminAdv'
+                                )
                                         <td>
 
                                             <div class="d-flex flex-nowrap">
@@ -79,6 +88,17 @@
                                             </div>
                                         </td>
                                     @else
+                                    <td>
+
+                                        <div class="d-flex flex-nowrap">
+                                            <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
+                                                class="btn btn-outline-info"><i class="bi bi-book-fill"></i><span class="badge badge-pill badge-info">
+                                                    {{ $rumah->countTipe }}</span></a>
+
+
+
+                                        </div>
+                                    </td>
                                     @endif
 
                                 </tr>

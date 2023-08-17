@@ -8,6 +8,9 @@
 
 @section('content')
 
+<style>
+
+</style>
     <!-- start: main -->
 
 
@@ -135,12 +138,10 @@
                             </div>
 
                         </div>
-                        <div class="table-responsive">
+                        <div class="" style="width: 100%">
 
-                            <div class="map" style="background-color: white ;
-                            @if(request()->segment(2) == "Kalm")
-                            width:50%;
-                            @endif
+                            <div class="map svg-container" style="background-color: white ;
+
                             ">
 
                                 {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}

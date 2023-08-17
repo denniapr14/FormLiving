@@ -47,10 +47,7 @@ class C_Rumah extends Controller
             'user_menu.id_user_admin' => session::get('user'),
         ]);
         // dd($request->segment(1));
-        $getUserMenuCoba = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
+
         $foundMatchingMenu = false;
 
         foreach ($getUserMenu as $menu) {

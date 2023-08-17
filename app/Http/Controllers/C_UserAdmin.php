@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserAdmin;
 use App\Models\UserProjek;
+use App\Models\UserMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Crypt;
@@ -15,10 +16,12 @@ class C_UserAdmin extends Controller
 {
     public $userAdmin;
     public $userProjek;
+    public $userMenu;
 
     public function __construct() {
         $this->userAdmin = new UserAdmin;
         $this->userProjek  = new UserProjek;
+        $this->userMenu = new UserMenu();
     }
 
     function ambilWaktu(){
@@ -28,6 +31,21 @@ class C_UserAdmin extends Controller
         return $waktuNow;
     }
     function userAdminSalesAgent() {
+
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ]);
+        // dd($request->segment(1));
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
 
         $whereUserAdmin = [
            'Agent','SalesAgent','AgentCompany','AdminAgentCompany'
@@ -43,7 +61,8 @@ class C_UserAdmin extends Controller
                 compact(
                     'user',
                     'projekUser',
-                    'getUserSales'
+                    'getUserSales',
+                    'getUserMenu'
                 )
             );
         } else {
@@ -56,6 +75,20 @@ class C_UserAdmin extends Controller
 
     }
     function updateUserProfile() {
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ]);
+        // dd($request->segment(1));
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -66,7 +99,8 @@ class C_UserAdmin extends Controller
                 compact(
                     'user',
                     'projekUser',
-                    'getUser'
+                    'getUser',
+                    'getUserMenu'
 
                 )
             );
@@ -76,9 +110,24 @@ class C_UserAdmin extends Controller
     }
     function updateUserProfileAction(Request $request,$id) {
 
+
         $decryptedID = Crypt::decrypt($id);
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ]);
+        // dd($request->segment(1));
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
@@ -125,10 +174,24 @@ class C_UserAdmin extends Controller
         }
     }
     function DownloadUserAdminSales() {
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ]);
+        // dd($request->segment(1));
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
         $waktuNow = $this->ambilWaktu();
         $sesiNow = session::get('user');
         $userAll = $this->userAdmin->getPrintUserAdmin();
-        $pdf = PDF::loadView('AdminFormsLiving.printUser', ['userAll' => $userAll,'waktuNow'=> $waktuNow])->setPaper('a4', 'potrait');
+        $pdf = PDF::loadView('pdf.printUser', ['userAll' => $userAll,'waktuNow'=> $waktuNow])->setPaper('a4', 'potrait');
         // if (session()->has('user')) {
         //     return view('AdminFormsLiving.printUser',compact('userAll','waktuNow'));
         // }

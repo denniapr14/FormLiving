@@ -61,17 +61,20 @@
                                         var block = item.blok;
                                         var nomor = item.nomor;
                                         var blockNomor = block + "-" + nomor;
-                                        {{--  blockNomor.toString()  --}}
                                         var idrumah = document.getElementById(blockNomor);
 
+                                        {{--  console.log("Block-Nomor:", blockNomor);
+                                        console.log("Status:", item.status);
+                                        console.log("Color:", color(item.status)); // Check color function output  --}}
 
-                                        idrumah.style.fill = color(item.status);
-                                        idrumah.setAttribute('fill', color(item.status));
-
-
+                                        if (idrumah) {
+                                            idrumah.style.fill = color(item.status);
+                                            idrumah.setAttribute('fill', color(item.status));
+                                        } else {
+                                            console.log("Element not found:", blockNomor);
+                                        }
                                     });
                                 });
-                                console.log(data);
 
                                 function color(stat) {
                                     var iro = 'warnaa';
@@ -185,7 +188,7 @@
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
                                                 <div class="btn-group" role="group">
                                                 @php
-                                                    $listStatus = ['pending','confirmed','accepted','refunded','overtaken'];
+                                                    $listStatus = ['pending','confirmed','accepted','refunded','rejected'];
                                                 @endphp
                                                     @if ($preOrder->status_po == 'pending')
                                                     <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
@@ -204,7 +207,7 @@
                                                         {{ $preOrder->status_po }}
                                                     </button>
                                                 @elseif ($preOrder->status_po == 'overtaken')
-                                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                                                    <button type="button" class="btn btn-secondary" >
                                                         {{ $preOrder->status_po }}
                                                     </button>
                                                 @else
@@ -215,18 +218,28 @@
 
 
                                                     <div class="dropdown-menu">
-                                                        @foreach ($listStatus as $listStatus)
+                                                        @foreach ($listStatus as $status)
+
                                                         <a class="dropdown-item"
                                                         href="{{ route('changeStatusPreOrder.admin', [
-                                                            $getProjek->nama_projek,
-                                                            Crypt::encrypt($preOrder->id_pre_order),
+                                                             $getProjek->nama_projek,
+                                                             Crypt::encrypt($preOrder->id_pre_order),
+                                                             Crypt::encrypt($status),
+                                                        ]) }}">
+                                                        {{ $status }}
 
-                                                            Crypt::encrypt('rejected'),
+                                                        {{--  <a class="dropdown-item"
+                                                        href="{{ route('changeStatusPreOrder.admin', [
+                                                             $getProjek->nama_projek,
+                                                             $preOrder->id_pre_order,
+                                                             $status,
+                                                        ]) }}">
+                                                        {{ $status }}  --}}
+
+                                                     </a>
 
 
-                                                        ]) }}">Reject</a>
-
-                                                        @endforeach
+                                                    @endforeach
                                                         {{-- @if ($preOrder->status_po == 'pending')
                                                             <a class="dropdown-item"
                                                                 href="{{ route('changeStatusPreOrder.admin', [

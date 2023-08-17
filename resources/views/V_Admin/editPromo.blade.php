@@ -106,100 +106,132 @@
         <div class="container-fluid ">
             <div class="card">
                 <div class="card-header">
-                    Ubah Promo {{ $getPromo->keterangan }}
+                    Ubah Promo
                 </div>
 
                 <div class="card-body">
 
 
-                    <form action="{{ route('addPromoAction.admin', $getProjek->nama_projek) }}" enctype="multipart/form-data"
+                    <form action="{{ route('updatePromoAction.admin', [$getProjek->nama_projek,Crypt::encrypt($getPromo->id_promo)]) }}" enctype="multipart/form-data"
                         method="post">
                         @csrf
 
                         <div class="responsive-table">
-                            <h2>List Rumah Yang akan terupdate</h2>
-                            <table class="" id="list-promo" style="width: 100%">
-                                <thead class="thead-inverse">
 
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Rumah</th>
+                            <div class="card ">
+                              <img class="card-img-top" src="holder.js/100px180/" alt="">
 
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                       @foreach ($getListPromo as $listPromo)
+                              <div class="card-body">
+                                <h4>Rincian rumah yang akan terubah</h4>
+                                <table class="" id="list-promo" style="width: 100%">
+                                    <thead class="thead-inverse">
 
-                                       <tr>
-                                           <td scope="row">{{ $no }}</td>
-                                           <td>{{ $listPromo->blok }} - {{ $listPromo->nomor }}</td>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Rumah</th>
 
                                         </tr>
-                                        @php
-                                            $no++;
-                                        @endphp
-                                        @endforeach
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $no = 1;
+                                            @endphp
+                                           @foreach ($getListPromo as $listPromo)
 
-                                    </tbody>
-                            </table>
+                                           <tr>
+                                               <td scope="row">{{ $no }}</td>
+                                               <td>{{ $listPromo->blok }} - {{ $listPromo->nomor }}</td>
+
+                                            </tr>
+                                            @php
+                                                $no++;
+                                            @endphp
+                                            @endforeach
+
+                                        </tbody>
+                                </table>
+                              </div>
+                            </div>
+
                         </div>
 
-
+<br>
                         <div class="form-group">
                             <label for="">Tipe Promo</label>
-                            <select name="tipe_promo" id="" class="form form-control" required>
-                                <option value="">--Pilih--</option>
-                                <option value="standart">standart</option>
-                                <option value="special">special</option>
+                            <select name="status_stock" class="form-control" id="inputStock">
+                                @php
+                                $statusPromo = ['standart', 'special'];
+                            @endphp
+
+                            @foreach ($statusPromo as $promo)
+                                @if ($promo == $getPromo->tipe_promo)
+                                    <option value="{{ $promo }}" selected>{{ $promo }}</option>
+                                @else
+                                    <option value="{{ $promo }}">{{ $promo }}</option>
+                                @endif
+                            @endforeach
 
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Status</label>
+                            <select name="status_stock" class="form-control" id="inputStock">
+                                @php
+                                $status = ['aktif', 'nonaktif'];
+                            @endphp
 
+                            @foreach ($status as $status)
+                                @if ($status == $getPromo->status)
+                                    <option value="{{ $status }}" selected>{{ $status }}</option>
+                                @else
+                                    <option value="{{ $status }}">{{ $status }}</option>
+                                @endif
+                            @endforeach
+
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="">Nama promo</label>
-                            <input type="text" name="nama_promo" required id="" class="form-control"
+                            <input type="text" name="nama_promo" required id="" value="{{ $getPromo->promo }}" class="form-control"
                                 placeholder="" aria-describedby="helpId">
 
                         </div>
 
                         <div class="form-group">
                             <label for="">Kode Promo</label>
-                            <input type="text" name="kode_promo" id="" class="form-control" placeholder=""
+                            <input type="text" name="kode_promo" id="" value="{{ $getPromo->kode_promo }}" class="form-control" placeholder=""
                                 aria-describedby="helpId" required>
 
                         </div>
                         <div class="form-group">
                             <label for="">Diskon Promo</label>
-                            <input type="number" name="diskon_promo" id="" class="form-control" placeholder=""
+                            <input type="number" name="diskon_promo" id="" value="{{ $getPromo->diskon_promo }}" class="form-control" placeholder=""
                                 aria-describedby="helpId">
 
                         </div>
 
                         <div class="form-group">
                             <label for="">Tanggal Mulai</label>
-                            <input type="date" name="tgl_mulai" required id="" class="form-control"
+                            <input type="date" name="tgl_mulai" required id="" value="{{ $getPromo->tgl_aktif }}" class="form-control"
                                 placeholder="" aria-describedby="helpId">
 
                         </div>
 
                         <div class="form-group">
                             <label for="">Tanggal Berakhir</label>
-                            <input type="date" name="tgl_berakhir" required id="" class="form-control"
+                            <input type="date" name="tgl_berakhir" required value="{{ $getPromo->tgl_berakhir }}" id="" class="form-control"
                                 placeholder="" aria-describedby="helpId">
 
                         </div>
 
                         <div class="form-group">
                             <label for="">Keterangan</label>
-                            <textarea name="ket_promo" required id="" cols="30" class="form-control" rows="2"></textarea>
+                            <textarea name="ket_promo" required id="" cols="30" class="form-control" rows="2">{{ $getPromo->keterangan }}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="">Kuota Promo</label>
-                            <input type="number" name="kuota_promo" required class="form-control">
+                            <input type="number" name="kuota_promo" value="{{ $getPromo->kuota_promo }}" required class="form-control">
 
                         </div>
 
