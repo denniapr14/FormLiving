@@ -338,6 +338,7 @@ Route::get('/user-pelanggan-admin', [C_UserPelanggan::class, 'userPelanggan'])->
 Route::get('/ubah-user-pelanggan-admin/{id}', [C_UserPelanggan::class, 'updateUserPelanggan'])->name('updateUserPelanggan.admin');
 Route::post('/ubah-user-pelanggan-admin/action/{id}', [C_UserPelanggan::class, 'updateUserPelangganAction'])->name('updateUserPelangganAction.admin');
 
+
 Route::get('/user-menu-admin',[C_UserMenu::class,'userMenu'])->name('userMenu.admin');
 Route::post('/ubah-user-menu-admin/action/{id}',[C_UserMenu::class,'updateUserMenuAction'])->name('updateUserMenuAction.admin');
 Route::get('/ubah-status-user-menu-admin/{id}/{status}',[C_UserMenu::class,'changeStatusUserMenu'])->name('changeStatusUserMenu.admin');
