@@ -179,6 +179,18 @@
                         </a>
                     </li>
                 @endif
+                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminFormsLiving')
+                <li class="nav__divider">
+                    <div class="divider__title">Optional</div>
+                    <hr class="separate">
+                </li>
+                <li class="nav__item  ">
+                    <a class="nav__link @if (request()->segment(1) === 'user-pelanggan-admin') active @endif" href="{{ route('userPelanggan.admin') }}">
+                        <i class="fas fa-users    "></i>
+                        <span>User Pelanggan</span>
+                    </a>
+                </li>
+            @endif
 
 
                 <li class="nav__divider">

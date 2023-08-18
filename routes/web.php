@@ -277,7 +277,7 @@ Route::get('/dashboard-admin/{projek}', [C_Dashboard::class, 'index'])->name('da
 Route::get('/rumah-admin/{projek}', [C_Rumah::class, 'index'])->name('rumah.admin');
 Route::get('/tambah-rumah-admin/{projek}', [C_Rumah::class, 'storeRumah'])->name('postRumah.admin');
 Route::post('/tambah-rumah-action-admin', [C_Rumah::class, 'storeRumahAction'])->name('postRumah');
-Route::get('/hapus-rumah-admin/{projek}/{id}',[C_Rumah::class,'deleteRumahAction'])->name('deleteRumah.admin');
+Route::get('/hapus-rumah-admin/{projek}/{id}', [C_Rumah::class, 'deleteRumahAction'])->name('deleteRumah.admin');
 
 Route::get('/ubah-rumah-admin/{projek}/{id}', [C_Rumah::class, 'updateRumah'])->name('updateRumah.admin');
 Route::post('/ubah-rumah-action-admin/ubah/{projek}/{id}', [C_Rumah::class, 'updateRumahActionNoJS'])->name('updateRumahActionNoJS.admin');
@@ -320,13 +320,17 @@ Route::get('/download-user-sales-admin', [C_UserAdmin::class, 'DownloadUserAdmin
 
 // PROMO
 Route::get('/promo-admin/{projek}', [C_Promo::class, 'Promo'])->name('promo.admin');
-Route::get('/tambah-rumah-promo-admin/{projek}',[C_Promo::class,'addRumahPromo'])->name('addPromoRumah.admin');
-Route::post('/tambah-rumah-promo-admin/action/{projek}',[C_Promo::class,'addRumahPromoAction'])->name('addPromoRumahAction.admin');
+Route::get('/tambah-rumah-promo-admin/{projek}', [C_Promo::class, 'addRumahPromo'])->name('addPromoRumah.admin');
+Route::post('/tambah-rumah-promo-admin/action/{projek}', [C_Promo::class, 'addRumahPromoAction'])->name('addPromoRumahAction.admin');
 // Route::get('/tambah-promo-admin/{projek}', [C_Promo::class, 'addPromo'])->name('addPromo.admin');
 Route::post('/tambah-promo-admin/action/{projek}', [C_Promo::class, 'addPromoAction'])->name('addPromoAction.admin');
-Route::get('/ubah-promo-admin/{projek}/{id}',[C_Promo::class,'updatePromo'])->name('updatePromo.admin');
-Route::post('/ubah-promo-admin/action/{projek}/{id}',[C_Promo::class,'updatePromoAction'])->name('updatePromoAction.admin');
+Route::get('/ubah-promo-admin/{projek}/{id}', [C_Promo::class, 'updatePromo'])->name('updatePromo.admin');
+Route::post('/ubah-promo-admin/action/{projek}/{id}', [C_Promo::class, 'updatePromoAction'])->name('updatePromoAction.admin');
 // Route::get('/hapus-list-promo/{projek}/{id}',[C_ListPromo,'deleteListPromo'])->name('deleteListPromo.admin');
 
 Route::get('/ubah-user-profile/{id}', [C_UserAdmin::class, 'updateUserProfile'])->name('updateUserProfile.admin');
 Route::post('/ubah-user-profile/action/{id}', [C_UserAdmin::class, 'updateUserProfileAction'])->name('updateUserProfileAction.admin');
+
+Route::get('/user-pelanggan-admin', [C_UserPelanggan::class, 'userPelanggan'])->name('userPelanggan.admin');
+Route::get('/ubah-user-pelanggan-admin/{id}', [C_UserPelanggan::class, 'updateUserPelanggan'])->name('updateUserPelanggan.admin');
+Route::post('/ubah-user-pelanggan-admin/action/{id}', [C_UserPelanggan::class, 'updateUserPelangganAction'])->name('updateUserPelangganAction.admin');

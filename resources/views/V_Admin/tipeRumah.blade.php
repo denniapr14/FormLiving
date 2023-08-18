@@ -358,14 +358,14 @@
                                                                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
                                                                                     @if ($gambar->status_gr != 'nonaktif')
                                                                                     <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> class="btn btn-danger"><i
+                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> <i
                                                                                         class="fa fa-toggle-off"
                                                                                         aria-hidden="true"></i>
                                                                                     Nonaktif</a>
 
                                                                                     @else
                                                                                     <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> class="btn btn-danger"><i
+                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"><i
                                                                                         class="fa fa-toggle-off"
                                                                                         aria-hidden="true"></i>
                                                                                     Aktif</a>
@@ -392,14 +392,14 @@
                                                                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
                                                                                     @if ($gambar->status_gr != 'nonaktif')
                                                                                     <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> class="btn btn-danger"><i
+                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> <i
                                                                                         class="fa fa-toggle-off"
                                                                                         aria-hidden="true"></i>
                                                                                     Nonaktif</a>
 
                                                                                     @else
                                                                                     <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> class="btn btn-danger"><i
+                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> <i
                                                                                         class="fa fa-toggle-off"
                                                                                         aria-hidden="true"></i>
                                                                                     Aktif</a>

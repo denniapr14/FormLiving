@@ -207,7 +207,7 @@
                                                         {{ $preOrder->status_po }}
                                                     </button>
                                                 @elseif ($preOrder->status_po == 'overtaken')
-                                                    <button type="button" class="btn btn-secondary" >
+                                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
                                                         {{ $preOrder->status_po }}
                                                     </button>
                                                 @else

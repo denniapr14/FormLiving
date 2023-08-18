@@ -318,20 +318,30 @@
     <body>
         <div style="width: 100%;">
             <div class="card" style="width: 100%;">
+                <form action="{{ route('editSuratPemesananRumahAction.admin', [$getProjek->nama_projek,Crypt::encrypt($getFormulirPesanan->id_formulir)]) }}" method="post">
+                    @csrf
                 <div class="card-body">
                     <center>
                         <table class="table table-borderless no-space">
                             <tr>
                                 <td><img style="" src="{{ asset('Dashboard') }}/images/content/logo-forms-living1.png"
                                         alt=""></td>
-                                <td><img style="float: right;" class="float-right"
+                                <td><img style="float: right;"  class="float-right"
                                         src="{{ asset('Dashboard') }}/images/content/logo-tidar-gray.png" alt="">
                                 </td>
                             </tr>
                         </table>
                         <br>
                         <h4> SURAT PEMESANAN RUMAH SEMENTARA</h4>
-                        <p>Nomor : <input type="text" style="width: 30%"> </p>
+                        <p>Nomor :
+                            @if($getFormulirPesanan->no_fp !=null)
+
+                            <input type="text" name="nofp" value="{{ $getFormulirPesanan->no_fp }}" style="width: 30%">
+                            @else
+                            <input type="text" name="nofp" value="{{ old('nofp') }}" style="width: 30%">
+
+                            @endif
+                            </p>
                     </center>
                     <p>Yang bertanda tangan dibawah ini :</p>
                     <table>
@@ -1695,6 +1705,10 @@
                         </tr>
 
                     </table>
+                    <center>
+
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </center>
 
                     <br>
                     <br><br>
@@ -1714,6 +1728,7 @@
                         </tr>
 
                     </table>
+                </form>
                 </div>
             </div>
         </div>

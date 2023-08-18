@@ -12,7 +12,9 @@ use App\Models\UserAdmin;
 use App\Models\UserMenu;
 use App\Models\UserNotif;
 use App\Models\UserProjek;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class C_SuratPemesananRumah extends Controller
@@ -164,6 +166,57 @@ class C_SuratPemesananRumah extends Controller
                 'getProjek',
                 'getUserMenu'
             ));
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    public function editSuratPemesananRumahAction(Request $request, $projek, $id)
+    {
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ])->collect();
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+
+        // if (!$foundMatchingMenu) {
+        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+        // }
+
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $decryptedID = Crypt::decrypt($id);
+        $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananJoin7Where($decryptedID);
+        $getPromo = '';
+        // dd($getFormulirPesanan);
+        if (!empty($getFormulirPesanan->id_promo)) {
+            // code...
+            $getPromo = $this->promo->getPromoWhereAll('*', 'id_promo', '=', $getFormulirPesanan->id_promo);
+        } else {
+            $getPromo = '';
+        }
+
+        $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
+
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $dataUpdate = [
+                'no_fp' => $request->nofp,
+            ];
+            DB::table('formulir_pesanan')
+            ->where('id_formulir', $decryptedID)
+            ->update($dataUpdate);
+
+            return redirect()->route('suratPemesananRumah.admin', $getProjek->nama_projek)->with('success', 'Data berhasil diubah');
         } else {
             return redirect('/login');
         }
