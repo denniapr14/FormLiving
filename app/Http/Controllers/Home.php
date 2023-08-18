@@ -3010,7 +3010,7 @@ class Home extends Controller
     {
         $fp = DB::table('formulir_pesanan')
             ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'formulir_pesanan.id_rumah')
+            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
             ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
@@ -3021,16 +3021,22 @@ class Home extends Controller
         $dtPembayaran = DB::table('pembayaran_rumah')
             ->where('id_formulir', '=', $id_formulir)
             ->get();
+        if(!empty($fp->id_promo)){
         $promo = DB::table('promo')
             ->where('id_promo', '=', $fp->id_promo)
-        // ->where('tgl_aktif', '<=', NOW())
+            // ->where('tgl_aktif', '<=', NOW())
 
             ->first();
+        }else{
+            $promo ="";
+        }
+        
         // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
-        $pdf = PDF::loadView('pdf.PrintSPR', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran, 'promo' => $promo]);
+        $pdf = PDF::loadView('pdf.printSPR-ttd', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran, 'promo' => $promo]);
         $pdf->setPaper('F4', 'potrait');
-        return $pdf->download('FP-' . $fp->blok . "-" . $fp->nomor . '.pdf');
+        return $pdf->download('SPR-' . $fp->blok . "-" . $fp->nomor . '.pdf');
     }
+    
     public function rupiah($angka)
     {
         $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.') . ',-';

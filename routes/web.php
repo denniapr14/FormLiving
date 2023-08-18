@@ -44,6 +44,8 @@ Route::get('/my-cart', [Home::class, 'MyCart']);
 Route::get('/login', [C_Login::class, 'login']);
 Route::post('/login', [C_Login::class, 'loginAction'])->name('login.action');
 Route::get('/logout', [C_Login::class, 'logout']);
+Route::get('/reset-password', [C_Login::class, 'emailForgot']);
+Route::get('/profile/cetak/{code}/{id_formulir}', [Home::class, 'printFP']);
 Route::get('/forgot/{email}', [C_Login::class, 'forgotPassword'])->name('forgot.utama');
 Route::post('/forgot', [C_Login::class, 'forgotAction'])->name('forgot.action');
 
@@ -339,3 +341,4 @@ Route::post('/ubah-user-pelanggan-admin/action/{id}', [C_UserPelanggan::class, '
 Route::get('/user-menu-admin',[C_UserMenu::class,'userMenu'])->name('userMenu.admin');
 Route::post('/ubah-user-menu-admin/action/{id}',[C_UserMenu::class,'updateUserMenuAction'])->name('updateUserMenuAction.admin');
 Route::get('/ubah-status-user-menu-admin/{id}/{status}',[C_UserMenu::class,'changeStatusUserMenu'])->name('changeStatusUserMenu.admin');
+Route::post('/ubah-user-pelanggan-admin/action/{id}', [C_UserPelanggan::class, 'updateUserPelangganAction'])->name('updateUserPelangganAction.admin');
