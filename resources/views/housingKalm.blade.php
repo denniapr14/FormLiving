@@ -24,7 +24,7 @@
                 <h1 data-aos="fade-right" data-aos-delay="400">Resepsi sudah jadi, Rumahnya kapan?</h1>
             </div>
             <div class="col-12 col-lg-6 ps-lg-6" data-aos="fade-left" data-aos-delay="400">
-                <p class="header-text">Temukan ketenangan jiwa di antara hijaunya rerumputan dan birunya langit </p>
+                <p class="header-text">Hunian Modern dengan Konsep di tengah suasana yang asri. </p>
 
                 <a href="/PreOrderSelect" class="btn btn-primary d-none d-lg-block">Pre Order Now</a>
             </div>
@@ -73,12 +73,11 @@
                 </div> --}}
                 <div class="sliders">
                     <div class="slider-image">
-                        <img src="{{ asset('Home') }}/images/cluster/A-11.jpg" class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/page-picture/kalm-housing-banner.jpg" class="w-100" alt="">
                     </div>
                     <div class="text-blur-bg d-none d-lg-block">
-                        <h5>Beautiful Green themed House</h5>
-                        <p>TGreenlandmengkombinasikan gaya arsitektur kontemporer dengan alam yang memanjakan
-                            pemiliknya
+                        <h5>Natural Living House</h5>
+                        <p>Kalm Residence, hunian dengan konsep natural dengan lingkungan yang asri dan nyaman.
                         </p>
                     </div>
                 </div>
@@ -134,12 +133,12 @@
     <!--    </div>-->
             <div class="choose-cluster">
             <h2 class="title">
-                Pilih Cluster
+                Hunian di Kalm residence
             </h2>
             <div class="row">
                 @foreach ($cluster1 as $cluster)
                 <div class="col-6 col-lg-3">
-                    <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
+                    <a href="//PreOrderSelect">
                     <div class="item">
                         <div class="item-image">
                             <?php
@@ -149,7 +148,6 @@
                                 <?php
                             }else{
                             ?>
-
                             <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
                             <?php
                             }
@@ -157,10 +155,19 @@
 
                         </div>
                         <div class="item-avail">{{ $cluster->count }} Available</div>
-                        <div class="item-image" style="border-bottom:0px; padding-bottom:0px;"><img style="width:50%;height:50%;filter: invert(100%);" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""></div>
+                        <div class="item-text">
+
+                        @if(!empty($cluster->logo_img))
+                        <div class="item-image" style="border-bottom:0px; padding-bottom:0px;"><img style="width:50%;height:50%;filter: invert(100%);"src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}"" alt=""></div>
+                        @else
+                        <div class="item-image" style="border-bottom:0px; padding-bottom:0px;">
+                        <a href="/PreOrderSelect">
+                            {{ $cluster->nama_cluster }}
+                        </a>
+                        @endif
+                        </div>
+                        </div>
                     </div>
-
-
                 </a>
                 </div>
                 @endforeach
@@ -177,7 +184,7 @@
             Cluster
         </h5>
         <h2 class="title">
-            Hunian di Greenland
+            Hunian di Kalm residence
         </h2>
         <div class="row">
             @foreach ($cluster1 as $cluster)
@@ -201,15 +208,37 @@
                     ?>
 
                     <div class="item-text">
-
                         @if(!empty($cluster->logo_img))
-                       <a href="/simulation-select-unit/{{ $cluster->codecluster }}"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                       <a href="/PreOrderSelect"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
                         @else
-                        <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
+                        <a href="/PreOrderSelect">
                             {{ $cluster->nama_cluster }}
                         </a>
-
                         @endif
+                    </div>
+                     <div class="until-tablet">
+                        <div class="item-text">
+
+                        @if(!empty($cluster->logo_img))
+                       <a href="/PreOrderSelect"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                        @else
+                        <a href="/PreOrderSelect">
+                            {{ $cluster->nama_cluster }}
+                        </a>
+                        @endif
+                        </div>
+                    </div>
+                    <div class="mobile-only">
+                        <div class="item-text">
+
+                        @if(!empty($cluster->logo_img))
+                       <a href="/PreOrderSelect"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                        @else
+                        <a href="/PreOrderSelect">
+                            {{ $cluster->nama_cluster }}
+                        </a>
+                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -309,16 +338,17 @@
                     <div class="col-12 col-lg-6 pe-0 d-none d-lg-block" data-aos="fade-right">
                         <div class="image-sliders">
                             <div class="image-item">
-                                <img src="{{ asset('Home') }}/images/img-testimonial.png" class="w-100" alt="">
+                                <img src="{{ asset('Home') }}/images/page-picture/kalm-3.jpg" class="w-100" alt="">
                                 <div class="text-blur-bg">
-                                    <h5>Alex Boston</h5>
+                                    <h5>Hunian di Kalm</h5>
                                     <p>Residence</p>
                                 </div>
                             </div>
                             <div class="image-item">
-                                <img src="{{ asset('Home') }}/images/img-food-court.png" class="w-100" alt="">
+                                <img src="{{ asset('Home') }}/images/page-picture/kalm-4.jpg" class="w-100" alt="">
                                 <div class="text-blur-bg">
-                                    <h5>Food Court</h5>
+                                    <h5>Commercial Area</h5>
+                                    <h6>Food Court</h6>
                                     <p>upcoming Soon</p>
                                 </div>
                             </div>
@@ -331,14 +361,14 @@
                                     <img src="{{ asset('Home') }}/images/ic-quote.png" alt="">
                                 </div>
                                 <h2 class="testimoni-text">
-                                    Hunian Berkelas dimana anda dan keluarga menatap masa depan nan gemilang
+                                    Hunian berkonsep natural yang memberikan suasana asri dan nyaman untuk keluarga anda.
                                 </h2>
                                 <div class="until-tablet">
                                     <div class="items">
                                         <div class="user">
-                                            <div><img src="{{ asset('Home') }}/images/img-testimonial.png" alt=""></div>
+                                            <div><img src="{{ asset('Home') }}/images/page-picture/kalm-3.jpg" alt=""></div>
                                             <div>
-                                                <h6>Alex Boston</h6>
+                                                <h6>Hunian Kalm</h6>
                                                 <small>Residence</small>
                                             </div>
                                         </div>
@@ -358,10 +388,10 @@
                                 <div class="until-tablet">
                                     <div class="items">
                                         <div class="user">
-                                            <div><img src="{{ asset('Home') }}/images/img-testimonial.png" alt=""></div>
+                                            <div><img src="{{ asset('Home') }}/images/page-picture/kalm-3.jpg" alt=""></div>
                                             <div>
-                                                <h6>Alex Boston</h6>
-                                                <small>Residence</small>
+                                                <h6>Food Court</h6>
+                                                <small>Upcoming Soon</small>
                                             </div>
                                         </div>
                                         <div class="quote">
@@ -579,43 +609,43 @@
         <div class="row">
             <div class="col-12" data-aos="fade-right">
                 <div class="image-container left-text">
-                    <img src="{{ asset('Home') }}/images/img-home-section2.png" alt="">
+                    <img src="{{ asset('Home') }}/images/page-picture/5.jpg" alt="">
                     <div class="text-blur-bg">
-                        <h1>Berada di pusat pendidikan.</h1>
-                        <p>Dukung anak-anak mendapatkan pendidikan terbaik dengan kemudahan
-                            akses dan fasilitas terbaik</p>
-                        <a href="#" class="more">Learn More <i class="bi-chevron-right"></i>
+                         <h1>Area Berkembang</h1>
+                            <p>Berada di Kawasan Pakisaji yang 
+                            diproyeksikan menjadi kota mandiri
+                            di Kabupaten Malang</p>
+                        <!--<a href="#" class="more">Learn More <i class="bi-chevron-right"></i>-->
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col-12" data-aos="fade-left">
                 <div class="image-container">
-                    <img src="{{ asset('Home') }}/images/img-home-section3.png" alt="">
+                    <img src="{{ asset('Home') }}/images/page-picture/6.jpg" alt="">
                     <div class="item-text">
                         <div class="text-blur-bg">
-                            <h1>Belanja bebas tanpa kendala.</h1>
-                            <p>Dukung anak-anak mendapatkan pendidikan terbaik dengan kemudahan
-                                akses dan fasilitas terbaik</p>
-                            <a href="#" class="more">Learn More <i class="bi-chevron-right"></i>
-                            </a>
+                            <h1>kawasan Asri</h1>
+                            <p>Area yang masih natural, memberikan kenyamanan pada penghuni</p>
+                            <!--<a href="#" class="more">Learn More <i class="bi-chevron-right"></i>-->
+                            <!--</a>-->
 
                         </div>
                     </div>
                 </div>
-                <div class="col-12" data-aos="fade-right">
-                    <div class="image-container left-text">
-                        <img src="{{ asset('Home') }}/images/img-home-section4.png" alt="">
-                        <div class="text-blur-bg">
-                            <h1>Pastikan yang tercinta tetap terlindungi.</h1>
-                            <p>Dukung anak-anak mendapatkan pendidikan terbaik dengan kemudahan
-                                akses dan fasilitas terbaik</p>
-                            <a href="#" class="more">Learn More <i class="bi-chevron-right"></i>
-                            </a>
+                <!--<div class="col-12" data-aos="fade-right">-->
+                <!--    <div class="image-container left-text">-->
+                <!--        <img src="{{ asset('Home') }}/images/img-home-section4.png" alt="">-->
+                <!--        <div class="text-blur-bg">-->
+                <!--            <h1>Kawasan Asri</h1>-->
+                <!--            <p>Dukung anak-anak mendapatkan pendidikan terbaik dengan kemudahan-->
+                <!--                akses dan fasilitas terbaik</p>-->
+                <!--            <a href="#" class="more">Learn More <i class="bi-chevron-right"></i>-->
+                <!--            </a>-->
 
-                        </div>
-                    </div>
-                </div>
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>

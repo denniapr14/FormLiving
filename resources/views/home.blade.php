@@ -17,10 +17,10 @@
                         <img src="{{ asset('Home') }}/images/60.jpg" class="w-100" alt="">
                     </div> --}}
                     <div>
-                        <img src="{{ asset('Home') }}/images/greenland-project.jpeg" class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/page-picture/greenland-banner.jpg" class="w-100" alt="">
                     </div>
                     <div>
-                        <img src="{{ asset('Home') }}/images/kalm-project.jpeg" class="w-100" alt="">
+                        <img src="{{ asset('Home') }}/images/page-picture/kalm-banner.jpg" class="w-100" alt="">
                     </div>
 
                     {{-- <div>
@@ -344,51 +344,6 @@
 </script>
 
 
-
-<!--<div class="apps" data-aos="fade-up" data-aos-offset="0">-->
-<!--    <div class="container">-->
-<!--        <div class="ornament one">-->
-<!--            <img src="{{ asset('Home') }}/images/img-ornament3.png" alt="">-->
-<!--        </div>-->
-<!--        <div class="ornament two">-->
-<!--            <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="col-5 col-lg-6">-->
-<!--                <div class="apps-preview">-->
-<!--                    <div class="first">-->
-<!--                        <img src="{{ asset('Home') }}/images/phone-1.png" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="second">-->
-<!--                        <img src="{{ asset('Home') }}/images/phone-2.png" alt="">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="col-7 col-lg-6">-->
-<!--                <h2>Percayalah, hidup itu hanya butuh jari</h2>-->
-<!--                <p>-->
-<!--                    Bayar iuran bulanan?-->
-<!--                    Butuh perbaikan rumah?-->
-<!--                    Cleaning service?Ada ular?-->
-<!--                    Panggil ambulan?-->
-<!--                    Keluhan?-->
-<!--                    dan seabreg kebutuhan lainnya?-->
-<!--                    Tenang, semua ada di aplikasi One Property.-->
-<!--                </p>-->
-
-<!--                <div class="logos">-->
-<!--                    <div class="me-3">-->
-<!--                        <img src="{{ asset('Home') }}/images/img-app-store.png" alt="App Store">-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <img src="{{ asset('Home') }}/images/img-google-play.png" alt="Google Play">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 <script>
     function copyToClipboard(element) {
