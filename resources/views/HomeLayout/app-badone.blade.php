@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('tittle')</title>
+    <link rel="icon" href="{{ asset('Home') }}/images/logo-website/fl-favicon.png">
 
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -25,11 +26,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
         integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" href="{{asset('Dashboard')}}/css/toastify.min.css">
-    <link rel="stylesheet" href="{{asset('Dashboard')}}/css/jquery.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="{{url('Dashboard')}}/css/toastify.min.css">
+    <link rel="stylesheet" href="{{url('Dashboard')}}/css/jquery.dataTables.css" />
+    {{--
+    <link rel="stylesheet" href="{{url('Dashboard')}}/css/style.css" type="text/css"> --}}
+
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e393db40ad.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -43,9 +48,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript" src="{{url('Dashboard')}}/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="{{url('Dashboard')}}/js//toastify.js"></script>
-    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+        integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {{-- Datatabless --}}
+
+
 </head>
 
 <body class="@yield('body')">
@@ -59,6 +71,7 @@
 
     @yield('navbar-profile')
 
+    @yield('navbar-mobile')
     {{-- @yield('branch') --}}
     @yield('footer')
     @yield('script')
@@ -69,92 +82,87 @@
         offset: 150,
         once: true,
     });
+    $(document).ready(function () {
+        $('.sliders').slick();
+    });
 </script>
-
 <script>
     @if(Session::has('success'))
-  toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-top-left",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "200",
-  "hideDuration": "1000",
-  "timeOut": "1800",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
-  		toastr.success("{{ session('success') }}");
-  		
-  @endif
-  
-  @if(Session::has('error'))
-  toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-top-center",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "200",
-  "hideDuration": "1000",
-  "timeOut": "3000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
-    toastr.warning("{{ session('error') }}");
-  		
-  @endif
+      toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-left",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "200",
+      "hideDuration": "1000",
+      "timeOut": "1800",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+              toastr.success("{{ session('success') }}");
+              
+      @endif
+      
+      @if(Session::has('error'))
+      toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-center",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "200",
+      "hideDuration": "1000",
+      "timeOut": "3000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+        toastr.warning("{{ session('error') }}");
+              
+      @endif
+</script>
+<script>
+    @if(Session::has('message'))
+       var type="{{Session::get('alert-type','info')}}"
+
+        switch(type){
+            case 'info':
+                toastr.info("{{ Session::get('message') }}");
+                break;
+            case 'success':
+                toastr.success("{{ Session::get('message') }}");
+                break;
+            case 'warning':
+                toastr.warning("{{ Session::get('message') }}");
+                break;
+            case 'error':
+               toastr.error("{{ Session::get('message') }}");
+               break;
+        }
+    @endif
+</script>
+<script>
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
 </script>
 
-<!--<script type="text/javascript">-->
-<!--   $(document).ready(function(){-->
-<!--     $('.hunian-cluster').slick({-->
-<!--       dots: false,-->
-<!--         infinite: false,-->
-<!--         speed: 300,-->
-<!--         slidesToShow: 4,-->
-<!--         slidesToScroll: 4,-->
-<!-- responsive: [-->
-<!--   {-->
-<!--     breakpoint: 1024,-->
-<!--     settings: {-->
-<!--       slidesToShow: 3,-->
-<!--       slidesToScroll: 3,-->
-<!--       infinite: true,-->
-<!--       dots: true-->
-<!--     }-->
-<!--   },-->
-<!--   {-->
-<!--     breakpoint: 600,-->
-<!--     settings: {-->
-<!--       slidesToShow: 2,-->
-<!--       slidesToScroll: 2-->
-<!--     }-->
-<!--   },-->
-<!--   {-->
-<!--     breakpoint: 480,-->
-<!--     settings: {-->
-<!--       slidesToShow: 1,-->
-<!--       slidesToScroll: 1-->
-<!--     }-->
-<!--   }-->
-<!--// You can unslick at a given breakpoint now by adding:-->
-<!--// settings: "unslick"-->
-<!--// instead of a settings object-->
-<!-- ]-->
-<!--     });-->
-<!--   });-->
-<!-- </script>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript" src="{{url('Dashboard')}}/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{url('Dashboard')}}/js//toastify.js"></script>
+<script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 
 </html>

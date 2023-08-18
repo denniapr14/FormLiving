@@ -32,4 +32,12 @@ class Promo extends Model{
         return Promo::get();
     }
 
+    public function promoHalamanDepan(){
+        return Promo::select('*')
+        ->where('status','=','aktif')
+        ->where('tipe_promo','=','standart')
+        ->get();
+    }
+
+
 }
