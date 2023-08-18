@@ -34,7 +34,12 @@
     {{-- Datatabless --}}
 
     <link rel="stylesheet" href="{{url('Dashboard')}}/css/jquery.dataTables.css" />
+    <style>
+        .myicon-color{
+            color: #8ACCA1;
+        }
 
+    </style>
 </head>
 
 <body>

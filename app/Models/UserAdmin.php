@@ -71,12 +71,29 @@ class UserAdmin extends Authenticatable
     //     ])
     //     ->first();
     // }
-    
+
     function getPrintUserAdmin(){
         return UserAdmin::select('*')
         ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
         ->whereNotNull('code_id_ua')
         ->orderByDesc('tgl_input_ua')
         ->get();
+    }
+    function getUserAdminJoinKategoriDepartemen($select,$order,$by) {
+        return UserAdmin::select($select)
+        ->join('ktgr_admin','user_admin.id_kategori','ktgr_admin.id_kategori')
+        ->join('departemen','ktgr_admin.id_departemen','departemen.id_departemen')
+        ->orderBy($order,$by)
+        ->get();
+
+    }
+    function getUserAdminJoinWhereKategoriDepartemen($select,$where,$order,$by) {
+        return UserAdmin::select($select)
+        ->join('ktgr_admin','user_admin.id_kategori','ktgr_admin.id_kategori')
+        ->join('departemen','ktgr_admin.id_departemen','departemen.id_departemen')
+        ->where($where)
+        ->orderBy($order,$by)
+        ->get();
+
     }
 }

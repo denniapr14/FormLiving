@@ -10,4 +10,10 @@ class Menu extends Model
     protected $table = "menu";
     protected $primaryKey = "id_menu";
 
+    function getMenuWhere($select,$where) {
+        return Menu::select($select)
+        ->where($where)
+        ->get();
+
+    }
 }
