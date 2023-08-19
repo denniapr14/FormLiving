@@ -6,6 +6,8 @@ use App\Models\UserMenu;
 use App\Models\Menu;
 use App\Models\UserAdmin;
 use App\Models\UserProjek;
+use App\Models\Projek;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -19,17 +21,20 @@ class C_UserMenu extends Controller
     public $userProjek;
 
     public $userMenu;
+    public $projek;
     public function __construct() {
         $this->menu = new Menu();
         $this->userAdmin = new UserAdmin();
         $this->userProjek = new UserProjek();
         $this->userProjek = new UserProjek();
         $this->userMenu = new UserMenu();
+        $this->projek = new Projek();
     }
     function userMenu() {
 
         // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         // dd($getRumah);
+        $getProjekAll = $this->projek->getProjekAll();
         $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*','tgl_input_ua','desc');
         $getUserMenuAll = $this->userMenu->getUserMenuJoinMenu('*','tgl_input_um','desc');
         $getMenu = $this->menu->getMenuWhere('*',['status_menu' => 'fitur'])->collect();

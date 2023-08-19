@@ -34,6 +34,7 @@
                             <tr>
                                 <th style="width: 10px">No</th>
                                 <th>Nama</th>
+                                <th>Kategori - Departemen</th>
                                 <th>Status</th>
                                 <th>Pengaturan</th>
                             </tr>
@@ -46,6 +47,7 @@
                                 <tr>
                                     <td scope="row">{{ $no }}</td>
                                     <td>{{ $userAdmin->nama_ua }}</td>
+                                    <td>{{ $userAdmin->kategori }} - {{ $userAdmin->departemen }}</td>
                                     <td>{{ $userAdmin->status_ua }}</td>
                                     <td>
                                         <div class="d-flex flex-nowrap">

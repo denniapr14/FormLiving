@@ -178,14 +178,14 @@
                             <span>User Sales / Agent</span>
                         </a>
                     </li>
-                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminFormsLiving')
+                    {{--  @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminFormsLiving')
                     <li class="nav__item  ">
                         <a class="nav__link @if (request()->segment(1) === 'user-pelanggan-admin') active @endif" href="{{ route('userPelanggan.admin') }}">
                             <i class="fas fa-users    "></i>
                             <span>User Pelanggan</span>
                         </a>
                     </li>
-                    @endif
+                    @endif  --}}
                     @if ($user->kategori == 'SuperAdmin')
                     <li class="nav__item  ">
                         <a class="nav__link @if (request()->segment(1) === 'user-menu-admin') active @endif" href="{{ route('userMenu.admin') }}">

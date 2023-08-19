@@ -63,6 +63,7 @@ class C_Promo extends Controller
             ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
             // ->leftjoin('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
             ->where('rumah.id_projek', '=', $getProjek->id_projek)
+            ->where('formulir_pesanan.status_fp', '!=', 'nonactive')
             ->get();
         // echo "<pre>";
         // print_r($promo);

@@ -15,4 +15,9 @@ class UserProjek extends Model{
         ->get();
     }
 
+    // Insert
+    function insertUserProjek($data) {
+        return UserProjek::insert($data);
+    }
+
 }

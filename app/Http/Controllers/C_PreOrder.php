@@ -103,9 +103,9 @@ class C_PreOrder extends Controller
             ) {
                 $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUserArr(
                     '*',
-                   [
-                    'pre_order.id_user_admin' => $user->id_user_admin,
-                    'rumah.id_projek'   => $getProjek->id_projek
+                    [
+                        'pre_order.id_user_admin' => $user->id_user_admin,
+                        'rumah.id_projek'   => $getProjek->id_projek
                     ],
                     'pre_order.tgl_input_po',
                     'desc'
@@ -214,26 +214,46 @@ class C_PreOrder extends Controller
 
             if ($decryptedStatus == "accepted" && $getPreOrder[0]->tipe_booking_po == 'non-refundable') {
                 # code...
-                $getPreOrderRefundable = $this->preOrder->getPreOrderWhereAllArr(
+              $getPreOrderRefundable = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUserArr(
                     '*',
                     [
-                        'tipe_booking_po' => 'refundable',
-                        'id_rumah'        => $getPreOrder[0]->id_rumah
-                    ]
+                        'pre_order.tipe_booking_po' => 'refundable',
+                        'pre_order.id_rumah'        => $getPreOrder[0]->id_rumah
+                    ],
+                    'pre_order.tgl_input_po',
+                    'asc'
                 );
                 // dd($getPreOrderRefundable);
                 foreach ($getPreOrderRefundable as $refundable) {
-                    DB::table('pre_order')
-                        ->where('id_pre_order', $refundable->id_pre_order)
-                        ->update([
-                            'status_po' => 'overtaken'
-                        ]);
+                    if (!empty($refundable->email_plgn)) {
+                        DB::table('pre_order')
+                            ->where('id_pre_order', $refundable->id_pre_order)
+                            ->update([
+                                'status_po' => 'overtaken'
+                            ]);
+
+                        $templateOvertaken = 'mail.mailPOOvertaken';
+                        $data = [
+                            "subject" => "Form Living",
+                            "body" => "Form Living",
+                            "blok" => $refundable->blok,
+                            "nomor" => $refundable->nomor,
+                        ];
+
+                        try {
+                            Mail::to($refundable->email_plgn)
+                                ->send(new MailNotify($data, $templateOvertaken));
+
+                            // Log successful email sending
+                            // \Log::info("Email sent to: " . $refundable->email_plgn);
+                        } catch (Exception $e) {
+                            // Log email sending error
+                            // \Log::error("Email sending error: " . $e->getMessage());
+                        }
+                    } else {
+                        // \Log::warning("Empty email address for id_pre_order: " . $refundable->id_pre_order);
+                    }
                 }
-                $dataRumah = [
-                    'status' => "Hold"
-                ];
-                $template = 'mail.mailPOTerima';
-            }
 
             if ($decryptedStatus == "rejected" && $getPreOrder[0]->tipe_booking_po == 'non-refundable') {
                 # code...
@@ -276,12 +296,12 @@ class C_PreOrder extends Controller
 
             ];
             // MailNotify class that is extend from Mailable class.
-            // try {
-            //     Mail::to($getPreOrder[0]->email_plgn)->send(new MailNotify($data, $template));
-            //     // return response()->json(['Great! Successfully send in your mail']);
-            // } catch (Exception $e) {
-            //     // return response()->json(['Sorry! Please try again latter']);
-            // }
+            try {
+                Mail::to($getPreOrder[0]->email_plgn)->send(new MailNotify($data,  $template));
+                // return response()->json(['Great! Successfully send in your mail']);
+            } catch (Exception $e) {
+                // return response()->json(['Sorry! Please try again latter']);
+            }
 
 
             return redirect()->back()->with(
