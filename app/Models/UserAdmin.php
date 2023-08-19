@@ -63,6 +63,14 @@ class UserAdmin extends Authenticatable
         ->whereIn($where,$value)
         ->get();
     }
+
+    function getUserAdminWhereJoinProjek($select,$where){
+        return UserAdmin::select($select)
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->leftjoin('projek','user_admin.id_projek','=','projek.id_projek' )
+        ->where($where)
+        ->get();
+    }
     // function getUserJoinWithCompanyCount(){
     //     return UserAdmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
     //     ->select(UserAdmin::raw('COUNT(user_admin.id_user_admin) as userCount'))
@@ -82,7 +90,7 @@ class UserAdmin extends Authenticatable
     function getUserAdminJoinKategoriDepartemen($select,$order,$by) {
         return UserAdmin::select($select)
         ->join('ktgr_admin','user_admin.id_kategori','ktgr_admin.id_kategori')
-        ->join('departemen','ktgr_admin.id_departemen','departemen.id_departemen')
+        ->leftjoin('departemen','ktgr_admin.id_departemen','departemen.id_departemen')
         ->orderBy($order,$by)
         ->get();
 

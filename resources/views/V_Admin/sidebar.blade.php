@@ -167,7 +167,13 @@
                     </li>
                 @endforeach
 
-                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminFormsLiving')
+                @if (
+                    $user->kategori == 'SuperAdmin' ||
+                    $user->kategori == 'AdminFormsLiving' ||
+                    $user->kategori == 'AdminSales' ||
+                    $user->kategori == 'AdminAgentCompany'
+
+                  )
                     <li class="nav__divider">
                         <div class="divider__title">Optional</div>
                         <hr class="separate">

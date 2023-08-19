@@ -72,6 +72,7 @@
 
                     </div>
                     <div class="transaction__listing">
+
                         <div class="transaction__column">
                             <div class="transaction__icon transaction__icon--web-page">
                                 <i class="bi bi-file-earmark-code"></i>
@@ -90,9 +91,26 @@
                             $user->kategori == 'Sales' ||
                             $user->kategori == 'SalesAgent' ||
                             $user->kategori == 'Agent' ||
-                            $user->kategori == 'AgentCompany' ||
-                            $user->kategori == 'AdminAgentCompany'
+                            $user->kategori == 'AgentCompany'
                         )
+                        @elseif( $user->kategori == 'AdminAgentCompany' ||
+                        $user->kategori == 'AdminSales'
+                        )
+                        <div class="transaction__column">
+                            <div class="transaction__icon transaction__icon--agents">
+                                <i class="bi bi-person-workspace"></i>
+                            </div>
+                            <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
+                            <div class="transaction__title">
+                                @if ($user->kategori == 'AdminSales')
+                                Sales
+                                @elseif($user->kategori == 'AdminAgentCompany')
+                                Agent
+                                @endif
+
+                            </div>
+                        </div>
+
                         @else
                         <div class="transaction__column">
                             <div class="transaction__icon transaction__icon--agents">
@@ -110,6 +128,8 @@
                         </div>
 
                         @endif
+
+
                         <div class="transaction__column">
                             <div class="transaction__icon transaction__icon--order-forms">
                                 <i class="bi bi-file-earmark-font"></i>

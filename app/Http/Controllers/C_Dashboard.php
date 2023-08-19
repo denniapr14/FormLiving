@@ -53,18 +53,13 @@ class C_Dashboard extends Controller
         );
         $getRumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek', '=', $projek);
         $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek', '=', $projek);
-        $arrWithCompany = array(
-            'ktgr_admin.kategori' => "AgentWithCompany",
-            'user_admin.status_ua' => "aktif",
-        );
+
+        // dd($agentWithoutCompany);
         $arrWithoutCompany = array(
             'ktgr_admin.kategori' => "AgentWithoutCompany",
             'user_admin.status_ua' => "aktif",
         );
-
-        $agentWithCompany = $this->userAdmin->getUserJoinCountWhere($arrWithCompany);
         $agentWithoutCompany = $this->userAdmin->getUserJoinCountWhere($arrWithoutCompany);
-        // dd($agentWithoutCompany);
 
         $whereRemainHouse = [
             'status' => 'Available',
@@ -99,12 +94,84 @@ class C_Dashboard extends Controller
             //     return redirect('/login')->with('danger','Kamu tidak memiliki akses ke halaman ini');
             // }
             // dd($getUserMenu);
-            if (
+            if(
+                $user->kategori == 'AdminAgentCompany'
+
+            ){
+
+                $arrWithCompany = array(
+                    'ktgr_admin.kategori' => "AgentWithCompany",
+                    'user_admin.status_ua' => "aktif",
+                    'user_admin.id_kepala_ua'  => session::get('user'),
+                    'user_admin.id_projek'         => $getProjek->id_projek
+                );
+
+                $agentWithCompany = $this->userAdmin->getUserJoinCountWhere($arrWithCompany);
+                // dd($agentWithCompany);
+                $whereClosing = [
+
+                    'user_admin.id_kepala_ua'  => session::get('user'),
+                    'rumah.id_projek'       => $getProjek->id_projek,
+                ];
+                $whereClosingAll = [
+
+                    'user_admin.id_kepala_ua'  => session::get('user'),
+                    'rumah.id_projek'       => $getProjek->id_projek,
+                ];
+
+                $closing = $this->formulirPesanan->getFormulirPesananJoin5CountWhereMonth(
+                    'formulir_pesanan.tgl_input_fp',
+                    now()->month,
+                    $whereClosing
+
+                );
+                $closingAll = $this->formulirPesanan->getFormulirPesananJoin5CountWhereUser($whereClosingAll);
+            }
+
+            elseif(
+                $user->kategori == 'AdminSales'
+
+            ){
+
+                $arrWithCompany = array(
+                    'ktgr_admin.kategori' => "Sales",
+                    'user_admin.status_ua' => "aktif",
+                    'user_admin.id_kepala_ua'  => session::get('user'),
+                    'user_admin.id_projek'         => $getProjek->id_projek
+                );
+
+                $agentWithCompany = $this->userAdmin->getUserJoinCountWhere($arrWithCompany);
+                // dd($agentWithCompany);
+                $whereClosing = [
+
+                    'user_admin.id_kepala_ua'  => session::get('user'),
+                    'rumah.id_projek'       => $getProjek->id_projek,
+                ];
+                $whereClosingAll = [
+
+
+                    'user_admin.id_kepala_ua'  => session::get('user'),
+                    'rumah.id_projek'       => $getProjek->id_projek,
+                ];
+
+                $closing = $this->formulirPesanan->getFormulirPesananJoin5CountWhereMonth(
+                    'formulir_pesanan.tgl_input_fp',
+                    now()->month,
+                    $whereClosing
+
+                );
+                $closingAll = $this->formulirPesanan->getFormulirPesananJoin5CountWhereUser($whereClosingAll);
+                // dd($closingAll);
+            }
+
+
+
+            elseif (
                 $user->kategori == 'Sales' ||
                 $user->kategori == 'SalesAgent' ||
                 $user->kategori == 'Agent' ||
-                $user->kategori == 'AgentCompany' ||
-                $user->kategori == 'AdminAgentCompany'
+                $user->kategori == 'AgentCompany'
+
             ) {
                 $whereClosing = [
                     'user_admin.id_user_admin' => $user->id_user_admin,
@@ -124,7 +191,20 @@ class C_Dashboard extends Controller
                 );
 
                 # code...
-            } else {
+            }
+
+            else {
+                $arrWithCompany = array(
+                    'ktgr_admin.kategori' => "AgentWithCompany",
+                    'user_admin.status_ua' => "aktif",
+                );
+                $arrWithoutCompany = array(
+                    'ktgr_admin.kategori' => "AgentWithoutCompany",
+                    'user_admin.status_ua' => "aktif",
+                );
+
+                $agentWithCompany = $this->userAdmin->getUserJoinCountWhere($arrWithCompany);
+                $agentWithoutCompany = $this->userAdmin->getUserJoinCountWhere($arrWithoutCompany);
                 $closingAll = $this->formulirPesanan->getFormulirPesananJoin5CountWhereProjek(['projek.nama_projek' => $projek]);
 
                 $closing = $this->formulirPesanan->getFormulirPesananJoin5CountWhereMonthProjek(
@@ -133,6 +213,8 @@ class C_Dashboard extends Controller
                     ['projek.nama_projek' => $projek]
                 );
             }
+
+            // dd($agentWithCompany);
 
             return view(
                 'V_Admin.dashboard',

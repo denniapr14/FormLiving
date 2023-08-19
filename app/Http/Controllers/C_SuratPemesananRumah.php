@@ -75,6 +75,20 @@ class C_SuratPemesananRumah extends Controller
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+
+            if(
+                $user->kategori == 'AdminAgentCompany' || $user->kategori == 'AdminSales'
+
+            ){
+                $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananProjekJoin6WhereArr(
+                    [
+                        'projek.nama_projek'=> $projek,
+                        'user_admin.id_kepala_ua' => session::get('user')
+                    ],
+                    'formulir_pesanan.tgl_input_fp',
+                    'desc'
+                );
+            }
             if (
                 $user->kategori == 'Sales' ||
                 $user->kategori == 'SalesAgent' ||
