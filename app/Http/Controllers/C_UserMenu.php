@@ -7,6 +7,7 @@ use App\Models\Menu;
 use App\Models\UserAdmin;
 use App\Models\UserProjek;
 use App\Models\Projek;
+use App\Models\KategoriAdmin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,22 +23,28 @@ class C_UserMenu extends Controller
 
     public $userMenu;
     public $projek;
+    public $kategori;
     public function __construct() {
         $this->menu = new Menu();
         $this->userAdmin = new UserAdmin();
         $this->userProjek = new UserProjek();
-        $this->userProjek = new UserProjek();
+        // $this->userProjek = new UserProjek();
         $this->userMenu = new UserMenu();
         $this->projek = new Projek();
+        $this->kategori = new KategoriAdmin();
     }
     function userMenu() {
 
         // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         // dd($getRumah);
         $getProjekAll = $this->projek->getProjekAll();
+
+        $getKategoriAll = $this->kategori->getKategori('*');
         $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*','tgl_input_ua','desc');
         $getUserMenuAll = $this->userMenu->getUserMenuJoinMenu('*','tgl_input_um','desc');
         $getMenu = $this->menu->getMenuWhere('*',['status_menu' => 'fitur'])->collect();
+        $getUserProjekFromUser = $this->userProjek->getProjectUserWhere('user_projek.id_user_admin','!=','null');
+        // dd($getKategoriAll);
         // dd($getMenu);
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
@@ -61,7 +68,6 @@ class C_UserMenu extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-
         return view(
                 'V_Admin.userMenu',
                 compact(
@@ -70,7 +76,10 @@ class C_UserMenu extends Controller
                     'getUserMenu',
                     'getUserAdminAll',
                     'getUserMenuAll',
-                    'getMenu'
+                    'getMenu',
+                    'getProjekAll',
+                    'getKategoriAll',
+                    'getUserProjekFromUser'
                 )
         );
         } else {

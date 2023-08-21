@@ -397,7 +397,13 @@
                                                                                 Kategori dan Departemen
                                                                             </label>
                                                                             <div class="col-sm-8 align-self-center">
-                                                                                {{ $userAdmin->kategori }} -
+                                                                                <select name="kategori" id="">
+                                                                                    <option value="{{ $userAdmin->id_kategori }}">{{ $userAdmin->kategori }}</option>
+                                                                                    @foreach ($getKategoriAll as $kategoriAll)
+                                                                                        <option value="{{ $kategoriAll->id_kategori }}">{{ $kategoriAll->kategori }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                                <br>
                                                                                 {{ $userAdmin->departemen }}
                                                                             </div>
                                                                         </div>
@@ -453,6 +459,21 @@
                                                                                     <label for="">{{ $menu->menu }} <i class="{{ $menu->icon_menu }}"></i></label>
                                                                                 @endif
                                                                             @endforeach
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group row">
+                                                                            <label
+                                                                                class="col-sm-4 col-form-label align-self-center">
+                                                                                Projek
+                                                                            </label>
+                                                                            <div class="col-sm-8 align-self-center">
+                                                                                @foreach ($getProjekAll as $projekAll)
+                                                                                <input type="checkbox" name="projek[]" id="">
+                                                                                <label for="">{{ $projekAll->nama_projek }}</label>
+                                                                                <br>
+                                                                                @endforeach
 
                                                                             </div>
                                                                         </div>
