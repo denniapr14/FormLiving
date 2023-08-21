@@ -28,7 +28,7 @@
     }
 
     .collapsible-content {
-        display: none;
+        display: block;
         padding: 10px;
         border-radius: 15px;
         transition: all .5s;
@@ -89,9 +89,9 @@
                                 <div class="item">
                                     <div class="item-image">
                                         @if ($home->img_rumah != null)
-                                        <img src="{{ asset('home') }}/images/rumah/{{ $home->img_rumah }}" alt="">
+                                        <img src="{{ asset('Home') }}/images/rumah/{{ $home->img_rumah }}" alt="">
                                         @else
-                                        <img src="{{ asset('home') }}/images/60.jpg" alt="">
+                                        <img src="{{ asset('Home') }}/images/60.jpg" alt="">
                                         @endif
                                     </div>
                                     <div class="item-title">{{ $home->blok }} - {{ $home->nomor }}
@@ -102,14 +102,18 @@
                                     <div class="btn-group desktop-only">
                                         <a href="/Pre-Order-User/{{ $home->id_rumah }}/NR"
                                             class="btn btn-sm btn-success custom-button"> Pre-Order</a>
+                                        @if ($home->status == "Available")
                                         <a href="/Pre-Order-User/{{ $home->id_rumah }}/R"
                                             class="btn btn-sm btn-success custom-button"> Pre-Order Refund</a>
+                                        @endif
                                     </div>
                                     <div style="" class="btn-group mobile-only">
                                         <a href="/Pre-Order-User/{{ $home->id_rumah }}/NR"
                                             class="btn btn-sm btn-success custom-button"> Pre-Order</a>
+                                        @if ($home->status == "Available")
                                         <a href="/Pre-Order-User/{{ $home->id_rumah }}/R"
                                             class="btn btn-sm btn-success custom-button"> Pre-Order Refund</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +142,7 @@
             buttons.forEach(button => {
                 button.addEventListener("click", function() {
                     const content = this.nextElementSibling;
-                    content.style.display = content.style.display === "block" ? "none" : "block";
+                    content.style.display = content.style.display === "none" ? "block" : "none";
                 });
             });
         });

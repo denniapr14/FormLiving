@@ -60,7 +60,7 @@ Route::get('/dashboard-profile', [Home::class, 'DashboardProfile']);
 Route::get('/profile/formulir-pesanan/{id_formulir}', [Home::class, 'FormulirPesanan']);
 Route::get('/profile/cetak/{id_formulir}', [Home::class, 'cetak']);
 Route::get('/cari-user', [Home::class, 'Search'])->name('search.action');
-Route::post('/profile-setting/update', [Home::class, 'ProfileSettingAction'])->name('profileSetting.action');
+Route::post('/profile-setting/update', [Home::class, 'ProfileSettingActio1'])->name('profileSetting.action');
 
 Route::get('/komisi-sales', [Home::class, 'Commission']);
 
@@ -314,9 +314,10 @@ Route::get('/pre-order-admin/{projek}', [C_PreOrder::class, 'preOrder'])->name('
 Route::get('/pre-order-admin/payment/{projek}', [C_PreOrder::class, 'paymentPreorder'])->name('paymentPreOrder.admin');
 Route::post('/pre-order-admin/payment-action/{projek}', [C_PreOrder::class, 'paymentPreOrderAction'])->name('paymentPreOrderAction.admin');
 Route::get('/ubah-status-pre-order/{projek}/{id}/{status}', [C_PreOrder::class, 'changeStatusPreOrder'])->name('changeStatusPreOrder.admin');
-Route::post('/simulation-data-pelanggan/store/{id_rumah}', [C_PreOrder::class, 'simPOUserAction'])->name('dataPO.action');
+Route::post('/simulation-data-pelanggan/store/{id_rumah}', [C_PreOrder::class, 'simPODataUserAction'])->name('dataPO.action');
 Route::get('/summary-po/{id}/{ktp}/{code}', [C_PreOrder::class, 'simSummaryPO']);
 Route::post('/po-build/store/{id_rumah}/{harga}/{pelanggan}/{code}', [C_PreOrder::class, 'simSummaryPOAction'])->name('dataPOSummary.action');
+Route::get('/konfirmasi-pembayaran-po/{id}', [C_PreOrder::class, 'confirmationPaymentEmail']);
 // >>>>>>>>>>>>>>>>>>Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');
 Route::get('/download-user-sales-admin', [C_UserAdmin::class, 'DownloadUserAdminSales'])->name('downloadUserAdminSales.admin');

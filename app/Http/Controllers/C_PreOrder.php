@@ -94,21 +94,6 @@ class C_PreOrder extends Controller
                 '=',
                 session::get('user')
             );
-
-            if(
-                $user->kategori == 'AdminAgentCompany' || $user->kategori == 'AdminSales'
-
-            ){
-                $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUserArr(
-                    '*',
-                    [
-                        'user_admin.id_kepala_ua' => session::get('user'),
-                        'rumah.id_projek'   => $getProjek->id_projek
-                    ],
-                    'pre_order.tgl_input_po',
-                    'desc'
-                );
-            }
             if (
                 $user->kategori == 'Sales' ||
                 $user->kategori == 'SalesAgent' ||
@@ -222,14 +207,14 @@ class C_PreOrder extends Controller
             if ($decryptedStatus == "accepted" && $getPreOrder[0]->tipe_booking_po == 'refundable') {
                 # code...
                 $dataRumah = [
-                    'status' => "KeepRefundable"
+                    'status' => "keepRefundable"
                 ];
-                $template = 'mail.mailPOTerima';
+                $template = 'mail.mailPOAccept';
             }
 
             if ($decryptedStatus == "accepted" && $getPreOrder[0]->tipe_booking_po == 'non-refundable') {
                 # code...
-                $getPreOrderRefundable = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUserArr(
+              $getPreOrderRefundable = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUserArr(
                     '*',
                     [
                         'pre_order.tipe_booking_po' => 'refundable',
@@ -246,7 +231,7 @@ class C_PreOrder extends Controller
                             ->update([
                                 'status_po' => 'overtaken'
                             ]);
-
+                
                         $templateOvertaken = 'mail.mailPOOvertaken';
                         $data = [
                             "subject" => "Form Living",
@@ -254,11 +239,11 @@ class C_PreOrder extends Controller
                             "blok" => $refundable->blok,
                             "nomor" => $refundable->nomor,
                         ];
-
+                
                         try {
                             Mail::to($refundable->email_plgn)
                                 ->send(new MailNotify($data, $templateOvertaken));
-
+                
                             // Log successful email sending
                             // \Log::info("Email sent to: " . $refundable->email_plgn);
                         } catch (Exception $e) {
@@ -272,7 +257,7 @@ class C_PreOrder extends Controller
                 $dataRumah = [
                     'status' => "Hold"
                 ];
-                $template = 'mail.mailPOAccept';
+                 $template = 'mail.mailPOAccept';
             }
 
             if ($decryptedStatus == "rejected" && $getPreOrder[0]->tipe_booking_po == 'non-refundable') {
@@ -316,12 +301,12 @@ class C_PreOrder extends Controller
 
             ];
             // MailNotify class that is extend from Mailable class.
-            // try {
-            //     Mail::to($getPreOrder[0]->email_plgn)->send(new MailNotify($data,  $template));
-            //     // return response()->json(['Great! Successfully send in your mail']);
-            // } catch (Exception $e) {
-            //     // return response()->json(['Sorry! Please try again latter']);
-            // }
+            try {
+                Mail::to($getPreOrder[0]->email_plgn)->send(new MailNotify($data,  $template));
+                // return response()->json(['Great! Successfully send in your mail']);
+            } catch (Exception $e) {
+                // return response()->json(['Sorry! Please try again latter']);
+            }
 
 
             return redirect()->back()->with(
@@ -384,17 +369,17 @@ class C_PreOrder extends Controller
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->select('*')
-            ->where('status', '=', 'available')
             ->where('projek.nama_projek', '=', 'Kalm')
+            ->where('status', '=', 'Available')
             ->groupBy('cluster.nama_cluster')
-
             ->get();
         $rumah = DB::table('rumah')
             ->select('*')
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->where('projek.nama_projek', '=', 'Kalm')
-            ->where('status', '=', 'available')
+            ->where('status', '=', 'Available')
+            ->orWhere('status', '=', 'keepRefundable')
             // ->groupBy('cluster.nama_cluster')
             ->get();
 
@@ -432,7 +417,7 @@ class C_PreOrder extends Controller
         }
     }
 
-    function dataUserPO($id, $code)
+    public function dataUserPO($id, $code)
     {
         $dataFunctionUser = $code;
 
@@ -447,7 +432,6 @@ class C_PreOrder extends Controller
         $rumah = DB::table('rumah')
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->where('rumah.status', '=', 'available')
             ->where('projek.nama_projek', '=', 'Kalm')
             ->where('rumah.id_rumah', '=', $id)
             ->first();
@@ -462,7 +446,7 @@ class C_PreOrder extends Controller
             // dd($user);
             // die();
             // return view('underMT', compact('rumah', 'tipeRumah'));
-            return view('simPOUser', compact('user', 'rumah', 'dataFunctionUser'));
+            return view('simPODataUser', compact('user', 'rumah', 'dataFunctionUser'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -471,17 +455,16 @@ class C_PreOrder extends Controller
             // dd($userPelanggan);
             // die();
             // return view('underMT', compact('rumah', 'tipeRumah'));
-            return view('simPOUser', compact('userPelanggan', 'dataFunctionUser'));
+            return view('simPODataUser', compact('userPelanggan', 'dataFunctionUser'));
         }
         return view('login');
     }
 
-    function simPOUserAction(Request $request, $id_rumah)
+    public function simPODataUserAction(Request $request, $id_rumah)
     {
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
-            ->where('status', '=', 'available')
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
         if (session()->has('user')) {
@@ -503,10 +486,14 @@ class C_PreOrder extends Controller
                     'nama_plgn' => $request->nama,
                     'id_user_admin' => session::get('user'),
                     'pekerjaan_plgn' => $request->pekerjaan,
-                    // 'id_sales'              => session::get('user'),
                     'no_ktp_plgn' => $request->nik,
                     'no_telp_plgn' => $request->telp,
+                    'no_wa_plgn' => $request->wa,
+                    'alamat_plgn' => $request->jalan . ', Kelurahan ' . $request->kelurahan . ', Kecamatan ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->pulau,
                     'email_plgn' => $request->email,
+                    'npwp_plgn' => $request->npwp,
+                    'jenis_kelamin_status' => $request->gender,
+                    'status_pernikahan_plgn' => $request->statusPernikahan
                 );
                 // dd($dataInput);
                 // die();
@@ -521,13 +508,13 @@ class C_PreOrder extends Controller
             }
             $codeData = $request->code;
             $ktp = $request->nik;
-            return redirect('/summary-po/' . $rumah->id_rumah . '/' . $ktp . '/' . $codeData);
+            return redirect('/summary-po/' . $rumah->id_rumah . '/' . $id . '/' . $codeData);
             dd($ktp);
             // die();
         }
     }
 
-    function simSummaryPO($id_rumah, $ktp, $code)
+    public function simSummaryPO($id_rumah, $id, $code)
     {
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -543,16 +530,15 @@ class C_PreOrder extends Controller
         }
 
         $pelanggan = DB::table('user_pelanggan')->where([
-            'no_ktp_plgn' => $ktp,
+            'id_pelanggan' => $id,
         ])->first();
         // dd($pelanggan);
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->where('status', '=', 'available')
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
 
-        $hargaPO = $hargaPO + $randomIndex;
+        $hargaPO = $hargaPO;
 
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
@@ -581,7 +567,7 @@ class C_PreOrder extends Controller
         }
     }
 
-    function simSummaryPOAction(Request $request, $id_rumah, $harga, $p, $code)
+    public function simSummaryPOAction(Request $request, $id_rumah, $harga, $p, $code)
     {
         $pelanggan = DB::table('user_pelanggan')->where([
             'id_pelanggan' => $p,
@@ -589,12 +575,11 @@ class C_PreOrder extends Controller
 
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->where('status', '=', 'available')
             ->where('rumah.id_rumah', '=', $id_rumah)
             ->first();
 
         $now = Carbon::now();
-        $template = 'mail.mailPOAccept';
+        $template = 'mail.mailForgot';
         $this->validate($request, [
             'ktp' => 'required',
         ]);
@@ -605,6 +590,8 @@ class C_PreOrder extends Controller
         } elseif ($code == "NR") {
             $statusPO = 'non-refundable';
         }
+
+        $newDateTime = Carbon::now()->addHour();
 
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
@@ -618,15 +605,32 @@ class C_PreOrder extends Controller
                 'index_po' => $harga,
                 'status_po' => 'pending',
                 'tipe_booking_po' => $statusPO,
-                'tgl_input_po' => $now
+                'tgl_input_po' => $now,
+                'expired_date' => $newDateTime
             );
 
-
-
-
-            DB::table('pre_order')->insert(
+            $id = DB::table('pre_order')->insertGetId(
                 $dataInput
             );
+            
+            if ($rumah->status == "Available") {
+                DB::table('rumah')
+                ->where('id_rumah', $id_rumah)
+                ->update(['status' => 'keepRefundable']             
+                );
+            }
+
+            if ($rumah->status == "keepRefundable") {
+                DB::table('rumah')
+                ->where('id_rumah', $id_rumah)
+                ->update(['status' => 'Keep']             
+                );
+            }
+                 
+            $dataPO = DB::table('pre_order')
+            ->select('*')
+            ->where('id_pre_order','=',$id)
+            ->first();
 
             $accounting = DB::table('user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
@@ -637,12 +641,18 @@ class C_PreOrder extends Controller
 
             $dataEmail1 = [
                 'to' => $pelanggan->email_plgn,
-                "subject" => "Forms Living",
+                "subject" => "Forms Living Pre Order Kalm Residence",
                 "body" => "",
+                "id_rumah" => Crypt::encrypt($rumah->id_rumah),
                 'nama' => $pelanggan->nama_plgn,
                 'blok' => $rumah->blok,
                 'nomor' => $rumah->nomor,
-
+                'harga' => $dataPO->index_po,
+                'status' => $dataPO->status_po,
+                'tipe' => $dataPO->tipe_booking_po,
+                'tgl_input' => $dataPO->tgl_input_po,
+                'expire' => $dataPO->expire_date,
+                'va' => $rumah->va_rumah
             ];
             $dataEmail2 = [
                 'to' => $user->email_ua,
@@ -689,5 +699,16 @@ class C_PreOrder extends Controller
             // die();
 
         }
+    }
+
+    public function confirmationPaymentEmail($id){
+        // $decryptedID = Crypt::decrypt($id);
+        $dataUser = DB::table('rumah')
+        ->join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')
+        ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
+        ->where('pre_order.id_pre_order','=',$id)
+        ->first();
+        $now = carbon::now();
+        dd($now);
     }
 }

@@ -16,7 +16,7 @@
 
         body {
             font-family: sans-serif;
-            background-color: #d8dada;
+            background-color: #ffffff;
             font-size: 19px;
             max-width: 800px;
             margin: 0 auto;
@@ -28,7 +28,7 @@
         }
 
         footer {
-            background-color: #bef7be;
+            background-color: #ffffff;
         }
 
         .header {
@@ -46,7 +46,7 @@
         }
 
         #wrapper {
-            background-color: #f0f6fb;
+            background-color: white;
         }
 
         #social {
@@ -106,11 +106,11 @@
         }
 
         #banner {
-            background-image: url("{{ asset('Home') }}/images/waves-background.png");
-            min-height: 300px;
+            min-height: 100%;
             min-width: 100%;
             position: relative;
-            z-index: 1;
+            padding-bottom: 2%;
+            background-color: white;
         }
 
         .container {
@@ -119,11 +119,14 @@
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
+            background-color: white;
         }
 
         .table {
 
-            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-gap: 3px;
             border-collapse: collapse;
             border-radius: 20px;
             margin-top: 20px;
@@ -144,13 +147,59 @@
             background-color: #f2f2f2;
         }
 
-        @media screen and (max-width: 600px) {
+        /* iOS BLUE LINKS */
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
 
-            table,
-            th,
-            td {
-                text-align: center;
-                display: block;
+        /* ANDROID CENTER FIX */
+        div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
+        }
+
+        @media all and (max-width:639px) {
+            .table {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .wrapper {
+                width: 320px !important;
+                padding: 0 !important;
+            }
+
+            .container {
+                width: 300px !important;
+                padding: 0 !important;
+            }
+
+            .mobile {
+                width: 300px !important;
+                display: block !important;
+                padding: 0 !important;
+            }
+
+            img {
+                height: auto !important;
+                display: block !important;
+            }
+
+            *[class="mobileOff"] {
+                width: 0px !important;
+                display: none !important;
+            }
+
+            *[class*="mobileOn"] {
+                display: block !important;
+                max-height: none !important;
+            }
+
+            img {
+                max-width: 100%;
             }
         }
     </style>
@@ -159,84 +208,65 @@
 <body>
     <div id="wrapper">
         <div id="banner">
-            <div id="logo">
-                <img src="{{ asset('Home') }}/images/logo-forms-living1.png" alt="">
+            <div>
+                <img src="{{ asset('Home') }}/images/mail/Header-Kalm.jpg" alt="">
             </div>
         </div>
-        <div class="one-col" style="padding-top:6%;">
+        <div class="one-col" style="background-color:white;">
             <h2 style="text-align: center;">Selamat! Pesanan Pre-Order anda telah dibuat</h2>
-            <p>Berikut data pre-order yang telah dipesan pada Formsliving</p>
+            <p style="margin-left: 5%">Berikut data pre-order yang telah dipesan pada Formsliving</p>
             <br>
-
             <div class="container">
                 <h4>Nama Perumahan : Kalm Residence</h4>
                 <br>
                 <div>
-                    <table>
+                    <table width="100%" style="border: 1px solid #ccc;">
                         <tr>
-                            <td style="min-width: 300px;">
+                            <td>
                                 <h2>Invoice</h2>
                             </td>
-                            <td>
-                                <p id="text-right">Jatuh Tempo Pembayaran pada : <br>
-                                    10 September 2023 23:00:14
+                            <td style="text-align:right;">
+                                <p id="text-right" ">Jatuh Tempo Pembayaran :<br>
+                                    <b>{{ $data['expire'] }}</b>
                                 </p>
                             </td>
                         </tr>
                     </table>
-
-
                 </div>
-
-                <table class="table">
-                    <tbody>
+                <div>
+                    <table width=" 100%" style="border: 1px solid #ccc;">
+                        <tr>
                         <tr>
                             <td>
                                 <p>Unit Yang Dipilih </p>
-                                <h2>A - 3</h2>
+                                <h2 style="padding-left: 4%">{{ $data['blok'] }} - {{ $data['nomor'] }}</h2>
                                 <br>
                                 <p>Tipe Pre-Order </p>
-                                <h2>Refundable</h2>
+                                <h2 style="padding-left: 4%">{{ $data['tipe'] }}</h2>
+                                <br>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>jane@example.com</td>
-                            <td>Designer</td>
-                        </tr>
-                        <tr>
-                            <td>Michael Johnson</td>
-                            <td>michael@example.com</td>
-                            <td>Manager</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
-            <br>
-            <a href="#" class="btn">Learn more</a>
 
-            <hr />
         </div>
 
-        <div class="one-col" style="padding-bottom: 20px;">
-            <h1 style="text-align:center;">cool, look at this</h1>
+        <div class="one-col" style="padding-bottom: 4%; background-color : white;">
+            <h1 style="text-align:center;">Pembayaran via Virtual Account</h1>
             <p>
                 Anda Dapat membayar melalu Virtual Account kami yang tertera dibawah ini.
             </p>
             <div class="centercore">
-                <h4>1223 4533 4342 23452</h4>
+                <img style="max-width:200px" src="{{ asset('Home') }}/images/icons/ocbc-logo.png" alt="">
                 <br>
-                <a href="#" class="btn">Learn more</a>
+                <h4>{{ $data['va'] }}</h4>
             </div>
-
-
-
+            <p>setelah membayar, silahkan konfirmasi pada link dibawah ini :</p>
+            <a href="http://"></a>
         </div>
         <footer>
-            <hr />
-            <p id="contact">
-                <img src="{{ asset('Home') }}/images/480px.gif" alt="" style="max-height: 100px;">
-            </p>
+            <img src="{{ asset('Home') }}/images/mail/Footer-Kalm.jpg" alt="">
         </footer>
     </div>
 </body>

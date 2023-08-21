@@ -92,11 +92,11 @@
     <!--            Hunian di Greenland-->
     <!--        </h2>-->
     <!--    <div class="container-fluid ">-->
-           
+
     <!--            <div class="items" style="height:260px;width:1500px">-->
     <!--            @foreach ($cluster1 as $cluster)-->
     <!--            <a href="/simulation-select-unit/{{ $cluster->codecluster }}">-->
-                   
+
     <!--            <div style="" class="item">-->
     <!--                <div class="item-image">-->
     <!--                    <?php-->
@@ -123,7 +123,7 @@
     <!--                        </a>-->
     <!--                        @endif-->
     <!--                </div>-->
-                    
+
     <!--            </div>-->
     <!--            </a>-->
     <!--            @endforeach-->
@@ -131,21 +131,21 @@
 
     <!--        </div>-->
     <!--    </div>-->
-            <div class="choose-cluster">
-            <h2 class="title">
-                Hunian di Kalm residence
-            </h2>
-            <div class="row">
-                @foreach ($cluster1 as $cluster)
-                <div class="col-6 col-lg-3">
-                    <a href="//PreOrderSelect">
+    <div class="choose-cluster">
+        <h2 class="title">
+            Hunian di Kalm residence
+        </h2>
+        <div class="row">
+            @foreach ($cluster1 as $cluster)
+            <div class="col-6 col-lg-3">
+                <a href="/PreOrderSelect">
                     <div class="item">
                         <div class="item-image">
                             <?php
                             if(!empty($cluster->nama_img)){
                                 ?>
-                                <img  src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
-                                <?php
+                            <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
+                            <?php
                             }else{
                             ?>
                             <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
@@ -157,22 +157,24 @@
                         <div class="item-avail">{{ $cluster->count }} Available</div>
                         <div class="item-text">
 
-                        @if(!empty($cluster->logo_img))
-                        <div class="item-image" style="border-bottom:0px; padding-bottom:0px;"><img style="width:50%;height:50%;filter: invert(100%);"src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}"" alt=""></div>
+                            @if(!empty($cluster->logo_img))
+                            <div class="item-image" style="border-bottom:0px; padding-bottom:0px;"><img
+                                    style="width:50%;height:50%;filter: invert(100%);"
+                                    src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}"" alt=""></div>
                         @else
-                        <div class="item-image" style="border-bottom:0px; padding-bottom:0px;">
-                        <a href="/PreOrderSelect">
-                            {{ $cluster->nama_cluster }}
-                        </a>
-                        @endif
-                        </div>
+                        <div class=" item-image" style="border-bottom:0px; padding-bottom:0px;">
+                                <a href="/PreOrderSelect">
+                                    {{ $cluster->nama_cluster }}
+                                </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </a>
-                </div>
-                @endforeach
             </div>
+            @endforeach
         </div>
+    </div>
 </div>
 
 
@@ -196,57 +198,60 @@
                     if(!empty($cluster->nama_img))
                     {
                         ?>
-                        <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
-                        <?php
+                    <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
+                    <?php
                     }else{
                     ?>
 
-                        <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">
+                    <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">
 
-                        <?php
+                    <?php
                     }
                     ?>
 
                     <div class="item-text">
                         @if(!empty($cluster->logo_img))
-                       <a href="/PreOrderSelect"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                        <a href="/PreOrderSelect"> <img style="width: 50%"
+                                src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
                         @else
                         <a href="/PreOrderSelect">
                             {{ $cluster->nama_cluster }}
                         </a>
                         @endif
                     </div>
-                     <div class="until-tablet">
+                    <div class="until-tablet">
                         <div class="item-text">
 
-                        @if(!empty($cluster->logo_img))
-                       <a href="/PreOrderSelect"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
-                        @else
-                        <a href="/PreOrderSelect">
-                            {{ $cluster->nama_cluster }}
-                        </a>
-                        @endif
+                            @if(!empty($cluster->logo_img))
+                            <a href="/PreOrderSelect"> <img style="width: 50%"
+                                    src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                            @else
+                            <a href="/PreOrderSelect">
+                                {{ $cluster->nama_cluster }}
+                            </a>
+                            @endif
                         </div>
                     </div>
                     <div class="mobile-only">
                         <div class="item-text">
 
-                        @if(!empty($cluster->logo_img))
-                       <a href="/PreOrderSelect"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
-                        @else
-                        <a href="/PreOrderSelect">
-                            {{ $cluster->nama_cluster }}
-                        </a>
-                        @endif
+                            @if(!empty($cluster->logo_img))
+                            <a href="/PreOrderSelect"> <img style="width: 50%"
+                                    src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                            @else
+                            <a href="/PreOrderSelect">
+                                {{ $cluster->nama_cluster }}
+                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
             @endforeach
 
-            {{--  <div class="col-12 d-flex justify-content-center" data-aos="fade-up">
+            {{-- <div class="col-12 d-flex justify-content-center" data-aos="fade-up">
                 <button type="button" class="btn btn-primary">Tampilkan Semua</button>
-            </div>  --}}
+            </div> --}}
         </div>
     </div>
 </div>
@@ -361,12 +366,14 @@
                                     <img src="{{ asset('Home') }}/images/ic-quote.png" alt="">
                                 </div>
                                 <h2 class="testimoni-text">
-                                    Hunian berkonsep natural yang memberikan suasana asri dan nyaman untuk keluarga anda.
+                                    Hunian berkonsep natural yang memberikan suasana asri dan nyaman untuk keluarga
+                                    anda.
                                 </h2>
                                 <div class="until-tablet">
                                     <div class="items">
                                         <div class="user">
-                                            <div><img src="{{ asset('Home') }}/images/page-picture/kalm-3.jpg" alt=""></div>
+                                            <div><img src="{{ asset('Home') }}/images/page-picture/kalm-3.jpg" alt="">
+                                            </div>
                                             <div>
                                                 <h6>Hunian Kalm</h6>
                                                 <small>Residence</small>
@@ -383,12 +390,13 @@
                                     <img src="{{ asset('Home') }}/images/ic-quote.png" alt="">
                                 </div>
                                 <h3 class="testimoni-text">
-                                   -- coming soon --
+                                    -- coming soon --
                                 </h3>
                                 <div class="until-tablet">
                                     <div class="items">
                                         <div class="user">
-                                            <div><img src="{{ asset('Home') }}/images/page-picture/kalm-3.jpg" alt=""></div>
+                                            <div><img src="{{ asset('Home') }}/images/page-picture/kalm-3.jpg" alt="">
+                                            </div>
                                             <div>
                                                 <h6>Food Court</h6>
                                                 <small>Upcoming Soon</small>
@@ -611,8 +619,8 @@
                 <div class="image-container left-text">
                     <img src="{{ asset('Home') }}/images/page-picture/5.jpg" alt="">
                     <div class="text-blur-bg">
-                         <h1>Area Berkembang</h1>
-                            <p>Berada di Kawasan Pakisaji yang 
+                        <h1>Area Berkembang</h1>
+                        <p>Berada di Kawasan Pakisaji yang
                             diproyeksikan menjadi kota mandiri
                             di Kabupaten Malang</p>
                         <!--<a href="#" class="more">Learn More <i class="bi-chevron-right"></i>-->

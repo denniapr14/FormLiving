@@ -49,7 +49,6 @@
             </h2>
           </div>
           <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
-
             <div class="mod-type">
               <div class="type-image">
                 <img src="{{ asset('Home') }}/images/rumah/{{$rumah->img_rumah}}" alt="">
