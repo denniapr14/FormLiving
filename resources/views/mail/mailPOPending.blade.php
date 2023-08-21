@@ -253,16 +253,19 @@
 
         <div class="one-col" style="padding-bottom: 4%; background-color : white;">
             <h1 style="text-align:center;">Pembayaran via Virtual Account</h1>
-            <p>
+            <p style="text-align:center;">
                 Anda Dapat membayar melalu Virtual Account kami yang tertera dibawah ini.
             </p>
             <div class="centercore">
                 <img style="max-width:200px" src="{{ asset('Home') }}/images/icons/ocbc-logo.png" alt="">
                 <br>
                 <h4>{{ $data['va'] }}</h4>
+                <br>
+                <br>
+                <p>setelah membayar, silahkan konfirmasi pada link dibawah ini :</p>
+                <a href="https://formsliving.com/konfirmasi-pembayaran-po/" {{ $data[] }}></a>
             </div>
-            <p>setelah membayar, silahkan konfirmasi pada link dibawah ini :</p>
-            <a href="http://"></a>
+
         </div>
         <footer>
             <img src="{{ asset('Home') }}/images/mail/Footer-Kalm.jpg" alt="">

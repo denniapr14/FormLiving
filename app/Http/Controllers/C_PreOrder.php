@@ -702,38 +702,38 @@ class C_PreOrder extends Controller
 
     public function confirmationPaymentEmail($id){
         // $decryptedID = Crypt::decrypt($id);
-        $dataUser = DB::table('rumah')
-        ->join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')
-        ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
-        ->where('pre_order.id_pre_order','=',$id)
-        ->first();
-            $template = 'mail.mailForgot';
-            $dataEmail1 = [
-                'to' => $dataUser->email_plgn,
-                "subject" => "Forms Living Pre Order Kalm Residence",
-                "body" => "",
-                "id_rumah" => Crypt::encrypt($dataUser->id_rumah),
-                'nama' => $dataUser->nama_plgn,
-                'blok' => $dataUser->blok,
-                'nomor' => $dataUser->nomor,
-                'harga' => $dataUser->index_po,
-                'status' => $dataUser->status_po,
-                'tipe' => $dataUser->tipe_booking_po,
-                'tgl_input' => $dataUser->tgl_input_po,
-                'expire' => $dataUser->expire_date,
-                'va' => $dataUser->va_rumah
-            ];
-            
-            try {
-                // $MailAtt = ();
-                Mail::to($dataUser->email_plgn)->send(new MailNotify($dataEmail1, $template));
-                // Mail::to($user->email_ua)->send(new MailNotify($dataEmail2,$template));
-
-            } catch (Exception $e) {
-                // return response()->json(['Sorry! Please try again latter']);
-            }
-
-            return redirect('/congratulation')->with('success', 'Data has been send!');
-            
+        if (!session()->has('guest') && !session()->has('user')) {
+            $dataUser = DB::table('rumah')
+            ->join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')
+            ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
+            ->where('pre_order.id_pre_order','=',$id)
+            ->first();
+                $template = 'mail.mailForgot';
+                $dataEmail1 = [
+                    'to' => $dataUser->email_plgn,
+                    "subject" => "Forms Living Pre Order Kalm Residence",
+                    "body" => "",
+                    "id_rumah" => Crypt::encrypt($dataUser->id_rumah),
+                    'nama' => $dataUser->nama_plgn,
+                    'blok' => $dataUser->blok,
+                    'nomor' => $dataUser->nomor,
+                    'harga' => $dataUser->index_po,
+                    'status' => $dataUser->status_po,
+                    'tipe' => $dataUser->tipe_booking_po,
+                    'tgl_input' => $dataUser->tgl_input_po,
+                    'expire' => $dataUser->expire_date,
+                    'va' => $dataUser->va_rumah
+                ];
+                
+                try {
+                    // $MailAtt = ();
+                    Mail::to($dataUser->email_plgn)->send(new MailNotify($dataEmail1, $template));
+                    // Mail::to($user->email_ua)->send(new MailNotify($dataEmail2,$template));
+    
+                } catch (Exception $e) {
+                    // return response()->json(['Sorry! Please try again latter']);
+                }
+                return redirect('/congratulation')->with('success', 'Data has been send!');      
+        }
     }
 }
