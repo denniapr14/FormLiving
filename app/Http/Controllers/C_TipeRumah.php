@@ -222,9 +222,9 @@ class C_TipeRumah extends Controller
                             // $resizedImage = Image::make($image)->fit(300);
                             $img = Image::make($image->path());
                             $img->save($destinationPath . '/' . $filename);
-                            $path = '/Home/images/denah/';
-                            // Save the resized image to disk
-                            Storage::put($path . $filename, $img);
+                            // $path = '/Home/images/denah/';
+                            // // Save the resized image to disk
+                            // Storage::put($path . $filename, $img);
 
                             // Generate a unique filename
                             // $filename = time() . '.' . $image->getClientOriginalExtension();
@@ -244,8 +244,8 @@ class C_TipeRumah extends Controller
                             $img->save($destinationPath . '/' . $filename);
 
                             // Save the resized image to disk
-                            $path = '/Home/images/tipe/';
-                            Storage::put($path . $filename, $img);
+                            // $path = '/Home/images/tipe/';
+                            // Storage::put($path . $filename, $img);
                             // $fileName = uniqid() . '.' . $image->getClientOriginalExtension();
 
                             // $img = $image->save($path.$fileName);

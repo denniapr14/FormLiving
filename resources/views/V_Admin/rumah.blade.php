@@ -131,6 +131,19 @@
             $(document).ready(function() {
                 $('#rumah').DataTable(
                     {
+                        lengthMenu: [
+                        [25, 50, 100, -1],
+                        [25, 50, 100, 'All'],
+                    ],
+                        searching: true, // Enable global search bar
+                        searchCols: [
+                            null, // Column 1 (No) - No search input field
+                            null, // Column 2 (Rumah) - No search input field
+                            null, // Column 3 (Status) - No search input field
+                            null, // Column 4 (Tipe) - No search input field
+                            null // Column 5 (Tanggal Pre Order) - No search input field
+                        ],
+                        autoWidth: true,
                         columnDefs: [
                             { targets: 3, type: 'string' } // Kolom "Status" akan diurutkan sebagai string
                         ],

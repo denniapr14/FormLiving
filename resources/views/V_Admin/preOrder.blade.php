@@ -80,21 +80,21 @@
                                     var iro = 'warnaa';
                                     switch (stat) {
                                         case 'Available':
-                                            iro = '#28a744';
+                                            iro = '#44bb55';
                                             break;
                                         case 'Keep':
-                                            iro = '#dc3546';
+                                            iro = '#ff7777';
                                             break;
                                         case 'Sold':
-                                            iro = '#dc3546';
+                                            iro = '#ff7777';
                                             break;
                                         case 'onProgress':
-                                            iro = '#dc3546';
+                                            iro = '#ff7777';
                                             break;
                                         case 'Undeveloped':
                                             iro = 'gray';
                                         case 'Hold':
-                                            iro = '#dc3546';
+                                            iro = '#ff7777';
                                             break;
                                     }
                                     return iro;
@@ -374,7 +374,10 @@
         <script>
             $(document).ready(function() {
                 $('#preOrderPending').DataTable({
-                    lengthMenu: [25, 50, 75, 100],
+                    lengthMenu: [
+                        [25, 50, 100, -1],
+                        [25, 50, 100, 'All'],
+                    ],
                     searching: true, // Enable global search bar
                     searchCols: [
                         null, // Column 1 (No) - No search input field

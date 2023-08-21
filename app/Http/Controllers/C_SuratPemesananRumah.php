@@ -89,12 +89,12 @@ class C_SuratPemesananRumah extends Controller
                     'desc'
                 );
             }
-            if (
+            elseif (
                 $user->kategori == 'Sales' ||
                 $user->kategori == 'SalesAgent' ||
                 $user->kategori == 'Agent' ||
-                $user->kategori == 'AgentCompany' ||
-                $user->kategori == 'AdminAgentCompany'
+                $user->kategori == 'AgentCompany'
+
             ) {
                 $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
                     'projek.nama_projek',

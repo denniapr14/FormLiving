@@ -8,6 +8,7 @@ use App\Models\UserMenu;
 use App\Models\UserNotif;
 use App\Models\UserPelanggan;
 use App\Models\UserProjek;
+use Illuminate\Support\Facades\Session;
 
 class C_UserPelanggan extends Controller
 {
@@ -33,7 +34,7 @@ class C_UserPelanggan extends Controller
     {
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
+            'user_menu.id_user_admin' => Session::get('user'),
         ])->collect();
 
         $foundMatchingMenu = false;

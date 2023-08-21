@@ -31,12 +31,12 @@
             <div class="step last">8</div>
         </div>
     </div>
-    
+
     <div class="container">
          <style>
             @media screen and (max-width: 480px) {
               .gone-mobile {
-                  
+
                 visibility: hidden;
                 display: none;
               }
@@ -65,7 +65,7 @@
                          @if (empty($imgRumahSingle->img_rumah))
                                <img src="{{ asset('Home') }}/images/img-cluster-large3.png" alt="">
                                 @else
-                                <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumahSingle->img_rumah }}" alt="">
+                                <img src="{{ asset('Home') }}/images/tipe/{{ $imgRumahSingle->img_rumah }}" alt="">
                                 @endif
                     </div>
                 </div>
@@ -86,7 +86,7 @@
 
                     @else
 
-                    <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumahSingle->img_rumah }}" alt="">
+                    <img src="{{ asset('Home') }}/images/tipe/{{ $imgRumahSingle->img_rumah }}" alt="">
                     @endif
                 </div>
                 <div class="col-12 col-lg-3 image-right">
@@ -100,7 +100,7 @@
 
                                 @else
 
-                                <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumahSingle->img_rumah }}" alt="">
+                                <img src="{{ asset('Home') }}/images/tipe/{{ $imgRumahSingle->img_rumah }}" alt="">
                                 @endif
                             </a>
 
@@ -127,7 +127,7 @@
 
                         @else
 
-                        <img src="{{ asset('Home') }}/images/rumah/{{ $imgRumah->img_rumah }}" alt="">
+                        <img src="{{ asset('Home') }}/images/tipe/{{ $imgRumah->img_rumah }}" alt="">
                         @endif
                     </div>
 
@@ -135,7 +135,7 @@
 
                 </div>
 
-                {{-- <div class="thumbnails-container">
+                {{--  <div class="thumbnails-container">
                     <div class="thumbnails">
                         @foreach ($imgRumah2 as $gambarRumah)
 
@@ -146,13 +146,13 @@
                         <img src="{{ asset('Home') }}/images/NoImg.jpg" alt="">
 
                         @else
-                        <img src="{{ asset('Home') }}/images/rumah/{{ $gambarRumah->img_rumah }}" alt="">
+                        <img src="{{ asset('Home') }}/images/tipe/{{ $gambarRumah->img_rumah }}" alt="">
                         @endif
                     </div>
 
                     @endforeach
                     </div>
-                </div> --}}
+                </div>  --}}
             </div>
 
         </div>
@@ -188,9 +188,9 @@
                     $()
 
                     $('.thumbnails').slick({
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         arrows: true,
-                        slidesToScroll: 1,
+                        slidesToScroll: 2,
                         dots: false,
                         asNavFor: '.main-images',
                         nextArrow: ' <div class="slick-next"><img src="{{ asset('Home') }}/images/btn-right.png"  alt=""></div>',

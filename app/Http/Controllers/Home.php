@@ -1179,7 +1179,7 @@ class Home extends Controller
                 "body" => "Form Living",
                 "dataFP" => array($fp),
                 "dataPembayaran" => $dtPem,
-                "hargaAwal" => $this->rupiah($fp->harga_awal),
+                "hargaAwal" => $fp->harga_awal,
                 "promo" => "Tidak Ada Promo",
                 "tgl_input" => date("d M Y", strtotime($fp->tgl_input_fp)),
             ];
@@ -1188,7 +1188,7 @@ class Home extends Controller
             // dd($data);
             // die();
             // view()->share('data',$data);
-            $pdf = PDF::loadView('pdf.printSPR', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran]);
+            $pdf = PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran]);
             // $pdf = PDF::loadView('mail.index');
             $pdf->setPaper('F4', 'potrait');
             // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
@@ -1245,12 +1245,13 @@ class Home extends Controller
                 "body" => "Form Living",
                 "dataFP" => array($fp),
                 "dataPembayaran" => $dtPem,
-                "hargaAwal" => $this->rupiah($fp->harga_awal),
+                "hargaAwal" => $fp->harga_awal,
                 "promo" => "Tidak Ada Promo",
                 "tgl_input" => date("d M Y", strtotime($fp->tgl_input_fp)),
             ];
             // echo $dtPem;
-            // die();
+            // die();\
+            // MASIH LOADING EXPORT PDFF YA SABAR
             // dd($data);
             // die();
             // view()->share('data',$data);
@@ -1265,6 +1266,7 @@ class Home extends Controller
             // dd($fp);
             // $path = 'Home/pdf/';
             // $pdf->save($path . 'FP-'.$fp->blok."-".$fp->nomor.'-'.$fp->id_formulir.'.pdf');
+            set_time_limit(2000);
             return $pdf->download('FP-' . $fp->blok . "-" . $fp->nomor . '.pdf');
         } else {
 
@@ -1469,6 +1471,7 @@ class Home extends Controller
             ])
             ->where('status_gr', '=', 'aktif')
             ->get();
+
         $imgRumah2 = DB::table('gambar_rumah')
             ->where([
                 'id_rumah' => $id_rumah,
@@ -1481,6 +1484,7 @@ class Home extends Controller
             ])
             ->where('status_gr', '=', 'aktif')
             ->get();
+            // dd($imgRumah2);
         $imgDenah = DB::table('gambar_rumah')
             ->where([
                 'id_rumah' => $id_rumah,
@@ -1511,7 +1515,15 @@ class Home extends Controller
             // dd($user);
             // die();
             // return view('underMT');
-            return view('simDetailType', compact('user', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgRumah2', 'imgDenah'));
+            return view('simDetailType', compact(
+                'user',
+                'rumah',
+                'tipeRumah',
+                'imgRumahSingle',
+                'imgRumah',
+                'imgRumah2',
+                'imgDenah'
+            ));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
@@ -1521,7 +1533,15 @@ class Home extends Controller
             // dd($userPelanggan);
             // die();
             // return view('underMT');
-            return view('simDetailType', compact('userPelanggan', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgRumah2', 'imgDenah'));
+            return view('simDetailType', compact(
+                'userPelanggan',
+                'rumah',
+                'tipeRumah',
+                'imgRumahSingle',
+                'imgRumah',
+                'imgRumah2',
+                'imgDenah'
+            ));
         }
         return view('simDetailType', 'rumah', 'tipeRumah', 'imgRumahSingle', 'imgRumah', 'imgDenah');
 
@@ -3097,9 +3117,10 @@ class Home extends Controller
         } else {
             $promo = "";
         }
+        // dd($fp);
 
         // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
-        $pdf = PDF::loadView('pdf.printSPR-ttd', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran, 'promo' => $promo]);
+        $pdf = PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fp, 'dtPembayaran' => $dtPembayaran, 'promo' => $promo]);
         $pdf->setPaper('F4', 'potrait');
         return $pdf->download('SPR-' . $fp->blok . "-" . $fp->nomor . '.pdf');
     }

@@ -360,7 +360,7 @@
                     Tempat & Tanggal. Lahir
                 </td>
                 <td>
-                    : {{ $fp->tempat_lahir_plgn }}  <?= tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn)))?> 
+                    : {{ $fp->tempat_lahir_plgn }}  <?= tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn)))?>
                 </td>
             </tr>
             <tr>
@@ -370,7 +370,7 @@
             <tr>
                 <td style="width:40%;">Tujuan transaksi</td>
                 <td>
-                    : - 
+                    : -
                 </td>
 
             </tr>
@@ -557,7 +557,7 @@
 
                 @else
 
-                 @if ($promo->bphtb_promo == "yes")
+                @if ($promo->bphtb_promo == "yes")
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                     <tr style="height:14pt">
                         <td style="width:215pt">
@@ -856,11 +856,7 @@
 
 
             </li>
-            <li data-list-text="6.">
-                <p class="s3" style="padding-top: 1pt;padding-left: 40pt;text-indent: -17pt;text-align: left;">
-                    Untuk
-                    penyerahan bangunan tanggal :</p>
-            </li>
+
         </ol>
         <div class="page-break"></div>
 
@@ -1235,7 +1231,7 @@
                 </ol>
             </li>
 
-
+            <div class="page-break"></div>
 
             <li data-list-text="XIII.">
                 <p style="padding-left: 41pt;text-indent: -34pt;text-align: left;">KETENTUAN PENGALIHAN HAK, KEWAJIBAN
@@ -1312,56 +1308,159 @@
                 </ol>
             </li>
             <li data-list-text="XIV.">
-                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">FORCE MAJEURE</p>
-                <p style="padding-top: 1pt;padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">Para
-                    pihak setuju untuk mengadakan perubahan/penambahan atas Surat Pemesanan ini apabila di kemudian hari
-                    terjadi Force Majeure. Yang dimaksud dengan Force Majeure adalah hal-hal yang dapat mempengaruhi
-                    jalannya pelaksanaan pekerjaan PT. CITRA ARGO TIRTA antara lain: gempa bumi, banjir, bencana alam
-                    lainnya, huru-hara, perang, tindakan kekerasan oleh pihak lain baik</p>
-                <p style="padding-top: 4pt;padding-left: 41pt;text-indent: 0pt;line-height: 113%;text-align: left;">
-                    secara
-                    perorangan atau massal, termasuk tindakan, kebijakan/peraturan Pemerintah termasuk di bidang fiskal
-                    atau
-                    moneter, keadaan politik atau keadaan langka bahan bangunan yang</p>
-                <p style="padding-left: 41pt;text-indent: 0pt;text-align: left;">mempengaruhi kegiatan usaha di bidang
-                    properti dan turunannya.</p>
+                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">KETENTUAN SELAMA
+                    PEMBANGUNAN</p>
+                <ol id="l10">
+                    <li data-list-text="a.">
+                        <p
+                            style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
+                            Pelaksanaan pembangunan didasarkan pada spesifikasi teknik dan gambar rumah yang
+                            telah dikeluarkan oleh PT. CITRA ARGO TIRTA.</p>
+                    </li>
+                    <li data-list-text="b.">
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Untuk pembelian rumah dengan kavling khusus, untuk pelaksanaan pembangunan
+                            diperkenankan free design dan tetap berpedoman sesuai dengan prosedur PT. CITRA
+                            ARGO TIRTA.</p>
+
+                    </li>
+                    <li data-list-text="c.">
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Adanya pekerjaan tambahan atau perubahan spesifikasi teknik dan gambar harap
+                            diinformasikan di awal pemesanan.
+                        </p>
+                    </li>
+                    <li data-list-text="d.">
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Selama masa pembangunan, Pembeli tidak diperkenankan untuk melakukan pekerjaan
+                            tambahan atau perubahan spesifikasi teknik dan gambar tanpa persetujuan dari PT.
+                            CITRA ARGO TIRTA.
+                        </p>
+                    </li>
+                    <li data-list-text="e.">
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Pengajuan order pembangunan akan dilakukan setelah Pembeli menyelesaikan
+                            pembayaran 50% dari harga jual untuk pembayaran secara inhouse dan sudah
+                            Realisasi dengan pihak Bank/Lembaga Keuangan/ Pembiayaan. Penyelesaian bangunan
+                            akan dilaksanakan oleh PT. CITRA ARGO TIRTA selambat-lambatnya 12 bulan untuk
+                            tipe dibawah 70, sedangkan untuk tipe diatas 70 akan disepakati oleh kedua belah
+                            pihak.
+                        </p>
+                    </li>
+                </ol>
             </li>
+
             <li data-list-text="XV.">
-                <p style="padding-top: 8pt;padding-left: 41pt;text-indent: -32pt;text-align: left;">ARBITRASE</p>
+                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">PRIHAL SERAH TERIMA
+                    RUMAH</p>
+                <ol id="l10">
+                    <li data-list-text="a.">
+                        <p
+                            style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
+                            Serah Terima Kavling akan dilaksanakan setelah Pembeli membayar lunas seluruh
+                            harga Tanah dan Bangunan dan pembangunan telah selesai 100%.</p>
+                    </li>
+                    <li data-list-text="b.">
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Serah Terima Sepihak akan dilaksanakan jika pembeli tidak dapat melakukan serah
+                            terima kavling dalam waktu yang telah ditentukan oleh PT. CITRA ARGO TIRTA.</p>
+
+                    </li>
+                    <li data-list-text="c.">
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Pembeli berjanji serta mengikatkan diri untuk tetap menggunakan tanah dan
+                            bangunan sebagai rumah tinggal, di kemudian hari apabila ada pengerjaan renovasi
+                            pembeli wajib melakukan konfirmasi kepada PT. CITRA ARGO TIRTA.
+                        </p>
+                    </li>
+                    <li data-list-text="d.">
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Biaya Pemeliharaan dan Perbaikan Lingkungan serta penggunaan air bersih dimulai
+                            sejak tanggal ditandatanganinya BAST (Berita Acara Serah Terima) yang besarnya
+                            ditentukan oleh PT. CITRA ARGO TIRTA.
+                        </p>
+                    </li>
+
+                </ol>
+            </li>
+            <li data-list-text="XVI.">
+                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">PRIHAL SERAH TERIMA
+                    RUMAH</p>
+
+
+                <p
+                    style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
+                    Para pihak setuju untuk mengadakan perubahan/penambahan atas Surat Pemesanan ini apabila
+                    di kemudian hari terjadi Force Majeure. Yang dimaksud dengan Force Majeure adalah
+                    hal-hal yang dapat mempengaruhi jalannya pelaksanaan pekerjaan PT. CITRA ARGO TIRTA
+                    antara lain: gempa bumi, banjir, bencana alam lainnya, huru-hara, perang, tindakan
+                    kekerasan oleh pihak lain baik secara perorangan atau massal, termasuk tindakan,
+                    kebijakan/peraturan Pemerintah termasuk di bidang fiskal atau moneter, keadaan politik
+                    atau keadaan langka bahan bangunan yang mempengaruhi kegiatan usaha di bidang properti
+                    dan turunannya.</p>
+
+            </li>
+            <li data-list-text="XVII.">
+                <p style="padding-top: 8pt;padding-left: 41pt;text-indent: -32pt;text-align: left;">
+                    ARBITRASE DAN PENYELESAIAN SENGKETA
+                </p>
                 <ol id="l11">
                     <li data-list-text="a.">
                         <p
                             style="padding-top: 1pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Jika timbul perselisihan dalam melaksanakan Surat Pemesanan ini, maka akan diselesaikan oleh
+                            Jika timbul perselisihan dalam melaksanakan Surat Pemesanan ini, maka akan
+                            diselesaikan oleh
                             para pihak secara musyawarah.</p>
                     </li>
                     <li data-list-text="b.">
-                        <p style="padding-left: 77pt;text-indent: -18pt;text-align: left;">Apabila dalam jangka waktu 60
-                            (enam puluh) hari sejak sengketa atau beda pendapat tersebut, penyelesaian secara musyawarah
+                        <p style="padding-left: 77pt;text-indent: -18pt;text-align: left;">Apabila dalam
+                            jangka
+                            waktu 60
+                            (enam puluh) hari sejak sengketa atau beda pendapat tersebut, penyelesaian
+                            secara
+                            musyawarah
                             tidak tercapai, maka para pihak sepakat untuk
-                            menyelesaikannya pada tingkat pertama dan terakhir dengan cara arbitrase melalui Badan
+                            menyelesaikannya pada tingkat pertama dan terakhir dengan cara arbitrase melalui
+                            Badan
                             Arbitrase
                             Nasional Indonesia (BANI) di Jakarta, sesuai dengan Undang-Undang Republik
                             nomor
-                            30 tahun 1999 tentang Arbitrase dan Alternatif Penyelesaian Sengketa, berikut perubahan dan
+                            30 tahun 1999 tentang Arbitrase dan Alternatif Penyelesaian Sengketa, berikut
+                            perubahan dan
                             penambahannya di kemudian hari.
                         </p>
                         <p
                             style="padding-top: 1pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
                         </p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">Indonesia
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
+                            Indonesia
                         </p>
                     </li>
                     <li data-list-text="c.">
-                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">Kesepakatan
-                            para pihak untuk menyelesaikan sengketa dengan cara arbitrase meniadakan hak para pihak
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Kesepakatan
+                            para pihak untuk menyelesaikan sengketa dengan cara arbitrase meniadakan hak
+                            para
+                            pihak
                             untuk
                             mengajukan penyelesaian sengketa ke Pengadilan Negeri.</p>
                     </li>
                     <li data-list-text="d.">
-                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">Para pihak
-                            setuju bahwa keputusan BANI adalah final dan mengikat para pihak, serta untuk pelaksanaan
-                            keputusan BANI dapat dimintakan fiat eksekusinya ke Pengadilan Negeri setempat.</p>
+                        <p
+                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Para pihak
+                            setuju bahwa keputusan BANI adalah final dan mengikat para pihak, serta untuk
+                            pelaksanaan
+                            keputusan BANI dapat dimintakan fiat eksekusinya ke Pengadilan Negeri setempat.
+                        </p>
                     </li>
                 </ol>
             </li>
@@ -1424,7 +1523,7 @@
                 </td>
             </tr>
             <?php
-            
+
             $no++;
             ?>
             @endforeach

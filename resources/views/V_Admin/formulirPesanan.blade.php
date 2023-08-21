@@ -71,28 +71,28 @@
                                     });
                                 console.log(data);
                                 function color(stat) {
-                                        var iro = 'warnaa';
-                                        switch (stat) {
+                                    var iro = 'warnaa';
+                                    switch (stat) {
                                         case 'Available':
-                                            iro = '#28a744';
+                                            iro = '#44bb55';
                                             break;
                                         case 'Keep':
-                                            iro = '#dc3546';
+                                            iro = '#ff7777';
                                             break;
                                         case 'Sold':
-                                            iro = '#dc3546';
+                                            iro = '#ff7777';
                                             break;
                                         case 'onProgress':
-                                            iro = '#dc3546';
+                                            iro = '#ff7777';
                                             break;
                                         case 'Undeveloped':
                                             iro = 'gray';
                                         case 'Hold':
-                                            iro = '#dc3546';
+                                            iro = '#ff7777';
                                             break;
-                                        }
-                                        return iro;
                                     }
+                                    return iro;
+                                }
                             </script>
                             {{--  <div class="control">
                                 <div class="zoom in">
@@ -202,7 +202,21 @@
 
     <script>
         $(document).ready(function() {
-            $('#formulirPesanan').DataTable();
+            $('#formulirPesanan').DataTable({
+                lengthMenu: [
+                    [25, 50, 100, -1],
+                    [25, 50, 100, 'All'],
+                ],
+                searching: true, // Enable global search bar
+                searchCols: [
+                    null, // Column 1 (No) - No search input field
+                    null, // Column 2 (Rumah) - No search input field
+                    null, // Column 3 (Status) - No search input field
+                    null, // Column 4 (Tipe) - No search input field
+                    null // Column 5 (Tanggal Pre Order) - No search input field
+                ],
+                autoWidth: true
+            });
         });
     </script>
 
