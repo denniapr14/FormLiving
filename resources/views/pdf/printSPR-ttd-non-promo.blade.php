@@ -1536,7 +1536,7 @@
         <p style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">Harga Sudah
             Termasuk : SHGB, PPN, IMB, PLN dan Air bersih. </p>
         <p style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">Harga Belum
-            Termasuk : AJB, BBN, BPHTB, Biaya KPR.</p>
+            Termasuk : BPHTB, Biaya KPR.</p>
        <br>
        <br>
         <p>

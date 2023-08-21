@@ -60,9 +60,32 @@ class Rumah extends Model
             ->get();
     }
 
+    public function getRumahSelectJoinClusterProjek($select,$where)
+    {
+        return Rumah::select($select)
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->join('projek','rumah.id_projek','projek.id_projek')
+        ->where($where)
+        ->get();
+    }
+    public function firstRumahJoinTipeRumahWhere($select,$where){
+        return Rumah::select($select)
+        ->join('tipe_rumah','tipe_rumah.id_rumah','tipe_rumah.id_rumah')
+        ->where($where)
+        ->get();
+    }
+
     public function getRumahWhere($where, $eq, $value)
     {
         return Rumah::select('*')
+            ->where($where, $eq, $value)
+            ->first();
+    }
+
+    public function firstRumahWhereJoinCluster($select,$where, $eq, $value)
+    {
+        return Rumah::select($select)
+        ->join('cluster','rumah.codecluster','cluster.codecluster')
             ->where($where, $eq, $value)
             ->first();
     }
@@ -139,4 +162,5 @@ class Rumah extends Model
             ->groupBy('cluster.nama_cluster')
             ->get();
     }
+
 }

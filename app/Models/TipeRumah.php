@@ -50,4 +50,10 @@ class TipeRumah extends Model
             $dataInput
         );
     }
+
+    function firstTipeRumah($select,$where) {
+        return TipeRumah::select($select)
+        ->where($where)
+        ->first();
+    }
 }

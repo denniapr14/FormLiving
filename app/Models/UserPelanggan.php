@@ -36,4 +36,8 @@ class UserPelanggan extends Authenticatable
         ->orderBy($order, $by)
         ->get();
     }
+    function firstUserPelangganWhere($where, $eq, $value){
+        return UserAdmin::where($where, $eq, $value)
+        ->first();
+    }
 }

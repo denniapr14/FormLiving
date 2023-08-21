@@ -14,6 +14,7 @@ use App\Http\Controllers\C_PembayaranRumah;
 use App\Http\Controllers\C_PreOrder;
 use App\Http\Controllers\C_Promo;
 use App\Http\Controllers\C_Rumah;
+use App\Http\Controllers\C_Simulasi;
 use App\Http\Controllers\C_SuratPemesananRumah;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
@@ -76,10 +77,12 @@ Route::get('/pre-order', [C_PreOrder::class, 'preOrderForms'])->name('preOrderFo
 
 // ---------------= SIMULATION =-----------------
 
-Route::get('/simulation-cluster', [Home::class, 'simCluster']);
+Route::get('/simulation-cluster', [C_Simulasi::class, 'simCluster']);
+
 Route::get('/simulation-select-unit/{codecluster}', [Home::class, 'simSelectUnit']);
-Route::get('/simulation-type/{id_rumah}', [Home::class, 'simType']);
-Route::get('/simulation-detail-type/{id_rumah}/{id_tipe}', [Home::class, 'simDetailType']);
+
+Route::get('/simulation-type/{id_rumah}', [C_Simulasi::class, 'simType']);
+Route::get('/simulation-detail-type/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simDetailType']);
 Route::get('/simulation-data-pelanggan/{id_rumah}/{id_tipe}', [Home::class, 'simDataPelanggan']);
 Route::post('/simulation-data-pelanggan/store/{id_rumah}/{id_tipe}', [Home::class, 'SumDataPelangganAction'])->name('dataPelanggan.action');
 Route::get('/simulation-data-pelanggan/cariKuponSpesial/{id_rumah}/{id_tipe}/{id_pelanggan}/{kode_promo}', [Home::class, 'findKuponSpesial']);

@@ -13,6 +13,13 @@ class GambarRumah extends Model{
         ->get();
 
     }
+
+    function firstGambarRumah($select,$where)  {
+        return GambarRumah::select($select)
+        ->where($where)
+        ->first();
+
+    }
     function getGambarRumahWhere($select, $where,$eq,$value) {
         return GambarRumah::select($select)
         ->where($where,$eq,$value)
@@ -32,12 +39,25 @@ class GambarRumah extends Model{
     //         ->groupBy('rumah.id_rumah')
     //         ->get();
     // }
+
+    function getGambarRumahJoinTipeRumahGroupBy($select,$where,$group) {
+        return GambarRumah::select($select)
+        ->join('tipe_rumah','gambar_rumah.id_tipe','tipe_rumah.id_tipe_rumah')
+        ->where($where)
+        ->groupBy($group)
+        ->get();
+
+    }
+
+
     function insertGambarRumah($dataInput)
     {
         return GambarRumah::insert(
             $dataInput
         );
     }
+
+
 
 
 }
