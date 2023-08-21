@@ -38,8 +38,7 @@ class MailNotify extends Mailable
 
     public function build()
     {
-        return $this->from('formliving@greenlandtidar.net','Forms Living Greenland')
-                    
+        return $this->from('formliving@greenlandtidar.net','Forms Living Greenland')         
                     ->view($this->template)
                     ->with($this->data);
     }

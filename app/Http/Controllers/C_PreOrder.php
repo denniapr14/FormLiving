@@ -708,6 +708,12 @@ class C_PreOrder extends Controller
             ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
             ->where('pre_order.id_pre_order','=',$id)
             ->first();
+            
+            $data =([
+                'title' => 'Konfirmasi Sukses!',
+                'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
+            ]);
+             
                 $template = 'mail.mailForgot';
                 $dataEmail1 = [
                     'to' => $dataUser->email_plgn,
@@ -733,7 +739,12 @@ class C_PreOrder extends Controller
                 } catch (Exception $e) {
                     // return response()->json(['Sorry! Please try again latter']);
                 }
-                return redirect('/congratulation')->with('success', 'konfirmasi sudah masuk');      
+                return redirect('/selamat')->with('success', 'konfirmasi sudah masuk');      
         }
+    }
+
+    public function selamatPage($dataText)
+    {
+        return view('congratulation-data', compact('data'));
     }
 }
