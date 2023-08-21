@@ -733,7 +733,7 @@ class C_PreOrder extends Controller
                 } catch (Exception $e) {
                     // return response()->json(['Sorry! Please try again latter']);
                 }
-                return redirect('/congratulation')->with('success', 'Data has been send!');      
+                return redirect('/congratulation')->with('success', 'konfirmasi sudah masuk');      
         }
     }
 }
