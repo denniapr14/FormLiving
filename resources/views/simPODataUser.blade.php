@@ -29,25 +29,15 @@
         </div>
         <div class="steps">
             <div class="step done">1</div>
-            <div class="step done">2</div>
-            <div class="step done">3</div>
-            <div class="step done">4</div>
-            <div class="step active">5</div>
-            <div class="step">6</div>
-            <div class="step">7</div>
-            <div class="step last">8</div>
+            <div class="step active">2</div>
+            <div class="step last">3</div>
         </div>
     </div>
     <div class="container">
         <div class="steps">
             <div class="step done">1</div>
-            <div class="step done">2</div>
-            <div class="step done">3</div>
-            <div class="step done">4</div>
-            <div class="step active">5</div>
-            <div class="step">6</div>
-            <div class="step">7</div>
-            <div class="step last">8</div>
+            <div class="step active">2</div>
+            <div class="step last">3</div>
         </div>
         <div>
 
@@ -238,6 +228,7 @@
                         <br>
                         <form action="{{ route('dataPO.action', [$rumah->id_rumah]) }}" method="POST">
                             @csrf
+                            <input type="hidden" name="code" value="{{ $dataFunctionUser }}">
                             <div class="row form-order">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">

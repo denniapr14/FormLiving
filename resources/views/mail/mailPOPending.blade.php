@@ -263,7 +263,7 @@
                 <br>
                 <br>
                 <p>setelah membayar, silahkan konfirmasi pada link dibawah ini :</p>
-                <a href="https://formsliving.com/konfirmasi-pembayaran-po/" {{ $data[] }}></a>
+                <a href="https://formsliving.com/konfirmasi-pembayaran-po/"></a>
             </div>
 
         </div>
