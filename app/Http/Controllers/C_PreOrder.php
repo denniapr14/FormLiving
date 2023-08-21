@@ -231,19 +231,20 @@ class C_PreOrder extends Controller
                             ->update([
                                 'status_po' => 'overtaken'
                             ]);
-                
+
                         $templateOvertaken = 'mail.mailPOOvertaken';
                         $data = [
-                            "subject" => "Form Living",
+                            "subject" => "Pre Order ".$decryptedStatus,
                             "body" => "Form Living",
-                            "blok" => $refundable->blok,
-                            "nomor" => $refundable->nomor,
+                            "blok" => $getPreOrder[0]->blok,
+                            "nomor" => $getPreOrder[0]->nomor,
+                            "tipe"  => $getPreOrder[0]->tipe_booking_po
+
                         ];
-                
                         try {
                             Mail::to($refundable->email_plgn)
                                 ->send(new MailNotify($data, $templateOvertaken));
-                
+
                             // Log successful email sending
                             // \Log::info("Email sent to: " . $refundable->email_plgn);
                         } catch (Exception $e) {
@@ -278,7 +279,7 @@ class C_PreOrder extends Controller
                 ];
                 $template = 'mail.mailPOPending';
             }
-            if ($decryptedStatus == "confirmed") {
+            if ($decryptedStatus == "userconfirmed") {
                 # code...
                 $dataRumah = [
                     'status' => "Sold"
@@ -286,11 +287,11 @@ class C_PreOrder extends Controller
                 $template = 'mail.mailPOAccept';
             }
 
-            // DB::table('rumah')
-            //     ->where('id_rumah', $getPreOrder[0]->id_rumah)
-            //     ->update(
-            //         $dataRumah
-            //     );
+            DB::table('rumah')
+                ->where('id_rumah', $getPreOrder[0]->id_rumah)
+                ->update(
+                    $dataRumah
+                );
 
 
             $data = [
@@ -298,6 +299,7 @@ class C_PreOrder extends Controller
                 "body" => "Form Living",
                 "blok" => $getPreOrder[0]->blok,
                 "nomor" => $getPreOrder[0]->nomor,
+                "tipe"  => $getPreOrder[0]->tipe_booking_po
 
             ];
             // MailNotify class that is extend from Mailable class.
@@ -612,21 +614,21 @@ class C_PreOrder extends Controller
             $id = DB::table('pre_order')->insertGetId(
                 $dataInput
             );
-            
+
             if ($rumah->status == "Available") {
                 DB::table('rumah')
                 ->where('id_rumah', $id_rumah)
-                ->update(['status' => 'keepRefundable']             
+                ->update(['status' => 'keepRefundable']
                 );
             }
 
             if ($rumah->status == "keepRefundable") {
                 DB::table('rumah')
                 ->where('id_rumah', $id_rumah)
-                ->update(['status' => 'Keep']             
+                ->update(['status' => 'Keep']
                 );
             }
-                 
+
             $dataPO = DB::table('pre_order')
             ->select('*')
             ->where('id_pre_order','=',$id)
@@ -654,7 +656,7 @@ class C_PreOrder extends Controller
                 'expire' => $dataPO->expire_date,
                 'va' => $rumah->va_rumah
             ];
-            
+
             $dataEmail2 = [
                 'to' => $user->email_ua,
                 "subject" => "Forms Living",
@@ -664,7 +666,7 @@ class C_PreOrder extends Controller
                 'blok' => $rumah->blok,
                 'nomor' => $rumah->nomor,
             ];
-            
+
             $dataEmail3 = null;
             foreach ($accounting as $accounting) {
                 $dataEmail3 = [
@@ -708,12 +710,12 @@ class C_PreOrder extends Controller
             ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
             ->where('pre_order.id_pre_order','=',$id)
             ->first();
-            
+
             $data =([
                 'title' => 'Konfirmasi Sukses!',
                 'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
             ]);
-             
+
                 $template = 'mail.mailForgot';
                 $dataEmail1 = [
                     'to' => $dataUser->email_plgn,
@@ -730,16 +732,16 @@ class C_PreOrder extends Controller
                     'expire' => $dataUser->expire_date,
                     'va' => $dataUser->va_rumah
                 ];
-                
+
                 try {
                     // $MailAtt = ();
                     Mail::to($dataUser->email_plgn)->send(new MailNotify($dataEmail1, $template));
                     // Mail::to($user->email_ua)->send(new MailNotify($dataEmail2,$template));
-    
+
                 } catch (Exception $e) {
                     // return response()->json(['Sorry! Please try again latter']);
                 }
-                return redirect('/selamat')->with('success', 'konfirmasi sudah masuk');      
+                return redirect('/selamat')->with('success', 'konfirmasi sudah masuk');
         }
     }
 

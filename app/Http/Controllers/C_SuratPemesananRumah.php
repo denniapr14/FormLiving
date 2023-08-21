@@ -223,9 +223,17 @@ class C_SuratPemesananRumah extends Controller
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
-            $dataUpdate = [
-                'no_fp' => $request->nofp,
-            ];
+            $dataUpdate = "";
+            if ($projek == 'Greenland') {
+                $dataUpdate = [
+                    'no_fp' => $request->nofp,
+                ];
+            }
+            if ($projek == 'Kalm') {
+                $dataUpdate = [
+                    'no_fp' => $request->nofp,
+                ];
+            }
             DB::table('formulir_pesanan')
             ->where('id_formulir', $decryptedID)
             ->update($dataUpdate);

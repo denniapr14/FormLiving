@@ -80,21 +80,21 @@
                                     var iro = 'warnaa';
                                     switch (stat) {
                                         case 'Available':
-                                            iro = '#44bb55';
+                                            iro = '#28a744';
                                             break;
                                         case 'Keep':
-                                            iro = '#ff7777';
+                                            iro = '#dc3546';
                                             break;
                                         case 'Sold':
-                                            iro = '#ff7777';
+                                            iro = '#dc3546';
                                             break;
                                         case 'onProgress':
-                                            iro = '#ff7777';
+                                            iro = '#dc3546';
                                             break;
                                         case 'Undeveloped':
                                             iro = 'gray';
                                         case 'Hold':
-                                            iro = '#ff7777';
+                                            iro = '#dc3546';
                                             break;
                                     }
                                     return iro;
@@ -188,13 +188,13 @@
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
                                                 <div class="btn-group" role="group">
                                                 @php
-                                                    $listStatus = ['pending','confirmed','accepted','refunded','rejected'];
+                                                    $listStatus = ['pending','userconfirmed','accepted','refunded','rejected'];
                                                 @endphp
                                                     @if ($preOrder->status_po == 'pending')
                                                     <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
                                                         {{ $preOrder->status_po }}
                                                     </button>
-                                                @elseif ($preOrder->status_po == 'confirmed')
+                                                @elseif ($preOrder->status_po == 'userconfirmed')
                                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                                         {{ $preOrder->status_po }}
                                                     </button>
@@ -228,13 +228,6 @@
                                                         ]) }}">
                                                         {{ $status }}
 
-                                                        {{--  <a class="dropdown-item"
-                                                        href="{{ route('changeStatusPreOrder.admin', [
-                                                             $getProjek->nama_projek,
-                                                             $preOrder->id_pre_order,
-                                                             $status,
-                                                        ]) }}">
-                                                        {{ $status }}  --}}
 
                                                      </a>
 
@@ -374,10 +367,7 @@
         <script>
             $(document).ready(function() {
                 $('#preOrderPending').DataTable({
-                    lengthMenu: [
-                        [25, 50, 100, -1],
-                        [25, 50, 100, 'All'],
-                    ],
+                    lengthMenu: [25, 50, 75, 100],
                     searching: true, // Enable global search bar
                     searchCols: [
                         null, // Column 1 (No) - No search input field

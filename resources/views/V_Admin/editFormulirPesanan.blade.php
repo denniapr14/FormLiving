@@ -338,11 +338,13 @@
                             <br>
                             <h4> SURAT PEMESANAN RUMAH SEMENTARA</h4>
                             <p>Nomor :
+
                                 @if ($getFormulirPesanan->no_fp != null)
                                     <input type="text" name="nofp" value="{{ $getFormulirPesanan->no_fp }}"
                                         style="width: 30%">
                                 @else
-                                    <input type="text" name="nofp" value="{{ old('nofp') }}" style="width: 30%">
+                                    <input type="text" name="nofp" value="@if ($getProjek->nama_projek=='Greenland')SPRGL/<?=date('m/Y')?>@else SPRKR/<?=date('m/Y')?>@endif
+                                    " style="width: 30%">
                                 @endif
                             </p>
                         </center>

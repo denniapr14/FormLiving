@@ -450,7 +450,7 @@
                         <td style="width:86pt">
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                {{ rupiah($promo->diskon_promo)}},-</p>
+                              0,-</p>
                         </td>
                     </tr>
                     <tr style="height:14pt">
@@ -491,7 +491,7 @@
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
                         </td>
                     </tr>
-                    <tr style="height:20pt">
+                    {{--  <tr style="height:20pt">
                         <td style="width:215pt">
                             <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">e. BPHTB</p>
                         </td>
@@ -503,8 +503,8 @@
                                 0,-
                             </p>
                         </td>
-                    </tr>
-                    <tr style="height:18pt">
+                    </tr>  --}}
+                    {{--  <tr style="height:18pt">
                         <td style="width:215pt">
                             <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">
                                 f. Biaya Surat (BBN dan AJB) PPAT</p>
@@ -534,7 +534,7 @@
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                 0,-</p>
                         </td>
-                    </tr>
+                    </tr>  --}}
                     <tr style="height:17pt">
                         <td style="width:215pt">
                             <p class="s2"
@@ -557,7 +557,7 @@
 
                 @else
 
-                @if ($promo->bphtb_promo == "yes")
+                {{--  {{--  @if ($promo->bphtb_promo == "yes")
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                     <tr style="height:14pt">
                         <td style="width:215pt">
@@ -701,8 +701,8 @@
                                 {{ rupiah($fp->total_harga) }},-</p>
                         </td>
                     </tr>
-                </table>
-                @elseif ($promo->bphtb_promo == "no")
+                </table>  --}}
+                {{--  @elseif ($promo->bphtb_promo == "no")  --}}
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                      <tr style="height:14pt">
                         <td style="width:215pt">
@@ -783,7 +783,7 @@
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
                         </td>
                     </tr>
-                    <tr style="height:16pt">
+                    {{--  <tr style="height:16pt">
                         <td style="width:215pt">
                             <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
                                 BPHTB</p>
@@ -830,7 +830,7 @@
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                 0,-</p>
                         </td>
-                    </tr>
+                    </tr>  --}}
                     <tr style="height:17pt">
                         <td style="width:215pt">
                             <p class="s2"
@@ -849,14 +849,18 @@
                         </td>
                     </tr>
                 </table>
-                @endif
+                {{--  @endif  --}}
 
 
                 @endif
 
 
             </li>
-
+            {{--  <li data-list-text="6.">
+                <p class="s3" style="padding-top: 1pt;padding-left: 40pt;text-indent: -17pt;text-align: left;">
+                    Untuk
+                    penyerahan bangunan tanggal :</p>
+            </li>  --}}
         </ol>
         <div class="page-break"></div>
 
@@ -1231,7 +1235,7 @@
                 </ol>
             </li>
 
-            <div class="page-break"></div>
+
 
             <li data-list-text="XIII.">
                 <p style="padding-left: 41pt;text-indent: -34pt;text-align: left;">KETENTUAN PENGALIHAN HAK, KEWAJIBAN
@@ -1353,7 +1357,6 @@
                     </li>
                 </ol>
             </li>
-
             <li data-list-text="XV.">
                 <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">PRIHAL SERAH TERIMA
                     RUMAH</p>
@@ -1391,8 +1394,7 @@
                 </ol>
             </li>
             <li data-list-text="XVI.">
-                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">PRIHAL SERAH TERIMA
-                    RUMAH</p>
+                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">FORCE MAJEURE</p>
 
 
                 <p

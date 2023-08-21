@@ -213,23 +213,13 @@
             </div>
         </div>
         <div class="one-col" style="background-color:white;">
-            <h2 style="text-align: center;">Sayangnya, pesanan anda telah ditolak.</h2>
-            <p style="margin-left: 5%">Silakan hubungi layanan pelanggan kami jika Anda memiliki pertanyaan lebih lanjut
-                atau memerlukan bantuan.
-                Terima kasih atas kepercayaan Anda kepada kami.</p>
+            <h2 style="text-align: center;">Sayangnya, pesanan anda telah dikembalikan.</h2>
+            <p style="margin-left: 5%">Berikut data pre-order yang telah dipesan pada Formsliving</p>
             <br>
             <div class="container">
                 <h4>Nama Perumahan : Kalm Residence</h4>
                 <br>
-                <div>
-                    <table width="100%" style="border: 1px solid #ccc;">
-                        <tr>
-                            <td>
-                                <h2>Data Pre-Order</h2>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+
                 <div>
                     <table width=" 100%" style="border: 1px solid #ccc;">
                         <tr>
@@ -241,15 +231,12 @@
                                 <p>Tipe Pre-Order </p>
                                 <h2 style="padding-left: 4%">{{ $data['tipe'] }}</h2>
                                 <br>
-                                <p>Status Pembayaran </p>
-                                <h2 style="padding-left: 4%">Telah di tolak</h2>
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
-
         <div class="one-col" style="padding-bottom: 4%; background-color : white;">
             <h1 style="text-align:center;">Permasalahan Seputar data Pre-Order</h1>
             <p>

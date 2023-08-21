@@ -2626,7 +2626,7 @@ class Home extends Controller
 
             // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
 
-            $pdf = PDF::loadView('pdf.printSPR', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
+            $pdf = PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
             // $pdf = PDF::loadView('mail.index');
             $pdf->setPaper('F4', 'potrait');
             // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());

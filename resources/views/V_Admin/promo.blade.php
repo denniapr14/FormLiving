@@ -262,8 +262,8 @@
             $(document).ready(function() {
                 $('#promo').DataTable({
                     lengthMenu: [
-                        [5, 10, 50, -1],
-                        [5, 10, 50, 'All'],
+                        [25, 50, 100, -1],
+                        [25, 50, 100, 'All'],
                     ],
                 });
             });
