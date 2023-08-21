@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
         integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" href="{{asset('Dashboard')}}/css/toastify.min.css">
     <link rel="stylesheet" href="{{asset('Dashboard')}}/css/jquery.dataTables.css" />
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -44,7 +43,6 @@
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="{{url('Dashboard')}}/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="{{url('Dashboard')}}/js//toastify.js"></script>
     <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 </head>
 

@@ -579,7 +579,7 @@ class C_PreOrder extends Controller
             ->first();
 
         $now = Carbon::now();
-        $template = 'mail.mailForgot';
+        $template = 'mail.mailPOPending';
         $this->validate($request, [
             'ktp' => 'required',
         ]);
@@ -654,6 +654,7 @@ class C_PreOrder extends Controller
                 'expire' => $dataPO->expire_date,
                 'va' => $rumah->va_rumah
             ];
+            
             $dataEmail2 = [
                 'to' => $user->email_ua,
                 "subject" => "Forms Living",
@@ -662,8 +663,8 @@ class C_PreOrder extends Controller
                 'nama' => $pelanggan->nama_plgn,
                 'blok' => $rumah->blok,
                 'nomor' => $rumah->nomor,
-
             ];
+            
             $dataEmail3 = null;
             foreach ($accounting as $accounting) {
                 $dataEmail3 = [
@@ -674,7 +675,6 @@ class C_PreOrder extends Controller
                     'nama' => $pelanggan->nama_plgn,
                     'blok' => $rumah->blok,
                     'nomor' => $rumah->nomor,
-
                 ];
                 try {
                     // $MailAtt = ();
@@ -697,7 +697,6 @@ class C_PreOrder extends Controller
             return redirect('/congratulation')->with(compact('rumah', 'pelanggan', 'dataInput'), 'success', 'Data has been send!');
             // dd($user);
             // die();
-
         }
     }
 
@@ -708,7 +707,33 @@ class C_PreOrder extends Controller
         ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
         ->where('pre_order.id_pre_order','=',$id)
         ->first();
-        $now = carbon::now();
-        dd($now);
+            $template = 'mail.mailForgot';
+            $dataEmail1 = [
+                'to' => $dataUser->email_plgn,
+                "subject" => "Forms Living Pre Order Kalm Residence",
+                "body" => "",
+                "id_rumah" => Crypt::encrypt($dataUser->id_rumah),
+                'nama' => $dataUser->nama_plgn,
+                'blok' => $dataUser->blok,
+                'nomor' => $dataUser->nomor,
+                'harga' => $dataUser->index_po,
+                'status' => $dataUser->status_po,
+                'tipe' => $dataUser->tipe_booking_po,
+                'tgl_input' => $dataUser->tgl_input_po,
+                'expire' => $dataUser->expire_date,
+                'va' => $dataUser->va_rumah
+            ];
+            
+            try {
+                // $MailAtt = ();
+                Mail::to($dataUser->email_plgn)->send(new MailNotify($dataEmail1, $template));
+                // Mail::to($user->email_ua)->send(new MailNotify($dataEmail2,$template));
+
+            } catch (Exception $e) {
+                // return response()->json(['Sorry! Please try again latter']);
+            }
+
+            return redirect('/congratulation')->with('success', 'Data has been send!');
+            
     }
 }

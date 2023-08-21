@@ -249,7 +249,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
 
         <div class="one-col" style="padding-bottom: 4%; background-color : white;">
