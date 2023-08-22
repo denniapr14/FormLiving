@@ -62,7 +62,7 @@
 
                         <div class="mod-type">
                             <div class="type-image">
-                                <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
+                                <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_rumah}}" alt="">
                             </div>
                             <div class="items">
 
@@ -95,14 +95,15 @@
                             </div>
                         </div>
                     </div>
-
+{{--  =============================================================================================================================  --}}
+{{--  PELANGGAN  --}}
                     @if (!empty(Session::get('guest')))
                     <div class="col-12 col-lg-8 right-column order-3">
                         <small style="color:red;">Diperlukan*</small><br>
                         <small style="color:red;">Sangat Diperlukan**</small>
                         <br>
                         <form
-                            action="{{ route('dataPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}"
+                            action="{{ route('simulasiPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $getKKPR->id_kpr,$jenis]) }}"
                             method="POST">
                             @csrf
                             <div class="row form-order">
@@ -193,7 +194,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6 form-group">
                                     <label for="date" class="form-label">Tempat dan Tanggal Lahir <span>*</span></label>
-                                    <input type="text" class="form-control" name="tempatLahir"  id="" placeholder="Tempat Lahir"> <br>
+                                    <input type="text" class="form-control" name="tempatLahir"  id=""  value="{{ old('tempatLahir') }}"  placeholder="Tempat Lahir"> <br>
                                     <input type="text" class="form-control" name="tanggalLahir"  onfocus="(this.type='date')" onblur="(this.type='text')" id="" placeholder="Tanggal Lahir">
                                 </div>
                                 <div class="col-12 col-lg-6">
@@ -259,14 +260,15 @@
                                 </div>
                         </form>
                     </div>
-
+{{--  =============================================================================================================================  --}}
+{{--  USER  --}}
                     @elseif (session::get('user'))
                     <div class="col-12 col-lg-8 right-column order-3">
                         <small style="color:red;">Diperlukan*</small><br>
                         <small style="color:red;">Sangat Diperlukan**</small>
                         <br>
                         <form
-                            action="{{ route('dataPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}"
+                            action="{{ route('simulasiPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $getKKPR->id_kkpr, $jenis]) }}"
                             method="POST">
                             @csrf
                             <div class="row form-order">
@@ -357,8 +359,9 @@
                                 </div>
                                 <div class="col-12 col-lg-6 form-group">
                                     <label for="date" class="form-label">Tempat dan Tanggal Lahir <small style="color:red;">*</small></label>
-                                    <input type="text" class="form-control" name="tempatLahir"  id="" placeholder="Tempat Lahir"> <br>
-                                    <input type="text" class="form-control" name="tanggalLahir"  onfocus="(this.type='date')" onblur="(this.type='text')" id="" placeholder="Tanggal Lahir">
+                                    <input type="text" class="form-control" name="tempatLahir" id="tempatLahir" value="{{ old('tempatLahir') }}" placeholder="Tempat Lahir"><br>
+                                    <input type="text" class="form-control" name="tanggalLahir" id="tanggalLahir" placeholder="Tanggal Lahir" onfocus="(this.type='date')" onblur="(this.type='text')">
+
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
@@ -370,7 +373,7 @@
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="gender" class="form-label">Jenis Kelamin</label>
-                                        <select class="input form-select" name="gender" id="gender">
+                                        <select class="input form-select" name="gender"  id="gender">
                                             <option disabled selected>Jenis Kelamin</option>
                                             <option>Laki Laki</option>
                                             <option>Perempuan</option>
@@ -380,7 +383,7 @@
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="gender" class="form-label">Status Pernikahan</label>
-                                        <select class="input form-select" name="statusPernikahan" id="statusPernikahan">
+                                        <select class="input form-select"  name="statusPernikahan" id="statusPernikahan">
                                             <option disabled selected>Pilih Status Penikahan</option>
                                             <option>Sudah Menikah</option>
                                             <option>Belum Menikah</option>
@@ -498,47 +501,6 @@
                                                             @endif
 
 
-                                                            @if (empty($promo))
-                                                            <h5>Promo Cluster</h5>
-                                                            Tidak ada promo cluster
-                                                            @else
-                                                            <h5>Promo Cluster</h5>
-                                                            @foreach ($promo as $promo)
-                                                            <div class="promo-item ">
-                                                                <div class="row ">
-                                                                    <div class="promo-icon col-md-1">
-                                                                        <img src="{{ asset('Home') }}/images/ic-promo.png"
-                                                                            alt="Promo">
-                                                                    </div>
-                                                                    <div class="promo-text col-md-8">
-
-                                                                        <h6 id='keteranganPromo'>{{ $promo->promo }}
-                                                                        </h6>
-                                                                        <p>Berlaku hingga:
-                                                                            {{ date('d M Y',
-                                                                            strtotime($promo->tgl_berakhir)) }}
-                                                                        </p>
-                                                                        <div class="hemat">
-                                                                            <p class="light-grey-color">Anda bisa hemat
-                                                                            </p>
-                                                                            <h5>Rp. {{rupiah($promo->diskon_promo)}}
-                                                                            </h5>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="promo-button col-md-2">
-
-                                                                        <a class="promoCodeBtn btn btn-outline-success"
-                                                                            data-promo-code="{{ $promo->kode_promo }}"
-                                                                            data-promo="{{ $promo->promo }}">{{
-                                                                            $promo->kode_promo }} </a>
-
-
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            @endforeach
-                                                            @endif
 
                                                         </div>
                                                         <!-- STATE NO PROMO -->
@@ -619,6 +581,27 @@
 
 
 </script>
+    <script>
+        // Save form data to sessionStorage
+const formInputs = document.querySelectorAll('.form-control');
+
+formInputs.forEach(input => {
+    input.addEventListener('input', function() {
+        sessionStorage.setItem(input.id, input.value);
+    });
+});
+
+// Load form data from sessionStorage
+window.addEventListener('load', function() {
+    formInputs.forEach(input => {
+        const storedValue = sessionStorage.getItem(input.id);
+        if (storedValue !== null) {
+            input.value = storedValue;
+        }
+    });
+});
+
+    </script>
 
 <script>
     const promoCodeBtns = document.querySelectorAll(".promoCodeBtn");
@@ -645,7 +628,7 @@
             var kodePromo = document.getElementById('promo').value;
             var spaceAlert = document.getElementById('myAlert');
             $.ajax({
-                url: '/simulation-data-pelanggan/cariKuponSpesial/{id_rumah}/{id_tipe}/{id_pelanggan}/'+kodePromo,
+                url: '/simulation-data-pelanggan/cariKuponSpesial/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/'+kodePromo,
                 type: 'GET',
 
                 dataType: 'json',
@@ -691,18 +674,3 @@
 @endsection
 
 
-<?php
-
-
-
-function pembulatan($uang)
-{
-    $ratusan = substr($uang, -2);
-    if ($ratusan < 500) {
-        $akhir = $uang - $ratusan;
-    } else {
-        $akhir = $uang + (1000 - $ratusan);
-    }
-    echo number_format($akhir, 2, ',', '.');
-}
-?>

@@ -84,14 +84,23 @@ Route::get('/simulation-select-unit/{codecluster}', [Home::class, 'simSelectUnit
 Route::get('/simulation-type/{id_rumah}', [C_Simulasi::class, 'simType'])->name('simulationTipe');
 Route::get('/simulation-detail-type/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simDetailType'])->name('simulationDetailTipe');
 
-// Route::get('/simulation-data-pelanggan/{id_rumah}/{id_tipe}', [Home::class, 'simDataPelanggan']);
-// Route::post('/simulation-data-pelanggan/store/{id_rumah}/{id_tipe}', [Home::class, 'SumDataPelangganAction'])->name('dataPelanggan.action');
-// Route::get('/simulation-data-pelanggan/cariKuponSpesial/{id_rumah}/{id_tipe}/{id_pelanggan}/{kode_promo}', [Home::class, 'findKuponSpesial']);
+
 
 Route::get('/simulation-modification', [Home::class, 'simModif']);
 
 
 Route::get('/simulation-payment-option/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simPayment'])->name('simulationPaymentOption');
+Route::post('/simulation-payment-option/action/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simPaymentAction'])->name('simulationPaymentOptionAction');
+
+Route::get('/simulation-data-pelanggan/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}', [C_Simulasi::class, 'simDataPelanggan'])->name('simulasiPelanggan');
+Route::post('/simulation-data-pelanggan/store/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}', [C_Simulasi::class, 'SimDataPelangganAction'])->name('simulasiPelanggan.action');
+Route::get('/simulation-data-pelanggan/cariKuponSpesial/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/{kode_promo}', [C_Simulasi::class, 'findKuponSpesial'])->name('findKuponSpesial');
+
+Route::get('/simulation-summary/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/{id_pelanggan}/{kdPromo}', [C_Simulasi::class, 'simSummary'])->name('simulasiSummary');
+Route::post('/simulation-summary/store/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/{id_pelanggan}/{kdPromo}', [C_Simulasi::class, 'simSummaryAction'])->name('simulationSummary.action');
+Route::get('/congratulation', [Home::class, 'congratulation']);
+
+
 Route::get('/simulation-price/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simPrice'])->name('simulationPrice');
 
 Route::get('/simulation-price-payment/{id_rumah}/{id_tipe}/{payment}', [C_Simulasi::class, 'simPricePayment'])->name('simulationPricePayment');
@@ -103,9 +112,7 @@ Route::post('/simulation-price-payment/action/{id_rumah}/{id_tipe}/{payment}', [
 // Route::post('/simulation-order/store/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}', [Home::class, 'simOrderAction'])->name('simulation-order.action');
 // Route::get('/simulation-order/cariKupon/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}/{kode_promo}', [Home::class, 'findKupon']);
 
-Route::get('/simulation-summary/{id_rumah}/{id_tipe}/{id_pelanggan}/{kdPromo}/{payment}/{id_kkpr}', [Home::class, 'simSummary']);
-Route::post('/simulation-summary/store/{id_rumah}/{id_tipe}/{id_pelanggan}/{kdPromo}/{payment}/{id_kkpr}', [Home::class, 'simSummaryAction'])->name('simulation-sumary.action');
-Route::get('/congratulation', [Home::class, 'congratulation']);
+
 
 Route::get('/MailSend', [Home::class, 'Send']);
 Route::get('/WASend', [Home::class, 'SendWA']);
@@ -119,6 +126,7 @@ Route::get('/kalm', [Home::class, 'kalm']);
 Route::get('/loading-page', [Home::class, 'loadingPage']);
 Route::get('/privacy', [Home::class, 'Privacy']);
 Route::get('/terms', [Home::class, 'Terms']);
+Route::get('/aboutUs', [Home::class, 'About']);
 
 Route::get('/cetak/{id_formulir}', [Home::class, 'PrintFP']);
 // END FOOTER

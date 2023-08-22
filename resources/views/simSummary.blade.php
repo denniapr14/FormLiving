@@ -50,10 +50,11 @@
             <div class="step active last">8</div>
         </div>
         <div>
-
+{{--  ==========================================================================================================================================================================================================  --}}
+{{--  GUEST(PELANGGAN)  --}}
             @if (!empty(Session::get('guest')))
             <form
-                action="{{ route('simulation-sumary.action',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment, $kkpr->id_kkpr, $voucher, $pelanggan->id_pelanggan]) }}"
+                action="{{ route('simulationSummary.action',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $kkpr->id_kkpr,$jenis,$pelanggan->id_pelanggan, $voucher]) }}"
                 method="POST">
                 <div class="second-layout">
                     <div class="row">
@@ -251,9 +252,11 @@
                 </div>
             </form>
             @endif
+            {{--  ==========================================================================================================================================================================================================  --}}
+            {{--  GUEST(PELANGGAN)  --}}
             @if (!empty(Session::get('user')))
             <form
-                action="{{ route('simulation-sumary.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment, $kkpr->id_kkpr, $voucher, $pelanggan->id_pelanggan]) }}"
+                action="{{ route('simulationSummary.action',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $kkpr->id_kkpr,$jenis,$pelanggan->id_pelanggan, $voucher]) }}"
                 method="POST">
                 <div class="second-layout">
                     <div class="row">
@@ -425,7 +428,7 @@
                     </div>
                 </div>
                 <div class="btn-groups">
-                    <a href="/simulation-order/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $payment }}/{{$kkpr->id_kkpr}}"
+                    <a href="{{ route('simulasiPelanggan', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $kkpr->id_kkpr,$jenis,$pelanggan->id_pelanggan]) }}"
                         type="button" id="kembali" class="btn btn-grey">Kembali</a>
                     <button type="submit" id="lanjutkan" disabled class="btn btn-primary">Lanjutkan</button>
                 </div>

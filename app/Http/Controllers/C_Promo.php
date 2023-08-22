@@ -340,6 +340,7 @@ class C_Promo extends Controller
             ]);
 
             $dataInputPromo = [
+                'status'    => 'aktif',
                 'promo' => $request->nama_promo,
                 'kode_promo' => $request->kode_promo,
                 'keterangan' => $request->ket_promo,
