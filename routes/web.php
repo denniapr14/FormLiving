@@ -49,7 +49,7 @@ Route::get('/reset-password', [C_Login::class, 'emailForgot']);
 Route::get('/profile/cetak/{code}/{id_formulir}', [Home::class, 'printFP']);
 Route::get('/forgot/{email}', [C_Login::class, 'forgotPassword'])->name('forgot.utama');
 Route::post('/forgot', [C_Login::class, 'forgotAction'])->name('forgot.action');
-
+Route::get('/about}', [Home::class, 'About']);
 Route::get('/cluster/{id_cluster}', [Home::class, 'Cluster']);
 Route::get('/detail-cluster', [Home::class, 'DetailCluster']);
 Route::get('/virtual-tour', [Home::class, 'VirtualTour']);

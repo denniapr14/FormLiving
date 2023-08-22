@@ -2931,9 +2931,7 @@ class Home extends Controller
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
-            ])
-
-                ->first();
+            ])->first();
 
             // dd($user);
             // die();
