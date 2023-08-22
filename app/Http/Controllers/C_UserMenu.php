@@ -44,7 +44,11 @@ class C_UserMenu extends Controller
         $getUserMenuAll = $this->userMenu->getUserMenuJoinMenu('*','tgl_input_um','desc');
         $getMenu = $this->menu->getMenuWhere('*',['status_menu' => 'fitur'])->collect();
         $getUserProjekFromUser = $this->userProjek->getProjectUserWhere('user_projek.id_user_admin','!=','null');
-        // dd($getKategoriAll);
+        $getKepala = $this->userAdmin->getUserAdminWhereJoinProjek('*',
+        [
+            'ktgr_admin.kategori'   => "AdminAgentCompany",
+        ]            );
+        // dd($getKepala);
         // dd($getMenu);
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
@@ -79,7 +83,8 @@ class C_UserMenu extends Controller
                     'getMenu',
                     'getProjekAll',
                     'getKategoriAll',
-                    'getUserProjekFromUser'
+                    'getUserProjekFromUser',
+                    'getKepala'
                 )
         );
         } else {

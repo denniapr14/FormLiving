@@ -214,10 +214,7 @@
                                                     </div>
                                                     <div class="price-total">
                                                         <p>Perkiraan pembayaran KPR Anda:</p>
-                                                        <h5 id="hasil">/ Bulan</h5>
-                                                        <h5 id="hasil2">/ Bulan</h5>
-                                                        <h5 id="hasil3">/ Bulan</h5>
-                                                        <h5 id="hasil4">/ Bulan</h5>
+
                                                         <h5 id="sisaPembayaran"></h5>
                                                     </div>
                                                     <div class="btn-groups">
@@ -428,10 +425,7 @@
 
                 console.log(rupiah2);   --}}
 
-                hasil.innerText = "Cicilan KPR Selama 5 Tahun " + hasilRupiah + "/ Bulan";
-                hasil2.innerText = "Cicilan KPR Selama 10 Tahun " + hasilRupiah2 + "/ Bulan";
-                hasil3.innerText = "Cicilan KPR Selama 15 Tahun " + hasilRupiah3 + "/ Bulan";
-                hasil4.innerText = "Cicilan KPR Selama 20 Tahun " + hasilRupiah4 + "/ Bulan";
+
                 sisa.innerText = "Sisa Pembayaran KPR Rp " + hasilSisa + ",-";
                 document.getElementById('nextKPR').disabled = false;
             }

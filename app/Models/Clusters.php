@@ -29,4 +29,13 @@ class Clusters extends Model{
         ->where($where)
         ->get();
     }
+    function getClusterProjekWhereArrJoinRumah($select,$where) {
+        return Clusters::select($select)
+        ->join('rumah','rumah.codecluster','cluster.codecluster')
+        ->join('projek','cluster.id_projek','=','projek.id_projek')
+        ->where($where)
+        ->groupBy("cluster.codecluster")
+        ->get();
+    }
+
 }

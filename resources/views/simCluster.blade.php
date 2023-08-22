@@ -124,16 +124,16 @@
                             <div id="collapse-card-cluster" class="card-body collapse-item">
                                 <div class="row">
                                     @foreach ($rumah as $home)
-                                        @if ($home->codecluster = $cluster->codecluster)
+                                        @if ($home->codecluster == $cluster->codecluster)
                                             <div class="col-6 col-lg-3">
                                                 <a href="{{ route('simulationTipe', $home->id_rumah) }}">
                                                     <div class="item">
                                                         <div class="item-image">
                                                             @if ($home->nama_img != null)
-                                                                <img src="{{ asset('home') }}/images/rumah/{{ $home->nama_img }}"
+                                                                <img src="{{ asset('Home') }}/images/rumah/{{ $home->img_rumah }}"
                                                                     alt="">
                                                             @else
-                                                                <img src="{{ asset('home') }}/images/60.jpg" alt="">
+                                                                <img src="{{ asset('Home') }}/images/60.jpg" alt="">
                                                             @endif
                                                         </div>
                                                         <div class="item-title">{{ $home->blok }} - {{ $home->nomor }}

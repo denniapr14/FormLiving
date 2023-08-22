@@ -398,15 +398,41 @@
                                                                             </label>
                                                                             <div class="col-sm-8 align-self-center">
                                                                                 <select name="kategori" id="">
-                                                                                    <option value="{{ $userAdmin->id_kategori }}">{{ $userAdmin->kategori }}</option>
+                                                                                    <option
+                                                                                        value="{{ $userAdmin->id_kategori }}">
+                                                                                        {{ $userAdmin->kategori }}</option>
                                                                                     @foreach ($getKategoriAll as $kategoriAll)
-                                                                                        <option value="{{ $kategoriAll->id_kategori }}">{{ $kategoriAll->kategori }}</option>
+                                                                                        <option
+                                                                                            value="{{ $kategoriAll->id_kategori }}">
+                                                                                            {{ $kategoriAll->kategori }}
+                                                                                        </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                                 <br>
                                                                                 {{ $userAdmin->departemen }}
                                                                             </div>
                                                                         </div>
+                                                                        @if ($userAdmin->kategori == 'AgentWithCompany')
+                                                                            <div class="form-group row">
+                                                                                <label
+                                                                                    class="col-sm-4 col-form-label align-self-center">
+                                                                                    Kepala Agent
+                                                                                </label>
+                                                                                <div class="col-sm-8 align-self-center">
+
+                                                                                    <select name="kepala_admin">
+                                                                                        <option value="">Pilih Kepala
+                                                                                            Agent</option>
+                                                                                        @foreach ($getKepala as $kepala)
+                                                                                            <option
+                                                                                                value="{{ $kepala->id_user_admin }}">
+                                                                                                {{ $kepala->nama_ua }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
 
 
 
@@ -418,47 +444,55 @@
                                                                             <div class="col-sm-8 align-self-center">
                                                                                 @foreach ($getUserMenuAll as $userMenu)
                                                                                     @if ($userMenu->id_user_admin == $userAdmin->id_user_admin)
-                                                                                    @if ($userMenu->status_um != 'aktif')
-                                                                                    <a class="btn btn-danger mb-1 toggle-status"
-                                                                                       data-id="{{ $userMenu->id_user_menu }}"
-                                                                                       data-status="aktif"
-                                                                                       href="">
-                                                                                        {{ $userMenu->menu }} - <i class="{{ $userMenu->icon_menu }}"></i>
-                                                                                    </a>
-                                                                                @else
-                                                                                    <a class="btn btn-success mb-1 toggle-status"
-                                                                                       data-id="{{ $userMenu->id_user_menu }}"
-                                                                                       data-status="nonaktif"
-                                                                                       href="">
-                                                                                        {{ $userMenu->menu }} - <i class="{{ $userMenu->icon_menu }}"></i>
-                                                                                    </a>
-                                                                                @endif
+                                                                                        @if ($userMenu->status_um != 'aktif')
+                                                                                            <a class="btn btn-danger mb-1 toggle-status"
+                                                                                                data-id="{{ $userMenu->id_user_menu }}"
+                                                                                                data-status="aktif"
+                                                                                                href="">
+                                                                                                {{ $userMenu->menu }} - <i
+                                                                                                    class="{{ $userMenu->icon_menu }}"></i>
+                                                                                            </a>
+                                                                                        @else
+                                                                                            <a class="btn btn-success mb-1 toggle-status"
+                                                                                                data-id="{{ $userMenu->id_user_menu }}"
+                                                                                                data-status="nonaktif"
+                                                                                                href="">
+                                                                                                {{ $userMenu->menu }} - <i
+                                                                                                    class="{{ $userMenu->icon_menu }}"></i>
+                                                                                            </a>
+                                                                                        @endif
                                                                                     @endif
                                                                                 @endforeach
 
                                                                                 @foreach ($getMenu as $menu)
-                                                                                @php
-                                                                                    $isChecked = false;
-                                                                                    $hasMatch = false;
-                                                                                @endphp
+                                                                                    @php
+                                                                                        $isChecked = false;
+                                                                                        $hasMatch = false;
+                                                                                    @endphp
 
-                                                                                @foreach ($getUserMenuAll as $userMenu)
-                                                                                    @if ($userMenu->id_menu == $menu->id_menu && $userAdmin->id_user_admin == $userMenu->id_user_admin)
-                                                                                        @php
-                                                                                            $isChecked = true;
-                                                                                            $hasMatch = true;
-                                                                                            break; // If the menu is found, no need to continue the inner loop
-                                                                                        @endphp
+                                                                                    @foreach ($getUserMenuAll as $userMenu)
+                                                                                        @if ($userMenu->id_menu == $menu->id_menu && $userAdmin->id_user_admin == $userMenu->id_user_admin)
+                                                                                            @php
+                                                                                                $isChecked = true;
+                                                                                                $hasMatch = true;
+                                                                                                break; // If the menu is found, no need to continue the inner loop
+                                                                                            @endphp
+                                                                                        @endif
+                                                                                    @endforeach
+
+                                                                                    @if ($hasMatch)
+                                                                                    @elseif(!$hasMatch)
+                                                                                        <br>
+                                                                                        <input type="checkbox"
+                                                                                            name="menu[]"
+                                                                                            value="{{ $menu->id_menu }}"
+                                                                                            {{ $isChecked ? 'checked' : '' }}>
+                                                                                        <label
+                                                                                            for="">{{ $menu->menu }}
+                                                                                            <i
+                                                                                                class="{{ $menu->icon_menu }}"></i></label>
                                                                                     @endif
                                                                                 @endforeach
-
-                                                                                @if ($hasMatch)
-                                                                                @elseif (!$hasMatch)
-                                                                                    <br>
-                                                                                    <input type="checkbox" name="menu[]" value="{{ $menu->id_menu }}" {{ $isChecked ? 'checked' : '' }}>
-                                                                                    <label for="">{{ $menu->menu }} <i class="{{ $menu->icon_menu }}"></i></label>
-                                                                                @endif
-                                                                            @endforeach
 
                                                                             </div>
                                                                         </div>
@@ -468,14 +502,19 @@
                                                                                 class="col-sm-4 col-form-label align-self-center">
                                                                                 Projek
                                                                             </label>
-                                                                            <div class="col-sm-8 align-self-center">
+                                                                            @foreach ($getUserProjekFromUser as $userProjekFromUser)
+                                                                            @if ($userProjekFromUser->id_user_admin == $userMenu->id_user_admin)
                                                                                 @foreach ($getProjekAll as $projekAll)
-                                                                                <input type="checkbox" name="projek[]" id="">
-                                                                                <label for="">{{ $projekAll->nama_projek }}</label>
-                                                                                <br>
-                                                                                @endforeach
+                                                                                    @if ($userProjekFromUser->id_projek == $projekAll->id_projek)
+                                                                                        <input type="checkbox" name="projek[]" id="{{ $projekAll->id_projek }}" checked>
 
-                                                                            </div>
+                                                                                    @endif
+
+                                                                                @endforeach
+                                                                            @endif
+                                                                        @endforeach
+
+
                                                                         </div>
 
                                                                         <div class="row pt-4">
@@ -518,8 +557,8 @@
 
 
         <script>
-            $(document).ready(function () {
-                $('.toggle-status').click(function (event) {
+            $(document).ready(function() {
+                $('.toggle-status').click(function(event) {
                     event.preventDefault();
                     var button = $(this);
                     var id = button.data('id');
@@ -527,13 +566,13 @@
 
                     $.ajax({
                         type: 'get',
-                        url: '{{ route("changeStatusUserMenu.admin",['+id+','+status+']) }}', // Replace with the actual route URL
+                        url: '{{ route('changeStatusUserMenu.admin', ['+id+', '+status+']) }}', // Replace with the actual route URL
                         data: {
                             _token: '{{ csrf_token() }}',
                             id: id,
                             status: status
                         },
-                        success: function (data) {
+                        success: function(data) {
                             if (data.success) {
                                 // Update UI based on the new status
                                 if (status === 'aktif') {
@@ -547,7 +586,7 @@
                                 console.log('Error changing status.');
                             }
                         },
-                        error: function (xhr, status, error) {
+                        error: function(xhr, status, error) {
                             // Handle errors if needed
                             console.log(error);
                         }
