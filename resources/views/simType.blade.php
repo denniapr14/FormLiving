@@ -53,7 +53,7 @@
                     @foreach ($tipe as $tipe)
                         <div class="col-12 col-lg-4">
 
-                            <a href="/simulation-detail-type/{{ $rumah->id_rumah }}/{{ $tipe->id_tipe_rumah }}">
+                            <a href="{{ route('simulationDetailTipe', [$rumah->id_rumah,$tipe->id_tipe_rumah]) }}">
                                 <div class="item">
                                     <div class="item-image">
                                         <img src="{{ asset('Home') }}/images/tipe/{{ $tipe->img_rumah }}" alt="">
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="btn-groups">
-                    <a href="/simulation-select-unit/{{ $rumah->codecluster }}" type="button"
+                    <a href="{{ route('simulationCluster') }}" type="button"
                         class="btn btn-grey">Kembali</a>
                     {{--  <a href="/k-simulation-modification.html" type="button" class="btn btn-primary">Lanjutkan</a>  --}}
                 </div>

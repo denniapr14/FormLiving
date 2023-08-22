@@ -126,7 +126,7 @@
                                     @foreach ($rumah as $home)
                                         @if ($home->codecluster = $cluster->codecluster)
                                             <div class="col-6 col-lg-3">
-                                                <a href="/simulation-type/{{ $home->id_rumah }}">
+                                                <a href="{{ route('simulationTipe', $home->id_rumah) }}">
                                                     <div class="item">
                                                         <div class="item-image">
                                                             @if ($home->nama_img != null)

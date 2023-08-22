@@ -59,7 +59,7 @@
                         </h2>
                     </div>
                     <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
-                       
+
                         <div class="mod-type">
                             <div class="type-image">
                                 <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
@@ -241,8 +241,8 @@
                                         <div id="myAlert"  role="alert">
 
                                         </div>
-                                        
-                                        
+
+
                                         <br>
                                         <div class="form-group">
                                             <input type="text" name="promo" value="Tidak Ada Promo"
@@ -259,7 +259,7 @@
                                 </div>
                         </form>
                     </div>
-                    
+
                     @elseif (session::get('user'))
                     <div class="col-12 col-lg-8 right-column order-3">
                         <small style="color:red;">Diperlukan*</small><br>
@@ -694,11 +694,6 @@
 <?php
 
 
-function rupiah($angka)
-{
-    $hasil_rupiah = number_format($angka, 2, ',', '.');
-    return $hasil_rupiah;
-}
 
 function pembulatan($uang)
 {

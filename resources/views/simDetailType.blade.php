@@ -398,9 +398,9 @@
         </div>
 
         <div class="btn-groups">
-            <a href="/simulation-type/{{ $rumah->id_rumah }}" type="button"
+            <a href="{{ route('simulationTipe',$rumah->id_rumah ) }}" type="button"
                 class="btn btn-grey">Kembali</a>
-                <a href="/simulation-data-pelanggan/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}" type="button" class="btn btn-primary">Miliki Unit
+                <a href="{{ route('simulationPaymentOption', [$rumah->id_rumah,$tipeRumah->id_tipe_rumah]) }}" type="button" class="btn btn-primary">Miliki Unit
                     Ini</a>
             {{--  <a href="/k-simulation-modification.html" type="button" class="btn btn-primary">Lanjutkan</a>  --}}
         </div>

@@ -48,6 +48,15 @@ class GambarRumah extends Model{
         ->get();
 
     }
+    function firstGambarRumahJoinTipeRumahGroupBy($select,$where,$group) {
+        return GambarRumah::select($select)
+        ->join('tipe_rumah','gambar_rumah.id_tipe','tipe_rumah.id_tipe_rumah')
+        ->where($where)
+        ->groupBy($group)
+        ->first();
+
+    }
+
 
 
     function insertGambarRumah($dataInput)

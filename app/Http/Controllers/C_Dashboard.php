@@ -190,6 +190,18 @@ class C_Dashboard extends Controller
 
                 );
 
+                $arrWithCompany = array(
+                    'ktgr_admin.kategori' => "AgentWithCompany",
+                    'user_admin.status_ua' => "aktif",
+                );
+                $arrWithoutCompany = array(
+                    'ktgr_admin.kategori' => "AgentWithoutCompany",
+                    'user_admin.status_ua' => "aktif",
+                );
+
+                $agentWithCompany = $this->userAdmin->getUserJoinCountWhere($arrWithCompany);
+                $agentWithoutCompany = $this->userAdmin->getUserJoinCountWhere($arrWithoutCompany);
+
                 # code...
             }
 

@@ -47,7 +47,7 @@
         </div>
         <div>
             {{--  FORM  --}}
-            <form action="{{ route('simulation-price',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$pelanggan->id_pelanggan,$kdPromo]) }}" method="post">
+            <form action="{{ route('simulationPrice',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}" method="get">
                 @csrf
                 <div class="second-layout">
 
@@ -60,7 +60,7 @@
                         <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                             <div class="mod-type">
                                 <div class="type-image">
-                                    <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_tr}}" alt="">
+                                    <img src="{{ asset('Home') }}/images/tipe/{{$tipeRumah->img_rumah}}" alt="">
                                 </div>
                                 <div class="items">
 
@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="btn-groups">
-                    <a href="/simulation-data-pelanggan/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}" type="button" class="btn btn-grey">Kembali</a>
+                    <a href="{{ route('simulationDetailTipe', [$rumah->id_rumah,$tipeRumah->id_tipe_rumah]) }}" type="button" class="btn btn-grey">Kembali</a>
                     <button type="submit"  type="button" class="btn btn-primary">Lanjutkan</button>
                 </div>
             </form>
@@ -176,12 +176,3 @@
 
 
 @endsection
-
-<?php
-function rupiah($angka)
-{
-    $hasil_rupiah = number_format($angka, 2, ',', '.');
-    return $hasil_rupiah;
-}
-
-?>

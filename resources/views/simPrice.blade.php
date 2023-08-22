@@ -20,8 +20,7 @@
                 $('#namaBank').find('option').not(':first').remove();
 
                 $.ajax({
-                    url: '/simulation-price-payment/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}/{{ $payment }}/' +
-                        getNama,
+                    url: '{{ route("getSKBunga", [$rumah->id_rumah,$tipeRumah->id_tipe_rumah,$payment,'+getNama+']) }}' ,
 
                     method: "GET",
 
@@ -125,8 +124,8 @@
                 let monthName = monthNames[month];
 
                 let formattedDateID = `${day} ${monthName} ${year}`;
-                
-                
+
+
                 col2.className = 'col';
                 col2.innerHTML = formattedDateID;
 
@@ -192,26 +191,26 @@
                     // Append the new div to the existing div
 
 // COLL 3
-            
-                
 
-                    
-                    
-                   
+
+
+
+
+
                 }
-                    
-                    
+
+
                     var hasilCeil = Math.ceil( (uangMuka / 6) / 100000) * 100000;
                     var sumCeil = (hasilCeil * 5);
-                    
+
                     const row2 = document.createElement('div');
                 // Set some attributes for the new div
 
                     row2.className = 'row';
                     // row2.innerHTML = '<label> Contoh Rincian Cicilan Uang Muka (per 30 Hari dan 6 kali cicilan) </label>';
-    
+
                     existingDiv.appendChild(row2);
-                   
+
                     // Set some attributes for the new div
 
                     // row.className = 'row';
@@ -228,7 +227,7 @@
 
                     nextMonthDate = new Date(date.getTime() + ((30 * 24 * 60 * 60 * 1000) * 6)  + (7 *
                         24 * 60 * 60 * 1000));
-                  
+
 
                     const col4 = document.createElement('div');
 
@@ -321,7 +320,7 @@
                         <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                             <div class="mod-type">
                                 <div class="type-image">
-                                    <img src="{{ asset('Home') }}/images/tipe/{{ $tipeRumah->img_tr }}" alt="">
+                                    <img src="{{ asset('Home') }}/images/tipe/{{ $tipeRumah->img_rumah }}" alt="">
                                 </div>
                                 <div class="items">
 
@@ -359,7 +358,7 @@
                                 @if ($payment == 'KPR')
 
                                     <form
-                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$pelanggan->id_pelanggan,$kdPromo, $payment]) }}"
+                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}"
                                         method="POST">
                                         @csrf
                                         <div class="simulation-price">
@@ -600,7 +599,7 @@
                                                 <input type="text" readonly class="form-control card-shadow"
                                                     name="HasilKPR" id="hasilKPR" aria-describedby="helpId" placeholder="" value="{{ rupiah(($tipeRumah->harga_tr - $promo->diskon_promo) - (10 / 100)) }}"
                                                     >
-                                            
+
                                             </div>
                                             @else
                                             <div class="">
@@ -609,9 +608,9 @@
                                                     >
                                             </div>
                                             @endif
-                                             
-                                               
-                                           
+
+
+
 
 
 
@@ -632,7 +631,7 @@
                                         @endif
 
                                         <div class="btn-groups">
-                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}"
+                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
                                             <button type="submit" type="button" id="next" disabled="true"
                                                 class="btn btn-primary">Lanjutkan</button>
@@ -640,7 +639,7 @@
                                     </form>
                                 @elseif($payment == 'Cicilan')
                                     <form
-                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah,$pelanggan->id_pelanggan,$kdPromo, $payment]) }}"
+                                        action="{{ route('simulation-price-payment.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $payment]) }}"
                                         method="POST">
                                         <div class="simulation-price">
                                             @csrf
@@ -715,7 +714,7 @@
                                             @endif
 
                                         </div>
-                                        
+
                                         <div class="card-shadow">
                                                 <label for="">Jumlah harga</label>
                                             </div>
@@ -734,9 +733,9 @@
                                                     value="{{ rupiah($tipeRumah->harga_tr ) }}">
                                             </div>
                                             @endif
-                                        
+
                                         <div class="btn-groups">
-                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}/{{ $pelanggan->id_pelanggan }}/{{ $kdPromo }}"
+                                            <a href="/simulation-payment-option/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
                                             <button type="submit" type="button" id=""
                                                 class="btn btn-primary">Lanjutkan</button>
@@ -777,9 +776,9 @@
         var hasil2 = document.getElementById(result2);
         var cicilan;
         var cicilan2;
-        
+
         var perngurangan = jml;
-        
+
         //  perngurangan = perngurangan.replace(/\D/g, '.');
         // console.log(perngurangan+"Pengurangan");
         /*
@@ -897,10 +896,10 @@
 
 <script>
 
-    
+
     function Display(){
         var index = document.getElementById("uangMuka").selectedIndex;
-      
+
         var in10 = document.getElementById('10');
         var in20 = document.getElementById('20');
         var in30 = document.getElementById('30');
@@ -909,7 +908,7 @@
         switch(index) {
             case 1:
             // in10.add();
-          
+
             in10.style.display = "block";
             in10.setAttribute("name", "cicilanUM");
             in20.style.display = "none";
@@ -981,23 +980,3 @@
 
     }
 </script>
-
-
-<?php
-function rupiah($angka)
-{
-    $hasil_rupiah = number_format($angka, 0, ',', '.');
-    return $hasil_rupiah;
-}
-
-function pembulatan($uang)
-{
-    $ratusan = substr($uang, -2);
-    if ($ratusan < 500) {
-        $akhir = $uang - $ratusan;
-    } else {
-        $akhir = $uang + (1000 - $ratusan);
-    }
-    echo number_format($akhir, 2, ',', '.');
-}
-?>
