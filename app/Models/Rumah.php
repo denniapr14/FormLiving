@@ -15,7 +15,6 @@ class Rumah extends Model
     public function getRumahAll()
     {
         return Rumah::join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-
             ->get();
     }
     public function getRumahProjekAll()
@@ -29,7 +28,7 @@ class Rumah extends Model
         return Rumah::join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
         ->join('projek','rumah.id_projek','=','projek.id_projek')
         ->where($where,$eq,$value)
-            ->get();
+        ->get();
     }
 
     public function getRumahSelectCountGroupBy()
@@ -163,4 +162,12 @@ class Rumah extends Model
             ->get();
     }
 
+    public function RumahPO($idPreOrder){
+        return Rumah::join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')
+        ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
+        ->where('pre_order.id_pre_order','=',$idPreOrder)
+        ->where('rumah.status','=','Keep')
+        ->orWhere('rumah.status','=','KeepRefundable')
+        ->first();
+    }
 }

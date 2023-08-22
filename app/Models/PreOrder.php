@@ -76,6 +76,12 @@ class PreOrder extends Model{
         return PreOrder::select($select)
         ->where($where,$eq,$value)
         ->first();
+    }
 
+    function PreOrderRejected($dataDate){
+        return PreOrder::select('*')
+        ->where('status_po','=','pending')
+        ->where('expire_date','<',$dataDate)
+        ->get();
     }
 }
