@@ -23,8 +23,8 @@
         <div class="steps">
             <div class="step done">1</div>
             <div class="step done">2</div>
-            <div class="step done">3</div>
-            <div class="step active">4</div>
+            <div class="step active">3</div>
+            <div class="step ">4</div>
             <div class="step">5</div>
             <div class="step">6</div>
             <div class="step">7</div>
@@ -50,12 +50,11 @@
         <div class="steps gone-mobile">
             <div class="step done">1</div>
             <div class="step done">2</div>
-            <div class="step done">3</div>
-            <div class="step active">4</div>
+            <div class="step active">3</div>
+            <div class="step ">4</div>
             <div class="step">5</div>
-            <div class="step">6</div>
-            <div class="step">7</div>
-            <div class="step last">8</div>
+            <div class="step last">6</div>
+
         </div>
 
         <div class="header-detail mobile-only">

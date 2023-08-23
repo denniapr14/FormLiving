@@ -52,11 +52,11 @@
                 <div class="step done">1</div>
                 <div class="step done">2</div>
                 <div class="step done">3</div>
-                <div class="step done">4</div>
-                <div class="step done">5</div>
-                <div class="step active">6</div>
-                <div class="step">7</div>
-                <div class="step last">8</div>
+                <div class="step active">4</div>
+                <div class="step ">5</div>
+                <div class="step last">6</div>
+
+
             </div>
 
         </div>
@@ -65,11 +65,11 @@
                 <div class="step done">1</div>
                 <div class="step done">2</div>
                 <div class="step done">3</div>
-                <div class="step done">4</div>
-                <div class="step done">5</div>
-                <div class="step active">6</div>
-                <div class="step">7</div>
-                <div class="step last">8</div>
+                <div class="step active">4</div>
+                <div class="step ">5</div>
+                <div class="step last">6</div>
+
+
             </div>
 
             <div class="container">
@@ -192,7 +192,7 @@
                                                         </div>
                                                         <div class="">
                                                             <div class="form-group">
-                                                                <select name="cicilanUM"  class="form-control">
+                                                                <select name="cicilanUM" required class="form-control">
                                                                     <option value="" selected>--Pilih Cicilan Uang Muka--
                                                                     </option>
                                                                     @for ($i = 1; $i < 7; $i++)

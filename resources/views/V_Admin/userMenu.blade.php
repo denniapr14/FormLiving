@@ -471,7 +471,7 @@
                                                                                     @endphp
 
                                                                                     @foreach ($getUserMenuAll as $userMenu)
-                                                                                        @if ($userMenu->id_menu == $menu->id_menu && $userAdmin->id_user_admin == $userMenu->id_user_admin)
+                                                                                        @if ($userAdmin->id_menu == $menu->id_menu && $userAdmin->id_user_admin == $userMenu->id_user_admin)
                                                                                             @php
                                                                                                 $isChecked = true;
                                                                                                 $hasMatch = true;
@@ -502,17 +502,33 @@
                                                                                 class="col-sm-4 col-form-label align-self-center">
                                                                                 Projek
                                                                             </label>
-                                                                            @foreach ($getUserProjekFromUser as $userProjekFromUser)
-                                                                            @if ($userProjekFromUser->id_user_admin == $userMenu->id_user_admin)
+                                                                            <div class="col-sm-8 align-self-center">
+                                                                                {{ $userAdmin->id_user_admin }}
                                                                                 @foreach ($getProjekAll as $projekAll)
-                                                                                    @if ($userProjekFromUser->id_projek == $projekAll->id_projek)
-                                                                                        <input type="checkbox" name="projek[]" id="{{ $projekAll->id_projek }}" checked>
+                                                                                @php
+                                                                                    $isCheckedProjek = false;
 
+                                                                                @endphp
+
+                                                                                @foreach ($getUserProjekFromUser as $userProjekFromUser)
+                                                                                    @if ($userAdmin->id_user_admin == $userProjekFromUser->id_user_admin && $projekAll->id_projek ==  $userProjekFromUser->id_projek)
+                                                                                        @php
+                                                                                            $isCheckedProjek = true;
+
+                                                                                            break;
+                                                                                        @endphp
                                                                                     @endif
-
                                                                                 @endforeach
-                                                                            @endif
-                                                                        @endforeach
+
+
+                                                                                <input type="checkbox" name="projek[]"
+                                                                                id="{{ $projekAll->id_projek }}"
+                                                                                @if ($isCheckedProjek) checked @endif>
+                                                                            <label for="">{{ $projekAll->nama_projek }}</label>
+                                                                            <br>
+
+                                                                            @endforeach
+                                                                            </div>
 
 
                                                                         </div>

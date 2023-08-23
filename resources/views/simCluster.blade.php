@@ -40,7 +40,7 @@
                 <img src="{{ asset('Home') }}/images/img-ornament1.png" alt="">
             </div>
             <div class="nav-header">
-                <a href="/Greenland" class="ic-back">
+                <a href="/Housing/Greenland" class="ic-back">
                     <img src="{{ asset('Home') }}/images/ic-back-sim.png" alt="">
                 </a>
                 <h2 class="title">
@@ -55,8 +55,7 @@
 
                 <div class="step">4</div>
                 <div class="step">5</div>
-                <div class="step">6</div>
-                <div class="step last">7</div>
+                <div class="step last"></div>
             </div>
         </div>
 
@@ -69,8 +68,7 @@
 
                 <div class="step">4</div>
                 <div class="step">5</div>
-                <div class="step">6</div>
-                <div class="step last">7</div>
+                <div class="step last">6</div>
             </div>
 
             <div class="choose-cluster">

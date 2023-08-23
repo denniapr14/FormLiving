@@ -32,9 +32,7 @@
             <div class="step done">3</div>
             <div class="step done">4</div>
             <div class="step done">5</div>
-            <div class="step done">6</div>
-            <div class="step done">7</div>
-            <div class="step active last">8</div>
+            <div class="step active last">6</div>
 
         </div>
     </div>
@@ -45,9 +43,7 @@
             <div class="step done">3</div>
             <div class="step done">4</div>
             <div class="step done">5</div>
-            <div class="step done">6</div>
-            <div class="step done">7</div>
-            <div class="step active last">8</div>
+            <div class="step active last">6</div>
         </div>
         <div>
 {{--  ==========================================================================================================================================================================================================  --}}

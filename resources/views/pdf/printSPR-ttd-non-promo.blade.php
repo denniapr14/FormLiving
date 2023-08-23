@@ -360,7 +360,7 @@
                     Tempat & Tanggal. Lahir
                 </td>
                 <td>
-                    : {{ $fp->tempat_lahir_plgn }}  <?= tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn)))?>
+                    : {{ $fp->tempat_lahir_plgn }},  <?= tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn)))?>
                 </td>
             </tr>
             <tr>
@@ -1234,7 +1234,7 @@
                     </li>
                 </ol>
             </li>
-
+            <div class="page-break"></div>
 
 
             <li data-list-text="XIII.">
