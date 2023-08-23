@@ -545,10 +545,7 @@ class C_PreOrder extends Controller
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
-            ])
-
-                ->first();
-
+            ])->first();
             // dd($user);
             // die();
 
@@ -593,7 +590,7 @@ class C_PreOrder extends Controller
             $statusPO = 'non-refundable';
         }
 
-        $newDateTime = Carbon::now()->addHour();
+        $newDateTime = Carbon::now()->addDay();
 
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
@@ -704,7 +701,7 @@ class C_PreOrder extends Controller
 
     public function confirmationPaymentEmail($id){
         // $decryptedID = Crypt::decrypt($id);
-        if (!session()->has('guest') && !session()->has('user')) {
+       
             $dataUser = DB::table('rumah')
             ->join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')
             ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
@@ -733,6 +730,11 @@ class C_PreOrder extends Controller
                     'va' => $dataUser->va_rumah
                 ];
 
+                DB::table('pre_order')
+                ->where('id_rumah', $id)
+                ->update(['status_po' => 'userconfirmed']
+                );
+                
                 try {
                     // $MailAtt = ();
                     Mail::to($dataUser->email_plgn)->send(new MailNotify($dataEmail1, $template));
@@ -742,7 +744,6 @@ class C_PreOrder extends Controller
                     // return response()->json(['Sorry! Please try again latter']);
                 }
                 return redirect('/selamat')->with('success', 'konfirmasi sudah masuk');
-        }
     }
 
     public function selamatPage($dataText)
