@@ -88,65 +88,21 @@
 </div>
 
 <div class="mobile-only">
-    <!--<div class="hunian">-->
-    <!--     <h2 class="title" style="padding-left:5%;">-->
-    <!--            Hunian di Greenland-->
-    <!--        </h2>-->
-    <!--    <div class="container-fluid ">-->
-           
-    <!--            <div class="items" style="height:260px;width:1500px">-->
-    <!--            @foreach ($cluster1 as $cluster)-->
-    <!--            <a href="/simulation-select-unit/{{ $cluster->codecluster }}">-->
-                   
-    <!--            <div style="" class="item">-->
-    <!--                <div class="item-image">-->
-    <!--                    <?php-->
-    <!--                if(!empty($cluster->nama_img))-->
-    <!--                {-->
-    <!--                    ?>-->
-    <!--                    <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">-->
-    <!--                    <?php-->
-    <!--                }else{-->
-    <!--                ?>-->
-
-    <!--                    <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">-->
-
-    <!--                    <?php-->
-    <!--                }-->
-    <!--                ?>-->
-    <!--                </div>-->
-    <!--                <div class="item-text">-->
-    <!--                        @if(!empty($cluster->logo_img))-->
-    <!--                       <a href="/simulation-select-unit/{{ $cluster->codecluster }}"> <img style="width: 50%;filter: invert(100%);" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>-->
-    <!--                        @else-->
-    <!--                        <a href="/simulation-select-unit/{{ $cluster->codecluster }}">-->
-    <!--                            {{ $cluster->nama_cluster }}-->
-    <!--                        </a>-->
-    <!--                        @endif-->
-    <!--                </div>-->
-                    
-    <!--            </div>-->
-    <!--            </a>-->
-    <!--            @endforeach-->
-    <!--            </div>-->
-
-    <!--        </div>-->
-    <!--    </div>-->
-            <div class="choose-cluster">
-            <h2 class="title">
-                Pilih Cluster
-            </h2>
-            <div class="row">
-                @foreach ($cluster1 as $cluster)
-                <div class="col-6 col-lg-3">
-                    <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
+    <div class="choose-cluster">
+        <h2 class="title">
+            Pilih Cluster
+        </h2>
+        <div class="row">
+            @foreach ($cluster1 as $cluster)
+            <div class="col-6 col-lg-3">
+                <a href="{{ route('simulationCluster') }}">
                     <div class="item">
                         <div class="item-image">
                             <?php
                             if(!empty($cluster->nama_img)){
                                 ?>
-                                <img  src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
-                                <?php
+                            <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
+                            <?php
                             }else{
                             ?>
 
@@ -157,15 +113,17 @@
 
                         </div>
                         <div class="item-avail">{{ $cluster->count }} Available</div>
-                        <div class="item-image" style="border-bottom:0px; padding-bottom:0px;"><img style="width:50%;height:50%;filter: invert(100%);" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""></div>
+                        <div class="item-image" style="border-bottom:0px; padding-bottom:0px;"><img
+                                style="width:50%;height:50%;filter: invert(100%);"
+                                src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""></div>
                     </div>
 
 
                 </a>
-                </div>
-                @endforeach
             </div>
+            @endforeach
         </div>
+    </div>
 </div>
 
 
@@ -189,23 +147,24 @@
                     if(!empty($cluster->nama_img))
                     {
                         ?>
-                        <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
-                        <?php
+                    <img src="{{ asset('Home') }}/images/cluster/{{$cluster->nama_img}}" alt="">
+                    <?php
                     }else{
                     ?>
 
-                        <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">
+                    <img src="{{ asset('Home') }}/images/cluster/AC-18.jpg" class="w-100" alt="">
 
-                        <?php
+                    <?php
                     }
                     ?>
 
                     <div class="item-text">
 
                         @if(!empty($cluster->logo_img))
-                       <a href="/simulation-select-unit/{{ $cluster->codecluster }}"> <img style="width: 50%" src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
+                        <a href="{{ route('simulationCluster') }}"> <img style="width: 50%"
+                                src="{{ asset('Home') }}/images/logo_cluster/{{$cluster->logo_img}}" alt=""> </a>
                         @else
-                        <a href="/simulation-select-unit/{{ $cluster->codecluster }}">
+                        <a href="{{ route('simulationCluster') }}">
                             {{ $cluster->nama_cluster }}
                         </a>
 
@@ -215,9 +174,9 @@
             </div>
             @endforeach
 
-            {{--  <div class="col-12 d-flex justify-content-center" data-aos="fade-up">
+            {{-- <div class="col-12 d-flex justify-content-center" data-aos="fade-up">
                 <button type="button" class="btn btn-primary">Tampilkan Semua</button>
-            </div>  --}}
+            </div> --}}
         </div>
     </div>
 </div>
@@ -353,7 +312,7 @@
                                     <img src="{{ asset('Home') }}/images/ic-quote.png" alt="">
                                 </div>
                                 <h3 class="testimoni-text">
-                                   -- coming soon --
+                                    -- coming soon --
                                 </h3>
                                 <div class="until-tablet">
                                     <div class="items">

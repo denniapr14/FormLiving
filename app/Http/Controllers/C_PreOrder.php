@@ -608,7 +608,7 @@ class C_PreOrder extends Controller
                 'status_po' => 'pending',
                 'tipe_booking_po' => $statusPO,
                 'tgl_input_po' => $now,
-                'expired_date' => $newDateTime
+                'expire_date' => $newDateTime
             );
 
             $id = DB::table('pre_order')->insertGetId(

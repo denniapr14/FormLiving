@@ -22,13 +22,13 @@ class MailNotify extends Mailable
     public $data=[];
     // protected $pdfPath;
 
-
     /**
      * Create a new message instance.
      *
      * @return void
      */
     // protected $data;
+    
     protected $template;
 
     public function __construct($data, $template)

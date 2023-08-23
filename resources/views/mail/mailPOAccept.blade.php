@@ -251,15 +251,17 @@
         </div>
 
         <div class="one-col" style="padding-bottom: 4%; background-color : white;">
-            <h1 style="text-align:center;">Permasalahan Seputar data Pre-Order</h1>
+            <h1 style="text-align:center;">Pembayaran via Virtual Account</h1>
             <p>
-                Anda Dapat menghubungi Sales Anda atau dapat langsung menghubungi Admin Formsliving bilamana ada
-                permasalahan atau info tentang pre-order anda.
+                Anda Dapat membayar melalu Virtual Account kami yang tertera dibawah ini.
             </p>
-            <p>Terima kasih atas kepercayaan Anda kepada kami.</p>
-            <br>
-            <br>
-            <h5>Formsliving</h5>
+            <div class="centercore">
+                <img style="max-width:200px" src="{{ asset('Home') }}/images/icons/ocbc-logo.png" alt="">
+                <br>
+                <h4>{{ $data['va'] }}</h4>
+            </div>
+            <p>setelah membayar, silahkan konfirmasi pada link dibawah ini :</p>
+            <a href="http://"></a>
         </div>
         <footer>
             <img src="{{ asset('Home') }}/images/mail/Footer-Kalm.jpg" alt="">
