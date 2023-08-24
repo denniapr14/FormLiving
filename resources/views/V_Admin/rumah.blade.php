@@ -64,7 +64,23 @@
                             @foreach ($getRumah as $rumah)
                                 <tr>
                                     <td>{{ $no }}</td>
-                                    <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</td>
+                                    <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}
+                                        @if ($rumah->img_rumah != null)
+                                        <button type="button" class="btn-fd-icon-outline" data-toggle="modal" data-target=".bd-example-modal-lg{{ $no }}"><i class="fas fa-image    "></i></button>
+
+                                        <div class="modal fade bd-example-modal-lg{{ $no }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <img src="{{ url('Home') }}/images/rumah/{{ $rumah->img_rumah }}" style="width: 100%" class="img-fluid" alt="Responsive image"
+                                                                                                    alt="product-1">
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                        @endif
+
+
+                                       </td>
                                     <td>{{ $rumah->luas_tanah }}</td>
                                     <td>{{ $rumah->status }}</td>
                                     @if (

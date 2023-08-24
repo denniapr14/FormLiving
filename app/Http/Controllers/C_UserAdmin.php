@@ -214,6 +214,100 @@ class C_UserAdmin extends Controller
         }
     }
 
+    function updatePasswordProfile()
+    {
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ]);
+        // dd($request->segment(1));
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+        $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            //   dd($user);
+            return view(
+                'V_Admin.editPasswordProfile',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getUser',
+                    'getUserMenu'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
+    function updatePasswordProfileAction(Request $request, $id)
+    {
+
+
+        $decryptedID = Crypt::decrypt($id);
+        $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_user_admin' => session::get('user'),
+        ]);
+        // dd($request->segment(1));
+
+        $foundMatchingMenu = false;
+
+        foreach ($getUserMenu as $menu) {
+            if ($menu->url_menu == request()->segment(1)) {
+                $foundMatchingMenu = true;
+                break;
+            }
+        }
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            //   dd($user);
+
+            $filename = $getUser->foto_ua;
+            if ($request->file('image')) {
+                $img = $request->file('image');
+
+                // Generate a unique filename based on the current timestamp and the original file extension
+                $filename = $request->username . '-' . time() . '.' . $img->getClientOriginalExtension();
+
+                // Store the image in the 'images' folder under the 'public' disk
+                $path = 'Home/images/foto/';
+                $img = Image::make($img);
+                $img->save(public_path($path . $filename));
+            }
+
+
+
+            $dataUserAdmin = [
+
+               'password_ua'    =>md5($request->password)
+            ];
+            // dd($dataUserAdmin);
+            DB::table('user_admin')
+                ->where('id_user_admin', $decryptedID)
+                ->update(
+                    $dataUserAdmin
+                );
+
+            return redirect()->back()->with('success', 'Data profile berhasil diubah');
+        } else {
+            return redirect('/login');
+        }
+    }
     function changeStatusUser($id,$status) {
 
         $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*','tgl_input_ua','desc');

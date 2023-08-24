@@ -24,7 +24,8 @@ class C_UserMenu extends Controller
     public $userMenu;
     public $projek;
     public $kategori;
-    public function __construct() {
+    public function __construct()
+    {
         $this->menu = new Menu();
         $this->userAdmin = new UserAdmin();
         $this->userProjek = new UserProjek();
@@ -33,21 +34,25 @@ class C_UserMenu extends Controller
         $this->projek = new Projek();
         $this->kategori = new KategoriAdmin();
     }
-    function userMenu() {
+    function userMenu()
+    {
 
         // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         // dd($getRumah);
         $getProjekAll = $this->projek->getProjekAll();
 
         $getKategoriAll = $this->kategori->getKategori('*');
-        $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*','tgl_input_ua','desc');
-        $getUserMenuAll = $this->userMenu->getUserMenuJoinMenu('*','tgl_input_um','desc');
-        $getMenu = $this->menu->getMenuWhere('*',['status_menu' => 'fitur'])->collect();
-        $getUserProjekFromUser = $this->userProjek->getProjectUserWhere('user_projek.id_user_admin','!=','null');
-        $getKepala = $this->userAdmin->getUserAdminWhereJoinProjek('*',
-        [
-            'ktgr_admin.kategori'   => "AdminAgentCompany",
-        ]            );
+        $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*', 'tgl_input_ua', 'desc');
+        $getUserMenuAll = $this->userMenu->getUserMenuJoinMenu('*', 'tgl_input_um', 'desc');
+        $getMenu = $this->menu->getMenuWhere('*', ['status_menu' => 'fitur'])->collect();
+        $getUserProjekFromUser = $this->userProjek->getUserProjekJoinProjek("*");
+        // dd($getUserProjekFromUser);
+        $getKepala = $this->userAdmin->getUserAdminWhereJoinProjek(
+            '*',
+            [
+                'ktgr_admin.kategori'   => "AdminAgentCompany",
+            ]
+        );
         // dd($getKepala);
         // dd($getMenu);
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
@@ -72,7 +77,7 @@ class C_UserMenu extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-        return view(
+            return view(
                 'V_Admin.userMenu',
                 compact(
                     'user',
@@ -86,19 +91,20 @@ class C_UserMenu extends Controller
                     'getUserProjekFromUser',
                     'getKepala'
                 )
-        );
+            );
         } else {
             return redirect('/login');
         }
     }
 
-    function updateUserMenuAction(Request $request,$id) {
+    function updateUserMenuAction(Request $request, $id)
+    {
 
         // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         // dd($getRumah);
-        $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*','tgl_input_ua','desc');
-        $getUserMenuAll = $this->userMenu->getUserMenuJoinMenu('*','tgl_input_um','desc');
-        $getMenu = $this->menu->getMenuWhere('*',['status_menu' => 'fitur'])->collect();
+        $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*', 'tgl_input_ua', 'desc');
+        $getUserMenuAll = $this->userMenu->getUserMenuJoinMenu('*', 'tgl_input_um', 'desc');
+        $getMenu = $this->menu->getMenuWhere('*', ['status_menu' => 'fitur'])->collect();
         // dd($getMenu);
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
@@ -134,30 +140,47 @@ class C_UserMenu extends Controller
 
             ];
             $dataInputUserMenu = [];
-            if ($request->menu!=null) {
-                for ($i=0; $i <count($request->menu) ; $i++) {
-                    array_push($dataInputUserMenu,[
-                        'id_menu'   =>$request->menu[$i],
+            if ($request->menu != null) {
+                for ($i = 0; $i < count($request->menu); $i++) {
+                    array_push($dataInputUserMenu, [
+                        'id_menu'   => $request->menu[$i],
                         'id_user_admin' => $id,
                         'status_um'     => 'aktif'
                     ]);
-
                 }
                 $this->userMenu->insertUserMenu($dataInputUserMenu);
+            }
+
+            $dataInputUserProjek = []; // Initialize the array outside the loop
+
+            if ($request->projek != null) {
+                for ($p = 0; $p < count($request->projek); $p++) {
+
+                        // Only push to the array when $getProjekUser is empty
+                        array_push($dataInputUserProjek, [
+                            'id_projek' => $request->projek[$p],
+                            'id_user_admin' => $id,
+                        ]);
+
+                }
+                // dd($dataInputUserProjek); // This line can be removed if not needed for debugging
+                $this->userProjek->insertUserProjek($dataInputUserProjek);
+
+
 
             }
+
             DB::table('user_admin')
-            ->where('id_user_admin',$id)
-            ->update($dataUpdateUser);
+                ->where('id_user_admin', $id)
+                ->update($dataUpdateUser);
 
-            return redirect()->back()->with('success','user '.$request->nama.' berhasil diubah');
-
-
+            return redirect()->back()->with('success', 'user ' . $request->nama . ' berhasil diubah');
         } else {
             return redirect('/login');
         }
     }
-    function changeStatusUserMenu($id,$status) {
+    function changeStatusUserMenu($id, $status)
+    {
 
         // $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*','tgl_input_ua','desc');
         // $getUserMenuAll = $this->userMenu->getUserMenuJoinMenu('*','tgl_input_um','desc');
@@ -185,23 +208,21 @@ class C_UserMenu extends Controller
 
         //     $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            $dataUpdateUserMenu = [
-                'id_user_menu'  => $id,
-                'status_um'     =>$status
+        $dataUpdateUserMenu = [
+            'id_user_menu'  => $id,
+            'status_um'     => $status
 
-            ];
-            DB::table('user_menu')
-            ->where('id_user_menu',$id)
+        ];
+        DB::table('user_menu')
+            ->where('id_user_menu', $id)
             ->update($dataUpdateUserMenu);
-            // return response()->json();
-            return response()->json(['success' => true]);
-            // return redirect()->back()->with('success','User berhasil diubah');
+        // return response()->json();
+        return response()->json(['success' => true]);
+        // return redirect()->back()->with('success','User berhasil diubah');
 
 
         // } else {
         //     return redirect('/login');
         // }
     }
-
-
 }

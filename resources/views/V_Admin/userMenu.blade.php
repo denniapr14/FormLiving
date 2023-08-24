@@ -442,6 +442,7 @@
                                                                                 Prefillege
                                                                             </label>
                                                                             <div class="col-sm-8 align-self-center">
+
                                                                                 @foreach ($getUserMenuAll as $userMenu)
                                                                                     @if ($userMenu->id_user_admin == $userAdmin->id_user_admin)
                                                                                         @if ($userMenu->status_um != 'aktif')
@@ -471,7 +472,7 @@
                                                                                     @endphp
 
                                                                                     @foreach ($getUserMenuAll as $userMenu)
-                                                                                        @if ($userAdmin->id_menu == $menu->id_menu && $userAdmin->id_user_admin == $userMenu->id_user_admin)
+                                                                                        @if ($userMenu->id_menu == $menu->id_menu && $userAdmin->id_user_admin == $userMenu->id_user_admin)
                                                                                             @php
                                                                                                 $isChecked = true;
                                                                                                 $hasMatch = true;
@@ -481,7 +482,7 @@
                                                                                     @endforeach
 
                                                                                     @if ($hasMatch)
-                                                                                    @elseif(!$hasMatch)
+                                                                                        @elseif(!$hasMatch)
                                                                                         <br>
                                                                                         <input type="checkbox"
                                                                                             name="menu[]"
@@ -493,7 +494,6 @@
                                                                                                 class="{{ $menu->icon_menu }}"></i></label>
                                                                                     @endif
                                                                                 @endforeach
-
                                                                             </div>
                                                                         </div>
 
@@ -503,31 +503,42 @@
                                                                                 Projek
                                                                             </label>
                                                                             <div class="col-sm-8 align-self-center">
-                                                                                {{ $userAdmin->id_user_admin }}
-                                                                                @foreach ($getProjekAll as $projekAll)
-                                                                                @php
-                                                                                    $isCheckedProjek = false;
-
-                                                                                @endphp
-
                                                                                 @foreach ($getUserProjekFromUser as $userProjekFromUser)
-                                                                                    @if ($userAdmin->id_user_admin == $userProjekFromUser->id_user_admin && $projekAll->id_projek ==  $userProjekFromUser->id_projek)
-                                                                                        @php
-                                                                                            $isCheckedProjek = true;
+                                                                                @if ($userProjekFromUser->id_user_admin == $userAdmin->id_user_admin)
+                                                                                <label class="" for="">{{ $userProjekFromUser->nama_projek }} <i class="fa fa-check-circle" aria-hidden="true"></i></label> <br>
+                                                                                @endif
+                                                                            @endforeach
 
-                                                                                            break;
-                                                                                        @endphp
+                                                                                @foreach ($getProjekAll as $projekAll)
+                                                                                    @php
+                                                                                        $isCheckedProjek = false;
+                                                                                        $hasMatchProjek = false;
+                                                                                    @endphp
+
+                                                                                    @foreach ($getUserProjekFromUser as $userProjekFromUser)
+                                                                                        @if (
+                                                                                            $userProjekFromUser->id_projek == $projekAll->id_projek &&
+                                                                                                $userAdmin->id_user_admin == $userProjekFromUser->id_user_admin)
+                                                                                            @php
+                                                                                                $isCheckedProjek = true;
+                                                                                                $hasMatchProjek = true;
+                                                                                                break; // If the menu is found, no need to continue the inner loop
+                                                                                            @endphp
+                                                                                        @endif
+                                                                                    @endforeach
+
+                                                                                    @if ($hasMatchProjek)
+
+                                                                                    @elseif(!$hasMatchProjek)
+                                                                                        <br>
+                                                                                        <input type="checkbox"
+                                                                                            name="projek[]"
+                                                                                            value="{{ $projekAll->id_projek }}">
+
+                                                                                        <label
+                                                                                            for="">{{ $projekAll->nama_projek }}</label>
                                                                                     @endif
                                                                                 @endforeach
-
-
-                                                                                <input type="checkbox" name="projek[]"
-                                                                                id="{{ $projekAll->id_projek }}"
-                                                                                @if ($isCheckedProjek) checked @endif>
-                                                                            <label for="">{{ $projekAll->nama_projek }}</label>
-                                                                            <br>
-
-                                                                            @endforeach
                                                                             </div>
 
 

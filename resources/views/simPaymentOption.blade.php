@@ -192,7 +192,7 @@
                                                         </div>
                                                         <div class="">
                                                             <div class="form-group">
-                                                                <select name="cicilanUM" required class="form-control">
+                                                                <select name="cicilanUM" id="cicilanUM" required class="form-control">
                                                                     <option value="" selected>--Pilih Cicilan Uang Muka--
                                                                     </option>
                                                                     @for ($i = 1; $i < 7; $i++)
@@ -204,16 +204,24 @@
 
                                                             </div>
                                                         </div>
+                                                    @else
+                                                    <select name="cicilanUM" id="cicilanUM" hidden required class="form-control">
+                                                        <option value="1">1</option>
+                                                    </select>
+
                                                     @endif
                                                     <div class="btn-groups">
                                                         <a type="button"
-                                                            onclick="hitung('jumlah','persentase','sukuBunga','hasil','hasil2','hasil3','hasil4','sisaPembayaran')"
+                                                            onclick="hitung('jumlah','persentase','sukuBunga','hasil','hasil2','hasil3','hasil4', 'cicilanUM','sisaPembayaran')"
                                                             class="btn btn-primary">Hitung Simulasi</a>
 
 
                                                     </div>
                                                     <div class="price-total">
                                                         <p>Perkiraan pembayaran KPR Anda:</p>
+                                                        <h5 id="hasil"></h5>
+                                                        <h5 id="hasil2"></h5>
+                                                        <h5 id="hasil3"></h5>
 
                                                         <h5 id="sisaPembayaran"></h5>
                                                     </div>
@@ -348,19 +356,22 @@
             });
         </script>
         <script>
-            function hitung(jumlah, uangmuka, sukuBunga, result, result2, result3, result4,sisaPengurangan) {
+            function hitung(jumlah, uangmuka, sukuBunga, result, result2, result3, result4,cicilanUM ,sisaPengurangan) {
 
                 var jml = document.getElementById(jumlah).value;
                 jml = jml.replace(/\D/g, '');
                 {{--  console.log(jml);  --}}
                 var um = document.getElementById(uangmuka).value;
                 var skBunga = document.getElementById(sukuBunga).value;
+                var cicilanUM = document.getElementById(cicilanUM).value;
                 var totalPersentase = ({{ $tipeRumah->harga_tr }} * (um / 100))
+                var hasilCicilan;
+                if(cicilanUM != 1){
+                    hasilCicilan = totalPersentase / cicilanUM;
+                }else{
+                    hasilCicilan = totalPersentase / 1;
+                }
 
-                {{--  um = um.replace(/\D/g, '');  --}}
-                {{--  console.log(totalPersentase);  --}}
-
-                {{--  var thn = document.getElementById(tahun).value;  --}}
                 var hasil = document.getElementById(result);
                 var hasil2 = document.getElementById(result2);
                 var hasil3 = document.getElementById(result3);
@@ -380,53 +391,19 @@
                 fv - future value (residual value)
                 */
 
-                cicilan = calculatePMT(perngurangan, skBunga, 60);
-                {{--  console.log(jml);
-                console.log(cicilan);  --}}
-                var hasilRupiah = formatRupiah2(cicilan);
-                cicilan2 = calculatePMT(perngurangan, skBunga, 120);
-                {{--  console.log(cicilan2);  --}}
-                var hasilRupiah2 = formatRupiah2(cicilan2);
 
-                cicilan3 = calculatePMT(perngurangan, skBunga, 180);
-                {{--  console.log(cicilan3);  --}}
-                var hasilRupiah3 = formatRupiah2(cicilan3);
+                if(cicilanUM != 1){
+                    hasil.innerText = "Uang muka Rp "+ formatRupiah2(hasilCicilan)+" ("+um+"% dari Rp "+formatRupiah2(jml)+")";
+                    hasil2.innerText = "Cicilan "+cicilanUM+" kali"
+                    hasil3.innerText = "Harga cicilan uang muka Rp "+formatRupiah2(hasilCicilan)+" ("+formatRupiah2(totalPersentase)+" : "+ cicilanUM +")"
 
-                cicilan4 = calculatePMT(perngurangan, skBunga, 240);
-                {{--  console.log(cicilan4);  --}}
-                var hasilRupiah4 = formatRupiah2(cicilan4);
-                var hasilSisa = formatRupiah2(perngurangan);
-                {{--  console.log(hasilRupiah);
-                console.log(hasilRupiah2);  --}}
-                {{--  var hasilCicilan = Math.round(parseInt((cicilan / 1000)) * 1000).toString(),
-                    sisa = hasilCicilan.length % 3,
-                    rupiah = hasilCicilan.substr(0, sisa),
-                    ribuan = hasilCicilan.substr(sisa).match(/\d{3}/g);
+                    sisa.innerText = "Sisa Pembayaran KPR Rp " + formatRupiah2( perngurangan) ;
+                }else{
+                    hasil.innerText = "Uang Muka Rp "+formatRupiah2(hasilCicilan)
 
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah += separator + ribuan.join('.');
+                    sisa.innerText = "Sisa Pembayaran KPR Rp " + formatRupiah2( perngurangan) ;
                 }
 
-                cicilan2 = ((jml - um) * (sb / 100) * 20) / (20 * 12);
-                {{--  console.log(cicilan2);  --}}
-
-                var hasilCicilan2 = Math.round(parseInt((cicilan2 / 1000)) * 1000).toString(),
-                    sisa2 = hasilCicilan2.length % 3,
-                    rupiah2 = hasilCicilan2.substr(0, sisa2),
-                    ribuan2 = hasilCicilan2.substr(sisa2).match(/\d{3}/g);
-
-                if (ribuan2) {
-                    separator2 = sisa2 ? '.' : '';
-                    rupiah2 += separator2 + ribuan2.join('.');
-                }
-                {{--  console.log(hasilCicilan);
-                console.log(hasilCicilan2);
-
-                console.log(rupiah2);   --}}
-
-
-                sisa.innerText = "Sisa Pembayaran KPR Rp " + hasilSisa + ",-";
                 document.getElementById('nextKPR').disabled = false;
             }
 
@@ -484,4 +461,50 @@
             }
         </script>
 
+        <script>
+            {{--  cicilan = calculatePMT(perngurangan, skBunga, 60);
+            {{--  console.log(jml);
+            console.log(cicilan);  --}}
+            var hasilRupiah = formatRupiah2(cicilan);
+            cicilan2 = calculatePMT(perngurangan, skBunga, 120);
+            {{--  console.log(cicilan2);  --}}
+            var hasilRupiah2 = formatRupiah2(cicilan2);
+
+            cicilan3 = calculatePMT(perngurangan, skBunga, 180);
+            {{--  console.log(cicilan3);  --}}
+            var hasilRupiah3 = formatRupiah2(cicilan3);
+
+            cicilan4 = calculatePMT(perngurangan, skBunga, 240);
+            {{--  console.log(cicilan4);  --}}
+            var hasilRupiah4 = formatRupiah2(cicilan4);
+            var hasilSisa = formatRupiah2(perngurangan);
+            {{--  console.log(hasilRupiah);
+            console.log(hasilRupiah2);  --}}
+            {{--  var hasilCicilan = Math.round(parseInt((cicilan / 1000)) * 1000).toString(),
+                sisa = hasilCicilan.length % 3,
+                rupiah = hasilCicilan.substr(0, sisa),
+                ribuan = hasilCicilan.substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            cicilan2 = ((jml - um) * (sb / 100) * 20) / (20 * 12);
+            {{--  console.log(cicilan2);  --}}
+
+            var hasilCicilan2 = Math.round(parseInt((cicilan2 / 1000)) * 1000).toString(),
+                sisa2 = hasilCicilan2.length % 3,
+                rupiah2 = hasilCicilan2.substr(0, sisa2),
+                ribuan2 = hasilCicilan2.substr(sisa2).match(/\d{3}/g);
+
+            if (ribuan2) {
+                separator2 = sisa2 ? '.' : '';
+                rupiah2 += separator2 + ribuan2.join('.');
+            }
+            {{--  console.log(hasilCicilan);
+            console.log(hasilCicilan2);
+
+            console.log(rupiah2);   --}}  --}}
+        </script>
     @endsection

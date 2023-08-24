@@ -348,8 +348,13 @@ Route::get('/ubah-promo-admin/{projek}/{id}', [C_Promo::class, 'updatePromo'])->
 Route::post('/ubah-promo-admin/action/{projek}/{id}', [C_Promo::class, 'updatePromoAction'])->name('updatePromoAction.admin');
 // Route::get('/hapus-list-promo/{projek}/{id}',[C_ListPromo,'deleteListPromo'])->name('deleteListPromo.admin');
 
+// PROFILEEEEEE
 Route::get('/ubah-user-profile/{id}', [C_UserAdmin::class, 'updateUserProfile'])->name('updateUserProfile.admin');
 Route::post('/ubah-user-profile/action/{id}', [C_UserAdmin::class, 'updateUserProfileAction'])->name('updateUserProfileAction.admin');
+
+Route::get('/ubah-password-profile/{id}',[C_UserAdmin::class,'updatePasswordProfile'])->name('updatePasswordProfile.admin');
+Route::post('/ubah-password-profile/action/{id}',[C_UserAdmin::class,'updatePasswordProfileAction'])->name('updatePasswordProfileAction.admin');
+
 
 Route::get('/user-pelanggan-admin', [C_UserPelanggan::class, 'userPelanggan'])->name('userPelanggan.admin');
 Route::get('/ubah-user-pelanggan-admin/{id}', [C_UserPelanggan::class, 'updateUserPelanggan'])->name('updateUserPelanggan.admin');
