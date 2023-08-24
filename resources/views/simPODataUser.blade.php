@@ -329,6 +329,11 @@
                                     <input type="text" class="form-control" name="tanggalLahir"
                                         onfocus="(this.type='date')" onblur="(this.type='text')" id=""
                                         placeholder="Tanggal Lahir">
+                                    @if ((new \Jenssegers\Agent\Agent())->isIphone())
+                                    <input type="date" class="form-control" name="tanggalLahir" id=""
+                                        placeholder="Tanggal Lahir" style="cursor:pointer"
+                                        value="{{ old('tanggalLahir') }}">
+                                    @endif
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">

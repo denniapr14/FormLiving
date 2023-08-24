@@ -332,7 +332,7 @@ Route::post('/simulation-data-pelanggan/store/{id_rumah}', [C_PreOrder::class, '
 Route::get('/summary-po/{id}/{ktp}/{code}', [C_PreOrder::class, 'simSummaryPO']);
 Route::post('/po-build/store/{id_rumah}/{harga}/{pelanggan}/{code}', [C_PreOrder::class, 'simSummaryPOAction'])->name('dataPOSummary.action');
 Route::get('/konfirmasi-pembayaran-po/{id}', [C_PreOrder::class, 'confirmationPaymentEmail']);
-Route::get('/selamat', [C_PreOrder::class, 'selamatPage']);
+Route::get('/selamat', [C_PreOrder::class, 'selamatPage'])->name('userConfirmed');
 
 // >>>>>>>>>>>>>>>>>>end of Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');

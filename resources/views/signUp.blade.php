@@ -73,8 +73,11 @@
                             <input type="text" class="form-control" name="tanggalLahir" onclick="(this.type='date')"
                                 onblur="(this.type='text')" id="" placeholder="Tanggal Lahir" style="cursor:pointer"
                                 value="{{ old('tanggalLahir') }}">
+                            @if ((new \Jenssegers\Agent\Agent())->isIphone())
+                            <input type="date" class="form-control" name="tanggalLahir" id=""
+                                placeholder="Tanggal Lahir" style="cursor:pointer" value="{{ old('tanggalLahir') }}">
+                            @endif
                         </div>
-
                         <div class="mb-3 form-group">
                             <label for="kelamin" class="form-label">Jenis Kelamin <span>*</span></label>
                             <select name="kelamin" class="form-select form-control" id="">

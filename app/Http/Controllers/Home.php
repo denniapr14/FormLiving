@@ -86,7 +86,7 @@ class Home extends Controller
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
-            return redirect("/login")->with('error', "You not sign in or sign up!");
+            return redirect("/login")->with('error', "Anda Belum Login atau belum terdaftar sebagai User");
             # code...
 
         }
@@ -121,7 +121,7 @@ class Home extends Controller
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
-            return redirect("/login")->with('error', "You not sign in or sign up!");
+            return redirect("/login")->with('error', "Anda Belum Login atau belum terdaftar sebagai User");
             # code...
 
         }
@@ -182,7 +182,7 @@ class Home extends Controller
     {
         $user = \App\Models\UserAdmin::where([
             'username_ua' => $request->username,
-            'password_ua' => md5($request->password),
+            'password_ua' => md5($request->password),F
         ])->first();
 
         // CHECK PELANGGAN
@@ -206,24 +206,24 @@ class Home extends Controller
 
                 switch ($userRole) {
                     case 'AdminAccounting':
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "Anda berhasil masuk");
                         break;
                     case 'Admin':
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "Anda berhasil masuk");
                         break;
 
                     case 'CEO':
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "Anda berhasil masuk");
                         break;
 
                     case 'SuperAdmin':
-                        return redirect('/dasboard')->with('success', "You're Sign in!");
+                        return redirect('/dasboard')->with('success', "Anda berhasil masuk");
                         break;
                     case 'AdminFormsLiving':
-                        return redirect('AdminFormsLiving/dasboard')->with('success', "You're Sign in!");
+                        return redirect('AdminFormsLiving/dasboard')->with('success', "Anda berhasil masuk");
                         break;
                     default:
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "Anda berhasil masuk");
                         break;
                 }
             }
@@ -262,7 +262,7 @@ class Home extends Controller
     {
         Session::flush('guest');
         Session::flush('user');
-        return redirect('/')->with('success', "You're sign out!");
+        return redirect('/')->with('success', "Anda telah sign out");
     }
 
     protected function guard($guard)
@@ -369,7 +369,7 @@ class Home extends Controller
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
-            return redirect("/login")->with('error', "You not sign in or sign up!");
+            return redirect("/login")->with('error', "Anda Belum Login atau belum terdaftar sebagai User");
             # code...
 
         }
@@ -409,7 +409,7 @@ class Home extends Controller
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
             // response()->json('hasilSess');
-            return redirect("/login")->with('error', "You not sign in or sign up!");
+            return redirect("/login")->with('error', "Anda Belum Login atau belum terdaftar sebagai User");
             # code...
 
         }
@@ -2961,7 +2961,7 @@ class Home extends Controller
 
     public function Terms()
     {
-        return view('terms');
+        return view('mail.mailPOTemplate');
     }
     public function About()
     {
@@ -3109,7 +3109,7 @@ class Home extends Controller
         if (!empty($fp->id_promo)) {
             $promo = DB::table('promo')
                 ->where('id_promo', '=', $fp->id_promo)
-                // ->where('tgl_aktif', '<=', NOW())
+                // ->where('tgl_aktif', '<=', NOW())    
 
                 ->first();
         } else {
