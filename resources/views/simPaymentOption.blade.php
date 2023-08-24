@@ -160,10 +160,7 @@
                                                                 Minimal 10%</small>
                                                         </div>
                                                     </div>
-                                                    <br>
-                                                    <div class="card-shadow">
-                                                        <label for="">Suku Bunga</label>
-                                                    </div>
+
                                                     <div class="">
                                                         <div class="form-group">
 
