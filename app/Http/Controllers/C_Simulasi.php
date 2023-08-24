@@ -565,7 +565,9 @@ class C_Simulasi extends Controller
                 'gender' => 'required',
                 'statusPernikahan' => 'required',
                 'tempatLahir' => 'required',
-                'tanggalLahir' => 'required',
+                'tanggal' => 'required',
+                'bulan' => 'required',
+                'tahun' => 'required',
                 // 'user'  => 'required'
                 // 'phone' => 'required|numeric',
 
@@ -592,7 +594,7 @@ class C_Simulasi extends Controller
                     'jenis_kelamin_status' => $request->gender,
                     'status_pernikahan_plgn' => $request->statusPernikahan,
                     'tempat_lahir_plgn'         => $request->tempatLahir,
-                    'tgl_lahir_plgn'            => $request->tanggalLahir,
+                    'tgl_lahir_plgn'            => $request->tahun."-".$request->bulan.'-'.$request->tanggal,
                     // 'id_kkpr'               => $kkpr->id_kkpr,
 
                 );
@@ -640,7 +642,9 @@ class C_Simulasi extends Controller
                 'gender' => 'required',
                 'statusPernikahan' => 'required',
                 'tempatLahir' => 'required',
-                'tanggalLahir' => 'required',
+                'tanggal' => 'required',
+                'bulan' => 'required',
+                'tahun' => 'required',
 
             ]);
 
@@ -653,8 +657,7 @@ class C_Simulasi extends Controller
                     'nama_plgn' => $request->nama,
                     'id_user_admin' => session::get('user'),
                     'pekerjaan_plgn' => $request->pekerjaan,
-                    'sumber_dana_plgn'  => $request->sumberDana,
-                    // 'id_sales'              => session::get('user'),
+
                     'no_ktp_plgn' => $request->nik,
                     'no_telp_plgn' => $request->telp,
                     'no_wa_plgn' => $request->wa,
@@ -663,6 +666,8 @@ class C_Simulasi extends Controller
                     'npwp_plgn' => $request->npwp,
                     'jenis_kelamin_status' => $request->gender,
                     'status_pernikahan_plgn' => $request->statusPernikahan,
+                    'tempat_lahir_plgn'         => $request->tempatLahir,
+                    'tgl_lahir_plgn'            => $request->tahun."-".$request->bulan.'-'.$request->tanggal,
                     // 'id_kkpr'               => $kkpr->id_kkpr,
 
                 );
