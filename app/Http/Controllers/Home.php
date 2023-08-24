@@ -69,19 +69,15 @@ class Home extends Controller
     }
 
     public function housing($dataProjek)
-    {
-        $cluster1 = $this->clusterList->getRumahBaseProjekClusterCount($dataProjek);
-        // $cluster1 = DB::table('rumah')
-        //     ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-        //     ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
-        //     ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', DB::raw('COUNT(rumah.id_rumah) as count'))
-        //     ->where('status', '=', 'available')
-        //     ->where('projek.nama_projek','=','Greenland')
-        //     ->groupBy('cluster.nama_cluster')
-        //     ->get();
-        // dd($cluster1);
-        // die();
-        // dd($cluster1);
+    {   
+        $cluster1;
+        if ($dataProjek == "Greenland") {
+            $cluster1 = $this->clusterList->getRumahBaseProjekClusterCount($dataProjek);
+        }else{
+            $cluster1 = $this->clusterList->getCountRumahWithStatus($dataProjek);
+        }
+       
+        
         $namaPage = ($dataProjek == "Greenland") ? 'housing' : 'housingKalm';
 
         if (!session()->has('guest') && !session()->has('user')) {
@@ -2968,7 +2964,7 @@ class Home extends Controller
             'expire' => Carbon::now()->format('d-m-Y H:i:s'),
             'blok' => 'A',
             'nomor' => '10',
-            'tipe' => 'dada',
+            'tipe' => 'Non - Refundable',
             'va' => $va
         ];
         $dataText =([

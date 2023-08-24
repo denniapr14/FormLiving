@@ -703,8 +703,8 @@ class C_PreOrder extends Controller
     }
 
     public function confirmationPaymentEmail($id){
-        // $decryptedID = Crypt::decrypt($id);
-       
+        $decryptedID = Crypt::decrypt($id);
+        
             $dataUser = DB::table('rumah')
             ->join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')
             ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
@@ -763,5 +763,51 @@ class C_PreOrder extends Controller
             'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
         ]);
         return view('congratulation-data', compact('data'));
+    }
+
+    public function testingRejectedAction(){
+        $jamNow = Carbon::now();
+        $dataPreOrder = $this->PreOrder->PreOrderRejected($jamNow);
+        $dataUser;
+        foreach ($dataPreOrder as $data) {
+            $dataUser = $this->rumah->RumahPO($data->id_pre_order);
+            
+                $template = 'mail.mailPORejected';
+                
+                $dataEmail = [
+                    'to' => $dataUser->email_plgn,
+                    "subject" => "Forms Living Pre Order Kalm Residence Rejected",
+                    "body" => "",
+                    "id_rumah" => $dataUser->id_rumah,
+                    'nama' => $dataUser->nama_plgn,
+                    'blok' => $dataUser->blok,
+                    'nomor' => $dataUser->nomor,
+                    'harga' => $dataUser->index_po,
+                    'status' => $dataUser->status_po,
+                    'tipe' => $dataUser->tipe_booking_po,
+                    'tgl_input' => $dataUser->tgl_input_po,
+                    'expire' => $dataUser->expire_date,
+                ];
+
+                if ($dataUser->status == "KeepRefundable") {
+                    DB::table('pre_order')
+                ->where('id_rumah', $dataUser->id_rumah)
+                ->update(
+                    ['status' => 'Available']
+                );
+                }elseif($dataUser->status == "Keep"){
+                    DB::table('rumah')
+                    ->where('id_rumah', $dataUser->id_rumah)
+                    ->update(
+                        ['status' => 'KeepRefundable']
+                    );
+                }
+
+                DB::table('pre_order')
+                ->where('id_pre_order', $data->id_pre_order)
+                ->update(
+                    ['status_po' => 'rejected']
+                );
+            }
     }
 }
