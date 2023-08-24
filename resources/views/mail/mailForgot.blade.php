@@ -214,7 +214,8 @@
         </div>
         <div class="one-col" style="background-color:white;">
             <h2 style="text-align: center;">Selamat! Pesanan Pre-Order anda telah dibuat</h2>
-            <p style="margin-left: 5%">Berikut data pre-order yang telah dipesan pada Formsliving</p>
+            <p style="margin-left: 5%">Berikut ini adalah informasi pre-order yang telah dipesan pada Formsliving sesuai
+                masukan oleh Sales / Agensi yang anda pilih</p>
             <br>
             <div class="container">
                 <h4>Nama Perumahan : Kalm Residence</h4>
@@ -223,11 +224,11 @@
                     <table width="100%" style="border: 1px solid #ccc;">
                         <tr>
                             <td>
-                                <h2>Invoice</h2>
+                                <h1>Invoice</h1>
                             </td>
                             <td style="text-align:right;">
                                 <p id="text-right" ">Jatuh Tempo Pembayaran :<br>
-                                    <b>{{ $data['expire'] }}</b>
+                                    <b style=" font-size: 30px;">{{ $data['expire'] }}</b>
                                 </p>
                             </td>
                         </tr>
@@ -253,16 +254,29 @@
 
         <div class="one-col" style="padding-bottom: 4%; background-color : white;">
             <h1 style="text-align:center;">Pembayaran via Virtual Account</h1>
-            <p>
-                Anda Dapat membayar melalu Virtual Account kami yang tertera dibawah ini.
-            </p>
+
             <div class="centercore">
+                <p>
+                    Anda Dapat membayar melalu Virtual Account kami yang tertera dibawah ini.
+                </p>
+                <br>
+                <br>
                 <img style="max-width:200px" src="{{ asset('Home') }}/images/icons/ocbc-logo.png" alt="">
                 <br>
-                <h4>{{ $data['va'] }}</h4>
+                <h2>
+                    @foreach ($data['va'] as $ok)
+                    {{ $ok }}
+                    @endforeach
+                </h2>
             </div>
-            <p>setelah membayar, silahkan konfirmasi pada link dibawah ini :</p>
-            <a href="http://"></a>
+            <br>
+
+            <div class="centercore">
+                <p>setelah melakukan pembayaran, silahkan konfirmasi pada tombol dibawah ini </p>
+                <a class="btn" href="{{ route('userConfirmed',$data['id']) }}">Klik Disini</a>
+            </div>
+
+
         </div>
         <footer>
             <img src="{{ asset('Home') }}/images/mail/Footer-Kalm.jpg" alt="">

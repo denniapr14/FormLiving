@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Mail;
 use PDF;
@@ -2960,8 +2961,21 @@ class Home extends Controller
     }
 
     public function Terms()
-    {
-        return view('mail.mailPOTemplate');
+    {   $dataVA = strval("8888444433339999");
+        $va = str_split($dataVA,4);
+        $data =[
+            'id' => Crypt::encrypt('14'),
+            'expire' => Carbon::now()->format('d-m-Y H:i:s'),
+            'blok' => 'A',
+            'nomor' => '10',
+            'tipe' => 'dada',
+            'va' => $va
+        ];
+        $dataText =([
+            'title' => 'Konfirmasi Sukses!',
+            'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
+        ]);
+        return view('mail.mailForgot',compact('data','dataText'));
     }
     public function About()
     {

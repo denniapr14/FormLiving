@@ -612,24 +612,27 @@ class C_PreOrder extends Controller
                 $dataInput
             );
 
-            if ($rumah->status == "Available") {
-                DB::table('rumah')
-                ->where('id_rumah', $id_rumah)
-                ->update(['status' => 'keepRefundable']
-                );
-            }
-
-            if ($rumah->status == "keepRefundable") {
+            if ($rumah->status == "keepRefundable" && $code =="NR") {
                 DB::table('rumah')
                 ->where('id_rumah', $id_rumah)
                 ->update(['status' => 'Keep']
                 );
             }
-
+            
+            if ($rumah->status == "Available" && $code == "R") {
+                DB::table('rumah')
+                ->where('id_rumah', $id_rumah)
+                ->update(['status' => 'keepRefundable']
+                );
+            }
+            
             $dataPO = DB::table('pre_order')
             ->select('*')
             ->where('id_pre_order','=',$id)
             ->first();
+
+            $convertVA = strval($dataPO->va_rumah);
+            $dataVA = str_split($convertVA,3);
 
             $accounting = DB::table('user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
@@ -651,7 +654,7 @@ class C_PreOrder extends Controller
                 'tipe' => $dataPO->tipe_booking_po,
                 'tgl_input' => $dataPO->tgl_input_po,
                 'expire' => $dataPO->expire_date,
-                'va' => $rumah->va_rumah
+                'va' => $dataVA
             ];
 
             $dataEmail2 = [
@@ -713,6 +716,11 @@ class C_PreOrder extends Controller
                 'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
             ]);
 
+            $decryptedID = Crypt::decrypt($id);
+
+            $convertVA = strval($dataUser->va_rumah);
+            $dataVA = str_split($convertVA,3);
+
                 $template = 'mail.mailForgot';
                 $dataEmail1 = [
                     'to' => $dataUser->email_plgn,
@@ -743,11 +751,17 @@ class C_PreOrder extends Controller
                 } catch (Exception $e) {
                     // return response()->json(['Sorry! Please try again latter']);
                 }
-                return redirect('/selamat')->with('success', 'konfirmasi sudah masuk');
+                 return view('congratulation-data', compact('data'))->with('success', 'konfirmasi sudah masuk');
     }
 
-    public function selamatPage($dataText)
+    public function selamatPage($id)
     {
+        $decryptedID = Crypt::decrypt($id);
+        
+        $data =([
+            'title' => 'Konfirmasi Sukses!',
+            'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
+        ]);
         return view('congratulation-data', compact('data'));
     }
 }
