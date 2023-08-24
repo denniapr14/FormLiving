@@ -89,9 +89,9 @@
   "hideMethod": "fadeOut"
 }
   		toastr.success("{{ session('success') }}");
-  		
+
   @endif
-  
+
   @if(Session::has('error'))
   toastr.options = {
   "closeButton": true,
@@ -111,8 +111,9 @@
   "hideMethod": "fadeOut"
 }
     toastr.warning("{{ session('error') }}");
-  		
+
   @endif
+
 </script>
 
 <!--<script type="text/javascript">-->
