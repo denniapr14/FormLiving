@@ -451,7 +451,7 @@
                                 <div class="btn-groups">
                                     <a href="/simulation-detail-type/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                         type="button" class="btn btn-grey">Kembali</a>
-                                    <button type="submit" value="submit" id="submit" disabled="true"
+                                    <button type="submit" value="submit" id="submit" style="opacity: 20%" disabled="true"
                                         class="btn btn-primary">Lanjutkan</button>
 
                                 </div>
@@ -597,6 +597,7 @@
                 submitBtn.disabled = false; // Enable the button
             } else {
                 submitBtn.disabled = true; // disable the button
+                submitBtn.style.opacity = "100%";
             }
         }
 </script>

@@ -164,10 +164,11 @@ class C_UserMenu extends Controller
 
                 }
                 // dd($dataInputUserProjek); // This line can be removed if not needed for debugging
+
+
+
+
                 $this->userProjek->insertUserProjek($dataInputUserProjek);
-
-
-
             }
 
             DB::table('user_admin')
