@@ -386,10 +386,10 @@ class C_Simulasi extends Controller
                     $dataInputKalkulator = [
                         'luas_tanah_kkpr'    => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                        'harga_awal'        => (float) $tipeRumah->harga_tr,
+                        'harga_awal'        => (double) $tipeRumah->harga_tr,
 
-                        'uang_muka'         => (float)($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'kpr'               => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'uang_muka'         => (double)($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'kpr'               => (double) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'terbilang'         => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'cicilan_um'        => $request->cicilanUM,
 
@@ -398,10 +398,10 @@ class C_Simulasi extends Controller
                     $dataInputKalkulator = [
                         'luas_tanah_kkpr'    => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                        'harga_awal'        => (float) $tipeRumah->harga_tr,
+                        'harga_awal'        => (double) $tipeRumah->harga_tr,
 
-                        'uang_muka'         => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'kpr'               => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'uang_muka'         => (double) ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'kpr'               => (double) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'terbilang'         => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'cicilan_um'        => 1,
 
@@ -411,9 +411,9 @@ class C_Simulasi extends Controller
                 $dataInputKalkulator = [
                     'luas_tanah_kkpr'    => $rumah->luas_tanah,
                     'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                    'harga_awal'        => (float) $tipeRumah->harga_tr,
-                    'total_harga'       => (float) $tipeRumah->harga_tr,
-                    'uang_muka'         => (float) 10000000,
+                    'harga_awal'        => (double) $tipeRumah->harga_tr,
+                    'total_harga'       => (double) $tipeRumah->harga_tr,
+                    'uang_muka'         => (double) 10000000,
                     'kpr'               => 0,
                     'cicilan_um'        => 1,
                     'cicilan'           => $request->cicilan,
@@ -549,16 +549,40 @@ class C_Simulasi extends Controller
             // dd($checkPelanggan);
             $id = null;
 
+            $this->validate($request, [
+                'nama' => 'required|min:3',
+                'pekerjaan' => 'required',
+                'email' => 'required',
+                'nik' => 'required',
+                'telp' => 'required',
+                'jalan' => 'required',
+                'kelurahan' => 'required',
+                'kecamatan' => 'required',
+                'kota' => 'required',
+                'pulau' => 'required',
+                'email' => 'required',
+                'npwp' => 'required',
+                'gender' => 'required',
+                'statusPernikahan' => 'required',
+                'tempatLahir' => 'required',
+                'tanggalLahir' => 'required',
+                // 'user'  => 'required'
+                // 'phone' => 'required|numeric',
+
+                // 'kelamin'   => 'required',
+
+            ]);
 
             if (!empty($checkPelanggan)) {
                 $id = $checkPelanggan->id_pelanggan;
             }
             if (empty($checkPelanggan)) {
+
                 $dataInput = array(
                     'nama_plgn' => $request->nama,
                     'id_user_admin' => session::get('user'),
                     'pekerjaan_plgn' => $request->pekerjaan,
-                    // 'id_sales'              => session::get('user'),
+
                     'no_ktp_plgn' => $request->nik,
                     'no_telp_plgn' => $request->telp,
                     'no_wa_plgn' => $request->wa,
@@ -575,16 +599,7 @@ class C_Simulasi extends Controller
                 // dd($dataInput);
                 // die();
 
-                $this->validate($request, [
-                    'nama' => 'required|min:3',
 
-                    'email' => 'required',
-                    // 'user'  => 'required'
-                    // 'phone' => 'required|numeric',
-
-                    // 'kelamin'   => 'required',
-
-                ]);
 
 
                 $id = DB::table('user_pelanggan')->insertGetId(
@@ -609,10 +624,31 @@ class C_Simulasi extends Controller
                 ->first();
 
             $id = null;
+            $this->validate($request, [
+                'nama' => 'required|min:3',
+                'pekerjaan' => 'required',
+                'email' => 'required',
+                'nik' => 'required',
+                'telp' => 'required',
+                'jalan' => 'required',
+                'kelurahan' => 'required',
+                'kecamatan' => 'required',
+                'kota' => 'required',
+                'pulau' => 'required',
+                'email' => 'required',
+                'npwp' => 'required',
+                'gender' => 'required',
+                'statusPernikahan' => 'required',
+                'tempatLahir' => 'required',
+                'tanggalLahir' => 'required',
+
+            ]);
+
             if (!empty($checkPelanggan)) {
                 $id = $checkPelanggan->id_pelanggan;
             }
             if (empty($checkPelanggan)) {
+
                 $dataInput = array(
                     'nama_plgn' => $request->nama,
                     'id_user_admin' => session::get('user'),
@@ -633,16 +669,7 @@ class C_Simulasi extends Controller
                 // dd($dataInput);
                 // die();
 
-                $this->validate($request, [
-                    'nama' => 'required|min:3',
 
-                    'email' => 'required',
-                    // 'user'  => 'required'
-                    // 'phone' => 'required|numeric',
-
-                    // 'kelamin'   => 'required',
-
-                ]);
 
                 $id = DB::table('user_pelanggan')->insertGetId(
                     $dataInput
@@ -821,10 +848,10 @@ class C_Simulasi extends Controller
                 $dataInputDetail = array(
                     'luas_tanah_kkpr' => $rumah->luas_tanah,
                     'tipe_kkpr' => $tipeRumah->jenis_tr,
-                    'harga_awal' =>  (float) $tipeRumah->harga_tr,
-                    'total_diskon' =>  (float) $promo->diskon_promo,
+                    'harga_awal' =>  (double) $tipeRumah->harga_tr,
+                    'total_diskon' =>  (double) $promo->diskon_promo,
 
-                    'total_harga' =>  (float) $tipeRumah->harga_tr - $promo->diskon_promo,
+                    'total_harga' =>  (double) $tipeRumah->harga_tr - $promo->diskon_promo,
                     'terbilang'   => terbilang($tipeRumah->harga_tr - $promo->diskon_promo),
 
                 );
@@ -833,9 +860,9 @@ class C_Simulasi extends Controller
                 $dataInputDetail = array(
                     'luas_tanah_kkpr' => $rumah->luas_tanah,
                     'tipe_kkpr' => $tipeRumah->jenis_tr,
-                    'harga_awal' =>  (float) $tipeRumah->harga_tr,
+                    'harga_awal' =>  (double) $tipeRumah->harga_tr,
 
-                    'total_harga' => (float) $tipeRumah->harga_tr,
+                    'total_harga' => (double) $tipeRumah->harga_tr,
                     'terbilang'   => terbilang($tipeRumah->harga_tr),
                 );
             }
@@ -898,8 +925,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => "Booking Fee",
-                    'harga_pr' => (float)$kkpr->uang_muka,
-                    'sisa_pr' => (float)$kkpr->uang_muka,
+                    'harga_pr' => (double)$kkpr->uang_muka,
+                    'sisa_pr' => (double)$kkpr->uang_muka,
                     'tgl_pr' => date('Y-m-d'),
                     'status_pr' => "belum",
                 );
@@ -923,8 +950,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "Angsuran " . $i,
-                            'harga_pr' => (float)$dataCicil,
-                            'sisa_pr' => (float)$dataCicil,
+                            'harga_pr' => (double)$dataCicil,
+                            'sisa_pr' => (double)$dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
                             'status_pr' => "belum",
                         );
@@ -935,8 +962,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "Angsuran " . $i,
-                            'harga_pr' => (float)$dataCicil,
-                            'sisa_pr' => (float)$dataCicil,
+                            'harga_pr' => (double)$dataCicil,
+                            'sisa_pr' => (double)$dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
                             'status_pr' => "belum",
                         );
@@ -947,8 +974,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => "Angsuran " . $kkpr->cicilan,
-                    'harga_pr' => (float) $kkpr->total_harga - $sumCicil - 10000000,
-                    'sisa_pr' =>  (float)$kkpr->total_harga - $sumCicil - 10000000,
+                    'harga_pr' => (double) $kkpr->total_harga - $sumCicil - 10000000,
+                    'sisa_pr' =>  (double)$kkpr->total_harga - $sumCicil - 10000000,
                     'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan),
                     'status_pr' => "belum",
                 );
@@ -973,8 +1000,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => "Booking Fee ",
-                    'harga_pr' => (float) 10000000,
-                    'sisa_pr' => (float) 10000000,
+                    'harga_pr' => (double) 10000000,
+                    'sisa_pr' => (double) 10000000,
                     'tgl_pr' => date('Y-m-d'),
                     'status_pr' => "belum",
                 );
@@ -985,8 +1012,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => "Cicilan Uang Muka " . 1,
-                        'harga_pr' => (float) $dataCicilKPR,
-                        'sisa_pr' => (float) $dataCicilKPR,
+                        'harga_pr' => (double) $dataCicilKPR,
+                        'sisa_pr' => (double) $dataCicilKPR,
                         'tgl_pr' => Carbon::now()->addMonths(1),
                         'status_pr' => "belum",
                     );
@@ -997,8 +1024,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "Cicilan Uang Muka " . 1 + $k,
-                            'harga_pr' => (float) $dataCicilKPR,
-                            'sisa_pr' => (float) $dataCicilKPR,
+                            'harga_pr' => (double) $dataCicilKPR,
+                            'sisa_pr' => (double) $dataCicilKPR,
                             'tgl_pr' => Carbon::now()->addMonths($k),
                             'status_pr' => "belum",
                         );
@@ -1008,8 +1035,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => "Cicilan Uang Muka " . $kkpr->cicilan_um,
-                        'harga_pr' => (float) $kkpr->uang_muka -  $sumCicilKPR,
-                        'sisa_pr' => (float) $kkpr->uang_muka -  $sumCicilKPR,
+                        'harga_pr' => (double) $kkpr->uang_muka -  $sumCicilKPR,
+                        'sisa_pr' => (double) $kkpr->uang_muka -  $sumCicilKPR,
                         'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan_um),
                         'status_pr' => "belum",
                     );
@@ -1019,8 +1046,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "KPR",
-                            'harga_pr' => (float) $dataKPR,
-                            'sisa_pr' => (float)$dataKPR,
+                            'harga_pr' => (double) $dataKPR,
+                            'sisa_pr' => (double)$dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => "belum",
                         );
@@ -1031,8 +1058,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "KPR",
-                            'harga_pr' => (float) $dataKPR,
-                            'sisa_pr' => (float)$dataKPR,
+                            'harga_pr' => (double) $dataKPR,
+                            'sisa_pr' => (double)$dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => "belum",
                         );
@@ -1045,8 +1072,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => "Uang Muka ",
-                        'harga_pr' =>  (float)  $kkpr->uang_muka,
-                        'sisa_pr' => (float) $kkpr->uang_muka,
+                        'harga_pr' =>  (double)  $kkpr->uang_muka,
+                        'sisa_pr' => (double) $kkpr->uang_muka,
                         'tgl_pr' => Carbon::now()->addMonths(1),
                         'status_pr' => "belum",
                     );
@@ -1057,8 +1084,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "KPR",
-                            'harga_pr' => (float) $dataKPR,
-                            'sisa_pr' => (float) $dataKPR,
+                            'harga_pr' => (double) $dataKPR,
+                            'sisa_pr' => (double) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => "belum",
                         );
@@ -1069,8 +1096,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => "KPR",
-                            'harga_pr' => (float) $dataKPR,
-                            'sisa_pr' => (float) $dataKPR,
+                            'harga_pr' => (double) $dataKPR,
+                            'sisa_pr' => (double) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => "belum",
                         );
