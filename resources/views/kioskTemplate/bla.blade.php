@@ -1,3 +1,0 @@
-@section('apaini')
-
-@endsection
