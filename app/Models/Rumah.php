@@ -156,11 +156,21 @@ class Rumah extends Model
        return Rumah::join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', Rumah::raw('COUNT(rumah.id_rumah) as count'))
-            ->where('status', '=', 'available')
+            ->where('status', '=', 'Available')
             ->where('projek.nama_projek','=',$namaProjek)
             ->groupBy('cluster.nama_cluster')
             ->get();
     }
+    public function getCountRumahWithStatus($namaProjek){
+        return Rumah::join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
+             ->select('logo_img', 'nama_img', 'cluster.nama_cluster', 'cluster.codecluster', 'cluster.nama_img', Rumah::raw('COUNT(rumah.id_rumah) as count'))
+             ->where('projek.nama_projek','=',$namaProjek)
+             ->where('status', '=', 'Available')
+             ->orWhere('status', '=', 'keepRefundable')
+             ->groupBy('cluster.nama_cluster')
+             ->get();
+     }
 
     public function RumahPO($idPreOrder){
         return Rumah::join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')

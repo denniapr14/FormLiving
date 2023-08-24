@@ -98,7 +98,6 @@
                                 <option value="agentWithCompany"> Agen(Xavier marks premier)</option>
                                 <option value="agentWithoutCompany"> Non Affiliated Agent</option>
                             </select>
-
                         </div>
 
 
@@ -113,10 +112,9 @@
                             <small>saya menyetujui dan mengisi data saya dengan benar untuk dipergunakan sebagai
                                 registrasi</small>
                         </div>
-                        <button type="submit" id="btnsignup" class="btn btn-primary w-100 mb-3" disabled>Sign
-                            Up</button>
-                        <p class="light-grey-color mb-0">Already have an account?
-                            <a href="/login" class="primary-color">Sign In</a>
+                        <button type="submit" id="btnsignup" class="btn btn-primary w-100 mb-3" disabled>Daftar</button>
+                        <p class="light-grey-color mb-0">Sudah Punya Akun?
+                            <a href="/login" class="primary-color">Masuk</a>
                         </p>
                     </form>
                 </div>
