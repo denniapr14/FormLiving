@@ -630,6 +630,7 @@ class C_PreOrder extends Controller
 
             $dataPO = DB::table('pre_order')
             ->select('*')
+            ->join('rumah','pre_order.id_rumah','=','rumah.id_rumah')
             ->where('id_pre_order','=',$id)
             ->first();
 
@@ -647,7 +648,8 @@ class C_PreOrder extends Controller
                 'to' => $pelanggan->email_plgn,
                 "subject" => "Forms Living Pre Order Kalm Residence",
                 "body" => "",
-                "id_rumah" => Crypt::encrypt($rumah->id_rumah),
+                "id" => Crypt::encrypt($dataPO->id_pre_order),
+                "id_rumah" => $rumah->id_rumah,
                 'nama' => $pelanggan->nama_plgn,
                 'blok' => $rumah->blok,
                 'nomor' => $rumah->nomor,
@@ -661,12 +663,19 @@ class C_PreOrder extends Controller
 
             $dataEmail2 = [
                 'to' => $user->email_ua,
-                "subject" => "Forms Living",
+                "subject" => "Forms Living Pre Order Kalm Residence",
                 "body" => "",
-                "body" => "",
+                "id" => Crypt::encrypt($dataPO->$id_pre_order),
+                "id_rumah" => $rumah->id_rumah,
                 'nama' => $pelanggan->nama_plgn,
                 'blok' => $rumah->blok,
                 'nomor' => $rumah->nomor,
+                'harga' => $dataPO->index_po,
+                'status' => $dataPO->status_po,
+                'tipe' => $dataPO->tipe_booking_po,
+                'tgl_input' => $dataPO->tgl_input_po,
+                'expire' => $dataPO->expire_date,
+                'va' => $dataVA
             ];
 
             $dataEmail3 = null;
@@ -692,7 +701,7 @@ class C_PreOrder extends Controller
             try {
                 // $MailAtt = ();
                 Mail::to($pelanggan->email_plgn)->send(new MailNotify($dataEmail1, $template));
-                // Mail::to($user->email_ua)->send(new MailNotify($dataEmail2,$template));
+                Mail::to($user->email_ua)->send(new MailNotify($dataEmail2,$template));
 
             } catch (Exception $e) {
                 // return response()->json(['Sorry! Please try again latter']);
@@ -717,8 +726,6 @@ class C_PreOrder extends Controller
                 'title' => 'Konfirmasi Sukses!',
                 'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
             ]);
-
-            $decryptedID = Crypt::decrypt($id);
 
             $convertVA = strval($dataUser->va_rumah);
             $dataVA = str_split($convertVA,3);
