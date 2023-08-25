@@ -126,14 +126,14 @@
                                             <div class="form-group">
                                                 <label for="nik" class="form-label">Pekerjaan</label>
                                                 <input type="text" class="input form-control" name="pekerjaan"
-                                                    id="pekerjaan" value="{{ old('pekerjaan') }}" placeholder="pekerjaan">
+                                                    id="pekerjaan" value="{{ old('pekerjaan') }}" placeholder="Pekerjaan">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
                                                 <label for="nik" class="input form-label">Sumber Dana</label>
                                                 <input type="text" class="form-control" name="sumberDana" id="sumberDana"
-                                                    value="{{ old('sumberDana') }}" placeholder="sumber dana">
+                                                    value="{{ old('sumberDana') }}" placeholder="Sumber Dana">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -318,7 +318,7 @@
                                                 <label for="nik" class="form-label">Pekerjaan</label>
                                                 <input type="text" class="input form-control" name="pekerjaan"
                                                     id="pekerjaan" value="{{ old('pekerjaan') }}"
-                                                    placeholder="pekerjaan">
+                                                    placeholder="Pekerjaan">
                                                 <small style="color: red">{{ $errors->first('pekerjaan') }}</small>
                                             </div>
                                         </div>
@@ -327,7 +327,7 @@
                                                 <label for="nik" class="input form-label">Sumber Dana</label>
                                                 <input type="text" class="form-control" name="sumberDana"
                                                     id="sumberDana" value="{{ old('sumberDana') }}"
-                                                    placeholder="sumber dana">
+                                                    placeholder="Sumber Dana">
 
                                             </div>
                                         </div>
