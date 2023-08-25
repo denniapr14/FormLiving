@@ -495,7 +495,9 @@ class C_PreOrder extends Controller
                     'email_plgn' => $request->email,
                     'npwp_plgn' => $request->npwp,
                     'jenis_kelamin_status' => $request->gender,
-                    'status_pernikahan_plgn' => $request->statusPernikahan
+                    'status_pernikahan_plgn' => $request->statusPernikahan,
+                    'tempat_lahir_plgn'         => $request->tempatLahir,
+                    'tgl_lahir_plgn'            => $request->tahun."-".$request->bulan.'-'.$request->tanggal,
                 );
                 // dd($dataInput);
                 // die();
@@ -618,14 +620,14 @@ class C_PreOrder extends Controller
                 ->update(['status' => 'Keep']
                 );
             }
-            
+
             if ($rumah->status == "Available" && $code == "R") {
                 DB::table('rumah')
                 ->where('id_rumah', $id_rumah)
                 ->update(['status' => 'keepRefundable']
                 );
             }
-            
+
             $dataPO = DB::table('pre_order')
             ->select('*')
             ->where('id_pre_order','=',$id)
@@ -704,7 +706,7 @@ class C_PreOrder extends Controller
 
     public function confirmationPaymentEmail($id){
         $decryptedID = Crypt::decrypt($id);
-        
+
             $dataUser = DB::table('rumah')
             ->join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')
             ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
@@ -742,7 +744,7 @@ class C_PreOrder extends Controller
                 ->where('id_rumah', $id)
                 ->update(['status_po' => 'userconfirmed']
                 );
-                
+
                 try {
                     // $MailAtt = ();
                     Mail::to($dataUser->email_plgn)->send(new MailNotify($dataEmail1, $template));
@@ -757,7 +759,7 @@ class C_PreOrder extends Controller
     public function selamatPage($id)
     {
         $decryptedID = Crypt::decrypt($id);
-        
+
         $data =([
             'title' => 'Konfirmasi Sukses!',
             'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
@@ -771,9 +773,9 @@ class C_PreOrder extends Controller
         $dataUser;
         foreach ($dataPreOrder as $data) {
             $dataUser = $this->rumah->RumahPO($data->id_pre_order);
-            
+
                 $template = 'mail.mailPORejected';
-                
+
                 $dataEmail = [
                     'to' => $dataUser->email_plgn,
                     "subject" => "Forms Living Pre Order Kalm Residence Rejected",
