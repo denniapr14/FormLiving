@@ -251,17 +251,11 @@
         </div>
 
         <div class="one-col" style="padding-bottom: 4%; background-color : white;">
-            <h1 style="text-align:center;">Pembayaran via Virtual Account</h1>
-            <p>
-                Anda Dapat membayar melalu Virtual Account kami yang tertera dibawah ini.
-            </p>
             <div class="centercore">
-                <img style="max-width:200px" src="{{ asset('Home') }}/images/icons/ocbc-logo.png" alt="">
                 <br>
-                <h4>{{ $data['va'] }}</h4>
+                <p>terkait permasalahan atau informasi tentang data Pre-Order bisa menghubungi Kantor Kami.</p>
+                <p>Terima kasih.</p>
             </div>
-            <p>setelah membayar, silahkan konfirmasi pada link dibawah ini :</p>
-            <a href="http://"></a>
         </div>
         <footer>
             <img src="{{ asset('Home') }}/images/mail/Footer-Kalm.jpg" alt="">

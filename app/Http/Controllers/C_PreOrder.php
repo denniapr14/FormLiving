@@ -766,12 +766,68 @@ class C_PreOrder extends Controller
     public function selamatPage($id)
     {
         $decryptedID = Crypt::decrypt($id);
+        $dataUser = DB::table('rumah')
+           ->join('pre_order','rumah.id_rumah','=','pre_order.id_rumah')
+           ->join('user_pelanggan','pre_order.id_pelanggan','=','user_pelanggan.id_pelanggan')
+           ->where('pre_order.id_pre_order','=',$decryptedID)
+           ->first();
 
-        $data =([
-            'title' => 'Konfirmasi Sukses!',
-            'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
-        ]);
-        return view('congratulation-data', compact('data'));
+           $data =([
+               'title' => 'Konfirmasi Sukses!',
+               'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
+           ]);
+           
+            $dataPO = DB::table('pre_order')
+           ->select('*')
+           ->join('rumah','pre_order.id_rumah','=','rumah.id_rumah')
+           ->where('id_pre_order','=',$decryptedID)
+           ->first();
+
+           $convertVA = strval($dataPO->va_rumah);
+           $dataVA = str_split($convertVA,4);
+
+               $template = 'mail.mailPOAccept';
+               $dataEmail1 = [
+                   'to' => $dataUser->email_plgn,
+                   "subject" => "Forms Living Pre Order Kalm Residence Diterima",
+                   "body" => "",
+                   "id_rumah" => Crypt::encrypt($dataUser->id_rumah),
+                   'nama' => $dataUser->nama_plgn,
+                   'blok' => $dataUser->blok,
+                   'nomor' => $dataUser->nomor,
+                   'harga' => $dataUser->index_po,
+                   'status' => $dataUser->status_po,
+                   'tipe' => $dataUser->tipe_booking_po,
+                   'tgl_input' => $dataUser->tgl_input_po,
+                   'expire' => $dataUser->expire_date,
+                   'va' => $dataUser->va_rumah
+               ];
+
+               DB::table('pre_order')
+               ->where('id_pre_order', $decryptedID)
+               ->update(['status_po' => 'userconfirmed']
+               );
+
+               try {
+                   // $MailAtt = ();
+                   Mail::to($dataUser->email_plgn)->send(new MailNotify($dataEmail1, $template));
+                   // Mail::to($user->email_ua)->send(new MailNotify($dataEmail2,$template));
+
+               } catch (Exception $e) {
+                   // return response()->json(['Sorry! Please try again latter']);
+               }
+               
+               if (session()->has('user')) {
+                $user = $this->userAdmin->getUserKategoriWhere(
+               'user_admin.id_user_admin',
+               '=',
+               session::get('user')
+           );
+           
+           return view('congratulation-data', compact('data','user'))->with('success', 'konfirmasi sudah masuk');
+               
+           }
+                return view('congratulation-data', compact('data'))->with('success', 'konfirmasi sudah masuk');
     }
 
     public function testingRejectedAction(){
