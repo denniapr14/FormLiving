@@ -147,17 +147,17 @@
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <label for="wa" class="form-label">No. Whataspp (Aktif)</label>
+                                                <label for="wa" class="form-label">No. Whatsapp (Aktif)</label>
                                                 <input type="text" class="input form-control" name="wa"
                                                     id="wa" value="{{ old('wa') }}"
-                                                    placeholder="No. Whataspp (Aktif)">
+                                                    placeholder="No. Whatsapp (Aktif)">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
                                                 <label for="" class="form-label">Jalan</label>
                                                 <input type="text" class="input form-control" name="jalan"
-                                                    id="jalan" value="{{ old('alamat') }}" placeholder="jalan">
+                                                    id="jalan" value="{{ old('alamat') }}" placeholder="Jalan">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -178,7 +178,7 @@
                                             <div class="form-group">
                                                 <label for="alamat" class="form-label">Kota</label>
                                                 <input type="text" class="input form-control" name="kota"
-                                                    id="kota" value="{{ old('alamat') }}" placeholder="kota">
+                                                    id="kota" value="{{ old('alamat') }}" placeholder="Kota">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -235,7 +235,7 @@
                                                 <label for="gender" class="form-label">Status Pernikahan</label>
                                                 <select class="input form-select" name="statusPernikahan"
                                                     id="statusPernikahan">
-                                                    <option disabled selected>Pilih Status Penikahan</option>
+                                                    <option disabled selected>Status Penikahan</option>
                                                     <option>Sudah Menikah</option>
                                                     <option>Belum Menikah</option>
                                                 </select>
@@ -343,11 +343,11 @@
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <label for="wa" class="form-label">No. Whataspp (Aktif<small
+                                                <label for="wa" class="form-label">No. Whatsapp (Aktif)<small
                                                         style="color:red;">*</small></label>
                                                 <input type="text" class="input form-control" name="wa"
                                                     id="wa" value="{{ old('wa') }}"
-                                                    placeholder="No. Whataspp (Aktif)">
+                                                    placeholder="No. Whatsapp (Aktif)">
                                                 <small style="color: red">{{ $errors->first('wa') }}</small>
                                             </div>
                                         </div>
@@ -355,7 +355,7 @@
                                             <div class="form-group">
                                                 <label for="" class="form-label">Jalan</label>
                                                 <input type="text" class="input form-control" name="jalan"
-                                                    id="jalan" value="{{ old('alamat') }}" placeholder="jalan">
+                                                    id="jalan" value="{{ old('alamat') }}" placeholder="Jalan">
                                                 <small style="color: red">{{ $errors->first('jalan') }}</small>
                                             </div>
                                         </div>
@@ -379,7 +379,7 @@
                                             <div class="form-group">
                                                 <label for="alamat" class="form-label">Kota</label>
                                                 <input type="text" class="input form-control" name="kota"
-                                                    id="kota" value="{{ old('alamat') }}" placeholder="kota">
+                                                    id="kota" value="{{ old('alamat') }}" placeholder="Kota">
                                                 <small style="color: red">{{ $errors->first('kota') }}</small>
                                             </div>
                                         </div>
@@ -422,7 +422,7 @@
                                                     </td>
                                                     <td style="width: 30%; padding-left: 5px; padding-right: 5px;" class="">
                                                         <select name="bulan"  class="form-control">
-                                                            <option>Pilih Bulan</option>
+                                                            <option>Bulan</option>
                                                             @for ($d = 0; $d < 12; $d++)
                                                                 <option value="{{ $d + 1 }}"> {{ $d + 1 }}
                                                                 </option>
@@ -473,7 +473,7 @@
                                                 <label for="gender" class="form-label">Status Pernikahan</label>
                                                 <select class="input form-select" name="statusPernikahan"
                                                     id="statusPernikahan">
-                                                    <option disabled selected>Pilih Status Penikahan</option>
+                                                    <option disabled selected>Status Penikahan</option>
                                                     <option>Sudah Menikah</option>
                                                     <option>Belum Menikah</option>
                                                     <small
