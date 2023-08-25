@@ -24,6 +24,17 @@ class ListPromo extends Model
         ->where($where,$eq,$value)
         ->first();
     }
+    function getListPromoJoinPromoWherePengisianData($id) {
+        return ListPromo::join('promo', 'list_promo.id_promo', '=', 'promo.id_promo')
+            ->where('promo.status', '=', "aktif")
+
+            ->where('list_promo.id_rumah', '=', $id)
+            ->where('promo.tipe_promo', '=', 'standart')
+            ->where('tgl_aktif', '<=', NOW())
+            ->where('tgl_berakhir', '>=', NOW())
+            ->get();
+
+    }
     function getListPromoJoinPromoRumah($select,$where,$eq,$value)  {
         return ListPromo::select($select)
         ->join('promo','list_promo.id_promo','=','promo.id_promo')

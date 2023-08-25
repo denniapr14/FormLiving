@@ -76,20 +76,19 @@ class C_SuratPemesananRumah extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            if(
+            if (
                 $user->kategori == 'AdminAgentCompany' || $user->kategori == 'AdminSales'
 
-            ){
+            ) {
                 $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananProjekJoin6WhereArr(
                     [
-                        'projek.nama_projek'=> $projek,
+                        'projek.nama_projek' => $projek,
                         'user_admin.id_kepala_ua' => session::get('user')
                     ],
                     'formulir_pesanan.tgl_input_fp',
                     'desc'
                 );
-            }
-            elseif (
+            } elseif (
                 $user->kategori == 'Sales' ||
                 $user->kategori == 'SalesAgent' ||
                 $user->kategori == 'Agent' ||
@@ -224,19 +223,46 @@ class C_SuratPemesananRumah extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $dataUpdate = "";
-            if ($projek == 'Greenland') {
+
+            if ($user->kategori == "StaffAcc" || $user->kategori == "SuperAdmin") {
                 $dataUpdate = [
                     'no_fp' => $request->nofp,
+                    'status_market_fp'   => "accept",
+                    'tgl_market_fp'  => date('d-m-y h:m:s'),
+                    'status_staf_acc_fp'   => "accept",
+                    'tgl_staff_acc_fp'  => date('d-m-y h:m:s'),
                 ];
             }
-            if ($projek == 'Kalm') {
+
+            if ($user->kategori == "AdminAccounting") {
+
                 $dataUpdate = [
                     'no_fp' => $request->nofp,
+                    'status_acc_fp'   => "accept",
+                    'tgl_acc_fp'  => date('d-m-y h:m:s'),
+
                 ];
+            }
+            if ($user->kategori == "AdminLegal") {
+
+                $dataUpdate = [
+
+                    'status_legal_fp'   => "accept",
+                    'tgl_legal_fp'  => date('d-m-y h:m:s'),
+
+                ];
+            }
+
+
+            if ($user->kategori == "AdminLegal" || $user->kategori == "SuperAdmin" ) {
+                $dataRumah = ['luas_tanah'    => $request->luasTanah];
+                DB::table('rumah')
+                    ->where('id_rumah', $getFormulirPesanan->id_rumah)
+                    ->update($dataRumah);
             }
             DB::table('formulir_pesanan')
-            ->where('id_formulir', $decryptedID)
-            ->update($dataUpdate);
+                ->where('id_formulir', $decryptedID)
+                ->update($dataUpdate);
 
             return redirect()->route('suratPemesananRumah.admin', $getProjek->nama_projek)->with('success', 'Data berhasil diubah');
         } else {

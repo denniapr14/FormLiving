@@ -338,14 +338,18 @@
                             <br>
                             <h4> SURAT PEMESANAN RUMAH SEMENTARA</h4>
                             <p>Nomor :
-
+                                @if ($user->kategori =="StaffAcc" || $user->kategori == "SuperAdmin")
                                 @if ($getFormulirPesanan->no_fp != null)
-                                    <input type="text" name="nofp" value="{{ $getFormulirPesanan->no_fp }}"
-                                        style="width: 30%">
+                                <input type="text" name="nofp" value="{{ $getFormulirPesanan->no_fp }}"
+                                    style="width: 30%">
+                            @else
+                                <input type="text" name="nofp" value="@if ($getProjek->nama_projek=='Greenland')SPRGL/<?=date('m/Y')?>@else SPRKR/<?=date('m/Y')?>@endif
+                                " style="width: 30%">
+                            @endif
                                 @else
-                                    <input type="text" name="nofp" value="@if ($getProjek->nama_projek=='Greenland')SPRGL/<?=date('m/Y')?>@else SPRKR/<?=date('m/Y')?>@endif
-                                    " style="width: 30%">
+                                    <p>{{ $getFormulirPesanan->no_fp }}</p>
                                 @endif
+
                             </p>
                         </center>
                         <p>Yang bertanda tangan dibawah ini :</p>
@@ -409,9 +413,16 @@
                                 </p>
                             </li>
                             <li data-list-text="3.">
+                                @if ($user->kategori == "AdminLegal" || $user->kategori == "SuperAdmin")
+                                <p style="padding-top: 2pt;padding-left: 41pt;text-indent: -18pt;text-align: left;">
+                                Luas Tanah : <input type="text" name="luasTanah" value="{{ $getFormulirPesanan->luas_tanah }}"
+                                style="width: 10%">
+                            </p>
+                                @else
                                 <p style="padding-top: 2pt;padding-left: 41pt;text-indent: -18pt;text-align: left;">
                                     Luas Tanah : {{ $getFormulirPesanan->luas_tanah }} m2
                                 </p>
+                                @endif
                             </li>
                             <li data-list-text="4.">
                                 <p style="padding-top: 1pt;padding-left: 41pt;text-indent: -18pt;text-align: left;">

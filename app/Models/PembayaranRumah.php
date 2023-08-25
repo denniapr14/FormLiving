@@ -39,6 +39,14 @@ class PembayaranRumah extends Model{
         ->where($where, $eq, $value)
         ->get();
     }
+    // INSERT
+    function insertPembayaranRumah($data) {
+
+        return PembayaranRumah::insert(
+            $data
+        );
+
+    }
 
 
 }
