@@ -38,6 +38,17 @@ class Promo extends Model{
         ->where('tipe_promo','=','standart')
         ->get();
     }
+    public function firstPromoDataPelanggan($kode_promo) {
+            return Promo::select('*')
+            ->where('status', '=', "aktif")
+            ->where('tipe_promo', '=', "special")
+            // ->where('tgl_aktif', '<=', NOW())
+            ->where('tgl_berakhir', '>=', NOW())
+            ->where([
+                'kode_promo' => $kode_promo,
+        ])->get();
+
+    }
 
 
 }

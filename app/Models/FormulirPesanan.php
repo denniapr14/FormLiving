@@ -172,4 +172,12 @@ class FormulirPesanan extends Model
             ->where('id_formulir', '=', $id)
             ->first();
     }
+
+    // INSERT
+
+    function insertGetIDFormulirPesanan($data) {
+        return FormulirPesanan::insertGetId(
+            $data
+        );
+    }
 }

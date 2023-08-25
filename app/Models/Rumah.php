@@ -88,6 +88,13 @@ class Rumah extends Model
             ->where($where, $eq, $value)
             ->first();
     }
+    public function firstRumahWhereJoinClusterArr($select,$where)
+    {
+        return Rumah::select($select)
+        ->join('cluster','rumah.codecluster','cluster.codecluster')
+            ->where($where)
+            ->first();
+    }
 
 
     public function getRumahJoinClusterWhere($select, $where, $eq, $value)

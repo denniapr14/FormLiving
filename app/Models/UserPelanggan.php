@@ -29,6 +29,13 @@ class UserPelanggan extends Authenticatable
     {
         return UserPelanggan::select('*')->first();
     }
+    public function firstUserPelangganWhereArr($select,$where)
+    {
+        return UserPelanggan::select($select)
+        ->where($where)
+        ->first();
+    }
+
 
     public function getUserPelangganOrderBy($select, $order, $by)
     {
@@ -39,5 +46,9 @@ class UserPelanggan extends Authenticatable
     function firstUserPelangganWhere($where, $eq, $value){
         return UserAdmin::where($where, $eq, $value)
         ->first();
+    }
+    function insertGetIDUserPelanggan($data) {
+        return UserPelanggan::insertGetId($data);
+
     }
 }
