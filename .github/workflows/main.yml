@@ -11,6 +11,15 @@ jobs:
       - name: Get the latest code
         uses: actions/checkout@v3
       # - uses: actions/setup-node@master
+      - name: Create tag
+      uses: actions/github-script@v3
+      with:
+        script: |
+          console.log(await github.git.getRef({
+            owner: context.repo.owner,
+            ref: "tags/v0.0.1",
+            repo: context.repo.repo,
+          }));
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
