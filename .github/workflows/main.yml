@@ -32,7 +32,7 @@ jobs:
         with:
           # Deploy user
           user: ${{ secrets.FTP_USERNAME }}
-          entryPoint: ${{ secrets.FTP_PASSWORD }}
+          # entryPoint: ${{ secrets.FTP_PASSWORD }}
           # Deploy host
           host: ${{ secrets.FTP_SERVER }}
           # Path source on server
