@@ -94,6 +94,22 @@ class C_PreOrder extends Controller
                 '=',
                 session::get('user')
             );
+
+            if(
+                $user->kategori == 'AdminAgentCompany'
+
+            ){
+
+                $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUserArr(
+                    '*',
+                    [
+                        'user_admin.id_kepala_ua' => $user->id_user_admin,
+                        'rumah.id_projek'   => $getProjek->id_projek
+                    ],
+                    'pre_order.tgl_input_po',
+                    'desc'
+                );
+            }
             if (
                 $user->kategori == 'Sales' ||
                 $user->kategori == 'SalesAgent' ||
@@ -502,6 +518,7 @@ class C_PreOrder extends Controller
                     'status_pernikahan_plgn' => $request->statusPernikahan,
                     'tempat_lahir_plgn'         => $request->tempatLahir,
                     'tgl_lahir_plgn'            => $request->tahun."-".$request->bulan.'-'.$request->tanggal,
+                    'sumber_dana_plgn'               => $request->sumberDana
                 );
                 // dd($dataInput);
                 // die();

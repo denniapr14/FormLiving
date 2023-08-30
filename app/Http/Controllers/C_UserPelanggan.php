@@ -8,6 +8,9 @@ use App\Models\UserMenu;
 use App\Models\UserNotif;
 use App\Models\UserPelanggan;
 use App\Models\UserProjek;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class C_UserPelanggan extends Controller
@@ -47,9 +50,8 @@ class C_UserPelanggan extends Controller
         }
 
 
-        $getUserPelanggan = $this->userPelanggan->getUserPelangganOrderByJoinUserAdmin('*', 'tgl_input_plgn', 'desc')->collect();
-        $getUserPelanggan->contains('id_user_admin',session::get('user'));
-        dd($getUserPelanggan);
+
+        // dd($getUserPelanggan);
         // Surat Pemesanan Rumah == Formulir Pesanan
 
         // $getRumah = $this->rumah->getRumahSelectCountGroupBy();
@@ -59,7 +61,28 @@ class C_UserPelanggan extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            return view('V_Admin.userPelanggan',
+            $getUserPelanggan = $this->userPelanggan->getUserPelangganOrderByJoinUserAdmin('*', 'tgl_input_plgn', 'desc')->collect();
+
+            if(
+                $user->kategori == 'AdminAgentCompany'
+
+            ){
+                $getUserPelanggan = $getUserPelanggan->where('id_kepala_ua', $user->id_user_admin);
+
+            }
+
+            if (
+                $user->kategori == 'Sales' ||
+                $user->kategori == 'SalesAgent' ||
+                $user->kategori == 'Agent' ||
+                $user->kategori == 'AgentCompany'
+            ) {
+                # code...
+                $getUserPelanggan = $getUserPelanggan->where('id_user_admin', $user->id_user_admin);
+            }
+
+            return view(
+                'V_Admin.userPelanggan',
                 compact(
                     'user',
                     'projekUser',
@@ -71,5 +94,37 @@ class C_UserPelanggan extends Controller
         } else {
             return redirect('/login');
         }
+    }
+    function updateUserPelangganAction(Request $request, $id)
+    {
+
+        $decryptedID = Crypt::decrypt($id);
+
+        $dataUpdate = array(
+            'nama_plgn' => $request->nama,
+            'id_user_admin' => session::get('user'),
+            'pekerjaan_plgn' => $request->pekerjaan,
+
+            'no_ktp_plgn' => $request->nik,
+            'no_telp_plgn' => $request->telp,
+            'no_wa_plgn' => $request->wa,
+            'alamat_plgn' => $request->alamat,
+            'email_plgn' => $request->email,
+            'npwp_plgn' => $request->npwp,
+            'jenis_kelamin_status' => $request->gender,
+            'status_pernikahan_plgn' => $request->statusPernikahan,
+            'tempat_lahir_plgn'         => $request->tempatLahir,
+            'tgl_lahir_plgn'            => $request->tglLahir,
+            'sumber_dana_plgn'               => $request->sumberDana
+            // 'id_kkpr'               => $kkpr->id_kkpr,
+
+        );
+
+
+        DB::table('user_pelanggan')
+            ->where('id_pelanggan', $decryptedID)
+            ->update($dataUpdate);
+
+        return redirect()->back()->with('success', 'Data pelanggan telah diubah');
     }
 }
