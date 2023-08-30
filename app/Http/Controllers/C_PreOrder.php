@@ -480,6 +480,10 @@ class C_PreOrder extends Controller
                 ->first();
             // dd($checkPelanggan);
             $id = null;
+            $this->validate($request, [
+                // 'nik' => 'required',
+                'email' => 'required'
+            ]);
             if (!empty($checkPelanggan)) {
                 $id = $checkPelanggan->id_pelanggan;
             }
@@ -502,9 +506,7 @@ class C_PreOrder extends Controller
                 // dd($dataInput);
                 // die();
 
-                $this->validate($request, [
-                    'nik' => 'required',
-                ]);
+
 
                 $id = DB::table('user_pelanggan')->insertGetId(
                     $dataInput
@@ -776,7 +778,7 @@ class C_PreOrder extends Controller
                'title' => 'Konfirmasi Sukses!',
                'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
            ]);
-           
+
             $dataPO = DB::table('pre_order')
            ->select('*')
            ->join('rumah','pre_order.id_rumah','=','rumah.id_rumah')
@@ -816,16 +818,16 @@ class C_PreOrder extends Controller
                } catch (Exception $e) {
                    // return response()->json(['Sorry! Please try again latter']);
                }
-               
+
                if (session()->has('user')) {
                 $user = $this->userAdmin->getUserKategoriWhere(
                'user_admin.id_user_admin',
                '=',
                session::get('user')
            );
-           
+
            return view('congratulation-data', compact('data','user'))->with('success', 'konfirmasi sudah masuk');
-               
+
            }
                 return view('congratulation-data', compact('data'))->with('success', 'konfirmasi sudah masuk');
     }

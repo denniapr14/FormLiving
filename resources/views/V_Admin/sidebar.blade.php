@@ -166,7 +166,10 @@
                         </ul>
                     </li>
                 @endforeach
-
+                <li class="nav__divider">
+                    <div class="divider__title">Optional</div>
+                    <hr class="separate">
+                </li>
                 @if (
                     $user->kategori == 'SuperAdmin' ||
                     $user->kategori == 'AdminFormsLiving' ||
@@ -174,24 +177,16 @@
                     $user->kategori == 'AdminAgentCompany'
 
                   )
-                    <li class="nav__divider">
-                        <div class="divider__title">Optional</div>
-                        <hr class="separate">
-                    </li>
+
                     <li class="nav__item  ">
                         <a class="nav__link @if (request()->segment(1) === 'user-sales-agent-admin') active @endif" href="/user-sales-agent-admin">
                             <i class="fas fa-users    "></i>
                             <span>User Sales / Agent</span>
                         </a>
                     </li>
-                    {{--  @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminFormsLiving')
-                    <li class="nav__item  ">
-                        <a class="nav__link @if (request()->segment(1) === 'user-pelanggan-admin') active @endif" href="{{ route('userPelanggan.admin') }}">
-                            <i class="fas fa-users    "></i>
-                            <span>User Pelanggan</span>
-                        </a>
-                    </li>
-                    @endif  --}}
+
+
+
                     @if ($user->kategori == 'SuperAdmin')
                     <li class="nav__item  ">
                         <a class="nav__link @if (request()->segment(1) === 'user-menu-admin') active @endif" href="{{ route('userMenu.admin') }}">
@@ -202,7 +197,12 @@
                     @endif
                 @endif
 
-
+                <li class="nav__item  ">
+                    <a class="nav__link @if (request()->segment(1) === 'user-pelanggan-admin') active @endif" href="{{ route('userPelanggan.admin') }}">
+                        <i class="fas fa-users    "></i>
+                        <span>User Pelanggan</span>
+                    </a>
+                </li>
 
 
                 <li class="nav__divider">

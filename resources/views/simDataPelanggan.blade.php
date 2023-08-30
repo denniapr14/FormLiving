@@ -98,7 +98,7 @@
                         @if (!empty(Session::get('guest')))
                             <div class="col-12 col-lg-8 right-column order-3">
                                 <small style="color:red;">Diperlukan*</small><br>
-                                <small style="color:red;">Sangat Diperlukan**</small>
+
                                 <br>
                                 <form
                                     action="{{ route('simulasiPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $getKKPR->id_kpr, $jenis]) }}"
@@ -109,7 +109,7 @@
                                             <div class="form-group">
                                                 <label for="name" class="form-label">Nama (Sesuai KTP)<small
                                                         style="color:red;">*</small></label>
-                                                <input type="text" class="input form-control" name="nama"
+                                                <input type="text" class="input form-control" required name="nama"
                                                     id="name" value="{{ old('name') }}"
                                                     placeholder="Nama (Sesuai KTP)">
                                             </div>
@@ -118,7 +118,7 @@
                                             <div class="form-group">
                                                 <label for="nik" class="form-label">NIK<small
                                                         style="color:red;">*</small></label>
-                                                <input type="text" class="input form-control" name="nik"
+                                                <input type="text" class="input form-control" required name="nik"
                                                     id="nik" value="{{ old('nik') }}" placeholder="NIK">
                                             </div>
                                         </div>
@@ -140,7 +140,7 @@
                                             <div class="form-group">
                                                 <label for="telp" class="form-label">No. Telepon<small
                                                         style="color:red;">*</small> </label>
-                                                <input type="text" class="input form-control" name="telp"
+                                                <input type="text" class="input form-control" required name="telp"
                                                     id="telp" placeholder="No. Telp" value="{{ old('telp') }}">
 
                                             </div>
@@ -191,7 +191,7 @@
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
                                                 <label for="email" class="form-label">Email<small
-                                                        style="color:red;">**</small></label>
+                                                        style="color:red;">*</small></label>
                                                 <input type="text" class="input form-control" name="email"
                                                     id="email" value="{{ old('email') }}"
                                                     placeholder="Email untuk dikirim Surat Pemesanan Rumah">
@@ -214,8 +214,7 @@
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <label for="npwp" class="form-label">Nomor NPWP<small
-                                                        style="color:red;">*</small></label>
+                                                <label for="npwp" class="form-label">Nomor NPWP
                                                 <input type="text" class="input form-control" name="npwp"
                                                     id="npwp" value="{{ old('npwp') }}" placeholder="No. NPWP">
                                             </div>
@@ -284,7 +283,7 @@
                         @elseif (session::get('user'))
                             <div class="col-12 col-lg-8 right-column order-3">
                                 <small style="color:red;">Diperlukan*</small><br>
-                                <small style="color:red;">Sangat Diperlukan**</small>
+
                                 <br>
                                 <form
                                     action="{{ route('simulasiPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $getKKPR->id_kkpr, $jenis]) }}"
@@ -299,7 +298,7 @@
                                                 <input type="text" class="input form-control" name="nama"
                                                     id="name" value="{{ old('name') }}"
                                                     placeholder="Nama (Sesuai KTP)">
-                                                <small style="color: red">{{ $errors->first('nama') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -309,7 +308,7 @@
                                                 <input type="text" class="input form-control" name="nik"
                                                     id="nik" value="{{ old('nik') }}" placeholder="NIK">
 
-                                                <small style="color: red">{{ $errors->first('nik') }}</small>
+
 
                                             </div>
                                         </div>
@@ -319,7 +318,7 @@
                                                 <input type="text" class="input form-control" name="pekerjaan"
                                                     id="pekerjaan" value="{{ old('pekerjaan') }}"
                                                     placeholder="Pekerjaan">
-                                                <small style="color: red">{{ $errors->first('pekerjaan') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -337,7 +336,7 @@
                                                         style="color:red;">*</small></label>
                                                 <input type="text" class="input form-control" name="telp"
                                                     id="telp" placeholder="No. Telp" value="{{ old('telp') }}">
-                                                <small style="color: red">{{ $errors->first('telp') }}</small>
+
 
                                             </div>
                                         </div>
@@ -348,7 +347,7 @@
                                                 <input type="text" class="input form-control" name="wa"
                                                     id="wa" value="{{ old('wa') }}"
                                                     placeholder="No. Whatsapp (Aktif)">
-                                                <small style="color: red">{{ $errors->first('wa') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -356,7 +355,7 @@
                                                 <label for="" class="form-label">Jalan</label>
                                                 <input type="text" class="input form-control" name="jalan"
                                                     id="jalan" value="{{ old('alamat') }}" placeholder="Jalan">
-                                                <small style="color: red">{{ $errors->first('jalan') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -364,7 +363,7 @@
                                                 <label for="alamat" class="form-label">Kelurahan</label>
                                                 <input type="text" class="input form-control" name="kelurahan"
                                                     id="kelurahan" value="{{ old('alamat') }}" placeholder="Kelurahan">
-                                                <small style="color: red">{{ $errors->first('kelurahan') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -372,7 +371,7 @@
                                                 <label for="alamat" class="form-label">Kecamatan</label>
                                                 <input type="text" class="input form-control" name="kecamatan"
                                                     id="kecamatan" value="{{ old('alamat') }}" placeholder="Kecamatan">
-                                                <small style="color: red">{{ $errors->first('kecamatan') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -380,7 +379,7 @@
                                                 <label for="alamat" class="form-label">Kota</label>
                                                 <input type="text" class="input form-control" name="kota"
                                                     id="kota" value="{{ old('alamat') }}" placeholder="Kota">
-                                                <small style="color: red">{{ $errors->first('kota') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -388,13 +387,13 @@
                                                 <label for="alamat" class="form-label">Provinsi</label>
                                                 <input type="text" class="input form-control" name="pulau"
                                                     id="provinsi" value="{{ old('alamat') }}" placeholder="Provinsi">
-                                                <small style="color: red">{{ $errors->first('pulau') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
                                                 <label for="email" class="form-label">Email<small
-                                                        style="color:red;">**</small></label>
+                                                        style="color:red;">*</small></label>
                                                 <input type="text" class="input form-control" name="email"
                                                     id="email" value="{{ old('email') }}"
                                                     placeholder="Email untuk dikirim Surat Pemesanan Rumah">
@@ -407,7 +406,7 @@
                                             <input type="text" class="form-control" name="tempatLahir"
                                                 id="tempatLahir" value="{{ old('tempatLahir') }}"
                                                 placeholder="Tempat Lahir"><br>
-                                            <small style="color: red">{{ $errors->first('tempatLahir') }}</small>
+
                                             <table>
                                                 <tr>
                                                     <td style="width: 30%" class="">
@@ -443,10 +442,6 @@
                                                 </tr>
                                             </table>
 
-
-
-
-
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
@@ -454,7 +449,7 @@
                                                         style="color:red;">*</small></label>
                                                 <input type="text" class="input form-control" name="npwp"
                                                     id="npwp" value="{{ old('npwp') }}" placeholder="No. NPWP">
-                                                <small style="color: red">{{ $errors->first('npwp') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -465,7 +460,7 @@
                                                     <option>Laki Laki</option>
                                                     <option>Perempuan</option>
                                                 </select>
-                                                <small style="color: red">{{ $errors->first('gender') }}</small>
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -476,8 +471,7 @@
                                                     <option disabled selected>Status Penikahan</option>
                                                     <option>Sudah Menikah</option>
                                                     <option>Belum Menikah</option>
-                                                    <small
-                                                        style="color: red">{{ $errors->first('statusPenikahan') }}</small>
+
                                                 </select>
                                             </div>
                                         </div>

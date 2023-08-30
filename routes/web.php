@@ -16,6 +16,8 @@ use App\Http\Controllers\C_Promo;
 use App\Http\Controllers\C_Rumah;
 use App\Http\Controllers\C_Simulasi;
 use App\Http\Controllers\C_SuratPemesananRumah;
+use App\Http\Controllers\C_UserPelanggan;
+
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
 use App\Http\Controllers\C_UserAdmin;

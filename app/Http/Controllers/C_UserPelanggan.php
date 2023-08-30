@@ -46,11 +46,10 @@ class C_UserPelanggan extends Controller
             }
         }
 
-        if (!$foundMatchingMenu) {
-            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        }
-        $getUserPelanggan = $this->userPelanggan->getUserPelangganOrderBy('*', 'tgl_input_plgn', 'desc');
 
+        $getUserPelanggan = $this->userPelanggan->getUserPelangganOrderByJoinUserAdmin('*', 'tgl_input_plgn', 'desc')->collect();
+        $getUserPelanggan->contains('id_user_admin',session::get('user'));
+        dd($getUserPelanggan);
         // Surat Pemesanan Rumah == Formulir Pesanan
 
         // $getRumah = $this->rumah->getRumahSelectCountGroupBy();
@@ -60,13 +59,11 @@ class C_UserPelanggan extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            return view(
-                'V_Admin.userPelanggan',
+            return view('V_Admin.userPelanggan',
                 compact(
                     'user',
                     'projekUser',
 
-                    'getProjek',
                     'getUserMenu',
                     'getUserPelanggan'
                 )

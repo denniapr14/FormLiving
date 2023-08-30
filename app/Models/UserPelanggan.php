@@ -43,6 +43,13 @@ class UserPelanggan extends Authenticatable
         ->orderBy($order, $by)
         ->get();
     }
+    public function getUserPelangganOrderByJoinUserAdmin($select, $order, $by)
+    {
+        return UserPelanggan::select($select)
+        ->join('user_admin','user_pelanggan.id_user_admin','user_admin.id_user_admin')
+        ->orderBy($order, $by)
+        ->get();
+    }
     function firstUserPelangganWhere($where, $eq, $value){
         return UserAdmin::where($where, $eq, $value)
         ->first();
