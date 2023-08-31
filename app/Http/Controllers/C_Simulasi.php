@@ -13,6 +13,7 @@ use App\Mail\MailNotify;
 use App\Models\FormulirPesanan;
 use App\Models\KalkulatorKPR;
 use App\Models\ListPromo;
+use App\Models\PembayaranRumah;
 use App\Models\Promo;
 use App\Models\Departemen;
 use App\Models\Rumah;
@@ -66,7 +67,7 @@ class C_Simulasi extends Controller
         $this->listPromo = new ListPromo();
         $this->promo = new Promo();
         $this->formulirPesanan = new FormulirPesanan();
-        $this->pembayaranRumah = new C_PembayaranRumah();
+        $this->pembayaranRumah = new PembayaranRumah();
         // $this->middleware('guest')->except('logout');
         // $this->middleware('guest:admin')->except('logout');
         // // $this->middleware('guest:writer')->except('logout');
@@ -608,6 +609,7 @@ class C_Simulasi extends Controller
                     'status_pernikahan_plgn' => $request->statusPernikahan,
                     'tempat_lahir_plgn'         => $request->tempatLahir,
                     'tgl_lahir_plgn'            => $request->tahun."-".$request->bulan.'-'.$request->tanggal,
+                    'sumber_dana_plgn'               => $request->sumberDana
                     // 'id_kkpr'               => $kkpr->id_kkpr,
 
                 );
