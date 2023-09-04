@@ -1,6 +1,6 @@
-@extends('AdminAccounting.app')
-@extends('AdminAccounting.sidebar')
-@extends('AdminAccounting.footer')
+@extends('V_Admin.app')
+@extends('V_Admin.sidebar')
+@extends('V_Admin.footer')
 @extends('flashdata')
 @section('tittle', 'FORMS ONE | Formulir')
 @section('content')
@@ -101,10 +101,7 @@
             }
         }
     </style>
-    <br><br>
-    <br><br>
-    <div><a class="btn btn-outline-danger" href="{{ url()->previous() }}">Kembali</a></div>
-    <br>
+
     <section class="content" id="printcontent">
         <div class="container-fluid ">
             <div class="card">

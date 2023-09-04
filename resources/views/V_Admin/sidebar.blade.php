@@ -191,7 +191,7 @@
                     <li class="nav__item  ">
                         <a class="nav__link @if (request()->segment(1) === 'user-menu-admin') active @endif" href="{{ route('userMenu.admin') }}">
                             <i class="fa fa-user-secret" aria-hidden="true"></i>
-                            <span>User Prefilege</span>
+                            <span>User Privilege</span>
                         </a>
                     </li>
                     @endif
