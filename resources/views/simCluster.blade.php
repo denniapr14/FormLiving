@@ -59,6 +59,7 @@
             </div>
         </div>
 
+
         <div class="container">
 
             <div class="steps">
@@ -71,10 +72,113 @@
                 <div class="step last">6</div>
             </div>
 
+
+
             <div class="choose-cluster">
                 <h2 class="title">
                     Pilih Cluster
                 </h2>
+
+                <div>
+                    <div class="content__row">
+                        @if ($rumahAll != null && $rumahAll != '')
+                            @php
+
+                                $fileSVG = 'views/Greenland.svg';
+                            @endphp
+                            <div class="content__row mb-3">
+                                <div class="card__box">
+                                    <div class="card__header">
+
+
+                                    </div>
+                                    <div class="" style="width: 100%">
+
+                                        <div class="map svg-container" style="background-color: white ;
+
+                                        ">
+
+                                            {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
+                                            {{-- @include('map.svg') --}}
+                                            {!! file_get_contents(resource_path($fileSVG)) !!}
+                                            <script>
+                                                var svg = document.getElementById('Layer_1');
+
+
+                                                function zoom(scale) {
+
+                                                    svg.setAttribute('transform', 'scale(' + scale + ')');
+                                                }
+
+                                                var mouseX = 0;
+
+
+                                                var data = {!! json_encode($rumahAll) !!};
+                                                $(document).ready(function() {
+                                                    data.forEach(function(item) {
+                                                        var block = item.blok;
+                                                        var nomor = item.nomor;
+                                                        var blockNomor = block + "-" + nomor;
+                                                        var idrumah = document.getElementById(blockNomor);
+
+                                                        {{--  console.log("Block-Nomor:", blockNomor);
+                                                        console.log("Status:", item.status);
+                                                        console.log("Color:", color(item.status)); // Check color function output  --}}
+
+                                                        if (idrumah) {
+                                                            idrumah.style.fill = color(item.status);
+                                                            idrumah.setAttribute('fill', color(item.status));
+                                                        } else {
+                                                            console.log("Element not found:", blockNomor);
+                                                        }
+                                                    });
+                                                });
+
+
+                                                function color(stat) {
+                                                    var iro = 'warnaa';
+                                                    switch (stat) {
+                                                        case 'Available':
+                                                            iro = '#44bb55';
+                                                            break;
+                                                        case 'Keep':
+                                                            iro = '#ff7777';
+                                                            break;
+                                                        case 'Sold':
+                                                            iro = '#ff7777';
+                                                            break;
+                                                        case 'onProgress':
+                                                            iro = '#ff7777';
+                                                            break;
+                                                        case 'Undeveloped':
+                                                            iro = 'gray';
+                                                        case 'Hold':
+                                                            iro = '#ff7777';
+                                                            break;
+                                                    }
+                                                    return iro;
+                                                }
+                                            </script>
+                                            {{--  <div class="control">
+                                                <div class="zoom in">
+                                                    <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
+                                                </div>
+                                                <div class="zoom">
+                                                    <img src="{{ asset('Home') }}/images/ic-zoom-out.png" alt="">
+                                                </div>
+                                            </div>  --}}
+
+
+                                        </div>
+                                        {{--  <button onclick="zoom(1.5)">Zoom in</button>
+                                        <button onclick="zoom(0.5)">Zoom out</button>  --}}
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
                 {{-- <div class="row">
                 @foreach ($cluster as $cluster)
                 <div class="col-6 col-lg-3">

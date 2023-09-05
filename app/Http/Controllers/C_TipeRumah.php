@@ -487,46 +487,49 @@ class C_TipeRumah extends Controller
         // $decryptIDGambar = Crypt::decrypt($id_gambar);
         $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
         $getGambar = $this->gambarRumah->getGambarRumahWhere('*', 'gambar_rumah.id_gambar_rumah', '=', $id_gambar);
-        
-      
+
+
             $filename = $getGambar->img_rumah;
             if ($request->file('img')) {
-                if($getGambar->jenis_img == 'denah'){
-                    $img = $request->file('img');
-    
-                    // Generate a unique filename based on the current timestamp and the original file extension
-                    $filename = time().'.'.$img->getClientOriginalExtension();
-        
-                    // Store the image in the 'images' folder under the 'public' disk
-                    $path = 'Home/images/denah/';
-                    $img = Image::make($img);
-                    $img->save(public_path($path.$filename));
-                }
                 if($getGambar->jenis_img == 'gambar'){
                     $img = $request->file('img');
-    
+
                     // Generate a unique filename based on the current timestamp and the original file extension
                     $filename = time().'.'.$img->getClientOriginalExtension();
-        
+
                     // Store the image in the 'images' folder under the 'public' disk
                     $path = 'Home/images/tipe/';
                     $img = Image::make($img);
                     $img->save(public_path($path.$filename));
                 }
-              
+                if($getGambar->jenis_img == 'denah'){
+                    $img = $request->file('img');
+
+                    // Generate a unique filename based on the current timestamp and the original file extension
+                    $filename = time().'.'.$img->getClientOriginalExtension();
+
+                    // Store the image in the 'images' folder under the 'public' disk
+                    $path = 'Home/images/denah/';
+                    $img = Image::make($img);
+                    $img->save(public_path($path.$filename));
+
+                }
+
+
             }
             $dataGambarTipe = [
-                
+
                 'img_rumah' => $filename,
             ];
-    
+
             // dd($dataGambarTipe);
-            $this->gambarRumah->update($dataGambarTipe)
-            ->where('id_gambar_rumah',$id_gambar);
-            
-        return response()->json();
-  
-       
+            DB::table('gambar_rumah')
+            ->where('id_gambar_rumah',$id_gambar)
+            ->update($dataGambarTipe);
+
+        return response()->json($dataGambarTipe);
+
+
 
     }
 }

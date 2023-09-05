@@ -90,6 +90,7 @@ class C_Simulasi extends Controller
                 'rumah.status'      => 'available'
             ]
         );
+        $rumahAll = $this->rumah->getRumahAll();
         $rumah = $this->rumah->getRumahSelectJoinClusterProjek(
             '*',
             [
@@ -108,7 +109,8 @@ class C_Simulasi extends Controller
             return view('simCluster', compact(
                 'user',
                 'cluster',
-                'rumah'
+                'rumah',
+                'rumahAll'
             ));
         }
         // session check untuk pelanggan
@@ -122,12 +124,14 @@ class C_Simulasi extends Controller
             return view('simCluster', compact(
                 'userPelanggan',
                 'cluster',
-                'rumah'
+                'rumah',
+                'rumahAll'
             ));
         }
         return view('simCluster', compact(
             'cluster',
-            'rumah'
+            'rumah',
+            'rumahAll'
         ));
         # code...
     }
