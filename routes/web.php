@@ -310,6 +310,8 @@ route::post('/tambah-tipe-rumah/{projek}', [C_TipeRumah::class, 'storeTipeRumahA
 Route::get('/ubah-tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumah'])->name('updateTipeRumah.admin');
 Route::post('/tambah-tipe-rumah-admin/action/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
     ->name('updateTipeRumahAction.admin');
+Route::post('/ubah-gambar-tipe-rumah-admin/action/{projek}/{id}/{id_gambar}',[C_TipeRumah::class,'updateImageTipeRumahAction'])
+->name('updateImageTipeRumahAction.admin');
 
 Route::get('/gambar-rumah/status/{status}/{id}', [C_GambarRumah::class, 'changeGambarRumahStatus']);
 

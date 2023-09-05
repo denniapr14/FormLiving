@@ -46,7 +46,7 @@ class UserPelanggan extends Authenticatable
     public function getUserPelangganOrderByJoinUserAdmin($select, $order, $by)
     {
         return UserPelanggan::select($select)
-        ->join('user_admin','user_pelanggan.id_user_admin','user_admin.id_user_admin')
+        // ->leftjoin('user_admin','user_pelanggan.id_user_admin','user_admin.id_user_admin')
         ->orderBy($order, $by)
         ->get();
     }

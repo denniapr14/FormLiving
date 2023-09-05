@@ -61,14 +61,17 @@ class C_UserPelanggan extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            $getUserPelanggan = $this->userPelanggan->getUserPelangganOrderByJoinUserAdmin('*', 'tgl_input_plgn', 'desc')->collect();
+            $getUserPelanggan = $this->userPelanggan->getUserPelangganOrderByJoinUserAdmin('*', 'user_pelanggan.tgl_input_plgn', 'desc')->take(100);
+            
+            // $getUserPelanggan=$getUserPelanggan->take(100);
+            // dd($getUserPelanggan);
 
             if(
                 $user->kategori == 'AdminAgentCompany'
 
             ){
-                $getUserPelanggan = $getUserPelanggan->where('id_kepala_ua', $user->id_user_admin);
-
+                $getUserPelanggan = $getUserPelanggan->where('id_kepala_ua', $user->id_user_admin)->collect();
+                $getUserPelanggan=$getUserPelanggan->take(100);
             }
 
             if (
@@ -78,7 +81,8 @@ class C_UserPelanggan extends Controller
                 $user->kategori == 'AgentCompany'
             ) {
                 # code...
-                $getUserPelanggan = $getUserPelanggan->where('id_user_admin', $user->id_user_admin);
+                $getUserPelanggan = $getUserPelanggan->where('id_user_admin', $user->id_user_admin)->collect();
+                $getUserPelanggan=$getUserPelanggan->take(100);
             }
 
             return view(
