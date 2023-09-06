@@ -10,14 +10,12 @@ use App\Models\Cluster;
 
 // Model
 use App\Models\GambarRumah;
+use App\Models\Projek;
 use App\Models\Rumah;
 use App\Models\TipeRumah;
 use App\Models\UserAdmin;
-use App\Models\UserProjek;
-use App\Models\Projek;
 use App\Models\UserMenu;
-
-
+use App\Models\UserProjek;
 use Illuminate\Http\Request;
 // =======================
 
@@ -41,7 +39,7 @@ class C_TipeRumah extends Controller
 
     public function __construct()
     {
-        $this->projek = new Projek;
+        $this->projek = new Projek();
         $this->rumah = new Rumah();
         $this->tipeRumah = new TipeRumah();
         $this->gambarRumah = new GambarRumah();
@@ -51,16 +49,16 @@ class C_TipeRumah extends Controller
         // $this->cluster = new Cluster;
     }
 
-    public function tipeRumah($projek,$id)
+    public function tipeRumah($projek, $id)
     {
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
 
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
         $getTipeRumah = $this->tipeRumah->getGambarTipeRumahSelectCountGroupByWhere('rumah.id_rumah', '=', $decryptedID);
         $whereGambar = [
             // 'status_gr' => "aktif",
-            "id_rumah" =>  $decryptedID
+            'id_rumah' => $decryptedID,
         ];
         $getGambar = $this->gambarRumah->getGambarRumahWhereArr('*', $whereGambar);
         // dd($getGambar);
@@ -81,7 +79,6 @@ class C_TipeRumah extends Controller
         // if (!$foundMatchingMenu) {
         //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
         // }
-
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -105,7 +102,7 @@ class C_TipeRumah extends Controller
         }
     }
 
-    public function storeTipeRumah($projek,$id)
+    public function storeTipeRumah($projek, $id)
     {
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
@@ -120,7 +117,7 @@ class C_TipeRumah extends Controller
             }
         }
         $decryptedID = Crypt::decrypt($id);
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
         // dd($getRumah);
         $getTipeRumah = $this->tipeRumah->getTipeRumahWhere('*', 'id_rumah', '=', $decryptedID);
@@ -146,9 +143,9 @@ class C_TipeRumah extends Controller
         }
     }
 
-    public function storeTipeRumahAction(Request $request,$projek)
+    public function storeTipeRumahAction(Request $request, $projek)
     {
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
             'user_menu.id_user_admin' => session::get('user'),
@@ -199,7 +196,6 @@ class C_TipeRumah extends Controller
                     [
                         'no' => $i,
                         'id_tipe_rumah' => DB::table('tipe_rumah')->insertGetId($dataTipeRumah[$i]),
-
                     ];
             }
 
@@ -258,7 +254,6 @@ class C_TipeRumah extends Controller
                             // // $filename = basename($path);
                         }
 
-
                         if ($request->counter[$counter] == $dataidTipeRumah[$i]['no']) {
                             // echo "<pre>";
                             // echo "ada yang sama cook";
@@ -273,7 +268,6 @@ class C_TipeRumah extends Controller
                                 'img_rumah' => $filename,
                             ];
                         }
-
                     }
                 }
             }
@@ -282,19 +276,16 @@ class C_TipeRumah extends Controller
             // print_r($dataTipeRumah);
             // dd($dataGambarTipe);
             // dd($dataGambarTipe);
-            return redirect('/rumah-admin/'.$projek)->with('success', 'Data rumah dan tipe rumah telah berhasil di simpan');
+            return redirect('/rumah-admin/' . $projek)->with('success', 'Data rumah dan tipe rumah telah berhasil di simpan');
         } else {
             return redirect('/login');
         }
-
-
-
     }
 
-    public function updateTipeRumah($projek,$id_tipe)
+    public function updateTipeRumah($projek, $id_tipe)
     {
         $decryptID = Crypt::decrypt($id_tipe);
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptID);
         $getTipeRumah = $this->tipeRumah->getTipeRumahWhere('*', 'id_tipe_rumah', '=', $decryptID);
         $getGambar = $this->gambarRumah->getGambarRumahWhereAll('*', 'id_tipe', '=', $decryptID);
@@ -337,11 +328,10 @@ class C_TipeRumah extends Controller
         }
     }
 
-    public function updateTipeRumahAction(Request $request,$projek, $id_tipe)
+    public function updateTipeRumahAction(Request $request, $projek, $id_tipe)
     {
-
         $decryptID = Crypt::decrypt($id_tipe);
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
         $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
             'user_menu.status_um' => 'aktif',
@@ -458,7 +448,6 @@ class C_TipeRumah extends Controller
                     // // print_r(array_keys($dataidTipeRumah[$i]));
                     // echo "</pre>";
 
-
                     $dataGambarTipe[] = [
                         'id_tipe' => $decryptID,
                         'id_rumah' => $request->id_rumah,
@@ -467,69 +456,58 @@ class C_TipeRumah extends Controller
                         'img_rumah' => $filename,
                     ];
 
-
                     $this->gambarRumah->insertGambarRumah($dataGambarTipe);
                 }
-
             }
             // dd($dataGambarTipe);
             // dd($dataGambarTipe);
-            return redirect('/tipe-rumah-admin/'.$getProjek->nama_projek.'/'.
-            Crypt::encrypt($request->id_rumah))->with('success', 'Data tipe rumah telah berhasil diubah');
+            return redirect('/tipe-rumah-admin/' . $getProjek->nama_projek . '/' .
+                Crypt::encrypt($request->id_rumah))->with('success', 'Data tipe rumah telah berhasil diubah');
         } else {
             return redirect('/login');
         }
     }
-    public function updateImageTipeRumahAction(Request $request,$projek,$id,$id_gambar){
 
-
+    public function updateImageTipeRumahAction(Request $request, $projek, $id, $id_gambar)
+    {
         // $decryptID = Crypt::decrypt($id_tipe);
         // $decryptIDGambar = Crypt::decrypt($id_gambar);
-        $getProjek = $this->projek->firstProjek('*','nama_projek','=',$projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getGambar = $this->gambarRumah->getGambarRumahWhere('*', 'gambar_rumah.id_gambar_rumah', '=', $id_gambar);
 
+        $filename = $getGambar->img_rumah;
+        $jenis_img = trim($getGambar->jenis_img);
+        $path ="";
 
-            $filename = $getGambar->img_rumah;
-            if ($request->file('img')) {
-                if($getGambar->jenis_img == 'gambar'){
-                    $img = $request->file('img');
 
-                    // Generate a unique filename based on the current timestamp and the original file extension
-                    $filename = time().'.'.$img->getClientOriginalExtension();
+        if ($request->file('img')!= null ) {
 
-                    // Store the image in the 'images' folder under the 'public' disk
+                $img = $request->file('img');
+
+                // Generate a unique filename based on the current timestamp and the original file extension
+                $filename =time() . '.' . $img->getClientOriginalExtension();
+
+                // Store the image in the 'images' folder under the 'public' disk
+                if ($jenis_img =="gambar") {
+                    # code...
                     $path = 'Home/images/tipe/';
-                    $img = Image::make($img);
-                    $img->save(public_path($path.$filename));
-                }
-                if($getGambar->jenis_img == 'denah'){
-                    $img = $request->file('img');
-
-                    // Generate a unique filename based on the current timestamp and the original file extension
-                    $filename = time().'.'.$img->getClientOriginalExtension();
-
-                    // Store the image in the 'images' folder under the 'public' disk
+                }else{
                     $path = 'Home/images/denah/';
-                    $img = Image::make($img);
-                    $img->save(public_path($path.$filename));
-
                 }
+                $img = Image::make($img);
+                $img->save(public_path($path . $filename));
 
+        }
 
-            }
-            $dataGambarTipe = [
+        $dataGambarTipe = [
+            'img_rumah' => $filename,
+        ];
 
-                'img_rumah' => $filename,
-            ];
-
-            // dd($dataGambarTipe);
-            DB::table('gambar_rumah')
-            ->where('id_gambar_rumah',$id_gambar)
+        // dd($dataGambarTipe);
+        DB::table('gambar_rumah')
+            ->where('id_gambar_rumah', $id_gambar)
             ->update($dataGambarTipe);
 
         return response()->json($dataGambarTipe);
-
-
-
     }
 }

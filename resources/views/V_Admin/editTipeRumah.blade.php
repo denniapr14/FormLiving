@@ -231,7 +231,7 @@
 
                                                         <div class="product__img">
                                                             <img src="{{ url('Home') }}/images/denah/{{ $gambar->img_rumah }}"
-                                                                alt="product-1">
+                                                                alt="product-1" id="denah{{ $gambar->id_gambar_rumah }}">
                                                         </div>
                                                         <p> {{ $gambar->jenis_img }}</p>
                                                         @if ($gambar->status_gr != 'nonaktif')
@@ -287,13 +287,143 @@
                                                                                                 class="form-control"
                                                                                                 name="img"
                                                                                                 placeholder="masukan gambar"
+                                                                                                id="img{{ $gambar->id_gambar_rumah }}">
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                    <div class="row pt-4">
+                                                                                        <div class="col-12">
+
+                                                                                            <button
+                                                                                                class="btn btn-primary w-100 mb-1"
+                                                                                                type="button"
+                                                                                                name="submitImg"
+                                                                                                id="uploadButton{{ $gambar->id_gambar_rumah }}">Submit</button>
+                                                                                            <button
+                                                                                                class="btn btn-danger w-100"
+                                                                                                type=""
+                                                                                                data-dismiss="modal">Close</button>
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                            <script>
+                                                                                $(document).ready(function() {
+                                                                                    $("#uploadButton{{ $gambar->id_gambar_rumah }}").click(function() {
+                                                                                        var formData = new FormData();
+                                                                                        formData.append("img", $("#img{{ $gambar->id_gambar_rumah }}")[0].files[0]);
+                                                                                        formData.append("_token", "{{ csrf_token() }}");
+
+                                                                                        $.ajax({
+                                                                                            url: "{{ route('updateImageTipeRumahAction.admin', [$getProjek->nama_projek, $getTipeRumah->id_tipe_rumah, $gambar->id_gambar_rumah]) }}", // Replace with your Laravel route
+                                                                                            type: "POST",
+                                                                                            data: formData,
+                                                                                            processData: false,
+                                                                                            contentType: false,
+                                                                                            success: function(response) {
+                                                                                                // Handle success response (e.g., update image preview)
+                                                                                                let url = "{{ url('Home') }}/images/denah/"
+                                                                                                // Handle success response (e.g., update image preview)
+                                                                                                // alert("Image uploaded successfully!");
+                                                                                                $("#denah{{ $gambar->id_gambar_rumah }}").attr("src", url + response.img_rumah);
+
+
+
+                                                                                            },
+                                                                                            error: function(error) {
+                                                                                                // Handle error response (e.g., show an error message)
+                                                                                                console.error(error.responseText);
+                                                                                                alert("Error uploading image. Please try again.");
+                                                                                            }
+                                                                                        });
+                                                                                    });
+                                                                                });
+                                                                            </script>
+
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+
+
+                                            @if ($gambar->jenis_img == 'gambar')
+                                                <div class="product__item">
+                                                    <div class="product__card">
+                                                        <div class="product__img">
+                                                            <img src="{{ url('Home') }}/images/tipe/{{ $gambar->img_rumah }}"
+                                                                alt="product-1"
+                                                                id="gambar{{ $gambar->id_gambar_rumah }}">
+                                                        </div>
+                                                        <p> {{ $gambar->jenis_img }}</p>
+                                                        @if ($gambar->status_gr != 'nonaktif')
+                                                            <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                                class="btn btn-danger"><i class="fa fa-toggle-off"
+                                                                    aria-hidden="true"></i>
+                                                                Nonaktif</a>
+                                                        @else
+                                                            <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                                class="btn btn-primary"><i class="fa fa-toggle-on"
+                                                                    aria-hidden="true"></i>
+                                                                Aktif</a>
+                                                        @endif
+                                                        <button type="button" class="btn btn-info"
+                                                            data-target="#tipeRumah{{ $gambar->id_gambar_rumah }}"
+                                                            data-toggle="modal"
+                                                            data-target=".bd-example-modal-lg{{ $gambar->id_gambar_rumah }}">
+                                                            <i class="fas fa-edit    "></i>
+                                                        </button>
+
+                                                        <div class="modal modal-form fade"
+                                                            id="tipeRumah{{ $gambar->id_gambar_rumah }}"
+                                                            data-backdrop="static" data-keyboard="false" tabindex="-1"
+                                                            aria-labelledby="order-informationLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Detail Tipe Rumah
+
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true"><i
+                                                                                    class="bi bi-x-lg"></i></span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="product-listing">
+                                                                            <form action="" method="POST"
+                                                                                enctype="multipart/form-data"
+                                                                                id="imageUploadForm">
+                                                                                @csrf
+
+
+                                                                                <div class="modal-body">
+                                                                                    <div class="form-group row">
+                                                                                        <label
+                                                                                            class="col-sm-4 col-form-label align-self-center">
+                                                                                            Gambar Tipe Rumah
+                                                                                        </label>
+                                                                                        <div
+                                                                                            class="col-sm-8 align-self-center">
+                                                                                            <input type="file"
+                                                                                                class="form-control"
+                                                                                                name="img"
+                                                                                                placeholder="masukan gambar"
                                                                                                 id="img">
                                                                                         </div>
-                                                                                        <div id="imagePreviewContainer">
-                                                                                            <img id="imagePreview"
-                                                                                                src=""
-                                                                                                alt="Uploaded Image">
-                                                                                        </div>
+
                                                                                     </div>
 
                                                                                     <div class="row pt-4">
@@ -328,15 +458,18 @@
                                                                                             processData: false,
                                                                                             contentType: false,
                                                                                             success: function(response) {
+                                                                                                let url = "{{ url('Home') }}/images/tipe/"
                                                                                                 // Handle success response (e.g., update image preview)
-                                                                                                $("#imagePreview").attr("src", response.imageUrl);
+                                                                                                $("#gambar{{ $gambar->id_gambar_rumah }}").attr("src", url + response
+                                                                                                    .img_rumah);
                                                                                                 // alert("Image uploaded successfully!");
-                                                                                                console.log(response);
+                                                                                                // console.log(response);
+                                                                                                // console.log(url+response.img_rumah);
                                                                                             },
                                                                                             error: function(error) {
                                                                                                 // Handle error response (e.g., show an error message)
                                                                                                 console.error(error.responseText);
-                                                                                                alert("Error uploading image. Please try again.");
+                                                                                                // alert("Error uploading image. Please try again.");
                                                                                             }
                                                                                         });
                                                                                     });
@@ -353,135 +486,6 @@
                                                             </div>
 
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-
-
-                                            @if ($gambar->jenis_img == 'gambar')
-                                                <div class="product__item">
-                                                    <div class="product__card">
-                                                        <div class="product__img">
-                                                            <img src="{{ url('Home') }}/images/tipe/{{ $gambar->img_rumah }}"
-                                                                alt="product-1">
-                                                        </div>
-                                                        <p> {{ $gambar->jenis_img }}</p>
-                                                        @if ($gambar->status_gr != 'nonaktif')
-                                                            <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                class="btn btn-danger"><i class="fa fa-toggle-off"
-                                                                    aria-hidden="true"></i>
-                                                                Nonaktif</a>
-                                                        @else
-                                                            <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                class="btn btn-primary"><i class="fa fa-toggle-on"
-                                                                    aria-hidden="true"></i>
-                                                                Aktif</a>
-                                                        @endif
-                                                        <button type="button" class="btn btn-info"
-                                                        data-target="#tipeRumah{{ $gambar->id_gambar_rumah }}"
-                                                        data-toggle="modal"
-                                                        data-target=".bd-example-modal-lg{{ $gambar->id_gambar_rumah }}">
-                                                        <i class="fas fa-edit    "></i>
-                                                    </button>
-
-                                                    <div class="modal modal-form fade"
-                                                        id="tipeRumah{{ $gambar->id_gambar_rumah }}"
-                                                        data-backdrop="static" data-keyboard="false" tabindex="-1"
-                                                        aria-labelledby="order-informationLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title">Detail Tipe Rumah
-
-                                                                    </h5>
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true"><i
-                                                                                class="bi bi-x-lg"></i></span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="product-listing">
-                                                                        <form action="" method="POST"
-                                                                            enctype="multipart/form-data"
-                                                                            id="imageUploadForm">
-                                                                            @csrf
-
-
-                                                                            <div class="modal-body">
-                                                                                <div class="form-group row">
-                                                                                    <label
-                                                                                        class="col-sm-4 col-form-label align-self-center">
-                                                                                        Gambar Tipe Rumah
-                                                                                    </label>
-                                                                                    <div
-                                                                                        class="col-sm-8 align-self-center">
-                                                                                        <input type="file"
-                                                                                            class="form-control"
-                                                                                            name="img"
-                                                                                            placeholder="masukan gambar"
-                                                                                            id="img">
-                                                                                    </div>
-
-                                                                                </div>
-
-                                                                                <div class="row pt-4">
-                                                                                    <div class="col-12">
-
-                                                                                        <button
-                                                                                            class="btn btn-primary w-100 mb-1"
-                                                                                            type="button"
-                                                                                            name="submitImg"
-                                                                                            id="uploadButton{{ $gambar->id_gambar_rumah }}">Submit</button>
-                                                                                        <button
-                                                                                            class="btn btn-danger w-100"
-                                                                                            type=""
-                                                                                            data-dismiss="modal">Close</button>
-
-                                                                                    </div>
-
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-                                                                        <script>
-                                                                            $(document).ready(function() {
-                                                                                $("#uploadButton{{ $gambar->id_gambar_rumah }}").click(function() {
-                                                                                    var formData = new FormData();
-                                                                                    formData.append("img", $("#img")[0].files[0]);
-                                                                                    formData.append("_token", "{{ csrf_token() }}");
-
-                                                                                    $.ajax({
-                                                                                        url: "{{ route('updateImageTipeRumahAction.admin', [$getProjek->nama_projek, $getTipeRumah->id_tipe_rumah, $gambar->id_gambar_rumah]) }}", // Replace with your Laravel route
-                                                                                        type: "POST",
-                                                                                        data: formData,
-                                                                                        processData: false,
-                                                                                        contentType: false,
-                                                                                        success: function(response) {
-                                                                                            // Handle success response (e.g., update image preview)
-                                                                                            $("#imagePreview").attr("src", response.imageUrl);
-                                                                                            // alert("Image uploaded successfully!");
-                                                                                            console.log(response);
-                                                                                        },
-                                                                                        error: function(error) {
-                                                                                            // Handle error response (e.g., show an error message)
-                                                                                            console.error(error.responseText);
-                                                                                            alert("Error uploading image. Please try again.");
-                                                                                        }
-                                                                                    });
-                                                                                });
-                                                                            });
-                                                                        </script>
-
-
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
 
                                                     </div>
                                                 </div>
@@ -496,28 +500,28 @@
 
 
 
-        <div id="fileInput0">
-            <label for="fileInput">Select a file:</label>
-            <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
-            <input type="file" id="fileInput" name="fileInput[]">
+                    <div id="fileInput0">
+                        <label for="fileInput">Select a file:</label>
+                        <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
+                        <input type="file" id="fileInput" name="fileInput[]">
 
-            <select name="jenisGambar[]" id="" class="form form-control">
-                <option value="">---Pilih Jenis Gambar---</option>
-                <option value="Denah">Denah</option>
-                <option value="Gambar">Gambar</option>
-            </select>
+                        <select name="jenisGambar[]" id="" class="form form-control">
+                            <option value="">---Pilih Jenis Gambar---</option>
+                            <option value="Denah">Denah</option>
+                            <option value="Gambar">Gambar</option>
+                        </select>
 
+                    </div>
+
+                    <button type="button" class="btn btn-success" onclick="addFile(id= 0)">Add File Input</button>
+                    <br><br>
+
+
+
+                    <br>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
         </div>
-
-        <button type="button" class="btn btn-success" onclick="addFile(id= 0)">Add File Input</button>
-        <br><br>
-
-
-
-        <br>
-        <button class="btn btn-primary" type="submit">Submit</button>
-    </div>
-    </div>
     </div>
 
 
