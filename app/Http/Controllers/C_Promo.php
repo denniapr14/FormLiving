@@ -349,6 +349,10 @@ class C_Promo extends Controller
                 'diskon_promo' => $request->diskon_promo,
                 'tgl_aktif' => $request->tgl_mulai,
                 'tgl_berakhir' => $request->tgl_berakhir,
+                'bphtb_promo' => $request->bphtb,
+                'freekpr_promo' => $request->kpr,
+                'extra_cicilan' => $request->extra_cicilan,
+                'jumlah_extra_cicilan' => $request->jumlah_cicilan
             ];
             $promoID = DB::table('promo')
                 ->insertGetId($dataInputPromo);
@@ -494,6 +498,10 @@ class C_Promo extends Controller
                 'diskon_promo' => $request->diskon_promo,
                 'tgl_aktif' => $request->tgl_mulai,
                 'tgl_berakhir' => $request->tgl_berakhir,
+                'bphtb_promo' => $request->bphtb,
+                'freekpr_promo' => $request->kpr,
+                'extra_cicilan' => $request->extra_cicilan,
+                'jumlah_extra_cicilan' => $request->jumlah_cicilan
             ];
             // dd($dataRumah);
             DB::table('promo')

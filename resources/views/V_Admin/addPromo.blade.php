@@ -166,6 +166,32 @@
                                 aria-describedby="helpId">
 
                         </div>
+                        <div class="form-group">
+                            <label for="">BPHTB Promo</label>
+                            <select name="bphtb" id="" class="form-control">
+                                <option value="">--Pilih--</option>
+                                <option value="yes">Ya</option>
+                                <option value="no">Tidak</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">KPR Promo</label>
+                            <select name="kpr" id="" class="form-control">
+                                <option value="">--Pilih--</option>
+                                <option value="yes">Ya</option>
+                                <option value="no">Tidak</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ekstra Cicilan Promo</label>
+                            <select name="extra_cicilan" id="" class="form-control">
+                                <option value="">--Pilih--</option>
+                                <option value="yes">Ya</option>
+                                <option value="no">Tidak</option>
+                            </select>
+                         <input type="number" name="jumlah_cicilan" class="form-control">
+                        </div>
+
 
                         <div class="form-group">
                             <label for="">Tanggal Mulai</label>

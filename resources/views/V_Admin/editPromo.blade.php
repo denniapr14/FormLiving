@@ -209,6 +209,49 @@
                                 aria-describedby="helpId">
 
                         </div>
+                        <div class="form-group">
+                            <label for="">BPHTB Promo</label>
+                            <select name="bphtb" id="" class="form-control">
+                                @if ($getPromo->bphtb_promo == "yes")
+                                <option value="yes" selected>Ya</option>
+                                <option value="no">Tidak</option>
+                                @else
+                                <option value="no" selected>Tidak</option>
+                                <option value="yes">Ya</option>
+
+                                @endif
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">KPR Promo</label>
+                            <select name="kpr" id="" class="form-control">
+                                @if ($getPromo->freekpr_promo == "yes")
+                                <option value="yes" selected>Ya</option>
+                                <option value="no">Tidak</option>
+                                @else
+                                <option value="no" selected>Tidak</option>
+                                <option value="yes">Ya</option>
+
+                                @endif
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ekstra Cicilan Promo</label>
+                            <select name="extra_cicilan" id="" class="form-control">
+                                @if ($getPromo->extra_cicilan == "yes")
+                                <option value="yes" selected>Ya</option>
+                                <option value="no">Tidak</option>
+                                @else
+                                <option value="no" selected>Tidak</option>
+                                <option value="yes">Ya</option>
+
+                                @endif
+                            </select>
+                            <input type="number" name="jumlah_cicilan" value="{{ $getPromo->jumlah_extra_cicilan }}" class="form-control">
+                        </div>
+
 
                         <div class="form-group">
                             <label for="">Tanggal Mulai</label>
