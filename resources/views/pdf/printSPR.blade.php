@@ -327,25 +327,33 @@
     <div class="container">
 
         <center>
-           <table class="table table-borderless no-space">
+            <table class="table table-borderless no-space">
                 <tr>
-
                     <td><img style="" src="{{ asset('Dashboard') }}/images/content/logo-forms-living1.png" alt=""></td>
-                    <td><img style="float: right;" class="float-right" src="{{ asset('Dashboard') }}/images/content/logo-tidar-gray.png" alt=""></td>
+                    <td><img style="float: right;" class="float-right"
+                            src="{{ asset('Dashboard') }}/images/content/logo-tidar-gray.png" alt=""></td>
                 </tr>
             </table>
             <br>
-            <h4> SURAT PEMESANAN RUMAH </h4>
+            <h4> SURAT PEMESANAN RUMAH SEMENTARA</h4>
             <p>Nomor : - </p>
         </center>
         <p>Yang bertanda tangan dibawah ini :</p>
         <table>
             <tr>
-                <td>Nama</td>
+                <td style="width:40%;">Nama</td>
                 <td>: {{ $fp->nama_plgn }} </td>
             </tr>
             <tr>
-                <td>Alamat</td>
+                <td style="width:40%;">NPWP</td>
+                <td>: {{ $fp->npwp_plgn }} </td>
+            </tr>
+            <tr>
+                <td style="width:40%;">KTP/SIM No.</td>
+                <td>: {{ $fp->no_ktp_plgn }} </td>
+            </tr>
+            <tr>
+                <td style="width:40%;">Alamat</td>
                 <td>: {{ $fp->alamat_plgn }}</td>
             </tr>
             <tr>
@@ -361,17 +369,18 @@
                     Tempat & Tgl. Lahir
                 </td>
                 <td>
-                    : -
+                    : {{ $fp->tempat_lahir_plgn }},
+                    <?= tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn)))?>
                 </td>
             </tr>
             <tr>
                 <td>Sumber Dana</td>
-                <td>: </td>
+                <td>: {{$fp->sumber_dana_plgn}}</td>
             </tr>
             <tr>
                 <td>Tujuan transaksi</td>
                 <td>
-                    :
+                    : -
                 </td>
 
             </tr>
@@ -403,7 +412,7 @@
             </li>
             <li data-list-text="4.">
                 <p style="padding-top: 1pt;padding-left: 41pt;text-indent: -18pt;text-align: left;">
-                    Luas Bangunan : {{ $fp->luas_tanah_kkpr }} m2
+                    Luas Bangunan : {{ $fp->luas_bangunan_kkpr }} m2
                 </p>
             </li>
             <li data-list-text="5.">
@@ -412,7 +421,7 @@
                     diperhitungkan sebagai berikut :</p>
                 <p style="text-indent: 0pt;text-align: left;"><br /></p>
 
-                @if (empty($promo))
+                @if (empty($promo) && $promo == null)
 
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                     <tr style="height:14pt">
@@ -420,6 +429,45 @@
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
                                 a.
+                                Harga
+                                Pricelist</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
+                                {{ rupiah($fp->harga_tr )}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                b.
+                                Diskon</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
+                                0,-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                c.
                                 Harga
                                 Netto</p>
                         </td>
@@ -439,7 +487,7 @@
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                b.
+                                d.
                                 PPN (
                                 Pajak Pertambahan Nilai)</p>
                         </td>
@@ -455,59 +503,12 @@
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
                         </td>
                     </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
-                                BPHTB</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
-                                - ,-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
-                                Biaya Surat
-                                (BBN dan AJB) PPAT</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:17pt">
-                        <td style="width:215pt">
-                            <p class="s2"
-                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                e.
-                                Biaya
-                                Administrasi</p>
-                        </td>
-                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                Rp.
-                            </p>
-                        </td>
-                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                0,-</p>
-                        </td>
-                    </tr>
+
                     <tr style="height:17pt">
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                                Sehinggal TOTAL harga sebesar</p>
+                                Sehingga TOTAL harga sebesar</p>
                         </td>
                         <td style="width:29pt;border-top-style:solid;border-top-width:1pt">
                             <p class="s2"
@@ -525,7 +526,8 @@
 
                 @else
 
-                 @if ($promo->BPHTB_promo == "yes")
+
+                @if ($promo->bphtb_promo == "yes" )
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                     <tr style="height:14pt">
                         <td style="width:215pt">
@@ -533,6 +535,44 @@
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
                                 a.
                                 Harga
+                                Pricelist</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
+                                {{ rupiah($fp->harga_tr )}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                b.
+                                Diskon</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
+                                {{ rupiah($promo->diskon_promo)}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                c. Harga
                                 Netto</p>
                         </td>
                         <td style="width:29pt">
@@ -547,13 +587,11 @@
                                 {{ rupiah(($fp->total_harga+3000000)/1.16 )}},-</p>
                         </td>
                     </tr>
-                    <tr style="height:16pt">
+                    <tr style="height:14pt">
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                b.
-                                PPN (
-                                Pajak Pertambahan Nilai)</p>
+                                d. PPN (Pajak Pertambahan Nilai)</p>
                         </td>
                         <td style="width:29pt">
                             <p class="s2"
@@ -565,54 +603,6 @@
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                 {{ rupiah((11/100)*(($fp->total_harga+3000000)/1.16) )}},-</p>
-                        </td>
-                    </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
-                                BPHTB</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
-                                {{ rupiah(( (($fp->total_harga+3000000)/1.16) *(5/100)) - 3000000)}},-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
-                                Biaya Surat
-                                (BBN dan AJB) PPAT</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:17pt">
-                        <td style="width:215pt">
-                            <p class="s2"
-                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                e.
-                                Biaya
-                                Administrasi</p>
-                        </td>
-                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                Rp.
-                            </p>
-                        </td>
-                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                0,-</p>
                         </td>
                     </tr>
                     <tr style="height:17pt">
@@ -633,13 +623,52 @@
                         </td>
                     </tr>
                 </table>
-                @elseif ($promo->BPHTB_promo == "no")
+                @elseif ($promo->bphtb_promo == "no")
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                     <tr style="height:14pt">
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
                                 a.
+                                Harga
+                                Pricelist</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
+                                {{ rupiah($fp->harga_tr )}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                b.
+                                Diskon</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
+                                {{ rupiah($promo->diskon_promo)}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+                                c.
                                 Harga
                                 Netto</p>
                         </td>
@@ -659,7 +688,7 @@
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                b.
+                                d.
                                 PPN (
                                 Pajak Pertambahan Nilai)</p>
                         </td>
@@ -673,54 +702,6 @@
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
-                        </td>
-                    </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
-                                BPHTB</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
-                                - ,-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:16pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
-                                Biaya Surat
-                                (BBN dan AJB) PPAT</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:17pt">
-                        <td style="width:215pt">
-                            <p class="s2"
-                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                e.
-                                Biaya
-                                Administrasi</p>
-                        </td>
-                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                Rp.
-                            </p>
-                        </td>
-                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                0,-</p>
                         </td>
                     </tr>
                     <tr style="height:17pt">
@@ -742,6 +723,9 @@
                     </tr>
                 </table>
                 @endif
+
+
+
 
 
                 @endif
@@ -930,7 +914,7 @@
                             melengkapi data-data yang diperlukan oleh Bank/Lembaga</p>
                         <p
                             style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
-                            Keuangan/Pembiayaan selambat-lambatnya : 14 (empat belas) Hari setelah tanda jadi (booking
+                            Keuangan/Pembiayaan selambat-lambatnya : 7 (Tujuh) Hari setelah tanda jadi (booking
                             fee)
                             untuk KPR PERTAMA, KEDUA, KETIGA, KEEMPAT dan KELIMA 3 (tiga) bulan sebelum DP Lunas untuk
                             KPR
@@ -1045,7 +1029,7 @@
                             mengembalikan kepada PT. CITRA ARGO TIRTA asli Surat Pemesanan ini dan seluruh asli kwitansi
                             pembayaran terkait. Seluruh pengembalian tersebut tanpa</p>
                         <p style="padding-left: 77pt;text-indent: 0pt;line-height: 113%;text-align: justify;">diberikan
-                            bunga apapun juga, setelah dipotong biaya pembatalan sebagaimana yang diatur didalambutir X
+                            bunga apapun juga, setelah dipotong biaya pembatalan sebagaimana yang diatur didalam butir X
                             huruf d.</p>
                     </li>
                 </ol>
@@ -1204,56 +1188,148 @@
                 </ol>
             </li>
             <li data-list-text="XIV.">
-                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">FORCE MAJEURE</p>
-                <p style="padding-top: 1pt;padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">Para
-                    pihak setuju untuk mengadakan perubahan/penambahan atas Surat Pemesanan ini apabila di kemudian hari
-                    terjadi Force Majeure. Yang dimaksud dengan Force Majeure adalah hal-hal yang dapat mempengaruhi
-                    jalannya pelaksanaan pekerjaan PT. CITRA ARGO TIRTA antara lain: gempa bumi, banjir, bencana alam
-                    lainnya, huru-hara, perang, tindakan kekerasan oleh pihak lain baik</p>
-                <p style="padding-top: 4pt;padding-left: 41pt;text-indent: 0pt;line-height: 113%;text-align: left;">
-                    secara
-                    perorangan atau massal, termasuk tindakan, kebijakan/peraturan Pemerintah termasuk di bidang fiskal
-                    atau
-                    moneter, keadaan politik atau keadaan langka bahan bangunan yang</p>
-                <p style="padding-left: 41pt;text-indent: 0pt;text-align: left;">mempengaruhi kegiatan usaha di bidang
-                    properti dan turunannya.</p>
+                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">KETENTUAN SELAMA
+                    PEMBANGUNAN</p>
+                <ol id="l10">
+                    <li data-list-text="a.">
+                        <p
+                            style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
+                            Pelaksanaan pembangunan didasarkan pada spesifikasi teknik dan gambar rumah yang
+                            telah dikeluarkan oleh PT. CITRA ARGO TIRTA.</p>
+                    </li>
+                    <li data-list-text="b.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Untuk pembelian rumah dengan kavling khusus, untuk pelaksanaan pembangunan
+                            diperkenankan free design dan tetap berpedoman sesuai dengan prosedur PT. CITRA
+                            ARGO TIRTA.</p>
+
+                    </li>
+                    <li data-list-text="c.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Adanya pekerjaan tambahan atau perubahan spesifikasi teknik dan gambar harap
+                            diinformasikan di awal pemesanan.
+                        </p>
+                    </li>
+                    <li data-list-text="d.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Selama masa pembangunan, Pembeli tidak diperkenankan untuk melakukan pekerjaan
+                            tambahan atau perubahan spesifikasi teknik dan gambar tanpa persetujuan dari PT.
+                            CITRA ARGO TIRTA.
+                        </p>
+                    </li>
+                    <li data-list-text="e.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Pengajuan order pembangunan akan dilakukan setelah Pembeli menyelesaikan
+                            pembayaran 50% dari harga jual untuk pembayaran secara inhouse dan sudah
+                            Realisasi dengan pihak Bank/Lembaga Keuangan/ Pembiayaan. Penyelesaian bangunan
+                            akan dilaksanakan oleh PT. CITRA ARGO TIRTA selambat-lambatnya 12 bulan untuk
+                            tipe dibawah 70, sedangkan untuk tipe diatas 70 akan disepakati oleh kedua belah
+                            pihak.
+                        </p>
+                    </li>
+                </ol>
             </li>
             <li data-list-text="XV.">
-                <p style="padding-top: 8pt;padding-left: 41pt;text-indent: -32pt;text-align: left;">ARBITRASE</p>
+                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">PRIHAL SERAH TERIMA
+                    RUMAH</p>
+                <ol id="l10">
+                    <li data-list-text="a.">
+                        <p
+                            style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
+                            Serah Terima Kavling akan dilaksanakan setelah Pembeli membayar lunas seluruh
+                            harga Tanah dan Bangunan dan pembangunan telah selesai 100%.</p>
+                    </li>
+                    <li data-list-text="b.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Serah Terima Sepihak akan dilaksanakan jika pembeli tidak dapat melakukan serah
+                            terima kavling dalam waktu yang telah ditentukan oleh PT. CITRA ARGO TIRTA.</p>
+
+                    </li>
+                    <li data-list-text="c.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Pembeli berjanji serta mengikatkan diri untuk tetap menggunakan tanah dan
+                            bangunan sebagai rumah tinggal, di kemudian hari apabila ada pengerjaan renovasi
+                            pembeli wajib melakukan konfirmasi kepada PT. CITRA ARGO TIRTA.
+                        </p>
+                    </li>
+                    <li data-list-text="d.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Biaya Pemeliharaan dan Perbaikan Lingkungan serta penggunaan air bersih dimulai
+                            sejak tanggal ditandatanganinya BAST (Berita Acara Serah Terima) yang besarnya
+                            ditentukan oleh PT. CITRA ARGO TIRTA.
+                        </p>
+                    </li>
+
+                </ol>
+            </li>
+            <li data-list-text="XVI.">
+                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">PRIHAL SERAH TERIMA
+                    RUMAH</p>
+
+
+                <p style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
+                    Para pihak setuju untuk mengadakan perubahan/penambahan atas Surat Pemesanan ini apabila
+                    di kemudian hari terjadi Force Majeure. Yang dimaksud dengan Force Majeure adalah
+                    hal-hal yang dapat mempengaruhi jalannya pelaksanaan pekerjaan PT. CITRA ARGO TIRTA
+                    antara lain: gempa bumi, banjir, bencana alam lainnya, huru-hara, perang, tindakan
+                    kekerasan oleh pihak lain baik secara perorangan atau massal, termasuk tindakan,
+                    kebijakan/peraturan Pemerintah termasuk di bidang fiskal atau moneter, keadaan politik
+                    atau keadaan langka bahan bangunan yang mempengaruhi kegiatan usaha di bidang properti
+                    dan turunannya.</p>
+
+            </li>
+            <li data-list-text="XVII.">
+                <p style="padding-top: 8pt;padding-left: 41pt;text-indent: -32pt;text-align: left;">
+                    ARBITRASE DAN PENYELESAIAN SENGKETA
+                </p>
                 <ol id="l11">
                     <li data-list-text="a.">
                         <p
                             style="padding-top: 1pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Jika timbul perselisihan dalam melaksanakan Surat Pemesanan ini, maka akan diselesaikan oleh
+                            Jika timbul perselisihan dalam melaksanakan Surat Pemesanan ini, maka akan
+                            diselesaikan oleh
                             para pihak secara musyawarah.</p>
                     </li>
                     <li data-list-text="b.">
-                        <p style="padding-left: 77pt;text-indent: -18pt;text-align: left;">Apabila dalam jangka waktu 60
-                            (enam puluh) hari sejak sengketa atau beda pendapat tersebut, penyelesaian secara musyawarah
+                        <p style="padding-left: 77pt;text-indent: -18pt;text-align: left;">Apabila dalam
+                            jangka
+                            waktu 60
+                            (enam puluh) hari sejak sengketa atau beda pendapat tersebut, penyelesaian
+                            secara
+                            musyawarah
                             tidak tercapai, maka para pihak sepakat untuk
-                            menyelesaikannya pada tingkat pertama dan terakhir dengan cara arbitrase melalui Badan
+                            menyelesaikannya pada tingkat pertama dan terakhir dengan cara arbitrase melalui
+                            Badan
                             Arbitrase
                             Nasional Indonesia (BANI) di Jakarta, sesuai dengan Undang-Undang Republik
                             nomor
-                            30 tahun 1999 tentang Arbitrase dan Alternatif Penyelesaian Sengketa, berikut perubahan dan
+                            30 tahun 1999 tentang Arbitrase dan Alternatif Penyelesaian Sengketa, berikut
+                            perubahan dan
                             penambahannya di kemudian hari.
                         </p>
                         <p
                             style="padding-top: 1pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
                         </p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">Indonesia
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
+                            Indonesia
                         </p>
                     </li>
                     <li data-list-text="c.">
-                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">Kesepakatan
-                            para pihak untuk menyelesaikan sengketa dengan cara arbitrase meniadakan hak para pihak
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Kesepakatan
+                            para pihak untuk menyelesaikan sengketa dengan cara arbitrase meniadakan hak
+                            para
+                            pihak
                             untuk
                             mengajukan penyelesaian sengketa ke Pengadilan Negeri.</p>
                     </li>
                     <li data-list-text="d.">
-                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">Para pihak
-                            setuju bahwa keputusan BANI adalah final dan mengikat para pihak, serta untuk pelaksanaan
-                            keputusan BANI dapat dimintakan fiat eksekusinya ke Pengadilan Negeri setempat.</p>
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Para pihak
+                            setuju bahwa keputusan BANI adalah final dan mengikat para pihak, serta untuk
+                            pelaksanaan
+                            keputusan BANI dapat dimintakan fiat eksekusinya ke Pengadilan Negeri setempat.
+                        </p>
                     </li>
                 </ol>
             </li>
@@ -1302,7 +1378,11 @@
                 <td
                     style="width:122pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                     <p class="s2" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                        <?= date('Y-m-d', strtotime($fp->tgl_input_fp)) ?>
+                        @if($dtpem->tgl_pr != "0000-00-00")
+                        <?= tgl_indo(date('Y-m-d', strtotime($dtpem->tgl_pr))) ?>
+                        @else
+                        -
+                        @endif
                     </p>
                 </td>
                 <td
@@ -1310,22 +1390,33 @@
                     <p class="s2" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
                         Rp {{ rupiah($dtpem->harga_pr) }}</p>
                 </td>
-                {$no++}
             </tr>
+            <?php
+            
+            $no++;
+            ?>
             @endforeach
 
         </table>
         <p style="text-indent: 0pt;text-align: left;"><br /></p>
         <p style="padding-left: 5pt;text-indent: 0pt;text-align: left;">NOTES</p>
         <p style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">Harga Sudah
-            Termasuk : SHGB. Air bersih. Pagar keliling. PLN, IMB dan taman depan </p>
+            Termasuk : SHGB, PPN, IMB, PLN dan Air bersih. </p>
         <p style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">Harga Belum
-            Termasuk : -</p>
-        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 229%;text-align: left;">Promo : Free BPHTB
+            Termasuk : AJB, BBN, BPHTB, Biaya KPR.</p>
+        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 229%;text-align: justify;">Promo :
+            @if(empty($promo) && $promo == null)
+            Tidak ada Promo
+            @else
+            {{$promo->kode_promo}}<br>
+            {{$promo->keterangan}}
+            @endif
         </p>
         <p>
-            Malang, 11
-            Juli 2022</p>
+            Malang,
+            <?=  tgl_indo(date('Y-m-d', strtotime($fp->tgl_input_fp))) ?>
+            </php>
+        </p>
         <table style="width: 100%">
             <tr>
                 <td>
@@ -1336,10 +1427,10 @@
                     <p style="padding-left: 18pt;text-indent: 0pt;text-align: left;">{{ $fp->nama_ua }}</p>
                 </td>
                 <td>
-                    <p style="padding-top: 6pt;padding-left: 18pt;text-indent: 0pt;text-align: left;">Sales Manager</p>
+                    <p style="padding-top: 6pt;padding-left: 18pt;text-indent: 0pt;text-align: left;"></p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-                    <p style="padding-left: 19pt;text-indent: 0pt;text-align: left;">Aryuan Minoe</p>
+                    <p style="padding-left: 19pt;text-indent: 0pt;text-align: left;"></p>
                 </td>
                 <td>
                     <p style="padding-top: 3pt;padding-left: 89pt;text-indent: 0pt;text-align: center;">Pemesan</p>
@@ -1391,12 +1482,6 @@
         </table>
     </div>
 
-    <?php
-    function rupiah($angka)
-    {
-        $hasil_rupiah = number_format($angka, 0, ',', '.') ;
-        return $hasil_rupiah;
-    } ?>
 
 </body>
 
