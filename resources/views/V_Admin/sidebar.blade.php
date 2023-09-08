@@ -181,21 +181,30 @@
                     <li class="nav__item  ">
                         <a class="nav__link @if (request()->segment(1) === 'user-sales-agent-admin') active @endif" href="/user-sales-agent-admin">
                             <i class="fas fa-users    "></i>
-                            <span>User Sales / Agent</span>
+                            <span>User
+                                @if ($user->kategori == 'SuperAdmin')
+
+                                @else
+                                Sales / Agent
+                                @endif
+                            </span>
                         </a>
                     </li>
 
 
 
-                    @if ($user->kategori == 'SuperAdmin')
-                    <li class="nav__item  ">
-                        <a class="nav__link @if (request()->segment(1) === 'user-menu-admin') active @endif" href="{{ route('userMenu.admin') }}">
-                            <i class="fa fa-user-secret" aria-hidden="true"></i>
-                            <span>User Privilege</span>
-                        </a>
-                    </li>
-                    @endif
                 @endif
+
+                @if ($user->kategori == 'SuperAdmin')
+                <li class="nav__item  ">
+                    <a class="nav__link @if (request()->segment(1) === 'user-kategori-admin') active @endif" href="{{ route('userKategori.admin') }}">
+                        <i class="fa fa-user-secret" aria-hidden="true"></i>
+                        <span>User Kategori</span>
+                    </a>
+                </li>
+                @endif
+
+
 
                 <li class="nav__item  ">
                     <a class="nav__link @if (request()->segment(1) === 'user-pelanggan-admin') active @endif" href="{{ route('userPelanggan.admin') }}">

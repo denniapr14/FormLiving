@@ -17,6 +17,7 @@ use App\Http\Controllers\C_Rumah;
 use App\Http\Controllers\C_Simulasi;
 use App\Http\Controllers\C_SuratPemesananRumah;
 use App\Http\Controllers\C_UserPelanggan;
+use App\Http\Controllers\C_UserKategori;
 
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
@@ -341,7 +342,7 @@ Route::get('/selamat/{id}', [C_PreOrder::class, 'selamatPage'])->name('userConfi
 // >>>>>>>>>>>>>>>>>>end of Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');
 Route::get('/download-user-sales-admin', [C_UserAdmin::class, 'DownloadUserAdminSales'])->name('downloadUserAdminSales.admin');
-
+Route::get('/hapus-user-admin/{id}',[C_UserAdmin::class,'deleteUserAdmin'])->name('deleteUserAdmin.admin');
 // PROMO
 Route::get('/promo-admin/{projek}', [C_Promo::class, 'Promo'])->name('promo.admin');
 Route::get('/tambah-rumah-promo-admin/{projek}', [C_Promo::class, 'addRumahPromo'])->name('addPromoRumah.admin');
@@ -365,10 +366,14 @@ Route::get('/ubah-user-pelanggan-admin/{id}', [C_UserPelanggan::class, 'updateUs
 Route::post('/ubah-user-pelanggan-admin/action/{id}', [C_UserPelanggan::class, 'updateUserPelangganAction'])->name('updateUserPelangganAction.admin');
 
 
-Route::get('/user-menu-admin',[C_UserMenu::class,'userMenu'])->name('userMenu.admin');
-Route::post('/ubah-user-menu-admin/action/{id}',[C_UserMenu::class,'updateUserMenuAction'])->name('updateUserMenuAction.admin');
-Route::get('/ubah-status-user-menu-admin/{id}/{status}',[C_UserMenu::class,'changeStatusUserMenu'])->name('changeStatusUserMenu.admin');
+// Route::get('/user-menu-admin',[C_UserMenu::class,'userMenu'])->name('userMenu.admin');
+// Route::post('/ubah-user-menu-admin/action/{id}',[C_UserMenu::class,'updateUserMenuAction'])->name('updateUserMenuAction.admin');
+// Route::get('/ubah-status-user-menu-admin/{id}/{status}',[C_UserMenu::class,'changeStatusUserMenu'])->name('changeStatusUserMenu.admin');
 
+Route::get('/user-kategori-admin',[C_UserKategori::class,'userKategori'])->name('userKategori.admin');
+Route::post('/ubah-kategori-admin/action/{id}',[C_UserKategori::class,'updateUserKategoriAction'])->name('updateUserKategoriAction.admin');
+Route::get('/ubah-status-kategori-admin/{id}/{status}',[C_UserKategori::class,'changeStatusUserKategori'])->name('changeStatusUserKategori.admin');
+Route::get('/ubah-hapus-kategori-admin/{id}',[C_UserKategori::class,'changeStatusUserKategori'])->name('changeStatusUserKategori.admin');
 
 
 

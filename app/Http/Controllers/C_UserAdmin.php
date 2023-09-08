@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserAdmin;
-use App\Models\UserProjek;
 use App\Models\UserMenu;
+use App\Models\UserProjek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Crypt;
@@ -22,21 +22,19 @@ class C_UserAdmin extends Controller
     public function __construct()
     {
         $this->userAdmin = new UserAdmin;
-        $this->userProjek  = new UserProjek;
+        $this->userProjek = new UserProjek;
         $this->userMenu = new UserMenu();
     }
 
-    function ambilWaktu()
+    public function ambilWaktu()
     {
         $waktuNow = Carbon::now()->locale('id');
         $waktuNow = $waktuNow->settings(['formatFunction' => 'translatedFormat']);
         $waktuNow = $waktuNow->format('d F Y');
         return $waktuNow;
     }
-    function userAdminSalesAgent()
+    public function userAdminSalesAgent()
     {
-
-
 
         // dd($getUserSales);
         if (session()->has('user')) {
@@ -45,16 +43,16 @@ class C_UserAdmin extends Controller
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             //   dd($user);
 
-
             if (
                 $user->kategori == 'AdminAgentCompany'
 
             ) {
                 $whereUserAdmin = [
-                    'user_admin.id_kepala_ua'   => session::get('user')
+                    'user_admin.id_kepala_ua' => session::get('user'),
 
                 ];
-                $getUserSales = $this->userAdmin->getUserAdminWhereJoinProjek('*',  $whereUserAdmin);
+                $getUserSales = $this->userAdmin->getUserAdminWhereJoinProjek('*', $whereUserAdmin)->collect();
+                $getUserSales = $getUserSales->where('deleted_ua', 'false');
 
             }
 
@@ -63,27 +61,36 @@ class C_UserAdmin extends Controller
 
             ) {
                 $whereUserAdmin = [
-                    'user_admin.id_kepala_ua'   => session::get('user')
+                    'user_admin.id_kepala_ua' => session::get('user'),
 
                 ];
-                $getUserSales = $this->userAdmin->getUserAdminWhereJoinProjek('*',  $whereUserAdmin);
+                $getUserSales = $this->userAdmin->getUserAdminWhereJoinProjek('*', $whereUserAdmin)->collect();
+                $getUserSales = $getUserSales->where('deleted_ua', 'false');
 
             }
 
             if (
-                $user->kategori != 'AdminAgentCompany' &&  $user->kategori != 'AdminSales'
+                $user->kategori != 'AdminAgentCompany' && $user->kategori != 'AdminSales'
 
             ) {
                 $whereUserAdmin = [
-                    'Agent', 'SalesAgent', 'AgentCompany', 'AdminAgentCompany'
+                    'Agent', 'SalesAgent', 'AgentCompany', 'AdminAgentCompany',
                 ];
-                $getUserSales = $this->userAdmin->getUserAdminWhereIn('*', 'ktgr_admin.kategori', $whereUserAdmin);
+                $getUserSales = $this->userAdmin->getUserAdminWhereIn('*', 'ktgr_admin.kategori', $whereUserAdmin)->collect();
+                $getUserSales = $getUserSales->where('deleted_ua', 'false');
 
             }
 
+            if (
+                $user->kategori == 'SuperAdmin'
 
-            return view(
-                'V_Admin.userListSalesAgent',
+            ) {
+
+                $getUserSales = $this->userAdmin->getUserAdminAll('*');
+                $getUserSales = $getUserSales->where('deleted_ua', 'false');
+                // dd($getUserSales);
+            }
+            return view('V_Admin.userListSalesAgent',
                 compact(
                     'user',
                     'projekUser',
@@ -96,10 +103,7 @@ class C_UserAdmin extends Controller
         }
     }
 
-    function UserAdminAll()
-    {
-    }
-    function updateUserProfile()
+    public function updateUserProfile()
     {
 
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -115,20 +119,17 @@ class C_UserAdmin extends Controller
                     'projekUser',
                     'getUser',
 
-
                 )
             );
         } else {
             return redirect('/login');
         }
     }
-    function updateUserProfileAction(Request $request, $id)
+    public function updateUserProfileAction(Request $request, $id)
     {
-
 
         $decryptedID = Crypt::decrypt($id);
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
-
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -149,17 +150,15 @@ class C_UserAdmin extends Controller
                 $img->save(public_path($path . $filename));
             }
 
-
-
             $dataUserAdmin = [
-
-                'nama_ua'           => $request->nama,
-                'email_ua'          => $request->email,
-                'no_tlp_ua'         => $request->no_telp,
-                'alamat_ua'         => $request->alamat,
-                'tempat_lahir_ua'   => $request->tempat_lahir,
-                'tgl_lahir_ua'      => $request->tgl_lahir,
-                'foto_ua'           => $filename
+                'code_id_ua' => $request->code,
+                'nama_ua' => $request->nama,
+                'email_ua' => $request->email,
+                'no_tlp_ua' => $request->no_telp,
+                'alamat_ua' => $request->alamat,
+                'tempat_lahir_ua' => $request->tempat_lahir,
+                'tgl_lahir_ua' => $request->tgl_lahir,
+                'foto_ua' => $filename,
             ];
             // dd($dataUserAdmin);
             DB::table('user_admin')
@@ -174,7 +173,7 @@ class C_UserAdmin extends Controller
         }
     }
 
-    function updatePasswordProfile()
+    public function updatePasswordProfile()
     {
 
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -190,20 +189,17 @@ class C_UserAdmin extends Controller
                     'projekUser',
                     'getUser',
 
-
                 )
             );
         } else {
             return redirect('/login');
         }
     }
-    function updatePasswordProfileAction(Request $request, $id)
+    public function updatePasswordProfileAction(Request $request, $id)
     {
-
 
         $decryptedID = Crypt::decrypt($id);
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
-
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -224,11 +220,9 @@ class C_UserAdmin extends Controller
                 $img->save(public_path($path . $filename));
             }
 
-
-
             $dataUserAdmin = [
 
-               'password_ua'    =>md5($request->password)
+                'password_ua' => md5($request->password),
             ];
             // dd($dataUserAdmin);
             DB::table('user_admin')
@@ -242,9 +236,10 @@ class C_UserAdmin extends Controller
             return redirect('/login');
         }
     }
-    function changeStatusUser($id,$status) {
+    public function changeStatusUser($id, $status)
+    {
 
-        $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*','tgl_input_ua','desc');
+        $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*', 'tgl_input_ua', 'desc');
 
         // dd($getMenu);
 
@@ -257,25 +252,23 @@ class C_UserAdmin extends Controller
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $dataUpdateUser = [
-                'id_user_admin'  => $id,
-                'status_ua'     =>$status
+                'id_user_admin' => $id,
+                'status_ua' => $status,
 
             ];
             DB::table('user_admin')
-            ->where('id_user_admin',$id)
-            ->update($dataUpdateUser);
+                ->where('id_user_admin', $id)
+                ->update($dataUpdateUser);
             // return response()->json();
             // return response()->json(['success' => true]);
-            return redirect()->back()->with('success','User berhasil '.$status);
-
+            return redirect()->back()->with('success', 'User berhasil ' . $status);
 
         } else {
             return redirect('/login');
         }
     }
 
-
-    function DownloadUserAdminSales()
+    public function DownloadUserAdminSales()
     {
 
         $waktuNow = $this->ambilWaktu();
@@ -288,4 +281,22 @@ class C_UserAdmin extends Controller
         return $pdf->download('Laporan User Register Formsliving Tanggal ' . $waktuNow . ".pdf");
     }
     //
+
+    public function deleteUserAdmin($id)
+    {
+
+        $decryptedID = Crypt::decrypt($id);
+        $dataUserAdmin = [
+          'deleted_ua' => 'true',
+          'deleted_ua_at' => Carbon::now()
+        ];
+        // dd($dataUserAdmin);
+        DB::table('user_admin')
+            ->where('id_user_admin', $decryptedID)
+            ->update(
+                $dataUserAdmin
+            );
+
+        return redirect()->back()->with('success', 'Data profile dihapus');
+    }
 }

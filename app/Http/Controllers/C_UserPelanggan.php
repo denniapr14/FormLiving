@@ -73,6 +73,8 @@ class C_UserPelanggan extends Controller
                 $getUserPelanggan=$getUserPelanggan->take(100);
             }
 
+
+
             return view(
                 'V_Admin.userPelanggan',
                 compact(

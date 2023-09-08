@@ -22,6 +22,12 @@ class UserAdmin extends Authenticatable
         return bcrypt($this->password_ua);
     }
 
+    function getUserAdminAll($select) {
+        return UserAdmin::select($select)
+        ->get();
+
+    }
+
     function getUserKategoriWhere($where, $eq, $value){
         return UserAdmin::join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
         ->where($where, $eq, $value)

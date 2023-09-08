@@ -94,7 +94,8 @@
                                     </div>
                                     <div class="" style="width: 100%">
 
-                                        <div class="map svg-container" style="background-color: white ;
+                                        <div class="map svg-container"
+                                            style="background-color: white ;
 
                                         ">
 
@@ -210,15 +211,14 @@
                 @foreach ($cluster as $cluster)
                     <div class="collapsible">
                         <button class="collapsible-btn">
-                            @if ($cluster->logo_img!= null || $cluster->logo_img != "")
-                            <img style="max-height: 60px; "
-                            src="{{ asset('Home') }}/images/logo_cluster/{{ $cluster->logo_img }}" alt="">
+                            @if ($cluster->logo_img != null || $cluster->logo_img != '')
+                                <img style="max-height: 60px; "
+                                    src="{{ asset('Home') }}/images/logo_cluster/{{ $cluster->logo_img }}" alt="">
                             @else
-                            <b>
-                                {{ $cluster->nama_cluster }}
+                                <b>
+                                    {{ $cluster->nama_cluster }}
 
-                            </b>
-
+                                </b>
                             @endif
 
                         </button>

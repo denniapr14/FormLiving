@@ -328,7 +328,8 @@
                                                                                                 let url = "{{ url('Home') }}/images/denah/"
                                                                                                 // Handle success response (e.g., update image preview)
                                                                                                 // alert("Image uploaded successfully!");
-                                                                                                $("#denah{{ $gambar->id_gambar_rumah }}").attr("src", url + response.img_rumah);
+                                                                                                $("#denah{{ $gambar->id_gambar_rumah }}").attr("src", url + response
+                                                                                                    .img_rumah);
 
 
 
