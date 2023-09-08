@@ -18,7 +18,7 @@
                     <hr class="separate">
                 </li>
 
-                {{-- @foreach ($projekUser as $projekUser)
+                @foreach ($projekUser as $projekUser)
                     @if ($projekUser->nama_projek == 'Greenland')
                         <li class="nav__item dropdown ">
                             <a class="nav__link" href="#" alt=" {{ $projekUser->nama_projek }}">
@@ -138,9 +138,9 @@
                             </ul>
                         </li>
                     @endif
-                @endforeach --}}
+                @endforeach
 
-                @foreach ($projekUser as $projekUser)
+                {{-- @foreach ($projekUser as $projekUser)
                     <li class="nav__item dropdown ">
                         <a class="nav__link" href="#" alt=" {{ $projekUser->nama_projek }}">
                             <i class="bi bi-briefcase"></i>
@@ -165,7 +165,7 @@
                                 @endforeach
                         </ul>
                     </li>
-                @endforeach
+                @endforeach --}}
                 <li class="nav__divider">
                     <div class="divider__title">Optional</div>
                     <hr class="separate">

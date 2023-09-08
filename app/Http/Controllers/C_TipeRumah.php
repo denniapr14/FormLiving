@@ -63,22 +63,7 @@ class C_TipeRumah extends Controller
         $getGambar = $this->gambarRumah->getGambarRumahWhereArr('*', $whereGambar);
         // dd($getGambar);
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-        $foundMatchingMenu = false;
 
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        // if (!$foundMatchingMenu) {
-        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        // }
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -94,7 +79,7 @@ class C_TipeRumah extends Controller
                     'getTipeRumah',
                     'getGambar',
                     'getProjek',
-                    'getUserMenu'
+
                 )
             );
         } else {
@@ -104,18 +89,7 @@ class C_TipeRumah extends Controller
 
     public function storeTipeRumah($projek, $id)
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-        $foundMatchingMenu = false;
 
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         $decryptedID = Crypt::decrypt($id);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
@@ -135,7 +109,7 @@ class C_TipeRumah extends Controller
                     'getRumah',
                     'getTipeRumah',
                     'getProjek',
-                    'getUserMenu'
+
                 )
             );
         } else {
@@ -146,18 +120,7 @@ class C_TipeRumah extends Controller
     public function storeTipeRumahAction(Request $request, $projek)
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-        $foundMatchingMenu = false;
 
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         if (session()->has('user')) {
             $dataTipeRumah = [];
             $dataidTipeRumah = [];
@@ -294,18 +257,7 @@ class C_TipeRumah extends Controller
         // dd($decryptID);
         // dd($getTipeRumah);
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-        $foundMatchingMenu = false;
 
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
@@ -320,7 +272,7 @@ class C_TipeRumah extends Controller
                     'getTipeRumah',
                     'getGambar',
                     'getProjek',
-                    'getUserMenu'
+
                 )
             );
         } else {
@@ -333,18 +285,7 @@ class C_TipeRumah extends Controller
         $decryptID = Crypt::decrypt($id_tipe);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-        $foundMatchingMenu = false;
 
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         if (session()->has('user')) {
             $dataTipeRumah = [];
             $dataidTipeRumah = [];

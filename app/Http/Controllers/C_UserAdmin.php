@@ -36,21 +36,7 @@ class C_UserAdmin extends Controller
     function userAdminSalesAgent()
     {
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ]);
 
-        // dd($request->segment(1));
-
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
 
         // dd($getUserSales);
         if (session()->has('user')) {
@@ -102,7 +88,7 @@ class C_UserAdmin extends Controller
                     'user',
                     'projekUser',
                     'getUserSales',
-                    'getUserMenu'
+
                 )
             );
         } else {
@@ -115,20 +101,7 @@ class C_UserAdmin extends Controller
     }
     function updateUserProfile()
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ]);
-        // dd($request->segment(1));
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -141,7 +114,7 @@ class C_UserAdmin extends Controller
                     'user',
                     'projekUser',
                     'getUser',
-                    'getUserMenu'
+
 
                 )
             );
@@ -156,20 +129,7 @@ class C_UserAdmin extends Controller
         $decryptedID = Crypt::decrypt($id);
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ]);
-        // dd($request->segment(1));
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
@@ -216,20 +176,7 @@ class C_UserAdmin extends Controller
 
     function updatePasswordProfile()
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ]);
-        // dd($request->segment(1));
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -242,7 +189,7 @@ class C_UserAdmin extends Controller
                     'user',
                     'projekUser',
                     'getUser',
-                    'getUserMenu'
+
 
                 )
             );
@@ -257,20 +204,7 @@ class C_UserAdmin extends Controller
         $decryptedID = Crypt::decrypt($id);
         $getUser = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ]);
-        // dd($request->segment(1));
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
@@ -313,19 +247,6 @@ class C_UserAdmin extends Controller
         $getUserAdminAll = $this->userAdmin->getUserAdminJoinKategoriDepartemen('*','tgl_input_ua','desc');
 
         // dd($getMenu);
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => Session::get('user'),
-        ])->collect();
-
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
 
         // if (!$foundMatchingMenu) {
         //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
@@ -356,20 +277,7 @@ class C_UserAdmin extends Controller
 
     function DownloadUserAdminSales()
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ]);
-        // dd($request->segment(1));
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         $waktuNow = $this->ambilWaktu();
         $sesiNow = session::get('user');
         $userAll = $this->userAdmin->getPrintUserAdmin();

@@ -38,19 +38,7 @@ class C_PembayaranRumah extends Controller
 
     public function pembayaranRumah($projek, $id)
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => Session::get('user'),
-        ])->collect();
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
@@ -70,7 +58,7 @@ class C_PembayaranRumah extends Controller
                 'getProjek',
                 'getRincianPembayaran',
                 'getRumah',
-                'getUserMenu'
+
             ));
         } else {
             return redirect('/login');
@@ -146,19 +134,7 @@ class C_PembayaranRumah extends Controller
 
     public function updatePembayaranRumah($projek, $id)
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => Session::get('user'),
-        ])->collect();
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
         $getPembayaranRumah = $this->pembayaranRumah->firstPembayaranRumahWhere('*', 'id_pem_rumah', '=', $decryptedID);
@@ -173,7 +149,7 @@ class C_PembayaranRumah extends Controller
                 'projekUser',
                 'getPembayaranRumah',
                 'getProjek',
-                'getUserMenu'
+
             ));
         } else {
             return redirect('/login');

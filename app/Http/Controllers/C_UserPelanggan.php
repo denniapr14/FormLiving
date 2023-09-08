@@ -35,19 +35,7 @@ class C_UserPelanggan extends Controller
 
     public function userPelanggan()
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => Session::get('user'),
-        ])->collect();
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
 
 
 
@@ -62,7 +50,7 @@ class C_UserPelanggan extends Controller
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $getUserPelanggan = $this->userPelanggan->getUserPelangganOrderByJoinUserAdmin('*', 'user_pelanggan.tgl_input_plgn', 'desc')->take(100);
-            
+
             // $getUserPelanggan=$getUserPelanggan->take(100);
             // dd($getUserPelanggan);
 
@@ -91,7 +79,7 @@ class C_UserPelanggan extends Controller
                     'user',
                     'projekUser',
 
-                    'getUserMenu',
+
                     'getUserPelanggan'
                 )
             );

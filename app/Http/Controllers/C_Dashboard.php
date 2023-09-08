@@ -73,27 +73,24 @@ class C_Dashboard extends Controller
 
             $projekUser = $this->userProject->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-                'user_menu.status_um' => 'aktif',
-                'user_menu.id_user_admin' => session::get('user')
-            ])->collect();
+            // $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            //     'user_menu.status_um' => 'aktif',
+            //     'user_menu.id_user_admin' => session::get('user')
+            // ])->collect();
 
-            $foundMatchingMenu = false;
+            // $foundMatchingMenu = false;
 
-            foreach ($getUserMenu as $menu) {
-                if ($menu->url_menu == request()->segment(1)) {
-                    $foundMatchingMenu = true;
-                    break;
-                }
-            }
-
-            if (!$foundMatchingMenu) {
-                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-            }
-            // if (empty($getUserMenu) || $getUserMenu == '') {
-            //     return redirect('/login')->with('danger','Kamu tidak memiliki akses ke halaman ini');
+            // foreach ($getUserMenu as $menu) {
+            //     if ($menu->url_menu == request()->segment(1)) {
+            //         $foundMatchingMenu = true;
+            //         break;
+            //     }
             // }
-            // dd($getUserMenu);
+
+            // if (!$foundMatchingMenu) {
+            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            // }
+
             if(
                 $user->kategori == 'AdminAgentCompany'
 
@@ -242,7 +239,7 @@ class C_Dashboard extends Controller
                     'remainHouse',
                     'getRumah',
                     'getProjek',
-                    'getUserMenu',
+
 
                 )
             );

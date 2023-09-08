@@ -1,3 +1,4 @@
+
 {
     "name": "laravel/laravel",
     "type": "project",
@@ -16,6 +17,7 @@
         "livewire/livewire": "^2.12",
         "nesbot/carbon": "^2.68",
         "spatie/laravel-permission": "*"
+
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

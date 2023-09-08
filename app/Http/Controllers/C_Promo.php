@@ -65,26 +65,6 @@ class C_Promo extends Controller
             ->where('rumah.id_projek', '=', $getProjek->id_projek)
             ->where('formulir_pesanan.status_fp', '!=', 'nonactive')
             ->get();
-        // echo "<pre>";
-        // print_r($promo);
-        // dd($getPromoFP);
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        if (!$foundMatchingMenu) {
-            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        }
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
@@ -107,7 +87,6 @@ class C_Promo extends Controller
                     'promo',
                     'projekUser',
                     'getProjek',
-                    'getUserMenu',
                     'getPromoFP'
                 )
             );
@@ -118,23 +97,6 @@ class C_Promo extends Controller
 
     public function addRumahPromo($projek)
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        // if (!$foundMatchingMenu) {
-        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        // }
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $rumah = DB::table('rumah')
@@ -163,7 +125,7 @@ class C_Promo extends Controller
                     'rumah',
                     'projekUser',
                     'getProjek',
-                    'getUserMenu'
+
                 )
             );
         } else {
@@ -175,23 +137,7 @@ class C_Promo extends Controller
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        // if (!$foundMatchingMenu) {
-        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        // }
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
                 'user_admin.id_user_admin',
@@ -231,7 +177,7 @@ class C_Promo extends Controller
                     'projekUser',
                     'dataInputRumahPromo',
                     'getProjek',
-                    'getUserMenu'
+
                 )
             );
             // dd($dataInputRumahPromo);
@@ -253,19 +199,6 @@ class C_Promo extends Controller
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
@@ -289,7 +222,6 @@ class C_Promo extends Controller
                     'rumah',
                     'projekUser',
                     'getProjek',
-                    'getUserMenu'
                 )
             );
         } else {
@@ -301,23 +233,6 @@ class C_Promo extends Controller
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        // if (!$foundMatchingMenu) {
-        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        // }
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
@@ -390,25 +305,6 @@ class C_Promo extends Controller
         $getPromo = $this->listPromo->firstListPromoJoinPromoRumah('*', 'promo.id_promo', '=', $decryptedID);
         $getListPromo = $this->listPromo->getListPromoJoinPromoRumah('*', 'promo.id_promo', '=', $decryptedID);
         // dd($getPromo);
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-
-        // dd($getPromo);
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-
-        // if (!$foundMatchingMenu) {
-        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        // }
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
@@ -430,7 +326,6 @@ class C_Promo extends Controller
 
                     'projekUser',
                     'getProjek',
-                    'getUserMenu',
                     'getPromo',
                     'getListPromo'
                 )
@@ -446,26 +341,7 @@ class C_Promo extends Controller
         $getPromo = $this->listPromo->firstListPromoJoinPromoRumah('*', 'list_promo.id_promo', '=', $decryptedID);
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
-        // dd($getRumah);
 
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        // if (!$foundMatchingMenu) {
-        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        // }
 
         // $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $id);
         if (session()->has('user')) {
@@ -513,14 +389,7 @@ class C_Promo extends Controller
             // dd($dataRumah);
 
             return redirect()->route('promo.admin', [$getProjek->nama_projek])->with('success', 'Data promo telah berhasil diubah');
-            // return view(
-            //     'V_Admin.rumah',
-            //     compact(
-            //         'user',
-            //         'projekUser',
-            //         'getRumah',
-            //     )
-            // );
+
         } else {
             return redirect('/login');
         }

@@ -46,23 +46,6 @@ class C_SuratPemesananRumah extends Controller
 
     public function suratPemesananRumah($projek)
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
-
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        if (!$foundMatchingMenu) {
-            return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        }
 
         // Surat Pemesanan Rumah == Formulir Pesanan
 
@@ -123,7 +106,7 @@ class C_SuratPemesananRumah extends Controller
                     'getFormulirPesanan',
                     'rumah',
                     'getProjek',
-                    'getUserMenu'
+
                 )
             );
         } else {
@@ -133,23 +116,7 @@ class C_SuratPemesananRumah extends Controller
 
     public function editSuratPemesananRumah($projek, $id)
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        // if (!$foundMatchingMenu) {
-        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        // }
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
@@ -177,7 +144,7 @@ class C_SuratPemesananRumah extends Controller
                 'getPromo',
                 'getPembayaranRumah',
                 'getProjek',
-                'getUserMenu'
+
             ));
         } else {
             return redirect('/login');
@@ -186,23 +153,7 @@ class C_SuratPemesananRumah extends Controller
 
     public function editSuratPemesananRumahAction(Request $request, $projek, $id)
     {
-        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-            'user_menu.status_um' => 'aktif',
-            'user_menu.id_user_admin' => session::get('user'),
-        ])->collect();
 
-        $foundMatchingMenu = false;
-
-        foreach ($getUserMenu as $menu) {
-            if ($menu->url_menu == request()->segment(1)) {
-                $foundMatchingMenu = true;
-                break;
-            }
-        }
-
-        // if (!$foundMatchingMenu) {
-        //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-        // }
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
