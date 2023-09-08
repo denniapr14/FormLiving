@@ -47,7 +47,7 @@
                     <table id="rumah" class="table">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th style="width: 1rem">No</th>
                                 <th>Tipe Rumah</th>
                                 <th>Luas <br> Tanah</th>
                                 <th>Status</th>

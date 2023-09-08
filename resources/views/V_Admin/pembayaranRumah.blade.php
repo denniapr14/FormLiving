@@ -143,7 +143,7 @@
                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
-                                                                <img src="{{ url('Dashboard') }}/images/content/night.png"
+                                                                <img src="{{ url('Home') }}/images/pembayaran/{{ $dpem->bukti_rp }}"
                                                                     alt="">
                                                             </div>
                                                         </div>

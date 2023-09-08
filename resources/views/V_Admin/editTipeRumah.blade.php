@@ -331,7 +331,17 @@
                                                                                                 $("#denah{{ $gambar->id_gambar_rumah }}").attr("src", url + response
                                                                                                     .img_rumah);
 
-
+                                                                                                    $(document).ready(function() {
+                                                                                                        Toastify({
+                                                                                                            text:   'Gambar tipe rumah telah diubah', // Add single quotes around the variable to make it a valid JavaScript string
+                                                                                                            duration: 3000,
+                                                                                                            gravity: "top",
+                                                                                                            positionLeft: false,
+                                                                                                            close: true,
+                                                                                                            backgroundColor: "linear-gradient(to right, #8ACCA1, #458f60)",
+                                                                                                            stopOnFocus: true
+                                                                                                        }).showToast();
+                                                                                                    });
 
                                                                                             },
                                                                                             error: function(error) {
@@ -463,9 +473,17 @@
                                                                                                 // Handle success response (e.g., update image preview)
                                                                                                 $("#gambar{{ $gambar->id_gambar_rumah }}").attr("src", url + response
                                                                                                     .img_rumah);
-                                                                                                // alert("Image uploaded successfully!");
-                                                                                                // console.log(response);
-                                                                                                // console.log(url+response.img_rumah);
+                                                                                                    $(document).ready(function() {
+                                                                                                        Toastify({
+                                                                                                            text:   'Gambar tipe rumah telah diubah', // Add single quotes around the variable to make it a valid JavaScript string
+                                                                                                            duration: 3000,
+                                                                                                            gravity: "top",
+                                                                                                            positionLeft: false,
+                                                                                                            close: true,
+                                                                                                            backgroundColor: "linear-gradient(to right, #8ACCA1, #458f60)",
+                                                                                                            stopOnFocus: true
+                                                                                                        }).showToast();
+                                                                                                    });
                                                                                             },
                                                                                             error: function(error) {
                                                                                                 // Handle error response (e.g., show an error message)

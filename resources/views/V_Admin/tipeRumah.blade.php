@@ -119,7 +119,7 @@
                                                                                 Kamar Mandi
                                                                             </label>
                                                                             <div class="col-sm-8 align-self-center">
-                                                                               {{$tipeRumah->kmr_mandi_tr}}
+                                                                                {{ $tipeRumah->kmr_mandi_tr }}
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
@@ -128,7 +128,7 @@
                                                                                 Kamar Tidur
                                                                             </label>
                                                                             <div class="col-sm-8 align-self-center">
-                                                                               {{$tipeRumah->kmr_tidur_tr}}
+                                                                                {{ $tipeRumah->kmr_tidur_tr }}
                                                                             </div>
                                                                         </div>
 
@@ -341,84 +341,90 @@
                                                                         </div>
                                                                         <div class="component__listing">
                                                                             @foreach ($getGambar as $gambar)
-                                                                            @if ($tipeRumah->id_tipe_rumah == $gambar->id_tipe)
+                                                                                @if ($tipeRumah->id_tipe_rumah == $gambar->id_tipe)
+                                                                                    @if ($gambar->jenis_img == 'gambar')
+                                                                                        <div
+                                                                                            class="component__item col-md-6">
+                                                                                            <div class="component__card">
+                                                                                                <div class="card__image">
+                                                                                                    <img src="{{ url('Home') }}/images/tipe/{{ $gambar->img_rumah }}"
+                                                                                                        alt="product-1">
+                                                                                                </div>
+                                                                                                <div class="card__details">
+                                                                                                    <p>{{ $gambar->jenis_img }}
+                                                                                                    </p>
 
-                                                                            @if ($gambar->jenis_img == 'gambar')
-                                                                            <div class="component__item col-md-6">
-                                                                              <div class="component__card">
-                                                                                <div class="card__image">
-                                                                                    <img src="{{ url('Home') }}/images/tipe/{{ $gambar->img_rumah }}"
-                                                                                    alt="product-1">
-                                                                                </div>
-                                                                                <div class="card__details">
-                                                                                  <p>{{ $gambar->jenis_img }}</p>
+
+                                                                                                    <div
+                                                                                                        class="button-box">
+                                                                                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
+                                                                                                            @if ($gambar->status_gr != 'nonaktif')
+                                                                                                                <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                                                                                    class="btn-fd-outline-secondary btn--small"
+                                                                                                                    data-toggle="modal">
+                                                                                                                    <i class="fa fa-toggle-off"
+                                                                                                                        aria-hidden="true"></i>
+                                                                                                                    Nonaktif</a>
+                                                                                                            @else
+                                                                                                                <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                                                                                    class="btn-fd-outline-secondary btn--small"
+                                                                                                                    data-toggle="modal"><i
+                                                                                                                        class="fa fa-toggle-off"
+                                                                                                                        aria-hidden="true"></i>
+                                                                                                                    Aktif</a>
+                                                                                                            @endif
+                                                                                                        @endif
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                    @if ($gambar->jenis_img == 'denah')
+                                                                                        <div
+                                                                                            class="component__item col-md-6">
+                                                                                            <div class="component__card">
+                                                                                                <div class="card__image">
+                                                                                                    <img src="{{ url('Home') }}/images/denah/{{ $gambar->img_rumah }}"
+                                                                                                        alt="product-1">
+                                                                                                </div>
+                                                                                                <div class="card__details">
+                                                                                                    <p>{{ $gambar->jenis_img }}
+                                                                                                    </p>
 
 
-                                                                                  <div class="button-box">
-                                                                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                                                                    @if ($gambar->status_gr != 'nonaktif')
-                                                                                    <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> <i
-                                                                                        class="fa fa-toggle-off"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Nonaktif</a>
+                                                                                                    <div
+                                                                                                        class="button-box">
+                                                                                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
+                                                                                                            @if ($gambar->status_gr != 'nonaktif')
+                                                                                                                <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                                                                                    class="btn-fd-outline-secondary btn--small"
+                                                                                                                    data-toggle="modal">
+                                                                                                                    <i class="fa fa-toggle-off"
+                                                                                                                        aria-hidden="true"></i>
+                                                                                                                    Nonaktif</a>
+                                                                                                            @else
+                                                                                                                <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                                                                                    class="btn-fd-outline-secondary btn--small"
+                                                                                                                    data-toggle="modal">
+                                                                                                                    <i class="fa fa-toggle-off"
+                                                                                                                        aria-hidden="true"></i>
+                                                                                                                    Aktif</a>
+                                                                                                            @endif
+                                                                                                        @endif
 
-                                                                                    @else
-                                                                                    <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"><i
-                                                                                        class="fa fa-toggle-off"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Aktif</a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     @endif
                                                                                 @endif
-
-                                                                                  </div>
-                                                                                </div>
-                                                                              </div>
-                                                                            </div>
-                                                                            @endif
-                                                                            @if ($gambar->jenis_img == 'denah')
-                                                                            <div class="component__item col-md-6">
-                                                                              <div class="component__card">
-                                                                                <div class="card__image">
-                                                                                    <img src="{{ url('Home') }}/images/denah/{{ $gambar->img_rumah }}"
-                                                                                                    alt="product-1">
-                                                                                </div>
-                                                                                <div class="card__details">
-                                                                                  <p>{{ $gambar->jenis_img }}</p>
-
-
-                                                                                  <div class="button-box">
-                                                                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                                                                    @if ($gambar->status_gr != 'nonaktif')
-                                                                                    <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> <i
-                                                                                        class="fa fa-toggle-off"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Nonaktif</a>
-
-                                                                                    @else
-                                                                                    <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                                                        class="btn-fd-outline-secondary btn--small" data-toggle="modal"> <i
-                                                                                        class="fa fa-toggle-off"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Aktif</a>
-                                                                                    @endif
-                                                                                @endif
-
-                                                                                  </div>
-                                                                                </div>
-                                                                              </div>
-                                                                            </div>
-                                                                            @endif
-
-                                                                            @endif
                                                                             @endforeach
 
 
 
 
-                                                                          </div>
+                                                                        </div>
 
                                                                         <div class="row pt-4">
                                                                             <div class="col-12">
@@ -439,10 +445,10 @@
 
 
                                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                                <a href="{{ route('updateTipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($tipeRumah->id_tipe_rumah)]) }}"
-                                                    class="btn-fd-icon-outline">
-                                                    <i class="fa fa-edit" aria-hidden="true"></i>
-                                                </a>
+                                                    <a href="{{ route('updateTipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($tipeRumah->id_tipe_rumah)]) }}"
+                                                        class="btn-fd-icon-outline">
+                                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                                    </a>
                                                 @endif
                                             </div>
 

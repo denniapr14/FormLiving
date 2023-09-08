@@ -73,7 +73,11 @@
                                     <td>
                                         {{ date('d M Y', strtotime($fp->tgl_input_fp)) }}
                                     </td>
-                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
+                                    @if ($user->kategori == 'SuperAdmin' ||
+                                     $user->kategori == 'AdminAccounting' ||
+                                     $user->kategori == 'StafAcc' ||
+
+                                     )
                                         <td>
 
                                             <div class="d-flex flex-nowrap">

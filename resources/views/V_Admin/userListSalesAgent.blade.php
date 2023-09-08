@@ -41,7 +41,7 @@
                     <table id="list-user" class="table">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th style="width: 1rem">No</th>
 
                                 <th>Nama</th>
                                 @if ($user->kategori == 'SuperAdmin')

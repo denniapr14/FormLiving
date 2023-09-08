@@ -41,7 +41,14 @@
 
 
 
-                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminFormsLiving' || $user->kategori == 'Direktur' || $user->kategori == 'CEO' || $user->kategori == 'AdminADV')
+                                @if (
+                                    $user->kategori == 'SuperAdmin' ||
+                                 $user->kategori == 'AdminAccounting' ||
+                                  {{--  $user->kategori == 'AdminFormsLiving' ||  --}}
+                                   $user->kategori == 'Direktur' ||
+                                    $user->kategori == 'CEO' ||
+                                     $user->kategori == 'AdminADV'
+                                     )
                                     <li class="nav__item">
                                         <a class="nav__link
                     @if (request()->segment(1) === 'rumah-admin' && request()->segment(2) == $projekUser->nama_projek) active @endif
@@ -53,7 +60,11 @@
                                     </li>
                                 @endif
 
-                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
+                                @if (
+                                    $user->kategori == 'SuperAdmin' ||
+                                 $user->kategori == 'AdminAccounting' ||
+                                  $user->kategori == 'CEO'
+                                  )
                                     <li class="nav__item">
                                         <a class="nav__link
                @if (request()->segment(1) === 'promo-admin' && request()->segment(2) == $projekUser->nama_projek) active @endif
