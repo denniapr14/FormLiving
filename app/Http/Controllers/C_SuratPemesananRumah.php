@@ -220,4 +220,45 @@ class C_SuratPemesananRumah extends Controller
             return redirect('/login');
         }
     }
+    function cetakSuratPemesananRumah($id) {
+
+            $decryptedID = Crypt::decrypt($id);
+
+
+        $fpJadi = DB::table('formulir_pesanan')
+        ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+        ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+        ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+        ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+        ->where('id_formulir', '=', $decryptedID)
+        ->first();
+
+    // dd($fpJadi);
+    $dataPembayaran = DB::table('pembayaran_rumah')
+        ->where('id_formulir', '=', $decryptedID)
+        ->get();
+    $promo = '';
+    if (!empty($fpJadi->id_promo)) {
+        $promo = DB::table('promo')
+            ->where('id_promo', '=', $fpJadi->id_promo)
+            ->first();
+    }
+         $pdf = \PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
+            // $pdf = PDF::loadView('mail.index');
+            $pdf->setPaper('F4', 'potrait');
+            // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
+            $pdf->render();
+            $pdfData = $pdf->output();
+            // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
+            // Storage::put($filename, $pdfData);
+            // dd($filename);
+            $path = './Home/pdf/';
+            $pdf->save($path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf');
+            $filename = $path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf';
+            set_time_limit(2000);
+        return $pdf->download('FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '.pdf');
+    }
 }

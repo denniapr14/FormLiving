@@ -56,7 +56,7 @@ class C_Dashboard extends Controller
 
         // dd($agentWithoutCompany);
         $arrWithoutCompany = array(
-            'ktgr_admin.kategori' => "AgentWithoutCompany",
+            'ktgr_admin.kategori' => "SalesAgent",
             'user_admin.status_ua' => "aktif",
         );
         $agentWithoutCompany = $this->userAdmin->getUserJoinCountWhere($arrWithoutCompany);
@@ -97,7 +97,7 @@ class C_Dashboard extends Controller
             ){
 
                 $arrWithCompany = array(
-                    'ktgr_admin.kategori' => "AgentWithCompany",
+                    'ktgr_admin.kategori' => "AgentCompany",
                     'user_admin.status_ua' => "aktif",
                     'user_admin.id_kepala_ua'  => session::get('user'),
                     'user_admin.id_projek'         => $getProjek->id_projek
@@ -204,11 +204,11 @@ class C_Dashboard extends Controller
 
             else {
                 $arrWithCompany = array(
-                    'ktgr_admin.kategori' => "AgentWithCompany",
+                    'ktgr_admin.kategori' => "AgentCompany",
                     'user_admin.status_ua' => "aktif",
                 );
                 $arrWithoutCompany = array(
-                    'ktgr_admin.kategori' => "AgentWithoutCompany",
+                    'ktgr_admin.kategori' => "SalesAgent",
                     'user_admin.status_ua' => "aktif",
                 );
 

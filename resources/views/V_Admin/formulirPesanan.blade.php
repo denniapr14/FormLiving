@@ -38,10 +38,9 @@
                                 <th>Nama</th>
                                 <th>Nomor </th>
                                 <th>Tanggal Order</th>
-                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting')
-                                    <th>Pengaturan</th>
-                                @else
-                                @endif
+
+                                <th>Pengaturan</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -59,38 +58,36 @@
                                     <td>
                                         <p class="mb-1">
 
-                                            No. telp {{ $fp->no_telp_plgn }} <a
-                                                href="tel:{{ $fp->no_telp_plgn }}" class="btn-fd-icon-outline"><i
-                                                    class="bi bi-telephone-outbound"></i></a> <br>
+                                            No. telp {{ $fp->no_telp_plgn }} <a href="tel:{{ $fp->no_telp_plgn }}"
+                                                class="btn-fd-icon-outline"><i class="bi bi-telephone-outbound"></i></a>
+                                            <br>
                                         </p>
                                         <p>
 
-                                            No. WA {{ $fp->no_wa_plgn }} <a
-                                                href="https://wa.me/{{ $fp->no_wa_plgn }}"
+                                            No. WA {{ $fp->no_wa_plgn }} <a href="https://wa.me/{{ $fp->no_wa_plgn }}"
                                                 class="btn-fd-icon-outline"> <i class="bi bi-whatsapp"></i></a>
                                         </p>
                                     </td>
                                     <td>
                                         {{ date('d M Y', strtotime($fp->tgl_input_fp)) }}
                                     </td>
-                                    @if ($user->kategori == 'SuperAdmin' ||
-                                     $user->kategori == 'AdminAccounting' ||
-                                     $user->kategori == 'StafAcc' ||
-
-                                     )
-                                        <td>
-
-                                            <div class="d-flex flex-nowrap">
+                                    <td>
+                                        <div class="d-flex flex-nowrap">
+                                            @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
                                                 <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"
                                                     class="btn-fd-icon-outline">
                                                     <i class="fas fa-edit    "></i>
                                                 </a>
+                                            @else
+                                            @endif
 
-                                            </div>
+                                            <a href="{{ route('cetakSuratPemesananRumah.admin', Crypt::encrypt($fp->id_formulir)) }}" class="btn-fd-icon-outline">
+                                                <i class="fa fa-print" aria-hidden="true">
 
-                                        </td>
-                                    @else
-                                    @endif
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </td>
 
                                 </tr>
                             @endforeach
