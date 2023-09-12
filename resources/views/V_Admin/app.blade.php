@@ -29,11 +29,13 @@
     <link rel="stylesheet" href="{{url('Dashboard')}}/css/style.css" type="text/css">
 
     <script src="{{url('Dashboard')}}/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/panzoom/7.1.0/panzoom.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{{url('Dashboard')}}/css/toastify.min.css">
     {{-- Datatabless --}}
 
     <link rel="stylesheet" href="{{url('Dashboard')}}/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <style>
         .myicon-color{
             color: #8ACCA1;
@@ -72,7 +74,9 @@
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="{{url('Dashboard')}}/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="{{url('Dashboard')}}/js//toastify.js"></script>
+
 
 </html>

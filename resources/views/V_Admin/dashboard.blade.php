@@ -158,10 +158,9 @@
                             </div>
 
                         </div>
-                        <div class="" style="width: 100%">
+                        <div class="table-responsive" style="width: 100%">
 
-                            <div class="map svg-container" style="background-color: white ;
-
+                            <div class="map svg-container" style="background-color: white ;width: 90%;
                             ">
 
                                 {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
@@ -224,6 +223,8 @@
                                         }
                                         return iro;
                                     }
+
+
                                 </script>
                                 {{--  <div class="control">
                                     <div class="zoom in">

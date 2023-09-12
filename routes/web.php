@@ -349,6 +349,10 @@ Route::get('/hapus-user-admin/{id}',[C_UserAdmin::class,'deleteUserAdmin'])->nam
 // PROMO
 Route::get('/promo-admin/{projek}', [C_Promo::class, 'Promo'])->name('promo.admin');
 Route::get('/tambah-rumah-promo-admin/{projek}', [C_Promo::class, 'addRumahPromo'])->name('addPromoRumah.admin');
+
+Route::get('/cari-rumah-promo-admin/{projek}', [C_Promo::class, 'rumahPromoAutocomplete'])->name('rumahPromoAutocomplete.admin');
+
+
 Route::post('/tambah-rumah-promo-admin/action/{projek}', [C_Promo::class, 'addRumahPromoAction'])->name('addPromoRumahAction.admin');
 // Route::get('/tambah-promo-admin/{projek}', [C_Promo::class, 'addPromo'])->name('addPromo.admin');
 Route::post('/tambah-promo-admin/action/{projek}', [C_Promo::class, 'addPromoAction'])->name('addPromoAction.admin');

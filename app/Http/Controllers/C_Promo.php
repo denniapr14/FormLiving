@@ -137,7 +137,6 @@ class C_Promo extends Controller
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
                 'user_admin.id_user_admin',
@@ -389,9 +388,30 @@ class C_Promo extends Controller
             // dd($dataRumah);
 
             return redirect()->route('promo.admin', [$getProjek->nama_projek])->with('success', 'Data promo telah berhasil diubah');
-
         } else {
             return redirect('/login');
         }
+    }
+
+    function rumahPromoAutoComplete(Request $request, $projek)
+    {
+
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+        $searchTerm = $request->input('search');
+
+        $rumah = $this->rumah->getRumahAll()->collect();
+        $rumah = $rumah->where('status', 'Available');
+        $rumah = $rumah->where('id_projek', $getProjek->id_projek);
+
+        // Filter the $rumah collection based on 'blok' containing the search term
+        $filteredRumah = $rumah->filter(function ($item) use ($searchTerm) {
+            return str_contains($item->blok, $searchTerm);
+        });
+
+        // Extract the 'blok' values from the filtered collection
+        $suggestions = $filteredRumah->pluck('blok')->unique()->values();
+
+        return response()->json($suggestions);
     }
 }

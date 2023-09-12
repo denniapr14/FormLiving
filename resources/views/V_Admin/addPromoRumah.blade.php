@@ -26,79 +26,19 @@
         table.no-space th {
             padding: 2px;
         }
+        .suggestion-item {
+            padding: 5px;
+            cursor: pointer;
+        }
 
-        @media print {
-            @page :footer {
-                display: none
-            }
-
-            @page :header {
-                display: none
-            }
-
-            @page {
-                size: F4;
-                margin: 5px 0 -100px 0;
-            }
-
-            body {
-                margin: 0;
-            }
-
-            body * {
-                visibility: hidden;
-                font-size: 20px;
-                line-height: 12px;
-                color: black;
-            }
-
-            #printcontent * {
-                visibility: visible;
-            }
-
-            #printcontent {
-                /* position: absolute; */
-                left: 0;
-                right: 0;
-                top: -90px;
-            }
-
-            .br-nLine {
-                page-break-before: always;
-            }
-
-            .footerPrint {
-                background-color: white;
-                height: 100%;
-                width: 100%;
-                position: relative;
-                page-break-before: always;
-
-            }
-
-            table.solid-border td,
-            table.solid-border tr,
-            table.solid-border th {
-                border: 2px solid black;
-            }
-
-            .noprint {
-                display: none;
-            }
-
-
-            .hidden {
-                display: none;
-            }
-
-            .myinput {
-
-                height: 20px;
-            }
-
-            .form-inline {
-                height: 20px;
-            }
+        /* Define additional custom styles for suggestion items */
+        .custom-style-class {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px;
+            padding: 10px;
+            font-weight: bold;
         }
     </style>
 
@@ -113,28 +53,43 @@
                     </div>
 
                 </div>
+
+
+
                 <div class="table-responsive">
                     <h5>Pilih rumah yang akan diterapkan promo</h5>
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input type="text" class="form-control mb-3" placeholder="search" name="q"
+                                id="searchRumah">
+                            <span id="listRumah" class="btn"></span>
+                        </div>
+
+                    </div>
+
                     <form action="{{ route('addPromoRumahAction.admin', $getProjek->nama_projek) }}"
-                        enctype="multipart/form-data" method="post" >
+                        enctype="multipart/form-data" method="post">
                         @csrf
+
                         <div class="row">
                             <?php $noRumah = 1; ?>
-                                @foreach ($rumah as $rumah)
-                                    <div class="col-sm-2" style="    padding-right: 2px;
+                            @foreach ($rumah as $rumah)
+                                <div class="col-sm-2 house-card"
+                                    style="    padding-right: 2px;
                                     padding-left: 2px;">
-                                        <div class="card">
-                                            <div class="card-body">
-                                              {{ $rumah->blok }} - {{ $rumah->nomor }}
-                                              <input type="checkbox" name="rumah[]" value="{{ $rumah->id_rumah }}">
-                                            </div>
-                                          </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            {{ $rumah->blok }}-{{ $rumah->nomor }}
+                                            <input type="checkbox" name="rumah[]" value="{{ $rumah->id_rumah }}">
+                                        </div>
                                     </div>
+                                </div>
 
 
 
-                                    <?php $noRumah++; ?>
-                                @endforeach
+                                <?php $noRumah++; ?>
+                            @endforeach
                         </div>
                         <div class="float-right">
 
@@ -147,9 +102,61 @@
             </div>
         </div>
     </div>
-    <script>
 
+
+    <script>
+        $(document).ready(function () {
+            // Initialize autocomplete on search input
+            $("#searchRumah").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "{{ route('rumahPromoAutocomplete.admin', $getProjek->nama_projek) }}",
+                        type: 'GET',
+                        dataType: "json",
+                        data: {
+                            search: request.term
+                        },
+                        success: function (data) {
+                            // Format and style the response data
+
+                            response(data); // Display the formatted data as suggestions
+                        }
+                    });
+                },
+                minLength: 1, // Minimum characters before autocomplete suggestions appear
+                select: function (event, ui) {
+                    // Handle selection here if needed
+                    console.log("Selected value:", ui.item.value);
+                    var searchText = ui.item.value.toLowerCase();
+                    $(".house-card").each(function () {
+                        var cardText = $(this).text().toLowerCase();
+                        if (cardText.indexOf(searchText) === -1) {
+                            $(this).hide();
+                        } else {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+
+
+
+            // Handle keyup event for .house-card elements
+            $("#searchRumah").on("keyup", function () {
+                var searchText = $(this).val().toLowerCase();
+                {{--  console.log(searchText);  --}}
+                $(".house-card").each(function () {
+                    var cardText = $(this).text().toLowerCase();
+                    if (cardText.indexOf(searchText) === -1) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
     </script>
+
 
     <script>
         function previewImage() {
