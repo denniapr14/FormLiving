@@ -334,43 +334,43 @@
                 </tr>
             </table>
             <br>
-            <h4> SURAT PEMESANAN RUMAH</h4>
-            <p>Nomor : {{$fp->no_fp}} </p>
+            <h4> SURAT PEMESANAN RUMAH SEMENTARA</h4>
+            <p>Nomor : - </p>
         </center>
         <p>Yang bertanda tangan dibawah ini :</p>
         <table>
             <tr>
-                <td style="width:40%;">Nama</td>
+                <td>Nama</td>
                 <td>: {{ $fp->nama_plgn }} </td>
             </tr>
             <tr>
-                <td style="width:40%;">Alamat</td>
+                <td>Alamat</td>
                 <td>: {{ $fp->alamat_plgn }}</td>
             </tr>
             <tr>
-                <td style="width:40%;">No. Telepon</td>
+                <td>No. Telepon</td>
                 <td>: {{ $fp->no_telp_plgn }}</td>
             </tr>
             <tr>
-                <td style="width:40%;">Email</td>
+                <td>Email</td>
                 <td>: {{ $fp->email_plgn }}</td>
             </tr>
             <tr>
-                <td style="width:40%;">
-                    Tempat & Tanggal. Lahir
+                <td>
+                    Tempat & Tgl. Lahir
                 </td>
                 <td>
-                    : {{ $fp->tempat_lahir_plgn }},  <?= tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn)))?>
+                    : {{ $fp->tempat_lahir_plgn }},  <?= tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn)))?> 
                 </td>
             </tr>
             <tr>
-                <td style="width:40%;">Sumber Dana</td>
+                <td>Sumber Dana</td>
                 <td>: {{$fp->sumber_dana_plgn}}</td>
             </tr>
             <tr>
-                <td style="width:40%;">Tujuan transaksi</td>
+                <td>Tujuan transaksi</td>
                 <td>
-                    : -
+                    : - 
                 </td>
 
             </tr>
@@ -450,7 +450,7 @@
                         <td style="width:86pt">
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                              0,-</p>
+                                0 ,-</p>
                         </td>
                     </tr>
                     <tr style="height:14pt">
@@ -473,13 +473,15 @@
                                 {{ rupiah($fp->total_harga/1.11 )}},-</p>
                         </td>
                     </tr>
-                    <tr style="height:18pt">
+                    <tr style="height:16pt">
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                d. PPN (Pajak Pertambahan Nilai)</p>
+                                d.
+                                PPN (
+                                Pajak Pertambahan Nilai)</p>
                         </td>
-                        <td style="width:18pt">
+                        <td style="width:29pt">
                             <p class="s2"
                                 style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
                                 Rp.
@@ -491,7 +493,55 @@
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
                         </td>
                     </tr>
-
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
+                                e.
+                                BPHTB</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
+                                0,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
+                                Biaya Surat
+                                (BBN dan AJB) PPAT</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:17pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                e.
+                                Biaya
+                                Administrasi</p>
+                        </td>
+                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
+                                0,-</p>
+                        </td>
+                    </tr>
                     <tr style="height:17pt">
                         <td style="width:215pt">
                             <p class="s2"
@@ -514,7 +564,7 @@
 
                 @else
 
-                {{--  {{--  @if ($promo->bphtb_promo == "yes")
+                 @if ($promo->bphtb_promo == "yes")
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                     <tr style="height:14pt">
                         <td style="width:215pt">
@@ -559,7 +609,8 @@
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                c. Harga
+                                c.
+                                Harga
                                 Netto</p>
                         </td>
                         <td style="width:29pt">
@@ -574,11 +625,13 @@
                                 {{ rupiah(($fp->total_harga+3000000)/1.16 )}},-</p>
                         </td>
                     </tr>
-                    <tr style="height:14pt">
+                    <tr style="height:16pt">
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                d. PPN (Pajak Pertambahan Nilai)</p>
+                                d.
+                                PPN (
+                                Pajak Pertambahan Nilai)</p>
                         </td>
                         <td style="width:29pt">
                             <p class="s2"
@@ -592,9 +645,9 @@
                                 {{ rupiah((11/100)*(($fp->total_harga+3000000)/1.16) )}},-</p>
                         </td>
                     </tr>
-                    <tr style="height:14pt">
+                    <tr style="height:16pt">
                         <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
                                 e.
                                 BPHTB</p>
                         </td>
@@ -603,14 +656,14 @@
                         </td>
                         <td style="width:86pt">
                             <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
-                               {{ rupiah(((($fp->total_harga+3000000)/1.16) *(5/100)) - 3000000)}},-
+                                {{ rupiah(((($fp->total_harga+3000000)/1.16) *(5/100)) - 3000000)}},-
                             </p>
                         </td>
                     </tr>
-                    <tr style="height:14pt">
+                    <tr style="height:16pt">
                         <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">
-                                f. Biaya Surat
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
+                                Biaya Surat
                                 (BBN dan AJB) PPAT</p>
                         </td>
                         <td style="width:29pt">
@@ -621,11 +674,11 @@
                             </p>
                         </td>
                     </tr>
-                    <tr style="height:14pt">
+                    <tr style="height:17pt">
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                g.
+                                e.
                                 Biaya
                                 Administrasi</p>
                         </td>
@@ -658,8 +711,8 @@
                                 {{ rupiah($fp->total_harga) }},-</p>
                         </td>
                     </tr>
-                </table>  --}}
-                {{--  @elseif ($promo->bphtb_promo == "no")  --}}
+                </table>
+                @elseif ($promo->bphtb_promo == "no")
                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                      <tr style="height:14pt">
                         <td style="width:215pt">
@@ -740,7 +793,7 @@
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
                         </td>
                     </tr>
-                    {{--  <tr style="height:16pt">
+                    <tr style="height:16pt">
                         <td style="width:215pt">
                             <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
                                 BPHTB</p>
@@ -787,7 +840,7 @@
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                 0,-</p>
                         </td>
-                    </tr>  --}}
+                    </tr>
                     <tr style="height:17pt">
                         <td style="width:215pt">
                             <p class="s2"
@@ -806,18 +859,18 @@
                         </td>
                     </tr>
                 </table>
-                {{--  @endif  --}}
+                @endif
 
 
                 @endif
 
 
             </li>
-            {{--  <li data-list-text="6.">
+            <li data-list-text="6.">
                 <p class="s3" style="padding-top: 1pt;padding-left: 40pt;text-indent: -17pt;text-align: left;">
                     Untuk
                     penyerahan bangunan tanggal :</p>
-            </li>  --}}
+            </li>
         </ol>
         <div class="page-break"></div>
 
@@ -828,7 +881,7 @@
             berikut
             :</p>
 
-        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">
+        <p class="s3" style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">
             Untuk pemesanan tersebut diatas, maka dengan ini pemesan menyetujui syarat dan ketentuan sebagai berikut
             :
         </p>
@@ -908,7 +961,7 @@
                     serta akibatnya menjadi tanggungan pemesan sepenuhnya.</p>
             </li>
             <li data-list-text="VI.">
-                <p style="padding-left: 41pt;text-indent: -29pt;line-height: 114%;text-align: left;">Apabila
+                <p style="padding-left: 41pt;text-indent: -29pt;line-height: 114%;text-align: justify;">Apabila
                     pemesan
                     lalai dalam hal kurang atau terlambat melakukan suatu pembayaran berdasarkan Surat Pemesanan
                     ini,
@@ -949,18 +1002,17 @@
                     <li data-list-text="a.">
                         <p
                             style="padding-top: 4pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
-                            Secara Cash atau Cash Bertahap (inhouse) dapat melalui transfer ke rekening
-                        </p>
-                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">BANK CENTRAL
+                            Secara Cash atau Cash Bertahap (inhouse) dapat melalui transfer ke rekening BANK CENTRAL
                             ASIA
                         </p>
-                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Cabang Galunggung, Malang</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;text-align: left;">Cabang Galunggung, Malang</p>
                         <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Atas Nama : PT
                             CITRA ARGO TIRTA</p>
-                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">
-                            Nomor Rekening : 4403014000
-                        </p>
-
+                        <p style="padding-top: 1pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Nomor Rekening
+                            :
+                            4403014000, atau melalui virtual account:</p>
+                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Nomor Virtual
+                            Account NISP : 711021105313770</p>
                     </li>
                     <li data-list-text="b.">
                         <p
@@ -968,7 +1020,9 @@
                             Secara KPR wajib dilakukan oleh pemesan dengan menggunakan debet card/transfer/virtual
                             account/pemindahbukuan/ giro/cek dari rekening atas nama pemesan sendiri (Jika rekening atas
                             nama suami/istri/anak harus dibuktikan dengan dokumen legalitas yang berupa Kartu Keluarga,
-                            Akta Nikah, Akta Lahir Anak), dengan mencantumkan nama pemesan, Nomor Blok/Kavling,
+                            Akta
+                            Nikah, Akta Lahir Anak), dengan mencantumkan nama pemesan, Nomor</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Blok/Kavling,
                             pembayaran ditujukan ke :</p>
                         <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">BANK CENTRAL
                             ASIA
@@ -976,9 +1030,11 @@
                         <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Cabang
                             Galunggung, Malang</p>
                         <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Atas Nama : PT
-                                CITRA ARGO TIRTA</p>
-                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">
-                                Nomor Rekening : 4403014000</p>
+                            CITRA ARGO TIRTA</p>
+                        <p
+                            style="padding-top: 1pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
+                            Nomor Rekening : 4403014000, atau melalui virtual account: Nomor Virtual Account NISP :
+                            711021105313770</p>
                     </li>
                 </ol>
             </li>
@@ -987,16 +1043,20 @@
                     BANK/LEMBAGA KEUANGAN/PEMBIAYAAN</p>
                 <ol id="l5">
                     <li data-list-text="a.">
+                        <p style="padding-top: 1pt;padding-left: 77pt;text-indent: -18pt;text-align: left;">Pemesan
+                            wajib
+                            melengkapi data-data yang diperlukan oleh Bank/Lembaga</p>
                         <p
-                        style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                        Pemesan wajib melengkapi data-data yang diperlukan oleh Bank/Lembaga
+                            style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
                             Keuangan/Pembiayaan selambat-lambatnya : 7 (Tujuh) Hari setelah tanda jadi (booking
                             fee)
                             untuk KPR PERTAMA, KEDUA, KETIGA, KEEMPAT dan KELIMA 3 (tiga) bulan sebelum DP Lunas untuk
                             KPR
-                            PERTAMA,KEDUA, KETIGA, KEEMPAT, KELIMA, KEENAM dan seterusnya
+                            PERTAMA,KEDUA, KETIGA, KEEMPAT, KELIMA, KEENAM dan</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">seterusnya
                             dengan cicilan Uang Muka (DP) lebih dari 3 (tiga) bulan. Apabila lewat dari waktu tersebut,
-                            pemesan telah lalai dengan alasan apapun maka PT. CITRA ARGO TIRTA berhak membatalkan
+                            pemesan telah lalai dengan alasan apapun maka PT. CITRA ARGO TIRTA berhak</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 13pt;text-align: left;">membatalkan
                             Surat Pemesanan ini sesuai butir II dan butir XI di bawah.</p>
                     </li>
                     <li data-list-text="b.">
@@ -1004,18 +1064,26 @@
                             style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
                             Apabila pemesan tidak memenuhi undangan untuk wawancara, dan/atau apabila pemesan sudah
                             mendapatkan persetujuan kredit dari Bank/Lembaga Keuangan/Pembiayaan namun belum melakukan
-                            akad kredit dengan Bank/Lembaga Keuangan/Pembiayaan dihadapan Notaris, dan PT. CITRA ARGO TIRTA,
+                            akad
+                            kredit dengan Bank/Lembaga Keuangan/Pembiayaan dihadapan Notaris, dan PT. CITRA ARGO TIRTA,
                             telah melakukan pemberitahuan sebanyak 3 (tiga) kali, baik lisan maupun tertulis, maka
-                            pemesan telah lalai dan PT. CITRA ARGO TIRTA berhak membatalkan
+                            pemesan
+                            telah lalai dan PT. CITRA ARGO TIRTA berhak</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 13pt;text-align: left;">membatalkan
                             Surat Pemesanan ini sesuai butir XI di bawah.</p>
                     </li>
                     <li data-list-text="c.">
+                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;text-align: left;">Apabila
+                            setelah
+                            persetujuan kredit dari Bank/Lembaga Keuangan/Pembiayaan kepada</p>
                         <p
-                        style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                        Apabila setelah persetujuan kredit dari Bank/Lembaga Keuangan/Pembiayaan kepada
+                            style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: justify;">
                             pemesan telah diberikan, ternyata pemesan harus menambah/membayar Uang Muka, maka pemesan
-                            wajib melunasi penambahan Uang Muka dimaksud selambat-lambatnya 14 (empat belas) hari setelah
-                            tanggal surat persetujuan fasilitas kredit dari Bank/Lembaga
+                            wajib
+                            melunasi penambahan Uang Muka dimaksud selambat-lambatnya 14 (empat belas) hari setelah
+                            tanggal
+                            surat persetujuan fasilitas kredit dari Bank/Lembaga</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: justify;">
                             Keuangan/Pembiayaan tersebut. Apabila lewat dari dalam jangka waktu tersebut, maka PT. CITRA
                             ARGO TIRTA berhak untuk :</p>
                         <ol id="l6">
@@ -1078,33 +1146,41 @@
                             diperjanjikan sebelumnya oleh PT. CITRA ARGO TIRTA dan pemesan bahwa seluruh/sebagian
                             pembayaran
                             Uang Muka, dibiayai oleh instansi/perusahaan seperti namun tidak terbatas PT. (Persero)
-                            Jamsostek, Yayasan Kesejahteraan Perumahan Prajurit dan Pegawai Negeri
+                            Jamsostek, Yayasan Kesejahteraan Perumahan Prajurit dan</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">Pegawai
+                            Negeri
                             Sipil Departemen Pertahanan (YKPP DEPHAN) atau Badan Pertimbangan Tabungan Perumahan Pegawai
                             Negeri Sipil (BAPERTARUM) dan ketentuan mengenai Fasilitas Likuiditas Pembiayaan Perumahan
-                            (FLPP), maka pemesan menjamin sepenuhnya bertanggung
+                            (FLPP), maka pemesan menjamin sepenuhnya</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">bertanggung
                             jawab atas pelunasan pembayaran Uang Muka tersebut kepada PT. CITRA ARGO TIRTA jika
-                            instansi/perusahaan dimaksud batal membayar Uang Muka dimaksud dalam waktu 1
+                            instansi/perusahaan dimaksud batal membayar Uang Muka dimaksud dalam</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: justify;">waktu 1
                             (satu) bulan sejak tanggal jatuh temponya sebagaimana jadwal pembayaran di atas, maka PT.
-                            CITRA ARGO TIRTA berhak membatalkan Perjanjian ini sesuai butir XI dibawah dan uang yang sudah
+                            CITRA
+                            ARGO TIRTA berhak membatalkan Perjanjian ini sesuai butir XI dibawah dan uang yang sudah
                             dibayarkan oleh pemesan kepada PT. CITRA ARGO TIRTA akan dikembalikan dengan syarat pemesan
                             mengembalikan kepada PT. CITRA ARGO TIRTA asli Surat Pemesanan ini dan seluruh asli kwitansi
-                            pembayaran terkait. Seluruh pengembalian tersebut tanpa diberikan
+                            pembayaran terkait. Seluruh pengembalian tersebut tanpa</p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 113%;text-align: justify;">diberikan
                             bunga apapun juga, setelah dipotong biaya pembatalan sebagaimana yang diatur didalambutir X
                             huruf d.</p>
                     </li>
                 </ol>
             </li>
             <li data-list-text="XI.">
-                <p style="padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">Untuk pembatalan Surat Pemesanan ini,
-                    maka Para Pihak dengan ini setuju dan sepakat untuk
+                <p style="padding-left: 41pt;text-indent: -29pt;text-align: justify;">Untuk pembatalan Surat Pemesanan
+                    ini,
+                    maka Para Pihak dengan ini setuju dan sepakat untuk</p>
+                <p style="padding-top: 2pt;padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">
                     melepaskan ketentuan ketentuan Pasal 1265, 1266, 1267 Kitab Undang-Undang Hukum Perdata dan pemesan
                     dengan ini memberikan kuasa sepenuhnya kepada PT. CITRA ARGO TIRTA dengan hak substitusi untuk
                     menandatangani surat pembatalannya dan surat tersebut berlaku efektif dan sah dengan PT. CITRA ARGO
                     TIRTA mengirim surat pembatalannya kepada pemesan, tanpa perlu melalui proses Pengadilan dan berlaku
-                    terhitung tanggal pengiriman surat pembatalan tersebut oleh PT. CITRA ARGO TIRTA yang
+                    terhitung tanggal pengiriman surat pembatalan tersebut oleh PT.</p>
+                <p style="padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">CITRA ARGO TIRTA yang
                     dibuktikan dengan tanda terima yang dikeluarkan oleh kantor pos/perusahaan jasa kurir/kurir.</p>
             </li>
-
             <li data-list-text="XII.">
                 <p style="padding-left: 41pt;text-indent: -32pt;text-align: justify;">KETENTUAN PINDAH BLOK DAN NOM0R
                     TANAH
@@ -1124,7 +1200,7 @@
                         <ol id="l9">
                             <li data-list-text="i.">
                                 <p
-                                style="padding-top: 4pt;padding-left: 113pt;text-indent: -16pt;line-height: 113%;text-align: left;">
+                                    style="padding-top: 2pt;padding-left: 113pt;text-indent: -14pt;line-height: 114%;text-align: left;">
                                     Harus mengajukan surat permohonan pindah Blok/ Kavling dan disetujui oleh PT. CITRA
                                     ARGO
                                     TIRTA.</p>
@@ -1146,20 +1222,20 @@
                             </li>
                             <li data-list-text="iv.">
                                 <p
-                                style="padding-top: 4pt;padding-left: 113pt;text-indent: -16pt;line-height: 113%;text-align: left;">
+                                    style="padding-top: 2pt;padding-left: 113pt;text-indent: -19pt;line-height: 114%;text-align: justify;">
                                     Pemesan bertanggung jawab atas segala kewajiban perpajakan yang mungkin timbul dari
                                     pindah Blok/Kavling tersebut;</p>
                             </li>
                             <li data-list-text="v.">
                                 <p
-                                style="padding-top: 4pt;padding-left: 113pt;text-indent: -16pt;line-height: 113%;text-align: left;">
+                                    style="padding-left: 113pt;text-indent: -16pt;line-height: 114%;text-align: justify;">
                                     Harga Tanah dan Bangunan/ Kavling yang lama diperhitungkan dari harga pada saat
                                     pemesanan, dan harga Tanah dan Bangunan/ Kavling yang baru diperhitungkan dari harga
                                     yang berlaku pada saat pindah Blok/Kavling.</p>
                             </li>
                             <li data-list-text="vi.">
                                 <p
-                                style="padding-top: 4pt;padding-left: 113pt;text-indent: -16pt;line-height: 113%;text-align: left;">
+                                    style="padding-left: 113pt;text-indent: -19pt;line-height: 114%;text-align: justify;">
                                     Menandatangani dan menyerahkan seluruh akta, perjanjian, surat, formulir, dan
                                     dokumen
                                     lainnya yang dipersyaratkan oleh PT. CITRA ARGO TIRTA;</p>
@@ -1170,7 +1246,7 @@
             </li>
 
 
-<div class="page-break"></div>
+
             <li data-list-text="XIII.">
                 <p style="padding-left: 41pt;text-indent: -34pt;text-align: left;">KETENTUAN PENGALIHAN HAK, KEWAJIBAN
                     DAN
@@ -1217,7 +1293,7 @@
                             istri/suami
                             dengan harta campur, anak kandung yang dapat dibuktikan secara hukum dengan: akta kelahiran,
                             akta nikah dan/atau kartu keluarga, dsbnya yang dianggap</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">cukup oleh
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: justify;">cukup oleh
                             PT. CITRA ARGO TIRTA, maka pemesan wajib membayar kepada PT. CITRA ARGO TIRTA biaya
                             administrasi
                             ganti nama sebesar Rp.250.000,- (dua ratus lima puluh ribu rupiah) per kejadian dan
@@ -1246,125 +1322,56 @@
                 </ol>
             </li>
             <li data-list-text="XIV.">
-                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">KETENTUAN SELAMA
-                    PEMBANGUNAN</p>
-                <ol id="l10">
-                    <li data-list-text="a.">
-                        <p
-                            style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
-                            Pelaksanaan pembangunan didasarkan pada spesifikasi teknik dan gambar rumah yang
-                            telah dikeluarkan oleh PT. CITRA ARGO TIRTA.</p>
-                    </li>
-                    <li data-list-text="b.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Untuk pembelian rumah dengan kavling khusus, untuk pelaksanaan pembangunan
-                            diperkenankan free design dan tetap berpedoman sesuai dengan prosedur PT. CITRA
-                            ARGO TIRTA.</p>
-
-                    </li>
-                    <li data-list-text="c.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Adanya pekerjaan tambahan atau perubahan spesifikasi teknik dan gambar harap
-                            diinformasikan di awal pemesanan.
-                        </p>
-                    </li>
-                    <li data-list-text="d.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Selama masa pembangunan, Pembeli tidak diperkenankan untuk melakukan pekerjaan
-                            tambahan atau perubahan spesifikasi teknik dan gambar tanpa persetujuan dari PT.
-                            CITRA ARGO TIRTA.
-                        </p>
-                    </li>
-                    <li data-list-text="e.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Pengajuan order pembangunan akan dilakukan setelah Pembeli menyelesaikan
-                            pembayaran 50% dari harga jual untuk pembayaran secara inhouse dan sudah
-                            Realisasi dengan pihak Bank/Lembaga Keuangan/ Pembiayaan. Penyelesaian bangunan
-                            akan dilaksanakan oleh PT. CITRA ARGO TIRTA selambat-lambatnya 12 bulan untuk
-                            tipe dibawah 70, sedangkan untuk tipe diatas 70 akan disepakati oleh kedua belah
-                            pihak.
-                        </p>
-                    </li>
-                </ol>
+                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">FORCE MAJEURE</p>
+                <p style="padding-top: 1pt;padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">Para
+                    pihak setuju untuk mengadakan perubahan/penambahan atas Surat Pemesanan ini apabila di kemudian hari
+                    terjadi Force Majeure. Yang dimaksud dengan Force Majeure adalah hal-hal yang dapat mempengaruhi
+                    jalannya pelaksanaan pekerjaan PT. CITRA ARGO TIRTA antara lain: gempa bumi, banjir, bencana alam
+                    lainnya, huru-hara, perang, tindakan kekerasan oleh pihak lain baik</p>
+                <p style="padding-top: 4pt;padding-left: 41pt;text-indent: 0pt;line-height: 113%;text-align: left;">
+                    secara
+                    perorangan atau massal, termasuk tindakan, kebijakan/peraturan Pemerintah termasuk di bidang fiskal
+                    atau
+                    moneter, keadaan politik atau keadaan langka bahan bangunan yang</p>
+                <p style="padding-left: 41pt;text-indent: 0pt;text-align: left;">mempengaruhi kegiatan usaha di bidang
+                    properti dan turunannya.</p>
             </li>
             <li data-list-text="XV.">
-                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">PRIHAL SERAH TERIMA
-                    RUMAH</p>
-                <ol id="l10">
-                    <li data-list-text="a.">
-                        <p
-                            style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
-                            Serah Terima Kavling akan dilaksanakan setelah Pembeli membayar lunas seluruh
-                            harga Tanah dan Bangunan dan pembangunan telah selesai 100%.</p>
-                    </li>
-                    <li data-list-text="b.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Serah Terima Sepihak akan dilaksanakan jika pembeli tidak dapat melakukan serah
-                            terima kavling dalam waktu yang telah ditentukan oleh PT. CITRA ARGO TIRTA.</p>
-
-                    </li>
-                    <li data-list-text="c.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Pembeli berjanji serta mengikatkan diri untuk tetap menggunakan tanah dan
-                            bangunan sebagai rumah tinggal, di kemudian hari apabila ada pengerjaan renovasi
-                            pembeli wajib melakukan konfirmasi kepada PT. CITRA ARGO TIRTA.
-                        </p>
-                    </li>
-                    <li data-list-text="d.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Biaya Pemeliharaan dan Perbaikan Lingkungan serta penggunaan air bersih dimulai
-                            sejak tanggal ditandatanganinya BAST (Berita Acara Serah Terima) yang besarnya
-                            ditentukan oleh PT. CITRA ARGO TIRTA.
-                        </p>
-                    </li>
-
-                </ol>
-            </li>
-            <li data-list-text="XVI.">
-                <p style="padding-left: 40pt;text-indent: -35pt;text-align: left;">FORCE MAJEURE</p>
-
-
-                <p
-                    style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
-                    Para pihak setuju untuk mengadakan perubahan/penambahan atas Surat Pemesanan ini apabila
-                    di kemudian hari terjadi Force Majeure. Yang dimaksud dengan Force Majeure adalah
-                    hal-hal yang dapat mempengaruhi jalannya pelaksanaan pekerjaan PT. CITRA ARGO TIRTA
-                    antara lain: gempa bumi, banjir, bencana alam lainnya, huru-hara, perang, tindakan
-                    kekerasan oleh pihak lain baik secara perorangan atau massal, termasuk tindakan,
-                    kebijakan/peraturan Pemerintah termasuk di bidang fiskal atau moneter, keadaan politik
-                    atau keadaan langka bahan bangunan yang mempengaruhi kegiatan usaha di bidang properti
-                    dan turunannya.</p>
-
-            </li>
-            <li data-list-text="XVII.">
-                <p style="padding-top: 8pt;padding-left: 41pt;text-indent: -32pt;text-align: left;">
-                    ARBITRASE DAN PENYELESAIAN SENGKETA
-                </p>
+                <p style="padding-top: 8pt;padding-left: 41pt;text-indent: -32pt;text-align: left;">ARBITRASE</p>
                 <ol id="l11">
                     <li data-list-text="a.">
                         <p
                             style="padding-top: 1pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Jika timbul perselisihan dalam melaksanakan Surat Pemesanan ini, maka akan
-                            diselesaikan oleh
+                            Jika timbul perselisihan dalam melaksanakan Surat Pemesanan ini, maka akan diselesaikan oleh
                             para pihak secara musyawarah.</p>
                     </li>
                     <li data-list-text="b.">
-                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Apabila dalam jangka waktu 60
-                            (enam puluh) hari sejak sengketa atau beda pendapat tersebut, penyelesaian
-                            secara musyawarah tidak tercapai, maka para pihak sepakat untuk
-                            menyelesaikannya pada tingkat pertama dan terakhir dengan cara arbitrase melalui
-                            Badan Arbitrase Nasional Indonesia (BANI) di Jakarta, sesuai dengan Undang-Undang Republik
-                            nomor 30 tahun 1999 tentang Arbitrase dan Alternatif Penyelesaian Sengketa, berikut
-                            perubahan dan penambahannya di kemudian hari.
+                        <p style="padding-left: 77pt;text-indent: -18pt;text-align: left;">Apabila dalam jangka waktu 60
+                            (enam puluh) hari sejak sengketa atau beda pendapat tersebut, penyelesaian secara musyawarah
+                            tidak tercapai, maka para pihak sepakat untuk
+                            menyelesaikannya pada tingkat pertama dan terakhir dengan cara arbitrase melalui Badan
+                            Arbitrase
+                            Nasional Indonesia (BANI) di Jakarta, sesuai dengan Undang-Undang Republik
+                            nomor
+                            30 tahun 1999 tentang Arbitrase dan Alternatif Penyelesaian Sengketa, berikut perubahan dan
+                            penambahannya di kemudian hari.
                         </p>
+                        <p
+                            style="padding-top: 1pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
+                        </p>
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">Indonesia
+                        </p>
+                    </li>
+                    <li data-list-text="c.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">Kesepakatan
+                            para pihak untuk menyelesaikan sengketa dengan cara arbitrase meniadakan hak para pihak
+                            untuk
+                            mengajukan penyelesaian sengketa ke Pengadilan Negeri.</p>
+                    </li>
+                    <li data-list-text="d.">
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">Para pihak
+                            setuju bahwa keputusan BANI adalah final dan mengikat para pihak, serta untuk pelaksanaan
+                            keputusan BANI dapat dimintakan fiat eksekusinya ke Pengadilan Negeri setempat.</p>
                     </li>
                 </ol>
             </li>
@@ -1427,7 +1434,7 @@
                 </td>
             </tr>
             <?php
-
+            
             $no++;
             ?>
             @endforeach
@@ -1438,59 +1445,52 @@
         <p style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">Harga Sudah
             Termasuk : SHGB, PPN, IMB, PLN dan Air bersih. </p>
         <p style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">Harga Belum
-            Termasuk : BPHTB, Biaya KPR.</p>
-            <p style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">{{$promo->keterangan}}</p>
-       <br>
-       <br>
+            Termasuk : AJB, BBN, BPHTB, Biaya KPR.</p>
+        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 229%;text-align: justify;">Promo : 
+        @if(empty($promo))
+        Tidak ada Promo
+        @else
+        {{$promo->kode_promo}}<br>
+        {{$promo->keterangan}}
+        @endif
+        </p>
         <p>
             Malang,  <?=  tgl_indo(date('Y-m-d', strtotime($fp->tgl_input_fp))) ?></php></p>
-        <table style="width: 100%;">
+        <table style="width: 100%">
             <tr>
-                <td style="text-align:center;">
-                    <p style="">Sales Executive
+                <td>
+                    <p style="padding-top: 6pt;padding-left: 20pt;text-indent: 0pt;text-align: left;">Sales Executive
                     </p>
-                   <br/>
-                   <br/>
-                    <p style="">{{ $fp->nama_ua }}</p>
+                    <p style="text-indent: 0pt;text-align: left;"><br /></p>
+                    <p style="text-indent: 0pt;text-align: left;"><br /></p>
+                    <p style="padding-left: 18pt;text-indent: 0pt;text-align: left;">{{ $fp->nama_ua }}</p>
                 </td>
-                <td style="text-align:center;">
+                <td>
                     <p style="padding-top: 6pt;padding-left: 18pt;text-indent: 0pt;text-align: left;"></p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
                     <p style="padding-left: 19pt;text-indent: 0pt;text-align: left;"></p>
                 </td>
-                <td style="text-align:center;">
-                    <p style="">Pemesan</p>
+                <td>
+                    <p style="padding-top: 3pt;padding-left: 89pt;text-indent: 0pt;text-align: center;">Pemesan</p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-                    <p style="">{{ $fp->nama_plgn }}</p>
+                    <p style="padding-left: 89pt;text-indent: 0pt;text-align: center;">{{ $fp->nama_plgn }}</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <br/>
-                    <br/>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align:center;">
-                    <p style="">Accounting
+                    <p style="padding-top: 3pt;padding-left: 89pt;text-indent: 0pt;text-align: center;">Accounting
                         Manager</p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-                    <p style="">Andreas Wibisono Lugito</p>
+                    <p style="padding-left: 89pt;text-indent: 0pt;text-align: center;">Andreas WL</p>
                 </td>
-                <td style="text-align:center;">
-                    <p style="">Legal Manager
+                <td>
+                    <p style="padding-top: 2pt;padding-left: 89pt;text-indent: 0pt;text-align: center;">CEO</p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-                    <p style="">Dian Yunitasari</p>
-                </td>
-                <td style="text-align:center;">
-                    <p style="">CEO</p>
-                    <p style="text-indent: 0pt;text-align: left;"><br /></p>
-                    <p style="text-indent: 0pt;text-align: left;"><br /></p>
-                    <p style="">Gilbert Setiawan</p>
+                    <p style="padding-left: 89pt;text-indent: 0pt;text-align: center;">Gilbert Setiawan</p>
 
                 </td>
                 <td>
@@ -1506,7 +1506,7 @@
 
         <table style="width: 100%">
             <tr>
-                <td style="width: 70%;"></td>
+                <td style="width: 70%;">Paraf : </td>
                 <td style="width: 30%;">
                     <b style="color: #8ACCA1;">PT. CITRA ARGO TIRTA</b>
                     <br>
@@ -1520,6 +1520,76 @@
 
         </table>
     </div>
+
+    <?php
+    function rupiah($angka)
+    {
+        $hasil_rupiah = number_format($angka, 0, ',', '.') ;
+        return $hasil_rupiah;
+    }
+    
+    function penyebut($nilai) {
+		$nilai = abs($nilai);
+		$huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+		$temp = "";
+		if ($nilai < 12) {
+			$temp = " ". $huruf[$nilai];
+		} else if ($nilai <20) {
+			$temp = penyebut($nilai - 10). " belas";
+		} else if ($nilai < 100) {
+			$temp = penyebut($nilai/10)." puluh". penyebut($nilai % 10);
+		} else if ($nilai < 200) {
+			$temp = " seratus" . penyebut($nilai - 100);
+		} else if ($nilai < 1000) {
+			$temp = penyebut($nilai/100) . " ratus" . penyebut($nilai % 100);
+		} else if ($nilai < 2000) {
+			$temp = " seribu" . penyebut($nilai - 1000);
+		} else if ($nilai < 1000000) {
+			$temp = penyebut($nilai/1000) . " ribu" . penyebut($nilai % 1000);
+		} else if ($nilai < 1000000000) {
+			$temp = penyebut($nilai/1000000) . " juta" . penyebut($nilai % 1000000);
+		} else if ($nilai < 1000000000000) {
+			$temp = penyebut($nilai/1000000000) . " milyar" . penyebut(fmod($nilai,1000000000));
+		} else if ($nilai < 1000000000000000) {
+			$temp = penyebut($nilai/1000000000000) . " trilyun" . penyebut(fmod($nilai,1000000000000));
+		}     
+		return $temp;
+	}
+ 
+	function terbilang($nilai) {
+		if($nilai<0) {
+			$hasil = "minus ". trim(penyebut($nilai));
+		} else {
+			$hasil = trim(penyebut($nilai));
+		}     		
+		return $hasil;
+	}
+	
+	function tgl_indo($tanggal){
+	$bulan = array (
+		1 =>   'Januari',
+		'Februari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'Oktober',
+		'November',
+		'Desember'
+	);
+	$pecahkan = explode('-', $tanggal);
+	
+	// variabel pecahkan 0 = tanggal
+	// variabel pecahkan 1 = bulan
+	// variabel pecahkan 2 = tahun
+ 
+	return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+    }
+	
+    ?>
 
 </body>
 

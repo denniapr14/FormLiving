@@ -503,12 +503,60 @@
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
                         </td>
                     </tr>
-
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
+                                e.
+                                BPHTB</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
+                                0,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
+                                Biaya Surat
+                                (BBN dan AJB) PPAT</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:17pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                e.
+                                Biaya
+                                Administrasi</p>
+                        </td>
+                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
+                                0,-</p>
+                        </td>
+                    </tr>
                     <tr style="height:17pt">
                         <td style="width:215pt">
                             <p class="s2"
                                 style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                                Sehingga TOTAL harga sebesar</p>
+                                Sehinggal TOTAL harga sebesar</p>
                         </td>
                         <td style="width:29pt;border-top-style:solid;border-top-width:1pt">
                             <p class="s2"
@@ -603,6 +651,55 @@
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                 {{ rupiah((11/100)*(($fp->total_harga+3000000)/1.16) )}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
+                                e.
+                                BPHTB</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
+                                {{ rupiah(((($fp->total_harga+3000000)/1.16) *(5/100)) - 3000000)}},-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
+                                f. Biaya Surat
+                                (BBN dan AJB) PPAT</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:14pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                g.
+                                Biaya
+                                Administrasi</p>
+                        </td>
+                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
+                                0,-</p>
                         </td>
                     </tr>
                     <tr style="height:17pt">
@@ -702,6 +799,54 @@
                             <p class="s2"
                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
+                        </td>
+                    </tr>
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">c.
+                                BPHTB</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
+                                0,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:16pt">
+                        <td style="width:215pt">
+                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">d.
+                                Biaya Surat
+                                (BBN dan AJB) PPAT</p>
+                        </td>
+                        <td style="width:29pt">
+                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
+                        </td>
+                        <td style="width:86pt">
+                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:17pt">
+                        <td style="width:215pt">
+                            <p class="s2"
+                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                e.
+                                Biaya
+                                Administrasi</p>
+                        </td>
+                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                Rp.
+                            </p>
+                        </td>
+                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
+                            <p class="s2"
+                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
+                                0,-</p>
                         </td>
                     </tr>
                     <tr style="height:17pt">
@@ -1029,7 +1174,7 @@
                             mengembalikan kepada PT. CITRA ARGO TIRTA asli Surat Pemesanan ini dan seluruh asli kwitansi
                             pembayaran terkait. Seluruh pengembalian tersebut tanpa</p>
                         <p style="padding-left: 77pt;text-indent: 0pt;line-height: 113%;text-align: justify;">diberikan
-                            bunga apapun juga, setelah dipotong biaya pembatalan sebagaimana yang diatur didalam butir X
+                            bunga apapun juga, setelah dipotong biaya pembatalan sebagaimana yang diatur didalambutir X
                             huruf d.</p>
                     </li>
                 </ol>

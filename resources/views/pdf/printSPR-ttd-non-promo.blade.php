@@ -491,50 +491,7 @@
                                 {{ rupiah((11/100)*(($fp->total_harga)/1.11) )}},-</p>
                         </td>
                     </tr>
-                    {{--  <tr style="height:20pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">e. BPHTB</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 6pt;text-indent: 0pt;text-align: right;">
-                                0,-
-                            </p>
-                        </td>
-                    </tr>  --}}
-                    {{--  <tr style="height:18pt">
-                        <td style="width:215pt">
-                            <p class="s2" style="padding-left: 2pt;text-indent: 0pt;text-align: left;">
-                                f. Biaya Surat (BBN dan AJB) PPAT</p>
-                        </td>
-                        <td style="width:29pt">
-                            <p class="s2" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">Rp.</p>
-                        </td>
-                        <td style="width:86pt">
-                            <p class="s2" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">0,-
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:18pt">
-                        <td style="width:215pt">
-                            <p class="s2"
-                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                g. Biaya Administrasi</p>
-                        </td>
-                        <td style="width:29pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                Rp.
-                            </p>
-                        </td>
-                        <td style="width:86pt;border-bottom-style:solid;border-bottom-width:1pt">
-                            <p class="s2"
-                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                0,-</p>
-                        </td>
-                    </tr>  --}}
+
                     <tr style="height:17pt">
                         <td style="width:215pt">
                             <p class="s2"
@@ -871,7 +828,7 @@
             berikut
             :</p>
 
-        <p class="s3" style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">
             Untuk pemesanan tersebut diatas, maka dengan ini pemesan menyetujui syarat dan ketentuan sebagai berikut
             :
         </p>
@@ -951,7 +908,7 @@
                     serta akibatnya menjadi tanggungan pemesan sepenuhnya.</p>
             </li>
             <li data-list-text="VI.">
-                <p style="padding-left: 41pt;text-indent: -29pt;line-height: 114%;text-align: justify;">Apabila
+                <p style="padding-left: 41pt;text-indent: -29pt;line-height: 114%;text-align: left;">Apabila
                     pemesan
                     lalai dalam hal kurang atau terlambat melakukan suatu pembayaran berdasarkan Surat Pemesanan
                     ini,
@@ -992,17 +949,18 @@
                     <li data-list-text="a.">
                         <p
                             style="padding-top: 4pt;padding-left: 77pt;text-indent: -18pt;line-height: 113%;text-align: left;">
-                            Secara Cash atau Cash Bertahap (inhouse) dapat melalui transfer ke rekening BANK CENTRAL
+                            Secara Cash atau Cash Bertahap (inhouse) dapat melalui transfer ke rekening
+                        </p>
+                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">BANK CENTRAL
                             ASIA
                         </p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;text-align: left;">Cabang Galunggung, Malang</p>
+                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Cabang Galunggung, Malang</p>
                         <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Atas Nama : PT
                             CITRA ARGO TIRTA</p>
-                        <p style="padding-top: 1pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Nomor Rekening
-                            :
-                            4403014000, atau melalui virtual account:</p>
-                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Nomor Virtual
-                            Account NISP : 711021105313770</p>
+                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">
+                            Nomor Rekening : 4403014000
+                        </p>
+
                     </li>
                     <li data-list-text="b.">
                         <p
@@ -1010,9 +968,7 @@
                             Secara KPR wajib dilakukan oleh pemesan dengan menggunakan debet card/transfer/virtual
                             account/pemindahbukuan/ giro/cek dari rekening atas nama pemesan sendiri (Jika rekening atas
                             nama suami/istri/anak harus dibuktikan dengan dokumen legalitas yang berupa Kartu Keluarga,
-                            Akta
-                            Nikah, Akta Lahir Anak), dengan mencantumkan nama pemesan, Nomor</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Blok/Kavling,
+                            Akta Nikah, Akta Lahir Anak), dengan mencantumkan nama pemesan, Nomor Blok/Kavling,
                             pembayaran ditujukan ke :</p>
                         <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">BANK CENTRAL
                             ASIA
@@ -1020,11 +976,9 @@
                         <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Cabang
                             Galunggung, Malang</p>
                         <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">Atas Nama : PT
-                            CITRA ARGO TIRTA</p>
-                        <p
-                            style="padding-top: 1pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
-                            Nomor Rekening : 4403014000, atau melalui virtual account: Nomor Virtual Account NISP :
-                            711021105313770</p>
+                                CITRA ARGO TIRTA</p>
+                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;text-align: left;">
+                                Nomor Rekening : 4403014000</p>
                     </li>
                 </ol>
             </li>
@@ -1033,20 +987,16 @@
                     BANK/LEMBAGA KEUANGAN/PEMBIAYAAN</p>
                 <ol id="l5">
                     <li data-list-text="a.">
-                        <p style="padding-top: 1pt;padding-left: 77pt;text-indent: -18pt;text-align: left;">Pemesan
-                            wajib
-                            melengkapi data-data yang diperlukan oleh Bank/Lembaga</p>
                         <p
-                            style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
+                        style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                        Pemesan wajib melengkapi data-data yang diperlukan oleh Bank/Lembaga
                             Keuangan/Pembiayaan selambat-lambatnya : 7 (Tujuh) Hari setelah tanda jadi (booking
                             fee)
                             untuk KPR PERTAMA, KEDUA, KETIGA, KEEMPAT dan KELIMA 3 (tiga) bulan sebelum DP Lunas untuk
                             KPR
-                            PERTAMA,KEDUA, KETIGA, KEEMPAT, KELIMA, KEENAM dan</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">seterusnya
+                            PERTAMA,KEDUA, KETIGA, KEEMPAT, KELIMA, KEENAM dan seterusnya
                             dengan cicilan Uang Muka (DP) lebih dari 3 (tiga) bulan. Apabila lewat dari waktu tersebut,
-                            pemesan telah lalai dengan alasan apapun maka PT. CITRA ARGO TIRTA berhak</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 13pt;text-align: left;">membatalkan
+                            pemesan telah lalai dengan alasan apapun maka PT. CITRA ARGO TIRTA berhak membatalkan
                             Surat Pemesanan ini sesuai butir II dan butir XI di bawah.</p>
                     </li>
                     <li data-list-text="b.">
@@ -1054,26 +1004,18 @@
                             style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
                             Apabila pemesan tidak memenuhi undangan untuk wawancara, dan/atau apabila pemesan sudah
                             mendapatkan persetujuan kredit dari Bank/Lembaga Keuangan/Pembiayaan namun belum melakukan
-                            akad
-                            kredit dengan Bank/Lembaga Keuangan/Pembiayaan dihadapan Notaris, dan PT. CITRA ARGO TIRTA,
+                            akad kredit dengan Bank/Lembaga Keuangan/Pembiayaan dihadapan Notaris, dan PT. CITRA ARGO TIRTA,
                             telah melakukan pemberitahuan sebanyak 3 (tiga) kali, baik lisan maupun tertulis, maka
-                            pemesan
-                            telah lalai dan PT. CITRA ARGO TIRTA berhak</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 13pt;text-align: left;">membatalkan
+                            pemesan telah lalai dan PT. CITRA ARGO TIRTA berhak membatalkan
                             Surat Pemesanan ini sesuai butir XI di bawah.</p>
                     </li>
                     <li data-list-text="c.">
-                        <p style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;text-align: left;">Apabila
-                            setelah
-                            persetujuan kredit dari Bank/Lembaga Keuangan/Pembiayaan kepada</p>
                         <p
-                            style="padding-top: 2pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: justify;">
+                        style="padding-top: 2pt;padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                        Apabila setelah persetujuan kredit dari Bank/Lembaga Keuangan/Pembiayaan kepada
                             pemesan telah diberikan, ternyata pemesan harus menambah/membayar Uang Muka, maka pemesan
-                            wajib
-                            melunasi penambahan Uang Muka dimaksud selambat-lambatnya 14 (empat belas) hari setelah
-                            tanggal
-                            surat persetujuan fasilitas kredit dari Bank/Lembaga</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: justify;">
+                            wajib melunasi penambahan Uang Muka dimaksud selambat-lambatnya 14 (empat belas) hari setelah
+                            tanggal surat persetujuan fasilitas kredit dari Bank/Lembaga
                             Keuangan/Pembiayaan tersebut. Apabila lewat dari dalam jangka waktu tersebut, maka PT. CITRA
                             ARGO TIRTA berhak untuk :</p>
                         <ol id="l6">
@@ -1136,41 +1078,33 @@
                             diperjanjikan sebelumnya oleh PT. CITRA ARGO TIRTA dan pemesan bahwa seluruh/sebagian
                             pembayaran
                             Uang Muka, dibiayai oleh instansi/perusahaan seperti namun tidak terbatas PT. (Persero)
-                            Jamsostek, Yayasan Kesejahteraan Perumahan Prajurit dan</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">Pegawai
-                            Negeri
+                            Jamsostek, Yayasan Kesejahteraan Perumahan Prajurit dan Pegawai Negeri
                             Sipil Departemen Pertahanan (YKPP DEPHAN) atau Badan Pertimbangan Tabungan Perumahan Pegawai
                             Negeri Sipil (BAPERTARUM) dan ketentuan mengenai Fasilitas Likuiditas Pembiayaan Perumahan
-                            (FLPP), maka pemesan menjamin sepenuhnya</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">bertanggung
+                            (FLPP), maka pemesan menjamin sepenuhnya bertanggung
                             jawab atas pelunasan pembayaran Uang Muka tersebut kepada PT. CITRA ARGO TIRTA jika
-                            instansi/perusahaan dimaksud batal membayar Uang Muka dimaksud dalam</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: justify;">waktu 1
+                            instansi/perusahaan dimaksud batal membayar Uang Muka dimaksud dalam waktu 1
                             (satu) bulan sejak tanggal jatuh temponya sebagaimana jadwal pembayaran di atas, maka PT.
-                            CITRA
-                            ARGO TIRTA berhak membatalkan Perjanjian ini sesuai butir XI dibawah dan uang yang sudah
+                            CITRA ARGO TIRTA berhak membatalkan Perjanjian ini sesuai butir XI dibawah dan uang yang sudah
                             dibayarkan oleh pemesan kepada PT. CITRA ARGO TIRTA akan dikembalikan dengan syarat pemesan
                             mengembalikan kepada PT. CITRA ARGO TIRTA asli Surat Pemesanan ini dan seluruh asli kwitansi
-                            pembayaran terkait. Seluruh pengembalian tersebut tanpa</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 113%;text-align: justify;">diberikan
+                            pembayaran terkait. Seluruh pengembalian tersebut tanpa diberikan
                             bunga apapun juga, setelah dipotong biaya pembatalan sebagaimana yang diatur didalambutir X
                             huruf d.</p>
                     </li>
                 </ol>
             </li>
             <li data-list-text="XI.">
-                <p style="padding-left: 41pt;text-indent: -29pt;text-align: justify;">Untuk pembatalan Surat Pemesanan
-                    ini,
-                    maka Para Pihak dengan ini setuju dan sepakat untuk</p>
-                <p style="padding-top: 2pt;padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">
+                <p style="padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">Untuk pembatalan Surat Pemesanan ini,
+                    maka Para Pihak dengan ini setuju dan sepakat untuk
                     melepaskan ketentuan ketentuan Pasal 1265, 1266, 1267 Kitab Undang-Undang Hukum Perdata dan pemesan
                     dengan ini memberikan kuasa sepenuhnya kepada PT. CITRA ARGO TIRTA dengan hak substitusi untuk
                     menandatangani surat pembatalannya dan surat tersebut berlaku efektif dan sah dengan PT. CITRA ARGO
                     TIRTA mengirim surat pembatalannya kepada pemesan, tanpa perlu melalui proses Pengadilan dan berlaku
-                    terhitung tanggal pengiriman surat pembatalan tersebut oleh PT.</p>
-                <p style="padding-left: 41pt;text-indent: 0pt;line-height: 114%;text-align: left;">CITRA ARGO TIRTA yang
+                    terhitung tanggal pengiriman surat pembatalan tersebut oleh PT. CITRA ARGO TIRTA yang
                     dibuktikan dengan tanda terima yang dikeluarkan oleh kantor pos/perusahaan jasa kurir/kurir.</p>
             </li>
+
             <li data-list-text="XII.">
                 <p style="padding-left: 41pt;text-indent: -32pt;text-align: justify;">KETENTUAN PINDAH BLOK DAN NOM0R
                     TANAH
@@ -1190,7 +1124,7 @@
                         <ol id="l9">
                             <li data-list-text="i.">
                                 <p
-                                    style="padding-top: 2pt;padding-left: 113pt;text-indent: -14pt;line-height: 114%;text-align: left;">
+                                style="padding-top: 4pt;padding-left: 113pt;text-indent: -16pt;line-height: 113%;text-align: left;">
                                     Harus mengajukan surat permohonan pindah Blok/ Kavling dan disetujui oleh PT. CITRA
                                     ARGO
                                     TIRTA.</p>
@@ -1212,20 +1146,20 @@
                             </li>
                             <li data-list-text="iv.">
                                 <p
-                                    style="padding-top: 2pt;padding-left: 113pt;text-indent: -19pt;line-height: 114%;text-align: justify;">
+                                style="padding-top: 4pt;padding-left: 113pt;text-indent: -16pt;line-height: 113%;text-align: left;">
                                     Pemesan bertanggung jawab atas segala kewajiban perpajakan yang mungkin timbul dari
                                     pindah Blok/Kavling tersebut;</p>
                             </li>
                             <li data-list-text="v.">
                                 <p
-                                    style="padding-left: 113pt;text-indent: -16pt;line-height: 114%;text-align: justify;">
+                                style="padding-top: 4pt;padding-left: 113pt;text-indent: -16pt;line-height: 113%;text-align: left;">
                                     Harga Tanah dan Bangunan/ Kavling yang lama diperhitungkan dari harga pada saat
                                     pemesanan, dan harga Tanah dan Bangunan/ Kavling yang baru diperhitungkan dari harga
                                     yang berlaku pada saat pindah Blok/Kavling.</p>
                             </li>
                             <li data-list-text="vi.">
                                 <p
-                                    style="padding-left: 113pt;text-indent: -19pt;line-height: 114%;text-align: justify;">
+                                style="padding-top: 4pt;padding-left: 113pt;text-indent: -16pt;line-height: 113%;text-align: left;">
                                     Menandatangani dan menyerahkan seluruh akta, perjanjian, surat, formulir, dan
                                     dokumen
                                     lainnya yang dipersyaratkan oleh PT. CITRA ARGO TIRTA;</p>
@@ -1234,9 +1168,9 @@
                     </li>
                 </ol>
             </li>
-            <div class="page-break"></div>
 
 
+<div class="page-break"></div>
             <li data-list-text="XIII.">
                 <p style="padding-left: 41pt;text-indent: -34pt;text-align: left;">KETENTUAN PENGALIHAN HAK, KEWAJIBAN
                     DAN
@@ -1283,7 +1217,7 @@
                             istri/suami
                             dengan harta campur, anak kandung yang dapat dibuktikan secara hukum dengan: akta kelahiran,
                             akta nikah dan/atau kartu keluarga, dsbnya yang dianggap</p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: justify;">cukup oleh
+                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">cukup oleh
                             PT. CITRA ARGO TIRTA, maka pemesan wajib membayar kepada PT. CITRA ARGO TIRTA biaya
                             administrasi
                             ganti nama sebesar Rp.250.000,- (dua ratus lima puluh ribu rupiah) per kejadian dan
@@ -1422,46 +1356,14 @@
                             para pihak secara musyawarah.</p>
                     </li>
                     <li data-list-text="b.">
-                        <p style="padding-left: 77pt;text-indent: -18pt;text-align: left;">Apabila dalam
-                            jangka
-                            waktu 60
+                        <p style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
+                            Apabila dalam jangka waktu 60
                             (enam puluh) hari sejak sengketa atau beda pendapat tersebut, penyelesaian
-                            secara
-                            musyawarah
-                            tidak tercapai, maka para pihak sepakat untuk
+                            secara musyawarah tidak tercapai, maka para pihak sepakat untuk
                             menyelesaikannya pada tingkat pertama dan terakhir dengan cara arbitrase melalui
-                            Badan
-                            Arbitrase
-                            Nasional Indonesia (BANI) di Jakarta, sesuai dengan Undang-Undang Republik
-                            nomor
-                            30 tahun 1999 tentang Arbitrase dan Alternatif Penyelesaian Sengketa, berikut
-                            perubahan dan
-                            penambahannya di kemudian hari.
-                        </p>
-                        <p
-                            style="padding-top: 1pt;padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
-                        </p>
-                        <p style="padding-left: 77pt;text-indent: 0pt;line-height: 114%;text-align: left;">
-                            Indonesia
-                        </p>
-                    </li>
-                    <li data-list-text="c.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Kesepakatan
-                            para pihak untuk menyelesaikan sengketa dengan cara arbitrase meniadakan hak
-                            para
-                            pihak
-                            untuk
-                            mengajukan penyelesaian sengketa ke Pengadilan Negeri.</p>
-                    </li>
-                    <li data-list-text="d.">
-                        <p
-                            style="padding-left: 77pt;text-indent: -18pt;line-height: 114%;text-align: left;">
-                            Para pihak
-                            setuju bahwa keputusan BANI adalah final dan mengikat para pihak, serta untuk
-                            pelaksanaan
-                            keputusan BANI dapat dimintakan fiat eksekusinya ke Pengadilan Negeri setempat.
+                            Badan Arbitrase Nasional Indonesia (BANI) di Jakarta, sesuai dengan Undang-Undang Republik
+                            nomor 30 tahun 1999 tentang Arbitrase dan Alternatif Penyelesaian Sengketa, berikut
+                            perubahan dan penambahannya di kemudian hari.
                         </p>
                     </li>
                 </ol>
