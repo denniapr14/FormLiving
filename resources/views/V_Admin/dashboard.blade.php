@@ -8,9 +8,26 @@
 
 @section('content')
 
-<style>
+    <style>
+        .map {
+            width: 100%;
+            height: 100%;
 
-</style>
+        }
+        .zoomIn {
+            position: absolute;
+            z-index: 2;
+            top: 150px;
+            right: 50px;
+        }
+        .zoomOut {
+            position: absolute;
+            z-index: 2;
+            top: 180px;
+            right: 50px;
+        }
+
+    </style>
     <!-- start: main -->
 
 
@@ -89,43 +106,39 @@
                         </div>
                         @if (
                             $user->kategori == 'Sales' ||
-                            $user->kategori == 'SalesAgent' ||
-                            $user->kategori == 'Agent' ||
-                            $user->kategori == 'AgentCompany'
-                        )
-                        @elseif( $user->kategori == 'AdminAgentCompany' ||
-                        $user->kategori == 'AdminSales'
-                        )
-                        <div class="transaction__column">
-                            <div class="transaction__icon transaction__icon--agents">
-                                <i class="bi bi-person-workspace"></i>
-                            </div>
-                            <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
-                            <div class="transaction__title">
-                                @if ($user->kategori == 'AdminSales')
-                                Sales
-                                @elseif($user->kategori == 'AdminAgentCompany')
-                                Agent
-                                @endif
+                                $user->kategori == 'SalesAgent' ||
+                                $user->kategori == 'Agent' ||
+                                $user->kategori == 'AgentCompany')
+                        @elseif($user->kategori == 'AdminAgentCompany' || $user->kategori == 'AdminSales')
+                            <div class="transaction__column">
+                                <div class="transaction__icon transaction__icon--agents">
+                                    <i class="bi bi-person-workspace"></i>
+                                </div>
+                                <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
+                                <div class="transaction__title">
+                                    @if ($user->kategori == 'AdminSales')
+                                        Sales
+                                    @elseif($user->kategori == 'AdminAgentCompany')
+                                        Agent
+                                    @endif
 
+                                </div>
                             </div>
-                        </div>
-
                         @else
-                        <div class="transaction__column">
-                            <div class="transaction__icon transaction__icon--agents">
-                                <i class="bi bi-person-workspace"></i>
+                            <div class="transaction__column">
+                                <div class="transaction__icon transaction__icon--agents">
+                                    <i class="bi bi-person-workspace"></i>
+                                </div>
+                                <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
+                                <div class="transaction__title">Agen Dengan Company</div>
                             </div>
-                            <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
-                            <div class="transaction__title">Agen Dengan Company</div>
-                        </div>
-                        <div class="transaction__column">
-                            <div class="transaction__icon transaction__icon--invoice">
-                                <i class="bi bi-file-earmark-pdf"></i>
+                            <div class="transaction__column">
+                                <div class="transaction__icon transaction__icon--invoice">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </div>
+                                <div class="transaction__count">{{ $agentWithoutCompany->userCount }}</div>
+                                <div class="transaction__title">Agen</div>
                             </div>
-                            <div class="transaction__count">{{ $agentWithoutCompany->userCount }}</div>
-                            <div class="transaction__title">Agen</div>
-                        </div>
 
                         @endif
 
@@ -158,10 +171,11 @@
                             </div>
 
                         </div>
-                        <div class="table-responsive" style="width: 100%">
+                        <div class="table-responsive">
 
-                            <div class="map svg-container" style="background-color: white ;width: 90%;
-                            ">
+                            <div class="map svg-container"
+                                style="background-color: white ;width: 100%;
+                            " >
 
                                 {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
                                 {{-- @include('map.svg') --}}
@@ -169,13 +183,6 @@
                                 <script>
                                     var svg = document.getElementById('Layer_1');
 
-
-                                    function zoom(scale) {
-
-                                        svg.setAttribute('transform', 'scale(' + scale + ')');
-                                    }
-
-                                    var mouseX = 0;
 
 
                                     var data = {!! json_encode($rumah) !!};
@@ -223,23 +230,65 @@
                                         }
                                         return iro;
                                     }
-
-
                                 </script>
-                                {{--  <div class="control">
-                                    <div class="zoom in">
-                                        <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
-                                    </div>
-                                    <div class="zoom">
-                                        <img src="{{ asset('Home') }}/images/ic-zoom-out.png" alt="">
-                                    </div>
-                                </div>  --}}
+
 
 
                             </div>
-                            {{--  <button onclick="zoom(1.5)">Zoom in</button>
-                            <button onclick="zoom(0.5)">Zoom out</button>  --}}
+
+                            <div class="float-right">
+                            <button class="btn-fd-icon-outline zoomIn col-md-1" id="plus" onclick="zoom(1.5)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+
+                            <button class="btn-fd-icon-outline zoomOut col-md-1" id="minus" onclick="zoom(0.5)"><i class="fa fa-minus" aria-hidden="true"></i></button>
                         </div>
+
+                        </div>
+
+                        <script>
+                            var svg = document.querySelector('.svg-container > svg');
+                            var currentScale = 1;
+                            var maxZoom = 2;
+                            var isPanning = true;
+                            var panStartX, panStartY, panTranslateX, panTranslateY;
+
+                            function zoom(scale) {
+                                currentScale *= scale;
+
+                                // Limit the zoom to the defined maximum
+                                if (currentScale > maxZoom) {
+                                    currentScale = maxZoom;
+                                }
+
+                                svg.style.transform = 'scale(' + currentScale + ')';
+                            }
+
+
+
+
+                            window.onload = function() {
+                                var panZoomInstance = svgPanZoom('#map', {
+                                    zoomEnabled: true,
+                                    controlIconsEnabled: false, // Disable default control icons
+                                    fit: true,
+                                    center: true,
+                                    minZoom: 0.5,
+                                    maxZoom: 10,
+                                    refreshRate: 'auto',
+                                });
+                                var controlElement = document.querySelector('#svg-pan-zoom-reset-pan-zoom');
+
+                                // Hide the control element by setting its display property to 'none'
+                                controlElement.style.display = 'none';
+                                controlElement.hide();
+
+                                var customZoomInButton = document.getElementById('plus');
+                                var customZoomOutButton = document.getElementById('minus');
+
+                                // Add click event listeners for your custom buttons
+
+                              };
+
+                        </script>
 
                     </div>
                 </div>
@@ -250,7 +299,6 @@
     </div>
 
     <!-- end: content -->
-
 
 
     <script>

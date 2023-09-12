@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="{{url('Dashboard')}}/css/style.css" type="text/css">
 
     <script src="{{url('Dashboard')}}/js/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/panzoom/7.1.0/panzoom.min.js"></script>
+    <script src="{{url('Dashboard')}}/js/svg-pan-zoom.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{{url('Dashboard')}}/css/toastify.min.css">
     {{-- Datatabless --}}
