@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('user_menu', function (Blueprint $table) {
             $table->integer('id_user_menu', true);
             $table->integer('id_menu')->nullable();
-            $table->integer('id_user_admin')->nullable();
+            $table->integer('id_kategori')->nullable();
             $table->enum('status_um', ['aktif', 'nonaktif']);
             $table->dateTime('tgl_input_um')->useCurrent();
         });

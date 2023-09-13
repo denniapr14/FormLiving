@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KategoriAdmin;
+use App\Models\Projek;
 use App\Models\UserAdmin;
 use App\Models\UserMenu;
 use App\Models\UserProjek;
@@ -16,14 +18,19 @@ use PDF;
 class C_UserAdmin extends Controller
 {
     public $userAdmin;
+    public $projek;
     public $userProjek;
     public $userMenu;
+    public $kategori;
+
 
     public function __construct()
     {
+        $this->kategori = new KategoriAdmin();
         $this->userAdmin = new UserAdmin;
         $this->userProjek = new UserProjek;
         $this->userMenu = new UserMenu();
+        $this->projek = new Projek();
     }
 
     public function ambilWaktu()
@@ -38,10 +45,31 @@ class C_UserAdmin extends Controller
 
         // dd($getUserSales);
         if (session()->has('user')) {
+            $getUserProjekFromUser = $this->userProjek->getUserProjekJoinProjek('*');
+            $getProjekAll = $this->projek->getProjekAll();
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             //   dd($user);
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            $getKategoriAll = $this->kategori->getKategori('*');
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            if (!$foundMatchingMenu) {
+                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            }
 
             if (
                 $user->kategori == 'AdminAgentCompany'
@@ -53,7 +81,6 @@ class C_UserAdmin extends Controller
                 ];
                 $getUserSales = $this->userAdmin->getUserAdminWhereJoinProjek('*', $whereUserAdmin)->collect();
                 $getUserSales = $getUserSales->where('deleted_ua', 'false');
-
             }
 
             if (
@@ -66,7 +93,6 @@ class C_UserAdmin extends Controller
                 ];
                 $getUserSales = $this->userAdmin->getUserAdminWhereJoinProjek('*', $whereUserAdmin)->collect();
                 $getUserSales = $getUserSales->where('deleted_ua', 'false');
-
             }
 
             if (
@@ -78,7 +104,6 @@ class C_UserAdmin extends Controller
                 ];
                 $getUserSales = $this->userAdmin->getUserAdminWhereIn('*', 'ktgr_admin.kategori', $whereUserAdmin)->collect();
                 $getUserSales = $getUserSales->where('deleted_ua', 'false');
-
             }
 
             if (
@@ -90,11 +115,16 @@ class C_UserAdmin extends Controller
                 $getUserSales = $getUserSales->where('deleted_ua', 'false');
                 // dd($getUserSales);
             }
-            return view('V_Admin.userListSalesAgent',
+            return view(
+                'V_Admin.userListSalesAgent',
                 compact(
                     'user',
                     'projekUser',
                     'getUserSales',
+                    'getUserMenu',
+                    'getUserProjekFromUser',
+                    'getProjekAll',
+                    'getKategoriAll'
 
                 )
             );
@@ -112,13 +142,31 @@ class C_UserAdmin extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             //   dd($user);
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            // if (!$foundMatchingMenu) {
+            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            // }
             return view(
                 'V_Admin.editUserProfile',
                 compact(
                     'user',
                     'projekUser',
                     'getUser',
-
+                    'getUserMenu'
                 )
             );
         } else {
@@ -159,6 +207,7 @@ class C_UserAdmin extends Controller
                 'tempat_lahir_ua' => $request->tempat_lahir,
                 'tgl_lahir_ua' => $request->tgl_lahir,
                 'foto_ua' => $filename,
+                'id_kategori' => $request->kategori
             ];
             // dd($dataUserAdmin);
             DB::table('user_admin')
@@ -166,6 +215,19 @@ class C_UserAdmin extends Controller
                 ->update(
                     $dataUserAdmin
                 );
+
+            $dataInputProjek = [];
+            if ($request->projek != null) {
+                for ($i = 0; $i < count($request->projek); ++$i) {
+                    array_push($dataInputProjek , [
+                        'id_projek' => $request->projek[$i],
+                        'id_user_admin' => $decryptedID,
+
+                    ]);
+                }
+
+                $this->userProjek->insertUserProjek( $dataInputProjek);
+            }
 
             return redirect()->back()->with('success', 'Data profile berhasil diubah');
         } else {
@@ -182,13 +244,31 @@ class C_UserAdmin extends Controller
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             //   dd($user);
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            // if (!$foundMatchingMenu) {
+            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            // }
             return view(
                 'V_Admin.editPasswordProfile',
                 compact(
                     'user',
                     'projekUser',
                     'getUser',
-
+                    'getUserMenu'
                 )
             );
         } else {
@@ -262,7 +342,6 @@ class C_UserAdmin extends Controller
             // return response()->json();
             // return response()->json(['success' => true]);
             return redirect()->back()->with('success', 'User berhasil ' . $status);
-
         } else {
             return redirect('/login');
         }
@@ -287,8 +366,8 @@ class C_UserAdmin extends Controller
 
         $decryptedID = Crypt::decrypt($id);
         $dataUserAdmin = [
-          'deleted_ua' => 'true',
-          'deleted_ua_at' => Carbon::now()
+            'deleted_ua' => 'true',
+            'deleted_ua_at' => Carbon::now()
         ];
         // dd($dataUserAdmin);
         DB::table('user_admin')

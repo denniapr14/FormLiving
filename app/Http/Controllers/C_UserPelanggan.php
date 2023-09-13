@@ -53,6 +53,24 @@ class C_UserPelanggan extends Controller
 
             // $getUserPelanggan=$getUserPelanggan->take(100);
             // dd($getUserPelanggan);
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            if (!$foundMatchingMenu) {
+                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            }
 
             if(
                 $user->kategori == 'AdminAgentCompany'
@@ -80,7 +98,7 @@ class C_UserPelanggan extends Controller
                 compact(
                     'user',
                     'projekUser',
-
+                    'getUserMenu',
 
                     'getUserPelanggan'
                 )

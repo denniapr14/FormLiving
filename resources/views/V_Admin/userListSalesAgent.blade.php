@@ -14,25 +14,20 @@
                         <i class="bi bi-people-fill"></i>
                         <span>User
                             @if ($user->kategori == 'SuperAdmin')
-
                             @else
-
-                            Sales/Agent
+                                Sales/Agent
                             @endif
-                           </span>
+                        </span>
                         @if ($user->kategori != 'AdminSales' && $user->kategori != 'AdminAgentCompany')
-                        <a style="position :absolute; right:10px;" href="{{ route('downloadUserAdminSales.admin') }}"
-                            class="btn btn-success">
-                            <i class="bi bi-download"></i> Download List User
-                            @if ($user->kategori == 'SuperAdmin')
-
+                            <a style="position :absolute; right:10px;" href="{{ route('downloadUserAdminSales.admin') }}"
+                                class="btn btn-success">
+                                <i class="bi bi-download"></i> Download List User
+                                @if ($user->kategori == 'SuperAdmin')
                                 @else
-
-
-                                Agent Atau Sales
+                                    Agent Atau Sales
                                 @endif
-                        </a>
-                    @endif
+                            </a>
+                        @endif
 
                     </div>
 
@@ -45,17 +40,12 @@
 
                                 <th>Nama</th>
                                 @if ($user->kategori == 'SuperAdmin')
-
                                 @else
-
-                                <th>Kategori</th>
+                                    <th>Kategori</th>
                                 @endif
                                 <th>Status</th>
                                 <th>Tanggal Daftar</th>
-                                @if ($user->kategori == 'AdminSales' ||
-                                $user->kategori == 'AdminAgentCompany'||
-                                $user->kategori == 'SuperAdmin'
-                                )
+                                @if ($user->kategori == 'AdminSales' || $user->kategori == 'AdminAgentCompany' || $user->kategori == 'SuperAdmin')
                                     <th>Pengaturan</th>
                                 @endif
 
@@ -73,53 +63,50 @@
                                         <span class="client__handled"> Kode : {{ $userSales->code_id_ua }}</span>
                                     </td>
                                     @if ($user->kategori == 'SuperAdmin')
-
                                     @else
-
-                                    <td>
-                                        {{ $userSales->kategori }}
-                                    </td>
+                                        <td>
+                                            {{ $userSales->kategori }}
+                                        </td>
                                     @endif
 
                                     <td>
-                                        @if ($userSales->status_ua == "Aktif")
-                                        <div class="p-1 mb-1 bg-primary text-white text-center rounded">{{ $userSales->status_ua }}</div>
+                                        @if ($userSales->status_ua == 'Aktif')
+                                            <div class="p-1 mb-1 bg-primary text-white text-center rounded">
+                                                {{ $userSales->status_ua }}</div>
                                         @else
-                                        <div class="p-1 mb-1 bg-secondary text-white text-center rounded">{{ $userSales->status_ua }}</div>
+                                            <div class="p-1 mb-1 bg-secondary text-white text-center rounded">
+                                                {{ $userSales->status_ua }}</div>
                                         @endif
+
 
                                     </td>
                                     <td>
                                         {{ tgl_indo(date('y-m-d', strtotime($userSales->tgl_input_ua))) }}
                                     </td>
                                     {{--  AGENT COMPANY AND ADMIN SALES  --}}
-                                    @if ($user->kategori == 'AdminSales' ||
-                                    $user->kategori == 'AdminAgentCompany'
+                                    @if ($user->kategori == 'AdminSales' || $user->kategori == 'AdminAgentCompany')
+                                        <td>
+                                            @php
 
-                                    )
-                                    <td>
-                                        @php
+                                                $status = ['Aktif', 'Nonaktif'];
 
-                                        $status = ['Aktif','Nonaktif']
+                                            @endphp
+                                            @foreach ($status as $status)
+                                                @if ($status != $userSales->status_ua)
+                                                    <a href="{{ route('changeStatusUser.admin', [$userSales->id_user_admin, $status]) }}"
+                                                        class="btn btn-outline-info"> {{ $status }}kan</a>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    @endif
 
-                                        @endphp
-                                        @foreach ($status as $status)
-                                        @if ($status != $userSales->status_ua)
-
-                                        <a href="{{ route('changeStatusUser.admin', [$userSales->id_user_admin,$status]) }}" class="btn btn-outline-info"> {{ $status }}kan</a>
-                                        @endif
-
-                                        @endforeach
-                                    </td>
-                                @endif
-                                @if ($user->kategori == 'SuperAdmin')
-
+                                    @if ($user->kategori == 'SuperAdmin')
                                         <td>
                                             <div class="d-flex flex-nowrap">
                                                 <button type="button" class="btn-fd-icon-outline"
                                                     data-target="#seeUser{{ $no }}" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i class="fa fa-eye"
-                                                        aria-hidden="true"></i>
+                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i
+                                                        class="fa fa-eye" aria-hidden="true"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="seeUser{{ $no }}"
@@ -133,7 +120,8 @@
                                                                 </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
-                                                                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                                                                    <span aria-hidden="true"><i
+                                                                            class="bi bi-x-lg"></i></span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
@@ -244,8 +232,36 @@
                                                                                     class="img-thumbnail">
                                                                             </div>
                                                                         </div>
+                                                                        <div class="form-group row">
+                                                                            <label
+                                                                                class="col-sm-4 col-form-label align-self-center">
+                                                                                Kategori
+                                                                            </label>
+                                                                            <div class="col-sm-8 align-self-center">
+
+                                                                                    {{ $userSales->kategori }}
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label
+                                                                                class="col-sm-4 col-form-label align-self-center">
+                                                                                Projek
+                                                                            </label>
+                                                                            <div class="col-sm-8 align-self-center">
+                                                                                @foreach ($getUserProjekFromUser as $userProjekFromUser)
+                                                                                    @if ($userProjekFromUser->id_user_admin == $userSales->id_user_admin)
+                                                                                        <label class=""
+                                                                                            for="">{{ $userProjekFromUser->nama_projek }}
+                                                                                            <i class="fa fa-check-circle"
+                                                                                                aria-hidden="true"></i></label>
+                                                                                        <br>
+                                                                                    @endif
+                                                                                @endforeach
 
 
+                                                                            </div>
+                                                                        </div>
 
                                                                         <div class="row pt-4">
                                                                             <div class="col-12">
@@ -280,9 +296,10 @@
                                                                 <h5 class="modal-title">Ubah Detail User
                                                                     {{ $userSales->username_ua }}
                                                                 </h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i
+                                                                            class="bi bi-x-lg"></i></span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
@@ -408,7 +425,8 @@
                                                                                 </label>
                                                                                 <div class="col-sm-8 align-self-center">
                                                                                     <select name="statusUser"
-                                                                                        class="form-control" id="inputStock">
+                                                                                        class="form-control"
+                                                                                        id="inputStock">
                                                                                         @php
                                                                                             $statusUser = ['Aktif', 'Nonaktif'];
                                                                                         @endphp
@@ -432,7 +450,68 @@
                                                                                 </div>
                                                                             </div>
 
+                                                                            <div class="form-group row">
+                                                                                <label
+                                                                                    class="col-sm-4 col-form-label align-self-center">
+                                                                                    Kategori
+                                                                                </label>
+                                                                                <div class="col-sm-8 align-self-center">
+                                                                                    <select name="kategori" id="" class="form-control">
+                                                                                        <option value="{{ $userSales->id_kategori }}">{{ $userSales->kategori }}</option>
+                                                                                        @foreach ($getKategoriAll as $getKategori)
+                                                                                            <option value="{{ $getKategori->id_kategori }}">{{ $getKategori->kategori }}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
 
+                                                                            <div class="form-group row">
+                                                                                <label
+                                                                                    class="col-sm-4 col-form-label align-self-center">
+                                                                                    Projek
+                                                                                </label>
+                                                                                <div class="col-sm-8 align-self-center">
+                                                                                    @foreach ($getUserProjekFromUser as $userProjekFromUser)
+                                                                                        @if ($userProjekFromUser->id_user_admin == $userSales->id_user_admin)
+                                                                                            <label class=""
+                                                                                                for="">{{ $userProjekFromUser->nama_projek }}
+                                                                                                <i class="fa fa-check-circle"
+                                                                                                    aria-hidden="true"></i></label>
+                                                                                            <br>
+                                                                                        @endif
+                                                                                    @endforeach
+
+                                                                                    @foreach ($getProjekAll as $projekAll)
+                                                                                        @php
+                                                                                            $isCheckedProjek = false;
+                                                                                            $hasMatchProjek = false;
+                                                                                        @endphp
+
+                                                                                        @foreach ($getUserProjekFromUser as $userProjekFromUser)
+                                                                                            @if (
+                                                                                                $userProjekFromUser->id_projek == $projekAll->id_projek &&
+                                                                                                    $userSales->id_user_admin == $userProjekFromUser->id_user_admin)
+                                                                                                @php
+                                                                                                    $isCheckedProjek = true;
+                                                                                                    $hasMatchProjek = true;
+                                                                                                    break; // If the menu is found, no need to continue the inner loop
+                                                                                                @endphp
+                                                                                            @endif
+                                                                                        @endforeach
+
+                                                                                        @if ($hasMatchProjek)
+                                                                                        @elseif(!$hasMatchProjek)
+                                                                                            <br>
+                                                                                            <input type="checkbox"
+                                                                                                name="projek[]"
+                                                                                                value="{{ $projekAll->id_projek }}">
+
+                                                                                            <label
+                                                                                                for="">{{ $projekAll->nama_projek }}</label>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </div>
+                                                                            </div>
 
 
 
@@ -461,47 +540,46 @@
                                                 </div>
 
                                                 <button type="button" class="btn-fd-icon-outline"
-                                                data-target="#delUser{{ $no }}" data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $no }}"> <i
-                                                  <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
+                                                    data-target="#delUser{{ $no }}" data-toggle="modal"
+                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i <i
+                                                        class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
 
-                                            <div class="modal modal-form fade" id="delUser{{ $no }}"
-                                            data-backdrop="static" data-keyboard="false" tabindex="-1"
-                                            aria-labelledby="order-informationLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Apa anda yakin menghapus user {{ $userSales->nama_ua }} ?
-                                                        </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row pt-4 col-12">
-                                                            <div class="col-6 mb-1">
-                                                                <a href="{{ route('deleteUserAdmin.admin',
-                                                                Crypt::encrypt($userSales->id_user_admin)) }}" class="btn-fd-primary  w-100">Ya</a>
+                                                <div class="modal modal-form fade" id="delUser{{ $no }}"
+                                                    data-backdrop="static" data-keyboard="false" tabindex="-1"
+                                                    aria-labelledby="order-informationLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Apa anda yakin menghapus user
+                                                                    {{ $userSales->nama_ua }} ?
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i
+                                                                            class="bi bi-x-lg"></i></span>
+                                                                </button>
                                                             </div>
-                                                            <div class="col-6 mb-1">
-                                                                <button
-                                                                    class="btn-fd-primary w-100"
-                                                                    data-dismiss="modal">Tidak</button>
+                                                            <div class="col-md-12">
+                                                                <div class="row pt-4 col-12">
+                                                                    <div class="col-6 mb-1">
+                                                                        <a href="{{ route('deleteUserAdmin.admin', Crypt::encrypt($userSales->id_user_admin)) }}"
+                                                                            class="btn-fd-primary  w-100">Ya</a>
+                                                                    </div>
+                                                                    <div class="col-6 mb-1">
+                                                                        <button class="btn-fd-primary w-100"
+                                                                            data-dismiss="modal">Tidak</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+
+
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             </div>
-                                        </div>
-                                            </div>
                                         </td>
-
-
-                                @endif
+                                    @endif
 
 
 
@@ -518,12 +596,12 @@
         <!-- end: content -->
         <script>
             $(document).ready(function() {
-                $('#list-user').DataTable( {
+                $('#list-user').DataTable({
                     lengthMenu: [
-                    [25, 50, 100, -1],
-                    [25, 50, 100, 'All'],
-                ],}
-                );
+                        [25, 50, 100, -1],
+                        [25, 50, 100, 'All'],
+                    ],
+                });
             });
             $(document).ready(function() {
                 $('#rumah').DataTable();

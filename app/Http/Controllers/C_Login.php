@@ -81,24 +81,24 @@ class C_Login extends Controller
 
                 switch ($userRole) {
                     case 'AdminAccounting':
-                        return redirect('/dashboard-admin/Greenland')->with('success', "You're Sign in!");
+                        return redirect('/dashboard-admin/Greenland')->with('success', "Anda berhasil masuk!");
                         break;
                     case 'Admin':
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "Anda berhasil masuk!");
                         break;
 
                     case 'CEO':
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "Anda berhasil masuk!");
                         break;
                     case 'AdminFormsLiving':
-                        return redirect('/dashboard-admin/Greenland')->with('success',"You're Sign in!");
+                        return redirect('/dashboard-admin/Greenland')->with('success',"Anda berhasil masuk!");
                     break;
                     case 'SuperAdmin':
-                        return redirect('/dashboard-admin/Greenland')->with('success',"You're Sign in!");
+                        return redirect('/dashboard-admin/Greenland')->with('success',"Anda berhasil masuk!");
                     break;
 
                     default:
-                        return redirect('/')->with('success', "You're Sign in!");
+                        return redirect('/')->with('success', "Anda berhasil masuk!");
                         break;
                 }
             }
@@ -111,7 +111,7 @@ class C_Login extends Controller
 
                 return redirect('/Greenland')
 
-                    ->with('success', "You're Sign in!");
+                    ->with('success', "Anda berhasil masuk!");
             }
         }
 
@@ -146,10 +146,10 @@ class C_Login extends Controller
         ],[
             'email_ua.required' => 'Email Perlu Diisi'
         ]);
-        
+
         if(!$dataEmail){
             Session::flash('error_message','Email belum terdaftar. Silahkan registrasi terlebih dahulu.');
-            return redirect()->back();     
+            return redirect()->back();
         }else{
             Mail::to($dataEmail->email_plgn)->send(new MailNotify($dataEmailList, $template));
         }
@@ -168,18 +168,18 @@ class C_Login extends Controller
         $user = DB::table('user_admin')
             ->where('user_admin.email_ua', '=', $email)
             ->first();
-            // dd($user); 
+            // dd($user);
        return view('forgotPassword',compact('user'));
     }
 
     //aksi dari forgot password
     public function forgotAction(request $request){
-       
+
         $validator = Validator::make($request->all(), [
             'password' => 'required|min:6|confirmed'
             // Add more validation rules as needed
         ]);
-        
+
         if ($validator->fails()) {
             $customMessages = [
                 'required' => ':attribute Masih Kosong',

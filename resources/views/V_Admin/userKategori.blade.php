@@ -33,9 +33,9 @@
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
-                                <th>Nama</th>
-                                <th>Kategori - Departemen</th>
-                                <th>Status</th>
+
+                                <th>Kategori</th>
+
                                 <th>Pengaturan</th>
                             </tr>
                         </thead>
@@ -43,28 +43,39 @@
                             @php
                                 $no = 1;
                             @endphp
-                            @foreach ($getUserAdminAll as $userAdmin)
+                            @foreach ($getKategoriAll as $getKategori)
                                 <tr>
-                                    <td scope="row">{{ $no }}</td>
-                                    <td>{{ $userAdmin->nama_ua }}</td>
-                                    <td>{{ $userAdmin->kategori }} - {{ $userAdmin->departemen }}</td>
-                                    <td>{{ $userAdmin->status_ua }}</td>
+                                    <td>
+                                        {{ $no }}
+                                    </td>
+                                    <td>
+                                        @if ($getKategori->nama_ktgr == null)
+                                            {{ $getKategori->kategori }}
+                                        @else
+                                            {{ $getKategori->nama_ktgr }}
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="d-flex flex-nowrap">
                                             <button type="button" class="btn-fd-icon-outline"
-                                                data-target="#seeUser{{ $no }}" data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="fa fa-eye"
-                                                    aria-hidden="true"></i>
+                                                data-target="#seeKategori{{ $no }}" data-toggle="modal"
+                                                data-target=".bd-example-modal-lg{{ $no }}">
+                                                <i class="bi bi-eye"></i>
                                             </button>
 
-                                            <div class="modal modal-form fade" id="seeUser{{ $no }}"
+                                            <div class="modal modal-form fade" id="seeKategori{{ $no }}"
                                                 data-backdrop="static" data-keyboard="false" tabindex="-1"
                                                 aria-labelledby="order-informationLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Detail User
-                                                                {{ $userAdmin->username_ua }}
+                                                            <h5 class="modal-title"> Kategori
+                                                                @if ($getKategori->nama_ktgr == null)
+                                                                    {{ $getKategori->kategori }}
+                                                                @else
+                                                                    {{ $getKategori->nama_ktgr }}
+                                                                @endif
+
                                                             </h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -72,129 +83,56 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
+
                                                             <div class="product-listing">
 
                                                                 <div class="modal-body">
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Code User
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->code_id_ua }}
+
+                                                                    <div class="">
+                                                                        <center>
+                                                                            <h4 class="">
+                                                                                Menu
+                                                                            </h4>
+                                                                        </center>
+                                                                        <div class="row">
+
+
+                                                                            @foreach ($getMenuKategori as $menuKategori)
+                                                                                @if ($getKategori->id_kategori == $menuKategori->id_kategori)
+                                                                                    @if ($menuKategori->status_um == 'aktif')
+                                                                                        <div class="col-md-3 mb-1">
+                                                                                            <p
+                                                                                                class="badge text-bg-success badge--success mb-1 ">
+
+                                                                                                <i
+                                                                                                    class="{{ $menuKategori->icon_menu }}">
+                                                                                                    {{ $menuKategori->menu }}
+                                                                                                </i>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    @else
+                                                                                        <div class="col-md-3 mb-1">
+                                                                                            <p
+                                                                                                class="badge text-bg-success badge--danger mb-1 ">
+
+                                                                                                <i
+                                                                                                    class="{{ $menuKategori->icon_menu }}">
+                                                                                                    {{ $menuKategori->menu }}
+                                                                                                </i>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                @endif
+                                                                            @endforeach
+
                                                                         </div>
                                                                     </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Username
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->username_ua }}
-                                                                        </div>
-                                                                    </div>
-
-
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Nama
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->nama_ua }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Email
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->email_ua }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Nomor Telepon
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->no_tlp_ua }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Alamat
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->alamat_ua }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Tanggal Lahir
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->tgl_lahir_ua }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Tempat Lahir
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->tempat_lahir_ua }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Status
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->status_ua }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Kategori dan Departemen
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            {{ $userAdmin->kategori }} -
-                                                                            {{ $userAdmin->departemen }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group row">
-                                                                        <label
-                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                            Foto
-                                                                        </label>
-                                                                        <div class="col-sm-8 align-self-center">
-                                                                            <img src="{{ url('Home') }}/images/foto/{{ $userAdmin->foto_ua }}"
-                                                                                class="img-thumbnail">
-                                                                        </div>
-                                                                    </div>
-
 
 
                                                                     <div class="row pt-4">
-                                                                        <div class="col-12">
-                                                                            <button class="btn-fd-primary w-100"
-                                                                                type="submit"
+
+                                                                        <div class="col-12 mb-1">
+                                                                            <button class="btn-fd-primary bg-danger w-100"
                                                                                 data-dismiss="modal">Close</button>
                                                                         </div>
                                                                     </div>
@@ -207,22 +145,22 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{--  EITS  --}}
+
 
                                             <button type="button" class="btn-fd-icon-outline"
-                                                data-target="#editUser{{ $no }}" data-toggle="modal"
+                                                data-target="#editUserKategori{{ $no }}" data-toggle="modal"
                                                 data-target=".bd-example-modal-lg{{ $no }}"> <i
                                                     class="fa fa-edit" aria-hidden="true"></i>
                                             </button>
 
-                                            <div class="modal modal-form fade" id="editUser{{ $no }}"
+                                            <div class="modal modal-form fade" id="editUserKategori{{ $no }}"
                                                 data-backdrop="static" data-keyboard="false" tabindex="-1"
                                                 aria-labelledby="order-informationLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Detail User
-                                                                {{ $userAdmin->username_ua }}
+                                                            <h5 class="modal-title">Ubah Detail User
+
                                                             </h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -231,254 +169,113 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <form
-                                                                action="{{ route('updateUserKategoriAction.admin', $userAdmin->id_user_admin) }}"
+                                                                action="{{ route('updateUserKategoriAction.admin', $getKategori->id_kategori) }}"
                                                                 method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="product-listing">
 
                                                                     <div class="modal-body">
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Code User
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <input type="text"
-                                                                                    class="form form-control"
-                                                                                    name="code"
-                                                                                    value="{{ $userAdmin->code_id_ua }}"
-                                                                                    placeholder="Code User">
-                                                                            </div>
-                                                                        </div>
+                                                                        <center>
+                                                                            <h4 class="">
+                                                                                Menu
+                                                                            </h4>
+                                                                        </center>
+                                                                        <div class="row">
 
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Username
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <input type="text"
-                                                                                    class="form form-control"
-                                                                                    name="username"
-                                                                                    value="{{ $userAdmin->username_ua }}"
-                                                                                    readonly placeholder="Username">
-                                                                            </div>
-                                                                        </div>
+                                                                            @foreach ($getMenuKategori as $menuKategori)
+                                                                                @if ($getKategori->id_kategori == $menuKategori->id_kategori)
+                                                                                    <div class="col-md-3 mb-1">
 
-
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Nama
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <input type="text"
-                                                                                    class="form form-control"
-                                                                                    name="nama"
-                                                                                    value="{{ $userAdmin->nama_ua }}"
-                                                                                    placeholder="Name">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Email
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <input type="email"
-                                                                                    class="form form-control"
-                                                                                    name="email"
-                                                                                    value="{{ $userAdmin->email_ua }}"
-                                                                                    placeholder="Email">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Nomor Telepon
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <input type="tel"
-                                                                                    class="form form-control"
-                                                                                    name="noTelp"
-                                                                                    value="{{ $userAdmin->no_tlp_ua }}"
-                                                                                    placeholder="Phone Number">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Alamat
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <textarea class="form form-control" name="alamat" placeholder="Address">{{ $userAdmin->alamat_ua }}</textarea>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Tanggal Lahir
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <input type="date"
-                                                                                    class="form form-control"
-                                                                                    name="tglLahir"
-                                                                                    value="{{ $userAdmin->tgl_lahir_ua }}">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Tempat Lahir
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <input type="text"
-                                                                                    class="form form-control"
-                                                                                    name="tempatLahir"
-                                                                                    value="{{ $userAdmin->tempat_lahir_ua }}"
-                                                                                    placeholder="Place of Birth">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Status
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <select name="statusUser"
-                                                                                    class="form-control" id="inputStock">
-                                                                                    @php
-                                                                                        $statusUser = ['Aktif', 'Nonaktif'];
-                                                                                    @endphp
-
-                                                                                    @foreach ($statusUser as $statusUser)
-                                                                                        @if ($statusUser == $userAdmin->status_ua)
-                                                                                            <option
-                                                                                                value="{{ $statusUser }}"
-                                                                                                selected>
-                                                                                                {{ $statusUser }}
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option
-                                                                                                value="{{ $statusUser }}">
-                                                                                                {{ $statusUser }}
-                                                                                            </option>
-                                                                                        @endif
-                                                                                    @endforeach
-
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Kategori
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                <select name="kategori" id="" class="form form-control">
-                                                                                    <option
-                                                                                        value="{{ $userAdmin->id_kategori }}">
-                                                                                        {{ $userAdmin->kategori }}</option>
-
-                                                                                    @foreach ($getKategoriAll as $kategoriAll)
-                                                                                        <option
-                                                                                            value="{{ $kategoriAll->id_kategori }}">{{ $kategoriAll->kategori }}
-
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                                <br>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Departemen
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-
-                                                                                {{ $userAdmin->departemen }}
-                                                                            </div>
-                                                                        </div>
-                                                                        @if ($userAdmin->kategori == 'AgentWithCompany')
-                                                                            <div class="form-group row">
-                                                                                <label
-                                                                                    class="col-sm-4 col-form-label align-self-center">
-                                                                                    Kepala Agent
-                                                                                </label>
-                                                                                <div class="col-sm-8 align-self-center">
-
-                                                                                    <select name="kepala_admin" class="form-control">
-                                                                                        <option value="">Pilih Kepala
-                                                                                            Agent</option>
-                                                                                        @foreach ($getKepala as $kepala)
-                                                                                            <option
-                                                                                                value="{{ $kepala->id_user_admin }}">
-                                                                                                {{ $kepala->nama_ua }}
-                                                                                            </option>
-                                                                                        @endforeach
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        @endif
-
-
-
-
-                                                                        <div class="form-group row">
-                                                                            <label
-                                                                                class="col-sm-4 col-form-label align-self-center">
-                                                                                Projek
-                                                                            </label>
-                                                                            <div class="col-sm-8 align-self-center">
-                                                                                @foreach ($getUserProjekFromUser as $userProjekFromUser)
-                                                                                @if ($userProjekFromUser->id_user_admin == $userAdmin->id_user_admin)
-                                                                                <label class="" for="">{{ $userProjekFromUser->nama_projek }} <i class="fa fa-check-circle" aria-hidden="true"></i></label> <br>
+                                                                                        <a href="{{ route('changeStatusUserKategori.admin', $menuKategori->id_user_menu) }}"
+                                                                                            class="badge text-bg-success badge--{{ $menuKategori->status_um == 'aktif' ? 'success' : 'danger' }} mb-1 change-status-link"
+                                                                                            data-id="{{ $menuKategori->id_user_menu }}"
+                                                                                            data-status="{{ $menuKategori->status_um }}"
+                                                                                            id="badge{{ $menuKategori->id_user_menu }}">
+                                                                                            <i
+                                                                                                class="{{ $menuKategori->icon_menu }}">
+                                                                                                {{ $menuKategori->menu }}
+                                                                                            </i>
+                                                                                            @if ($menuKategori->status_um == 'aktif')
+                                                                                                <i id="toggle{{ $menuKategori->id_user_menu }}"
+                                                                                                    class="bi bi-toggle2-off"></i>
+                                                                                            @else
+                                                                                                <i id="toggle{{ $menuKategori->id_user_menu }}"
+                                                                                                    class="bi bi-toggle2-on"></i>
+                                                                                            @endif
+                                                                                        </a>
+                                                                                    </div>
                                                                                 @endif
                                                                             @endforeach
 
-                                                                                @foreach ($getProjekAll as $projekAll)
+                                                                        </div>
+
+                                                                        <center>
+                                                                            <h4 class="">
+
+                                                                                @foreach ($getMenu as $menu)
                                                                                     @php
-                                                                                        $isCheckedProjek = false;
-                                                                                        $hasMatchProjek = false;
+                                                                                        $matchFoundMenu = false;
                                                                                     @endphp
 
-                                                                                    @foreach ($getUserProjekFromUser as $userProjekFromUser)
-                                                                                        @if (
-                                                                                            $userProjekFromUser->id_projek == $projekAll->id_projek &&
-                                                                                                $userAdmin->id_user_admin == $userProjekFromUser->id_user_admin)
+                                                                                    @foreach ($getMenuKategori as $menuKategori)
+                                                                                        {{--  {{ $menu->id_menu }} -
+                                                                                {{ $menuKategori->id_menu }}  --}}
+                                                                                        <!-- Debugging -->
+                                                                                        @if ($menu->id_menu == $menuKategori->id_menu && $getKategori->id_kategori == $menuKategori->id_kategori)
                                                                                             @php
-                                                                                                $isCheckedProjek = true;
-                                                                                                $hasMatchProjek = true;
-                                                                                                break; // If the menu is found, no need to continue the inner loop
+                                                                                                $matchFoundMenu = true;
+                                                                                                break;
                                                                                             @endphp
                                                                                         @endif
                                                                                     @endforeach
+                                                                                @endforeach
+                                                                                @if (!$matchFoundMenu)
+                                                                                    Tambah Menu
+                                                                                @else
+                                                                                    <p
+                                                                                        class="badge text-bg-info badge--success mb-1">
+                                                                                        Sudah di tambahkan semua menu
+                                                                                    </p>
+                                                                                @endif
 
-                                                                                    @if ($hasMatchProjek)
+                                                                            </h4>
+                                                                        </center>
+                                                                        <div class="row">
 
-                                                                                    @elseif(!$hasMatchProjek)
-                                                                                        <br>
-                                                                                        <input type="checkbox"
-                                                                                            name="projek[]"
-                                                                                            value="{{ $projekAll->id_projek }}">
+                                                                            @foreach ($getMenu as $menu)
+                                                                                @php
+                                                                                    $matchFound = false;
+                                                                                @endphp
 
-                                                                                        <label
-                                                                                            for="">{{ $projekAll->nama_projek }}</label>
+                                                                                @foreach ($getMenuKategori as $menuKategori)
+                                                                                    {{--  {{ $menu->id_menu }} -
+                                                                                    {{ $menuKategori->id_menu }}  --}}
+                                                                                    <!-- Debugging -->
+                                                                                    @if ($menu->id_menu == $menuKategori->id_menu && $getKategori->id_kategori == $menuKategori->id_kategori)
+                                                                                        @php
+                                                                                            $matchFound = true;
+                                                                                            break;
+                                                                                        @endphp
                                                                                     @endif
                                                                                 @endforeach
-                                                                            </div>
 
+                                                                                @if (!$matchFound)
+                                                                                    <div class="col-md-3 mb-1">
+                                                                                        <p
+                                                                                            class="badge text-bg-success badge--success mb-1">
+                                                                                            <i
+                                                                                                class="{{ $menu->icon_menu }}">
+                                                                                                {{ $menu->menu }}
+                                                                                            </i>
+                                                                                            <input type="checkbox"
+                                                                                                name="menu[]"
+                                                                                                value="{{ $menu->id_menu }}">
+                                                                                        </p>
+                                                                                    </div>
+                                                                                @endif
+                                                                            @endforeach
 
                                                                         </div>
-
                                                                         <div class="row pt-4">
                                                                             <div class="col-12 mb-1">
                                                                                 <button type="submit"
@@ -500,13 +297,17 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
+
+
                                     </td>
                                 </tr>
                                 @php
                                     $no++;
                                 @endphp
                             @endforeach
+
 
 
                         </tbody>
@@ -517,39 +318,42 @@
         </div>
 
 
-
         <script>
             $(document).ready(function() {
-                $('.toggle-status').click(function(event) {
-                    event.preventDefault();
-                    var button = $(this);
-                    var id = button.data('id');
-                    var status = button.data('status');
+                $('.change-status-link').on('click', function(e) {
+                    e.preventDefault();
+                    var id = $(this).data('id');
+                    var status = $(this).data('status');
+
 
                     $.ajax({
-                        type: 'get',
-                        url: '{{ route('changeStatusUserKategori.admin', ['+id+', '+status+']) }}', // Replace with the actual route URL
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            id: id,
-                            status: status
-                        },
+                        type: 'GET',
+                        url: '{{ route('changeStatusUserKategori.admin', ['id' => ':id']) }}'
+                            .replace(':id', id),
+
                         success: function(data) {
-                            if (data.success) {
-                                // Update UI based on the new status
-                                if (status === 'aktif') {
-                                    button.removeClass('btn-danger').addClass('btn-success');
-                                    button.data('status', 'nonaktif');
-                                } else {
-                                    button.removeClass('btn-success').addClass('btn-danger');
-                                    button.data('status', 'aktif');
-                                }
+                            // Handle success, update UI or show a success message
+                            {{--  console.log(data);  --}}
+                            var badge = document.getElementById('badge' + id);
+                            if (data.status_um == 'aktif') {
+                                badge.className = "badge text-bg-success badge--success mb-1";
                             } else {
-                                console.log('Error changing status.');
+                                badge.className = "badge text-bg-danger badge--danger mb-1";
                             }
+
+                            // Update the toggle class
+                            var toggle = document.getElementById('toggle' + id);
+                            if (data.status_um == 'aktif') {
+                                toggle.className = "bi bi-toggle2-on";
+                            } else {
+                                toggle.className = "bi bi-toggle2-off";
+                            }
+                            // Update the toggle class
+
+
                         },
-                        error: function(xhr, status, error) {
-                            // Handle errors if needed
+                        error: function(error) {
+                            // Handle error, show an error message or handle as needed
                             console.log(error);
                         }
                     });
@@ -557,16 +361,14 @@
             });
         </script>
 
-
         <script>
             $(document).ready(function() {
-                $('#userAdmin').DataTable(
-                    {
-                        lengthMenu: [
+                $('#userAdmin').DataTable({
+                    lengthMenu: [
                         [25, 50, 100, -1],
                         [25, 50, 100, 'All'],
-                    ],}
-                );
+                    ],
+                });
             });
         </script>
 

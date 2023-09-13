@@ -58,7 +58,24 @@ class C_SuratPemesananRumah extends Controller
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
 
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            if (!$foundMatchingMenu) {
+                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            }
             if (
                 $user->kategori == 'AdminAgentCompany' || $user->kategori == 'AdminSales'
 
@@ -106,6 +123,7 @@ class C_SuratPemesananRumah extends Controller
                     'getFormulirPesanan',
                     'rumah',
                     'getProjek',
+                    'getUserMenu'
 
                 )
             );
@@ -136,7 +154,24 @@ class C_SuratPemesananRumah extends Controller
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
 
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            // if (!$foundMatchingMenu) {
+            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            // }
             return view('V_Admin.editFormulirPesanan', compact(
                 'user',
                 'projekUser',
@@ -144,6 +179,7 @@ class C_SuratPemesananRumah extends Controller
                 'getPromo',
                 'getPembayaranRumah',
                 'getProjek',
+                'getUserMenu'
 
             ));
         } else {

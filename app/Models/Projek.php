@@ -15,4 +15,9 @@ class Projek extends Model{
         ->first();
     }
 
+    // insert
+    function insertProjek($data) {
+        return Projek::insert($data);
+    }
+
 }

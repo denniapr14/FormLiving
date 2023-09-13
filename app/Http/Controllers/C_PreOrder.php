@@ -77,7 +77,24 @@ class C_PreOrder extends Controller
                 '=',
                 session::get('user')
             );
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
 
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            if (!$foundMatchingMenu) {
+                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            }
             if(
                 $user->kategori == 'AdminAgentCompany'
 
@@ -128,6 +145,7 @@ class C_PreOrder extends Controller
                     'rumah',
                     'getProjek',
                     'getPreOrder',
+                    'getUserMenu'
 
                 )
             );

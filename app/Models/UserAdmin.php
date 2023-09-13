@@ -24,6 +24,7 @@ class UserAdmin extends Authenticatable
 
     function getUserAdminAll($select) {
         return UserAdmin::select($select)
+        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
         ->get();
 
     }

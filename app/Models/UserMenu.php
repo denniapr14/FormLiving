@@ -10,6 +10,11 @@ class UserMenu extends Model
     protected $table = "user_menu";
     protected $primaryKey = "id_user_menu";
 
+    function getUserMenuJoinKategori($select)  {
+        return UserMenu::select($select)
+        ->join('ktgr_admin','user_menu.id_kategori','ktgr_admin.id_kategori')
+        ->get();
+    }
     function getUserMenuWhere($select,$where,$eq,$value) {
         return UserMenu::select($select)
         ->join('menu','user_menu.id_menu','=','menu.id_menu')
@@ -36,6 +41,12 @@ class UserMenu extends Model
         ->orderBy($order,$by)
         ->get();
 
+    }
+    function firstUserMenu($select, $where) {
+        return UserMenu::select($select)
+        ->join('menu','user_menu.id_menu','=','menu.id_menu')
+        ->where($where)
+        ->first();
     }
 
     // INSERT...................................

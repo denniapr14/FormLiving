@@ -16,4 +16,10 @@ class Menu extends Model
         ->get();
 
     }
+
+    function getMenuAll($select) {
+        return Menu::select($select)
+        ->get();
+
+    }
 }

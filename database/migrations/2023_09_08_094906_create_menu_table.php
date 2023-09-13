@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('id_menu', true);
             $table->string('menu', 200)->nullable();
             $table->string('nama_menu', 200)->nullable();
-            $table->enum('status_menu', ['fitur', 'extend'])->nullable();
+            $table->enum('status_menu', ['menu', 'optional'])->nullable();
             $table->string('url_menu', 200)->nullable();
             $table->string('icon_menu', 100)->nullable();
             $table->dateTime('tgl_input_menu')->useCurrent();
