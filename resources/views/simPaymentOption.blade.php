@@ -127,8 +127,41 @@
                             </div>
 
                             <div class="col-12 col-lg-8 right-column order-3">
+                                <div class="card" >
+                                    <div class="card-header" style="background-color: #198754; color: white;">
+                                        <label for="gender" class="form-label">Pakai Promo</label>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group">
+                                                <button type="button" id="openModal" class="btn btn-form"
+                                                    data-bs-toggle="modal" data-bs-target="#modelId">
+                                                    <div class="promo-text"><img
+                                                            src="{{ asset('Home') }}/images/ic-promo.png" alt="">
+                                                        <div id="textPromo">Pilih promo di sini</div>
+                                                    </div>
+                                                    <div><i class="bi-chevron-right"></i></div>
+                                                </button>
+                                                <br>
+                                                <div id="myAlert" role="alert">
 
-                                  {{--  =================================================================================================================================================  --}}
+                                                </div>
+
+                                                <br>
+                                                <div class="form-group">
+                                                    <input type="text" name="promo" value="Tidak Ada Promo"
+                                                        id="selectedPromoCode" class="form-control" readonly>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <br>
+
+{{--  =================================================================================================================================================  --}}
 
                                 {{--  KPR --}}
                                 <div class="collapsible">
@@ -142,13 +175,13 @@
                                                     action="{{ route('simulationPaymentOptionAction', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}"
                                                     method="post">
                                                     @csrf
-                                                    <div class="card-shadow">
+                                                    <div>
                                                         <label for="">Booking Fee Rp. 10.000.000</label>
                                                         <input type="text" name="jenis" readonly hidden value="KPR">
                                                     </div>
 
                                                     <br>
-                                                    <div class="card-shadow">
+                                                    <div>
                                                         <label for="">Persentase Uang Muka</label>
                                                     </div>
                                                     <div class="">
@@ -170,7 +203,7 @@
                                                         </div>
                                                     </div>
                                                     <br>
-                                                    <div class="card-shadow">
+                                                    <div>
                                                         <label for="">Harga Rumah</label>
                                                     </div>
                                                     <div class="">
@@ -235,7 +268,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{--  =================================================================================================================================================  --}}
+{{--  =================================================================================================================================================  --}}
 
                                 {{--  CICILAN  --}}
                                 <div class="collapsible">
@@ -320,6 +353,84 @@
             </div>
         </div>
 
+{{------------------------------------------------------------------------------------------}}
+{{-- modal-popup promo --}}
+<div class="modal fade promo" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body promo-modal">
+                    <h5 class="promo-title">
+                        Pakai Promo
+                    </h5>
+
+                    <div class="promo-input">
+                        <input type="text" class="form-control" name="promo" id="promo"
+                            placeholder="Masukkan kode promo">
+
+                        <a id="cariPromo" class="btn">Terapkan</a>
+                    </div>
+                    <!-- STATE PROMO -->
+                    <div class=" d-block ">
+
+                        <h5 class="mb-4">Pilih Promo</h5>
+
+                        @if (empty($promoRumah))
+                            <h5>Promo Rumah</h5>
+                            Tidak ada promo Rumah
+                        @else
+                            <h5>Promo Rumah</h5>
+                            @foreach ($promoRumah as $promoRumah)
+                                <div class="promo-item ">
+                                    <div class="row ">
+                                        <div class="promo-icon col-md-1">
+                                            <img src="{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
+                                        </div>
+                                        <div class="promo-text col-md-8">
+
+                                            <h6 id='keteranganPromo'>{{ $promoRumah->promo }}</h6>
+                                            <p>Berlaku hingga:
+                                                {{ date('d M Y', strtotime($promoRumah->tgl_berakhir)) }}
+                                            </p>
+                                            <div class="hemat">
+                                                <p class="light-grey-color">Anda bisa hemat
+                                                </p>
+                                                <h5>Rp.
+                                                    {{ rupiah($promoRumah->diskon_promo) }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="promo-button col-md-2">
+
+                                            <a class="promoCodeBtn btn btn-outline-success"
+                                                data-promo-code="{{ $promoRumah->kode_promo }}"
+                                                data-jumlah-promo="{{ $promoRumah->diskon_promo}}"
+                                                data-promo="{{ $promoRumah->promo }}">{{ $promoRumah->kode_promo }} </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+
+
+
+                    </div>
+                    <!-- STATE NO PROMO -->
+                    <div class="no-promo text-center d-none">
+                        <img src="{{ asset('Home') }}/images/img-illustration4.png" class="w-100" alt="">
+                    </div>
+                </div>
+
+                <div class="modal-footer promo-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -352,6 +463,28 @@
                 }
             });
         </script>
+{{-- script find query promo selector --}}
+        <script>
+            const promoCodeBtns = document.querySelectorAll(".promoCodeBtn");
+            const selectedPromoCodeInput = document.getElementById("selectedPromoCode");
+
+            promoCodeBtns.forEach((promoCodeBtn) => {
+                promoCodeBtn.addEventListener("click", () => {
+                    const promoCode = promoCodeBtn.dataset.promoCode;
+                    const jmlPromo = promoCodeBtn.dataset.jumlah-promo;
+                    const promo = promoCodeBtn.dataset.promo;
+                    selectedPromoCodeInput.value = promoCode;
+                    document.getElementById('textPromo').innerText = promo;
+
+                    $('#modelId').modal('toggle');
+                    $('#modelId').modal('hide');
+
+                });
+            });
+        </script>
+
+{{-- end script find query promo selector --}}
+
         <script>
             function hitung(jumlah, uangmuka, sukuBunga, result, result2, result3, result4,cicilanUM ,sisaPengurangan) {
 

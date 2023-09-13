@@ -293,19 +293,7 @@ class C_Simulasi extends Controller
             // response()->json('hasilSess');
             return redirect('/login')->with('error', 'You not sign in or sign up!');
         }
-        // $promo = DB::table('promo')
-        //     ->where('kode_promo', '=', $kdPromo)
-        //     ->first();
-        // if ($kdPromo != "Tidak Ada Promo") {
-        //     $kdPromo = $promo->kode_promo;
-        // }
-        // $pelanggan = DB::table('user_pelanggan')
-        //     ->where('id_pelanggan', '=', $id_pelanggan)
-        //     ->first();
 
-        // $skBunga = DB::table('sk_bunga')->where([
-        //     'status_bunga' => "aktif",
-        // ])->get();
         $tipeRumah = $this->gambarRumah->firstGambarRumahJoinTipeRumahGroupBy(
             '*',
             [
@@ -318,6 +306,7 @@ class C_Simulasi extends Controller
             'status' => 'available',
             'rumah.id_rumah' => $id_rumah,
         ]);
+        $promoRumah = $this->listPromo->getListPromoJoinPromoWherePengisianData($id_rumah)->collect();
 
         // $data= 'tipe','rumah';
         if (session()->has('user')) {
@@ -332,6 +321,7 @@ class C_Simulasi extends Controller
             return view('simPaymentOption', compact(
                 'user',
                 'tipeRumah',
+                'promoRumah',
                 'rumah',
             ));
         }
@@ -347,12 +337,14 @@ class C_Simulasi extends Controller
             return view('simPaymentOption', compact(
                 'userPelanggan',
                 'tipeRumah',
+                'promoRumah',
                 'rumah',
             ));
         }
 
         return view('simPaymentOption', compact(
             'tipeRumah',
+            'promoRumah',
             'rumah'
         ));
 
@@ -389,10 +381,10 @@ class C_Simulasi extends Controller
                     $dataInputKalkulator = [
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                        'harga_awal' => (double) $tipeRumah->harga_tr,
-                        'total_harga' => (double) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'uang_muka' => (double) ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'kpr' => (double) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'harga_awal' => (float) $tipeRumah->harga_tr,
+                        'total_harga' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'cicilan_um' => $request->cicilanUM,
                     ];
@@ -400,10 +392,10 @@ class C_Simulasi extends Controller
                     $dataInputKalkulator = [
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                        'harga_awal' => (double) $tipeRumah->harga_tr,
-                        'total_harga' => (double) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'uang_muka' => (double) ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'kpr' => (double) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'harga_awal' => (float) $tipeRumah->harga_tr,
+                        'total_harga' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'cicilan_um' => 1,
                     ];
@@ -412,9 +404,9 @@ class C_Simulasi extends Controller
                 $dataInputKalkulator = [
                     'luas_tanah_kkpr' => $rumah->luas_tanah,
                     'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                    'harga_awal' => (double) $tipeRumah->harga_tr,
-                    'total_harga' => (double) $tipeRumah->harga_tr,
-                    'uang_muka' => (double) 10000000,
+                    'harga_awal' => (float) $tipeRumah->harga_tr,
+                    'total_harga' => (float) $tipeRumah->harga_tr,
+                    'uang_muka' => (float) 10000000,
                     'kpr' => 0,
                     'cicilan_um' => 1,
                     'cicilan' => $request->cicilan,
@@ -838,10 +830,10 @@ class C_Simulasi extends Controller
                 $dataInputDetail = [
                     'luas_tanah_kkpr' => $rumah->luas_tanah,
                     'tipe_kkpr' => $tipeRumah->jenis_tr,
-                    'harga_awal' => (double) $tipeRumah->harga_tr,
-                    'total_diskon' => (double) $promo->diskon_promo,
+                    'harga_awal' => (float) $tipeRumah->harga_tr,
+                    'total_diskon' => (float) $promo->diskon_promo,
 
-                    'total_harga' => (double) $kkpr->total_harga - $promo->diskon_promo,
+                    'total_harga' => (float) $kkpr->total_harga - $promo->diskon_promo,
                     'terbilang' => terbilang($tipeRumah->harga_tr - $promo->diskon_promo),
                 ];
             }
@@ -849,8 +841,7 @@ class C_Simulasi extends Controller
                 $dataInputDetail = [
                     'luas_tanah_kkpr' => $rumah->luas_tanah,
                     'tipe_kkpr' => $tipeRumah->jenis_tr,
-                    'harga_awal' => (double) $tipeRumah->harga_tr,
-
+                    'harga_awal' => (float) $tipeRumah->harga_tr,
 
                     'terbilang' => terbilang($tipeRumah->harga_tr),
                 ];
@@ -910,8 +901,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => 'Booking Fee',
-                    'harga_pr' => (double) $kkpr->uang_muka,
-                    'sisa_pr' => (double) $kkpr->uang_muka,
+                    'harga_pr' => (float) $kkpr->uang_muka,
+                    'sisa_pr' => (float) $kkpr->uang_muka,
                     'tgl_pr' => date('Y-m-d'),
                     'status_pr' => 'belum',
                 ];
@@ -933,8 +924,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'Angsuran '.$i,
-                            'harga_pr' => (double) $dataCicil,
-                            'sisa_pr' => (double) $dataCicil,
+                            'harga_pr' => (float) $dataCicil,
+                            'sisa_pr' => (float) $dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
                             'status_pr' => 'belum',
                         ];
@@ -945,8 +936,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'Angsuran '.$i,
-                            'harga_pr' => (double) $dataCicil,
-                            'sisa_pr' => (double) $dataCicil,
+                            'harga_pr' => (float) $dataCicil,
+                            'sisa_pr' => (float) $dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
                             'status_pr' => 'belum',
                         ];
@@ -957,8 +948,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => 'Angsuran '.$kkpr->cicilan,
-                    'harga_pr' => (double) $kkpr->total_harga - $sumCicil - 10000000,
-                    'sisa_pr' => (double) $kkpr->total_harga - $sumCicil - 10000000,
+                    'harga_pr' => (float) $kkpr->total_harga - $sumCicil - 10000000,
+                    'sisa_pr' => (float) $kkpr->total_harga - $sumCicil - 10000000,
                     'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan),
                     'status_pr' => 'belum',
                 ];
@@ -983,8 +974,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => 'Booking Fee ',
-                    'harga_pr' => (double) 10000000,
-                    'sisa_pr' => (double) 10000000,
+                    'harga_pr' => (float) 10000000,
+                    'sisa_pr' => (float) 10000000,
                     'tgl_pr' => date('Y-m-d'),
                     'status_pr' => 'belum',
                 ];
@@ -995,8 +986,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => 'Cicilan Uang Muka '. 1,
-                        'harga_pr' => (double) $dataCicilKPR,
-                        'sisa_pr' => (double) $dataCicilKPR,
+                        'harga_pr' => (float) $dataCicilKPR,
+                        'sisa_pr' => (float) $dataCicilKPR,
                         'tgl_pr' => Carbon::now()->addMonths(1),
                         'status_pr' => 'belum',
                     ];
@@ -1006,8 +997,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'Cicilan Uang Muka '. 1 + $k,
-                            'harga_pr' => (double) $dataCicilKPR,
-                            'sisa_pr' => (double) $dataCicilKPR,
+                            'harga_pr' => (float) $dataCicilKPR,
+                            'sisa_pr' => (float) $dataCicilKPR,
                             'tgl_pr' => Carbon::now()->addMonths($k + 1),
                             'status_pr' => 'belum',
                         ];
@@ -1017,8 +1008,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => 'Cicilan Uang Muka '.$kkpr->cicilan_um,
-                        'harga_pr' => (double) $kkpr->uang_muka - $sumCicilKPR,
-                        'sisa_pr' => (double) $kkpr->uang_muka - $sumCicilKPR,
+                        'harga_pr' => (float) $kkpr->uang_muka - $sumCicilKPR,
+                        'sisa_pr' => (float) $kkpr->uang_muka - $sumCicilKPR,
                         'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan_um),
                         'status_pr' => 'belum',
                     ];
@@ -1028,8 +1019,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'KPR',
-                            'harga_pr' => (double) $dataKPR,
-                            'sisa_pr' => (double) $dataKPR,
+                            'harga_pr' => (float) $dataKPR,
+                            'sisa_pr' => (float) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => 'belum',
                         ];
@@ -1040,8 +1031,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'KPR',
-                            'harga_pr' => (double) $dataKPR,
-                            'sisa_pr' => (double) $dataKPR,
+                            'harga_pr' => (float) $dataKPR,
+                            'sisa_pr' => (float) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => 'belum',
                         ];
@@ -1054,8 +1045,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => 'Uang Muka ',
-                        'harga_pr' => (double) $kkpr->uang_muka,
-                        'sisa_pr' => (double) $kkpr->uang_muka,
+                        'harga_pr' => (float) $kkpr->uang_muka,
+                        'sisa_pr' => (float) $kkpr->uang_muka,
                         'tgl_pr' => Carbon::now()->addMonths(1),
                         'status_pr' => 'belum',
                     ];
@@ -1066,8 +1057,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'KPR',
-                            'harga_pr' => (double) $dataKPR,
-                            'sisa_pr' => (double) $dataKPR,
+                            'harga_pr' => (float) $dataKPR,
+                            'sisa_pr' => (float) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => 'belum',
                         ];
@@ -1078,8 +1069,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'KPR',
-                            'harga_pr' => (double) $dataKPR,
-                            'sisa_pr' => (double) $dataKPR,
+                            'harga_pr' => (float) $dataKPR,
+                            'sisa_pr' => (float) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => 'belum',
                         ];
@@ -1215,10 +1206,10 @@ class C_Simulasi extends Controller
                 $dataInputDetail = [
                     'luas_tanah_kkpr' => $rumah->luas_tanah,
                     'tipe_kkpr' => $tipeRumah->jenis_tr,
-                    'harga_awal' => (double) $tipeRumah->harga_tr,
-                    'total_diskon' => (double) $promo->diskon_promo,
+                    'harga_awal' => (float) $tipeRumah->harga_tr,
+                    'total_diskon' => (float) $promo->diskon_promo,
 
-                    'total_harga' => (double) $tipeRumah->harga_tr - $promo->diskon_promo,
+                    'total_harga' => (float) $tipeRumah->harga_tr - $promo->diskon_promo,
                     'terbilang' => terbilang($tipeRumah->harga_tr - $promo->diskon_promo),
                 ];
             }
@@ -1226,9 +1217,9 @@ class C_Simulasi extends Controller
                 $dataInputDetail = [
                     'luas_tanah_kkpr' => $rumah->luas_tanah,
                     'tipe_kkpr' => $tipeRumah->jenis_tr,
-                    'harga_awal' => (double) $tipeRumah->harga_tr,
+                    'harga_awal' => (float) $tipeRumah->harga_tr,
 
-                    'total_harga' => (double) $tipeRumah->harga_tr,
+                    'total_harga' => (float) $tipeRumah->harga_tr,
                     'terbilang' => terbilang($tipeRumah->harga_tr),
                 ];
             }
@@ -1287,8 +1278,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => 'Booking Fee',
-                    'harga_pr' => (double) $kkpr->uang_muka,
-                    'sisa_pr' => (double) $kkpr->uang_muka,
+                    'harga_pr' => (float) $kkpr->uang_muka,
+                    'sisa_pr' => (float) $kkpr->uang_muka,
                     'tgl_pr' => date('Y-m-d'),
                     'status_pr' => 'belum',
                 ];
@@ -1310,8 +1301,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'Angsuran '.$i,
-                            'harga_pr' => (double) $dataCicil,
-                            'sisa_pr' => (double) $dataCicil,
+                            'harga_pr' => (float) $dataCicil,
+                            'sisa_pr' => (float) $dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
                             'status_pr' => 'belum',
                         ];
@@ -1322,8 +1313,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'Angsuran '.$i,
-                            'harga_pr' => (double) $dataCicil,
-                            'sisa_pr' => (double) $dataCicil,
+                            'harga_pr' => (float) $dataCicil,
+                            'sisa_pr' => (float) $dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
                             'status_pr' => 'belum',
                         ];
@@ -1334,8 +1325,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => 'Angsuran '.$kkpr->cicilan,
-                    'harga_pr' => (double) $kkpr->total_harga - $sumCicil - 10000000,
-                    'sisa_pr' => (double) $kkpr->total_harga - $sumCicil - 10000000,
+                    'harga_pr' => (float) $kkpr->total_harga - $sumCicil - 10000000,
+                    'sisa_pr' => (float) $kkpr->total_harga - $sumCicil - 10000000,
                     'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan),
                     'status_pr' => 'belum',
                 ];
@@ -1360,8 +1351,8 @@ class C_Simulasi extends Controller
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
                     'detail_pr' => 'Booking Fee ',
-                    'harga_pr' => (double) 10000000,
-                    'sisa_pr' => (double) 10000000,
+                    'harga_pr' => (float) 10000000,
+                    'sisa_pr' => (float) 10000000,
                     'tgl_pr' => date('Y-m-d'),
                     'status_pr' => 'belum',
                 ];
@@ -1372,8 +1363,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => 'Cicilan Uang Muka '. 1,
-                        'harga_pr' => (double) $dataCicilKPR,
-                        'sisa_pr' => (double) $dataCicilKPR,
+                        'harga_pr' => (float) $dataCicilKPR,
+                        'sisa_pr' => (float) $dataCicilKPR,
                         'tgl_pr' => Carbon::now()->addMonths(1),
                         'status_pr' => 'belum',
                     ];
@@ -1383,8 +1374,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'Cicilan Uang Muka '. 1 + $k,
-                            'harga_pr' => (double) $dataCicilKPR,
-                            'sisa_pr' => (double) $dataCicilKPR,
+                            'harga_pr' => (float) $dataCicilKPR,
+                            'sisa_pr' => (float) $dataCicilKPR,
                             'tgl_pr' => Carbon::now()->addMonths($k),
                             'status_pr' => 'belum',
                         ];
@@ -1394,8 +1385,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => 'Cicilan Uang Muka '.$kkpr->cicilan_um,
-                        'harga_pr' => (double) $kkpr->uang_muka - $sumCicilKPR,
-                        'sisa_pr' => (double) $kkpr->uang_muka - $sumCicilKPR,
+                        'harga_pr' => (float) $kkpr->uang_muka - $sumCicilKPR,
+                        'sisa_pr' => (float) $kkpr->uang_muka - $sumCicilKPR,
                         'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan_um),
                         'status_pr' => 'belum',
                     ];
@@ -1405,8 +1396,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'KPR',
-                            'harga_pr' => (double) $dataKPR,
-                            'sisa_pr' => (double) $dataKPR,
+                            'harga_pr' => (float) $dataKPR,
+                            'sisa_pr' => (float) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => 'belum',
                         ];
@@ -1417,8 +1408,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'KPR',
-                            'harga_pr' => (double) $dataKPR,
-                            'sisa_pr' => (double) $dataKPR,
+                            'harga_pr' => (float) $dataKPR,
+                            'sisa_pr' => (float) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => 'belum',
                         ];
@@ -1431,8 +1422,8 @@ class C_Simulasi extends Controller
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
                         'detail_pr' => 'Uang Muka ',
-                        'harga_pr' => (double) $kkpr->uang_muka,
-                        'sisa_pr' => (double) $kkpr->uang_muka,
+                        'harga_pr' => (float) $kkpr->uang_muka,
+                        'sisa_pr' => (float) $kkpr->uang_muka,
                         'tgl_pr' => Carbon::now()->addMonths(1),
                         'status_pr' => 'belum',
                     ];
@@ -1443,8 +1434,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'KPR',
-                            'harga_pr' => (double) $dataKPR,
-                            'sisa_pr' => (double) $dataKPR,
+                            'harga_pr' => (float) $dataKPR,
+                            'sisa_pr' => (float) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => 'belum',
                         ];
@@ -1455,8 +1446,8 @@ class C_Simulasi extends Controller
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
                             'detail_pr' => 'KPR',
-                            'harga_pr' => (double) $dataKPR,
-                            'sisa_pr' => (double) $dataKPR,
+                            'harga_pr' => (float) $dataKPR,
+                            'sisa_pr' => (float) $dataKPR,
                             'tgl_pr' => '0000-00-00',
                             'status_pr' => 'belum',
                         ];
