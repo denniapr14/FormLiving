@@ -672,7 +672,7 @@ class C_PreOrder extends Controller
                 'to' => $user->email_ua,
                 "subject" => "Forms Living Pre Order Kalm Residence",
                 "body" => "",
-                "id" => Crypt::encrypt($dataPO->$id_pre_order),
+                "id" => Crypt::encrypt($dataPO->id_pre_order),
                 "id_rumah" => $rumah->id_rumah,
                 'nama' => $pelanggan->nama_plgn,
                 'blok' => $rumah->blok,
