@@ -24,6 +24,8 @@
                 <br>
                 <div class="card__header">
                     <div class="card__title">
+                        <a href="{{ url()->previous() }}" class="btn-fd-icon-outline" style="height: 40px; width: 50px">
+                            <i class="bi bi-arrow-left"></i></a> &nbsp;
                         <i class="bi bi-clipboard2-plus"></i>
                         <span>Tipe Rumah {{ $getRumah->nama_cluster }} / {{ $getRumah->blok }} - {{ $getRumah->nomor }}
                         </span>
@@ -449,61 +451,100 @@
                                                         class="btn-fd-icon-outline">
                                                         <i class="fa fa-edit" aria-hidden="true"></i>
                                                     </a>
+
+                                                    <button type="button" class="btn-fd-icon-outline"
+                                                    data-target="#delTipeRumah{{ $no }}" data-toggle="modal"
+                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i <i
+                                                        class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+
+                                                <div class="modal modal-form fade" id="delTipeRumah{{ $no }}"
+                                                    data-backdrop="static" data-keyboard="false" tabindex="-1"
+                                                    aria-labelledby="order-informationLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Apa anda yakin menghapus user
+                                                                    {{ $tipeRumah->jenis_tr }} ?
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i
+                                                                            class="bi bi-x-lg"></i></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row pt-4 col-12">
+                                                                    <div class="col-6 mb-1">
+                                                                        <a href="{{  route('deleteTipeRumah.admin',Crypt::encrypt($tipeRumah->id_tipe_rumah)) }}"
+                                                                            class="btn-fd-primary  w-100">Ya</a>
+                                                                    </div>
+                                                                    <div class="col-6 mb-1">
+                                                                        <button class="btn-fd-primary w-100"
+                                                                            data-dismiss="modal">Tidak</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 @endif
                                             </div>
 
+
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $no++;
+                                    ?>
+                                @endforeach
+                            @else
+                                <div class="alert alert-danger">Tidak ada data</div>
+                            @endif
+
+
+                        </tbody>
+                    </table>
+
                 </div>
-                </td>
-                </tr>
-                <?php
-                $no++;
-                ?>
-                @endforeach
-            @else
-                <div class="alert alert-danger">Tidak ada data</div>
-                @endif
-
-
-                </tbody>
-                </table>
 
             </div>
-
         </div>
-    </div>
-    <!-- end: content -->
+        <!-- end: content -->
 
 
-    <script>
-        function updateTime() {
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-            const timeString = `${hours}:${minutes}:${seconds}`;
-            document.getElementById('clock').textContent = timeString;
-        }
-        setInterval(updateTime, 1000);
-    </script>
+        <script>
+            function updateTime() {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const seconds = now.getSeconds();
+                const timeString = `${hours}:${minutes}:${seconds}`;
+                document.getElementById('clock').textContent = timeString;
+            }
+            setInterval(updateTime, 1000);
+        </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#rumah').DataTable();
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#showToastButton').click(function() {
-                Toastify({
-                    text: "Hello, this is a toast message!",
-                    duration: 3000,
-                    gravity: "bottom",
-                    positionLeft: false,
-                    close: true,
-                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-                    stopOnFocus: true
-                }).showToast();
+        <script>
+            $(document).ready(function() {
+                $('#rumah').DataTable();
             });
-        });
-    </script>
-@endsection
+        </script>
+        <script>
+            $(document).ready(function() {
+                $('#showToastButton').click(function() {
+                    Toastify({
+                        text: "Hello, this is a toast message!",
+                        duration: 3000,
+                        gravity: "bottom",
+                        positionLeft: false,
+                        close: true,
+                        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                        stopOnFocus: true
+                    }).showToast();
+                });
+            });
+        </script>
+    @endsection

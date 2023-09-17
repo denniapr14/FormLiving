@@ -21,7 +21,8 @@
                 <div class="card__header">
                     <div class="card__title">
 
-                        <h1>Ubah Tipe Rumah {{ $getTipeRumah->jenis_tr }} </h1>
+                        <a href="{{ url()->previous() }}" class="btn-fd-icon-outline " style="height: 40px;width: 50px"> <i class="bi bi-arrow-left"></i></a>
+                        <h4>   Ubah Tipe Rumah {{ $getTipeRumah->jenis_tr }} </h4>
 
                     </div>
 
@@ -251,119 +252,7 @@
                                                             <i class="fas fa-edit    "></i>
                                                         </button>
 
-                                                        <div class="modal modal-form fade"
-                                                            id="tipeRumah{{ $gambar->id_gambar_rumah }}"
-                                                            data-backdrop="static" data-keyboard="false" tabindex="-1"
-                                                            aria-labelledby="order-informationLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title">Detail Tipe Rumah
 
-                                                                        </h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true"><i
-                                                                                    class="bi bi-x-lg"></i></span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="product-listing">
-                                                                            <form action="" method="POST"
-                                                                                enctype="multipart/form-data"
-                                                                                id="imageUploadForm">
-                                                                                @csrf
-
-
-                                                                                <div class="modal-body">
-                                                                                    <div class="form-group row">
-                                                                                        <label
-                                                                                            class="col-sm-4 col-form-label align-self-center">
-                                                                                            Gambar Tipe Rumah
-                                                                                        </label>
-                                                                                        <div
-                                                                                            class="col-sm-8 align-self-center">
-                                                                                            <input type="file"
-                                                                                                class="form-control"
-                                                                                                name="img"
-                                                                                                placeholder="masukan gambar"
-                                                                                                id="img{{ $gambar->id_gambar_rumah }}">
-                                                                                        </div>
-
-                                                                                    </div>
-
-                                                                                    <div class="row pt-4">
-                                                                                        <div class="col-12">
-
-                                                                                            <button
-                                                                                                class="btn btn-primary w-100 mb-1"
-                                                                                                type="button"
-                                                                                                name="submitImg"
-                                                                                                id="uploadButton{{ $gambar->id_gambar_rumah }}">Submit</button>
-                                                                                            <button
-                                                                                                class="btn btn-danger w-100"
-                                                                                                type=""
-                                                                                                data-dismiss="modal">Close</button>
-
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                            <script>
-                                                                                $(document).ready(function() {
-                                                                                    $("#uploadButton{{ $gambar->id_gambar_rumah }}").click(function() {
-                                                                                        var formData = new FormData();
-                                                                                        formData.append("img", $("#img{{ $gambar->id_gambar_rumah }}")[0].files[0]);
-                                                                                        formData.append("_token", "{{ csrf_token() }}");
-
-                                                                                        $.ajax({
-                                                                                            url: "{{ route('updateImageTipeRumahAction.admin', [$getProjek->nama_projek, $getTipeRumah->id_tipe_rumah, $gambar->id_gambar_rumah]) }}", // Replace with your Laravel route
-                                                                                            type: "POST",
-                                                                                            data: formData,
-                                                                                            processData: false,
-                                                                                            contentType: false,
-                                                                                            success: function(response) {
-                                                                                                // Handle success response (e.g., update image preview)
-                                                                                                let url = "{{ url('Home') }}/images/denah/"
-                                                                                                // Handle success response (e.g., update image preview)
-                                                                                                // alert("Image uploaded successfully!");
-                                                                                                $("#denah{{ $gambar->id_gambar_rumah }}").attr("src", url + response
-                                                                                                    .img_rumah);
-
-                                                                                                    $(document).ready(function() {
-                                                                                                        Toastify({
-                                                                                                            text:   'Gambar tipe rumah telah diubah', // Add single quotes around the variable to make it a valid JavaScript string
-                                                                                                            duration: 3000,
-                                                                                                            gravity: "top",
-                                                                                                            positionLeft: false,
-                                                                                                            close: true,
-                                                                                                            backgroundColor: "linear-gradient(to right, #8ACCA1, #458f60)",
-                                                                                                            stopOnFocus: true
-                                                                                                        }).showToast();
-                                                                                                    });
-
-                                                                                            },
-                                                                                            error: function(error) {
-                                                                                                // Handle error response (e.g., show an error message)
-                                                                                                console.error(error.responseText);
-                                                                                                alert("Error uploading image. Please try again.");
-                                                                                            }
-                                                                                        });
-                                                                                    });
-                                                                                });
-                                                                            </script>
-
-
-                                                                        </div>
-
-
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
                                                     </div>
                                                 </div>
                                             @endif
@@ -396,7 +285,145 @@
                                                             <i class="fas fa-edit    "></i>
                                                         </button>
 
-                                                        <div class="modal modal-form fade"
+
+
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div id="fileInput0">
+                        <label for="fileInput">Select a file:</label>
+                        <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
+                        <input type="file" id="fileInput" name="fileInput[]">
+
+                        <select name="jenisGambar[]" id="" class="form form-control">
+                            <option value="">---Pilih Jenis Gambar---</option>
+                            <option value="Denah">Denah</option>
+                            <option value="Gambar">Gambar</option>
+                        </select>
+
+                    </div>
+
+                    <button type="button" class="btn btn-success" onclick="addFile(id= 0)">Add File Input</button>
+                    <br><br>
+
+
+
+                    <br>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+                @foreach ($getGambar as $gambar)
+                    <div class="modal modal-form fade" id="tipeRumah{{ $gambar->id_gambar_rumah }}"
+                        data-backdrop="static" data-keyboard="false" tabindex="-1"
+                        aria-labelledby="order-informationLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Detail Tipe Rumah
+
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="product-listing">
+                                        <form id="imageUploadForm">
+                                            @csrf
+
+
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label align-self-center">
+                                                        Gambar Tipe Rumah
+                                                    </label>
+                                                    <div class="col-sm-8 align-self-center">
+                                                        <input type="file" class="form-control" name="img"
+                                                            placeholder="masukan gambar"
+                                                            id="img{{ $gambar->id_gambar_rumah }}">
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row pt-4">
+                                                    <div class="col-12">
+
+                                                        <button class="btn btn-primary w-100 mb-1" type="button"
+                                                            name="submitImg"
+                                                            id="uploadButton{{ $gambar->id_gambar_rumah }}">Submit</button>
+                                                        <button class="btn btn-danger w-100" type=""
+                                                            data-dismiss="modal">Close</button>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $("#uploadButton{{ $gambar->id_gambar_rumah }}").click(function() {
+                                                    var formData = new FormData();
+                                                    formData.append("img", $("#img{{ $gambar->id_gambar_rumah }}")[0].files[0]);
+                                                    formData.append("_token", "{{ csrf_token() }}");
+
+                                                    $.ajax({
+                                                        url: "{{ route('updateImageTipeRumahAction.admin', [$getProjek->nama_projek, $getTipeRumah->id_tipe_rumah, $gambar->id_gambar_rumah]) }}", // Replace with your Laravel route
+                                                        type: "POST",
+                                                        data: formData,
+                                                        processData: false,
+                                                        contentType: false,
+                                                        success: function(response) {
+                                                            // Handle success response (e.g., update image preview)
+                                                            let url = "{{ url('Home') }}/images/denah/"
+                                                            // Handle success response (e.g., update image preview)
+                                                            // alert("Image uploaded successfully!");
+                                                            $("#denah{{ $gambar->id_gambar_rumah }}").attr("src", url + response
+                                                                .img_rumah);
+
+                                                            $(document).ready(function() {
+                                                                Toastify({
+                                                                    text: 'Gambar tipe rumah telah diubah', // Add single quotes around the variable to make it a valid JavaScript string
+                                                                    duration: 3000,
+                                                                    gravity: "top",
+                                                                    positionLeft: false,
+                                                                    close: true,
+                                                                    backgroundColor: "linear-gradient(to right, #8ACCA1, #458f60)",
+                                                                    stopOnFocus: true
+                                                                }).showToast();
+                                                            });
+
+                                                        },
+                                                        error: function(error) {
+                                                            // Handle error response (e.g., show an error message)
+                                                            console.error(error.responseText);
+                                                            alert("Error uploading image. Please try again.");
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        </script>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal modal-form fade"
                                                             id="tipeRumah{{ $gambar->id_gambar_rumah }}"
                                                             data-backdrop="static" data-keyboard="false" tabindex="-1"
                                                             aria-labelledby="order-informationLabel" aria-hidden="true">
@@ -414,8 +441,7 @@
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="product-listing">
-                                                                            <form action="" method="POST"
-                                                                                enctype="multipart/form-data"
+                                                                            <form enctype="multipart/form-data"
                                                                                 id="imageUploadForm">
                                                                                 @csrf
 
@@ -473,17 +499,17 @@
                                                                                                 // Handle success response (e.g., update image preview)
                                                                                                 $("#gambar{{ $gambar->id_gambar_rumah }}").attr("src", url + response
                                                                                                     .img_rumah);
-                                                                                                    $(document).ready(function() {
-                                                                                                        Toastify({
-                                                                                                            text:   'Gambar tipe rumah telah diubah', // Add single quotes around the variable to make it a valid JavaScript string
-                                                                                                            duration: 3000,
-                                                                                                            gravity: "top",
-                                                                                                            positionLeft: false,
-                                                                                                            close: true,
-                                                                                                            backgroundColor: "linear-gradient(to right, #8ACCA1, #458f60)",
-                                                                                                            stopOnFocus: true
-                                                                                                        }).showToast();
-                                                                                                    });
+                                                                                                $(document).ready(function() {
+                                                                                                    Toastify({
+                                                                                                        text: 'Gambar tipe rumah telah diubah', // Add single quotes around the variable to make it a valid JavaScript string
+                                                                                                        duration: 3000,
+                                                                                                        gravity: "top",
+                                                                                                        positionLeft: false,
+                                                                                                        close: true,
+                                                                                                        backgroundColor: "linear-gradient(to right, #8ACCA1, #458f60)",
+                                                                                                        stopOnFocus: true
+                                                                                                    }).showToast();
+                                                                                                });
                                                                                             },
                                                                                             error: function(error) {
                                                                                                 // Handle error response (e.g., show an error message)
@@ -505,87 +531,17 @@
                                                             </div>
 
                                                         </div>
+                @endforeach
 
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div id="fileInput0">
-                        <label for="fileInput">Select a file:</label>
-                        <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
-                        <input type="file" id="fileInput" name="fileInput[]">
-
-                        <select name="jenisGambar[]" id="" class="form form-control">
-                            <option value="">---Pilih Jenis Gambar---</option>
-                            <option value="Denah">Denah</option>
-                            <option value="Gambar">Gambar</option>
-                        </select>
-
-                    </div>
-
-                    <button type="button" class="btn btn-success" onclick="addFile(id= 0)">Add File Input</button>
-                    <br><br>
-
-
-
-                    <br>
-                    <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </div>
     </div>
 
 
-    </form>
-    </div>
-    </div>
 
 
-    <!-- end: main -->
 
-    <!-- Modal -->
-    <div class="modal modal-sweet-alert modal-sweet-alert--error fade" id="delete-alert" data-backdrop="static"
-        data-keyboard="false" tabindex="-1" aria-labelledby="delete-alertLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="alert-icon">
-                        <i class="bi bi-trash"></i>
-                    </div>
-                    <h1>Delete Data?</h1>
-                    <p>You will not able to recover all this invoice!</p>
-                    <a href="#" class="btn btn-outline-danger" data-dismiss="modal">Cancel</a>
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal Change Confirmation-->
-    <div class="modal modal-sweet-alert modal-sweet-alert--warning fade" id="change-alert" data-backdrop="static"
-        data-keyboard="false" tabindex="-1" aria-labelledby="change-alertLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="alert-icon">
-                        <i class="bi bi-exclamation-circle"></i>
-                    </div>
-                    <h1>Are you sure want to change status this invoice?</h1>
-                    <p>You will not able to recover all this invoice!</p>
-                    <a href="#" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</a>
-                    <a href="#" class="btn btn-warning" data-dismiss="modal">Change</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal order information-->
 

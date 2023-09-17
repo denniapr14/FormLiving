@@ -45,9 +45,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [Home::class, 'index']);
 Route::get('/Housing/{dataProjek}', [Home::class, 'housing']);
 Route::get('/my-cart', [Home::class, 'MyCart']);
-Route::get('/login', [C_Login::class, 'login']);
-Route::post('/login', [C_Login::class, 'loginAction'])->name('login.action');
-Route::get('/logout', [C_Login::class, 'logout']);
+Route::get('/login', [C_Login::class, 'Login']);
+Route::post('/login', [C_Login::class, 'LoginAction'])->name('login.action');
+Route::get('/logout', [C_Login::class, 'Logout']);
 Route::get('/reset-password', [C_Login::class, 'emailForgot']);
 Route::get('/profile/cetak/{code}/{id_formulir}', [Home::class, 'printFP']);
 Route::get('/forgot/{email}', [C_Login::class, 'forgotPassword'])->name('forgot.utama');
@@ -97,7 +97,7 @@ Route::post('/simulation-payment-option/action/{id_rumah}/{id_tipe}', [C_Simulas
 
 Route::get('/simulation-data-pelanggan/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}', [C_Simulasi::class, 'simDataPelanggan'])->name('simulasiPelanggan');
 Route::post('/simulation-data-pelanggan/store/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}', [C_Simulasi::class, 'SimDataPelangganAction'])->name('simulasiPelanggan.action');
-Route::get('/simulation-data-pelanggan/cariKuponSpesial/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/{kode_promo}', [C_Simulasi::class, 'findKuponSpesial'])->name('findKuponSpesial');
+Route::get('/simulation-data-pelanggan/cariKuponSpesial/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'FindKuponSpesial'])->name('findKuponSpesial');
 
 Route::get('/simulation-summary/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/{id_pelanggan}/{kdPromo}', [C_Simulasi::class, 'simSummary'])->name('simulasiSummary');
 Route::post('/simulation-summary/store/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/{id_pelanggan}/{kdPromo}', [C_Simulasi::class, 'simSummaryAction'])->name('simulationSummary.action');
@@ -309,10 +309,11 @@ Route::get('/tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'tipeRumah'])
 Route::get('/tambah-tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'storeTipeRumah'])->name('storeTipeRumah.admin');
 route::post('/tambah-tipe-rumah/{projek}', [C_TipeRumah::class, 'storeTipeRumahAction'])->name('postTipeRumah');
 Route::get('/ubah-tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumah'])->name('updateTipeRumah.admin');
-Route::post('/tambah-tipe-rumah-admin/action/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
+Route::post('/ubah-tipe-rumah-admin/action/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
     ->name('updateTipeRumahAction.admin');
 Route::post('/ubah-gambar-tipe-rumah-admin/action/{projek}/{id}/{id_gambar}',[C_TipeRumah::class,'updateImageTipeRumahAction'])
 ->name('updateImageTipeRumahAction.admin');
+Route::get('/hapus-tipe-rumah-admin/{id}',[C_TipeRumah::class,'deleteTipeRumahAction'])->name('deleteTipeRumah.admin');
 
 Route::get('/gambar-rumah/status/{status}/{id}', [C_GambarRumah::class, 'changeGambarRumahStatus']);
 

@@ -47,6 +47,7 @@
             <div class="card__box">
                 <div class="card__header">
                     <div class="card__title">
+                        <a href="{{ url()->previous() }}" class="btn-fd-icon-outline " style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
                         <i class="bi bi-award-fill"></i>
                         <span>Promo </span>
 

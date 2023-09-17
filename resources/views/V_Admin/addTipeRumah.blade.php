@@ -24,7 +24,7 @@
             <div class="card__box">
                 <div class="card__header">
                     <div class="card__title">
-
+                        <a href="{{ url()->previous() }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
                         <h1>Tambah Tipe Rumah </h1>
 
                     </div>

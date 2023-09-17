@@ -327,15 +327,27 @@
     <div class="container">
 
         <center>
-           <table class="table table-borderless no-space">
+           <table class="table table-borderless no-space" style="width: 100%">
                 <tr>
-                    <td><img style="" src="{{ asset('Dashboard') }}/images/content/logo-forms-living1.png" alt=""></td>
-                    <td>
-                        <img style="float: right;" class="float-right" src="{{ asset('Dashboard') }}/images/content/logo-tidar-gray.png" alt=""></td>
+                    <td style="width: 70%"><img style="" src="{{ asset('Dashboard') }}/images/content/logo-forms-living1.png" alt=""></td>
+                    <td><img style="float: right;" class="float-right"
+
+                        @if($fp->id_projek == 1)
+
+                        src="{{ asset('Home') }}/images/logotidargreen.png"
+
+                        @else
+
+                        src="{{ asset('Home') }}/images/logo-kalm.png" style="width: 100%;"
+
+                        @endif
+
+                        alt="">
+                    </td>
                 </tr>
             </table>
             <br>
-            <h4> SURAT PEMESANAN RUMAH</h4>
+            <h4> SURAT PEMESANAN RUMAH </h4>
             <p>Nomor : {{$fp->no_fp}} </p>
         </center>
         <p>Yang bertanda tangan dibawah ini :</p>

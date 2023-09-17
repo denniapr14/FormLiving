@@ -19,6 +19,7 @@ use App\Models\UserProjek;
 use Illuminate\Http\Request;
 // =======================
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -55,7 +56,8 @@ class C_TipeRumah extends Controller
         $decryptedID = Crypt::decrypt($id);
 
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
-        $getTipeRumah = $this->tipeRumah->getGambarTipeRumahSelectCountGroupByWhere('rumah.id_rumah', '=', $decryptedID);
+        $getTipeRumah = $this->tipeRumah->getGambarTipeRumahSelectCountGroupByWhere('rumah.id_rumah', '=', $decryptedID)->collect();
+        $getTipeRumah = $getTipeRumah->where('deleted_tr','false');
         $whereGambar = [
             // 'status_gr' => "aktif",
             'id_rumah' => $decryptedID,
@@ -502,5 +504,22 @@ class C_TipeRumah extends Controller
             ->update($dataGambarTipe);
 
         return response()->json($dataGambarTipe);
+    }
+    function deleteTipeRumahAction($id){
+
+            $decryptedID = Crypt::decrypt($id);
+
+        $getTipeRumah = $this->tipeRumah->firstTipeRumah('*',[
+            'id_tipe_rumah' => $decryptedID
+        ]);
+
+        $dtDelete = [
+            'deleted_tr'    => 'true',
+            'deleted_tr_at' => Carbon::now()
+        ];
+        DB::table('tipe_rumah')
+        ->where('id_tipe_rumah',$decryptedID)
+        ->update($dtDelete);
+        return redirect()->back()->with('success', 'Data tipe rumah telah berhasil dihapus');
     }
 }

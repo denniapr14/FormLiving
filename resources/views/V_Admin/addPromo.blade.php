@@ -106,6 +106,7 @@
         <div class="container-fluid ">
             <div class="card">
                 <div class="card-header">
+                    <a href="{{ url()->previous() }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
                     Tambah Promo
                 </div>
 
@@ -189,7 +190,7 @@
                                 <option value="yes">Ya</option>
                                 <option value="no">Tidak</option>
                             </select>
-                         <input type="number" name="jumlah_cicilan" class="form-control">
+                         <input type="number" name="jumlah_cicilan" class="form-control" value="0">
                         </div>
 
 

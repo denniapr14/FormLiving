@@ -106,6 +106,8 @@
         <div class="container-fluid ">
             <div class="card">
                 <div class="card-header">
+                    <a href="{{ url()->previous() }}" class="btn-fd-icon-outline" style="height: 40px; width: 50px">
+                        <i class="bi bi-arrow-left"></i></a> &nbsp;
                     Pembayaran Rumah {{ $getRumah->blok }}-{{ $getRumah->nomor }} dengan sisa Rp {{ rupiah($getPembayaranRumah->sisa_pr) }}
                 </div>
 

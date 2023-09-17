@@ -317,7 +317,10 @@
 
     <body>
         <div style="width: 100%;">
+
             <div class="card" style="width: 100%;">
+                <br>
+                <a href="{{ url()->previous() }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
                 <form
                     action="{{ route('editSuratPemesananRumahAction.admin', [$getProjek->nama_projek, Crypt::encrypt($getFormulirPesanan->id_formulir)]) }}"
                     method="post">
@@ -329,9 +332,17 @@
                                     <td><img style=""
                                             src="{{ asset('Dashboard') }}/images/content/logo-forms-living1.png"
                                             alt=""></td>
-                                    <td><img style="float: right;" class="float-right"
-                                            src="{{ asset('Dashboard') }}/images/content/logo-tidar-gray.png"
-                                            alt="">
+                                    <td>
+                                        @if($getProjek->nama_projek=="Greenland")
+                                        <img style="float: right;" class="float-right"
+                                        src="{{ asset('Home') }}/images/logotidargreen.png"
+                                        alt="">
+                                        @else
+                                        <img style="float: right;" class="float-right"
+                                        src="{{ asset('Home') }}/images/logo-kalm.png"
+                                        alt="">
+                                        @endif
+
                                     </td>
                                 </tr>
                             </table>

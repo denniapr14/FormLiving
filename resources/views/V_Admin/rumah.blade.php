@@ -91,9 +91,14 @@
                                         <td>
 
                                             <div class="d-flex flex-nowrap">
+                                                @if ($rumah->status != "Available")
+
+                                                @else
                                                 <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
                                                     class="btn btn-outline-info"><i class="bi bi-book-fill"></i><span class="badge badge-pill badge-info">
                                                         {{ $rumah->countTipe }}</span></a>
+                                                @endif
+
                                                 <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
                                                     class="btn btn-outline-info">
                                                     <i class="fa fa-edit" aria-hidden="true"></i>
