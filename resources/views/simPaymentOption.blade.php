@@ -91,7 +91,7 @@
                             <div class="col-12 col-lg-4 left-column order-1 order-lg-2">
                                 <div class="mod-type">
                                     <div class="type-image">
-                                        <img src="{{ asset('Home') }}/images/tipe/{{ $tipeRumah->img_rumah }}"
+                                        <img src="{{ asset('Home') }}/images/tipe/{{ $tipeRumah->img_tr }}"
                                             alt="">
                                     </div>
                                     <div class="items">
@@ -544,7 +544,7 @@
                 var spaceAlert = document.getElementById('myAlert');
 
                 $.ajax({
-                    url: '{{ route('findKuponSpesial', [$tipeRumah->id_rumah, $tipeRumah->id_tipe]) }}',
+                    url: '{{ route('findKuponSpesial', [$tipeRumah->id_rumah, $tipeRumah->id_tipe_rumah]) }}',
                     type: 'GET',
                     dataType: 'json',
                     data: {

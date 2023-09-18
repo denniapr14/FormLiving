@@ -208,6 +208,19 @@
                             class="form-control" placeholder="Masukan Tangga" aria-describedby="helpId">
 
                     </div>
+                    <div class="form-group">
+                        <label for="">Gambar Tipe Rumah</label>
+                        <input type="file" name="gambarTipe[]" id=""
+                        class="form-control" placeholder="Masukan Tangga" aria-describedby="helpId">
+                     @if (empty($getTipeRumah->img_tr))
+                        @else
+                        <img src="{{ url('Home') }}/images/tipe/{{ $getTipeRumah->img_tr }}" alt="">
+                     @endif
+
+                    </div>
+
+                    <h4>Gallery</h4>
+
                     <div id="accordion">
                         <div class="card">
                             <div class="card-header" id="headingOne">

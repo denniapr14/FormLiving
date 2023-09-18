@@ -58,7 +58,7 @@
 
                             <div class="mod-type">
                                 <div class="type-image">
-                                    <img src="{{ asset('Home') }}/images/tipe/{{ $tipeRumah->img_rumah }}" alt="">
+                                    <img src="{{ asset('Home') }}/images/tipe/{{ $tipeRumah->img_tr }}" alt="">
                                 </div>
                                 <div class="items">
 

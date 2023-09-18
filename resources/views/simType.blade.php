@@ -56,7 +56,7 @@
                             <a href="{{ route('simulationDetailTipe', [$rumah->id_rumah,$tipe->id_tipe_rumah]) }}">
                                 <div class="item">
                                     <div class="item-image">
-                                        <img src="{{ asset('Home') }}/images/tipe/{{ $tipe->img_rumah }}" alt="">
+                                        <img src="{{ asset('Home') }}/images/tipe/{{ $tipe->img_tr }}" alt="">
                                     </div>
                                     <div>
                                         <h5 class="type">Type: {{ $tipe->jenis_tr }}</h5>

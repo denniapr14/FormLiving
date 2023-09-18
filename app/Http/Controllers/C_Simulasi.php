@@ -81,8 +81,14 @@ class C_Simulasi extends Controller
                 'rumah.status' => 'available',
             ]
         );
-        $rumahAll = $this->rumah->getRumahAll();
-        $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek', '=', "Greenland");
+        $rumahAll = $this->rumah->getRumahProjekWhereAll('projek.nama_projek', '=', "Greenland");
+        $rumah = $this->rumah->getRumahSelectJoinClusterProjek(
+            '*',
+            [
+                'rumah.id_projek' => 1,
+                'rumah.status' => 'Available',
+            ]
+        );
 
         // session check untuk user
         if (session()->has('user')) {
@@ -135,13 +141,9 @@ class C_Simulasi extends Controller
 
         // dd($rumah);
         // die();
-        $tipe = $this->gambarRumah->getGambarRumahJoinTipeRumahGroupBy(
-            '*',
-            [
-                'gambar_rumah.id_rumah' => $id_rumah,
-            ],
-            'tipe_rumah.id_tipe_rumah'
-        )->collect();
+        $tipe = DB::table('tipe_rumah')
+            ->where('id_rumah', '=', $id_rumah)
+            ->get();
         // dd($tipe);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
@@ -154,7 +156,8 @@ class C_Simulasi extends Controller
             return view('simType', compact(
                 'user',
                 'tipe',
-                'rumah'
+                'rumah',
+
             ));
         }
         if (session()->has('guest')) {
@@ -168,7 +171,8 @@ class C_Simulasi extends Controller
             return view('simType', compact(
                 'userPelanggan',
                 'tipe',
-                'rumah'
+                'rumah',
+
             ));
         }
 
@@ -289,13 +293,7 @@ class C_Simulasi extends Controller
         }
         // $promo = $this->promo->firstPromoDataPelanggan($id_rumah,"F28SP01");
         // dd($promo);
-        $tipeRumah = $this->gambarRumah->firstGambarRumahJoinTipeRumahGroupBy(
-            '*',
-            [
-                'gambar_rumah.id_rumah' => $id_rumah,
-            ],
-            'tipe_rumah.id_tipe_rumah'
-        );
+        $tipeRumah = $this->tipeRumah->firstTipeRumah('*', ['id_tipe_rumah' => $id_tipe]);
         // dd($tipeRumah);
         $rumah = $this->rumah->firstRumahWhereJoinClusterArr('*', [
             'status' => 'available',
@@ -354,13 +352,7 @@ class C_Simulasi extends Controller
             return redirect('/login')->with('error', 'You not sign in or sign up!');
         }
 
-        $tipeRumah = $this->gambarRumah->firstGambarRumahJoinTipeRumahGroupBy(
-            '*',
-            [
-                'gambar_rumah.id_rumah' => $id_rumah,
-            ],
-            'tipe_rumah.id_tipe_rumah'
-        );
+        $tipeRumah = $this->tipeRumah->firstTipeRumah('*', ['id_tipe_rumah' => $id_tipe]);
         // dd($tipeRumah);
         $rumah = $this->rumah->firstRumahWhereJoinCluster('*', 'rumah.id_rumah', '=', $id_rumah);
         // $data= 'tipe','rumah';
@@ -440,13 +432,7 @@ class C_Simulasi extends Controller
 
         // dd($kkpr);
         // die();
-        $tipeRumah = $this->gambarRumah->firstGambarRumahJoinTipeRumahGroupBy(
-            '*',
-            [
-                'gambar_rumah.id_tipe' => $id_tipe,
-            ],
-            'tipe_rumah.id_tipe_rumah'
-        );
+        $tipeRumah = $this->tipeRumah->firstTipeRumah('*', ['id_tipe_rumah' => $id_tipe]);
         $getKKPR = $this->kalkulatorKPR->firstKalkulatorKPRArr(
             '*',
             ['id_kkpr' => $id_kpr]
@@ -682,14 +668,7 @@ class C_Simulasi extends Controller
         $kkpr = $this->kalkulatorKPR->firstKalkulatorKPRArr('*', [
             'id_kkpr' => $id_kkpr,
         ]);
-
-        $tipeRumah = $this->gambarRumah->firstGambarRumahJoinTipeRumahGroupBy(
-            '*',
-            [
-                'gambar_rumah.id_tipe' => $id_tipe,
-            ],
-            'tipe_rumah.id_tipe_rumah'
-        );
+        $tipeRumah = $this->tipeRumah->firstTipeRumah('*', ['id_tipe_rumah' => $id_tipe]);
         $rumah = $this->rumah->firstRumahWhereJoinClusterArr('*', [
             'status' => 'available',
             'rumah.id_rumah' => $id_rumah,

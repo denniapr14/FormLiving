@@ -63,9 +63,9 @@
                             <div class="mod-type">
                                 <div class="type-image">
                                     <?php
-                                            if(!empty($rumah->img_rumah)){
+                                            if(!empty($rumah->img_tr)){
                                                 ?>
-                                    <img src="{{ asset('Home') }}/images/rumah/{{$rumah->img_rumah}}" alt="">
+                                    <img src="{{ asset('Home') }}/images/rumah/{{$rumah->img_tr}}" alt="">
                                     <?php
                                             }else{
                                             ?>

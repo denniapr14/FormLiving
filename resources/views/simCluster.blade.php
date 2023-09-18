@@ -155,7 +155,7 @@
 
 
 
-                                            var data = {!! json_encode($rumah) !!};
+                                            var data = {!! json_encode($rumahAll) !!};
                                             $(document).ready(function() {
                                                 data.forEach(function(item) {
                                                     var block = item.blok;
@@ -206,13 +206,6 @@
 
                                     </div>
 
-                                    <div class="float-right">
-                                        <button class="btn btn-outline-primary zoomIn col-md-1" id="plus"
-                                            onclick="zoom(1.5)">+</button>
-
-                                        <button class="btn btn-outline-primary zoomOut col-md-1" id="minus"
-                                            onclick="zoom(0.5)">-</button>
-                                    </div>
 
                                 </div>
 

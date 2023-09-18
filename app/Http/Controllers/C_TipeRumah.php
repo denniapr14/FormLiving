@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+
 use PDF;
 
 class C_TipeRumah extends Controller
@@ -57,7 +58,7 @@ class C_TipeRumah extends Controller
 
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
         $getTipeRumah = $this->tipeRumah->getGambarTipeRumahSelectCountGroupByWhere('rumah.id_rumah', '=', $decryptedID)->collect();
-        $getTipeRumah = $getTipeRumah->where('deleted_tr','false');
+        $getTipeRumah = $getTipeRumah->where('deleted_tr', 'false');
         $whereGambar = [
             // 'status_gr' => "aktif",
             'id_rumah' => $decryptedID,
@@ -338,9 +339,30 @@ class C_TipeRumah extends Controller
     {
         $decryptID = Crypt::decrypt($id_tipe);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $getTipe = $this->tipeRumah->firstTipeRumah('*', ['id_tipe_rumah' => $decryptID]);
 
 
         if (session()->has('user')) {
+            $imageTipe = "";
+            $filenameTipe = "";
+
+            if ($request->hasFile('gambarTipe')) {
+                foreach ($request->file('gambarTipe') as $image) {
+                    // Get the uploaded image file
+                    $destinationPath = public_path('/Home/images/tipe');
+
+                    // Generate a unique filename
+                    $filenameTipe = time() . '.' . $image->getClientOriginalExtension();
+
+                    // Resize and save the image
+                    $img = Image::make($image->path());
+                    $img->save($destinationPath . '/' . $filenameTipe);
+                }
+            } else {
+                $filenameTipe = $getTipe->img_tr;
+            }
+
+            // dd($imageTipe);
             $dataTipeRumah = [];
             $dataidTipeRumah = [];
             for ($i = 0; $i < count($request->tipe); ++$i) {
@@ -372,8 +394,10 @@ class C_TipeRumah extends Controller
                     'daya_listrik_tr' => $request->dayaListrik[$i],
                     'carport_tr' => $request->carport[$i],
                     'tangga_tr' => $request->tangga[$i],
+                    'img_tr'    => $filenameTipe,
                     'tgl_update_tr' => date('Y-m-d H:i:s'),
                 ];
+                // dd($dataTipeRumah);
 
                 DB::table('tipe_rumah')
                     ->where('id_tipe_rumah', $decryptID)
@@ -472,26 +496,25 @@ class C_TipeRumah extends Controller
 
         $filename = $getGambar->img_rumah;
         $jenis_img = trim($getGambar->jenis_img);
-        $path ="";
+        $path = "";
 
 
-        if ($request->file('img')!= null ) {
+        if ($request->file('img') != null) {
 
-                $img = $request->file('img');
+            $img = $request->file('img');
 
-                // Generate a unique filename based on the current timestamp and the original file extension
-                $filename =time() . '.' . $img->getClientOriginalExtension();
+            // Generate a unique filename based on the current timestamp and the original file extension
+            $filename = time() . '.' . $img->getClientOriginalExtension();
 
-                // Store the image in the 'images' folder under the 'public' disk
-                if ($jenis_img =="gambar") {
-                    # code...
-                    $path = 'Home/images/tipe/';
-                }else{
-                    $path = 'Home/images/denah/';
-                }
-                $img = Image::make($img);
-                $img->save(public_path($path . $filename));
-
+            // Store the image in the 'images' folder under the 'public' disk
+            if ($jenis_img == "gambar") {
+                # code...
+                $path = 'Home/images/tipe/';
+            } else {
+                $path = 'Home/images/denah/';
+            }
+            $img = Image::make($img);
+            $img->save(public_path($path . $filename));
         }
 
         $dataGambarTipe = [
@@ -505,11 +528,12 @@ class C_TipeRumah extends Controller
 
         return response()->json($dataGambarTipe);
     }
-    function deleteTipeRumahAction($id){
+    function deleteTipeRumahAction($id)
+    {
 
-            $decryptedID = Crypt::decrypt($id);
+        $decryptedID = Crypt::decrypt($id);
 
-        $getTipeRumah = $this->tipeRumah->firstTipeRumah('*',[
+        $getTipeRumah = $this->tipeRumah->firstTipeRumah('*', [
             'id_tipe_rumah' => $decryptedID
         ]);
 
@@ -518,8 +542,8 @@ class C_TipeRumah extends Controller
             'deleted_tr_at' => Carbon::now()
         ];
         DB::table('tipe_rumah')
-        ->where('id_tipe_rumah',$decryptedID)
-        ->update($dtDelete);
+            ->where('id_tipe_rumah', $decryptedID)
+            ->update($dtDelete);
         return redirect()->back()->with('success', 'Data tipe rumah telah berhasil dihapus');
     }
 }
