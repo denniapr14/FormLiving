@@ -6,7 +6,8 @@
 @section('body', '')
 
 @section('content')
-
+    <script src="{{ url('Dashboard') }}/js/jquery.min.js"></script>
+    <script src="{{ url('Dashboard') }}/js/svg-pan-zoom.js"></script>
     <style>
         .collapsible {
             border: 1px solid #ccc;
@@ -32,6 +33,51 @@
             border-radius: 15px;
 
 
+        }
+
+        .map {
+            width: 100%;
+            height: 600px;
+
+        }
+
+        .zoomIn {
+            position: absolute;
+            z-index: 2;
+            top: 550px;
+            right: 50px;
+        }
+
+        .zoomOut {
+            position: absolute;
+            z-index: 2;
+            top: 620px;
+            right: 50px;
+        }
+        @media(max-width: 576px){
+            .map {
+                width: 100%;
+                height: 600px;
+
+            }
+            svg{
+                width: 100%;
+                height: 300px;
+            }
+
+            .zoomIn {
+                position: absolute;
+                z-index: 2;
+                top: 550px;
+                right: 50px;
+            }
+
+            .zoomOut {
+                position: absolute;
+                z-index: 2;
+                top: 620px;
+                right: 50px;
+            }
         }
     </style>
     <div class="cluster">
@@ -79,106 +125,145 @@
                     Pilih Cluster
                 </h2>
 
-                <div>
-                    <div class="content__row">
-                        @if ($rumahAll != null && $rumahAll != '')
-                            @php
+                <div class="content__row">
+                    @if ($rumah != null && $rumah != '')
+                        @php
 
-                                $fileSVG = 'views/Greenland.svg';
-                            @endphp
-                            <div class="content__row mb-3">
-                                <div class="card__box">
-                                    <div class="card__header">
+                            $fileSVG = 'views/Greenland.svg';
+                        @endphp
+                        <div class="content__row mb-3">
+                            <div class="card__box">
+                                <div class="card__header">
+                                    <div class="card__title">
+                                        <i class="bi bi-map"></i>
+                                        <span>Site Plan</span>
 
-
-                                    </div>
-                                    <div class="" style="width: 100%">
-
-                                        <div class="map svg-container"
-                                            style="background-color: white ;
-
-                                        ">
-
-                                            {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
-                                            {{-- @include('map.svg') --}}
-                                            {!! file_get_contents(resource_path($fileSVG)) !!}
-                                            <script>
-                                                var svg = document.getElementById('Layer_1');
-
-
-                                                function zoom(scale) {
-
-                                                    svg.setAttribute('transform', 'scale(' + scale + ')');
-                                                }
-
-                                                var mouseX = 0;
-
-
-                                                var data = {!! json_encode($rumahAll) !!};
-                                                $(document).ready(function() {
-                                                    data.forEach(function(item) {
-                                                        var block = item.blok;
-                                                        var nomor = item.nomor;
-                                                        var blockNomor = block + "-" + nomor;
-                                                        var idrumah = document.getElementById(blockNomor);
-
-                                                        {{--  console.log("Block-Nomor:", blockNomor);
-                                                        console.log("Status:", item.status);
-                                                        console.log("Color:", color(item.status)); // Check color function output  --}}
-
-                                                        if (idrumah) {
-                                                            idrumah.style.fill = color(item.status);
-                                                            idrumah.setAttribute('fill', color(item.status));
-                                                        } else {
-                                                            console.log("Element not found:", blockNomor);
-                                                        }
-                                                    });
-                                                });
-
-
-                                                function color(stat) {
-                                                    var iro = 'warnaa';
-                                                    switch (stat) {
-                                                        case 'Available':
-                                                            iro = '#44bb55';
-                                                            break;
-                                                        case 'Keep':
-                                                            iro = '#ff7777';
-                                                            break;
-                                                        case 'Sold':
-                                                            iro = '#ff7777';
-                                                            break;
-                                                        case 'onProgress':
-                                                            iro = '#ff7777';
-                                                            break;
-                                                        case 'Undeveloped':
-                                                            iro = 'gray';
-                                                        case 'Hold':
-                                                            iro = '#ff7777';
-                                                            break;
-                                                    }
-                                                    return iro;
-                                                }
-                                            </script>
-                                            {{--  <div class="control">
-                                                <div class="zoom in">
-                                                    <img src="{{ asset('Home') }}/images/ic-zoom-in.png" alt="">
-                                                </div>
-                                                <div class="zoom">
-                                                    <img src="{{ asset('Home') }}/images/ic-zoom-out.png" alt="">
-                                                </div>
-                                            </div>  --}}
-
-
-                                        </div>
-                                        {{--  <button onclick="zoom(1.5)">Zoom in</button>
-                                        <button onclick="zoom(0.5)">Zoom out</button>  --}}
                                     </div>
 
                                 </div>
+                                <div class="table-responsive">
+
+                                    <div class="map svg-container"
+                                        style="background-color: white ;width: 100%;
+                                    ">
+
+                                        {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
+                                        {{-- @include('map.svg') --}}
+                                        {!! file_get_contents(resource_path($fileSVG)) !!}
+                                        <script>
+                                            var svg = document.getElementById('Layer_1');
+
+
+
+                                            var data = {!! json_encode($rumah) !!};
+                                            $(document).ready(function() {
+                                                data.forEach(function(item) {
+                                                    var block = item.blok;
+                                                    var nomor = item.nomor;
+                                                    var blockNomor = block + "-" + nomor;
+                                                    var idrumah = document.getElementById(blockNomor);
+
+                                                    {{--  console.log("Block-Nomor:", blockNomor);
+                                                    console.log("Status:", item.status);
+                                                    console.log("Color:", color(item.status)); // Check color function output  --}}
+
+                                                    if (idrumah) {
+                                                        idrumah.style.fill = color(item.status);
+                                                        idrumah.setAttribute('fill', color(item.status));
+                                                    } else {
+                                                        console.log("Element not found:", blockNomor);
+                                                    }
+                                                });
+                                            });
+
+
+                                            function color(stat) {
+                                                var iro = 'warnaa';
+                                                switch (stat) {
+                                                    case 'Available':
+                                                        iro = '#44bb55';
+                                                        break;
+                                                    case 'Keep':
+                                                        iro = '#f5fcb6';
+                                                        break;
+                                                    case 'Sold':
+                                                        iro = '#ff7777';
+                                                        break;
+                                                    case 'onProgress':
+                                                        iro = '#f5fcb6';
+                                                        break;
+                                                    case 'Undeveloped':
+                                                        iro = 'gray';
+                                                    case 'Hold':
+                                                        iro = '#ff7777';
+                                                        break;
+                                                }
+                                                return iro;
+                                            }
+                                        </script>
+
+
+
+                                    </div>
+
+                                    <div class="float-right">
+                                        <button class="btn btn-outline-primary zoomIn col-md-1" id="plus"
+                                            onclick="zoom(1.5)">+</button>
+
+                                        <button class="btn btn-outline-primary zoomOut col-md-1" id="minus"
+                                            onclick="zoom(0.5)">-</button>
+                                    </div>
+
+                                </div>
+
+                                <script>
+                                    var svg = document.querySelector('.svg-container > svg');
+                                    var currentScale = 1;
+                                    var maxZoom = 2;
+                                    var isPanning = true;
+                                    var panStartX, panStartY, panTranslateX, panTranslateY;
+
+                                    function zoom(scale) {
+                                        currentScale *= scale;
+
+                                        // Limit the zoom to the defined maximum
+                                        if (currentScale > maxZoom) {
+                                            currentScale = maxZoom;
+                                        }
+
+                                        svg.style.transform = 'scale(' + currentScale + ')';
+                                    }
+
+
+
+
+                                    window.onload = function() {
+                                        var panZoomInstance = svgPanZoom('#map', {
+                                            zoomEnabled: true,
+                                            controlIconsEnabled: false, // Disable default control icons
+                                            fit: true,
+                                            center: true,
+                                            minZoom: 0.5,
+                                            maxZoom: 10,
+                                            refreshRate: 'auto',
+                                        });
+                                        var controlElement = document.querySelector('#svg-pan-zoom-reset-pan-zoom');
+
+                                        // Hide the control element by setting its display property to 'none'
+                                        controlElement.style.display = 'none';
+                                        controlElement.hide();
+
+                                        var customZoomInButton = document.getElementById('plus');
+                                        var customZoomOutButton = document.getElementById('minus');
+
+                                        // Add click event listeners for your custom buttons
+
+                                    };
+                                </script>
+
                             </div>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
                 {{-- <div class="row">
                 @foreach ($cluster as $cluster)
@@ -231,11 +316,12 @@
                                                 <a href="{{ route('simulationTipe', $home->id_rumah) }}">
                                                     <div class="item">
                                                         <div class="item-image">
-                                                            @if ($home->nama_img != null)
+                                                            @if ($home->img_rumah != null)
                                                                 <img src="{{ asset('Home') }}/images/rumah/{{ $home->img_rumah }}"
                                                                     alt="">
                                                             @else
-                                                                <img src="{{ asset('Home') }}/images/60.jpg" alt="">
+                                                                <img src="{{ asset('Home') }}/images/60.jpg"
+                                                                    alt="">
                                                             @endif
                                                         </div>
                                                         <div class="item-title">{{ $home->blok }} - {{ $home->nomor }}
@@ -275,5 +361,6 @@
             });
         });
     </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 @endsection

@@ -21,7 +21,7 @@
                 <div class="card__header">
                     <div class="card__title">
 
-                        <a href="{{ url()->previous() }}" class="btn-fd-icon-outline " style="height: 40px;width: 50px"> <i class="bi bi-arrow-left"></i></a>
+                        <a href="{{  route('tipeRumah.admin',[$getProjek->nama_projek,Crypt::encrypt($getTipeRumah->id_rumah)] ) }}" class="btn-fd-icon-outline " style="height: 40px;width: 50px"> <i class="bi bi-arrow-left"></i></a>
                         <h4>   Ubah Tipe Rumah {{ $getTipeRumah->jenis_tr }} </h4>
 
                     </div>
@@ -35,32 +35,33 @@
                         readonly class="form form-control">
                     <div class="form-group">
                         {{-- {{ $getTipeRumah->id_tipe_rumah }} --}}
+                        <label for="">Tipe Rumah</label>
                         <input type="text" name="tipe[]" value="{{ $getTipeRumah->jenis_tr }}" id=""
                             class="form-control" placeholder="Masukan Tipe Rumah" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
-
+                        <label for="">Luas Bangunan</label>
                         <input type="text" name="luasBangunan[]" value="{{ $getTipeRumah->luas_bangunan_tr }}"
                             id="" class="form-control" placeholder="Masukan Luas Bangunan"
                             aria-describedby="helpId">
                     </div>
                     <div class="form-group">
-
+                        <label for="">Jumlah Kamar Mandi</label>
                         <input type="number" name="kamarMandi[]" id="" value="{{ $getTipeRumah->kmr_mandi_tr }}"
                             class="form-control" placeholder="Masukan Jumlah Kamar Mandi" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
-
+                        <label for="">Jumlah Kamar Tidur</label>
                         <input type="number" name="kamarTidur[]" id="" value="{{ $getTipeRumah->kmr_tidur_tr }}"
                             class="form-control" placeholder="Masukan Jumlah Kamar Tidur" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
-
+                        <label for="">Harga</label>
                         <input type="number" name="harga[]" id="" value="{{ $getTipeRumah->harga_tr }}"
                             class="form-control" placeholder="Masukan Harga" aria-describedby="helpId">
                     </div>
                     <div class="form-group">
-
+                        <label for="">Harga Perkiraan</label>
                         <input type="text" name="hargaText[]" id="" class="form-control"
                             placeholder="Masukan Harga Perkiraan" value="{{ $getTipeRumah->harga_text_tr }}"
                             aria-describedby="helpId">
@@ -69,139 +70,140 @@
                     <br>
                     <h4>Detail Tipe Rumah</h4>
                     <div class="form-group">
-
+                        <label for="">Pondasi</label>
                         <input type="text" name="pondasi[]" id="" value="{{ $getTipeRumah->pondasi_tr }}"
                             class="form-control" placeholder="Masukan Pondasi" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Struktur Bangunan</label>
                         <input type="text" name="struktur[]" value="{{ $getTipeRumah->struktur_tr }}" id=""
                             class="form-control" placeholder="Masukan Struktur Bangunan" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Dinding Dalam</label>
                         <input type="text" name="dindingDalam[]" id=""
                             value="{{ $getTipeRumah->dinding_dlm_tr }}" class="form-control"
                             placeholder="Masukan Dinding Dalam" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Dinding Luar</label>
                         <input type="text" name="dindingLuar[]" id=""
                             value="{{ $getTipeRumah->dinding_luar_tr }}" class="form-control"
                             placeholder="Masukan Dinding Luar" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Dinding Kamar Mandi</label>
                         <input type="text" name="dindingKamarMandi[]" id="" class="form-control"
                             value="{{ $getTipeRumah->dinding_kmr_mnd_tr }}" placeholder="Masukan Dinding Kamar Mandi"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Dinding Meja Dapur</label>
                         <input type="text" name="dindingMejaDapur[]" id="" class="form-control"
                             value="{{ $getTipeRumah->dd_meja_dapur_tr }}" placeholder="Masukan Dinding Meja Dapur"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Lantai Ruang Tidur</label>
                         <input type="text" name="lantaiRuangTidur[]" id="" class="form-control"
                             value="{{ $getTipeRumah->lt_ruang_tidur_tr }}" placeholder="Masukan Lantai Ruang Tidur"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Lantai Ruang Keluarga</label>
                         <input type="text" name="lantaiRuangKeluarga[]" id="" class="form-control"
                             value="{{ $getTipeRumah->lt_ruang_keluarga_tr }}" placeholder="Masukan Lantai Ruang Keluarga"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Lantai Kamar Mandi Utama</label>
                         <input type="text" name="lantaiKamarMandiUtama[]" id="" class="form-control"
                             value="{{ $getTipeRumah->lt_kmr_mnd_utama_tr }}"
                             placeholder="Masukan Lantai Kamar Mandi Utama" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Lantai Teras Utama</label>
                         <input type="text" name="lantaiTerasUtama[]" id="" class="form-control"
                             value="{{ $getTipeRumah->lt_teras_utama_tr }}" placeholder="Masukan Lantai Teras Utama"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Rangka Atap</label>
                         <input type="text" name="rangkaAtap[]" id="" class="form-control"
                             value="{{ $getTipeRumah->rangka_atap_tr }}" placeholder="Masukan Rangka Atap"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Penutup Atap</label>
                         <input type="text" name="penutupAtap[]" id="" class="form-control"
                             value="{{ $getTipeRumah->penutup_atap }}" placeholder="Masukan Pentutup Atap"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Kusen</label>
                         <input type="text" name="kusen[]" id="" class="form-control"
                             placeholder="Masukan Kusen" value="{{ $getTipeRumah->kusen_tr }}" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
+                        <label for="">Daun Pintu</label>
                         <input type="text" name="daunPintu[]" id="" class="form-control"
                             placeholder="Masukan Daun Pintu" value="{{ $getTipeRumah->daun_pintu_tr }}"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="Sanitary"></label>
                         <input type="text" name="sanitary[]" value="{{ $getTipeRumah->sanitary_tr }}" id=""
                             class="form-control" placeholder="Masukan sanitary" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Plafon Dalam</label>
                         <input type="text" name="plafonDalam[]" id="" class="form-control"
                             value="{{ $getTipeRumah->plafon_dlm_tr }}" placeholder="Masukan Plafon Dalam"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Handle</label>
                         <input type="text" name="handle[]" id="" value="{{ $getTipeRumah->handle_tr }}"
                             class="form-control" placeholder="Masukan Handle" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Lighting</label>
                         <input type="text" name="lighting[]" id="" value="{{ $getTipeRumah->lighting_tr }}"
                             class="form-control" placeholder="Masukan Lighting " aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Daya Listrik</label>
                         <input type="text" name="dayaListrik[]" id="" class="form-control"
                             value="{{ $getTipeRumah->daya_listrik_tr }}" placeholder="Masukan Daya Listrik"
                             aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Carport</label>
                         <input type="text" name="carport[]" id="" value="{{ $getTipeRumah->carport_tr }}"
                             class="form-control" placeholder="Masukan Carport" aria-describedby="helpId">
 
                     </div>
                     <div class="form-group">
-
+                        <label for="">Tangga</label>
                         <input type="text" name="tangga[]" id="" value="{{ $getTipeRumah->tangga_tr }}"
                             class="form-control" placeholder="Masukan Tangga" aria-describedby="helpId">
 
@@ -301,6 +303,7 @@
                     <br>
 
                     <div id="fileInput0">
+                        <label for="">Gambar Tipe Rumah</label><br>
                         <label for="fileInput">Select a file:</label>
                         <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
                         <input type="file" id="fileInput" name="fileInput[]">

@@ -24,7 +24,7 @@
                 <br>
                 <div class="card__header">
                     <div class="card__title">
-                        <a href="{{ url()->previous() }}" class="btn-fd-icon-outline" style="height: 40px; width: 50px">
+                        <a href="{{  route('rumah.admin', $getProjek->nama_projek)  }}" class="btn-fd-icon-outline" style="height: 40px; width: 50px">
                             <i class="bi bi-arrow-left"></i></a> &nbsp;
                         <i class="bi bi-clipboard2-plus"></i>
                         <span>Tipe Rumah {{ $getRumah->nama_cluster }} / {{ $getRumah->blok }} - {{ $getRumah->nomor }}

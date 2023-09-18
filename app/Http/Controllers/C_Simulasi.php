@@ -82,13 +82,7 @@ class C_Simulasi extends Controller
             ]
         );
         $rumahAll = $this->rumah->getRumahAll();
-        $rumah = $this->rumah->getRumahSelectJoinClusterProjek(
-            '*',
-            [
-                'rumah.id_projek' => 1,
-                'rumah.status' => 'Available',
-            ]
-        );
+        $rumah = $this->rumah->getRumahProjekWhereAll('projek.nama_projek', '=', "Greenland");
 
         // session check untuk user
         if (session()->has('user')) {
@@ -293,7 +287,8 @@ class C_Simulasi extends Controller
             // response()->json('hasilSess');
             return redirect('/login')->with('error', 'You not sign in or sign up!');
         }
-
+        // $promo = $this->promo->firstPromoDataPelanggan($id_rumah,"F28SP01");
+        // dd($promo);
         $tipeRumah = $this->gambarRumah->firstGambarRumahJoinTipeRumahGroupBy(
             '*',
             [
@@ -518,6 +513,7 @@ class C_Simulasi extends Controller
             ],
             'tipe_rumah.id_tipe_rumah'
         );
+
         $rumah = $this->rumah->firstRumahWhereJoinClusterArr('*', [
             'status' => 'available',
             'rumah.id_rumah' => $id_rumah,
@@ -662,9 +658,10 @@ class C_Simulasi extends Controller
         }
     }
 
-    public function FindKuponSpesial($id_rumah, $id_tipe, $id_formulir, $jenis, $kode_promo)
+    public function FindKuponSpesial(Request $request,$id_rumah,$tipe)
     {
-        $promo = $this->promo->firstPromoDataPelanggan($kode_promo);
+        $kodePromo = $request->input('kodePromo');
+        $promo = $this->promo->firstPromoDataPelanggan($id_rumah,$kodePromo);
         // dd($promo);
         // die();
         return response()->json($promo);

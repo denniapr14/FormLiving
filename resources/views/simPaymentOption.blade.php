@@ -127,7 +127,7 @@
                             </div>
 
                             <div class="col-12 col-lg-8 right-column order-3">
-                                <div class="card" >
+                                <div class="card">
                                     <div class="card-header" style="background-color: #198754; color: white;">
                                         <label for="gender" class="form-label">Pakai Promo</label>
                                     </div>
@@ -161,7 +161,7 @@
                                 <br>
                                 <br>
 
-{{--  =================================================================================================================================================  --}}
+                                {{--  =================================================================================================================================================  --}}
 
                                 {{--  KPR --}}
                                 <div class="collapsible">
@@ -187,8 +187,8 @@
                                                     <div class="">
                                                         <div class="form-group">
 
-                                                            <input type="text" name="persentase" id="persentase" class="form form-control"
-                                                                value="10">
+                                                            <input type="text" name="persentase" id="persentase"
+                                                                class="form form-control" value="10">
                                                             <small id="errorPersentase" style="color: red">Persentase
                                                                 Minimal 10%</small>
                                                         </div>
@@ -197,8 +197,8 @@
                                                     <div class="">
                                                         <div class="form-group">
 
-                                                            <input type="number" value="1" readonly hidden class="form form-control" id="sukuBunga"
-                                                                value="">
+                                                            <input type="number" value="1" readonly hidden
+                                                                class="form form-control" id="sukuBunga" value="">
 
                                                         </div>
                                                     </div>
@@ -209,25 +209,32 @@
                                                     <div class="">
                                                         <div class="form-group">
 
-                                                            <input type="text" class="form form-control" id="jumlah"
-                                                                readonly value="{{ $tipeRumah->harga_tr }}">
+                                                            <input type="text" class="form form-control"
+                                                                id="jumlah" readonly
+                                                                value="{{ $tipeRumah->harga_tr }}">
 
                                                         </div>
                                                     </div>
 
-<br>
+                                                    <br>
+                                                    @php
+                                                        $cicilan = 7;
+                                                    @endphp
                                                     @if ($rumah->status_stock == 'Inden')
                                                         <div class="card-shadow">
                                                             <label for="">Cicilan Uang Muka</label>
                                                         </div>
                                                         <div class="">
                                                             <div class="form-group">
-                                                                <select name="cicilanUM" id="cicilanUM" required class="form-control">
-                                                                    <option value="" selected>--Pilih Cicilan Uang Muka--
+                                                                <select name="cicilanUM" id="cicilanUM" required
+                                                                    class="form-control">
+                                                                    <option value="" selected>--Pilih Cicilan Uang
+                                                                        Muka--
                                                                     </option>
-                                                                    @for ($i = 1; $i < 7; $i++)
-                                                                        <option value="{{ $i }}">{{ $i }} kali
-                                                                            </option>
+                                                                    @for ($i = 1; $i < $cicilan; $i++)
+                                                                        <option value="{{ $i }}">
+                                                                            {{ $i }} kali
+                                                                        </option>
                                                                     @endfor
                                                                 </select>
 
@@ -235,9 +242,10 @@
                                                             </div>
                                                         </div>
                                                     @else
-                                                    <select name="cicilanUM" id="cicilanUM" hidden required class="form-control">
-                                                        <option value="1">1</option>
-                                                    </select>
+                                                        <select name="cicilanUM" id="cicilanUM" hidden required
+                                                            class="form-control">
+                                                            <option value="1">1</option>
+                                                        </select>
 
                                                     @endif
                                                     <div class="btn-groups">
@@ -268,7 +276,7 @@
                                         </div>
                                     </div>
                                 </div>
-{{--  =================================================================================================================================================  --}}
+                                {{--  =================================================================================================================================================  --}}
 
                                 {{--  CICILAN  --}}
                                 <div class="collapsible">
@@ -283,35 +291,35 @@
                                                     method="POST">
                                                     @csrf
                                                     <div class="simulation-price">
-                                                        <input type="text" name="jenis" value="Cicilan" readonly hidden id="">
+                                                        <input type="text" name="jenis" value="Cicilan" readonly
+                                                            hidden id="">
 
-                                                            <div class="form-group card-shadow">
-                                                                <label for="">Booking Fee</label>
-                                                                Rp{{ rupiah(10000000) }}
-                                                            </div>
-                                                            <br>
-                                                            @for ($i = 1; $i < 9; $i++)
-                                                                <?php
-                                                                $thn = ($tipeRumah->harga_tr - 10000000) / $i;
+                                                        <div class="form-group card-shadow">
+                                                            <label for="">Booking Fee</label>
+                                                            Rp{{ rupiah(10000000) }}
+                                                        </div>
+                                                        <br>
+                                                        @for ($i = 1; $i <= 8; $i++)
+                                                            <?php
+                                                            $thn = ($tipeRumah->harga_tr - 10000000) / $i;
 
-                                                                ?>
+                                                            ?>
 
-                                                                <div class="collapse-item">
-                                                                    <div class="card-shadow"
-                                                                        >
-                                                                        <input type="radio" id="age1"
-                                                                                    name="cicilan"
-                                                                                    value="{{ $i }}">
-                                                                                <label class="form-check-label">
-                                                                                    Cicilan {{ $i }} bulan dengan cicilan Rp {{ rupiah($thn) }} per bulan
+                                                            <div class="collapse-item" id="cicilan">
+                                                                <div class="card-shadow">
+                                                                    <input type="radio" id="age1" name="cicilan"
+                                                                        value="{{ $i }}">
+                                                                    <label class="form-check-label">
+                                                                        Cicilan {{ $i }} bulan dengan cicilan Rp
+                                                                        {{ rupiah($thn) }} per bulan
 
-                                                                                </label>
-
-                                                                    </div>
+                                                                    </label>
 
                                                                 </div>
-                                                                <br>
-                                                            @endfor
+
+                                                            </div>
+                                                            <br>
+                                                        @endfor
 
 
                                                     </div>
@@ -320,13 +328,12 @@
                                                         <label for="">Jumlah harga</label>
                                                     </div>
 
-                                                        <div class="">
-                                                            <input type="text" readonly
-                                                                class="form-control card-shadow" name="jumlah"
-                                                                id="jumlahHarga" aria-describedby="helpId" placeholder=""
-                                                                onkeyup="getValue('jumlahHarga')"
-                                                                value="{{ rupiah($tipeRumah->harga_tr) }}">
-                                                        </div>
+                                                    <div class="">
+                                                        <input type="text" readonly class="form-control card-shadow"
+                                                            name="jumlah" id="jumlahHarga" aria-describedby="helpId"
+                                                            placeholder="" onkeyup="getValue('jumlahHarga')"
+                                                            value="{{ rupiah($tipeRumah->harga_tr) }}">
+                                                    </div>
 
                                                     <div class="btn-groups">
 
@@ -353,83 +360,84 @@
             </div>
         </div>
 
-{{------------------------------------------------------------------------------------------}}
-{{-- modal-popup promo --}}
-<div class="modal fade promo" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-        aria-hidden="true">
-        <div class="modal-dialog  modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body promo-modal">
-                    <h5 class="promo-title">
-                        Pakai Promo
-                    </h5>
-
-                    <div class="promo-input">
-                        <input type="text" class="form-control" name="promo" id="promo"
-                            placeholder="Masukkan kode promo">
-
-                        <a id="cariPromo" class="btn">Terapkan</a>
+        {{-- -------------------------------------------------------------------------------------- --}}
+        {{-- modal-popup promo --}}
+        <div class="modal fade promo" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog  modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <!-- STATE PROMO -->
-                    <div class=" d-block ">
+                    <div class="modal-body promo-modal">
+                        <h5 class="promo-title">
+                            Pakai Promo
+                        </h5>
 
-                        <h5 class="mb-4">Pilih Promo</h5>
+                        <div class="promo-input">
+                            <input type="text" class="form-control" name="promo" id="promo"
+                                placeholder="Masukkan kode promo">
 
-                        @if (empty($promoRumah))
-                            <h5>Promo Rumah</h5>
-                            Tidak ada promo Rumah
-                        @else
-                            <h5>Promo Rumah</h5>
-                            @foreach ($promoRumah as $promoRumah)
-                                <div class="promo-item ">
-                                    <div class="row ">
-                                        <div class="promo-icon col-md-1">
-                                            <img src="{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
-                                        </div>
-                                        <div class="promo-text col-md-8">
+                            <a id="cariPromo" class="btn">Terapkan</a>
+                        </div>
+                        <!-- STATE PROMO -->
+                        <div class=" d-block ">
 
-                                            <h6 id='keteranganPromo'>{{ $promoRumah->promo }}</h6>
-                                            <p>Berlaku hingga:
-                                                {{ date('d M Y', strtotime($promoRumah->tgl_berakhir)) }}
-                                            </p>
-                                            <div class="hemat">
-                                                <p class="light-grey-color">Anda bisa hemat
+                            <h5 class="mb-4">Pilih Promo</h5>
+
+                            @if (empty($promoRumah))
+                                <h5>Promo Rumah</h5>
+                                Tidak ada promo Rumah
+                            @else
+                                <h5>Promo Rumah</h5>
+                                @foreach ($promoRumah as $promoRumah)
+                                    <div class="promo-item ">
+                                        <div class="row ">
+                                            <div class="promo-icon col-md-1">
+                                                <img src="{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
+                                            </div>
+                                            <div class="promo-text col-md-8">
+
+                                                <h6 id='keteranganPromo'>{{ $promoRumah->promo }}</h6>
+                                                <p>Berlaku hingga:
+                                                    {{ date('d M Y', strtotime($promoRumah->tgl_berakhir)) }}
                                                 </p>
-                                                <h5>Rp.
-                                                    {{ rupiah($promoRumah->diskon_promo) }}
-                                                </h5>
+                                                <div class="hemat">
+                                                    <p class="light-grey-color">Anda bisa hemat
+                                                    </p>
+                                                    <h5>Rp.
+                                                        {{ rupiah($promoRumah->diskon_promo) }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="promo-button col-md-2">
+
+                                                <a class="promoCodeBtn btn btn-outline-success"
+                                                    data-promo-code="{{ $promoRumah->kode_promo }}"
+                                                    data-jumlah-promo="{{ $promoRumah->diskon_promo }}"
+                                                    data-promo="{{ $promoRumah->promo }}">{{ $promoRumah->kode_promo }}
+                                                </a>
                                             </div>
                                         </div>
-                                        <div class="promo-button col-md-2">
-
-                                            <a class="promoCodeBtn btn btn-outline-success"
-                                                data-promo-code="{{ $promoRumah->kode_promo }}"
-                                                data-jumlah-promo="{{ $promoRumah->diskon_promo}}"
-                                                data-promo="{{ $promoRumah->promo }}">{{ $promoRumah->kode_promo }} </a>
-                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        @endif
+                                @endforeach
+                            @endif
 
 
+
+                        </div>
+                        <!-- STATE NO PROMO -->
+                        <div class="no-promo text-center d-none">
+                            <img src="{{ asset('Home') }}/images/img-illustration4.png" class="w-100" alt="">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer promo-footer">
 
                     </div>
-                    <!-- STATE NO PROMO -->
-                    <div class="no-promo text-center d-none">
-                        <img src="{{ asset('Home') }}/images/img-illustration4.png" class="w-100" alt="">
-                    </div>
-                </div>
-
-                <div class="modal-footer promo-footer">
-
                 </div>
             </div>
         </div>
-    </div>
 
 
         <script>
@@ -463,7 +471,7 @@
                 }
             });
         </script>
-{{-- script find query promo selector --}}
+        {{-- script find query promo selector --}}
         <script>
             const promoCodeBtns = document.querySelectorAll(".promoCodeBtn");
             const selectedPromoCodeInput = document.getElementById("selectedPromoCode");
@@ -471,22 +479,177 @@
             promoCodeBtns.forEach((promoCodeBtn) => {
                 promoCodeBtn.addEventListener("click", () => {
                     const promoCode = promoCodeBtn.dataset.promoCode;
-                    const jmlPromo = promoCodeBtn.dataset.jumlah-promo;
-                    const promo = promoCodeBtn.dataset.promo;
+                    const promo = promoCodeBtn.dataset.promo; // Define 'promo' before using it
+                    const jmlPromo = promoCodeBtn.dataset.jumlahPromo;
+                    console.log(jmlPromo);
                     selectedPromoCodeInput.value = promoCode;
                     document.getElementById('textPromo').innerText = promo;
 
+                    if (jmlPromo != 0) {
+                        let jumlah = document.getElementById('jumlah');
+                        jumlah.value = {{ $tipeRumah->harga_tr }} - jmlPromo;
+
+                        document.getElementById('jumlahHarga').value = (
+                            {{ $tipeRumah->harga_tr }} - 10000000 - jmlPromo);
+
+                        var cicilanContainer = document.getElementById('cicilan'); // Use a unique ID
+                        if (cicilanContainer) {
+                            cicilanContainer.innerHTML = ''; // Clear the existing content
+                        }
+
+                        var total1 = ({{ $tipeRumah->harga_tr }} - 10000000 - jmlPromo);
+                        var formattedTotal1 = formatRupiah2(total1);
+                        var cicilanDiv1 = document.createElement('div');
+                        cicilanDiv1.className = 'collapse-item';
+
+                        cicilanDiv1.innerHTML = `
+                            <div class="card-shadow">
+                                <input type="radio" name="cicilan" value="1">
+                                <label class="form-check-label">
+                                    Cicilan 1 bulan dengan cicilan Rp ${formattedTotal1} per bulan
+                                </label>
+                            </div>
+                        `;
+                        cicilanContainer.appendChild(cicilanDiv1);
+
+                        for (var k = 2; k <= 8; k++) {
+                            var total = ({{ $tipeRumah->harga_tr }} - 10000000 - jmlPromo) / k;
+                            var formattedTotal = formatRupiah2(total);
+                            var cicilanDiv = document.createElement('div');
+                            cicilanDiv.className = 'collapse-item';
+
+                            cicilanDiv.innerHTML = `
+                                <div class="card-shadow">
+                                    <input type="radio" name="cicilan" value="${k}">
+                                    <label class="form-check-label">
+                                        Cicilan ${k} bulan dengan cicilan Rp ${formattedTotal} per bulan
+                                    </label>
+                                </div>
+                            `;
+
+                            cicilanContainer.appendChild(cicilanDiv);
+                        }
+                    }
+
                     $('#modelId').modal('toggle');
                     $('#modelId').modal('hide');
+                });
+            });
 
+        </script>
+
+        <script>
+            $('#cariPromo').click(function() {
+                var kodePromo = document.getElementById('promo').value;
+                var spaceAlert = document.getElementById('myAlert');
+
+                $.ajax({
+                    url: '{{ route('findKuponSpesial', [$tipeRumah->id_rumah, $tipeRumah->id_tipe]) }}',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        kodePromo: kodePromo
+                    },
+                    success: function(response) {
+                        var len = 1;
+                        var promo = "";
+                        console.log(response);
+                        if (response != null) {
+
+                            document.getElementById('textPromo').innerText = response.promo;
+                            document.getElementById('selectedPromoCode').value = kodePromo;
+                            for (var i = 0; i < len; i++) {
+                                spaceAlert.innerHTML = '<div class="alert alert-success">' + response.promo +
+                                    ' berhasil digunakan</div>';
+                                var selectElement = document.getElementById('cicilanUM');
+                                // Clear any existing options
+                                selectElement.innerHTML = '';
+
+                                // Create and append options based on the value of $cicilan
+                                if (response.extra_cicilan == "yes") {
+                                    for (var j = 1; j < response.jumlah_extra_cicilan + 1; j++) {
+                                        var option = document.createElement('option');
+                                        option.value = j;
+                                        option.text = j + ' kali';
+                                        selectElement.appendChild(option);
+                                    }
+                                }
+
+                                if (response.diskon_promo != 0) {
+                                    let jumlah = document.getElementById('jumlah');
+                                    jumlah.value = {{ $tipeRumah->harga_tr }} - response.diskon_promo;
+
+                                    document.getElementById('jumlahHarga').value = (
+                                        {{ $tipeRumah->harga_tr }} - 10000000 - response.diskon_promo);
+
+
+
+
+                                    // Remove the existing cicilan element
+                                    var cicilanContainer = document.getElementById(
+                                    'cicilan'); // Use a unique ID
+                                    if (cicilanContainer) {
+                                        cicilanContainer.innerHTML = ''; // Clear the existing content
+                                    }
+
+                                    var total1 = ({{ $tipeRumah->harga_tr }} - 10000000 - response
+                                        .diskon_promo);
+                                    var formattedTotal1 = formatRupiah2(total1);
+                                    var cicilanDiv1 = document.createElement('div');
+                                    cicilanDiv1.className = 'collapse-item';
+
+                                    cicilanDiv1.innerHTML = `
+                                        <div class="card-shadow">
+                                            <input type="radio" name="cicilan" value="1">
+                                            <label class="form-check-label">
+                                                Cicilan 1 bulan dengan cicilan Rp ${formattedTotal1} per bulan
+                                            </label>
+                                        </div>
+                                    `;
+                                    cicilanContainer.appendChild(cicilanDiv1);
+                                    console.log(total1);
+
+                                    for (var k = 2; k <= 8; k++) {
+                                        var total = ({{ $tipeRumah->harga_tr }} - 10000000 - response
+                                            .diskon_promo) / k;
+                                        var formattedTotal = formatRupiah2(total);
+                                        var cicilanDiv = document.createElement('div');
+                                        cicilanDiv.className = 'collapse-item';
+
+                                        cicilanDiv.innerHTML = `
+                                        <div class="card-shadow">
+                                            <input type="radio" name="cicilan" value="${k}">
+                                            <label class="form-check-label">
+                                                Cicilan ${k} bulan dengan cicilan Rp ${formattedTotal} per bulan
+                                            </label>
+                                        </div>
+                                    `;
+
+                                        cicilanContainer.appendChild(cicilanDiv);
+                                        console.log(total);
+                                    }
+
+                                }
+
+                            }
+
+
+                            $('#modelId').modal('hide');
+                        } else {
+                            spaceAlert.innerHTML = '<div class="alert alert-danger">Promo tidak ada</div>';
+                            $('#modelId').modal('hide');
+                        }
+
+
+
+                    }
                 });
             });
         </script>
-
-{{-- end script find query promo selector --}}
+        {{-- end script find query promo selector --}}
 
         <script>
-            function hitung(jumlah, uangmuka, sukuBunga, result, result2, result3, result4,cicilanUM ,sisaPengurangan) {
+            function hitung(jumlah, uangmuka, sukuBunga, result, result2, result3, result4, cicilanUM, sisaPengurangan) {
 
                 var jml = document.getElementById(jumlah).value;
                 jml = jml.replace(/\D/g, '');
@@ -496,9 +659,9 @@
                 var cicilanUM = document.getElementById(cicilanUM).value;
                 var totalPersentase = ({{ $tipeRumah->harga_tr }} * (um / 100))
                 var hasilCicilan;
-                if(cicilanUM != 1){
+                if (cicilanUM != 1) {
                     hasilCicilan = totalPersentase / cicilanUM;
-                }else{
+                } else {
                     hasilCicilan = totalPersentase / 1;
                 }
 
@@ -522,16 +685,18 @@
                 */
 
 
-                if(cicilanUM != 1){
-                    hasil.innerText = "Uang muka Rp "+ formatRupiah2(hasilCicilan)+" ("+um+"% dari Rp "+formatRupiah2(jml)+")";
-                    hasil2.innerText = "Cicilan "+cicilanUM+" kali"
-                    hasil3.innerText = "Harga cicilan uang muka Rp "+formatRupiah2(hasilCicilan)+" ("+formatRupiah2(totalPersentase)+" : "+ cicilanUM +")"
+                if (cicilanUM != 1) {
+                    hasil.innerText = "Uang muka Rp " + formatRupiah2(hasilCicilan) + " (" + um + "% dari Rp " + formatRupiah2(
+                        jml) + ")";
+                    hasil2.innerText = "Cicilan " + cicilanUM + " kali"
+                    hasil3.innerText = "Harga cicilan uang muka Rp " + formatRupiah2(hasilCicilan) + " (" + formatRupiah2(
+                        totalPersentase) + " : " + cicilanUM + ")"
 
-                    sisa.innerText = "Sisa Pembayaran KPR Rp " + formatRupiah2( perngurangan) ;
-                }else{
-                    hasil.innerText = "Uang Muka Rp "+formatRupiah2(hasilCicilan)
+                    sisa.innerText = "Sisa Pembayaran KPR Rp " + formatRupiah2(perngurangan);
+                } else {
+                    hasil.innerText = "Uang Muka Rp " + formatRupiah2(hasilCicilan)
 
-                    sisa.innerText = "Sisa Pembayaran KPR Rp " + formatRupiah2( perngurangan) ;
+                    sisa.innerText = "Sisa Pembayaran KPR Rp " + formatRupiah2(perngurangan);
                 }
 
                 document.getElementById('nextKPR').disabled = false;
@@ -591,50 +756,5 @@
             }
         </script>
 
-        <script>
-            {{--  cicilan = calculatePMT(perngurangan, skBunga, 60);
-            {{--  console.log(jml);
-            console.log(cicilan);  --}}
-            var hasilRupiah = formatRupiah2(cicilan);
-            cicilan2 = calculatePMT(perngurangan, skBunga, 120);
-            {{--  console.log(cicilan2);  --}}
-            var hasilRupiah2 = formatRupiah2(cicilan2);
-
-            cicilan3 = calculatePMT(perngurangan, skBunga, 180);
-            {{--  console.log(cicilan3);  --}}
-            var hasilRupiah3 = formatRupiah2(cicilan3);
-
-            cicilan4 = calculatePMT(perngurangan, skBunga, 240);
-            {{--  console.log(cicilan4);  --}}
-            var hasilRupiah4 = formatRupiah2(cicilan4);
-            var hasilSisa = formatRupiah2(perngurangan);
-            {{--  console.log(hasilRupiah);
-            console.log(hasilRupiah2);  --}}
-            {{--  var hasilCicilan = Math.round(parseInt((cicilan / 1000)) * 1000).toString(),
-                sisa = hasilCicilan.length % 3,
-                rupiah = hasilCicilan.substr(0, sisa),
-                ribuan = hasilCicilan.substr(sisa).match(/\d{3}/g);
-
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            cicilan2 = ((jml - um) * (sb / 100) * 20) / (20 * 12);
-            {{--  console.log(cicilan2);  --}}
-
-            var hasilCicilan2 = Math.round(parseInt((cicilan2 / 1000)) * 1000).toString(),
-                sisa2 = hasilCicilan2.length % 3,
-                rupiah2 = hasilCicilan2.substr(0, sisa2),
-                ribuan2 = hasilCicilan2.substr(sisa2).match(/\d{3}/g);
-
-            if (ribuan2) {
-                separator2 = sisa2 ? '.' : '';
-                rupiah2 += separator2 + ribuan2.join('.');
-            }
-            {{--  console.log(hasilCicilan);
-            console.log(hasilCicilan2);
-
-            console.log(rupiah2);   --}}  --}}
-        </script>
+        <script></script>
     @endsection

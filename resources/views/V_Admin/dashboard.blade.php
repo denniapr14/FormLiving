@@ -214,13 +214,13 @@
                                                 iro = '#44bb55';
                                                 break;
                                             case 'Keep':
-                                                iro = '#ff7777';
+                                                iro = '#f5fcb6';
                                                 break;
                                             case 'Sold':
                                                 iro = '#ff7777';
                                                 break;
                                             case 'onProgress':
-                                                iro = '#ff7777';
+                                                iro = '#f5fcb6';
                                                 break;
                                             case 'Undeveloped':
                                                 iro = 'gray';
