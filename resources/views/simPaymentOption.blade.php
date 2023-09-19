@@ -176,8 +176,10 @@
                                                     method="post">
                                                     @csrf
                                                     <div>
-                                                        <label for="">Booking Fee Rp. 10.000.000</label>
+                                                        <label for="">Booking Fee Rp. 10.000.000</label><br>
+                                                        <label for="" id="diskon1"></label>
                                                         <input type="text" name="jenis" readonly hidden value="KPR">
+
                                                     </div>
 
                                                     <br>
@@ -210,7 +212,7 @@
                                                         <div class="form-group">
 
                                                             <input type="text" class="form form-control"
-                                                                id="jumlah" readonly
+                                                                id="jumlah" name="jumlah" readonly
                                                                 value="{{ $tipeRumah->harga_tr }}">
 
                                                         </div>
@@ -248,6 +250,12 @@
                                                         </select>
 
                                                     @endif
+
+                                                    <div class="form-group">
+
+                                                      <input type="text" name="promo" id="kdPromo1" value="Tidak Ada Promo" hidden readonly class="form-control" placeholder="" aria-describedby="helpId">
+
+                                                    </div>
                                                     <div class="btn-groups">
                                                         <a type="button"
                                                             onclick="hitung('jumlah','persentase','sukuBunga','hasil','hasil2','hasil3','hasil4', 'cicilanUM','sisaPembayaran')"
@@ -299,6 +307,9 @@
                                                             Rp{{ rupiah(10000000) }}
                                                         </div>
                                                         <br>
+
+                                                        <label for="" id="diskon2"></label>
+                                                        <br>
                                                         @for ($i = 1; $i <= 8; $i++)
                                                             <?php
                                                             $thn = ($tipeRumah->harga_tr - 10000000) / $i;
@@ -323,7 +334,11 @@
 
 
                                                     </div>
+                                                    <div class="form-group">
 
+                                                        <input type="text" name="promo" id="kdPromo2" value="Tidak Ada Promo" hidden readonly class="form-control" placeholder="" aria-describedby="helpId">
+
+                                                      </div>
                                                     <div class="card-shadow">
                                                         <label for="">Jumlah harga</label>
                                                     </div>
@@ -484,7 +499,10 @@
                     console.log(jmlPromo);
                     selectedPromoCodeInput.value = promoCode;
                     document.getElementById('textPromo').innerText = promo;
-
+                    document.getElementById('kdPromo1').value = promoCode;
+                    document.getElementById('kdPromo2').value = promoCode;
+                    document.getElementById('diskon1').innerText = "Sudah dipotong Diskon : Rp. " + formatRupiah2(jmlPromo);
+                    document.getElementById('diskon2').innerText = "Sudah dipotong Diskon : Rp. " + formatRupiah2(jmlPromo);
                     if (jmlPromo != 0) {
                         let jumlah = document.getElementById('jumlah');
                         jumlah.value = {{ $tipeRumah->harga_tr }} - jmlPromo;
@@ -554,10 +572,14 @@
                         var len = 1;
                         var promo = "";
                         console.log(response);
-                        if (response != null) {
+                        if (response.promo != null) {
 
                             document.getElementById('textPromo').innerText = response.promo;
                             document.getElementById('selectedPromoCode').value = kodePromo;
+                            document.getElementById('kdPromo1').value = kodePromo;
+                            document.getElementById('kdPromo2').value = kodePromo;
+                            document.getElementById('diskon1').innerText = "Sudah dipotong Diskon : Rp. " + formatRupiah2(response.diskon_promo);
+                            document.getElementById('diskon2').innerText = "Sudah dipotong Diskon : Rp. " + formatRupiah2(response.diskon_promo);
                             for (var i = 0; i < len; i++) {
                                 spaceAlert.innerHTML = '<div class="alert alert-success">' + response.promo +
                                     ' berhasil digunakan</div>';
@@ -632,8 +654,6 @@
                                 }
 
                             }
-
-
                             $('#modelId').modal('hide');
                         } else {
                             spaceAlert.innerHTML = '<div class="alert alert-danger">Promo tidak ada</div>';
@@ -642,7 +662,11 @@
 
 
 
+                    },
+                    error: function(error) {
+                        console.log(error);
                     }
+
                 });
             });
         </script>
@@ -657,7 +681,8 @@
                 var um = document.getElementById(uangmuka).value;
                 var skBunga = document.getElementById(sukuBunga).value;
                 var cicilanUM = document.getElementById(cicilanUM).value;
-                var totalPersentase = ({{ $tipeRumah->harga_tr }} * (um / 100))
+                var totalPersentase = (jml * (um / 100));
+                console.log(totalPersentase);
                 var hasilCicilan;
                 if (cicilanUM != 1) {
                     hasilCicilan = totalPersentase / cicilanUM;

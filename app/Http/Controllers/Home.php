@@ -69,15 +69,15 @@ class Home extends Controller
     }
 
     public function housing($dataProjek)
-    {   
+    {
         $cluster1;
         if ($dataProjek == "Greenland") {
             $cluster1 = $this->clusterList->getRumahBaseProjekClusterCount($dataProjek);
         }else{
             $cluster1 = $this->clusterList->getCountRumahWithStatus($dataProjek);
         }
-       
-        
+
+
         $namaPage = ($dataProjek == "Greenland") ? 'housing' : 'housingKalm';
 
         if (!session()->has('guest') && !session()->has('user')) {
@@ -796,6 +796,7 @@ class Home extends Controller
         $userP = \App\Models\UserPelanggan::where([
             'username_plgn' => $request->username,
         ])->first();
+
         $userUA = DB::table('user_admin')
             ->where('username_ua', '=', $request->username)
             ->first();
@@ -803,8 +804,10 @@ class Home extends Controller
         $userEmail = \App\Models\UserPelanggan::where([
             'email_plgn' => $request->email,
         ])->first();
+
         $userUAEmail = DB::table('user_admin')
             ->where('email_ua', '=', $request->email)
+
             ->first();
 
         if (!empty($userP) && !empty($userUA)) {
@@ -868,19 +871,13 @@ class Home extends Controller
                 $dataInput
             );
 
-            $dataUserMenu =   [
-                'id_menu' => 1,
-                'id_user_admin' => $getIDUser,
-                'status_um' => 'aktif'
-            ];
+
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-            DB::table('user_menu')->insert(
-                $dataUserMenu
-            );
+
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );
@@ -903,19 +900,13 @@ class Home extends Controller
                 $dataInput
             );
 
-            $dataUserMenu =   [
-                'id_menu' => 1,
-                'id_user_admin' => $getIDUser,
-                'status_um' => 'aktif'
-            ];
+
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-            DB::table('user_menu')->insert(
-                $dataUserMenu
-            );
+
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );
@@ -938,19 +929,12 @@ class Home extends Controller
                 $dataInput
             );
 
-            $dataUserMenu =   [
-                'id_menu' => 1,
-                'id_user_admin' => $getIDUser,
-                'status_um' => 'aktif'
-            ];
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-            DB::table('user_menu')->insert(
-                $dataUserMenu
-            );
+
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );
@@ -3119,7 +3103,7 @@ class Home extends Controller
         if (!empty($fp->id_promo)) {
             $promo = DB::table('promo')
                 ->where('id_promo', '=', $fp->id_promo)
-                // ->where('tgl_aktif', '<=', NOW())    
+                // ->where('tgl_aktif', '<=', NOW())
 
                 ->first();
         } else {

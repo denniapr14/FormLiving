@@ -147,7 +147,7 @@
                     <div class="form-group">
                         <label for="">Penutup Atap</label>
                         <input type="text" name="penutupAtap[]" id="" class="form-control"
-                            value="{{ $getTipeRumah->penutup_atap }}" placeholder="Masukan Pentutup Atap"
+                            value="{{ $getTipeRumah->penutup_atap_tr }}" placeholder="Masukan Pentutup Atap"
                             aria-describedby="helpId">
 
                     </div>

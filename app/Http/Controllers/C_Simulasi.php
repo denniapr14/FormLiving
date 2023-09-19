@@ -369,8 +369,8 @@ class C_Simulasi extends Controller
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
                         'harga_awal' => (float) $tipeRumah->harga_tr,
-                        'total_harga' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'total_harga' => (float) $request->jumlah,
+                        'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)) - 10000000,
                         'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'cicilan_um' => $request->cicilanUM,
@@ -380,8 +380,8 @@ class C_Simulasi extends Controller
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
                         'harga_awal' => (float) $tipeRumah->harga_tr,
-                        'total_harga' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                        'total_harga' => (float) $request->jumlah,
+                        'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100))- 10000000,
                         'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                         'cicilan_um' => 1,
@@ -402,7 +402,7 @@ class C_Simulasi extends Controller
 
             $getIDKalkulator = $this->kalkulatorKPR->insertGetIDKalkulatorKPR($dataInputKalkulator);
 
-            return redirect()->route('simulasiPelanggan', [$id_rumah, $id_tipe, $getIDKalkulator, $request->jenis])->with('success', 'silahkan lanjutkan proses');
+            return redirect()->route('simulasiPelanggan', [$id_rumah, $id_tipe, $getIDKalkulator, $request->jenis, $request->promo])->with('success', 'silahkan lanjutkan proses');
             // dd($dataInputKalkulator);
 
             // dd($user);
@@ -422,7 +422,7 @@ class C_Simulasi extends Controller
         // code...
     }
 
-    public function SimDataPelanggan($id_rumah, $id_tipe, $id_kpr, $jenis)
+    public function SimDataPelanggan($id_rumah, $id_tipe, $id_kpr, $jenis, $promo)
     {
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -463,7 +463,8 @@ class C_Simulasi extends Controller
 
                 'promoRumah',
                 'getKKPR',
-                'jenis'
+                'jenis',
+                'promo'
             ));
         }
         if (session()->has('guest')) {
@@ -481,7 +482,8 @@ class C_Simulasi extends Controller
 
                 'promoRumah',
                 'getKKPR',
-                'jenis'
+                'jenis',
+                'promo'
             ));
         }
 
@@ -490,7 +492,7 @@ class C_Simulasi extends Controller
         // code...
     }
 
-    public function SimDataPelangganAction(Request $request, $id_rumah, $id_tipe, $id_kpr, $jenis)
+    public function SimDataPelangganAction(Request $request, $id_rumah, $id_tipe, $id_kpr, $jenis,$promo)
     {
         $tipeRumah = $this->gambarRumah->firstGambarRumahJoinTipeRumahGroupBy(
             '*',
@@ -571,7 +573,7 @@ class C_Simulasi extends Controller
                 $id = $this->userPelanggan->insertGetIDUserPelanggan($dataInput);
             }
 
-            return redirect()->route('simulasiSummary', [$id_rumah, $id_tipe, $id_kpr, $jenis, $id, $request->promo]);
+            return redirect()->route('simulasiSummary', [$id_rumah, $id_tipe, $id_kpr, $jenis, $id, $promo]);
 
             // dd($dataInput);
             // die();
@@ -800,35 +802,36 @@ class C_Simulasi extends Controller
                 // 'kelamin'   => 'required',
             ]);
             $dataInputDetail = '';
-            $kkpr = '';
 
-            if (!empty($promo)) {
-                $dataInputDetail = [
-                    'luas_tanah_kkpr' => $rumah->luas_tanah,
-                    'tipe_kkpr' => $tipeRumah->jenis_tr,
-                    'harga_awal' => (float) $tipeRumah->harga_tr,
-                    'total_diskon' => (float) $promo->diskon_promo,
+            // if (!empty($promo)) {
+            //     $dataInputDetail = [
+            //         'luas_tanah_kkpr' => $rumah->luas_tanah,
+            //         'tipe_kkpr' => $tipeRumah->jenis_tr,
+            //         'harga_awal' => (float) $tipeRumah->harga_tr,
+            //         'total_diskon' => (float) $promo->diskon_promo,
 
-                    'total_harga' => (float) $kkpr->total_harga - $promo->diskon_promo,
-                    'terbilang' => terbilang($tipeRumah->harga_tr - $promo->diskon_promo),
-                ];
-            }
-            if (empty($promo)) {
-                $dataInputDetail = [
-                    'luas_tanah_kkpr' => $rumah->luas_tanah,
-                    'tipe_kkpr' => $tipeRumah->jenis_tr,
-                    'harga_awal' => (float) $tipeRumah->harga_tr,
+            //         'total_harga' => (float) $kkpr->total_harga,
+            //         'terbilang' => terbilang($tipeRumah->harga_tr - $promo->diskon_promo),
+            //     ];
+            // }
+            // if (empty($promo)) {
+            //     $dataInputDetail = [
+            //         'luas_tanah_kkpr' => $rumah->luas_tanah,
+            //         'tipe_kkpr' => $tipeRumah->jenis_tr,
+            //         'harga_awal' => (float) $tipeRumah->harga_tr,
 
-                    'terbilang' => terbilang($tipeRumah->harga_tr),
-                ];
-            }
+            //         'terbilang' => terbilang($tipeRumah->harga_tr),
+            //     ];
+            // }
+            // $kkpr = '';
 
-            // dd($dataInputDetail);
-            DB::table('kalkulator_kpr')
-                ->where('id_kkpr', $id_kkpr)
-                ->update(
-                    $dataInputDetail
-                );
+            // // dd($dataInputDetail);
+            // DB::table('kalkulator_kpr')
+            //     ->where('id_kkpr', $id_kkpr)
+            //     ->update(
+            //         $dataInputDetail
+            //     );
+
             $kkpr = $this->kalkulatorKPR->firstKalkulatorKPRArr('*', [
                 'id_kkpr' => $id_kkpr,
             ]);
@@ -1099,65 +1102,65 @@ class C_Simulasi extends Controller
 
             // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
 
-            $pdf = \PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
-            // $pdf = PDF::loadView('mail.index');
-            $pdf->setPaper('F4', 'potrait');
-            // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
-            $pdf->render();
-            $pdfData = $pdf->output();
-            // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
-            // Storage::put($filename, $pdfData);
-            // dd($filename);
-            $path = './Home/pdf/';
-            $pdf->save($path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf');
-            $filename = $path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf';
+            // $pdf = \PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
+            // // $pdf = PDF::loadView('mail.index');
+            // $pdf->setPaper('F4', 'potrait');
+            // // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
+            // $pdf->render();
+            // $pdfData = $pdf->output();
+            // // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
+            // // Storage::put($filename, $pdfData);
+            // // dd($filename);
+            // $path = './Home/pdf/';
+            // $pdf->save($path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf');
+            // $filename = $path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf';
 
-            $dataEmail1 = [
-                'to' => $pelanggan->email_plgn,
-                'subject' => 'Form Living',
-                'body' => '',
-                'nama' => $pelanggan->nama_plgn,
-                'attachment' => $filename,
-            ];
-            $dataEmail2 = [
-                'to' => $user->email_ua,
-                'subject' => 'Form Living',
-                'body' => '',
-                'body' => '',
-                'nama' => $pelanggan->nama_plgn,
-                'attachment' => $filename,
-            ];
-            $dataEmail3 = null;
-            foreach ($accounting as $accounting) {
-                $dataEmail3 = [
-                    'to' => $accounting->email_ua,
-                    'subject' => 'Form Living',
-                    'body' => '',
-                    'body' => '',
-                    'nama' => $pelanggan->nama_plgn,
-                    'attachment' => $filename,
-                ];
-                try {
-                    // $MailAtt = ();
-                    // Mail::to($pelanggan->email_plgn)->send(new MailAttachment($dataEmail1, $template));
+            // $dataEmail1 = [
+            //     'to' => $pelanggan->email_plgn,
+            //     'subject' => 'Form Living',
+            //     'body' => '',
+            //     'nama' => $pelanggan->nama_plgn,
+            //     'attachment' => $filename,
+            // ];
+            // $dataEmail2 = [
+            //     'to' => $user->email_ua,
+            //     'subject' => 'Form Living',
+            //     'body' => '',
+            //     'body' => '',
+            //     'nama' => $pelanggan->nama_plgn,
+            //     'attachment' => $filename,
+            // ];
+            // $dataEmail3 = null;
+            // foreach ($accounting as $accounting) {
+            //     $dataEmail3 = [
+            //         'to' => $accounting->email_ua,
+            //         'subject' => 'Form Living',
+            //         'body' => '',
+            //         'body' => '',
+            //         'nama' => $pelanggan->nama_plgn,
+            //         'attachment' => $filename,
+            //     ];
+            //     try {
+            //         // $MailAtt = ();
+            //         // Mail::to($pelanggan->email_plgn)->send(new MailAttachment($dataEmail1, $template));
 
-                    \Mail::to($accounting->email_ua)->send(new MailAttachment($dataEmail3, $template));
-                } catch (Exception $e) {
-                    // return response()->json(['Sorry! Please try again latter']);
-                }
-            }
+            //         \Mail::to($accounting->email_ua)->send(new MailAttachment($dataEmail3, $template));
+            //     } catch (Exception $e) {
+            //         // return response()->json(['Sorry! Please try again latter']);
+            //     }
+            // }
 
-            // $template = 'mail.mailFP';
-            // $template2 = 'pdf.salesFP';
-            // MailNotify class that is extend from Mailable class.
-            try {
-                // $MailAtt = ();
-                \Mail::to($pelanggan->email_plgn)->send(new MailAttachment($dataEmail1, $template));
+            // // $template = 'mail.mailFP';
+            // // $template2 = 'pdf.salesFP';
+            // // MailNotify class that is extend from Mailable class.
+            // try {
+            //     // $MailAtt = ();
+            //     \Mail::to($pelanggan->email_plgn)->send(new MailAttachment($dataEmail1, $template));
 
-                \Mail::to($user->email_ua)->send(new MailAttachment($dataEmail2, $template));
-            } catch (Exception $e) {
-                // return response()->json(['Sorry! Please try again latter']);
-            }
+            //     \Mail::to($user->email_ua)->send(new MailAttachment($dataEmail2, $template));
+            // } catch (Exception $e) {
+            //     // return response()->json(['Sorry! Please try again latter']);
+            // }
 
             return redirect('/congratulation')->with('success', 'Data has been send!');
             // dd($user);
@@ -1185,7 +1188,7 @@ class C_Simulasi extends Controller
                     'harga_awal' => (float) $tipeRumah->harga_tr,
                     'total_diskon' => (float) $promo->diskon_promo,
 
-                    'total_harga' => (float) $tipeRumah->harga_tr - $promo->diskon_promo,
+                    'total_harga' => (float) $tipeRumah->harga_tr,
                     'terbilang' => terbilang($tipeRumah->harga_tr - $promo->diskon_promo),
                 ];
             }
@@ -1224,6 +1227,7 @@ class C_Simulasi extends Controller
                     'id_promo' => $promo->id_promo,
                     'id_sales' => session::get('user'),
                     'promo_fp' => $promo->keterangan,
+
                 ];
             }
             if (empty($promo)) {

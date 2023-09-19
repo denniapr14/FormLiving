@@ -101,7 +101,7 @@
 
                                 <br>
                                 <form
-                                    action="{{ route('simulasiPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $getKKPR->id_kpr, $jenis]) }}"
+                                    action="{{ route('simulasiPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $getKKPR->id_kpr, $jenis,$promo]) }}"
                                     method="POST">
                                     @csrf
                                     <div class="row form-order">
@@ -286,7 +286,7 @@
 
                                 <br>
                                 <form
-                                    action="{{ route('simulasiPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $getKKPR->id_kkpr, $jenis]) }}"
+                                    action="{{ route('simulasiPelanggan.action', [$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $getKKPR->id_kkpr, $jenis,$promo]) }}"
                                     method="POST">
                                     @csrf
 
@@ -477,31 +477,7 @@
                                         </div>
 
 
-                                        <div class="col-12 col-lg-6">
-                                            <div class="form-group">
-                                                <label for="gender" class="form-label">Pakai Promo</label>
 
-                                                <button type="button" id="openModal" class="btn btn-form"
-                                                    data-bs-toggle="modal" data-bs-target="#modelId">
-                                                    <div class="promo-text"><img
-                                                            src="{{ asset('Home') }}/images/ic-promo.png" alt="">
-                                                        <div id="textPromo">Pilih promo di sini</div>
-                                                    </div>
-                                                    <div><i class="bi-chevron-right"></i></div>
-                                                </button>
-                                                <br>
-                                                <div id="myAlert" role="alert">
-
-                                                </div>
-
-                                                <br>
-                                                <div class="form-group">
-                                                    <input type="text" name="promo" value="Tidak Ada Promo"
-                                                        id="selectedPromoCode" class="form-control" readonly>
-                                                </div>
-
-                                            </div>
-                                        </div>
                                         <div class="btn-groups">
                                             <a href="/simulation-detail-type/{{ $rumah->id_rumah }}/{{ $tipeRumah->id_tipe_rumah }}"
                                                 type="button" class="btn btn-grey">Kembali</a>
