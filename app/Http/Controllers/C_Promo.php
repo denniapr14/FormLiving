@@ -27,6 +27,8 @@ class C_Promo extends Controller
     public $userMenu;
     public $listPromo;
 
+    public $promo;
+
     public function __construct()
     {
         $this->userNotif = new UserNotif();
@@ -37,6 +39,7 @@ class C_Promo extends Controller
         $this->userProjek = new UserProjek();
         $this->userMenu = new UserMenu();
         $this->listPromo = new ListPromo();
+        $this->promo = new Promo();
     }
 
     public function Promo($projek)
@@ -121,7 +124,9 @@ class C_Promo extends Controller
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->where('status', '=', 'Available')
+            ->join('projek','rumah.id_projek','projek.id_projek')
+            ->where('rumah.status', '=', 'Available')
+            ->where('projek.nama_projek',"=",$projek)
             ->get();
 
         if (session()->has('user')) {
@@ -254,7 +259,7 @@ class C_Promo extends Controller
             ->get();
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-
+        dd("aaa");
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
@@ -282,20 +287,25 @@ class C_Promo extends Controller
                     break;
                 }
             }
-
+            $kodePromo = randomCode(4,$projek);
+            $getPromo = $this->promo->firstPromo('*',['kode_promo' => $kodePromo]);
+            if ($kodePromo == $getPromo->kode_promo) {
+                $kodePromo = randomCode(4,$projek);
+            }
+            dd($kodePromo);
             // if (!$foundMatchingMenu) {
             //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
             // }
 
-            return view(
-                'V_Admin.addPromo',
+            return view('V_Admin.addPromo',
                 compact(
                     'user',
                     'rumah2',
                     'rumah',
                     'projekUser',
                     'getProjek',
-                    'getUserMenu'
+                    'getUserMenu',
+                    'kodePromo'
                 )
             );
         } else {

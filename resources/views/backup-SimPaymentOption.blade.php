@@ -208,16 +208,12 @@
                                                     <div>
                                                         <label for="">Harga Rumah</label>
                                                     </div>
-                                                    @php
-
-                                                        $hargaTotal = $tipeRumah->harga_tr - $tipeRumah->harga_tr * (10 / 100);
-                                                    @endphp
                                                     <div class="">
                                                         <div class="form-group">
 
                                                             <input type="text" class="form form-control"
                                                                 id="jumlah" name="jumlah" readonly
-                                                                value="{{ $hargaTotal }}">
+                                                                value="{{ $tipeRumah->harga_tr }}">
 
                                                         </div>
                                                     </div>
@@ -265,7 +261,8 @@
                                                     <div class="btn-groups">
                                                         <a type="button"
                                                             onclick="hitung('jumlah','persentase','sukuBunga','hasil','hasil2','hasil3','hasil4', 'cicilanUM','sisaPembayaran')"
-                                                            id="hitungBtn" class="btn btn-primary">Hitung Simulasi</a>
+                                                            id="hitungBtn"
+                                                            class="btn btn-primary">Hitung Simulasi</a>
 
 
                                                     </div>
@@ -278,8 +275,7 @@
                                                         <h5 id="sisaPembayaran"></h5>
                                                     </div>
                                                     <div class="btn-groups">
-                                                        <button type="submit" type="button" id="nextKPR" disabled
-                                                            style="opacity: 10%"
+                                                        <button type="submit" type="button" id="nextKPR" disabled style="opacity: 10%"
                                                             class="btn btn-primary">Lanjutkan</button>
                                                     </div>
 
@@ -313,19 +309,17 @@
                                                             <label for="">Booking Fee</label>
                                                             Rp{{ rupiah(10000000) }}
                                                         </div>
+                                                        <br>
 
-                                                        <div class="card-shadow" id='cardDiskon2' style="display: none">
-                                                            <label for="" id="diskon2"></label>
-                                                        </div>
-
-                                                        <div class="collapse-item" id="cicilan">
+                                                        <label for="" id="diskon2"></label>
+                                                        <br>
                                                         @for ($i = 1; $i <= 8; $i++)
                                                             <?php
                                                             $thn = ($tipeRumah->harga_tr - 10000000) / $i;
 
                                                             ?>
 
-
+                                                            <div class="collapse-item" id="cicilan">
                                                                 <div class="card-shadow">
                                                                     <input type="radio" id="age1" name="cicilan"
                                                                         value="{{ $i }}">
@@ -337,10 +331,10 @@
 
                                                                 </div>
 
-
+                                                            </div>
                                                             <br>
                                                         @endfor
-                                                    </div>
+
 
                                                     </div>
                                                     <div class="form-group">
@@ -417,12 +411,12 @@
                             @else
                                 <h5>Promo Rumah</h5>
                                 @foreach ($promoRumah as $promoRumah)
-                                    <div class="promo-item" style="width: 100%">
-                                        <div class="row " style="width: 100%">
+                                    <div class="promo-item ">
+                                        <div class="row ">
                                             <div class="promo-icon col-md-1">
                                                 <img src="{{ asset('Home') }}/images/ic-promo.png" alt="Promo">
                                             </div>
-                                            <div class="promo-text col-md-7">
+                                            <div class="promo-text col-md-8">
 
                                                 <h6 id='keteranganPromo'>{{ $promoRumah->promo }}</h6>
                                                 <p>Berlaku hingga:
@@ -440,11 +434,7 @@
 
                                                 <a class="promoCodeBtn btn btn-outline-success"
                                                     data-promo-code="{{ $promoRumah->kode_promo }}"
-                                                    data-jenis-promo="{{ $promoRumah->jenis_promo }}"
-                                                    data-status-diskon="{{ $promoRumah->status_diskon }}"
                                                     data-jumlah-promo="{{ $promoRumah->diskon_promo }}"
-                                                    data-status-max-diskon="{{ $promoRumah->status_max_diskon }}"
-                                                    data-max-diskon="{{ $promoRumah->max_diskon }}"
                                                     data-promo="{{ $promoRumah->promo }}">{{ $promoRumah->kode_promo }}
                                                 </a>
                                             </div>
@@ -488,13 +478,12 @@
             const alertMessage = document.getElementById('errorPersentase');
             const uangMuka10 = {{ $tipeRumah->harga_tr }} * (10 / 100);
             const hargaRumah = document.getElementById('jumlah');
-            var uangMukaAsli = document.getElementById('persentase').value;
-            console.log(hargaRumah.value);
+
             valueInput.addEventListener('keyup', function() {
                 const enteredValue = parseInt(valueInput.value);
-                uangMukaAsli = enteredValue;
+
                 if (!isNaN(enteredValue)) {
-                    if (enteredValue >= uangMuka10 && enteredValue < {{ $tipeRumah->harga_tr }}) {
+                    if (enteredValue > uangMuka10 && enteredValue < {{ $tipeRumah->harga_tr }}) {
                         alertMessage.textContent = 'persentase uang muka sudah benar';
                         alertMessage.style.color = "green";
                         hargaRumah.value = {{ $tipeRumah->harga_tr }} - enteredValue;
@@ -521,110 +510,63 @@
 
             promoCodeBtns.forEach((promoCodeBtn) => {
                 promoCodeBtn.addEventListener("click", () => {
-                    {{--  const promoCode = promoCodeBtn.dataset.promoCode;
+                    const promoCode = promoCodeBtn.dataset.promoCode;
                     const promo = promoCodeBtn.dataset.promo; // Define 'promo' before using it
-                    const jmlPromo = promoCodeBtn.dataset.jumlahPromo;  --}}
-
-                    const promoCode = promoCodeBtn.getAttribute('data-promo-code');
-                    const jenisPromo = promoCodeBtn.getAttribute('data-jenis-promo');
-                    const statusDiskon = promoCodeBtn.getAttribute('data-status-diskon');
-                    const jumlahPromo = promoCodeBtn.getAttribute('data-jumlah-promo');
-                    const statusMaxDiskon = promoCodeBtn.getAttribute('data-status-max-diskon');
-                    const maxDiskon = promoCodeBtn.getAttribute('data-max-diskon');
-                    const promo = promoCodeBtn.getAttribute('data-promo');
-
-                    console.log(jenisPromo);
+                    const jmlPromo = promoCodeBtn.dataset.jumlahPromo;
+                    console.log(jmlPromo);
                     selectedPromoCodeInput.value = promoCode;
                     document.getElementById('textPromo').innerText = promo;
+                    document.getElementById('kdPromo1').value = promoCode;
+                    document.getElementById('kdPromo2').value = promoCode;
+                    document.getElementById('diskon1').innerText = "Sudah dipotong Diskon : Rp. " +
+                        formatRupiah2(jmlPromo);
+                    document.getElementById('diskon2').innerText = "Sudah dipotong Diskon : Rp. " +
+                        formatRupiah2(jmlPromo);
+                    if (jmlPromo != 0) {
+                        let jumlah = document.getElementById('jumlah');
+                        jumlah.value = {{ $tipeRumah->harga_tr }} - jmlPromo;
 
+                        document.getElementById('jumlahHarga').value = (
+                            {{ $tipeRumah->harga_tr }} - 10000000 - jmlPromo);
 
-
-                    if (jenisPromo == "KPR") {
-
-
-                        let totalDiskon;
-                        if (statusDiskon == 'persen' && jumlahPromo != 0) {
-                            let hasilPerhitunganUM = valueInput.value - (uangMukaAsli * (jumlahPromo / 100));
-
-                            if (response.status_max_diskon == "persen") {
-                                totalDiskon = {{ $tipeRumah->harga_tr }} * (maxDiskon / 100);
-                            } else {
-                                totalDiskon = maxDiskon;
-                            }
-                            if (totalDiskon >= maxDiskon) {
-                                totalDiskon = maxDiskon;
-                            }
-                            hargaRumah.value = {{ $tipeRumah->harga_tr }} - valueInput.value;
-
-                            valueInput.value = uangMukaAsli - hasilPerhitunganUM;
-                            valueInput.readOnly = true;
-                            alertMessage.textContent =
-                                "kamu mendapatkan promo uang muka sebesar : Rp " + formatRupiah2(
-                                    hasilPerhitunganUM);
-                            alertMessage.style.color = "green";
-                        }
-                        else if (statusDiskon == "rupiah" && jumlahPromo != 0) {
-                            let hasilPerhitunganUM = valueInput.value - jumlahPromo;
-                            if (hasilPerhitunganUM >= maxDiskon) {
-                                hasilPerhitunganUM = maxDiskon;
-                            }
-                            alertMessage.textContent =
-                            "kamu mendapatkan promo uang muka sebesar : Rp " + formatRupiah2(hasilPerhitunganUM);
-                            alertMessage.style.color = "green";
-                            console.log(hasilPerhitunganUM);
-                            hargaRumah.value = {{ $tipeRumah->harga_tr }} - valueInput.value;
-                            hasilPerhitunganUM = valueInput.value - jumlahPromo;
-                            valueInput.value = hasilPerhitunganUM;
-                            valueInput.readOnly = true;
-
-
-                        }
-                        // ...
-                    } else if (jenisPromo == "Cicilan") {
-                        let diskonCicilan = document.getElementById('diskon2');
-                        let diskonCard2 = document.getElementById('cardDiskon2');
-                        let totalDiskon;
-                        if (statusDiskon == "persen") {
-                            totalDiskon = {{ $tipeRumah->harga_tr }} * (jumlahPromo /
-                                100);
-                            if (response.status_max_diskon == "persen") {
-                                totalDiskon = {{ $tipeRumah->harga_tr }} * (maxDiskon /
-                                    100)
-                            } else {
-                                totalDiskon = maxDiskon;
-                            }
-                            if (totalDiskon >= maxDiskon) {
-                                totalDiskon = maxDiskon;
-                            }
-                            createCicilan(totalDiskon);
-                            diskonCicilan.textContent = "kamu mendapatkan promo sebesar : Rp " +
-                                formatRupiah2(totalDiskon);
-                            diskonCicilan.style.color = "green";
-                            diskonCard2.style.display = "block";
-
-                        } else if (statusDiskon == "rupiah") {
-                            totalDiskon = jumlahPromo;
-                            if (totalDiskon >= maxDiskon) {
-                                totalDiskon = maxDiskon;
-                            }
-                            createCicilan(totalDiskon);
-                            diskonCicilan.textContent = "kamu mendapatkan promo sebesar : Rp " +
-                                formatRupiah2(totalDiskon);
-                            diskonCicilan.style.color = "green";
-                            diskonCard2.style.display = "block";
+                        var cicilanContainer = document.getElementById('cicilan'); // Use a unique ID
+                        if (cicilanContainer) {
+                            cicilanContainer.innerHTML = ''; // Clear the existing content
                         }
 
-                    } else {
-                        document.getElementById('kdPromo1').value = promoCode;
+                        var total1 = ({{ $tipeRumah->harga_tr }} - 10000000 - jmlPromo);
+                        var formattedTotal1 = formatRupiah2(total1);
+                        var cicilanDiv1 = document.createElement('div');
+                        cicilanDiv1.className = 'collapse-item';
 
-                        document.getElementById('diskon1').innerText = "Sudah dipotong Diskon : Rp. " +
-                            formatRupiah2(jumlahPromo);
-                        document.getElementById('cardDiskon2').style.display = "block";
-                        document.getElementById('kdPromo2').value = promoCode;
-                        document.getElementById('diskon2').innerText = "Sudah dipotong Diskon : Rp. " +
-                            formatRupiah2(jumlahPromo);
+                        cicilanDiv1.innerHTML = `
+                            <div class="card-shadow">
+                                <input type="radio" name="cicilan" value="1">
+                                <label class="form-check-label">
+                                    Cicilan 1 bulan dengan cicilan Rp ${formattedTotal1} per bulan
+                                </label>
+                            </div>
+                        `;
+                        cicilanContainer.appendChild(cicilanDiv1);
+
+                        for (var k = 2; k <= 8; k++) {
+                            var total = ({{ $tipeRumah->harga_tr }} - 10000000 - jmlPromo) / k;
+                            var formattedTotal = formatRupiah2(total);
+                            var cicilanDiv = document.createElement('div');
+                            cicilanDiv.className = 'collapse-item';
+
+                            cicilanDiv.innerHTML = `
+                                <div class="card-shadow">
+                                    <input type="radio" name="cicilan" value="${k}">
+                                    <label class="form-check-label">
+                                        Cicilan ${k} bulan dengan cicilan Rp ${formattedTotal} per bulan
+                                    </label>
+                                </div>
+                            `;
+
+                            cicilanContainer.appendChild(cicilanDiv);
+                        }
                     }
-
 
                     $('#modelId').modal('toggle');
                     $('#modelId').modal('hide');
@@ -651,89 +593,114 @@
                         console.log(response);
                         if (response.promo != null) {
                             var diskon;
-                            if (response.jenis_promo == "KPR") {
-                                if (response.status_diskon == "persen" && response.diskon_promo != 0) {
-                                    let maxDiskon;
-                                    let hasilPerhitunganUM = valueInput.value - (uangMukaAsli * (response
-                                        .diskon_promo / 100));
-                                    if (response.status_max_diskon == "persen") {
-                                        maxDiskon = {{ $tipeRumah->harga_tr }} * (response.max_diskon /
-                                            100)
-                                    } else {
-                                        maxDiskon = response.max_diskon;
-                                    }
-                                    if (hasilPerhitunganUM >= maxDiskon) {
-                                        hasilPerhitunganUM = maxDiskon;
-                                    }
-                                    hargaRumah.value = {{ $tipeRumah->harga_tr }} - valueInput.value;
-
-                                    valueInput.value = uangMukaAsli - hasilPerhitunganUM;
-                                    valueInput.readOnly = true;
-                                    alertMessage.textContent =
-                                        "kamu mendapatkan promo uang muka sebesar : Rp " + formatRupiah2(
-                                            hasilPerhitunganUM);
-                                    alertMessage.style.color = "green";
-                                } else if (
-                                    response.status_diskon == "rupiah" &&
-                                    response.diskon_promo != 0
-                                ) {
-
-                                    hargaRumah.value = {{ $tipeRumah->harga_tr }} - valueInput.value;
-                                    let hasilPerhitunganUM = valueInput.value - response.diskon_promo;
-                                    valueInput.value = hasilPerhitunganUM;
-                                    valueInput.readOnly = true;
-                                    alertMessage.textContent =
-                                        "kamu mendapatkan promo uang muka sebesar : Rp " + formatRupiah2(
-                                            response.diskon_promo);
-                                    alertMessage.style.color = "green";
-                                }
-
-
-
-
-                            } else if (response.jenis_promo == "Cicilan") {
-                                let diskonCicilan = document.getElementById('diskon2');
-                                let diskonCard2 = document.getElementById('cardDiskon2');
-                                let totalDiskon, maxDiskon;
-                                if (response.status_diskon == "persen") {
-                                    totalDiskon = {{ $tipeRumah->harga_tr }} * (response.diskon_promo /
-                                        100);
-                                    if (response.status_max_diskon == "persen") {
-                                        maxDiskon = {{ $tipeRumah->harga_tr }} * (response.max_diskon /
-                                            100)
-                                    } else {
-                                        maxDiskon = response.max_diskon;
-                                    }
-                                    if (totalDiskon >= maxDiskon) {
-                                        totalDiskon = maxDiskon;
-                                    }
-                                    createCicilan(totalDiskon);
-                                    diskonCicilan.textContent = "kamu mendapatkan promo sebesar : Rp " +
-                                        formatRupiah2(totalDiskon);
-                                    diskonCicilan.style.color = "green";
-                                    diskonCard2.style.display = "block";
-
-                                } else if (response.status_diskon == "rupiah") {
-                                    if (response.status_max_diskon == "persen") {
-                                        maxDiskon = {{ $tipeRumah->harga_tr }} * (response.max_diskon /
-                                            100)
-                                    } else {
-                                        maxDiskon = response.max_diskon;
-                                    }
-                                    if (totalDiskon >= maxDiskon) {
-                                        totalDiskon = maxDiskon;
-                                    }
-                                    createCicilan(totalDiskon);
-                                    diskonCicilan.textContent = "kamu mendapatkan promo sebesar : Rp " +
-                                        formatRupiah2(totalDiskon);
-                                    diskonCicilan.style.color = "green";
-                                    diskonCard2.style.display = "block";
-                                }
-
+                            if(response.jenis_promo == "KPR"){
+                               let hasilPerhitunganUM = valueInput.value - response.diskon_promo;
+                                valueInput.value = hasilPerhitunganUM;
+                               valueInput.readOnly = true;
+                               alertMessage.textContent = "kamu mendapatkan promo uang muka sebesar : "+ formatRupiah2(response.diskon_promo);
+                               alertMessage.style.color = "green";
+                               hargaRumah.value = hargaRuma
 
                             }
 
+                            if (response.diskon_promo != 0) {
 
+                                if (response.diskon_promo >= 1 && response.diskon_promo <= 100) {
+                                    // Calculate percentage discount
+                                    diskon = (response.diskon_promo / 100) * {{ $tipeRumah->harga_tr }};
+                                    console.log('Percentage discount applied:');
+                                    console.log(diskon);
+
+                                    // Limit the discount to a maximum of 100,000,000
+                                    diskon = Math.min(diskon, 100000000);
+                                } else {
+                                    // Use the fixed discount value and limit it to a maximum of 100,000,000
+                                    diskon = Math.min(response.diskon_promo, 100000000);
+                                    console.log('Fixed discount applied:');
+                                    console.log(diskon);
+                                }
+                                document.getElementById('textPromo').innerText = response.promo;
+                                document.getElementById('selectedPromoCode').value = kodePromo;
+                                document.getElementById('kdPromo1').value = kodePromo;
+                                document.getElementById('kdPromo2').value = kodePromo;
+                                document.getElementById('diskon1').innerText =
+                                    "Sudah dipotong Diskon : Rp. " + formatRupiah2(diskon);
+                                document.getElementById('diskon2').innerText =
+                                    "Sudah dipotong Diskon : Rp. " + formatRupiah2(diskon);
+
+                                for (var i = 0; i < len; i++) {
+                                    spaceAlert.innerHTML = '<div class="alert alert-success">' + response
+                                        .promo +
+                                        ' berhasil digunakan</div>';
+                                    var selectElement = document.getElementById('cicilanUM');
+                                    // Clear any existing options
+                                    selectElement.innerHTML = '';
+
+                                    // Create and append options based on the value of $cicilan
+                                    if (response.extra_cicilan == "yes") {
+                                        for (var j = 1; j < response.jumlah_extra_cicilan + 1; j++) {
+                                            var option = document.createElement('option');
+                                            option.value = j;
+                                            option.text = j + ' kali';
+                                            selectElement.appendChild(option);
+                                        }
+                                    }
+
+
+                                    let jumlah = document.getElementById('jumlah');
+                                    jumlah.value = {{ $tipeRumah->harga_tr }} - diskon;
+
+                                    document.getElementById('jumlahHarga').value = (
+                                        {{ $tipeRumah->harga_tr }} - 10000000 - diskon);
+
+
+
+
+                                    // Remove the existing cicilan element
+                                    var cicilanContainer = document.getElementById(
+                                        'cicilan'); // Use a unique ID
+                                    if (cicilanContainer) {
+                                        cicilanContainer.innerHTML = ''; // Clear the existing content
+                                    }
+
+                                    var total1 = ({{ $tipeRumah->harga_tr }} - 10000000 - diskon);
+                                    var formattedTotal1 = formatRupiah2(total1);
+                                    var cicilanDiv1 = document.createElement('div');
+                                    cicilanDiv1.className = 'collapse-item';
+
+                                    cicilanDiv1.innerHTML = `
+                                        <div class="card-shadow">
+                                            <input type="radio" name="cicilan" value="1">
+                                            <label class="form-check-label">
+                                                Cicilan 1 bulan dengan cicilan Rp ${formattedTotal1} per bulan
+                                            </label>
+                                        </div>
+                                    `;
+                                    cicilanContainer.appendChild(cicilanDiv1);
+                                    console.log(total1);
+
+                                    for (var k = 2; k <= 8; k++) {
+                                        var total = ({{ $tipeRumah->harga_tr }} - 10000000 - diskon) / k;
+                                        var formattedTotal = formatRupiah2(total);
+                                        var cicilanDiv = document.createElement('div');
+                                        cicilanDiv.className = 'collapse-item';
+
+                                        cicilanDiv.innerHTML = `
+                                        <div class="card-shadow">
+                                            <input type="radio" name="cicilan" value="${k}">
+                                            <label class="form-check-label">
+                                                Cicilan ${k} bulan dengan cicilan Rp ${formattedTotal} per bulan
+                                            </label>
+                                        </div>
+                                    `;
+
+                                        cicilanContainer.appendChild(cicilanDiv);
+                                        console.log(total);
+                                    }
+
+                                }
+
+                            }
                             $('#modelId').modal('hide');
                         } else {
                             spaceAlert.innerHTML = '<div class="alert alert-danger">Promo tidak ada</div>';
@@ -749,53 +716,6 @@
 
                 });
             });
-
-            function createCicilan(totalDiskon) {
-                let jumlah = document.getElementById('jumlah');
-                jumlah.value = {{ $tipeRumah->harga_tr }} - totalDiskon;
-
-                document.getElementById('jumlahHarga').value = (
-                    {{ $tipeRumah->harga_tr }} - 10000000 - totalDiskon);
-
-                var cicilanContainer = document.getElementById(
-                    'cicilan'); // Use a unique ID
-                if (cicilanContainer) {
-                    cicilanContainer.innerHTML = ''; // Clear the existing content
-                }
-
-                var total1 = ({{ $tipeRumah->harga_tr }} - 10000000 - totalDiskon);
-                var formattedTotal1 = formatRupiah2(total1);
-                var cicilanDiv1 = document.createElement('div');
-                cicilanDiv1.className = 'collapse-item';
-
-                cicilanDiv1.innerHTML = `
-                                        <div class="card-shadow">
-                                            <input type="radio" name="cicilan" value="1">
-                                            <label class="form-check-label">
-                                                Cicilan 1 bulan dengan cicilan Rp ${formattedTotal1} per bulan
-                                            </label>
-                                        </div>
-                                        `;
-                cicilanContainer.appendChild(cicilanDiv1);
-
-                for (var k = 2; k <= 8; k++) {
-                    var total = ({{ $tipeRumah->harga_tr }} - 10000000 - totalDiskon) / k;
-                    var formattedTotal = formatRupiah2(total);
-                    var cicilanDiv = document.createElement('div');
-                    cicilanDiv.className = 'collapse-item';
-
-                    cicilanDiv.innerHTML = `
-                                        <div class="card-shadow">
-                                            <input type="radio" name="cicilan" value="${k}">
-                                            <label class="form-check-label">
-                                                Cicilan ${k} bulan dengan cicilan Rp ${formattedTotal} per bulan
-                                            </label>
-                                        </div>
-                                    `;
-
-                    cicilanContainer.appendChild(cicilanDiv);
-                }
-            }
         </script>
         {{-- end script find query promo selector --}}
 
@@ -808,13 +728,13 @@
                 var um = document.getElementById(uangmuka).value;
                 var skBunga = document.getElementById(sukuBunga).value;
                 var cicilanUM = document.getElementById(cicilanUM).value;
-
-                console.log(uangMukaAsli);
+                var totalPersentase = (jml * (um / 100));
+                console.log(totalPersentase);
                 var hasilCicilan;
                 if (cicilanUM != 1) {
-                    hasilCicilan = uangMukaAsli / cicilanUM;
+                    hasilCicilan = totalPersentase / cicilanUM;
                 } else {
-                    hasilCicilan = uangMukaAsli / 1;
+                    hasilCicilan = totalPersentase / 1;
                 }
 
                 var hasil = document.getElementById(result);
@@ -825,7 +745,7 @@
                 var cicilan;
                 var cicilan2;
 
-                var perngurangan = jml - uangMukaAsli;
+                var perngurangan = jml - totalPersentase;
                 {{--  console.log(perngurangan);  --}}
                 //  perngurangan = perngurangan.replace(/\D/g, '.');
                 // console.log(perngurangan+"Pengurangan");
@@ -838,11 +758,11 @@
 
 
                 if (cicilanUM != 1) {
-                    hasil.innerText = "Uang muka Rp " + formatRupiah2(uangMukaAsli) + " dari Rp " + formatRupiah2(
-                        jml);
+                    hasil.innerText = "Uang muka Rp " + formatRupiah2(hasilCicilan) + " (" + um + "% dari Rp " + formatRupiah2(
+                        jml) + ")";
                     hasil2.innerText = "Cicilan " + cicilanUM + " kali"
                     hasil3.innerText = "Harga cicilan uang muka Rp " + formatRupiah2(hasilCicilan) + " (" + formatRupiah2(
-                        uangMukaAsli) + " : " + cicilanUM + ")"
+                        totalPersentase) + " : " + cicilanUM + ")"
 
                     sisa.innerText = "Sisa Pembayaran KPR Rp " + formatRupiah2(perngurangan);
                 } else {

@@ -52,6 +52,11 @@ class Promo extends Model{
         ])->first();
 
     }
+    public function firstPromo($select,$where) {
+        return Promo::select($select)
+        ->where($where)
+        ->first();
+    }
 
 
 }

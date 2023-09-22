@@ -85,6 +85,27 @@ if (!function_exists('tgl_indo')) {
 
 
 
+function RandomCode($counter,$projek) {
 
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'; // Define the characters to use
+    $randomString = '';
+
+    // Generate a random code of length 2 (you can adjust the length as needed)
+    for ($i = 0; $i < $counter; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    $kodePromo="";
+    switch ($projek) {
+        case 'Greenland':
+            $kodePromo = 'GL'.  $randomString;
+            break;
+
+        case "Kalm":
+            $kodePromo = 'KR'.  $randomString;
+            break;
+    }
+    return $kodePromo;
+
+}
 
 ?>

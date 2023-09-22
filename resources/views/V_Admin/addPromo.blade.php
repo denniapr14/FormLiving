@@ -106,32 +106,35 @@
         <div class="container-fluid ">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ url()->previous() }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
+                    <a href="{{ url()->previous() }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i
+                            class="bi bi-arrow-left"></i></a> &nbsp;
                     Tambah Promo
                 </div>
 
                 <div class="card-body">
 
 
-                    <form action="{{ route('addPromoAction.admin',$getProjek->nama_projek) }}" enctype="multipart/form-data" method="post">
+                    <form action="{{ route('addPromoAction.admin', $getProjek->nama_projek) }}"
+                        enctype="multipart/form-data" method="post">
                         @csrf
 
                         <div class="form-group">
                             <label for=""> Rumah yang akan di terapkan promo</label>
                             <br>
                             <div class="container">
-                            <div class="row" style="width: 100%">
-                            @foreach ($rumah as $rumah)
+                                <div class="row" style="width: 100%">
+                                    @foreach ($rumah as $rumah)
+                                        <div class="col-md-3 ">
+                                            <div class=" btn btn-success" style="width: 100%">
 
-                                    <div class="col-md-3 ">
-                                        <div class=" btn btn-success" style="width: 100%">
-
-                                            <h6>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}</h6>
+                                                <h6>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}
+                                                </h6>
+                                            </div>
+                                            <input type="text" hidden readonly name="codecluster[]"
+                                                value="{{ $rumah->codecluster }}">
+                                            <input type="text" hidden readonly name="id_rumah[]"
+                                                value="{{ $rumah->id_rumah }}">
                                         </div>
-                                        <input type="text" hidden readonly name="codecluster[]" value="{{ $rumah->codecluster }}">
-                                        <input type="text" hidden readonly name="id_rumah[]" value="{{ $rumah->id_rumah }}">
-                                    </div>
-
                                     @endforeach
                                 </div>
                             </div>
@@ -141,31 +144,57 @@
                         <div class="form-group">
                             <label for="">Tipe Promo</label>
                             <select name="tipe_promo" id="" class="form form-control" required>
-                                <option value="">--Pilih--</option>
-                                <option value="standart">standart</option>
-                                <option value="special">special</option>
+                                @if ($user->kategori == 'SuperAdmin')
+                                    <option value="">--Pilih--</option>
+                                    <option value="special">special</option>
+                                    <option value="standart">standart</option>
+                                @elseif ($user->kategori == 'CEO')
+                                    <option value="special" selected>special</option>
+                                @else
+                                    <option value="standart" selected>standart</option>
+                                @endif
 
                             </select>
 
                         </div>
                         <div class="form-group">
                             <label for="">Nama promo</label>
-                            <input type="text" name="nama_promo" required id="" class="form-control" placeholder=""
-                                aria-describedby="helpId">
+                            <input type="text" name="nama_promo" required id="" class="form-control"
+                                placeholder="" aria-describedby="helpId">
 
                         </div>
 
                         <div class="form-group">
-                            <label for="">Kode Promo</label>
-                            <input type="text" name="kode_promo" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" required>
+                            <label for="">Nominal / Persentase Diskon</label>
+                            <input type="number" name="diskon_promo" id="" class="form-control" placeholder="Masukan Diskon"
+                                aria-describedby="helpId">
+                            <div class="form-check">
 
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input type="radio" class="form-check-input" name="statusDiskon" id="" value="rupiah" checked> <span>Rupiah</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="radio" class="form-check-input" name="statusDiskon" id="" value="persen " checked> <span>Persen</span>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="">Diskon Promo</label>
-                            <input type="number" name="diskon_promo" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId">
-
+                          <label for="">Maksimal Diskon</label>
+                          <input type="text" name="" id="" class="form-control" placeholder="Masukan Max Diskon" aria-describedby="helpId">
+                          <div class="form-check">
+                          <div class="row">
+                            <div class="col-md-3">
+                                <input type="radio" class="form-check-input" name="statusDiskon" id="" value="rupiah" checked> <span>Rupiah</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="radio" class="form-check-input" name="statusDiskon" id="" value="persen" checked> <span>Persen</span>
+                            </div>
+                          </div>
+                        </div>
                         </div>
                         <div class="form-group">
                             <label for="">BPHTB Promo</label>
@@ -190,21 +219,21 @@
                                 <option value="yes">Ya</option>
                                 <option value="no">Tidak</option>
                             </select>
-                         <input type="number" name="jumlah_cicilan" class="form-control" value="0">
+                            <input type="number" name="jumlah_cicilan" class="form-control" value="0">
                         </div>
 
 
                         <div class="form-group">
                             <label for="">Tanggal Mulai</label>
-                            <input type="date" name="tgl_mulai" required id="" class="form-control" placeholder=""
-                                aria-describedby="helpId">
+                            <input type="date" name="tgl_mulai" required id="" class="form-control"
+                                placeholder="" aria-describedby="helpId">
 
                         </div>
 
                         <div class="form-group">
                             <label for="">Tanggal Berakhir</label>
-                            <input type="date" name="tgl_berakhir" required id="" class="form-control" placeholder=""
-                                aria-describedby="helpId">
+                            <input type="date" name="tgl_berakhir" required id="" class="form-control"
+                                placeholder="" aria-describedby="helpId">
 
                         </div>
 
