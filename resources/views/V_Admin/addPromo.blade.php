@@ -175,7 +175,7 @@
                                         <input type="radio" class="form-check-input" name="statusDiskon" id="" value="rupiah" checked> <span>Rupiah</span>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="radio" class="form-check-input" name="statusDiskon" id="" value="persen " checked> <span>Persen</span>
+                                        <input type="radio" class="form-check-input" name="statusDiskon" id="" value="persen "> <span>Persen</span>
                                     </div>
                                 </div>
 
@@ -188,10 +188,10 @@
                           <div class="form-check">
                           <div class="row">
                             <div class="col-md-3">
-                                <input type="radio" class="form-check-input" name="statusDiskon" id="" value="rupiah" checked> <span>Rupiah</span>
+                                <input type="radio" class="form-check-input" name="statusMaxDiskon" id="" value="rupiah" checked> <span>Rupiah</span>
                             </div>
                             <div class="col-md-3">
-                                <input type="radio" class="form-check-input" name="statusDiskon" id="" value="persen" checked> <span>Persen</span>
+                                <input type="radio" class="form-check-input" name="statusMaxDiskon" id="" value="persen"> <span>Persen</span>
                             </div>
                           </div>
                         </div>
@@ -214,18 +214,34 @@
                         </div>
                         <div class="form-group">
                             <label for="">Ekstra Cicilan Promo</label>
-                            <select name="extra_cicilan" id="" class="form-control">
+                            <select name="extra_cicilan" id="extraCicilan" class="form-control">
                                 <option value="">--Pilih--</option>
                                 <option value="yes">Ya</option>
-                                <option value="no">Tidak</option>
+                                <option value="no" selected>Tidak</option>
                             </select>
-                            <input type="number" name="jumlah_cicilan" class="form-control" value="0">
+                            <label for="jumlah_cicilan" id="jumlahCicilanLabel" hidden>Jumlah Cicilan</label>
+                            <input type="number" name="jumlah_cicilan" id="jumlahCicilan" class="form-control" hidden readonly value="0">
                         </div>
 
 
+                        @if ($user->kategori == 'CEO')
                         <div class="form-group">
                             <label for="">Tanggal Mulai</label>
-                            <input type="date" name="tgl_mulai" required id="" class="form-control"
+                            <input type="date" name="tgl_mulai" required id="" value="{{ date('Y-m-d') }}" class="form-control"
+                                placeholder="" aria-describedby="helpId">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Tanggal Berakhir</label>
+                            <input type="date" name="tgl_berakhir" required id="" value="{{ date('Y-m-d') }}" class="form-control"
+                                placeholder="" aria-describedby="helpId">
+
+                        </div>
+                        @else
+                        <div class="form-group">
+                            <label for="">Tanggal Mulai</label>
+                            <input type="date" name="tgl_mulai" required id="" value="{{ date('Y-m-d') }}" class="form-control"
                                 placeholder="" aria-describedby="helpId">
 
                         </div>
@@ -237,16 +253,29 @@
 
                         </div>
 
+                        @endif
+
                         <div class="form-group">
                             <label for="">Keterangan</label>
                             <textarea name="ket_promo" required id="" cols="30" class="form-control" rows="2"></textarea>
                         </div>
 
+                        @if ($user->kategori == 'CEO')
                         <div class="form-group">
                             <label for="">Kuota Promo</label>
-                            <input type="number" name="kuota_promo" required class="form-control">
+                            <input type="number" name="kuota_promo" required hidden value="1" class="form-control">
 
                         </div>
+
+                        @else
+                        <div class="form-group">
+                            <label for="">Kuota Promo</label>
+                            <input type="number" name="kuota_promo" required placeholder="masukan kuota promo" class="form-control">
+
+                        </div>
+
+
+                        @endif
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -256,7 +285,24 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
+    <script>
+        const extraCicilanSelect = document.getElementById('extraCicilan');
+        const jumlahCicilanLabel = document.getElementById('jumlahCicilanLabel');
+        const jumlahCicilanInput = document.getElementById('jumlahCicilan');
 
+        extraCicilanSelect.addEventListener('change', function () {
+            if (extraCicilanSelect.value === 'yes') {
+                jumlahCicilanLabel.removeAttribute('hidden');
+                jumlahCicilanInput.removeAttribute('hidden');
+                jumlahCicilanInput.removeAttribute('readonly');
+            } else {
+                jumlahCicilanLabel.setAttribute('hidden', 'true');
+                jumlahCicilanInput.setAttribute('hidden', 'true');
+                jumlahCicilanInput.setAttribute('readonly', 'true');
+                jumlahCicilanInput.value = '0'; // Reset the input value
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('#dtPembayaran').DataTable();
