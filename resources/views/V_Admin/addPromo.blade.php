@@ -178,6 +178,7 @@
                             <label for="">Nominal / Persentase Diskon</label>
                             <input type="number" name="diskon_promo" id="diskonPromo" class="form-control"
                                 placeholder="Masukan Diskon" aria-describedby="helpId">
+                                <span id="diskonWarning" class="text-danger"></span>
                             <div class="form-check">
 
                                 <div class="row">
@@ -198,6 +199,8 @@
                             <label for="">Maksimal Diskon</label>
                             <input type="text" name="maxDiskon" id="maxDiskon" class="form-control"
                                 placeholder="Masukan Max Diskon" aria-describedby="helpId">
+
+                                <span id="maxDiskonWarning" class="text-danger"></span>
                             <div class="form-check">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -294,9 +297,12 @@
                             </div>
                         @endif
                         <a class="btn btn-outline-info" href="#" id="generate">Tampilkan Kode</a>
-                        <button type="submit" class="btn btn-outline-primary" id="submitBtn">Submit</button>
+
+                        <br><br>
+                        <button type="submit" class="btn btn-outline-primary" id="submitBtn" disabled >Submit</button>
                     </form>
                     <br>
+
                     <div class="card" style="display: none" id="card">
                         <div class="card-body">
                             <div>
@@ -313,7 +319,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -351,6 +356,7 @@
 
             // Menampilkan card yang berisi keterangan dan kode promo
             $('#card').css('display', 'block');
+            document.getElementById('submitBtn').disabled =false;
         });
 
         // Fungsi untuk menyalin kode promo saat tombol "Klik untuk salin kode promo" ditekan
@@ -379,6 +385,65 @@
                     scrollTop: $("#card").offset().top
                 }, 1000);
             });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const diskonPromoInput = document.getElementById('diskonPromo');
+            const diskonRupiahRadio = document.getElementById('diskonRupiah');
+            const diskonPersenRadio = document.getElementById('diskonPersen');
+            const diskonWarning = document.getElementById('diskonWarning');
+
+            const maxDiskonInput = document.getElementById('maxDiskon');
+            const statusMaxDiskonRupiahRadio = document.getElementById('statusMaxDiskonRupiah');
+            const statusMaxDiskonPersenRadio = document.getElementById('statusMaxDiskonPersen');
+            const maxDiskonWarning = document.getElementById('maxDiskonWarning');
+
+            // Function to update the input and warning span for Diskon
+            function updateDiskonInput() {
+                if (diskonPersenRadio.checked) {
+                    // When "Persen" is selected for Diskon
+                    const diskonValue = parseFloat(diskonPromoInput.value);
+                    if (!isNaN(diskonValue) && diskonValue >= 50) {
+                        diskonWarning.textContent = 'Diskon terbesar adalah 50%';
+                    } else {
+                        diskonWarning.textContent = '';
+                    }
+                } else {
+                    // When "Rupiah" is selected for Diskon
+
+                }
+            }
+
+            // Function to update the input and warning span for Maksimal Diskon
+            function updateMaxDiskonInput() {
+                if (statusMaxDiskonPersenRadio.checked) {
+                    // When "Persen" is selected for Maksimal Diskon
+                    const maxDiskonValue = parseFloat(maxDiskonInput.value);
+                    if (!isNaN(maxDiskonValue) && maxDiskonValue > 50) {
+                        maxDiskonWarning.textContent = 'Maksimal Diskon terbesar adalah 50%';
+                    } else {
+                        maxDiskonWarning.textContent = '';
+                    }
+                } else {
+                    // When "Rupiah" is selected for Maksimal Diskon
+
+                }
+            }
+
+            // Initial updates
+            updateDiskonInput();
+            updateMaxDiskonInput();
+
+            // Event listeners to update on radio button change and input change for Diskon
+            diskonRupiahRadio.onchange = updateDiskonInput;
+            diskonPersenRadio.onchange = updateDiskonInput;
+            diskonPromoInput.oninput = updateDiskonInput;
+
+            // Event listeners to update on radio button change and input change for Maksimal Diskon
+            statusMaxDiskonRupiahRadio.onchange = updateMaxDiskonInput;
+            statusMaxDiskonPersenRadio.onchange = updateMaxDiskonInput;
+            maxDiskonInput.oninput = updateMaxDiskonInput;
         });
     </script>
     <script>

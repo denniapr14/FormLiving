@@ -52,7 +52,8 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $fp->no_fp }}</td>
                                     <td>
-                                        <span class="client__name">{{ $fp->nama_plgn }}</span>
+                                        <span class="client__name">{{ $fp->nama_plgn }} </span>
+                                        <span class="client__name">{{ $fp->blok }}-{{ $fp->nomor }}</span>
                                         <span class="client__handled">Dari {{ $fp->nama_ktgr }} ({{ $fp->nama_ua }})</span>
                                     </td>
                                     <td>

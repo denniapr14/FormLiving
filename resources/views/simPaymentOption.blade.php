@@ -183,7 +183,7 @@
 
                                                     <br>
                                                     <div>
-                                                        <label for="">Uang Muka</label>
+                                                        <label for="">Persentase Uang Muka</label>
                                                     </div>
                                                     <div class="">
                                                         <div class="form-group">
@@ -295,6 +295,8 @@
 
                                                         <h5 id="sisaPembayaran"></h5>
                                                     </div>
+                                                    <input type="text" id="diskonInputKPR" hidden readonly name="diskonInputKPR"  class="form-control">
+
                                                     <div class="btn-groups">
                                                         <button type="submit" type="button" id="nextKPR" disabled
                                                             style="opacity: 10%"
@@ -371,7 +373,7 @@
                                                     <div class="card-shadow">
                                                         <label for="">Jumlah harga</label>
                                                     </div>
-
+                                                    <input type="text" id="diskonInputCicilan" hidden readonly name="diskonInputCicilan" class="form-control">
                                                     <div class="">
                                                         <input type="text" readonly class="form-control card-shadow"
                                                             name="jumlah" id="jumlahHarga" aria-describedby="helpId"
@@ -581,6 +583,7 @@
                         console.log(diskonPercentage);
                         // uang Muka 10%
                         var totalDiskon = Math.round(diskonPercentage - (diskonPercentage * (diskonPromo / 100)));
+                        document.getElementById('diskonInputKPR').value = totalDiskon;
                         console.log(totalDiskon);
                         console.log(applyMaxDiskon(totalDiskon, maxDiskon, statusMaxDiskon));
                         return applyMaxDiskon(totalDiskon, maxDiskon, statusMaxDiskon);
@@ -627,6 +630,7 @@
                         diskonCicilan.style.color = "green";
                         diskonCard2.style.display = "block";
                     }
+                    document.getElementById('diskonInputCicilan').value = totalDiskon;
 
                 } else {
                     document.getElementById('kdPromo1').value = promoCode;

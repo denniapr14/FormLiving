@@ -352,52 +352,106 @@ class C_Simulasi extends Controller
             return redirect('/login')->with('error', 'You not sign in or sign up!');
         }
 
+        $getPromo ="";
+        if($request->promo != "Tidak Ada Promo"){
+            $getPromo = $this->promoList->firstPromo('*',[
+                'promo.kode_promo' => $request->promo
+            ]);
+
+        }
+
         $tipeRumah = $this->tipeRumah->firstTipeRumah('*', ['id_tipe_rumah' => $id_tipe]);
         // dd($tipeRumah);
         $rumah = $this->rumah->firstRumahWhereJoinCluster('*', 'rumah.id_rumah', '=', $id_rumah);
         // $data= 'tipe','rumah';
+
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
                 'user_admin.id_user_admin',
                 '=',
                 session::get('user')
             );
+
             $dataInputKalkulator = '';
             if ($request->jenis == 'KPR') {
                 if ($rumah->status_stock == 'Inden') {
-                    $dataInputKalkulator = [
-                        'luas_tanah_kkpr' => $rumah->luas_tanah,
-                        'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                        'harga_awal' => (float) $tipeRumah->harga_tr,
-                        'total_harga' => (float) $request->jumlah,
-                        'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)) - 10000000,
-                        'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'cicilan_um' => $request->cicilanUM,
-                    ];
+                    if($getPromo->promo != null){
+                        $dataInputKalkulator = [
+                            'luas_tanah_kkpr' => $rumah->luas_tanah,
+                            'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
+                            'harga_awal' => (float) $tipeRumah->harga_tr,
+                            'total_harga' => (float) $request->jumlah,
+                            'uang_muka' => (float) (($tipeRumah->harga_tr * ($request->persentase / 100)) - 10000000) - $request->diskonInputKPR,
+                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'cicilan_um' => $request->cicilanUM,
+                        ];
+                    }else{
+                        $dataInputKalkulator = [
+                            'luas_tanah_kkpr' => $rumah->luas_tanah,
+                            'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
+                            'harga_awal' => (float) $tipeRumah->harga_tr,
+                            'total_harga' => (float) $request->jumlah,
+                            'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)) - 10000000,
+                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'cicilan_um' => $request->cicilanUM,
+                        ];
+                    }
+
                 } else {
-                    $dataInputKalkulator = [
-                        'luas_tanah_kkpr' => $rumah->luas_tanah,
-                        'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                        'harga_awal' => (float) $tipeRumah->harga_tr,
-                        'total_harga' => (float) $request->jumlah,
-                        'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100))- 10000000,
-                        'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
-                        'cicilan_um' => 1,
-                    ];
+                    if($getPromo->promo != null){
+                        $dataInputKalkulator = [
+                            'luas_tanah_kkpr' => $rumah->luas_tanah,
+                            'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
+                            'harga_awal' => (float) $tipeRumah->harga_tr,
+                            'total_harga' => (float) $request->jumlah,
+                            'uang_muka' => (float) (($tipeRumah->harga_tr * ($request->persentase / 100)) - 10000000) - $request->diskonInputKPR,
+                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'cicilan_um' => 1,
+                        ];
+                    }else{
+                        $dataInputKalkulator = [
+                            'luas_tanah_kkpr' => $rumah->luas_tanah,
+                            'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
+                            'harga_awal' => (float) $tipeRumah->harga_tr,
+                            'total_harga' => (float) $request->jumlah,
+                            'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100))- 10000000,
+                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'cicilan_um' => 1,
+                        ];
+                    }
+
                 }
             } else {
-                $dataInputKalkulator = [
-                    'luas_tanah_kkpr' => $rumah->luas_tanah,
-                    'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                    'harga_awal' => (float) $tipeRumah->harga_tr,
-                    'total_harga' => (float) $tipeRumah->harga_tr,
-                    'uang_muka' => (float) 10000000,
-                    'kpr' => 0,
-                    'cicilan_um' => 1,
-                    'cicilan' => $request->cicilan,
-                ];
+                if($getPromo->promo != null){
+                    $dataInputKalkulator = [
+                        'luas_tanah_kkpr' => $rumah->luas_tanah,
+                        'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
+                        'harga_awal' => (float) $tipeRumah->harga_tr,
+                        'total_harga' => (float) $tipeRumah->harga_tr,
+                        'total_diskon'  => $request->diskonInputCicilan,
+                        'uang_muka' => (float) 10000000,
+                        'kpr' => 0,
+                        'cicilan_um' => 1,
+                        'cicilan' => $request->cicilan,
+                    ];
+                }else{
+                    $dataInputKalkulator = [
+                        'luas_tanah_kkpr' => $rumah->luas_tanah,
+                        'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
+                        'harga_awal' => (float) $tipeRumah->harga_tr,
+                        'total_harga' => (float) $tipeRumah->harga_tr,
+
+                        'uang_muka' => (float) 10000000,
+                        'kpr' => 0,
+                        'cicilan_um' => 1,
+                        'cicilan' => $request->cicilan,
+                    ];
+                }
+
             }
 
             $getIDKalkulator = $this->kalkulatorKPR->insertGetIDKalkulatorKPR($dataInputKalkulator);
@@ -421,6 +475,7 @@ class C_Simulasi extends Controller
 
         // code...
     }
+
 
     public function SimDataPelanggan($id_rumah, $id_tipe, $id_kpr, $jenis, $promo)
     {
@@ -802,35 +857,58 @@ class C_Simulasi extends Controller
                 // 'kelamin'   => 'required',
             ]);
             $dataInputDetail = '';
+            // if($jenis == "KPR"){
+            //     if (!empty($promo)) {
+            //         $dataInputDetail = [
+            //             'luas_tanah_kkpr' => $rumah->luas_tanah,
+            //             'tipe_kkpr' => $tipeRumah->jenis_tr,
+            //             'harga_awal' => (float) $tipeRumah->harga_tr,
+            //             'total_diskon' => (float) $promo->diskon_promo,
 
-            // if (!empty($promo)) {
-            //     $dataInputDetail = [
-            //         'luas_tanah_kkpr' => $rumah->luas_tanah,
-            //         'tipe_kkpr' => $tipeRumah->jenis_tr,
-            //         'harga_awal' => (float) $tipeRumah->harga_tr,
-            //         'total_diskon' => (float) $promo->diskon_promo,
+            //             'total_harga' => (float) $kkpr->total_harga,
+            //             'terbilang' => terbilang($tipeRumah->harga_tr),
+            //         ];
+            //     }
+            //     if (empty($promo)) {
+            //         $dataInputDetail = [
+            //             'luas_tanah_kkpr' => $rumah->luas_tanah,
+            //             'tipe_kkpr' => $tipeRumah->jenis_tr,
+            //             'harga_awal' => (float) $tipeRumah->harga_tr,
 
-            //         'total_harga' => (float) $kkpr->total_harga,
-            //         'terbilang' => terbilang($tipeRumah->harga_tr - $promo->diskon_promo),
-            //     ];
+            //             'terbilang' => terbilang($tipeRumah->harga_tr),
+            //         ];
+            //     }
+            // }else{
+            //     if (!empty($promo)) {
+            //         $dataInputDetail = [
+            //             'luas_tanah_kkpr' => $rumah->luas_tanah,
+            //             'tipe_kkpr' => $tipeRumah->jenis_tr,
+            //             'harga_awal' => (float) $tipeRumah->harga_tr,
+            //             'total_diskon' => (float) $promo->diskon_promo,
+
+            //             'total_harga' => (float) $kkpr->total_harga,
+            //             'terbilang' => terbilang($tipeRumah->harga_tr - $promo->diskon_promo),
+            //         ];
+            //     }
+            //     if (empty($promo)) {
+            //         $dataInputDetail = [
+            //             'luas_tanah_kkpr' => $rumah->luas_tanah,
+            //             'tipe_kkpr' => $tipeRumah->jenis_tr,
+            //             'harga_awal' => (float) $tipeRumah->harga_tr,
+
+            //             'terbilang' => terbilang($tipeRumah->harga_tr),
+            //         ];
+            //     }
             // }
-            // if (empty($promo)) {
-            //     $dataInputDetail = [
-            //         'luas_tanah_kkpr' => $rumah->luas_tanah,
-            //         'tipe_kkpr' => $tipeRumah->jenis_tr,
-            //         'harga_awal' => (float) $tipeRumah->harga_tr,
 
-            //         'terbilang' => terbilang($tipeRumah->harga_tr),
-            //     ];
-            // }
             // $kkpr = '';
 
-            // // dd($dataInputDetail);
-            // DB::table('kalkulator_kpr')
-            //     ->where('id_kkpr', $id_kkpr)
-            //     ->update(
-            //         $dataInputDetail
-            //     );
+            // dd($dataInputDetail);
+            DB::table('kalkulator_kpr')
+                ->where('id_kkpr', $id_kkpr)
+                ->update(
+                    $dataInputDetail
+                );
 
             $kkpr = $this->kalkulatorKPR->firstKalkulatorKPRArr('*', [
                 'id_kkpr' => $id_kkpr,
@@ -944,9 +1022,9 @@ class C_Simulasi extends Controller
                 $sumCicilKPR = $dataCicilKPR * ($kkpr->cicilan_um - 1);
                 $dataKPR = '';
                 if (!empty($promo)) {
-                    $dataKPR = $kkpr->kpr - ($promo->diskon_promo + 10000000);
+                    $dataKPR = $kkpr->kpr;
                 } else {
-                    $dataKPR = $kkpr->kpr - 10000000;
+                    $dataKPR = $kkpr->kpr;
                 }
                 $dtPembayaran[] = [
                     'id_rumah' => $id_rumah,
