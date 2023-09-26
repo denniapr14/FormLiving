@@ -357,6 +357,7 @@ Route::get('/cari-rumah-promo-admin/{projek}', [C_Promo::class, 'rumahPromoAutoc
 Route::post('/tambah-rumah-promo-admin/action/{projek}', [C_Promo::class, 'addRumahPromoAction'])->name('addPromoRumahAction.admin');
 // Route::get('/tambah-promo-admin/{projek}', [C_Promo::class, 'addPromo'])->name('addPromo.admin');
 Route::post('/tambah-promo-admin/action/{projek}', [C_Promo::class, 'addPromoAction'])->name('addPromoAction.admin');
+
 Route::get('/ubah-promo-admin/{projek}/{id}', [C_Promo::class, 'updatePromo'])->name('updatePromo.admin');
 Route::post('/ubah-promo-admin/action/{projek}/{id}', [C_Promo::class, 'updatePromoAction'])->name('updatePromoAction.admin');
 // Route::get('/hapus-list-promo/{projek}/{id}',[C_ListPromo,'deleteListPromo'])->name('deleteListPromo.admin');

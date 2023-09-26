@@ -967,7 +967,7 @@ class C_Simulasi extends Controller
                         'detail_pr' => 'Cicilan Uang Muka '. 1,
                         'harga_pr' => (float) $dataCicilKPR,
                         'sisa_pr' => (float) $dataCicilKPR,
-                        'tgl_pr' => Carbon::now()->addMonths(1),
+                        'tgl_pr' => Carbon::now()->addDays(7),
                         'status_pr' => 'belum',
                     ];
                     for ($k = 1; $k < $kkpr->cicilan_um - 1; ++$k) {
@@ -978,7 +978,7 @@ class C_Simulasi extends Controller
                             'detail_pr' => 'Cicilan Uang Muka '. 1 + $k,
                             'harga_pr' => (float) $dataCicilKPR,
                             'sisa_pr' => (float) $dataCicilKPR,
-                            'tgl_pr' => Carbon::now()->addMonths($k + 1),
+                            'tgl_pr' => Carbon::now()->addMonths($k),
                             'status_pr' => 'belum',
                         ];
                     }

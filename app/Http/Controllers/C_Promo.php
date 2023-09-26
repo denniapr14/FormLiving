@@ -228,6 +228,14 @@ class C_Promo extends Controller
                     'id_rumah' => $request->rumah,
                 ];
             }
+            $kodePromo = randomCode(4,$projek);
+            $getPromo = $this->promo->firstPromo('*',['kode_promo' => $kodePromo]);
+            if ($getPromo != null) {
+                if ($kodePromo == $getPromo->kode_promo) {
+                    $kodePromo = randomCode(4,$projek);
+                }
+            }
+
             // dd($rumah);
             return view(
                 'V_Admin.addPromo',
@@ -237,7 +245,8 @@ class C_Promo extends Controller
                     'projekUser',
                     'dataInputRumahPromo',
                     'getProjek',
-                    'getUserMenu'
+                    'getUserMenu',
+                    'kodePromo'
 
                 )
             );
@@ -259,7 +268,7 @@ class C_Promo extends Controller
             ->get();
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        dd("aaa");
+        // dd("aaa");
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
@@ -287,12 +296,8 @@ class C_Promo extends Controller
                     break;
                 }
             }
-            $kodePromo = randomCode(4,$projek);
-            $getPromo = $this->promo->firstPromo('*',['kode_promo' => $kodePromo]);
-            if ($kodePromo == $getPromo->kode_promo) {
-                $kodePromo = randomCode(4,$projek);
-            }
-            dd($kodePromo);
+
+
             // if (!$foundMatchingMenu) {
             //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
             // }
@@ -317,7 +322,7 @@ class C_Promo extends Controller
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-
+// dd($request);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
                 'user_admin.id_user_admin',
@@ -341,11 +346,15 @@ class C_Promo extends Controller
             $dataInputPromo = [
                 'status'    => 'aktif',
                 'promo' => $request->nama_promo,
+                'jenis_promo' => $request->jenisPromo,
                 'kode_promo' => $request->kode_promo,
                 'keterangan' => $request->ket_promo,
                 'tipe_promo' => $request->tipe_promo,
                 'kuota_promo' => $request->kuota_promo,
+                'status_diskon' => $request->statusDiskon,
                 'diskon_promo' => $request->diskon_promo,
+                'status_max_diskon' => $request->statusMaxDiskon,
+                'max_diskon'        =>$request->maxDiskon,
                 'tgl_aktif' => $request->tgl_mulai,
                 'tgl_berakhir' => $request->tgl_berakhir,
                 'bphtb_promo' => $request->bphtb,
@@ -353,6 +362,7 @@ class C_Promo extends Controller
                 'extra_cicilan' => $request->extra_cicilan,
                 'jumlah_extra_cicilan' => $request->jumlah_cicilan
             ];
+            // dd($dataInputPromo);
             $promoID = DB::table('promo')
                 ->insertGetId($dataInputPromo);
             $dataListPromo = [];
@@ -366,11 +376,17 @@ class C_Promo extends Controller
                 // code...
             }
 
+            // echo "<pre>";
+            // print_r ($dataInputPromo);
+            // echo "</pre>";
+
+            // dd($dataListPromo);
+
             DB::table('list_promo')
                 ->insert($dataListPromo);
             // dd($dataInputPromo);
 
-            return redirect()->route('promo.admin', $getProjek->nama_projek)->with('success', 'Promo berhasil ditambahkan');
+            return redirect()->route('promo.admin', $getProjek->nama_projek)->with('successPromo', $request->kode_promo);
             // return view('V_Admin.addPromo', compact('user', 'cluster', 'rumah'));
         } else {
             return redirect('/login');
@@ -472,11 +488,15 @@ class C_Promo extends Controller
 
             $dataUpdatePromo = [
                 'promo' => $request->nama_promo,
+                'jenis_promo' => $request->jenisPromo,
                 'kode_promo' => $request->kode_promo,
                 'keterangan' => $request->ket_promo,
                 'tipe_promo' => $request->tipe_promo,
                 'kuota_promo' => $request->kuota_promo,
+                'status_diskon' => $request->statusDiskon,
                 'diskon_promo' => $request->diskon_promo,
+                'status_max_diskon' => $request->status_max_diskon,
+                'max_diskon'        =>$request->maxDiskon,
                 'tgl_aktif' => $request->tgl_mulai,
                 'tgl_berakhir' => $request->tgl_berakhir,
                 'bphtb_promo' => $request->bphtb,

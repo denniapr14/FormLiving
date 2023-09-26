@@ -114,8 +114,8 @@
                 <div class="card-body">
 
 
-                    <form action="{{ route('addPromoAction.admin', $getProjek->nama_projek) }}"
-                        enctype="multipart/form-data" method="post">
+                    <form method="POST" action="{{ route('addPromoAction.admin', $getProjek->nama_projek) }}"
+                        enctype="multipart/form-data" >
                         @csrf
 
                         <div class="form-group">
@@ -130,9 +130,9 @@
                                                 <h6>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}
                                                 </h6>
                                             </div>
-                                            <input type="text" hidden readonly name="codecluster[]"
+                                            <input type="text" readonly hidden name="codecluster[]"
                                                 value="{{ $rumah->codecluster }}">
-                                            <input type="text" hidden readonly name="id_rumah[]"
+                                            <input type="text" readonly hidden name="id_rumah[]"
                                                 value="{{ $rumah->id_rumah }}">
                                         </div>
                                     @endforeach
@@ -157,6 +157,16 @@
                             </select>
 
                         </div>
+                        <input type="text" name="kode_promo" class="form-control" readonly hidden value="{{ $kodePromo }}">
+                        <div class="form-group">
+                            <label for="">Jenis Promo</label>
+
+                            <select class="form-control" name="jenisPromo" id="">
+                                <option value="">--Pilih--</option>
+                                <option value="KPR">KPR</option>
+                                <option value="Cicilan">Cicilan</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="">Nama promo</label>
                             <input type="text" name="nama_promo" required id="" class="form-control"
@@ -166,16 +176,18 @@
 
                         <div class="form-group">
                             <label for="">Nominal / Persentase Diskon</label>
-                            <input type="number" name="diskon_promo" id="" class="form-control" placeholder="Masukan Diskon"
-                                aria-describedby="helpId">
+                            <input type="number" name="diskon_promo" id="diskonPromo" class="form-control"
+                                placeholder="Masukan Diskon" aria-describedby="helpId">
                             <div class="form-check">
 
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <input type="radio" class="form-check-input" name="statusDiskon" id="" value="rupiah" checked> <span>Rupiah</span>
+                                        <input type="radio" class="form-check-input" name="statusDiskon" id="diskonRupiah"
+                                            value="rupiah" checked> <span>Rupiah</span>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="radio" class="form-check-input" name="statusDiskon" id="" value="persen "> <span>Persen</span>
+                                        <input type="radio" class="form-check-input" name="statusDiskon" id="diskonPersen"
+                                            value="persen "> <span>Persen</span>
                                     </div>
                                 </div>
 
@@ -183,18 +195,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                          <label for="">Maksimal Diskon</label>
-                          <input type="text" name="" id="" class="form-control" placeholder="Masukan Max Diskon" aria-describedby="helpId">
-                          <div class="form-check">
-                          <div class="row">
-                            <div class="col-md-3">
-                                <input type="radio" class="form-check-input" name="statusMaxDiskon" id="" value="rupiah" checked> <span>Rupiah</span>
+                            <label for="">Maksimal Diskon</label>
+                            <input type="text" name="maxDiskon" id="maxDiskon" class="form-control"
+                                placeholder="Masukan Max Diskon" aria-describedby="helpId">
+                            <div class="form-check">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input type="radio" class="form-check-input" name="statusMaxDiskon"
+                                            id="statusMaxDiskonRupiah" value="rupiah" checked> <span>Rupiah</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="radio" class="form-check-input" name="statusMaxDiskon"
+                                            id="statusMaxDiskonPersen" value="persen"> <span>Persen</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <input type="radio" class="form-check-input" name="statusMaxDiskon" id="" value="persen"> <span>Persen</span>
-                            </div>
-                          </div>
-                        </div>
                         </div>
                         <div class="form-group">
                             <label for="">BPHTB Promo</label>
@@ -220,39 +235,42 @@
                                 <option value="no" selected>Tidak</option>
                             </select>
                             <label for="jumlah_cicilan" id="jumlahCicilanLabel" hidden>Jumlah Cicilan</label>
-                            <input type="number" name="jumlah_cicilan" id="jumlahCicilan" class="form-control" hidden readonly value="0">
+                            <input type="number" name="jumlah_cicilan" id="jumlahCicilan" class="form-control" hidden
+                                readonly value="0">
                         </div>
 
 
                         @if ($user->kategori == 'CEO')
-                        <div class="form-group">
-                            <label for="">Tanggal Mulai</label>
-                            <input type="date" name="tgl_mulai" required id="" value="{{ date('Y-m-d') }}" class="form-control"
-                                placeholder="" aria-describedby="helpId">
+                            <div class="form-group">
+                                <label for="">Tanggal Mulai</label>
+                                <input type="date" name="tgl_mulai" required id=""
+                                    value="{{ date('Y-m-d') }}" class="form-control" placeholder=""
+                                    aria-describedby="helpId">
 
-                        </div>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="">Tanggal Berakhir</label>
-                            <input type="date" name="tgl_berakhir" required id="" value="{{ date('Y-m-d') }}" class="form-control"
-                                placeholder="" aria-describedby="helpId">
+                            <div class="form-group">
+                                <label for="">Tanggal Berakhir</label>
+                                <input type="date" name="tgl_berakhir" required id="tglBerakhir"
+                                    value="{{ date('Y-m-d') }}" class="form-control" placeholder=""
+                                    aria-describedby="helpId">
 
-                        </div>
+                            </div>
                         @else
-                        <div class="form-group">
-                            <label for="">Tanggal Mulai</label>
-                            <input type="date" name="tgl_mulai" required id="" value="{{ date('Y-m-d') }}" class="form-control"
-                                placeholder="" aria-describedby="helpId">
+                            <div class="form-group">
+                                <label for="">Tanggal Mulai</label>
+                                <input type="date" name="tgl_mulai" required id=""
+                                    value="{{ date('Y-m-d') }}" class="form-control" placeholder=""
+                                    aria-describedby="helpId">
 
-                        </div>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="">Tanggal Berakhir</label>
-                            <input type="date" name="tgl_berakhir" required id="" class="form-control"
-                                placeholder="" aria-describedby="helpId">
+                            <div class="form-group">
+                                <label for="">Tanggal Berakhir</label>
+                                <input type="date" name="tgl_berakhir" required id="tglBerakhir" class="form-control"
+                                    placeholder="" aria-describedby="helpId">
 
-                        </div>
-
+                            </div>
                         @endif
 
                         <div class="form-group">
@@ -261,46 +279,106 @@
                         </div>
 
                         @if ($user->kategori == 'CEO')
-                        <div class="form-group">
-                            <label for="">Kuota Promo</label>
-                            <input type="number" name="kuota_promo" required hidden value="1" class="form-control">
+                            <div class="form-group">
+                                <label for="" hidden>Kuota Promo</label>
+                                <input type="number" name="kuota_promo" required hidden value="1"
+                                    class="form-control">
 
-                        </div>
-
+                            </div>
                         @else
-                        <div class="form-group">
-                            <label for="">Kuota Promo</label>
-                            <input type="number" name="kuota_promo" required placeholder="masukan kuota promo" class="form-control">
+                            <div class="form-group">
+                                <label for="">Kuota Promo</label>
+                                <input type="number" name="kuota_promo" required placeholder="masukan kuota promo"
+                                    class="form-control">
 
-                        </div>
-
-
+                            </div>
                         @endif
-
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a class="btn btn-outline-info" href="#" id="generate">Tampilkan Kode</a>
+                        <button type="submit" class="btn btn-outline-primary" id="submitBtn">Submit</button>
                     </form>
+                    <br>
+                    <div class="card" style="display: none" id="card">
+                        <div class="card-body">
+                            <div>
+                                <label for="">Keterangan:</label>
+                                <br>
+                                <p id="diskonText"></p>
+                                <p id="maximalDiskonText"></p>
+                                <p id="tanggalText"></p>
+                                <label for="">Kode Promo:</label><br>
+                                <button id="copyPromoCode"
+                                    class="btn btn-outline-success col-md-12">{{ $kodePromo }}</button>
+                                <span id="copySuccess" style="">Klik untuk salin kode promo</span>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
-    <script>
-        const extraCicilanSelect = document.getElementById('extraCicilan');
-        const jumlahCicilanLabel = document.getElementById('jumlahCicilanLabel');
-        const jumlahCicilanInput = document.getElementById('jumlahCicilan');
 
-        extraCicilanSelect.addEventListener('change', function () {
-            if (extraCicilanSelect.value === 'yes') {
-                jumlahCicilanLabel.removeAttribute('hidden');
-                jumlahCicilanInput.removeAttribute('hidden');
-                jumlahCicilanInput.removeAttribute('readonly');
-            } else {
-                jumlahCicilanLabel.setAttribute('hidden', 'true');
-                jumlahCicilanInput.setAttribute('hidden', 'true');
-                jumlahCicilanInput.setAttribute('readonly', 'true');
-                jumlahCicilanInput.value = '0'; // Reset the input value
+    <script>
+        $('#generate').click(function () {
+            // Mendapatkan nilai input diskon_promo, maxDiskon, statusDiskon, statusMaxDiskon, dan tglBerakhir
+            var diskonPromo = $('#diskonPromo').val();
+            var maxDiskon = $('#maxDiskon').val();
+            var statusDiskon = $('input[name="statusDiskon"]:checked').val();
+            var statusMaxDiskon = $('input[name="statusMaxDiskon"]:checked').val();
+            var tglBerakhir = $('#tglBerakhir').val();
+
+            // Menyusun teks keterangan
+            if(statusDiskon == 'rupiah'){
+                var diskonText = "Diskon: Rp. " + formatRupiah2(diskonPromo) ;
+            }else{
+                var diskonText = "Diskon: " + diskonPromo +"%" ;
             }
+            if(statusMaxDiskon == 'rupiah'){
+                var maximalDiskonText ="Maksimum Diskon: Rp. "+formatRupiah2(maxDiskon);
+            }else{
+                var maximalDiskonText =  "Maksimum Diskon : "+ maxDiskon+"%";
+            }
+
+            var tanggalText = "Tanggal Berakhir: " + formatDateIndo(tglBerakhir);
+
+            // Menampilkan keterangan
+            $('#diskonText').text(diskonText);
+            $('#maximalDiskonText').text(maximalDiskonText);
+            $('#tanggalText').text(tanggalText);
+
+            // Menampilkan card yang berisi keterangan dan kode promo
+            $('#card').css('display', 'block');
+        });
+
+        // Fungsi untuk menyalin kode promo saat tombol "Klik untuk salin kode promo" ditekan
+        $('#copyPromoCode').click(function () {
+            // Mendapatkan teks dari kode promo
+            var kodePromoText = $('#copyPromoCode').text();
+
+            // Membuat elemen textarea sementara untuk menyalin teks
+            var tempTextArea = $('<textarea>');
+            tempTextArea.val(kodePromoText);
+            $('body').append(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            tempTextArea.remove();
+
+            // Menampilkan pesan sukses
+            $('#copySuccess').text('Kode promo telah disalin!');
+        });
+
+        $(document).ready(function() {
+            $("#generate").on("click", function(event) {
+                event.preventDefault(); // Prevent the default behavior of the anchor tag
+
+                // Scroll to the card element smoothly
+                $("html, body").animate({
+                    scrollTop: $("#card").offset().top
+                }, 1000);
+            });
         });
     </script>
     <script>
@@ -310,6 +388,25 @@
     </script>
 
     <script>
+        function formatDateIndo(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', options);
+        }
+        function formatRupiah2(angka) {
+            var hasilCicilan = Math.round(parseInt((angka / 1000)) * 1000).toString(),
+                sisa = hasilCicilan.length % 3,
+                rupiah = hasilCicilan.substr(0, sisa),
+                ribuan = hasilCicilan.substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            return rupiah;
+        }
+
         function previewImage() {
             var preview = document.querySelector('#preview');
             var file = document.querySelector('#image').files[0];
