@@ -212,7 +212,7 @@
                                                         <div class="form-group">
 
                                                             <input type="text" class="form form-control"
-                                                                id="jumlah" name="jumlah" readonly
+                                                                id="jumlahKPR" name="jumlah" readonly
                                                                 value="{{ $tipeRumah->harga_tr }}">
 
                                                         </div>
@@ -253,14 +253,14 @@
 
                                                     <div class="form-group">
 
-                                                        <input type="text" name="promo" id="kdPromo1"
+                                                        <input type="text" name="promoKPR" id="kdPromo1"
                                                             value="Tidak Ada Promo" hidden readonly class="form-control"
                                                             placeholder="" aria-describedby="helpId">
 
                                                     </div>
                                                     <div class="btn-groups">
                                                         <a type="button"
-                                                            onclick="hitung('jumlah','persentase','sukuBunga','hasil','hasil2','hasil3','hasil4', 'cicilanUM','sisaPembayaran')"
+                                                            onclick="hitung('jumlahKPR','persentase','sukuBunga','hasil','hasil2','hasil3','hasil4', 'cicilanUM','sisaPembayaran')"
                                                             id="hitungBtn" class="btn btn-primary">Hitung Simulasi</a>
 
 
@@ -295,7 +295,8 @@
 
                                                         <h5 id="sisaPembayaran"></h5>
                                                     </div>
-                                                    <input type="text" id="diskonInputKPR" hidden readonly name="diskonInputKPR"  class="form-control">
+                                                    <input type="text" id="diskonInputKPR" hidden readonly
+                                                        name="diskonInputKPR" class="form-control">
 
                                                     <div class="btn-groups">
                                                         <button type="submit" type="button" id="nextKPR" disabled
@@ -365,7 +366,7 @@
                                                     </div>
                                                     <div class="form-group">
 
-                                                        <input type="text" name="promo" id="kdPromo2"
+                                                        <input type="text" name="promoCicilan" id="kdPromo2"
                                                             value="Tidak Ada Promo" hidden readonly class="form-control"
                                                             placeholder="" aria-describedby="helpId">
 
@@ -373,7 +374,8 @@
                                                     <div class="card-shadow">
                                                         <label for="">Jumlah harga</label>
                                                     </div>
-                                                    <input type="text" id="diskonInputCicilan" hidden readonly name="diskonInputCicilan" class="form-control">
+                                                    <input type="text" id="diskonInputCicilan" hidden readonly
+                                                        name="diskonInputCicilan" class="form-control">
                                                     <div class="">
                                                         <input type="text" readonly class="form-control card-shadow"
                                                             name="jumlah" id="jumlahHarga" aria-describedby="helpId"
@@ -503,6 +505,8 @@
 
 
         <script>
+            var jenisDiskon, jumlahDiskon, statusJumlahDiskon, jumlahMaxDiskon, statusJumlahMaxDiskon;
+
             document.addEventListener("DOMContentLoaded", function() {
                 const buttons = document.querySelectorAll(".collapsible-btn");
 
@@ -533,7 +537,7 @@
         {{-- script find query promo selector --}}
         <script>
             const promoCodeBtns = document.querySelectorAll(".promoCodeBtn");
-            const selectedPromoCodeInput = document.getElementById("selectedPromoCode");
+            var selectedPromoCodeInput = document.getElementById("selectedPromoCode");
             var promoCode, jenisPromo, statusDiskon, diskonPromo, statusMaxDiskon, maxDiskon, promo;
             promoCodeBtns.forEach((promoCodeBtn) => {
                 promoCodeBtn.addEventListener("click", () => {
@@ -552,7 +556,7 @@
                     const dataPromo = {
                         promoCode: promoCodeBtn.dataset.promoCode,
                         promo: promoCodeBtn.dataset.promo, // Define 'promo' before using it
-                        diskonPromo: promoCodeBtn.dataset.diskonPromo,
+                        diskonPromo: promoCodeBtn.dataset.jumlahPromo,
                         jenisPromo: promoCodeBtn.dataset.jenisPromo,
                         statusDiskon: promoCodeBtn.dataset.statusDiskon,
 
@@ -561,11 +565,28 @@
                     }
                     console.log(dataPromo);
 
+                    jenisDiskon = jenisPromo;
+                    statusJumlahDiskon = statusDiskon;
+                    jumlahDiskon = diskonPromo;
+                    statusJumlahMaxDiskon = statusMaxDiskon;
+                    jumlahMaxDiskon = maxDiskon;
+                    console.log(jenisDiskon);
+                    console.log(statusJumlahDiskon);
+                    console.log(jumlahDiskon);
+                    console.log(statusJumlahMaxDiskon);
+                    console.log(jumlahMaxDiskon);
+                    if(jenisPromo == "KPR"){
+                        document.getElementById('kdPromo1').value = promoCode;
+                    }else{
+                        document.getElementById('kdPromo2').value = promoCode;
+                    }
+
                     selectedPromoCodeInput.value = promoCode;
+
                     document.getElementById('textPromo').innerText = promo;
 
-                    CekPromo(jenisPromo, statusDiskon, diskonPromo, statusMaxDiskon, maxDiskon);
-                    console.log(CekPromo(jenisPromo, statusDiskon, diskonPromo, statusMaxDiskon, maxDiskon));
+                    CekPromo(jenisDiskon, statusJumlahDiskon, jumlahDiskon, statusJumlahMaxDiskon,jumlahMaxDiskon);
+                    console.log(CekPromo(jenisDiskon, statusJumlahDiskon, jumlahDiskon, statusJumlahMaxDiskon,jumlahMaxDiskon));
 
 
                     $('#modelId').modal('toggle');
@@ -583,14 +604,21 @@
                         console.log(diskonPercentage);
                         // uang Muka 10%
                         var totalDiskon = Math.round(diskonPercentage - (diskonPercentage * (diskonPromo / 100)));
-                        document.getElementById('diskonInputKPR').value = totalDiskon;
+
                         console.log(totalDiskon);
+                        console.log(applyMaxDiskon(totalDiskon, maxDiskon, statusMaxDiskon));
+
+                        return applyMaxDiskon(totalDiskon, maxDiskon, statusMaxDiskon);
+
+
+                    } else if (statusDiskon == "rupiah" && diskonPromo > 0) {
+                        var totalDiskon = Math.round(diskonPromo);
                         console.log(applyMaxDiskon(totalDiskon, maxDiskon, statusMaxDiskon));
                         return applyMaxDiskon(totalDiskon, maxDiskon, statusMaxDiskon);
 
-                    } else if (statusDiskon == "rupiah" && diskonPromo > 0) {
                         // Handle rupiah discount here
                     }
+
                 } else if (jenisPromo == "Cicilan") {
                     let diskonCicilan = document.getElementById('diskon2');
                     let diskonCard2 = document.getElementById('cardDiskon2');
@@ -633,7 +661,7 @@
                     document.getElementById('diskonInputCicilan').value = totalDiskon;
 
                 } else {
-                    document.getElementById('kdPromo1').value = promoCode;
+
 
                     document.getElementById('diskon1').innerText = "Sudah dipotong Diskon : Rp. " +
                         formatRupiah2(diskonPromo);
@@ -654,6 +682,8 @@
                     console.log(maxDiskonValue);
                     return Math.min(diskonPromo, maxDiskonValue);
                 } else if (status == 'rupiah') {
+                    console.log(maxDiskon);
+                    console.log(diskonPromo);
                     return Math.min(diskonPromo, maxDiskon);
                 }
                 return diskonPromo;
@@ -680,18 +710,37 @@
                         if (response.promo != null) {
                             var diskon;
                             var totalDiskon, maxDiskon;
+                            if(response.jenis_promo == "KPR"){
+                                document.getElementById('kdPromo1').value = response.kode_promo;
+                            }else{
+                                document.getElementById('kdPromo2').value = response.kode_promo;
+                            }
                             if (response.jenis_promo == "KPR") {
-                                CekPromo("KPR", response.status_diskon, response.diskon_promo, response.statusMaxDiskon, response.max_diskon);
+                                jenisDiskon = response.jenis_promo;
+                                statusJumlahDiskon = response.status_diskon;
+                                jumlahDiskon = response.diskon_promo;
+                                statusJumlahMaxDiskon = response.status_max_diskon;
+                                jumlahMaxDiskon = response.max_diskon;
+                                console.log(jenisDiskon);
+                                console.log(statusJumlahMaxDiskon);
+                                console.log(jumlahDiskon);
+                                console.log(statusJumlahMaxDiskon);
+                                console.log(jumlahMaxDiskon);
 
+
+                                CekPromo("KPR", response.status_diskon, response.diskon_promo, response
+                                    .status_max_diskon, response.max_diskon);
+                                console.log(CekPromo("KPR", response.status_diskon, response.diskon_promo,
+                                    response.diskon_promo, response.diskon_promo));
                             } else if (response.jenis_promo == "Cicilan") {
                                 let diskonCicilan = document.getElementById('diskon2');
                                 let diskonCard2 = document.getElementById('cardDiskon2');
 
-                                console.log('status diskon '+ response.status_diskon);
+                                console.log('status diskon ' + response.status_diskon);
                                 if (response.status_diskon == "persen") {
                                     totalDiskon = {{ $tipeRumah->harga_tr }} * (response.diskon_promo /
                                         100);
-                                        console.log('INI ADALAH totalDiskon'+totalDiskon);
+                                    console.log('INI ADALAH totalDiskon' + totalDiskon);
                                     if (response.status_max_diskon == "persen") {
                                         maxDiskon = {{ $tipeRumah->harga_tr }} * (response.max_diskon /
                                             100)
@@ -708,7 +757,7 @@
                                     diskonCard2.style.display = "block";
 
                                 } else if (response.status_diskon == "rupiah") {
-                                    totalDiskon =  response.diskon_promo;
+                                    totalDiskon = response.diskon_promo;
                                     if (response.status_max_diskon == "persen") {
                                         maxDiskon = {{ $tipeRumah->harga_tr }} * (response.max_diskon /
                                             100)
@@ -748,8 +797,6 @@
             });
 
             function createCicilan(totalDiskon) {
-                let jumlah = document.getElementById('jumlah');
-                jumlah.value = {{ $tipeRumah->harga_tr }} - totalDiskon;
 
                 document.getElementById('jumlahHarga').value = (
                     {{ $tipeRumah->harga_tr }} - 10000000 - totalDiskon);
@@ -805,28 +852,32 @@
                 var um = document.getElementById(uangmuka).value;
                 var skBunga = document.getElementById(sukuBunga).value;
                 var cicilanUM = document.getElementById(cicilanUM).value;
-                var hasilUM = {{ $tipeRumah->harga_tr }} * (um/100);
+                var hasilUM = {{ $tipeRumah->harga_tr }} * (um / 100);
                 console.log(uangMukaAsli);
                 var hasilCicilan;
                 var hasilPromo;
-                var cekPromo = CekPromo("KPR", statusDiskon, diskonPromo, statusMaxDiskon, maxDiskon);
+
+
+                var cekPromo = CekPromo('KPR', statusJumlahDiskon, jumlahDiskon, statusJumlahMaxDiskon, jumlahMaxDiskon);
                 console.log(cekPromo);
-                if(cekPromo){
-                    hasilPromo = CekPromo("KPR", statusDiskon, diskonPromo, statusMaxDiskon, maxDiskon);
+                if (cekPromo) {
+                    hasilPromo = CekPromo('KPR', statusJumlahDiskon, jumlahDiskon, statusJumlahMaxDiskon, jumlahMaxDiskon);
+                    console.log()
                     if (cicilanUM != 1) {
                         hasilCicilan = (hasilUM - hasilPromo) / cicilanUM;
                     } else {
                         hasilCicilan = hasilUM - hasilPromo;
                     }
+                    document.getElementById('diskonInputKPR').value = hasilPromo;
 
-                }else{
+                } else {
                     hasilPromo = 0;
                     if (cicilanUM != 1) {
                         hasilCicilan = hasilUM / cicilanUM;
                     } else {
                         hasilCicilan = hasilUM / 1;
                     }
-
+                    document.getElementById('diskonInputKPR').value = 0;
                 }
 
 
@@ -852,19 +903,22 @@
 
                 if (cicilanUM != 1) {
 
-                    if(CekPromo("KPR", statusDiskon, diskonPromo, statusMaxDiskon, maxDiskon)){
+                    if (CekPromo('KPR', statusJumlahDiskon, jumlahDiskon, statusJumlahMaxDiskon, jumlahMaxDiskon)) {
 
 
-                        hasil.innerText = "Uang muka Rp " + formatRupiah2(hasilUM) + " Menjadi Rp. "+  formatRupiah2(hasilUM-hasilPromo)+" dari Rp " + formatRupiah2(
-                            jml) +" dengan diskon Rp. "+ formatRupiah2(hasilPromo);
-                            hasil3.innerText = "Harga cicilan uang muka Rp " + formatRupiah2(hasilCicilan) + " (" + formatRupiah2(hasilUM-hasilPromo
-                            ) + " : " + cicilanUM + ")"
+                        hasil.innerText = "Uang muka Rp " + formatRupiah2(hasilUM) + " Menjadi Rp. " + formatRupiah2(hasilUM -
+                            hasilPromo) + " dari Rp " + formatRupiah2(
+                            jml) + " dengan diskon Rp. " + formatRupiah2(hasilPromo);
+                        hasil3.innerText = "Harga cicilan uang muka Rp " + formatRupiah2(hasilCicilan) + " (" + formatRupiah2(
+                            hasilUM - hasilPromo
+                        ) + " : " + cicilanUM + ")"
 
-                    }else{
+                    } else {
                         hasil.innerText = "Uang muka Rp " + formatRupiah2(hasilUM) + " dari Rp " + formatRupiah2(
                             jml);
-                            hasil3.innerText = "Harga cicilan uang muka Rp " + formatRupiah2(hasilCicilan) + " (" + formatRupiah2(hasilUM
-                            ) + " : " + cicilanUM + ")"
+                        hasil3.innerText = "Harga cicilan uang muka Rp " + formatRupiah2(hasilCicilan) + " (" + formatRupiah2(
+                            hasilUM
+                        ) + " : " + cicilanUM + ")"
 
                     }
 

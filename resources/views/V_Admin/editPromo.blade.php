@@ -245,7 +245,7 @@
                         <div class="form-group">
                             <label for="">Maksimal Diskon</label>
                             <input type="text" name="maxDiskon" id="" class="form-control"
-                                placeholder="Masukan Max Diskon" aria-describedby="helpId">
+                                placeholder="Masukan Max Diskon" value="{{ $getPromo->max_diskon }}" aria-describedby="helpId">
                             <div class="form-check">
                                 <div class="row">
                                     <div class="col-md-3">

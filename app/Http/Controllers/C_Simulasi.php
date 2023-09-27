@@ -373,9 +373,11 @@ class C_Simulasi extends Controller
             );
 
             $dataInputKalkulator = '';
+            $kodePromo ="Tidak Ada Promo";
             if ($request->jenis == 'KPR') {
+
                 if ($rumah->status_stock == 'Inden') {
-                    if($getPromo->promo != null){
+                    if(empty($getPromo)){
                         $dataInputKalkulator = [
                             'luas_tanah_kkpr' => $rumah->luas_tanah,
                             'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
@@ -386,6 +388,7 @@ class C_Simulasi extends Controller
                             'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                             'cicilan_um' => $request->cicilanUM,
                         ];
+                    $kodePromo = $request->promoKPR;
                     }else{
                         $dataInputKalkulator = [
                             'luas_tanah_kkpr' => $rumah->luas_tanah,
@@ -400,7 +403,7 @@ class C_Simulasi extends Controller
                     }
 
                 } else {
-                    if($getPromo->promo != null){
+                    if(empty($getPromo)){
                         $dataInputKalkulator = [
                             'luas_tanah_kkpr' => $rumah->luas_tanah,
                             'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
@@ -411,6 +414,7 @@ class C_Simulasi extends Controller
                             'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                             'cicilan_um' => 1,
                         ];
+                        $kodePromo = $request->promoKPR;
                     }else{
                         $dataInputKalkulator = [
                             'luas_tanah_kkpr' => $rumah->luas_tanah,
@@ -426,7 +430,7 @@ class C_Simulasi extends Controller
 
                 }
             } else {
-                if($getPromo->promo != null){
+                if(empty($getPromo)){
                     $dataInputKalkulator = [
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
@@ -438,6 +442,7 @@ class C_Simulasi extends Controller
                         'cicilan_um' => 1,
                         'cicilan' => $request->cicilan,
                     ];
+                    $kodePromo = $request->promoCicilan;
                 }else{
                     $dataInputKalkulator = [
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
@@ -453,10 +458,16 @@ class C_Simulasi extends Controller
                 }
 
             }
+            // dd($kodePromo);
 
+            // echo "<pre>";
+            // print_r ($request->diskonInputKPR);
+            // echo "</pre>";
+
+            // dd($dataInputKalkulator);
             $getIDKalkulator = $this->kalkulatorKPR->insertGetIDKalkulatorKPR($dataInputKalkulator);
 
-            return redirect()->route('simulasiPelanggan', [$id_rumah, $id_tipe, $getIDKalkulator, $request->jenis, $request->promo])->with('success', 'silahkan lanjutkan proses');
+            return redirect()->route('simulasiPelanggan', [$id_rumah, $id_tipe, $getIDKalkulator, $request->jenis, $kodePromo])->with('success', 'silahkan lanjutkan proses');
             // dd($dataInputKalkulator);
 
             // dd($user);
