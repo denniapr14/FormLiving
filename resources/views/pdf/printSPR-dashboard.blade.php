@@ -99,14 +99,23 @@
                 </tr>
             </table>
             <br>
-            <h4> SURAT PEMESANAN RUMAH </h4>
-            <p>Nomor : {{$fp->no_fp}} </p>
+
         </center>
+        <h4> SURAT PEMESANAN RUMAH </h4>
+        <p>Nomor : {{$fp->no_fp}} </p>
         <p>Yang bertanda tangan dibawah ini :</p>
         <table>
             <tr>
                 <td style="width:40%;">Nama</td>
                 <td>: {{ $fp->nama_plgn }} </td>
+            </tr>
+            <tr>
+                <td style="width:40%;">NPWP</td>
+                <td>: {{ $fp->npwp_plgn }} </td>
+            </tr>
+            <tr>
+                <td style="width:40%;">KTP/SIM No.</td>
+                <td>: {{ $fp->no_ktp_plgn }} </td>
             </tr>
             <tr>
                 <td style="width:40%;">Alamat</td>
@@ -127,6 +136,10 @@
                 <td>
                     : {{ $fp->tempat_lahir_plgn }},  <?= tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn)))?>
                 </td>
+            </tr>
+            <tr>
+                <td style="width:40%;">Pekerjaan</td>
+                <td>: {{$fp->pekerjaan_plgn}}</td>
             </tr>
             <tr>
                 <td style="width:40%;">Sumber Dana</td>

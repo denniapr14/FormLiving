@@ -130,12 +130,22 @@
                                 value="{{ $getPembayaranRumah->sisa_pr }}" placeholder="" aria-describedby="helpId">
                             <small id="helpId" class="text-muted"></small>
                         </div>
+                        @if($getPembayaranRumah->detail_pr == "KPR")
+                        <div class="form-group">
+                            <label for="">Tanggal Bayar</label>
+                            <input type="text" name="tanggal" id="" class="form-control"
+                                value="00/00/0000" placeholder="" readonly aria-describedby="helpId">
+                            <small id="helpId" class="text-muted"></small>
+                        </div>
+                        @else
                         <div class="form-group">
                             <label for="">Tanggal Bayar</label>
                             <input type="date" name="tanggal" id="" class="form-control"
                                 value="{{ $getPembayaranRumah->tgl_pr }}" placeholder="" aria-describedby="helpId">
                             <small id="helpId" class="text-muted"></small>
                         </div>
+                        @endif
+
                         <div class="form-group">
                             <label for="">Status</label>
                             <select name="status" id="" class="form form-control">
