@@ -349,7 +349,10 @@
                             <br>
                             <h4> SURAT PEMESANAN RUMAH SEMENTARA</h4>
                             <p>Nomor :
-                                @if ($user->kategori =="StaffAcc" || $user->kategori == "SuperAdmin")
+                                @if ($user->kategori =="StafAcc" || 
+                                $user->kategori == "SuperAdmin"||
+                                $user->kategori == "AdminAccounting"
+                                )
                                 @if ($getFormulirPesanan->no_fp != null)
                                 <input type="text" name="nofp" value="{{ $getFormulirPesanan->no_fp }}"
                                     style="width: 30%">
