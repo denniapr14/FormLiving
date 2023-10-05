@@ -16,13 +16,12 @@ use App\Http\Controllers\C_Promo;
 use App\Http\Controllers\C_Rumah;
 use App\Http\Controllers\C_Simulasi;
 use App\Http\Controllers\C_SuratPemesananRumah;
-use App\Http\Controllers\C_UserPelanggan;
-use App\Http\Controllers\C_UserKategori;
-
-// ADMIN FORMS LIVING
 use App\Http\Controllers\C_TipeRumah;
 use App\Http\Controllers\C_UserAdmin;
+// ADMIN FORMS LIVING
+use App\Http\Controllers\C_UserKategori;
 use App\Http\Controllers\C_UserMenu;
+use App\Http\Controllers\C_UserPelanggan;
 use App\Http\Controllers\Ceo_Dashboard;
 // ADMIN
 use App\Http\Controllers\Direktur_Dashboard;
@@ -74,6 +73,8 @@ Route::get('/search-item', [Home::class, 'SearchItem']);
 
 Route::get('/sign-up', [Home::class, 'SignUp']);
 Route::post('/sign-up/create', [Home::class, 'SignUpAction'])->name('sign-up.action');
+Route::post('/check-username', [Login::class, 'checkUsernameAvailability']);
+Route::post('/check-email', [Login::class, 'checkEmailAvailability']);
 Route::get('/pre-order', [C_PreOrder::class, 'preOrderForms'])->name('preOrderForms.sales');
 
 // >>>>>>>>>>>>>>>>>>> END PROFILE <<<<<<<<<<<<<<<<<<<<<<<<
@@ -87,10 +88,7 @@ Route::get('/simulation-select-unit/{codecluster}', [Home::class, 'simSelectUnit
 Route::get('/simulation-type/{id_rumah}', [C_Simulasi::class, 'simType'])->name('simulationTipe');
 Route::get('/simulation-detail-type/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simDetailType'])->name('simulationDetailTipe');
 
-
-
 Route::get('/simulation-modification', [Home::class, 'simModif']);
-
 
 Route::get('/simulation-payment-option/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simPayment'])->name('simulationPaymentOption');
 Route::post('/simulation-payment-option/action/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simPaymentAction'])->name('simulationPaymentOptionAction');
@@ -103,7 +101,6 @@ Route::get('/simulation-summary/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/{id_pelan
 Route::post('/simulation-summary/store/{id_rumah}/{id_tipe}/{id_kkpr}/{jenis}/{id_pelanggan}/{kdPromo}', [C_Simulasi::class, 'simSummaryAction'])->name('simulationSummary.action');
 Route::get('/congratulation', [Home::class, 'congratulation']);
 
-
 Route::get('/simulation-price/{id_rumah}/{id_tipe}', [C_Simulasi::class, 'simPrice'])->name('simulationPrice');
 
 Route::get('/simulation-price-payment/{id_rumah}/{id_tipe}/{payment}', [C_Simulasi::class, 'simPricePayment'])->name('simulationPricePayment');
@@ -114,8 +111,6 @@ Route::post('/simulation-price-payment/action/{id_rumah}/{id_tipe}/{payment}', [
 // Route::get('/simulation-order/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}', [Home::class, 'simOrder']);
 // Route::post('/simulation-order/store/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}', [Home::class, 'simOrderAction'])->name('simulation-order.action');
 // Route::get('/simulation-order/cariKupon/{id_rumah}/{id_tipe}/{payment}/{id_kkpr}/{kode_promo}', [Home::class, 'findKupon']);
-
-
 
 Route::get('/MailSend', [Home::class, 'Send']);
 Route::get('/WASend', [Home::class, 'SendWA']);
@@ -311,9 +306,9 @@ route::post('/tambah-tipe-rumah/{projek}', [C_TipeRumah::class, 'storeTipeRumahA
 Route::get('/ubah-tipe-rumah-admin/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumah'])->name('updateTipeRumah.admin');
 Route::post('/ubah-tipe-rumah-admin/action/{projek}/{id}', [C_TipeRumah::class, 'updateTipeRumahAction'])
     ->name('updateTipeRumahAction.admin');
-Route::post('/ubah-gambar-tipe-rumah-admin/action/{projek}/{id}/{id_gambar}',[C_TipeRumah::class,'updateImageTipeRumahAction'])
+Route::post('/ubah-gambar-tipe-rumah-admin/action/{projek}/{id}/{id_gambar}', [C_TipeRumah::class, 'updateImageTipeRumahAction'])
 ->name('updateImageTipeRumahAction.admin');
-Route::get('/hapus-tipe-rumah-admin/{id}',[C_TipeRumah::class,'deleteTipeRumahAction'])->name('deleteTipeRumah.admin');
+Route::get('/hapus-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'deleteTipeRumahAction'])->name('deleteTipeRumah.admin');
 
 Route::get('/gambar-rumah/status/{status}/{id}', [C_GambarRumah::class, 'changeGambarRumahStatus']);
 
@@ -321,8 +316,7 @@ Route::get('/gambar-rumah/status/{status}/{id}', [C_GambarRumah::class, 'changeG
 Route::get('/surat-pemesanan-rumah-admin/{projek}', [C_SuratPemesananRumah::class, 'suratPemesananRumah'])->name('suratPemesananRumah.admin');
 Route::get('/ubah-surat-pemesanan-rumah/{projek}/{id}', [C_SuratPemesananRumah::class, 'editSuratPemesananRumah'])->name('editSuratPemesananRumah.admin');
 Route::post('/ubah-surat-pemesanan-rumah/action/{projek}/{id}', [C_SuratPemesananRumah::class, 'editSuratPemesananRumahAction'])->name('editSuratPemesananRumahAction.admin');
-Route::get('/cetak-surat-pemesanan-rumah/{id}',[C_SuratPemesananRumah::class,'cetakSuratPemesananRumah'])->name('cetakSuratPemesananRumah.admin');
-
+Route::get('/cetak-surat-pemesanan-rumah/{id}', [C_SuratPemesananRumah::class, 'cetakSuratPemesananRumah'])->name('cetakSuratPemesananRumah.admin');
 
 Route::get('/ubah-pembayaran-rumah-admin/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumah'])->name('editPembayaranRumah.admin');
 Route::post('/ubah-pembayaran-rumah-admin/action/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumahAction'])->name('editPembayaranRumahAction.admin');
@@ -346,13 +340,12 @@ Route::get('/selamat/{id}', [C_PreOrder::class, 'selamatPage'])->name('userConfi
 // >>>>>>>>>>>>>>>>>>end of Pre-Order route List<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');
 Route::get('/download-user-sales-admin', [C_UserAdmin::class, 'DownloadUserAdminSales'])->name('downloadUserAdminSales.admin');
-Route::get('/hapus-user-admin/{id}',[C_UserAdmin::class,'deleteUserAdmin'])->name('deleteUserAdmin.admin');
+Route::get('/hapus-user-admin/{id}', [C_UserAdmin::class, 'deleteUserAdmin'])->name('deleteUserAdmin.admin');
 // PROMO
 Route::get('/promo-admin/{projek}', [C_Promo::class, 'Promo'])->name('promo.admin');
 Route::get('/tambah-rumah-promo-admin/{projek}', [C_Promo::class, 'addRumahPromo'])->name('addPromoRumah.admin');
 
 Route::get('/cari-rumah-promo-admin/{projek}', [C_Promo::class, 'rumahPromoAutocomplete'])->name('rumahPromoAutocomplete.admin');
-
 
 Route::post('/tambah-rumah-promo-admin/action/{projek}', [C_Promo::class, 'addRumahPromoAction'])->name('addPromoRumahAction.admin');
 // Route::get('/tambah-promo-admin/{projek}', [C_Promo::class, 'addPromo'])->name('addPromo.admin');
@@ -366,24 +359,20 @@ Route::post('/ubah-promo-admin/action/{projek}/{id}', [C_Promo::class, 'updatePr
 Route::get('/ubah-user-profile/{id}', [C_UserAdmin::class, 'updateUserProfile'])->name('updateUserProfile.admin');
 Route::post('/ubah-user-profile/action/{id}', [C_UserAdmin::class, 'updateUserProfileAction'])->name('updateUserProfileAction.admin');
 
-Route::get('/ubah-password-profile/{id}',[C_UserAdmin::class,'updatePasswordProfile'])->name('updatePasswordProfile.admin');
-Route::post('/ubah-password-profile/action/{id}',[C_UserAdmin::class,'updatePasswordProfileAction'])->name('updatePasswordProfileAction.admin');
-
+Route::get('/ubah-password-profile/{id}', [C_UserAdmin::class, 'updatePasswordProfile'])->name('updatePasswordProfile.admin');
+Route::post('/ubah-password-profile/action/{id}', [C_UserAdmin::class, 'updatePasswordProfileAction'])->name('updatePasswordProfileAction.admin');
 
 Route::get('/user-pelanggan-admin', [C_UserPelanggan::class, 'userPelanggan'])->name('userPelanggan.admin');
 Route::get('/ubah-user-pelanggan-admin/{id}', [C_UserPelanggan::class, 'updateUserPelanggan'])->name('updateUserPelanggan.admin');
 Route::post('/ubah-user-pelanggan-admin/action/{id}', [C_UserPelanggan::class, 'updateUserPelangganAction'])->name('updateUserPelangganAction.admin');
 
-
 // Route::get('/user-menu-admin',[C_UserMenu::class,'userMenu'])->name('userMenu.admin');
 // Route::post('/ubah-user-menu-admin/action/{id}',[C_UserMenu::class,'updateUserMenuAction'])->name('updateUserMenuAction.admin');
 
-Route::get('/user-kategori-admin',[C_UserKategori::class,'userKategori'])->name('userKategori.admin');
-Route::post('/ubah-kategori-admin/action/{id}',[C_UserKategori::class,'updateUserKategoriAction'])->name('updateUserKategoriAction.admin');
-Route::get('/ubah-status-kategori-admin/{id}',[C_UserKategori::class,'changeStatusUserKategori'])->name('changeStatusUserKategori.admin');
+Route::get('/user-kategori-admin', [C_UserKategori::class, 'userKategori'])->name('userKategori.admin');
+Route::post('/ubah-kategori-admin/action/{id}', [C_UserKategori::class, 'updateUserKategoriAction'])->name('updateUserKategoriAction.admin');
+Route::get('/ubah-status-kategori-admin/{id}', [C_UserKategori::class, 'changeStatusUserKategori'])->name('changeStatusUserKategori.admin');
 // Route::get('/ubah-hapus-kategori-admin/{id}',[C_UserKategori::class,'changeStatusUserKategori'])->name('changeStatusUserKategori.admin');
 // Route::get('/ubah-status-user-menu-admin/{id}/{status}',[C_UserMenu::class,'changeStatusUserMenu'])->name('changeStatusUserMenu.admin');
 
-
-
-Route::get('/ubah-status-user-admin/{id}/{status}',[C_UserAdmin::class,'changeStatusUser'])->name('changeStatusUser.admin');
+Route::get('/ubah-status-user-admin/{id}/{status}', [C_UserAdmin::class, 'changeStatusUser'])->name('changeStatusUser.admin');

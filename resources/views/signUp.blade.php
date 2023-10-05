@@ -38,7 +38,7 @@
                     <form method="POST" action="{{ route('sign-up.action') }}">
                         @csrf
                         <h5>Register Account</h5>
-                        <h6>NB : Required *</h6>
+                        <h6>NB : Diperlukan *</h6>
                         <div class="mb-3 form-group">
                             <label for="full-name" class="form-label">Nama Lengkap <span>*</span></label>
                             <input type="text" class="form-control" name="nama" id="full-name" value="{{ old('nama') }}"
@@ -47,17 +47,20 @@
                         <div class="mb-3 form-group">
                             <label for="username" class="form-label">Username<span>*</span></label>
                             <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                name="username" placeholder="Username" value="{{ old('username') }}">
+                                name="username" id="username" placeholder="Username" value="{{ old('username') }}">
+                            <div id="username-availability"></div> <!-- Display username availability here -->
                         </div>
                         @error('username')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
+
                         <div class="mb-3 form-group">
                             <label for="email" class="form-label">Email <span>*</span></label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email"
                                 value="{{ old('email') }}">
-
+                            <div id="email-availability"></div> <!-- Display email availability here -->
                         </div>
+
                         <div class="mb-3 form-group">
                             <label for="phone" class="form-label">Nomor Telepon <span>*</span></label>
                             <input type="tel" class="form-control" name="phone" id="phone"
@@ -82,10 +85,10 @@
                             <label for="kelamin" class="form-label">Jenis Kelamin <span>*</span></label>
                             <select name="kelamin" class="form-select form-control" id="">
                                 <option value=""> - Pilih jenis Kelamin - </option>
-                                <option value="Laki - Laki" {{ (Input::old("kelamin")=='Laki - Laki' ? "selected" :"")
+                                <option value="Laki - Laki" {{ (old("kelamin")=='Laki - Laki' ? "selected" :"")
                                     }}>
                                     Laki - Laki </option>
-                                <option value="Perempuan" {{ (Input::old("kelamin")=='Perempuan' ? "selected" :"") }}>
+                                <option value="Perempuan" {{ (old("kelamin")=='Perempuan' ? "selected" :"") }}>
                                     Perempuan </option>
                             </select>
                         </div>
@@ -125,9 +128,40 @@
 <br><br>
 
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#username').on('input', function () {
+            checkUsernameAvailability($(this).val());
+        });
+
+        $('#email').on('input', function () {
+            checkEmailAvailability($(this).val());
+        });
+
+        function checkUsernameAvailability(username) {
+            $.post('/check-username', { username: username }, function (data) {
+                if (data.available) {
+                    $('#username-availability').html('<span style="color:green;">Username is available</span>');
+                } else {
+                    $('#username-availability').html('<span style="color:red;">Username is not available</span>');
+                }
+            });
+        }
+
+        function checkEmailAvailability(email) {
+            $.post('/check-email', { email: email }, function (data) {
+                if (data.available) {
+                    $('#email-availability').html('<span style="color:green;">Email is available</span>');
+                } else {
+                    $('#email-availability').html('<span style="color:red;">Email is not available</span>');
+                }
+            });
+        }
+    });
+
     const inputFields = document.querySelectorAll("input, select");
     const submitButton = document.getElementById("btnsignup");
-    
+
     for (let i = 0; i < inputFields.length; i++) {
       inputFields[i].addEventListener("input", () => {
         let allFilled = true;
