@@ -2,29 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Promo;
 use App\Models\UserAdmin;
-use App\Rules\noExistEmail;
-
 // Controller
 // =======================
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Crypt;
-
-use Mail;
-use PDF;
-
 
 class C_Login extends Controller
 {
     public function Login()
     {
-
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -38,6 +28,7 @@ class C_Login extends Controller
             $userPelanggan = \App\Models\UserPelanggan::where([
                 'id_pelanggan' => session::get('guest'),
             ])->first();
+
             // dd($userPelanggan);
             // die();
             return view('login', compact('userPelanggan'));
@@ -73,7 +64,6 @@ class C_Login extends Controller
 
         if (!empty($user)) {
             if (Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
-
                 Session::put('user', $user->id_user_admin);
                 $hasilSess = Session::get('user');
 
@@ -81,24 +71,24 @@ class C_Login extends Controller
 
                 switch ($userRole) {
                     case 'AdminAccounting':
-                        return redirect('/dashboard-admin/Greenland')->with('success', "Anda berhasil masuk!");
+                        return redirect('/dashboard-admin/Greenland')->with('success', 'Anda berhasil masuk!');
                         break;
                     case 'Admin':
-                        return redirect('/')->with('success', "Anda berhasil masuk!");
+                        return redirect('/')->with('success', 'Anda berhasil masuk!');
                         break;
 
                     case 'CEO':
-                        return redirect('/')->with('success', "Anda berhasil masuk!");
+                        return redirect('/')->with('success', 'Anda berhasil masuk!');
                         break;
                     case 'AdminFormsLiving':
-                        return redirect('/dashboard-admin/Greenland')->with('success',"Anda berhasil masuk!");
-                    break;
+                        return redirect('/dashboard-admin/Greenland')->with('success', 'Anda berhasil masuk!');
+                        break;
                     case 'SuperAdmin':
-                        return redirect('/dashboard-admin/Greenland')->with('success',"Anda berhasil masuk!");
-                    break;
+                        return redirect('/dashboard-admin/Greenland')->with('success', 'Anda berhasil masuk!');
+                        break;
 
                     default:
-                        return redirect('/')->with('success', "Anda berhasil masuk!");
+                        return redirect('/')->with('success', 'Anda berhasil masuk!');
                         break;
                 }
             }
@@ -106,20 +96,19 @@ class C_Login extends Controller
 
         if (!empty($userPelanggan)) {
             if (Auth::guard('guest')->attempt(['username_plgn' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
-
                 Session::put('guest', $userPelanggan->id_pelanggan);
 
                 return redirect('/Greenland')
 
-                    ->with('success', "Anda berhasil masuk!");
+                    ->with('success', 'Anda berhasil masuk!');
             }
         }
 
-        return redirect("login")->with('error', 'Login details are not valid');
+        return redirect('login')->with('error', 'Login details are not valid');
     }
+
     public function Role($idUser)
     {
-
         $user = DB::table('user_admin')
             ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
 
@@ -133,34 +122,36 @@ class C_Login extends Controller
         return $user->kategori;
     }
 
-    public function emailForgot(){
+    public function emailForgot()
+    {
         return view('mail.mailForgot');
     }
 
-    public function emailForgotAction(Request $request){
-        $dataEmail = UserAdmin::where('email_ua','=', $request->email_ua)->exists();
-        $dataEmailList = UserAdmin::where('email_ua','=', $request->email_ua)->first();
+    public function emailForgotAction(Request $request)
+    {
+        $dataEmail = UserAdmin::where('email_ua', '=', $request->email_ua)->exists();
+        $dataEmailList = UserAdmin::where('email_ua', '=', $request->email_ua)->first();
         $template = 'mail.mailForgot';
         $request->validate([
-            'email_ua' => ['required','email']
-        ],[
-            'email_ua.required' => 'Email Perlu Diisi'
+            'email_ua' => ['required', 'email'],
+        ], [
+            'email_ua.required' => 'Email Perlu Diisi',
         ]);
 
-        if(!$dataEmail){
-            Session::flash('error_message','Email belum terdaftar. Silahkan registrasi terlebih dahulu.');
+        if (!$dataEmail) {
+            Session::flash('error_message', 'Email belum terdaftar. Silahkan registrasi terlebih dahulu.');
+
             return redirect()->back();
-        }else{
-            Mail::to($dataEmail->email_plgn)->send(new MailNotify($dataEmailList, $template));
+        } else {
+            \Mail::to($dataEmail->email_plgn)->send(new MailNotify($dataEmailList, $template));
         }
-
-
 
         return redirect('/login')->with('success-forgot', 'reset password link telah dikirim ke email Anda');
     }
 
-    //page forgot password
-    public function forgotPassword($email){
+    // page forgot password
+    public function forgotPassword($email)
+    {
         // if(!session()->has('guest') || session()->has('user')){
         //     Session::flush('guest');
         //     Session::flush('user');
@@ -168,15 +159,16 @@ class C_Login extends Controller
         $user = DB::table('user_admin')
             ->where('user_admin.email_ua', '=', $email)
             ->first();
-            // dd($user);
-       return view('forgotPassword',compact('user'));
+
+        // dd($user);
+        return view('forgotPassword', compact('user'));
     }
 
-    //aksi dari forgot password
-    public function forgotAction(request $request){
-
+    // aksi dari forgot password
+    public function forgotAction(request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
             // Add more validation rules as needed
         ]);
 
@@ -184,17 +176,34 @@ class C_Login extends Controller
             $customMessages = [
                 'required' => ':attribute Masih Kosong',
                 'min' => ' :attribute kurang dari 6',
-                'confirmed' => ' :attribute tidak sama dengan konfirmasi password'
+                'confirmed' => ' :attribute tidak sama dengan konfirmasi password',
             ];
         }
 
         return redirect()->back()->withErrors($validator)->withInput();
     }
 
+    public function checkUsernameAvailability(Request $request)
+    {
+        $username = $request->input('username');
+        $user = User::where('username', $username)->first();
+
+        return response()->json(['available' => !$user]);
+    }
+
+    public function checkEmailAvailability(Request $request)
+    {
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
+
+        return response()->json(['available' => !$user]);
+    }
+
     public function Logout()
     {
         Session::flush('guest');
         Session::flush('user');
+
         return redirect('/')->with('success', "You're sign out!");
     }
 }
