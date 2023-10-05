@@ -334,15 +334,15 @@
                         </table>
                         <br>
                         <h4> Data SPR</h4>
-
                     </center>
                     <p>Nomor SPR:
                         @if ($user->kategori =="StaffAcc" || $user->kategori == "SuperAdmin")
                         @if ($getFormulirPesanan->no_fp != null)
                         <input type="text" name="nofp" value="{{ $getFormulirPesanan->no_fp }}" style="width: 30%">
                         @else
-                        <input type="text" name="nofp" value="@if ($getProjek->nama_projek=='Greenland')SPRGL/<?=date('m/Y')?>@else SPRKR/<?=date('m/Y')?>@endif
-                            " style="width: 30%">
+                        <input type="text" name="nofp" value="" style="width: 10%">
+                        <input type="text" name="nofpextra" value="@if ($getProjek->nama_projek=='Greenland')/SPRGL/<?=date('m/Y')?>@else /SPRKR/<?=date('m/Y')?>@endif
+                            " style="width: 15%" disabled>
                         @endif
                         @else
                     <p>{{ $getFormulirPesanan->no_fp }}</p>
@@ -357,34 +357,43 @@
                             <br>
                             <tr>
                                 <td>Nama</td>
-                                <td>: {{ $getFormulirPesanan->nama_plgn }} </td>
+                                <td>: <input type="text" name="namaPlgn" value="{{ $getFormulirPesanan->nama_plgn }}"
+                                        style="width: 95%">
+                                </td>
                             </tr>
                             <tr>
-                                <td style="width:40%;">NPWP</td>
-                                <td>: {{ $getFormulirPesanan->npwp_plgn }} </td>
+                                <td style="width:30%;">NPWP</td>
+                                <td>: <input type="text" name="npwp" value="{{ $getFormulirPesanan->npwp_plgn }}"
+                                        style="width:95%">
+                                </td>
                             </tr>
                             <tr>
-                                <td style="width:40%;">KTP/SIM No.</td>
-                                <td>: {{ $getFormulirPesanan->no_ktp_plgn }} </td>
+                                <td style="width:30%;">KTP/SIM No.</td>
+                                <td>: <input type="text" name="ktp" value="{{ $getFormulirPesanan->no_ktp_plgn }} "
+                                        style="width: 95%"></td>
                             </tr>
                             <tr>
                                 <td>Alamat</td>
-                                <td>: {{ $getFormulirPesanan->alamat_plgn }}</td>
+                                <td>: <input type="text" name="alamat" value="{{ $getFormulirPesanan->alamat_plgn }} "
+                                        style="width: 95%"></td>
                             </tr>
                             <tr>
                                 <td>No. Telepon</td>
-                                <td>: {{ $getFormulirPesanan->no_telp_plgn }}</td>
+                                <td>: <input type="text" name="tlp" value="{{ $getFormulirPesanan->no_telp_plgn }}"
+                                        style="width: 95%"></td>
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td>: {{ $getFormulirPesanan->email_plgn }}</td>
+                                <td>: <input type="email" name="tlp" value="{{ $getFormulirPesanan->email_plgn }}"
+                                        style="width: 95%"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Tempat & Tgl. Lahir
                                 </td>
                                 <td>
-                                    : {{ $getFormulirPesanan->tempat_lahir_plgn }},
+                                    : <input type="text" name="tlp" value="{{ $getFormulirPesanan->tempat_lahir_plgn }}"
+                                        style="width: 30%">,
                                     {{ tgl_indo(date('Y-m-d', strtotime($getFormulirPesanan->tgl_lahir_plgn))) }}
                                 </td>
                             </tr>

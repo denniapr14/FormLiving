@@ -142,7 +142,6 @@ class C_SuratPemesananRumah extends Controller
         $getPromo = '';
         // dd($getFormulirPesanan);
         if (!empty($getFormulirPesanan->id_promo)) {
-            // code...
             $getPromo = $this->promo->getPromoWhereAll('*', 'id_promo', '=', $getFormulirPesanan->id_promo);
         } else {
             $getPromo = '';
@@ -211,18 +210,35 @@ class C_SuratPemesananRumah extends Controller
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $dataUpdate = "";
 
+            if ($user->kategori == "AdminFormsLiving" || $user->kategori == "SuperAdmin") {
+                $dataUpdate = [
+                    'no_fp' => $request->nofp.$request->nofp2,
+                    'status_market_fp'   => "accept",
+                    'tgl_market_fp'  => date('d-m-y h:m:s'),
+                    'status_staf_acc_fp'   => "accept",
+                    'tgl_staff_acc_fp'  => date('d-m-y h:m:s'),
+                ];
+                $dataUpdateUSer = [
+                    'nama_plgn' => $request->namaPlgn,
+                    'npwp_plgn' => $request->npwp,
+                    'no_ktp_plgn' => $request->ktp,
+                    'alamat_plgn' => $request->alamat,
+                    'no_tlp_plgn' => $request->tlp,
+                    'email_plgn' => $request->email,
+                ];
+            }
+
             if ($user->kategori == "StaffAcc" || $user->kategori == "SuperAdmin") {
                 $dataUpdate = [
-                    'no_fp' => $request->nofp,
+                    'no_fp' => $request->nofp.$request->nofp2,
                     'status_market_fp'   => "accept",
                     'tgl_market_fp'  => date('d-m-y h:m:s'),
                     'status_staf_acc_fp'   => "accept",
                     'tgl_staff_acc_fp'  => date('d-m-y h:m:s'),
                 ];
             }
-
+            
             if ($user->kategori == "AdminAccounting") {
-
                 $dataUpdate = [
                     'no_fp' => $request->nofp,
                     'status_acc_fp'   => "accept",
@@ -256,6 +272,7 @@ class C_SuratPemesananRumah extends Controller
             return redirect('/login');
         }
     }
+    
     function cetakSuratPemesananRumah($id) {
 
             $decryptedID = Crypt::decrypt($id);
