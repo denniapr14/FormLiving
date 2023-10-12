@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Validator;
 
 class C_Login extends Controller
 {
+    public $userAdmin;
+    public function __construct()
+    {
+        $this->userAdmin = new UserAdmin();
+    }
     public function Login()
     {
         if (session()->has('user')) {
@@ -186,17 +191,27 @@ class C_Login extends Controller
     public function checkUsernameAvailability(Request $request)
     {
         $username = $request->input('username');
-        $user = User::where('username', $username)->first();
+        $user = $this->userAdmin->getUserKategoriWhere(
+            'user_admin.username_ua',
+            '=',
+            $username
+        );
 
-        return response()->json(['available' => !$user]);
+
+
+        return response()->json($user);
     }
 
     public function checkEmailAvailability(Request $request)
     {
         $email = $request->input('email');
-        $user = User::where('email', $email)->first();
+        $user = $this->userAdmin->getUserKategoriWhere(
+            'user_admin.email_ua',
+            '=',
+            $email
+        );
 
-        return response()->json(['available' => !$user]);
+        return response()->json($user);
     }
 
     public function Logout()

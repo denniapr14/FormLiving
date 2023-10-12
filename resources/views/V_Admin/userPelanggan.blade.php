@@ -184,6 +184,15 @@
                                                                     <div class="form-group row">
                                                                         <label
                                                                             class="col-sm-4 col-form-label align-self-center">
+                                                                            Nomor KTP
+                                                                        </label>
+                                                                        <div class="col-sm-8 align-self-center">
+                                                                            {{ $userPelanggan->no_ktp_plgn }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label
+                                                                            class="col-sm-4 col-form-label align-self-center">
                                                                             Pekerjaan
                                                                         </label>
                                                                         <div class="col-sm-8 align-self-center">
@@ -377,6 +386,20 @@
                                                                                     class="form form-control"
                                                                                     name="npwp"
                                                                                     placeholder="masukan NPWP"
+                                                                                    value=" {{ $userPelanggan->npwp_plgn }}">
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label
+                                                                                class="col-sm-4 col-form-label align-self-center">
+                                                                                Nomor KTP
+                                                                            </label>
+                                                                            <div class="col-sm-8 align-self-center">
+                                                                                <input type="text"
+                                                                                    class="form form-control"
+                                                                                    name="nik"
+                                                                                    placeholder="masukan nomor KTP"
                                                                                     value=" {{ $userPelanggan->npwp_plgn }}">
 
                                                                             </div>

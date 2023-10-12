@@ -129,34 +129,47 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        $('#username').on('input', function () {
-            checkUsernameAvailability($(this).val());
-        });
+    $(document).ready(function() {
+        $('#username').on('input', function() {
+            var username = $(this).val();
 
-        $('#email').on('input', function () {
-            checkEmailAvailability($(this).val());
-        });
+            // Send an AJAX request to the server to check username availability
+            $.ajax({
+                url: "{{ route('checkUsername') }}", // Replace with the actual URL of your server-side script
+                method: 'GET',
+                data: { username: username },
+                success: function(response) {
+                    if (response.username_ua){
 
-        function checkUsernameAvailability(username) {
-            $.post('/check-username', { username: username }, function (data) {
-                if (data.available) {
-                    $('#username-availability').html('<span style="color:green;">Username is available</span>');
-                } else {
-                    $('#username-availability').html('<span style="color:red;">Username is not available</span>');
+                        $('#username-availability').html('<span style="color: red;"> Username sudah terdaftar!</span>');
+                    }else{
+                        $('#username-availability').html('<span style="color: green;"> Username bisa digunakan. </span>');
+                    }
+                }
+
+            });
+        });
+    });
+    $(document).ready(function() {
+        $('#email').on('input', function() {
+            var email = $(this).val();
+
+            // Send an AJAX request to the server to check username availability
+            $.ajax({
+                url: "{{ route('checkEmail') }}", // Replace with the actual URL of your server-side script
+                method: 'GET',
+                data: { email: email },
+                success: function(response) {
+                    if (response.email_ua){
+
+                        $('#email-availability').html('<span style="color: red;"> Email sudah terdaftar.</span>');
+                    }else{
+
+                        $('#email-availability').html('<span style="color: green;">Email bisa digunakan</span>');
+                    }
                 }
             });
-        }
-
-        function checkEmailAvailability(email) {
-            $.post('/check-email', { email: email }, function (data) {
-                if (data.available) {
-                    $('#email-availability').html('<span style="color:green;">Email is available</span>');
-                } else {
-                    $('#email-availability').html('<span style="color:red;">Email is not available</span>');
-                }
-            });
-        }
+        });
     });
 
     const inputFields = document.querySelectorAll("input, select");

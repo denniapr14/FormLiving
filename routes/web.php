@@ -73,8 +73,8 @@ Route::get('/search-item', [Home::class, 'SearchItem']);
 
 Route::get('/sign-up', [Home::class, 'SignUp']);
 Route::post('/sign-up/create', [Home::class, 'SignUpAction'])->name('sign-up.action');
-Route::post('/check-username', [Login::class, 'checkUsernameAvailability']);
-Route::post('/check-email', [Login::class, 'checkEmailAvailability']);
+Route::get('/check-username', [C_Login::class, 'checkUsernameAvailability'])->name('checkUsername');
+Route::get('/check-email', [C_Login::class, 'checkEmailAvailability'])->name('checkEmail');
 Route::get('/pre-order', [C_PreOrder::class, 'preOrderForms'])->name('preOrderForms.sales');
 
 // >>>>>>>>>>>>>>>>>>> END PROFILE <<<<<<<<<<<<<<<<<<<<<<<<

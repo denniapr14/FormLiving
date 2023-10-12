@@ -46,8 +46,10 @@
             <div class="step active last">6</div>
         </div>
         <div>
-{{--  ==========================================================================================================================================================================================================  --}}
-{{--  GUEST(PELANGGAN)  --}}
+            {{--
+            ==========================================================================================================================================================================================================
+            --}}
+            {{-- GUEST(PELANGGAN) --}}
             @if (!empty(Session::get('guest')))
             <form
                 action="{{ route('simulationSummary.action',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $kkpr->id_kkpr,$jenis,$pelanggan->id_pelanggan, $voucher]) }}"
@@ -177,7 +179,11 @@
 
                                 @if (!empty($promo))
                                 <div class="col-7 col-lg-8">
-                                    <p>Rp. {{ rupiah($promo->diskon_promo) }}</p>
+
+
+                                    <p>Rp. {{ rupiah($kkpr->total_diskon) }}</p>
+
+
                                 </div>
                                 <div class="col-5 col-lg-4">
                                     <p>Keterangan Promo</p>
@@ -200,9 +206,13 @@
                                     <h6>Harga Total</h6>
                                 </div>
                                 <div class="col-7 col-lg-8">
-                                    <h6>Rp. {{ rupiah($tipeRumah->harga_tr - $promo->diskon_promo) }}</h6>
+
+
+
+                                    <h6>Rp. {{ rupiah($tipeRumah->harga_tr - $kkpr->total_diskon) }}</h6>
                                     <input type="text" name="harga" hidden
-                                        value=" {{  $tipeRumah->harga_tr - $promo->diskon_promo }}">
+                                        value=" {{  $tipeRumah->harga_tr - $kkpr->total_diskon }}">
+
                                 </div>
                                 @else
                                 <div class="col-7 col-lg-8">
@@ -248,8 +258,10 @@
                 </div>
             </form>
             @endif
-            {{--  ==========================================================================================================================================================================================================  --}}
-            {{--  GUEST(PELANGGAN)  --}}
+            {{--
+            ==========================================================================================================================================================================================================
+            --}}
+            {{-- GUEST(PELANGGAN) --}}
             @if (!empty(Session::get('user')))
             <form
                 action="{{ route('simulationSummary.action',[$rumah->id_rumah, $tipeRumah->id_tipe_rumah, $kkpr->id_kkpr,$jenis,$pelanggan->id_pelanggan, $voucher]) }}"
@@ -358,9 +370,15 @@
                                 <div class="col-5 col-lg-4">
                                     <p>Diskon Promo</p>
                                 </div>
+
                                 @if (!empty($promo))
                                 <div class="col-7 col-lg-8">
-                                    <p>Rp. {{ rupiah($promo->diskon_promo) }}</p>
+
+
+
+                                    <p>Rp. {{ rupiah($kkpr->total_diskon) }}</p>
+
+
                                 </div>
                                 <div class="col-5 col-lg-4">
                                     <p>Keterangan</p>
@@ -382,9 +400,12 @@
                                     <h6>Harga Total</h6>
                                 </div>
                                 <div class="col-7 col-lg-8">
-                                    <h6>Rp. {{ rupiah($tipeRumah->harga_tr - $promo->diskon_promo) }}</h6>
+
+
+                                    <h6>Rp. {{ rupiah($tipeRumah->harga_tr - $kkpr->total_diskon) }}</h6>
                                     <input type="text" name="harga" hidden
-                                        value=" {{ $tipeRumah->harga_tr - $promo->diskon_promo }}">
+                                        value=" {{  $tipeRumah->harga_tr - $kkpr->total_diskon }}">
+
                                 </div>
                                 @else
                                 <div class="col-7 col-lg-8">
