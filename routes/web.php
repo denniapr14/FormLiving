@@ -18,6 +18,8 @@ use App\Http\Controllers\C_Simulasi;
 use App\Http\Controllers\C_SuratPemesananRumah;
 use App\Http\Controllers\C_TipeRumah;
 use App\Http\Controllers\C_UserAdmin;
+use App\Http\Controllers\C_Payment;
+use App\Http\Controllers\C_Job;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_UserKategori;
 use App\Http\Controllers\C_UserMenu;
@@ -376,3 +378,16 @@ Route::get('/ubah-status-kategori-admin/{id}', [C_UserKategori::class, 'changeSt
 // Route::get('/ubah-status-user-menu-admin/{id}/{status}',[C_UserMenu::class,'changeStatusUserMenu'])->name('changeStatusUserMenu.admin');
 
 Route::get('/ubah-status-user-admin/{id}/{status}', [C_UserAdmin::class, 'changeStatusUser'])->name('changeStatusUser.admin');
+
+
+// JOB
+Route::get('/pekerjaan/{projek}',[C_Job::class,'getJob'])->name('pekerjaan.admin');
+Route::get('/tambah-pekerjaan/{projek}',[C_Job::class,'addJob'])->name('tambahPekerjaan.admin');
+Route::post('/tambah-pekerjaan/action/{projek}',[C_Job::class,'addJobAction'])->name('tambahPekerjaanAction.admin');
+Route::get('/ubah-pekerjaan/{projek}',[C_Job::class,'editJob'])->name('ubahPekerjaan.admin');
+Route::post('/ubah-pekerjaan/action/{projek}',[C_Job::class,'editJobAction'])->name('ubahPekerjaanAction.admin');
+Route::get('/ubah-status-pekerjaan/{projek}',[C_Job::class,'deleteJob'])->name('deletePekerjaan.admin');
+
+// TEST DOKU
+Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');
+Route::post('/generate-payment', [C_Payment::class,'generatePayment'])->name('generate.admin');

@@ -34,10 +34,9 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>No FP</th>
-                                <th>Nama</th>
-                                <th>Nomor </th>
-                                <th>Tanggal Order</th>
+                                <th>Nama Pekerjaan</th>
+                                <th>Termin </th>
+                                <th>status</th>
 
                                 <th>Pengaturan</th>
 
@@ -47,35 +46,26 @@
                             <?php
                             $no = 1;
                             ?>
-                            @foreach ($getFormulirPesanan as $fp)
+                            @foreach ($getJob as $job)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $fp->no_fp }}</td>
+
                                     <td>
-                                        <span class="client__name">{{ $fp->nama_plgn }} </span>
-                                        <span class="client__name">{{ $fp->blok }}-{{ $fp->nomor }}</span>
-                                        <span class="client__handled">Dari {{ $fp->nama_ktgr }} ({{ $fp->nama_ua }})</span>
+                                        <span class="client__name">{{ $job->nama_job }} </span>
+
+                                        <span class="client__handled">Lantai {{ $job->lantai_job }}</span>
+                                    </td>
+
+                                    <td>
+                                        {{ $job->termin_job }}
                                     </td>
                                     <td>
-                                        <p class="mb-1">
-
-                                            No. telp {{ $fp->no_telp_plgn }} <a href="tel:{{ $fp->no_telp_plgn }}"
-                                                class="btn-fd-icon-outline"><i class="bi bi-telephone-outbound"></i></a>
-                                            <br>
-                                        </p>
-                                        <p>
-
-                                            No. WA {{ $fp->no_wa_plgn }} <a href="https://wa.me/{{ $fp->no_wa_plgn }}"
-                                                class="btn-fd-icon-outline"> <i class="bi bi-whatsapp"></i></a>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        {{ date('d M Y', strtotime($fp->tgl_input_fp)) }}
+                                        {{ $job->status_job }}
                                     </td>
                                     <td>
                                         <div class="d-flex flex-nowrap">
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
-                                                <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"
+                                                <a href=""
                                                     class="btn-fd-icon-outline">
                                                     <i class="fas fa-edit    "></i>
                                                 </a>
@@ -83,7 +73,7 @@
                                             @else
                                             @endif
 
-                                            <a href="{{ route('cetakSuratPemesananRumah.admin', Crypt::encrypt($fp->id_formulir)) }}" class="btn-fd-icon-outline">
+                                            <a href="" class="btn-fd-icon-outline">
                                                 <i class="fa fa-print" aria-hidden="true">
 
                                                 </i>

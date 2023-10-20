@@ -216,7 +216,7 @@
                                                                 <label for="">Rp.
                                                                     {{ rupiah($tipeRumah->harga_tr) }}</label>
                                                                 <input type="text" class="form form-control"
-                                                                    id="jumlahKPR" name="jumlah" readonly
+                                                                    id="jumlahKPR" name="jumlah" hidden readonly
                                                                     value="{{ $tipeRumah->harga_tr }}">
 
                                                             </div>

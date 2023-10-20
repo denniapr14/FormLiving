@@ -94,6 +94,14 @@
                         <span>Edit Password</span>
                     </a>
                 </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href=" {{ route('payment.admin') }} ">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Coba Doku</span>
+                    </a>
+                </li>
+
                 <li class="nav__item">
                     <a class="nav__link" href="/logout">
                         <i class="bi bi-box-arrow-right"></i>
