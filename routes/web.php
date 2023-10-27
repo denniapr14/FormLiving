@@ -381,13 +381,14 @@ Route::get('/ubah-status-user-admin/{id}/{status}', [C_UserAdmin::class, 'change
 
 
 // JOB
-Route::get('/pekerjaan/{projek}',[C_Job::class,'getJob'])->name('pekerjaan.admin');
-Route::get('/tambah-pekerjaan/{projek}',[C_Job::class,'addJob'])->name('tambahPekerjaan.admin');
-Route::post('/tambah-pekerjaan/action/{projek}',[C_Job::class,'addJobAction'])->name('tambahPekerjaanAction.admin');
-Route::get('/ubah-pekerjaan/{projek}',[C_Job::class,'editJob'])->name('ubahPekerjaan.admin');
-Route::post('/ubah-pekerjaan/action/{projek}',[C_Job::class,'editJobAction'])->name('ubahPekerjaanAction.admin');
-Route::get('/ubah-status-pekerjaan/{projek}',[C_Job::class,'deleteJob'])->name('deletePekerjaan.admin');
+Route::get('/pekerjaan/{projek}',[C_Job::class,'getJob'])->name('job.admin');
+Route::get('/tambah-pekerjaan/{projek}',[C_Job::class,'addJob'])->name('addJob.admin');
+Route::post('/tambah-pekerjaan/action/{projek}',[C_Job::class,'addJobAction'])->name('addJobAction.admin');
+Route::get('/ubah-pekerjaan/{projek}',[C_Job::class,'editJob'])->name('updateJob.admin');
+Route::post('/ubah-pekerjaan/action/{projek}/{id_job}',[C_Job::class,'editJobAction'])->name('updateJobAction.admin');
+Route::get('/ubah-status-pekerjaan/{projek}',[C_Job::class,'deleteJob'])->name('deleteJob.admin');
 
 // TEST DOKU
 Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');
 Route::post('/generate-payment', [C_Payment::class,'generatePayment'])->name('generate.admin');
+Route::get('/check-payment-status/{orderId}/{requestId}/{expTime}/{signature}', [C_Simulasi::class,'checkStatus'])->name('checkStatusPembayaran');

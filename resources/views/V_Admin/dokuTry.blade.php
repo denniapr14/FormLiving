@@ -8,5 +8,6 @@
 <body>
     <h1>DOKU Payment Response:</h1>
     <pre>{{ $response }}</pre>
+    {{--  <pre>{{ $resposeStatus }}</pre>  --}}
 </body>
 </html>

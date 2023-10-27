@@ -73,7 +73,7 @@ class C_Payment extends Controller
     {
         // Get the form data from the request
         $amount = $request->input('amount');
-        $expiredTime = 90;
+        $expiredTime = 10080;
         $customerName = $request->input('customerName');
         $email = $request->input('email');
         $phoneNumber = $request->input('phoneNumber');
@@ -118,7 +118,7 @@ class C_Payment extends Controller
 
         // Generate request headers
         $clientId = $mallId;
-        $requestId = rand(1, 100000);
+        $requestId = rand(1, 100000000);
         $dateTime = gmdate('Y-m-d H:i:s');
         $isoDateTime = date(DATE_ISO8601, strtotime($dateTime));
         $dateTimeFinal = substr($isoDateTime, 0, 19) . 'Z';
@@ -153,13 +153,48 @@ class C_Payment extends Controller
                 'Signature' => 'HMACSHA256=' . $signature,
             ],
         ]);
-
+        $dataDoku = array(
+            'Request-Id' => $requestId
+        );
         // Get the response as JSON
         $responseJson = $response->getBody()->getContents();
+        array_push($dataDoku,$responseJson);
+        $dataTest = json_decode($dataDoku[0], true);
+        dd($dataTest['payment']['url']);
 
+
+        // $apiEndpoint = 'https://api.doku.com/orders/v2/status/' . $requestId;
+
+        // // Fetch DOKU credentials from .env
+
+
+        // // Make a GET request to DOKU API
+        // $responseStatus = $client->get($apiEndpoint, [
+        //     'json' => $requestBody,
+        //     'headers' => [
+        //         'Content-Type' => 'application/json',
+        //         'Client-Id' => $clientId,
+        //         'Request-Id' => $requestId,
+        //         'Request-Timestamp' => $dateTimeFinal,
+        //         'Signature' => 'HMACSHA256=' . $signature,
+        //     ],
+        // ]);
+
+        // // Get the response as JSON
+        // $responseJsonStatus = $responseStatus->getBody()->getContents();
         // Return the response to the view
         return view('V_admin/dokuTry', ['response' => $responseJson]);
     }
+
+    public function checkPaymentStatus()
+    {
+        // Check the payment status here
+        // You can query your database or make an API call to DOKU to check the status
+        $paymentStatus = "https://api.doku.com/orders/v1/status/";// Implement your logic to check the status;
+
+        return response()->json(['status' => $paymentStatus]);
+    }
+
 
     // public function generatePayment(Request $request)
     // {

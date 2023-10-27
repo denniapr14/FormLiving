@@ -782,21 +782,27 @@ class Home extends Controller
     }
     public function SignUpAction(Request $request)
     {
-        $validasi = $this->validate($request, [
+        // dd($request->all());
+        // if (!session()->has('guest') && !session()->has('user')) {
+        //     // $hasilSess = Session::get('guest');
+        //     // response()->json('hasilSess');
+        //     return redirect("/login")->with('error', "You not sign in or sign up!");
+        //     # code...
+
+        // }
+        $this->validate($request, [
             'nama' => 'required|min:3',
-            'username_ua' => 'required|min:5|max:20|unique:user_admin',
-            'email' => 'required|email',
+            'username' => 'required|min:5|max:20',
+            'email' => 'required',
             'phone' => 'required|numeric',
+
             'kelamin' => 'required',
             'password' => 'required|min:6',
-        ], [
-            'username_ua.unique' => 'Username sudah ada, Harap menggunakan Username yang lain'
         ]);
 
         $userP = \App\Models\UserPelanggan::where([
             'username_plgn' => $request->username,
         ])->first();
-
         $userUA = DB::table('user_admin')
             ->where('username_ua', '=', $request->username)
             ->first();
@@ -804,10 +810,8 @@ class Home extends Controller
         $userEmail = \App\Models\UserPelanggan::where([
             'email_plgn' => $request->email,
         ])->first();
-
         $userUAEmail = DB::table('user_admin')
             ->where('email_ua', '=', $request->email)
-
             ->first();
 
         if (!empty($userP) && !empty($userUA)) {
@@ -832,25 +836,8 @@ class Home extends Controller
             // dd($dataInput);
             // die();
 
-            $getIDUser = DB::table('user_admin')->insertGetId(
+            DB::table('user_pelanggan')->insert(
                 $dataInput
-            );
-
-            $dataUserMenu =   [
-                'id_menu' => 1,
-                'id_user_admin' => $getIDUser,
-                'status_um' => 'aktif'
-            ];
-            $dataUserProjek =  [
-                'id_projek'    => 1,
-                'id_user_admin' => $getIDUser
-            ];
-
-            DB::table('user_menu')->insert(
-                $dataUserMenu
-            );
-            DB::table('user_projek')->insert(
-                $dataUserProjek
             );
         }
         if ($request->userTipe == "agentWithCompany") {
@@ -867,17 +854,23 @@ class Home extends Controller
                 // 'no_wa_plgn'            => $request->wa,
                 // 'jenis_kelamin_status' => $request->kelamin,
             );
-            $getIDUser = DB::table('user_admin')->insertGetId(
+             $getIDUser = DB::table('user_admin')->insertGetId(
                 $dataInput
             );
 
-
+            $dataUserMenu =   [
+                'id_menu' => 1,
+                 'id_kategori' => 24,
+                'status_um' => 'aktif'
+            ];
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-
+            DB::table('user_menu')->insert(
+                $dataUserMenu
+            );
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );
@@ -900,13 +893,19 @@ class Home extends Controller
                 $dataInput
             );
 
-
+            $dataUserMenu =   [
+                'id_menu' => 1,
+                'id_kategori' => 5,
+                'status_um' => 'aktif'
+            ];
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-
+            DB::table('user_menu')->insert(
+                $dataUserMenu
+            );
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );
@@ -925,16 +924,23 @@ class Home extends Controller
                 // 'no_wa_plgn'            => $request->wa,
                 // 'jenis_kelamin_status' => $request->kelamin,
             );
-            $getIDUser = DB::table('user_admin')->insertGetId(
+              $getIDUser = DB::table('user_admin')->insertGetId(
                 $dataInput
             );
 
+            $dataUserMenu =   [
+                'id_menu' => 1,
+                 'id_kategori' => 4,
+                'status_um' => 'aktif'
+            ];
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-
+            DB::table('user_menu')->insert(
+                $dataUserMenu
+            );
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );

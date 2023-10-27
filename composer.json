@@ -1,4 +1,3 @@
-
 {
     "name": "laravel/laravel",
     "type": "project",
@@ -8,8 +7,10 @@
     "require": {
         "php": "^8.0.2",
         "barryvdh/laravel-dompdf": "*",
-        "guzzlehttp/guzzle": "^7.2",
+        "doku/jokul-php-library": "^2.0",
+        "guzzlehttp/guzzle": "^7.8",
         "intervention/image": "^2.7",
+        "ixudra/curl": "^6.22",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
@@ -17,7 +18,6 @@
         "livewire/livewire": "^2.12",
         "nesbot/carbon": "^2.68",
         "spatie/laravel-permission": "*"
-
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

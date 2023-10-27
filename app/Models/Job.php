@@ -22,4 +22,8 @@ class Job extends Model
         ->where($where)
         ->first();
     }
+
+    function insertJob($data) {
+        return Job::insert($data);
+    }
 }

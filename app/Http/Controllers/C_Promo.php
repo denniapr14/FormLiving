@@ -228,7 +228,7 @@ class C_Promo extends Controller
                     'id_rumah' => $request->rumah,
                 ];
             }
-            $kodePromo = randomCode(4,$projek);
+            $kodePromo = RandomCode(4,$projek);
             $getPromo = $this->promo->firstPromo('*',['kode_promo' => $kodePromo]);
             if ($getPromo != null) {
                 if ($kodePromo == $getPromo->kode_promo) {

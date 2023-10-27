@@ -23,6 +23,7 @@ use App\Models\UserPelanggan;
 // Controller
 // =======================
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -352,12 +353,11 @@ class C_Simulasi extends Controller
             return redirect('/login')->with('error', 'You not sign in or sign up!');
         }
 
-        $getPromo ="";
-        if($request->promo != "Tidak Ada Promo"){
-            $getPromo = $this->promoList->firstPromo('*',[
+        $getPromo = "";
+        if ($request->promo != "Tidak Ada Promo") {
+            $getPromo = $this->promoList->firstPromo('*', [
                 'promo.kode_promo' => $request->promo
             ]);
-
         }
 
         $tipeRumah = $this->tipeRumah->firstTipeRumah('*', ['id_tipe_rumah' => $id_tipe]);
@@ -373,11 +373,11 @@ class C_Simulasi extends Controller
             );
 
             $dataInputKalkulator = '';
-            $kodePromo ="Tidak Ada Promo";
+            $kodePromo = "Tidak Ada Promo";
             if ($request->jenis == 'KPR') {
 
                 if ($rumah->status_stock == 'Inden') {
-                    if(empty($getPromo)){
+                    if (empty($getPromo)) {
                         $dataInputKalkulator = [
                             'luas_tanah_kkpr' => $rumah->luas_tanah,
                             'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
@@ -390,38 +390,23 @@ class C_Simulasi extends Controller
                             'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                             'cicilan_um' => $request->cicilanUM,
                         ];
-                    $kodePromo = $request->promoKPR;
-                    }else{
+                        $kodePromo = $request->promoKPR;
+                    } else {
                         $dataInputKalkulator = [
                             'luas_tanah_kkpr' => $rumah->luas_tanah,
                             'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
                             'harga_awal' => (float) $tipeRumah->harga_tr,
                             'total_harga' => (float) $request->jumlah,
                             'total_diskon'  => $request->diskonInputKPR,
-                              'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
+                            'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
                             'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR),
                             'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
                             'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                             'cicilan_um' => $request->cicilanUM,
                         ];
                     }
-
                 } else {
-                    if(empty($getPromo)){
-                        $dataInputKalkulator = [
-                            'luas_tanah_kkpr' => $rumah->luas_tanah,
-                            'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
-                            'harga_awal' => (float) $tipeRumah->harga_tr,
-                            'total_harga' => (float) $request->jumlah,
-                            'total_diskon'  => $request->diskonInputKPR,
-                              'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
-                            'uang_muka' => (float) (($tipeRumah->harga_tr * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR)) - $request->diskonInputKPR,
-                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
-                            'cicilan_um' => 1,
-                        ];
-                        $kodePromo = $request->promoKPR;
-                    }else{
+                    if (empty($getPromo)) {
                         $dataInputKalkulator = [
                             'luas_tanah_kkpr' => $rumah->luas_tanah,
                             'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
@@ -429,16 +414,29 @@ class C_Simulasi extends Controller
                             'total_harga' => (float) $request->jumlah,
                             'total_diskon'  => $request->diskonInputKPR,
                             'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
-                            'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100))- str_replace(['.', ','], '', $request->bookingFeeKPR),
+                            'uang_muka' => (float) (($tipeRumah->harga_tr * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR)) - $request->diskonInputKPR,
+                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'cicilan_um' => 1,
+                        ];
+                        $kodePromo = $request->promoKPR;
+                    } else {
+                        $dataInputKalkulator = [
+                            'luas_tanah_kkpr' => $rumah->luas_tanah,
+                            'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
+                            'harga_awal' => (float) $tipeRumah->harga_tr,
+                            'total_harga' => (float) $request->jumlah,
+                            'total_diskon'  => $request->diskonInputKPR,
+                            'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
+                            'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR),
                             'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
                             'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                             'cicilan_um' => 1,
                         ];
                     }
-
                 }
             } else {
-                if(empty($getPromo)){
+                if (empty($getPromo)) {
                     $dataInputKalkulator = [
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
@@ -452,7 +450,7 @@ class C_Simulasi extends Controller
                         'cicilan' => $request->cicilan,
                     ];
                     $kodePromo = $request->promoCicilan;
-                }else{
+                } else {
                     $dataInputKalkulator = [
                         'luas_tanah_kkpr' => $rumah->luas_tanah,
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
@@ -465,7 +463,6 @@ class C_Simulasi extends Controller
                         'cicilan' => $request->cicilan,
                     ];
                 }
-
             }
             // dd($kodePromo);
 
@@ -567,7 +564,7 @@ class C_Simulasi extends Controller
         // code...
     }
 
-    public function SimDataPelangganAction(Request $request, $id_rumah, $id_tipe, $id_kpr, $jenis,$promo)
+    public function SimDataPelangganAction(Request $request, $id_rumah, $id_tipe, $id_kpr, $jenis, $promo)
     {
         $tipeRumah = $this->gambarRumah->firstGambarRumahJoinTipeRumahGroupBy(
             '*',
@@ -632,13 +629,13 @@ class C_Simulasi extends Controller
                     'no_ktp_plgn' => $request->nik,
                     'no_telp_plgn' => $request->telp,
                     'no_wa_plgn' => $request->wa,
-                    'alamat_plgn' => $request->jalan.', '.$request->kelurahan.', '.$request->kecamatan.', '.$request->kota.', '.$request->pulau,
+                    'alamat_plgn' => $request->jalan . ', ' . $request->kelurahan . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->pulau,
                     'email_plgn' => $request->email,
                     'npwp_plgn' => $request->npwp,
                     'jenis_kelamin_status' => $request->gender,
                     'status_pernikahan_plgn' => $request->statusPernikahan,
                     'tempat_lahir_plgn' => $request->tempatLahir,
-                    'tgl_lahir_plgn' => $request->tahun.'-'.$request->bulan.'-'.$request->tanggal,
+                    'tgl_lahir_plgn' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
                     'sumber_dana_plgn' => $request->sumberDana,
                     // 'id_kkpr'               => $kkpr->id_kkpr,
                 ];
@@ -699,13 +696,13 @@ class C_Simulasi extends Controller
                     'no_ktp_plgn' => $request->nik,
                     'no_telp_plgn' => $request->telp,
                     'no_wa_plgn' => $request->wa,
-                    'alamat_plgn' => $request->jalan.', '.$request->kelurahan.', '.$request->kecamatan.', '.$request->kota.', '.$request->pulau,
+                    'alamat_plgn' => $request->jalan . ', ' . $request->kelurahan . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->pulau,
                     'email_plgn' => $request->email,
                     'npwp_plgn' => $request->npwp,
                     'jenis_kelamin_status' => $request->gender,
                     'status_pernikahan_plgn' => $request->statusPernikahan,
                     'tempat_lahir_plgn' => $request->tempatLahir,
-                    'tgl_lahir_plgn' => $request->tahun.'-'.$request->bulan.'-'.$request->tanggal,
+                    'tgl_lahir_plgn' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
                     // 'id_kkpr'               => $kkpr->id_kkpr,
                 ];
                 // dd($dataInput);
@@ -714,17 +711,17 @@ class C_Simulasi extends Controller
                 $id = $this->userPelanggan->insertGetIDUserPelanggan($dataInput);
             }
 
-            return redirect('/simulation-jenis-option/'.$rumah->id_rumah.'/'.$tipeRumah->id_tipe_rumah.'/'.$id.'/'.$request->promo);
+            return redirect('/simulation-jenis-option/' . $rumah->id_rumah . '/' . $tipeRumah->id_tipe_rumah . '/' . $id . '/' . $request->promo);
 
             // dd($dataInput);
             // die();
         }
     }
 
-    public function FindKuponSpesial(Request $request,$id_rumah,$tipe)
+    public function FindKuponSpesial(Request $request, $id_rumah, $tipe)
     {
         $kodePromo = $request->input('kodePromo');
-        $promo = $this->promo->firstPromoDataPelanggan($id_rumah,$kodePromo);
+        $promo = $this->promo->firstPromoDataPelanggan($id_rumah, $kodePromo);
         // dd($promo);
         // die();
         return response()->json($promo);
@@ -1000,7 +997,7 @@ class C_Simulasi extends Controller
                             'id_rumah' => $id_rumah,
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
-                            'detail_pr' => 'Angsuran '.$i,
+                            'detail_pr' => 'Angsuran ' . $i,
                             'harga_pr' => (float) $dataCicil,
                             'sisa_pr' => (float) $dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
@@ -1012,7 +1009,7 @@ class C_Simulasi extends Controller
                             'id_rumah' => $id_rumah,
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
-                            'detail_pr' => 'Angsuran '.$i,
+                            'detail_pr' => 'Angsuran ' . $i,
                             'harga_pr' => (float) $dataCicil,
                             'sisa_pr' => (float) $dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
@@ -1024,7 +1021,7 @@ class C_Simulasi extends Controller
                     'id_rumah' => $id_rumah,
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
-                    'detail_pr' => 'Angsuran '.$kkpr->cicilan,
+                    'detail_pr' => 'Angsuran ' . $kkpr->cicilan,
                     'harga_pr' => (float) $kkpr->total_harga - $sumCicil - $kkpr->booking_fee_kkpr,
                     'sisa_pr' => (float) $kkpr->total_harga - $sumCicil - $kkpr->booking_fee_kkpr,
                     'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan),
@@ -1072,7 +1069,7 @@ class C_Simulasi extends Controller
                         'status_pr' => 'belum',
                     ];
 
-                    for ($k = 1; $k < $kkpr->cicilan_um - 1 ; ++$k) { // Fix the loop condition
+                    for ($k = 1; $k < $kkpr->cicilan_um - 1; ++$k) { // Fix the loop condition
                         $tglBayar->addMonth(1); // Add 1 month to the cloned instance
                         $dtPembayaran[] = [
                             'id_rumah' => $id_rumah,
@@ -1221,26 +1218,97 @@ class C_Simulasi extends Controller
 
             // return view('pdf.PrintSPR', compact('fp','dtPembayaran'));
 
-            // $pdf = \PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
-            // // $pdf = PDF::loadView('mail.index');
-            // $pdf->setPaper('F4', 'potrait');
-            // // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
-            // $pdf->render();
-            // $pdfData = $pdf->output();
-            // // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
-            // // Storage::put($filename, $pdfData);
-            // // dd($filename);
-            // $path = './Home/pdf/';
-            // $pdf->save($path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf');
-            // $filename = $path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf';
+            $getDataPembayaran = $this->pembayaranRumah->getPembayaranRumahWhereAllArr(
+                '*',
+                [
+                    'id_rumah' => $id_rumah,
+                    'id_pelanggan' => $pelanggan->id_pelanggan,
+                    'id_formulir'   => $fp,
+                ]
+            )->collect();
+            $getDataPembayaran = $getDataPembayaran->sortBy('id_pem_rumah');
+            $getDataPembayaran = $getDataPembayaran->first();
 
-            // $dataEmail1 = [
-            //     'to' => $pelanggan->email_plgn,
-            //     'subject' => 'Form Living',
-            //     'body' => '',
-            //     'nama' => $pelanggan->nama_plgn,
-            //     'attachment' => $filename,
-            // ];
+            $generatePayment = $this->generatePayment(
+                $getDataPembayaran->id_pem_rumah,
+                $pelanggan->id_pelanggan,
+                $id_rumah,
+                $fp,
+                "Greenland",
+                1000,
+                10080,
+                $pelanggan->nama_pelanggan,
+                $pelanggan->email_plgn,
+                $pelanggan->no_wa_plgn,
+                $pelanggan->alamat_plgn,
+                "ID"
+
+            );
+
+            $checkRequestID = $this->pembayaranRumah->getPembayaranRumahWhereAllArr(
+                '*',
+                [
+                    'request_id_pr' => $generatePayment['request_id'],
+                    'invoice_pr'    => $generatePayment['invoice']
+                ]
+            );
+            if (!empty($checkRequestID)) {
+                $generatePayment = $this->generatePayment(
+                    $getDataPembayaran->id_pem_rumah,
+                    $pelanggan->id_pelanggan,
+                    $id_rumah,
+                    $fp,
+                    "Greenland",
+                    1000,
+                    10080,
+                    $pelanggan->nama_pelanggan,
+                    $pelanggan->email_plgn,
+                    $pelanggan->no_wa_plgn,
+                    $pelanggan->alamat_plgn,
+                    "ID"
+
+                );
+                # code...
+            }
+
+            $dataSuccess = json_decode($generatePayment[0], true);
+
+            $dataUpdatePembayaran = array(
+                'request_id_pr' => $generatePayment['request_id'],
+                'invoice_pr'    => $generatePayment['invoice'],
+                'exp_time_pr'   => $generatePayment['expTime'],
+                'signature_pr'     => $generatePayment['signature']
+            );
+
+            dd($dataUpdatePembayaran);
+
+            DB::table('pembayaran_rumah')
+                ->where('id_pem_rumah', $getDataPembayaran->id_pem_rumah)
+                ->update(
+                    $dataUpdatePembayaran
+                );
+
+            $pdf = \PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
+            // $pdf = PDF::loadView('mail.index');
+            $pdf->setPaper('F4', 'potrait');
+            // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
+            $pdf->render();
+            $pdfData = $pdf->output();
+            // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
+            // Storage::put($filename, $pdfData);
+            // dd($filename);
+            $path = './Home/pdf/';
+            $pdf->save($path . 'FP-' . $fpJadi->blok . '-' . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf');
+            $filename = $path . 'FP-' . $fpJadi->blok . '-' . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf';
+
+            $dataEmail1 = [
+                'to' => $pelanggan->email_plgn,
+                'subject' => 'Form Living',
+                'body' => '',
+                'nama' => $pelanggan->nama_plgn,
+                'attachment' => $filename,
+                'url-pembayaran' => $dataSuccess['payment']['url'],
+            ];
             // $dataEmail2 = [
             //     'to' => $user->email_ua,
             //     'subject' => 'Form Living',
@@ -1258,6 +1326,7 @@ class C_Simulasi extends Controller
             //         'body' => '',
             //         'nama' => $pelanggan->nama_plgn,
             //         'attachment' => $filename,
+            //         'url-pembayaran' => $this->generatePayment(1000,10080,$pelanggan->nama_plgn,$pelanggan->email_plgn,$pelanggan->no_wa_plgn,$pelanggan->alamat_plgn,"ID"),
             //     ];
             //     try {
             //         // $MailAtt = ();
@@ -1269,19 +1338,19 @@ class C_Simulasi extends Controller
             //     }
             // }
 
-            // // $template = 'mail.mailFP';
+            $template = 'mail.mailFP';
             // // $template2 = 'pdf.salesFP';
             // // MailNotify class that is extend from Mailable class.
-            // try {
-            //     // $MailAtt = ();
-            //     \Mail::to($pelanggan->email_plgn)->send(new MailAttachment($dataEmail1, $template));
+            try {
+                // $MailAtt = ();
+                \Mail::to($pelanggan->email_plgn)->send(new MailAttachment($dataEmail1, $template));
 
-            //     \Mail::to($user->email_ua)->send(new MailAttachment($dataEmail2, $template));
-            // } catch (Exception $e) {
-            //     // return response()->json(['Sorry! Please try again latter']);
-            // }
+                // \Mail::to($user->email_ua)->send(new MailAttachment($dataEmail2, $template));
+            } catch (Exception $e) {
+                // return response()->json(['Sorry! Please try again latter']);
+            }
 
-            return redirect('/congratulation')->with('success', 'Data has been send!');
+            return redirect('/congratulation/' . $fp)->with('success', 'Data has been send!');
             // dd($user);
             // die();
         }
@@ -1399,7 +1468,7 @@ class C_Simulasi extends Controller
                             'id_rumah' => $id_rumah,
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
-                            'detail_pr' => 'Angsuran '.$i,
+                            'detail_pr' => 'Angsuran ' . $i,
                             'harga_pr' => (float) $dataCicil,
                             'sisa_pr' => (float) $dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
@@ -1411,7 +1480,7 @@ class C_Simulasi extends Controller
                             'id_rumah' => $id_rumah,
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
-                            'detail_pr' => 'Angsuran '.$i,
+                            'detail_pr' => 'Angsuran ' . $i,
                             'harga_pr' => (float) $dataCicil,
                             'sisa_pr' => (float) $dataCicil,
                             'tgl_pr' => Carbon::now()->addMonths($i),
@@ -1423,7 +1492,7 @@ class C_Simulasi extends Controller
                     'id_rumah' => $id_rumah,
                     'id_formulir' => $fp,
                     'id_pelanggan' => $pelanggan->id_pelanggan,
-                    'detail_pr' => 'Angsuran '.$kkpr->cicilan,
+                    'detail_pr' => 'Angsuran ' . $kkpr->cicilan,
                     'harga_pr' => (float) $kkpr->total_harga - $sumCicil - 10000000,
                     'sisa_pr' => (float) $kkpr->total_harga - $sumCicil - 10000000,
                     'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan),
@@ -1433,6 +1502,7 @@ class C_Simulasi extends Controller
                 // dd($dtPembayaran);
                 // die();
             }
+
             if ($jenis == 'KPR') {
                 $currentDateTime = Carbon::now();
 
@@ -1461,7 +1531,7 @@ class C_Simulasi extends Controller
                         'id_rumah' => $id_rumah,
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
-                        'detail_pr' => 'Cicilan Uang Muka '. 1,
+                        'detail_pr' => 'Cicilan Uang Muka ' . 1,
                         'harga_pr' => (float) $dataCicilKPR,
                         'sisa_pr' => (float) $dataCicilKPR,
                         'tgl_pr' => Carbon::now()->addMonths(1),
@@ -1472,7 +1542,7 @@ class C_Simulasi extends Controller
                             'id_rumah' => $id_rumah,
                             'id_formulir' => $fp,
                             'id_pelanggan' => $pelanggan->id_pelanggan,
-                            'detail_pr' => 'Cicilan Uang Muka '. 1 + $k,
+                            'detail_pr' => 'Cicilan Uang Muka ' . 1 + $k,
                             'harga_pr' => (float) $dataCicilKPR,
                             'sisa_pr' => (float) $dataCicilKPR,
                             'tgl_pr' => Carbon::now()->addMonths($k),
@@ -1483,7 +1553,7 @@ class C_Simulasi extends Controller
                         'id_rumah' => $id_rumah,
                         'id_formulir' => $fp,
                         'id_pelanggan' => $pelanggan->id_pelanggan,
-                        'detail_pr' => 'Cicilan Uang Muka '.$kkpr->cicilan_um,
+                        'detail_pr' => 'Cicilan Uang Muka ' . $kkpr->cicilan_um,
                         'harga_pr' => (float) $kkpr->uang_muka - $sumCicilKPR,
                         'sisa_pr' => (float) $kkpr->uang_muka - $sumCicilKPR,
                         'tgl_pr' => Carbon::now()->addMonths($kkpr->cicilan_um),
@@ -1589,8 +1659,11 @@ class C_Simulasi extends Controller
             // Storage::put($filename, $pdfData);
             // dd($filename);
             $path = './Home/pdf/';
-            $pdf->save($path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf');
-            $filename = $path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf';
+            $pdf->save($path . 'FP-' . $fpJadi->blok . '-' . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf');
+            $filename = $path . 'FP-' . $fpJadi->blok . '-' . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf';
+
+
+
 
             $dataEmail1 = [
                 'to' => $pelanggan->email_plgn,
@@ -1626,7 +1699,7 @@ class C_Simulasi extends Controller
         // code...
     }
 
-    public function Congratulation()
+    public function Congratulation($fp)
     {
         if (!session()->has('guest') && !session()->has('user')) {
             // $hasilSess = Session::get('guest');
@@ -1666,4 +1739,244 @@ class C_Simulasi extends Controller
 
         return (ceil($pow * $value) + ceil($pow * $value - ceil($pow * $value))) / $pow;
     }
+
+
+    public function generatePayment($id_pembayaran, $id_pelanggan, $id_rumah, $id_formulir, $projek, $amount, $expTime, $costumerName, $email, $phoneNumber, $address, $country)
+    {
+
+        // Get the form data from the request
+        $amount = $amount;
+        $expiredTime = $expTime;
+        $customerName = $costumerName;
+        $email = $email;
+        $phoneNumber = $phoneNumber;
+        $address = $address;
+        $country = $country;
+
+        // Fetch DOKU credentials from .env
+        $mallId = env('DOKU_MALL_ID');
+        $sharedKey = env('DOKU_SHARED_KEY');
+        $isSandbox = env('DOKU_SANDBOX');
+
+        // DOKU API endpoint (sandbox or production)
+        $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
+        $randomCode = $this->randomCode(5, $projek);
+        // Construct the request payload
+        $invoice_number = 'INV-' . $randomCode . $id_pembayaran . $id_pelanggan . $id_rumah . $id_formulir . rand(1, 1000000);
+        $requestBody = [
+            'order' => [
+                'amount' => $amount,
+                'invoice_number' => $invoice_number,
+                'currency' => 'IDR',
+                'callback_url' => 'https://merchant.com/return-url',
+                'line_items' => [
+                    [
+                        'name' => 'DOKU Plate',
+                        'price' => $amount,
+                        'quantity' => 1,
+                    ],
+                ],
+            ],
+            'payment' => [
+                'payment_due_date' => $expiredTime,
+            ],
+            'customer' => [
+                'id' => 'CUST-' . $randomCode . $id_pelanggan . $id_rumah . $id_formulir . rand(1, 1000000),
+                'name' => $customerName,
+                'email' => $email,
+                'phone' => $phoneNumber,
+                'address' => $address,
+                'country' => $country,
+            ],
+        ];
+
+        // Generate request headers
+        $clientId = $mallId;
+        $requestId = rand(1, 100000);
+        $dateTime = gmdate('Y-m-d H:i:s');
+        $isoDateTime = date(DATE_ISO8601, strtotime($dateTime));
+        $dateTimeFinal = substr($isoDateTime, 0, 19) . 'Z';
+
+        // Generate digest
+        $digestValue = base64_encode(hash('sha256', json_encode($requestBody), true));
+
+        // Prepare signature component
+        $componentSignature = "Client-Id:" . $clientId . "\n" .
+            "Request-Id:" . $requestId . "\n" .
+            "Request-Timestamp:" . $dateTimeFinal . "\n" .
+            "Request-Target:/checkout/v2/payment" . "\n" .
+            "Digest:" . $digestValue;
+
+        // Generate signature
+        $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
+
+        // Construct the final URL
+        $url = $apiBaseUrl . '/checkout/v2/payment';
+
+        // Create a Guzzle HTTP client
+        $client = new Client();
+
+        // Make a POST request to DOKU API
+        $response = $client->post($url, [
+            'json' => $requestBody,
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Client-Id' => $clientId,
+                'Request-Id' => $requestId,
+                'Request-Timestamp' => $dateTimeFinal,
+                'Signature' => 'HMACSHA256=' . $signature,
+            ],
+        ]);
+        $dataDoku = array(
+            'request_id' => $requestId,
+            'invoice'   => $invoice_number,
+            'expTime' => $expiredTime,
+            'signature' => $signature,
+        );
+        // Get the response as JSON
+        $responseJson = $response->getBody()->getContents();
+        array_push($dataDoku, $responseJson);
+
+
+        $data = json_decode($responseJson, true);
+        // Return the response to the view
+        return $dataDoku;
+    }
+
+
+    public function checkPayment($orderId, $requestId, $dateTimeFinal)
+    {
+        $clientId = env('DOKU_MALL_ID');
+        $clientId = env('DOKU_MALL_ID');
+        $sharedKey = env('DOKU_SHARED_KEY');
+        $isSandbox = env('DOKU_SANDBOX');
+        $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
+
+        $requestId = uniqid();
+
+
+        // Ensure that the Request-Timestamp is within a 60-second window of the current time
+
+
+        // Calculate the Digest
+        $requestBody = ''; // You can leave it empty for a GET request
+        $digestValue = base64_encode(hash('sha256', $requestBody, true));
+
+        // Prepare the Signature Component
+        $targetPath = "/orders/v1/status/" . $orderId;
+        $componentSignature = "Client-Id:" . $clientId . "\n" .
+            "Request-Id:" . $requestId . "\n" .
+            "Request-Timestamp:" . $dateTimeFinal . "\n" .
+            "Request-Target:" . $targetPath;
+
+        // Calculate HMAC-SHA256 base64 signature
+        $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
+
+        // Construct the URL
+        $url = $apiBaseUrl . $targetPath;
+
+        // Create a Guzzle HTTP client
+        $client = new Client();
+
+        // Make a GET request to DOKU API
+        $response = $client->get($url, [
+            'headers' => [
+                'Client-Id' => $clientId,
+                'Request-Id' => $requestId,
+                'Request-Timestamp' => $dateTimeFinal,
+                'Request-Target' => $targetPath,
+                'Digest' => $digestValue,
+                'Signature' => 'HMACSHA256=' . $signature,
+            ],
+        ]);
+
+        // Get the response as JSON
+        $responseJson = $response->getBody()->getContents();
+        return response()->json(['paymentStatus' => $responseJson]);
+    }
+    // function checkPayment($orderId, $requestId, $dateTimeFinal)
+    // {
+    //     $clientId = env('DOKU_MALL_ID');
+    //     $sharedKey = env('DOKU_SHARED_KEY');
+    //     $isSandbox = env('DOKU_SANDBOX');
+
+    //     // DOKU API endpoint (sandbox or production)
+    //     $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
+
+    //     // Generate a unique Request ID for each request
+    //     // $requestId = uniqid();
+
+    //     // Generate the timestamp
+
+    //     // Generate the signature
+    //     $componentSignature = "Client-Id:" . $clientId . "\n" .
+    //         "Request-Id:" . $requestId . "\n" .
+    //         "Request-Timestamp:" . $dateTimeFinal . "\n" .
+    //         "Request-Target:/orders/v1/status/" . $orderId."\n";
+
+    //     $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
+
+    //     $url = $apiBaseUrl."/orders/v1/status/".$orderId;
+
+    //     // Create a Guzzle HTTP client
+    //     $client = new Client();
+
+    //     // Make a GET request to DOKU API
+    //     $response = $client->get($url, [
+    //         'headers' => [
+    //             'Client-Id' => $clientId,
+    //             'Request-Id' => $requestId,
+    //             'Request-Timestamp' => $dateTimeFinal,
+    //             'Request-Target' => "/orders/v1/status/".$orderId,
+    //             'Signature' => 'HMACSHA256=' . $signature,
+    //         ],
+    //     ]);
+
+    //     // Get the response as JSON
+    //     $responseJson = $response->getBody()->getContents();
+    //     return response()->json(['paymentStatus' => $responseJson]);
+    // }
+
+    // function checkPayment($orderId, $requestId, $dateTimeFinal)
+    // {
+    //     $clientId = env('DOKU_MALL_ID');
+    //     $sharedKey = env('DOKU_SHARED_KEY');
+    //     $isSandbox = env('DOKU_SANDBOX');
+
+    //     // DOKU API endpoint (sandbox or production)
+    //     $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
+
+    //     // Generate a unique Request ID for each request
+    //     // $requestId = uniqid();
+
+    //     // Generate the timestamp
+
+    //     // Generate the signature
+    //     $componentSignature = "Client-Id:" . $clientId . "\n" .
+    //         "Request-Id:" . $requestId . "\n" .
+    //         "Request-Timestamp:" . $dateTimeFinal . "\n" .
+    //         "Request-Target:/orders/v1/status/" . $orderId."\n";
+
+    //     $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
+
+    //     $url = $apiBaseUrl."/orders/v1/status/".$orderId;
+
+    //     // Create a Guzzle HTTP client
+    //     $client = new Client();
+
+    //     // Make a GET request to DOKU API
+    //     $response = $client->get($url, [
+    //         'headers' => [
+    //             'Client-Id' => $clientId,
+    //             'Request-Id' => $requestId,
+    //             'Request-Timestamp' => $dateTimeFinal,
+    //             'Request-Target' => "/orders/v1/status/".$orderId,
+    //             'Signature' => 'HMACSHA256=' . $signature,
+    //         ],
+    //     ]);
+
+    //     // Get the response as JSON
+    //     $responseJson = $response->getBody()->getContents();
+    //     return response()->json(['paymentStatus' => $responseJson]);
+    // }
 }

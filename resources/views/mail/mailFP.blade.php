@@ -401,7 +401,7 @@
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
                                                                         &nbsp; &nbsp; Dimohon juga untuk konfirmasi
                                                                         pembayaran Booking Fee setelah melakukan
-                                                                        pembayaran ke Nomor WhatsApp : 0821-250-9000-5
+                                                                        pembayaran ke Nomor WhatsApp : 0821-250-9000-5 atau <a href="{{ $data['url-pembayaran'] }}">Klik disini</a>
                                                                         <a aria-label="WhatsApp"
                                                                             href="https://wa.me/6282125090005?text=Permisi, Saya%20mengirim%20bukti%20pembayaran%20Booking%20Fee%20Saya">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">

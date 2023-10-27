@@ -9,6 +9,8 @@ use App\Models\UserMenu;
 use App\Models\UserNotif;
 use App\Models\UserProjek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class C_Job extends Controller
@@ -67,7 +69,7 @@ class C_Job extends Controller
             }
 
 
-            return view('V_Admin.pekerjaan',
+            return view('V_Admin.job',
                 compact(
                     'user',
                     'projekUser',
@@ -82,69 +84,136 @@ class C_Job extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    function addJob($projek) {
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+
+
+            return view('V_Admin.addJob',
+                compact(
+                    'user',
+                    'projekUser',
+
+                    'getProjek',
+                    'getUserMenu'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
+    function addJobAction(Request $request,$projek) {
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+            $dataJob = array();
+
+            for ($i=0; $i < count($request->nama_job) ; $i++) {
+                # code...
+                array_push($dataJob,
+                [
+                    'id_projek' => $getProjek->id_projek,
+                    'nama_job'  => $request->nama_job[$i],
+                    'lantai_job'    => $request->lantai_job[$i],
+                    'termin_job'    => $request->termin_job[$i],
+                    'status_job'    => "Aktif"
+                ]);
+
+            }
+            $this->job->insertJob($dataJob);
+            return view('V_Admin.addJob',
+                compact(
+                    'user',
+                    'projekUser',
+
+                    'getProjek',
+                    'getUserMenu'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    function editJobAction(Request $request,$projek, $id) {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Job  $job
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Job $job)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Job  $job
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Job $job)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Job  $job
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Job $job)
-    {
-        //
-    }
+        $decryptedID = Crypt::decrypt($id);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Job  $job
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Job $job)
-    {
-        //
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+
+                # code...
+                $dataJob =
+                [
+                    'id_projek' => $getProjek->id_projek,
+                    'nama_job'  => $request->nama_job,
+                    'lantai_job'    => $request->lantai_job,
+                    'termin_job'    => $request->termin_job,
+                    'status_job'    => $request->status_job
+                ];
+            DB::table('job')
+                ->where('id_job', $decryptedID)
+                ->update($dataJob);
+
+
+            return redirect()->route('job.admin',$getProjek->nama_projek)->with('success','Perkerjaan berhasil di ubah');
+        } else {
+            return redirect('/login');
+        }
     }
 }
