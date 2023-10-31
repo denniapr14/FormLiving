@@ -1844,36 +1844,134 @@ class C_Simulasi extends Controller
     }
 
 
-    public function checkPayment($orderId, $requestId, $dateTimeFinal)
+    // public function checkPayment($invoiceNumber, $reqID, $date)
+    // {
+    //     // Fetch DOKU credentials from .env
+    //     $mallId = env('DOKU_MALL_ID');
+    //     $sharedKey = env('DOKU_SHARED_KEY');
+    //     $isSandbox = env('DOKU_SANDBOX');
+
+    //     // DOKU API endpoint (sandbox or production)
+    //     $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
+
+    //     // Define the invoice number for the payment you want to check
+    //     $invoice_number = $invoiceNumber;
+
+    //     // Generate request headers
+    //     $clientId = $mallId;
+    //     $requestId = uniqid();
+    //     $dateTime = gmdate('Y-m-d H:i:s');
+    //     $isoDateTime = date(DATE_ISO8601, strtotime($dateTime));
+    //     $dateTimeFinal = substr($isoDateTime, 0, 19) . 'Z';
+
+    //     // Prepare the target path
+    //     $targetPath = '/orders/v1/status/' . $invoice_number;
+
+    //     // Generate digest (you may need to include request body for a POST request)
+    //     $digestValue = base64_encode(hash('sha256', '', true)); // You can adjust this based on the API
+
+    //     // Prepare signature component
+    //     $componentSignature = "Client-Id:" . $clientId . "\n" .
+    //         "Request-Id:" . $requestId . "\n" .
+    //         "Request-Timestamp:" . $dateTimeFinal . "\n" .
+    //         "Request-Target:" . $targetPath . "\n" .
+    //         "Digest:" . $digestValue;
+
+    //     // Generate signature
+    //     $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
+
+    //     // Construct the final URL
+    //     $url = $apiBaseUrl . $targetPath;
+
+    //     // Create a Guzzle HTTP client
+    //     $client = new \GuzzleHttp\Client();
+
+    //     // Make a GET request to DOKU API
+    //     $response = $client->get($url, [
+    //         'headers' => [
+    //             'Content-Type' => 'application/json',
+    //             'Client-Id' => $clientId,
+    //             'Request-Id' => $requestId,
+    //             'Request-Timestamp' => $dateTimeFinal,
+    //             'Signature' => 'HMACSHA256=' . $signature,
+    //         ],
+    //     ]);
+
+    //     // Get the response as JSON
+    //     $responseJson = $response->getBody()->getContents();
+
+    //     // Decode the JSON response
+    //     // $data = json_decode($responseJson, true);
+
+    //     $responseJson = $response->getBody()->getContents();
+    //     return response()->json(['paymentStatus' => $responseJson]);
+    // }
+    // function checkPayment($orderId, $requestId, $dateTimeFinal)
+    // {
+    //     $clientId = env('DOKU_MALL_ID');
+    //     $sharedKey = env('DOKU_SHARED_KEY');
+    //     $isSandbox = env('DOKU_SANDBOX');
+
+    //     // DOKU API endpoint (sandbox or production)
+    //     $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
+
+    //     // Generate a unique Request ID for each request
+    //     // $requestId = uniqid();
+
+    //     // Generate the timestamp
+
+    //     // Generate the signature
+    //     $componentSignature = "Client-Id:" . $clientId . "\n" .
+    //         "Request-Id:" . $requestId . "\n" .
+    //         "Request-Timestamp:" . $dateTimeFinal . "\n" .
+    //         "Request-Target:/orders/v1/status/" . $orderId."\n";
+
+    //     $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
+
+    //     $url = $apiBaseUrl."/orders/v1/status/".$orderId;
+
+    //     // Create a Guzzle HTTP client
+    //     $client = new Client();
+
+    //     // Make a GET request to DOKU API
+    //     $response = $client->get($url, [
+    //         'headers' => [
+    //             'Client-Id' => $clientId,
+    //             'Request-Id' => $requestId,
+    //             'Request-Timestamp' => $dateTimeFinal,
+    //             'Request-Target' => "/orders/v1/status/".$orderId,
+    //             'Signature' => 'HMACSHA256=' . $signature,
+    //         ],
+    //     ]);
+
+    //     // Get the response as JSON
+    //     $responseJson = $response->getBody()->getContents();
+    //     return response()->json(['paymentStatus' => $responseJson]);
+    // }
+
+    function checkPayment($orderId, $requestId, $dateTimeFinal)
     {
-        $clientId = env('DOKU_MALL_ID');
         $clientId = env('DOKU_MALL_ID');
         $sharedKey = env('DOKU_SHARED_KEY');
         $isSandbox = env('DOKU_SANDBOX');
+
+        // DOKU API endpoint (sandbox or production)
         $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
 
-        $requestId = uniqid();
+        // Generate a unique Request ID for each request
+        // $requestId = uniqid();
 
+        // Generate the timestamp
 
-        // Ensure that the Request-Timestamp is within a 60-second window of the current time
-
-
-        // Calculate the Digest
-        $requestBody = ''; // You can leave it empty for a GET request
-        $digestValue = base64_encode(hash('sha256', $requestBody, true));
-
-        // Prepare the Signature Component
-        $targetPath = "/orders/v1/status/" . $orderId;
+        // Generate the signature
         $componentSignature = "Client-Id:" . $clientId . "\n" .
             "Request-Id:" . $requestId . "\n" .
             "Request-Timestamp:" . $dateTimeFinal . "\n" .
-            "Request-Target:" . $targetPath;
+            "Request-Target:/orders/v1/status/" . $orderId."\n";
 
-        // Calculate HMAC-SHA256 base64 signature
         $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
 
-        // Construct the URL
-        $url = $apiBaseUrl . $targetPath;
+        $url = $apiBaseUrl."/orders/v1/status/".$orderId;
 
         // Create a Guzzle HTTP client
         $client = new Client();
@@ -1884,8 +1982,7 @@ class C_Simulasi extends Controller
                 'Client-Id' => $clientId,
                 'Request-Id' => $requestId,
                 'Request-Timestamp' => $dateTimeFinal,
-                'Request-Target' => $targetPath,
-                'Digest' => $digestValue,
+                
                 'Signature' => 'HMACSHA256=' . $signature,
             ],
         ]);
@@ -1894,89 +1991,4 @@ class C_Simulasi extends Controller
         $responseJson = $response->getBody()->getContents();
         return response()->json(['paymentStatus' => $responseJson]);
     }
-    // function checkPayment($orderId, $requestId, $dateTimeFinal)
-    // {
-    //     $clientId = env('DOKU_MALL_ID');
-    //     $sharedKey = env('DOKU_SHARED_KEY');
-    //     $isSandbox = env('DOKU_SANDBOX');
-
-    //     // DOKU API endpoint (sandbox or production)
-    //     $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
-
-    //     // Generate a unique Request ID for each request
-    //     // $requestId = uniqid();
-
-    //     // Generate the timestamp
-
-    //     // Generate the signature
-    //     $componentSignature = "Client-Id:" . $clientId . "\n" .
-    //         "Request-Id:" . $requestId . "\n" .
-    //         "Request-Timestamp:" . $dateTimeFinal . "\n" .
-    //         "Request-Target:/orders/v1/status/" . $orderId."\n";
-
-    //     $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
-
-    //     $url = $apiBaseUrl."/orders/v1/status/".$orderId;
-
-    //     // Create a Guzzle HTTP client
-    //     $client = new Client();
-
-    //     // Make a GET request to DOKU API
-    //     $response = $client->get($url, [
-    //         'headers' => [
-    //             'Client-Id' => $clientId,
-    //             'Request-Id' => $requestId,
-    //             'Request-Timestamp' => $dateTimeFinal,
-    //             'Request-Target' => "/orders/v1/status/".$orderId,
-    //             'Signature' => 'HMACSHA256=' . $signature,
-    //         ],
-    //     ]);
-
-    //     // Get the response as JSON
-    //     $responseJson = $response->getBody()->getContents();
-    //     return response()->json(['paymentStatus' => $responseJson]);
-    // }
-
-    // function checkPayment($orderId, $requestId, $dateTimeFinal)
-    // {
-    //     $clientId = env('DOKU_MALL_ID');
-    //     $sharedKey = env('DOKU_SHARED_KEY');
-    //     $isSandbox = env('DOKU_SANDBOX');
-
-    //     // DOKU API endpoint (sandbox or production)
-    //     $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
-
-    //     // Generate a unique Request ID for each request
-    //     // $requestId = uniqid();
-
-    //     // Generate the timestamp
-
-    //     // Generate the signature
-    //     $componentSignature = "Client-Id:" . $clientId . "\n" .
-    //         "Request-Id:" . $requestId . "\n" .
-    //         "Request-Timestamp:" . $dateTimeFinal . "\n" .
-    //         "Request-Target:/orders/v1/status/" . $orderId."\n";
-
-    //     $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
-
-    //     $url = $apiBaseUrl."/orders/v1/status/".$orderId;
-
-    //     // Create a Guzzle HTTP client
-    //     $client = new Client();
-
-    //     // Make a GET request to DOKU API
-    //     $response = $client->get($url, [
-    //         'headers' => [
-    //             'Client-Id' => $clientId,
-    //             'Request-Id' => $requestId,
-    //             'Request-Timestamp' => $dateTimeFinal,
-    //             'Request-Target' => "/orders/v1/status/".$orderId,
-    //             'Signature' => 'HMACSHA256=' . $signature,
-    //         ],
-    //     ]);
-
-    //     // Get the response as JSON
-    //     $responseJson = $response->getBody()->getContents();
-    //     return response()->json(['paymentStatus' => $responseJson]);
-    // }
 }

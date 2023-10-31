@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
 
-    protected $table = "Job";
+    protected $table = "job";
     protected $primaryKey = "id_job";
     function getJob($select) {
         return

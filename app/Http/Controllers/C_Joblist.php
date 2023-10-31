@@ -2,50 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Joblist;
+use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Projek;
 use App\Models\UserAdmin;
 use App\Models\UserMenu;
 use App\Models\UserNotif;
 use App\Models\UserProjek;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class C_Job extends Controller
+class C_Joblist extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
+    public $userAdmin;
+    public $userNotif;
+    public $userProjek;
 
-     public $userAdmin;
-     public $userNotif;
-     public $userProjek;
-
-     public $projek;
-     public $userMenu;
+    public $projek;
+    public $userMenu;
     public $job;
-     public function __construct()
-     {
-        $this->job = new Job();
-         $this->userAdmin = new UserAdmin();
-         $this->userNotif = new UserNotif();
-         $this->userProjek = new UserProjek();
 
-         $this->projek = new Projek();
-         $this->userMenu = new UserMenu();
-     }
-    public function getJob($projek)
+    public $joblist;
+
+    public function __construct()
     {
+        $this->job = new Job();
+        $this->joblist = new Joblist();
+        $this->userAdmin = new UserAdmin();
+        $this->userNotif = new UserNotif();
+        $this->userProjek = new UserProjek();
+
+        $this->projek = new Projek();
+        $this->userMenu = new UserMenu();
+    }
+    public function getJoblist($projek, $id_job)
+    {
+
+        $decryptedID = Crypt::decrypt($id_job);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        //
         $getJob = $this->job->getJob('*')->collect();
         $getJob = $getJob->where('id_projek',$getProjek->id_projek);
-        // dd($getJob);
+        $getJob = $getJob->where('id_job',$decryptedID);
+        $getJob = $getJob->first();
+        $getJoblist = $this->joblist->getJoblist('*')->collect();
+        $getJoblist = $getJoblist->where('id_projek', $getProjek->id_projek);
+        $getJoblist = $getJoblist->where('id_job', $decryptedID);
+        // dd($getJob->nama_job);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
@@ -64,16 +69,14 @@ class C_Job extends Controller
                     break;
                 }
             }
-            if (!$foundMatchingMenu) {
-                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-            }
 
-
-            return view('V_Admin.job',
+            return view(
+                'V_Admin.joblist',
                 compact(
                     'user',
                     'projekUser',
                     'getJob',
+                    'getJoblist',
                     'getProjek',
                     'getUserMenu'
 
@@ -84,7 +87,14 @@ class C_Job extends Controller
         }
     }
 
-    function addJob($projek) {
+    function addJoblist($projek, $id_job)
+    {
+        $decryptedID = Crypt::decrypt($id_job);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $getJob = $this->job->getJob('*')->collect();
+        $getJob = $getJob->where('id_projek',$getProjek->id_projek);
+        $getJob = $getJob->where('id_job',$decryptedID);
+        $getJob = $getJob->first();
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -107,7 +117,8 @@ class C_Job extends Controller
 
 
 
-            return view('V_Admin.addJob',
+            return view(
+                'V_Admin.addJoblist',
                 compact(
                     'user',
                     'projekUser',
@@ -121,8 +132,14 @@ class C_Job extends Controller
             return redirect('/login');
         }
     }
-    function addJobAction(Request $request,$projek) {
+    function addJoblistAction(Request $request, $projek,$id_job)
+    {
+        $decryptedID = Crypt::decrypt($id_job);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $getJob = $this->job->getJob('*')->collect();
+        $getJob = $getJob->where('id_projek',$getProjek->id_projek);
+        $getJob = $getJob->where('id_job',$decryptedID);
+        $getJob = $getJob->first();
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
 
@@ -143,29 +160,30 @@ class C_Job extends Controller
             }
             $dataJob = array();
 
-            for ($i=0; $i < count($request->nama_job) ; $i++) {
+            for ($i = 0; $i < count($request->nama_job); $i++) {
                 # code...
-                array_push($dataJob,
-                [
-                    'id_projek' => $getProjek->id_projek,
-                    'nama_job'  => $request->nama_job[$i],
-                    'lantai_job'    => $request->lantai_job[$i],
-                    'termin_job'    => $request->termin_job[$i],
-                    'status_job'    => "Aktif"
-                ]);
-
+                array_push(
+                    $dataJob,
+                    [
+                        'id_job'   => $getJob->id_job,
+                        'nama_jl'  => $request->nama_jl[$i],
+                        'sort_jl'  => $request->sort_jl[$i],
+                        'bobot_jl'    => $request->bobot_jl[$i],
+                        'termin_jl'    => $getJob->termin_job,
+                        'lantai_jl'    => $getJob->lantai_job,
+                        'status_jl'    => "Aktif"
+                    ]
+                );
             }
             $this->job->insertJob($dataJob);
-            return redirect()->route('job.admin',$getProjek->nama_projek)->with('success','Perkerjaan berhasil di ubah');
+            return redirect()->route('joblist.admin', $getProjek->nama_projek)->with('success', 'Perkerjaan berhasil di ubah');
         } else {
             return redirect('/login');
         }
     }
 
-    function editJobAction(Request $request,$projek, $id) {
-
-
-
+    function editJoblistAction(Request $request, $projek, $id)
+    {
         $decryptedID = Crypt::decrypt($id);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         if (session()->has('user')) {
@@ -188,21 +206,23 @@ class C_Job extends Controller
             }
 
 
-                # code...
-                $dataJob =
+            # code...
+            $dataJob =
                 [
-                    'id_projek' => $getProjek->id_projek,
-                    'nama_job'  => $request->nama_job,
-                    'lantai_job'    => $request->lantai_job,
-                    'termin_job'    => $request->termin_job,
-                    'status_job'    => $request->status_job
+
+                    'nama_jl'  => $request->nama_jl,
+                    'sort_jl'  => $request->sort_jl,
+                    'bobot_jl'    => $request->bobot_jl,
+                    'termin_jl'    => $request->termin_jl,
+                    'lantai_jl'    => $request->lantai_jl,
+                    'status_jl'    => "Aktif"
                 ];
             DB::table('job')
                 ->where('id_job', $decryptedID)
                 ->update($dataJob);
 
 
-            return redirect()->route('job.admin',$getProjek->nama_projek)->with('success','Perkerjaan berhasil di ubah');
+            return redirect()->route('job.admin', $getProjek->nama_projek)->with('success', 'Perkerjaan berhasil di ubah');
         } else {
             return redirect('/login');
         }

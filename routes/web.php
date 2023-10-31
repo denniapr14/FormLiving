@@ -20,6 +20,7 @@ use App\Http\Controllers\C_TipeRumah;
 use App\Http\Controllers\C_UserAdmin;
 use App\Http\Controllers\C_Payment;
 use App\Http\Controllers\C_Job;
+use App\Http\Controllers\C_Joblist;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_UserKategori;
 use App\Http\Controllers\C_UserMenu;
@@ -387,6 +388,16 @@ Route::post('/tambah-pekerjaan/action/{projek}',[C_Job::class,'addJobAction'])->
 Route::get('/ubah-pekerjaan/{projek}',[C_Job::class,'editJob'])->name('updateJob.admin');
 Route::post('/ubah-pekerjaan/action/{projek}/{id_job}',[C_Job::class,'editJobAction'])->name('updateJobAction.admin');
 Route::get('/ubah-status-pekerjaan/{projek}',[C_Job::class,'deleteJob'])->name('deleteJob.admin');
+
+// JOBLIST
+Route::get('/rincian-pekerjaan/{projek}/{id_job}',[C_Joblist::class,'getJoblist'])->name('joblist.admin');
+Route::get('/tambah-rincian-pekerjaan/{projek}/{id_job}',[C_Joblist::class,'addJoblist'])->name('addJoblist.admin');
+Route::post('/tambah-rincian-pekerjaan/action/{projek}/{id_job}',[C_Joblist::class,'addJoblistAction'])->name('addJoblistAction.admin');
+Route::get('/ubah-rincian-pekerjaan/{projek}',[C_Joblist::class,'editJoblist'])->name('updateJoblist.admin');
+Route::post('/ubah-rincian-pekerjaan/action/{projek}/{id_job}',[C_Joblist::class,'editJoblistAction'])->name('updateJoblistAction.admin');
+Route::get('/ubah-status-pekerjaan/{projek}',[C_Joblist::class,'deleteJob'])->name('deletelistJob.admin');
+
+
 
 // TEST DOKU
 Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');

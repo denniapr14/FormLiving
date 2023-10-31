@@ -24,13 +24,13 @@
                 <div class="card__header">
                     <div class="card__title">
                         <i class="bi bi-map"></i>
-                        <span>Pekerjaan {{ $getProjek->nama_projek }}</span>
+                        <span>Pekerjaan {{ $getJob->nama_job }} termin {{ $getJob->termin_job }} lantai {{ $getJob->lantai_job }} di {{ $getProjek->nama_projek }}</span>
 
                     </div>
                     <div class="invoices__actions">
                         @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
-                            <a href="{{ route('addJob.admin', $getProjek->nama_projek) }}"
-                                class="btn-fd-outline btn--small">Tambah Pekerjaan</a>
+                            <a href="{{ route('addJoblist.admin', [$getProjek->nama_projek, Crypt::encrypt($getJob->id_job)]) }}"
+                                class="btn-fd-outline btn--small">Tambah Rincian Pekerjaan</a>
                         @else
                         @endif
                     </div>
@@ -40,8 +40,8 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Pekerjaan</th>
-                                <th>Termin </th>
+                                <th>Nama Rincian Pekerjaan</th>
+                                <th>Bobot </th>
                                 <th>status</th>
 
                                 <th>Pengaturan</th>
@@ -52,28 +52,24 @@
                             <?php
                             $no = 1;
                             ?>
-                            @foreach ($getJob as $job)
+                            @foreach ($getJoblist as $joblist)
                                 <tr>
                                     <td>{{ $no++ }}</td>
 
                                     <td>
-                                        <span class="client__name">{{ $job->nama_job }} </span>
+                                        <span class="client__name">{{ $joblist->nama_jl }} </span>
 
-                                        <span class="client__handled">Lantai {{ $job->lantai_job }}</span>
+                                        <span class="client__handled">Lantai {{ $joblist->lantai_job }}</span>
                                     </td>
 
                                     <td>
-                                        {{ $job->termin_job }}
+                                        {{ $joblist->bobot_jl }}
                                     </td>
                                     <td>
-                                        {{ $job->status_job }}
+                                        {{ $joblist->status_jl }}
                                     </td>
                                     <td>
                                         <div class="d-flex flex-nowrap">
-
-                                            <a href="{{ route('joblist.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job)]) }}" class="btn-fd-icon-outline">
-                                                <i class="fa fa-list" aria-hidden="true"></i>
-                                            </a>
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik' )
                                                 <button type="button" class="btn-fd-icon-outline"
                                                     data-target="#seeKategori{{ $no }}" data-toggle="modal"
@@ -102,20 +98,33 @@
 
                                                                     <div class="modal-body">
                                                                         <form
-                                                                            action="{{ route('updateJobAction.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job)]) }}"
+                                                                            action="{{ route('updateJoblistAction.admin', [$getProjek->nama_projek, Crypt::encrypt($joblist->id_joblist)]) }}"
                                                                             method="post" enctype="multipart/form-data">
                                                                             @csrf
                                                                             <div class="form-group row">
                                                                                 <label
                                                                                     class="col-sm-4 col-form-label align-self-center">
-                                                                                    Nama Pekerjaan
+                                                                                    Nama Rincian Pekerjaan
                                                                                 </label>
                                                                                 <div class="col-sm-8 align-self-center">
                                                                                     <input type="text"
                                                                                         class="form form-control"
-                                                                                        name="nama_job"
-                                                                                        value="{{ $job->nama_job }}"
+                                                                                        name="nama_jl"
+                                                                                        value="{{ $joblist->nama_jl }}"
                                                                                         placeholder="Nama Pekerjaan">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label
+                                                                                    class="col-sm-4 col-form-label align-self-center">
+                                                                                    Pengurutan Rincian Pekerjaan
+                                                                                </label>
+                                                                                <div class="col-sm-8 align-self-center">
+                                                                                    <input type="text"
+                                                                                        class="form form-control"
+                                                                                        name="sort_jl"
+                                                                                        value="{{ $joblist->sort_jl }}"
+                                                                                        placeholder="Termin Pekerjaan">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
@@ -126,8 +135,8 @@
                                                                                 <div class="col-sm-8 align-self-center">
                                                                                     <input type="text"
                                                                                         class="form form-control"
-                                                                                        name="termin_job"
-                                                                                        value="{{ $job->termin_job }}"
+                                                                                        name="termin_jl"
+                                                                                        value="{{ $joblist->termin_jl }}"
                                                                                         placeholder="Termin Pekerjaan">
                                                                                 </div>
                                                                             </div>
@@ -139,8 +148,8 @@
                                                                                 <div class="col-sm-8 align-self-center">
                                                                                     <input type="text"
                                                                                         class="form form-control"
-                                                                                        name="lantai_job"
-                                                                                        value="{{ $job->lantai_job }}"
+                                                                                        name="lantai_jl"
+                                                                                        value="{{ $joblist->lantai_jl }}"
                                                                                         placeholder="Lantai Pekerjaan">
                                                                                 </div>
                                                                             </div>
@@ -150,9 +159,9 @@
                                                                                     Status
                                                                                 </label>
                                                                                 <div class="col-sm-8 align-self-center">
-                                                                                    <select name="status_job" id=""
+                                                                                    <select name="status_jl" id=""
                                                                                         class="form-control">
-                                                                                        @if ($job->status_job == 'Aktif')
+                                                                                        @if ($joblist->status_jl == 'Aktif')
                                                                                             <option value="Aktif" selected>
                                                                                                 Aktif</option>
                                                                                             <option value="Nonaktif">
