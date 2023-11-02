@@ -94,7 +94,7 @@ class C_Payment extends Controller
                 'amount' => $amount,
                 'invoice_number' => 'INV-' . rand(1, 10000),
                 'currency' => 'IDR',
-                'callback_url' => 'https://merchant.com/return-url',
+                'callback_url' => 'https://formsliving.com',
                 'line_items' => [
                     [
                         'name' => 'DOKU Plate',
