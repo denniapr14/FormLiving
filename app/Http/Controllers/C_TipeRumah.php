@@ -178,6 +178,7 @@ class C_TipeRumah extends Controller
                     'lt_ruang_tidur_tr' => $request->lantaiRuangTidur[$i],
                     'lt_ruang_keluarga_tr' => $request->lantaiRuangKeluarga[$i],
                     'lt_kmr_mnd_utama_tr' => $request->lantaiKamarMandiUtama[$i],
+                    'lt_teras_utama_tr'   => $request->lantaiTerasUtama[$i],
                     'rangka_atap_tr' => $request->rangkaAtap[$i],
                     'penutup_atap_tr' => $request->penutupAtap[$i],
                     'kusen_tr' => $request->kusen[$i],
