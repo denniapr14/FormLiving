@@ -14,19 +14,20 @@
             height: 100%;
 
         }
+
         .zoomIn {
             position: absolute;
             z-index: 2;
             top: 150px;
             right: 50px;
         }
+
         .zoomOut {
             position: absolute;
             z-index: 2;
             top: 180px;
             right: 50px;
         }
-
     </style>
     <!-- start: main -->
 
@@ -175,7 +176,7 @@
 
                             <div class="map svg-container"
                                 style="background-color: white ;width: 100%;
-                            " >
+                            ">
 
                                 {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
                                 {{-- @include('map.svg') --}}
@@ -190,20 +191,25 @@
                                         data.forEach(function(item) {
                                             var block = item.blok;
                                             var nomor = item.nomor;
+
                                             var blockNomor = block + "-" + nomor;
                                             var idrumah = document.getElementById(blockNomor);
-
-                                            {{--  console.log("Block-Nomor:", blockNomor);
-                                            console.log("Status:", item.status);
-                                            console.log("Color:", color(item.status)); // Check color function output  --}}
 
                                             if (idrumah) {
                                                 idrumah.style.fill = color(item.status);
                                                 idrumah.setAttribute('fill', color(item.status));
+
+                                                idrumah.addEventListener('click', function() {
+                                                    // Show the modal or perform other actions
+                                                    showModal(idrumah, item); // Pass idrumah to the showModal function
+                                                });
                                             } else {
                                                 console.log("Element not found:", blockNomor);
                                             }
                                         });
+
+                                        // Close popover when the close button is clicked
+
                                     });
 
 
@@ -230,6 +236,53 @@
                                         }
                                         return iro;
                                     }
+
+                                    function showModal(idrumah, item) {
+                                        // Define a CSS class for the heading background color
+                                        var headingBgClass = color(item.status);
+                                        console.log(item);
+                                        console.log(headingBgClass);
+
+                                        // Define the HTML content for the popover
+                                        var popoverContent = `
+
+                                            <div>
+                                                No. Rumah: ${item.blok}-${item.nomor}<br>
+                                                Luas Tanah: ${item.luas_tanah} m<sup>2</sup><br>
+                                                Status: <span id="bg-status" style="background-color:${headingBgClass};" class="btn btn-outline-info"> ${item.status} <span>
+                                            </div>
+                                        `;
+
+                                        var headingPop =`Rumah <a href="#" class="close-popover" data-dismiss="alert">&times;</a>`;
+
+                                        // Create and display a dismissible popover
+                                        $(idrumah).popover({
+
+                                            title : headingPop,
+                                            content: popoverContent,
+
+                                            html: true,
+                                            placement: 'top',
+
+                                        });
+
+                                        // Show the popover
+                                        $(idrumah).popover('show');
+                                        $("h3.popover-header").css("background-color", color(item.status));
+                                        $("#bg-status").css("background-color", color(item.status));
+                                        $("h3.popover-header").addClass("text-center");
+
+                                        // Event delegation for the button inside the popover
+                                        $(document).on('click', '.close-popover', function() {
+                                            $(idrumah).popover('dispose');
+                                        });
+                                        $(idrumah).on('focusout', function() {
+                                            $(this).popover('dispose');
+                                        });
+                                    }
+
+                                    // Function to close the popover
+
                                 </script>
 
 
@@ -237,61 +290,68 @@
                             </div>
 
                             <div class="float-right">
-                            <button class="btn-fd-icon-outline zoomIn col-md-1" id="plus" onclick="zoom(1.5)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                <button class="btn-fd-icon-outline zoomIn col-md-1" id="plus" onclick="zoom(1.5)"><i
+                                        class="fa fa-plus" aria-hidden="true"></i></button>
 
-                            <button class="btn-fd-icon-outline zoomOut col-md-1" id="minus" onclick="zoom(0.5)"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                        </div>
+                                <button class="btn-fd-icon-outline zoomOut col-md-1" id="minus" onclick="zoom(0.5)"><i
+                                        class="fa fa-minus" aria-hidden="true"></i></button>
 
-                        </div>
 
-                        <script>
-                            var svg = document.querySelector('.svg-container > svg');
-                            var currentScale = 1;
-                            var maxZoom = 2;
-                            var isPanning = true;
-                            var panStartX, panStartY, panTranslateX, panTranslateY;
+                            </div>
 
-                            function zoom(scale) {
-                                currentScale *= scale;
 
-                                // Limit the zoom to the defined maximum
-                                if (currentScale > maxZoom) {
-                                    currentScale = maxZoom;
+
+
+                            <script>
+                                var svg = document.querySelector('.svg-container > svg');
+                                var currentScale = 1;
+                                var maxZoom = 2;
+                                var isPanning = true;
+                                var panStartX, panStartY, panTranslateX, panTranslateY;
+
+                                function zoom(scale) {
+                                    currentScale *= scale;
+
+                                    // Limit the zoom to the defined maximum
+                                    if (currentScale > maxZoom) {
+                                        currentScale = maxZoom;
+                                    }
+
+                                    svg.style.transform = 'scale(' + currentScale + ')';
                                 }
 
-                                svg.style.transform = 'scale(' + currentScale + ')';
-                            }
 
 
 
+                                window.onload = function() {
+                                    var panZoomInstance = svgPanZoom('#map', {
+                                        zoomEnabled: false,
+                                        controlIconsEnabled: false, // Disable default control icons
+                                        fit: true,
+                                        center: true,
+                                        minZoom: 0.5,
+                                        maxZoom: 10,
+                                        refreshRate: 'auto',
+                                        dblClickZoomEnabled: false,
+                                    });
+                                    var controlElement = document.querySelector('#svg-pan-zoom-reset-pan-zoom');
+                                    $("div.popover").popover('dispose');
+                                    // Hide the control element by setting its display property to 'none'
+                                    controlElement.style.display = 'none';
+                                    controlElement.hide();
 
-                            window.onload = function() {
-                                var panZoomInstance = svgPanZoom('#map', {
-                                    zoomEnabled: true,
-                                    controlIconsEnabled: false, // Disable default control icons
-                                    fit: true,
-                                    center: true,
-                                    minZoom: 0.5,
-                                    maxZoom: 10,
-                                    refreshRate: 'auto',
-                                });
-                                var controlElement = document.querySelector('#svg-pan-zoom-reset-pan-zoom');
+                                    var customZoomInButton = document.getElementById('plus');
+                                    var customZoomOutButton = document.getElementById('minus');
 
-                                // Hide the control element by setting its display property to 'none'
-                                controlElement.style.display = 'none';
-                                controlElement.hide();
+                                    // Add click event listeners for your custom buttons
 
-                                var customZoomInButton = document.getElementById('plus');
-                                var customZoomOutButton = document.getElementById('minus');
+                                };
 
-                                // Add click event listeners for your custom buttons
 
-                              };
+                            </script>
 
-                        </script>
-
+                        </div>
                     </div>
-                </div>
             @endif
         </div>
 
