@@ -223,10 +223,10 @@ class C_Dashboard extends Controller
                 );
             }
 
-            // dd($agentWithCompany);
+            // dd($getProjek);
 
             return view(
-                'V_Admin.dashboard',
+                'V_Admin.index',
                 compact(
                     'user',
                     'projekUser',

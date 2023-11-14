@@ -203,6 +203,11 @@
                                                     // Show the modal or perform other actions
                                                     showModal(idrumah, item); // Pass idrumah to the showModal function
                                                 });
+                                                idrumah.addEventListener('touchend', function() {
+                                                    // Show the modal or perform other actions
+                                                    event.preventDefault();
+                                                    showModal(idrumah, item); // Pass idrumah to the showModal function
+                                                });
                                             } else {
                                                 console.log("Element not found:", blockNomor);
                                             }
@@ -249,11 +254,11 @@
                                             <div>
                                                 No. Rumah: ${item.blok}-${item.nomor}<br>
                                                 Luas Tanah: ${item.luas_tanah} m<sup>2</sup><br>
-                                                Status: <span id="bg-status" style="background-color:${headingBgClass};" class="btn btn-outline-info"> ${item.status} <span>
+                                                Status: <span id="bg-status" style="background-color:${headingBgClass};" class="btn btn btn-outline-light"> ${item.status} <span>
                                             </div>
                                         `;
 
-                                        var headingPop =`Rumah <a href="#" class="close-popover" data-dismiss="alert">&times;</a>`;
+                                        var headingPop =`Rumah <a href="#" class="close-popover float-right" data-dismiss="alert">&times;</a>`;
 
                                         // Create and display a dismissible popover
                                         $(idrumah).popover({
@@ -276,8 +281,13 @@
                                         $(document).on('click', '.close-popover', function() {
                                             $(idrumah).popover('dispose');
                                         });
-                                        $(idrumah).on('focusout', function() {
-                                            $(this).popover('dispose');
+
+                                        $(document).on('click touchend', function (e) {
+                                            // Check if the click event is outside of the popover and the element that triggers the popover
+                                            if (!$(e.target).closest('.popover').length && !$(e.target).is(idrumah)) {
+                                                // Close the popover
+                                                $(idrumah).popover('dispose');
+                                            }
                                         });
                                     }
 
