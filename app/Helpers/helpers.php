@@ -83,6 +83,12 @@ if (!function_exists('tgl_indo')) {
     }
 }
 
+function round_up($value, $precision)
+    {
+        $pow = pow(10, $precision);
+
+        return (ceil($pow * $value) + ceil($pow * $value - ceil($pow * $value))) / $pow;
+    }
 
 
 function RandomCode($counter,$projek) {
