@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
+
 class C_Login extends Controller
 {
     public $userAdmin;
@@ -67,12 +68,19 @@ class C_Login extends Controller
             'password' => 'required',
         ]);
 
+
+
         if (!empty($user)) {
             if (Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
                 Session::put('user', $user->id_user_admin);
                 $hasilSess = Session::get('user');
 
                 $userRole = $this->Role(Session::get('user'));
+
+                // $getProjekUser = $this->userAdmin->firstUserAdminWhereJoinProjek('*',['id_user_admin' => $user->id_user_admin]);
+
+                // dd($getProjekUser);
+                // Session::push('selectedProjeks', $getProjekUser->nama_projek);
 
                 switch ($userRole) {
                     case 'AdminAccounting':
@@ -97,6 +105,7 @@ class C_Login extends Controller
                         break;
                 }
             }
+
         }
 
         if (!empty($userPelanggan)) {

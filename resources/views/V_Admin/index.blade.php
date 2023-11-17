@@ -36,6 +36,7 @@
             top: 200px;
             right: 50px;
         }
+
     </style>
     <div class="pagetitle">
         <div class="row">
@@ -67,6 +68,76 @@
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
+
+
+        <div class="">
+            <div class="">
+                <h5 class="card-title">
+                    Summary
+                </h5>
+
+                <div class="col-12">
+                    <table style="width: 100%" class="table table-borderless table-responsive">
+                        <tr>
+                            <td class="">
+                                <div class="card align-items-center justify-content-center">
+                                    <i class="bi bi-calendar"></i>
+
+                                    <span>{{ $closing->count }}</span>
+                                    <span class="text-center">Closing
+                                        <br>
+                                    Month</span>
+                                </div>
+
+                            </td>
+                            <td class="">
+                                <div class="card align-items-center justify-content-center">
+                                    <i class="bi bi-database"></i>
+                                    <span class="card">  {{ $closingAll->count }}
+                                    </span>
+                                    <span class="text-center">Closing
+                                        <br> All</span>
+                                </div>
+
+                            </td>
+                            <td class="">
+                                <div class="card align-items-center justify-content-center">
+                                    <i class="bi bi-house-exclamation"></i>
+                                    <span>
+                                        {{ $remainHouse->count }}
+                                    </span>
+                                    <span class="text-center">Remain
+                                        <br> House</span>
+                                </div>
+
+                            </td>
+                            <td class="">
+                                <div class="card align-items-center justify-content-center">
+                                    <i class="bi bi-headset"></i>
+                                    <span>
+                                        {{ $agentWithCompany->userCount }}
+                                    </span>
+                                    <span class="text-center">Agent <br> With <br> Company</span>
+                                </div>
+
+
+                            </td>
+                            <td class="">
+                                <div class="card align-items-center justify-content-center">
+                                    <i class="bi bi-headphones"></i>
+                                    <span>
+                                        {{ $agentWithoutCompany->userCount }}
+                                    </span>
+                                    <span class="text-center">Agent <br> Without <br> Company</span>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
 
         <div class="card col-md-12 col-lg-12">
 
@@ -151,7 +222,7 @@
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ $agentWithCompany->userCount }}</h6>
+                                        <h6></h6>
 
                                     </div>
                                 </div>
@@ -171,7 +242,7 @@
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ $agentWithoutCompany->userCount }}</h6>
+                                        <h6></h6>
 
 
                                     </div>
@@ -397,30 +468,30 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-md-3 col-sm-6 col-6">
-                    <a href="#" class="btn btn-primary btn-lg btn-block">
+                <div class="col-md-3 col-sm-6 col-6 p-2">
+                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
                         <i class="bi bi-house"></i><br>
-                        <span>Home</span>
+                        <span>House</span>
                     </a>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-6">
-                    <a href="#" class="btn btn-primary btn-lg btn-block">
-                        <i class="bi bi-info-circle"></i><br>
-                        <span>About</span>
+                <div class="col-md-3 col-sm-6 col-6 p-2">
+                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
+                        <i class="bi bi-cart3"></i><br>
+                        <span>Order</span>
                     </a>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-6">
-                    <a href="#" class="btn btn-primary btn-lg btn-block">
-                        <i class="bi bi-envelope"></i><br>
-                        <span>Contact</span>
+                <div class="col-md-3 col-sm-6 col-6 p-2">
+                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
+                        <i class="bi bi-flag"></i><br>
+                        <span>Pre Order</span>
                     </a>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-6">
-                    <a href="#" class="btn btn-primary btn-lg btn-block">
-                        <i class="bi bi-gear"></i><br>
+                <div class="col-md-3 col-sm-6 col-6 p-2">
+                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
+                        <i class="bi bi-percent"></i><br>
                         <span>Settings</span>
                     </a>
                 </div>
@@ -430,40 +501,33 @@
         <div>
             <h3>User</h3>
         </div>
-        <div class="text-center">
-
+        <div class="container">
 
             <div class="row">
+                <div class="col-md-4 col-sm-6 col-6 p-2">
+                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
+                        <i class="bi bi-house"></i><br>
+                        <span>All User</span>
+                    </a>
+                </div>
 
-                <a class="btn-outline-info col-md-4 col-sm-12 " aria-current="page" href="#">
-                    <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="col-md-4 col-sm-6 col-6 p-2">
+                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
+                        <i class="bi bi-boxes"></i><br>
+                        <span>Category</span>
+                    </a>
+                </div>
 
-                        <i class="bi bi-house"></i>
-                        <span>Home</span>
-                    </div>
-                </a>
+                <div class="col-md-4 col-sm-6 col-6 p-2">
+                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
+                        <i class="bi bi-people"></i><br>
+                        <span>Buyer</span>
+                    </a>
+                </div>
 
-                <a class="btn-outline-info col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center"
-                    aria-current="page" href="#">
-                    <div class="d-flex flex-column align-items-center justify-content-center">
-
-                        <i class="bi bi-house"></i>
-                        <span>Home</span>
-                    </div>
-                </a>
-
-                <a class="btn-outline-info col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center"
-                    aria-current="page" href="#">
-                    <div class="d-flex flex-column align-items-center justify-content-center">
-
-                        <i class="bi bi-house"></i>
-                        <span>Home</span>
-                    </div>
-                </a>
 
             </div>
         </div>
-
 
     </section>
 

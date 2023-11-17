@@ -70,16 +70,40 @@
 
                         <div class="mb-3 form-group">
                             <label for="date" class="form-label">Tempat dan Tanggal Lahir <span>*</span></label>
-                            <input type="text" class="form-control" name="tempatLahir" id="" placeholder="Tempat Lahir"
-                                value="{{ old('tempatLahir') }}">
-                            <br>
-                            <input type="text" class="form-control" name="tanggalLahir" onclick="(this.type='date')"
-                                onblur="(this.type='text')" id="" placeholder="Tanggal Lahir" style="cursor:pointer"
-                                value="{{ old('tanggalLahir') }}">
-                            @if ((new \Jenssegers\Agent\Agent())->isIphone())
-                            <input type="date" class="form-control" name="tanggalLahir" id=""
-                                placeholder="Tanggal Lahir" style="cursor:pointer" value="{{ old('tanggalLahir') }}">
-                            @endif
+                            <table>
+                                <tr>
+                                    <td style="width: 30%" class="">
+                                        <input list="tanggal" name="tanggal"  class="form-control" placeholder="Tanggal Lahir">
+
+                                        <datalist id="tanggal">
+                                            @for ($y = 0; $y < 30; $y++)
+                                            <option value="{{ $y + 1 }}"> {{ $y + 1 }}
+                                            </option>
+                                        @endfor
+                                        </datalist>
+                                    </td>
+                                    <td style="width: 30%; padding-left: 5px; padding-right: 5px;" class="">
+                                        <select name="bulan"  class="form-control">
+                                            <option>Bulan</option>
+                                            @for ($d = 0; $d < 12; $d++)
+                                                <option value="{{ $d + 1 }}"> {{ $d + 1 }}
+                                                </option>
+                                            @endfor
+
+                                        </select>
+                                    </td>
+                                    <td style="width: 30%">
+                                        <input list="th" name="tahun" id="tahun" class="form-control" placeholder="Tahun Lahir">
+
+                                        <datalist id="th">
+                                            @for ($y = 1950; $y < date("Y"); $y++)
+                                            <option value="{{ $y + 1 }}"> {{ $y + 1 }}
+                                            </option>
+                                        @endfor
+                                        </datalist>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="mb-3 form-group">
                             <label for="kelamin" class="form-label">Jenis Kelamin <span>*</span></label>

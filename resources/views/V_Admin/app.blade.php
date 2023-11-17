@@ -23,10 +23,10 @@
     <link href="{{ url('Bootstrap') }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ url('Bootstrap') }}/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="{{ url('Bootstrap') }}/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/quill/quill.snow.css" rel="stylesheet">
+    {{--  <link href="{{ url('Bootstrap') }}/vendor/quill/quill.snow.css" rel="stylesheet">
     <link href="{{ url('Bootstrap') }}/vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="{{ url('Bootstrap') }}/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="{{ url('Bootstrap') }}/vendor/simple-datatables/style.css" rel="stylesheet">  --}}
 
     <!-- Template Main CSS File -->
     <link href="{{ url('Bootstrap') }}/css/style.css" rel="stylesheet">
@@ -62,18 +62,22 @@
         </div><!-- End Logo -->
 
         <div class="dropdown">
-            <a class="btn btn-outline-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              Perumahan
+            <a class="btn btn-outline-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Perumahan
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              @foreach ($projekUser as $projekUser)
-              <li><a class="dropdown-item" href="#">{{ $projekUser->nama_projek }}</a></li>
-              @endforeach
-
-
-
+                @foreach ($projekUser as $projek)
+                    <li><a class="dropdown-item" href="#"
+                            onclick="setProjek('{{ $projek->nama_projek }}')">{{ $projek->nama_projek }}</a></li>
+                @php
+                    $setProjek;
+                @endphp
+                @endforeach
             </ul>
+
+
         </div>
 
         <nav class="header-nav ms-auto">
@@ -147,6 +151,20 @@
 
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-heading">Projek</li>
+
+
+            @foreach ($getUserMenu as $userMenu)
+                @if ($userMenu->status_menu == 'menu')
+                    <li class="nav-item ">
+                        <a class="nav-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif navMenu"
+                            href="{{ url($userMenu->url_menu) }}">
+                            <i class="{{ $userMenu->icon_menu }}"></i>
+                            <span>{{ $userMenu->menu }}</span>
+                        </a>
+                    </li><!-- End Dashboard Nav -->
+                @endif
+            @endforeach
+
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
                     <i class="bi bi-grid"></i>
@@ -250,14 +268,16 @@
 
 
     <!-- Vendor JS Files -->
-    <script src="{{ url('Bootstrap') }}/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    {{--  <script src="{{ url('Bootstrap') }}/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/chart.js/chart.umd.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/echarts/echarts.min.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/quill/quill.min.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/tinymce/tinymce.min.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/php-email-form/validate.js"></script>
+    <script src="{{ url('Bootstrap') }}/vendor/php-email-form/validate.js"></script>  --}}
 
     <!-- Template Main JS File -->
     <script src="{{ url('Bootstrap') }}/js/main.js"></script>
@@ -283,6 +303,23 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+    <script>
+        function setProjek(projek) {
+            // Use AJAX to send the selected project to the server
+            // You can use libraries like jQuery or the native Fetch API for this
+
+            // For example, using jQuery:
+            $.ajax({
+                type: "POST",
+                url: "/set-selected-projek", // Update with the actual endpoint
+                data: { selectedProjek: projek },
+                success: function(response) {
+                    // Handle the response from the server if needed
+                }
+            });
+        }
     </script>
 </body>
 

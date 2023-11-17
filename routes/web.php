@@ -4,7 +4,7 @@ use App\Http\Controllers\AdminAccounting;
 // NEW
 use App\Http\Controllers\AdminADV_Dashboard;
 // ======================================
-
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AdminFormsLiving_Dashboard;
 use App\Http\Controllers\AdminFormsLiving_User;
 use App\Http\Controllers\C_Dashboard;
@@ -288,6 +288,17 @@ Route::get('AdminFormsLiving/download-user', [AdminFormsLiving_User::class, 'dow
 // >>>>>>>>>>>>>>       END ADMIN FORMS LIVING      <<<<<<<<<<<<<
 
 Route::get('/email/{id_formulir}', [Home::class, 'email']);
+
+
+// SESION
+Route::post('/set-selected-projek', function () {
+    $selectedProjek = request('selectedProjek');
+
+    // Store the selected project in the session array
+    Session::push('selectedProjeks', $selectedProjek);
+
+    return response()->json(['success' => true]);
+});
 
 // SUPER ADMIN NEW
 Route::get('/dashboard-admin/{projek}', [C_Dashboard::class, 'index'])->name('dashboard.admin');

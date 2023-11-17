@@ -846,7 +846,7 @@ class Home extends Controller
                 'code_id_ua' => "XMP" . date("dmy", strtotime($request->tanggalLahir)) . "AGC",
                 'username_ua' => $request->username,
                 'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tanggalLahir,
+                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
                 'password_ua' => md5($request->password),
                 'email_ua' => $request->email,
                 'no_tlp_ua' => $request->phone,
@@ -858,19 +858,13 @@ class Home extends Controller
                 $dataInput
             );
 
-            $dataUserMenu =   [
-                'id_menu' => 1,
-                 'id_kategori' => 24,
-                'status_um' => 'aktif'
-            ];
+
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-            DB::table('user_menu')->insert(
-                $dataUserMenu
-            );
+
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );
@@ -881,7 +875,7 @@ class Home extends Controller
                 'code_id_ua' => "MDT" . date("dmy", strtotime($request->tanggalLahir)) . "AG",
                 'username_ua' => $request->username,
                 'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tanggalLahir,
+                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
                 'password_ua' => md5($request->password),
                 'email_ua' => $request->email,
                 'no_tlp_ua' => $request->phone,
@@ -893,19 +887,13 @@ class Home extends Controller
                 $dataInput
             );
 
-            $dataUserMenu =   [
-                'id_menu' => 1,
-                'id_kategori' => 5,
-                'status_um' => 'aktif'
-            ];
+
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-            DB::table('user_menu')->insert(
-                $dataUserMenu
-            );
+
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );
@@ -916,7 +904,7 @@ class Home extends Controller
                 'code_id_ua' => "GL" . date("dmy", strtotime($request->tanggalLahir)) . "SL",
                 'username_ua' => $request->username,
                 'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tanggalLahir,
+                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
                 'password_ua' => md5($request->password),
                 'email_ua' => $request->email,
                 'no_tlp_ua' => $request->phone,
@@ -928,19 +916,11 @@ class Home extends Controller
                 $dataInput
             );
 
-            $dataUserMenu =   [
-                'id_menu' => 1,
-                 'id_kategori' => 4,
-                'status_um' => 'aktif'
-            ];
             $dataUserProjek =  [
                 'id_projek'    => 1,
                 'id_user_admin' => $getIDUser
             ];
 
-            DB::table('user_menu')->insert(
-                $dataUserMenu
-            );
             DB::table('user_projek')->insert(
                 $dataUserProjek
             );
