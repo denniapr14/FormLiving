@@ -1,7 +1,6 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
 
+@extends('flashdata')
 @section('tittle', 'FORMS | Dashboard')
 
 @section('content')
@@ -15,16 +14,16 @@
 
     <!-- start: content -->
 
-    <div class="content__wrapper">
+    <div class="">
 
 
 
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
                     <div class="card__title">
-                        <a href="{{ route('tipeRumah.admin',[$getProjek->nama_projek,Crypt::encrypt($getRumah->id_rumah)] ) }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
+                        <a href="{{ route('tipeRumah.admin',[$getProjek->nama_projek,Crypt::encrypt($getRumah->id_rumah)] ) }}" class="btn btn-outline-danger col-1" style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
                         <h1>Tambah Tipe Rumah </h1>
 
                     </div>

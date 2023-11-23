@@ -1,6 +1,6 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
+
+@extends('flashdata')
 
 @section('tittle', 'FORMS | Dashboard')
 
@@ -15,13 +15,14 @@
 
     <!-- start: content -->
 
-    <div class="content__wrapper">
+    <div class="">
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
-                    <div class="card__title">
-                        <a href="{{ route('rumah.admin', $getProjek->nama_projek) }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
+                    <div class="">
+                        <a href="{{ route('rumah.admin', $getProjek->nama_projek) }}" class="btn btn-outline-danger col-1"
+                            style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
                         <h1>Tambah Rumah </h1>
 
                     </div>
@@ -42,22 +43,23 @@
 
 
 
-                                <option value="{{ $getProjek->id_projek }}">{{ $getProjek->nama_projek }}</option>
+                            <option value="{{ $getProjek->id_projek }}">{{ $getProjek->nama_projek }}</option>
 
                         </select>
 
-                        <small id="errorMsgProjek" class="" >Wajib di isi</small>
+                        <small id="errorMsgProjek" class="">Wajib di isi</small>
                     </div>
                     <div class="form-group">
 
                         <select name="cluster" class="form-control" id="inputCluster">
                             <option value="">--Pilih Cluster--</option>
                             @foreach ($getCluster as $cluster)
-                                <option value="{{ $cluster->codecluster }}">{{ $cluster->nama_cluster }} - {{ $cluster->nama_projek }}</option>
+                                <option value="{{ $cluster->codecluster }}">{{ $cluster->nama_cluster }} -
+                                    {{ $cluster->nama_projek }}</option>
                             @endforeach
                         </select>
 
-                        <small id="errorMsgCluster" class="" >Wajib di isi</small>
+                        <small id="errorMsgCluster" class="">Wajib di isi</small>
                     </div>
                     <div class="form-inline">
 
@@ -66,27 +68,29 @@
                                 placeholder="Masukan Blok Rumah" aria-describedby="helpId">
 
                         </div>
-                        &nbsp;
+
                         <div class="form-group mb-3">
-                            - &nbsp;
+
                             <input type="text" name="nomor" id="inputNomor" class="form-control"
                                 placeholder="Masukan Nomor Rumah" aria-describedby="helpId">
 
 
                         </div>
-  <small id="errorMsgBlokNomor" class="" >Wajib di isi</small>
+                        <small id="errorMsgBlokNomor" class="">Wajib di isi</small>
 
                     </div>
                     <div class="form-group">
 
-                      <input type="number" name="luasTanah" id="inputLuasTanah" class="form-control" placeholder="Masukan Luas Tanah" aria-describedby="helpId">
-                      <small id="helpId" class="text-muted">Wajib di isi</small>
-                    </div>
-                    <div class="form-group">
-
-                        <input type="number" name="inputVA" id="inputVA" class="form-control" placeholder="Masukan Virtual Account bank" aria-describedby="helpId">
+                        <input type="number" name="luasTanah" id="inputLuasTanah" class="form-control"
+                            placeholder="Masukan Luas Tanah" aria-describedby="helpId">
                         <small id="helpId" class="text-muted">Wajib di isi</small>
-                      </div>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="number" name="inputVA" id="inputVA" class="form-control"
+                            placeholder="Masukan Virtual Account bank" aria-describedby="helpId">
+                        <small id="helpId" class="text-muted">Wajib di isi</small>
+                    </div>
 
 
 
@@ -100,7 +104,7 @@
 
                         </select>
 
-                        <small id="errorMsgStatus" class="" >Wajib di isi</small>
+                        <small id="errorMsgStatus" class="">Wajib di isi</small>
                     </div>
                     <div class="form-group">
 
@@ -125,17 +129,18 @@
 
 
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
-                    <div class="card__title">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-tittle">
+                    <div class="">
 
                         <h1>Tambah Tipe Rumah </h1>
 
                     </div>
 
                 </div>
-                <form action="{{ route('postTipeRumah',$getProjek->nama_projek) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('postTipeRumah', $getProjek->nama_projek) }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="inputID" id="inputIDRumah" class="form form-control" hidden readonly>
                     <div class="form-group">
@@ -554,7 +559,7 @@
                         status: status,
                         stock: stock,
                         luasTanah: luasTanah,
-                        va:va
+                        va: va
 
 
                     },
@@ -575,7 +580,7 @@
 
                     },
                     error: function(response) {
-                         {{--  $('#errorMsgProjek').show();
+                        {{--  $('#errorMsgProjek').show();
                             $('#errorMsgCluster').show();
                             $('#errorMsgBlokNomor').show();
 
@@ -622,7 +627,7 @@
                         status: status,
                         stock: stock,
                         luasTanah: luasTanah,
-                        va:va
+                        va: va
 
                     },
                     success: function(response) {

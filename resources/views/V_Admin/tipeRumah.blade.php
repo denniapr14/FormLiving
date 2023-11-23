@@ -1,7 +1,6 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
+
 @extends('flashdata')
-@extends('V_Admin.footer')
 
 @section('tittle', 'FORMS | Dashboard')
 
@@ -15,16 +14,16 @@
     <!-- end: navbar -->
 
     <!-- start: content -->
-    <div class="content__wrapper">
+    <div class="">
 
 
-        <div class="content__row mb-3">
-            <div class="card__box">
+        <div class="card mb-3">
+            <div class="card-body">
 
                 <br>
-                <div class="card__header">
+                <div class="card-title">
                     <div class="card__title">
-                        <a href="{{  route('rumah.admin', $getProjek->nama_projek)  }}" class="btn-fd-icon-outline" style="height: 40px; width: 50px">
+                        <a href="{{  route('rumah.admin', $getProjek->nama_projek)  }}" class="btn btn-outline-danger" style="height: 40px; width: 50px">
                             <i class="bi bi-arrow-left"></i></a> &nbsp;
                         <i class="bi bi-clipboard2-plus"></i>
                         <span>Tipe Rumah {{ $getRumah->nama_cluster }} / {{ $getRumah->blok }} - {{ $getRumah->nomor }}
@@ -32,9 +31,9 @@
 
                     </div>
 
-                    <div class="invoices__actions">
+                    <div class="float-right">
                         <a href="{{ route('storeTipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($getRumah->id_rumah)]) }}"
-                            class="btn-fd-outline btn--small">Tambah Tipe Rumah</a>
+                            class="btn btn-outline-primary btn--small">Tambah Tipe Rumah</a>
                     </div>
                 </div>
 
@@ -88,12 +87,11 @@
                                         </td>
                                         <td>Rp {{ rupiah($tipeRumah->harga_tr) }}</td>
                                         <td>
-                                            <div class="d-flex flex-nowrap">
+                                            <div class="">
 
-                                                <button type="button" class="btn-fd-icon-outline"
+                                                <button type="button" class="btn btn-outline-info"
                                                     data-target="#tipeRumah{{ $no }}" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i
-                                                        class="fa fa-eye" aria-hidden="true"></i>
+                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-eye"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="tipeRumah{{ $no }}"
@@ -448,14 +446,13 @@
 
                                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
                                                     <a href="{{ route('updateTipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($tipeRumah->id_tipe_rumah)]) }}"
-                                                        class="btn-fd-icon-outline">
-                                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                                        class="btn btn-outline-info">
+                                                        <i class="bi bi-pencil-square"></i>
                                                     </a>
 
-                                                    <button type="button" class="btn-fd-icon-outline"
+                                                    <button type="button" class="btn btn-outline-info"
                                                     data-target="#delTipeRumah{{ $no }}" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i <i
-                                                        class="fa fa-trash" aria-hidden="true"></i>
+                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-trash"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="delTipeRumah{{ $no }}"

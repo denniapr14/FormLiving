@@ -1,6 +1,5 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
+
 @extends('flashdata')
 @section('tittle', 'FORMS ONE | Tambah Rumah Promo')
 @section('content')
@@ -42,11 +41,11 @@
         }
     </style>
 
-    <div class="content__row">
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
-                    <div class="card__title">
+    <div class="">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
+                    <div class="">
                         <a href="{{ url()->previous() }}" class="btn-fd-icon-outline " style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
                         <i class="bi bi-award-fill"></i>
                         <span>Promo </span>

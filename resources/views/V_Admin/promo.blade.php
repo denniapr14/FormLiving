@@ -6,11 +6,11 @@
 
 @section('content')
 
-    <div class="content__row">
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
-                    <div class="card__title">
+    <div class="">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
+                    <div class="">
                         <i class="bi bi-award-fill"></i>
                         <span>Promo</span>
 
@@ -18,7 +18,7 @@
                     <div class="invoices__actions">
                         @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
                             <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}"
-                                class="btn-fd-outline btn--small">Tambah Promo</a>
+                                class="btn btn-outline-info btn--small">Tambah Promo</a>
                         @endif
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                     <td>
                         <div class="d-flex flex-nowrap">
                             <a href="{{ route('updatePromo.admin', [$getProjek->nama_projek, Crypt::encrypt($promo->id_promo)]) }}"
-                                class="btn btn-outline-primary"><i class="fas fa-edit    "></i></a>
+                                class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
 
                         </div>
                     </td>

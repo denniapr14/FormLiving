@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserAdmin;
 // Controller
 // =======================
+use App\Models\UserProjek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,11 @@ use Illuminate\Support\Facades\Validator;
 class C_Login extends Controller
 {
     public $userAdmin;
+    public $userProjek;
     public function __construct()
     {
         $this->userAdmin = new UserAdmin();
+        $this->userProjek = new UserProjek();
     }
     public function Login()
     {
@@ -74,13 +77,13 @@ class C_Login extends Controller
             if (Auth::guard('admin')->attempt(['username_ua' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
                 Session::put('user', $user->id_user_admin);
                 $hasilSess = Session::get('user');
-
-                $userRole = $this->Role(Session::get('user'));
-
-                // $getProjekUser = $this->userAdmin->firstUserAdminWhereJoinProjek('*',['id_user_admin' => $user->id_user_admin]);
+                $getProjekUser = $this->userProjek->firstProjectUserWhere(['user_admin.id_user_admin' => $user->id_user_admin]);
 
                 // dd($getProjekUser);
-                // Session::push('selectedProjeks', $getProjekUser->nama_projek);
+                Session::push('selectedProjeks', $getProjekUser->nama_projek);
+                $userRole = $this->Role(Session::get('user'));
+
+
 
                 switch ($userRole) {
                     case 'AdminAccounting':

@@ -25,19 +25,38 @@
     <link href="{{ url('Bootstrap') }}/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     {{--  <link href="{{ url('Bootstrap') }}/vendor/quill/quill.snow.css" rel="stylesheet">
     <link href="{{ url('Bootstrap') }}/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/simple-datatables/style.css" rel="stylesheet">  --}}
+    <link href="{{ url('Bootstrap') }}/vendor/remixicon/remixicon.css" rel="stylesheet"> --}}
+    {{--  <link href="{{ url('Bootstrap') }}/vendor/simple-datatables/style.css" rel="stylesheet">  --}}
+
 
     <!-- Template Main CSS File -->
     <link href="{{ url('Bootstrap') }}/css/style.css" rel="stylesheet">
 
 
-    {{--  JQUERY  --}}
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <!-- Include jQuery -->
     <script src="{{ url('Dashboard') }}/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Include jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+    <!-- Include DataTables CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 
     {{--  TOASTY  --}}
     <link rel="stylesheet" type="text/css" href="{{ url('Dashboard') }}/css/toastify.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
 
     <!-- =======================================================
   * Template Name: NiceAdmin
@@ -64,16 +83,17 @@
         <div class="dropdown">
             <a class="btn btn-outline-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                Perumahan
+                {{ Session::get('selectedProjeks')[0] }}
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 @foreach ($projekUser as $projek)
-                    <li><a class="dropdown-item" href="#"
-                            onclick="setProjek('{{ $projek->nama_projek }}')">{{ $projek->nama_projek }}</a></li>
-                @php
-                    $setProjek;
-                @endphp
+                    <li><a class="dropdown-item"
+                            href="{{ url('/set-selected-projek', $projek->nama_projek) }}">{{ $projek->nama_projek }}</a>
+                    </li>
+                    @php
+                        $setProjek;
+                    @endphp
                 @endforeach
             </ul>
 
@@ -153,11 +173,12 @@
             <li class="nav-heading">Projek</li>
 
 
+
             @foreach ($getUserMenu as $userMenu)
                 @if ($userMenu->status_menu == 'menu')
                     <li class="nav-item ">
                         <a class="nav-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif navMenu"
-                            href="{{ url($userMenu->url_menu) }}">
+                            href=" {{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }} ">
                             <i class="{{ $userMenu->icon_menu }}"></i>
                             <span>{{ $userMenu->menu }}</span>
                         </a>
@@ -165,58 +186,20 @@
                 @endif
             @endforeach
 
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="index.html">
-                    <i class="bi bi-house-door-fill"></i>
-                    <span>House</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="index.html">
-                    <i class="bi bi-percent"></i>
-                    <span>Promo</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="index.html">
-                    <i class="bi bi-cart3"></i>
-                    <span>Order</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-flag"></i>
-                    <span>Pre Order</span>
-                </a>
-            </li>
             <li class="nav-heading">User</li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>User List</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-boxes"></i>
-                    <span>Category</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-people"></i>
-                    <span>Buyer</span>
-                </a>
-            </li>
+            @foreach ($getUserMenu as $userMenu)
+                @if ($userMenu->status_menu == "optional")
+                <li class="nav-item ">
+                    <a class="nav-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif navMenu"
+                        href=" {{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }} ">
+                        <i class="{{ $userMenu->icon_menu }}"></i>
+                        <span>{{ $userMenu->menu }}</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
+                @endif
+
+            @endforeach
+
 
             <li class="nav-heading">Pusat Bantuan</li>
             <li class="nav-item">
@@ -275,52 +258,31 @@
     <script src="{{ url('Bootstrap') }}/vendor/chart.js/chart.umd.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/echarts/echarts.min.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/quill/quill.min.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/tinymce/tinymce.min.js"></script>
     <script src="{{ url('Bootstrap') }}/vendor/php-email-form/validate.js"></script>  --}}
+    {{--  <script src="{{ url('Bootstrap') }}/vendor/simple-datatables/simple-datatables.js"></script>  --}}
 
     <!-- Template Main JS File -->
     <script src="{{ url('Bootstrap') }}/js/main.js"></script>
 
     {{--  JQUERY JS  --}}
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     {{--  SVGPANZOOM  --}}
     <script src="{{ url('Dashboard') }}/js/svg-pan-zoom.js"></script>
 
     {{--  DATATABLES  --}}
-    <script type="text/javascript" src="{{ url('Dashboard') }}/js/jquery.dataTables.js"></script>
+
+    {{--  <script type="text/javascript" src="{{ url('Dashboard') }}/js/jquery.dataTables.js"></script>  --}}
+
+
+
     {{--  TOASTY  --}}
     <script type="text/javascript" src="{{ url('Dashboard') }}/js/toastify.js"></script>
 
     {{--  BOOTSTRAP  --}}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
 
-    <script>
-        function setProjek(projek) {
-            // Use AJAX to send the selected project to the server
-            // You can use libraries like jQuery or the native Fetch API for this
 
-            // For example, using jQuery:
-            $.ajax({
-                type: "POST",
-                url: "/set-selected-projek", // Update with the actual endpoint
-                data: { selectedProjek: projek },
-                success: function(response) {
-                    // Handle the response from the server if needed
-                }
-            });
-        }
-    </script>
 </body>
 
 </html>

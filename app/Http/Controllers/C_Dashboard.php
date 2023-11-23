@@ -39,7 +39,7 @@ class C_Dashboard extends Controller
 
     public function index($projek)
     {
-
+        // dd(Session::get('selectedProjeks',)[0]);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $fp = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
             'formulir_pesanan.status_fp',
@@ -248,5 +248,14 @@ class C_Dashboard extends Controller
 
             return redirect('/login');
         }
+    }
+
+    function changeProjek($projek) {
+
+            // Store the selected project in the session array
+            Session::pull('selectedProjeks', $projek);
+            Session::push('selectedProjeks', $projek);
+            // dd(Session::get('selectedProjeks',)[0]);
+            return redirect()->route('dashboard.admin',$projek);
     }
 }

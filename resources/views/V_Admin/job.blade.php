@@ -14,23 +14,23 @@
     <!-- end: navbar -->
 
     <!-- start: content -->
-    <div class="content__wrapper">
+    <div class="">
 
 
 
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
                     <div class="card__title">
                         <i class="bi bi-map"></i>
                         <span>Pekerjaan {{ $getProjek->nama_projek }}</span>
 
                     </div>
-                    <div class="invoices__actions">
+                    <div class="float-right">
                         @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
                             <a href="{{ route('addJob.admin', $getProjek->nama_projek) }}"
-                                class="btn-fd-outline btn--small">Tambah Pekerjaan</a>
+                                class="btn btn-outline-info btn--small">Tambah Pekerjaan</a>
                         @else
                         @endif
                     </div>
@@ -71,14 +71,14 @@
                                     <td>
                                         <div class="d-flex flex-nowrap">
 
-                                            <a href="{{ route('joblist.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job)]) }}" class="btn-fd-icon-outline">
-                                                <i class="fa fa-list" aria-hidden="true"></i>
+                                            <a href="{{ route('joblist.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job)]) }}" class="btn btn-outline-info">
+                                                <i class="bi bi-list-task"></i>
                                             </a>
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik' )
-                                                <button type="button" class="btn-fd-icon-outline"
+                                                <button type="button" class="btn btn-outline-info"
                                                     data-target="#seeKategori{{ $no }}" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg{{ $no }}">
-                                                    <i class="fa fa-edit"></i>
+                                                    <i class="bi bi-pencil-square"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="seeKategori{{ $no }}"

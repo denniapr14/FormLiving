@@ -1,15 +1,15 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
+
 @extends('flashdata')
-@extends('V_Admin.footer')
+
 @section('tittle', 'FORMS | Sales Agent')
 
 @section('content')
 
-    <div class="content__wrapper">
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
+    <div class="">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
                     <div class="card__title">
                         <i class="bi bi-people-fill"></i>
                         <span>User
@@ -103,10 +103,10 @@
                                     @if ($user->kategori == 'SuperAdmin')
                                         <td>
                                             <div class="d-flex flex-nowrap">
-                                                <button type="button" class="btn-fd-icon-outline"
+                                                <button type="button" class="btn btn-outline-info"
                                                     data-target="#seeUser{{ $no }}" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i
-                                                        class="fa fa-eye" aria-hidden="true"></i>
+                                                    data-target=".bd-example-modal-lg{{ $no }}">
+                                                    <i class="bi bi-eye"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="seeUser{{ $no }}"
@@ -281,10 +281,10 @@
                                                 </div>
                                                 {{--  EITS  --}}
 
-                                                <button type="button" class="btn-fd-icon-outline"
+                                                <button type="button" class="btn btn-outline-info"
                                                     data-target="#editUser{{ $no }}" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i
-                                                        class="fa fa-edit" aria-hidden="true"></i>
+                                                    data-target=".bd-example-modal-lg{{ $no }}">
+                                                    <i class="bi bi-pencil-square"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="editUser{{ $no }}"
@@ -539,10 +539,10 @@
                                                     </div>
                                                 </div>
 
-                                                <button type="button" class="btn-fd-icon-outline"
+                                                <button type="button" class="btn btn-outline-info"
                                                     data-target="#delUser{{ $no }}" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i <i
-                                                        class="fa fa-trash" aria-hidden="true"></i>
+                                                    data-target=".bd-example-modal-lg{{ $no }}">
+                                                    <i class="bi bi-trash"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="delUser{{ $no }}"

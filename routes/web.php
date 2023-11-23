@@ -291,14 +291,7 @@ Route::get('/email/{id_formulir}', [Home::class, 'email']);
 
 
 // SESION
-Route::post('/set-selected-projek', function () {
-    $selectedProjek = request('selectedProjek');
-
-    // Store the selected project in the session array
-    Session::push('selectedProjeks', $selectedProjek);
-
-    return response()->json(['success' => true]);
-});
+Route::get('/set-selected-projek/{projek}', [C_Dashboard::class,'changeProjek'])->name('changeProjek.admin');
 
 // SUPER ADMIN NEW
 Route::get('/dashboard-admin/{projek}', [C_Dashboard::class, 'index'])->name('dashboard.admin');

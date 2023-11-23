@@ -1,6 +1,5 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
+
 @extends('flashdata')
 @section('tittle', 'FORMS | Dashboard')
 
@@ -14,12 +13,12 @@
     <!-- end: navbar -->
 
     <!-- start: content -->
-    <div class="content__wrapper">
+    <div class="">
 
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
                     <div class="card__title">
                         <i class="fa fa-user-secret myicon-color" aria-hidden="true"></i>
                         &nbsp;
@@ -51,10 +50,9 @@
                                     <td>{{ $userAdmin->status_ua }}</td>
                                     <td>
                                         <div class="d-flex flex-nowrap">
-                                            <button type="button" class="btn-fd-icon-outline"
+                                            <button type="button" class="btn btn-outline-info"
                                                 data-target="#seeUser{{ $no }}" data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="fa fa-eye"
-                                                    aria-hidden="true"></i>
+                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-eye"></i>
                                             </button>
 
                                             <div class="modal modal-form fade" id="seeUser{{ $no }}"
@@ -209,10 +207,9 @@
                                             </div>
                                             {{--  EITS  --}}
 
-                                            <button type="button" class="btn-fd-icon-outline"
+                                            <button type="button" class="btn btn-outline-info"
                                                 data-target="#editUser{{ $no }}" data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $no }}"> <i
-                                                    class="fa fa-edit" aria-hidden="true"></i>
+                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-pencil-square"></i>
                                             </button>
 
                                             <div class="modal modal-form fade" id="editUser{{ $no }}"

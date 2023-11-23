@@ -20,6 +20,14 @@ class UserProjek extends Model{
         ->where($where, $eq, $value)
         ->get();
     }
+
+    function firstProjectUserWhere($where){
+        return UserProjek::join('projek', 'user_projek.id_projek', '=', 'projek.id_projek')
+        ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')
+        ->where($where)
+        ->first();
+    }
+
     function getProjectUserWhereArr($where){
         return UserProjek::join('projek', 'user_projek.id_projek', '=', 'projek.id_projek')
         ->join('user_admin', 'user_projek.id_user_admin', '=', 'user_admin.id_user_admin')

@@ -80,7 +80,7 @@
                     <table style="width: 100%" class="table table-borderless table-responsive">
                         <tr>
                             <td class="">
-                                <div class="card align-items-center justify-content-center">
+                                <div class="card align-items-center justify-content-center" style="height: 120px">
                                     <i class="bi bi-calendar"></i>
 
                                     <span>{{ $closing->count }}</span>
@@ -91,9 +91,9 @@
 
                             </td>
                             <td class="">
-                                <div class="card align-items-center justify-content-center">
+                                <div class="card align-items-center justify-content-center" style="height: 120px">
                                     <i class="bi bi-database"></i>
-                                    <span class="card">  {{ $closingAll->count }}
+                                    <span class="">  {{ $closingAll->count }}
                                     </span>
                                     <span class="text-center">Closing
                                         <br> All</span>
@@ -101,7 +101,7 @@
 
                             </td>
                             <td class="">
-                                <div class="card align-items-center justify-content-center">
+                                <div class="card align-items-center justify-content-center" style="height: 120px">
                                     <i class="bi bi-house-exclamation"></i>
                                     <span>
                                         {{ $remainHouse->count }}
@@ -112,7 +112,7 @@
 
                             </td>
                             <td class="">
-                                <div class="card align-items-center justify-content-center">
+                                <div class="card align-items-center justify-content-center" style="height: 120px">
                                     <i class="bi bi-headset"></i>
                                     <span>
                                         {{ $agentWithCompany->userCount }}
@@ -123,7 +123,7 @@
 
                             </td>
                             <td class="">
-                                <div class="card align-items-center justify-content-center">
+                                <div class="card align-items-center justify-content-center" style="height: 120px">
                                     <i class="bi bi-headphones"></i>
                                     <span>
                                         {{ $agentWithoutCompany->userCount }}
@@ -139,124 +139,7 @@
             </div>
         </div>
 
-        <div class="card col-md-12 col-lg-12">
 
-            <div class="card-body">
-                <h5 class="card-title">Summary</h5>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card info-card sales-card">
-
-
-
-                            <div class="card-body">
-                                <h5 class="card-title">Closing Month <span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cart"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{ $closing->count }}</h6>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Sales Card -->
-
-                    <!-- Revenue Card -->
-                    <div class="col-md-4">
-                        <div class="card info-card sales-card">
-
-
-
-                            <div class="card-body">
-                                <h5 class="card-title">Closing Year <span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cart"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{ $closingAll->count }}</h6>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Revenue Card -->
-
-                    <div class="col-md-4">
-                        <div class="card info-card sales-card">
-
-
-                            <div class="card-body">
-                                <h5 class="card-title">the rest of the house <span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-houses"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{ $remainHouse->count }}</h6>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Revenue Card -->
-                    <div class="col-md-6">
-                        <div class="card info-card sales-card">
-
-
-
-                            <div class="card-body">
-                                <h5 class="card-title">Agent With Company <span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-people"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6></h6>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Revenue Card -->
-                    <div class="col-md-6">
-                        <div class="card info-card sales-card">
-
-
-                            <div class="card-body">
-                                <h5 class="card-title">Agent Without Company</h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-people"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6></h6>
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Revenue Card -->
-                    <!-- Reports -->
-                </div>
-            </div>
-
-
-        </div>
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title"> <i class="bi bi-map"></i> Site Plan</h4>
