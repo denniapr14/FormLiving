@@ -20,12 +20,12 @@
     <!-- end: navbar -->
 
     <!-- start: content -->
-    <div class="content__wrapper">
+    <div class="">
 
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
                     <div class="card__title">
                         <i class="bi bi-map"></i>
                         <span>Pre Order {{ $getProjek->nama_projek }}

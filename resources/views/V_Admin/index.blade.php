@@ -345,72 +345,7 @@
         </div>
         </div>
 
-        <div>
-            <h3>Projek</h3>
-        </div>
-        <div class="container">
 
-            <div class="row">
-                <div class="col-md-3 col-sm-6 col-6 p-2">
-                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
-                        <i class="bi bi-house"></i><br>
-                        <span>House</span>
-                    </a>
-                </div>
-
-                <div class="col-md-3 col-sm-6 col-6 p-2">
-                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
-                        <i class="bi bi-cart3"></i><br>
-                        <span>Order</span>
-                    </a>
-                </div>
-
-                <div class="col-md-3 col-sm-6 col-6 p-2">
-                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
-                        <i class="bi bi-flag"></i><br>
-                        <span>Pre Order</span>
-                    </a>
-                </div>
-
-                <div class="col-md-3 col-sm-6 col-6 p-2">
-                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
-                        <i class="bi bi-percent"></i><br>
-                        <span>Settings</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <h3>User</h3>
-        </div>
-        <div class="container">
-
-            <div class="row">
-                <div class="col-md-4 col-sm-6 col-6 p-2">
-                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
-                        <i class="bi bi-house"></i><br>
-                        <span>All User</span>
-                    </a>
-                </div>
-
-                <div class="col-md-4 col-sm-6 col-6 p-2">
-                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
-                        <i class="bi bi-boxes"></i><br>
-                        <span>Category</span>
-                    </a>
-                </div>
-
-                <div class="col-md-4 col-sm-6 col-6 p-2">
-                    <a href="#" class="btn btn-primary btn-lg btn-block w-100">
-                        <i class="bi bi-people"></i><br>
-                        <span>Buyer</span>
-                    </a>
-                </div>
-
-
-            </div>
-        </div>
 
     </section>
 
