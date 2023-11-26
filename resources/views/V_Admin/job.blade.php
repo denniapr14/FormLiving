@@ -22,18 +22,24 @@
         <div class="card mb-3">
             <div class="card-body">
                 <div class="card-title">
-                    <div class="card__title">
-                        <i class="bi bi-map"></i>
-                        <span>Pekerjaan {{ $getProjek->nama_projek }}</span>
-
-                    </div>
-                    <div class="float-right">
-                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
+                    <table style="width: 100%">
+                        <tr>
+                            <td>   <i class="bi bi-map"></i>
+                                <span>Pekerjaan {{ $getProjek->nama_projek }}</span>
+                            </td>
+                            <td>
+                                <div class="float-right">
+                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
                             <a href="{{ route('addJob.admin', $getProjek->nama_projek) }}"
-                                class="btn btn-outline-info btn--small">Tambah Pekerjaan</a>
+                                class="btn btn-outline-info btn--small" style="float: right"><i class="bi bi-plus"></i> Pekerjaan</a>
                         @else
                         @endif
-                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
                 <div class="table-responsive">
                     <table id="formulirPesanan" class="table">

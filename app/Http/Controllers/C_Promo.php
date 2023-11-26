@@ -45,19 +45,8 @@ class C_Promo extends Controller
     public function Promo($projek)
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        $promo = DB::table('list_promo')
-            ->select('*')
-            ->join('promo', 'list_promo.id_promo', '=', 'promo.id_promo')
-            ->leftJoin('cluster', 'list_promo.codecluster', '=', 'cluster.codecluster')
-            ->leftJoin('rumah', 'list_promo.id_rumah', '=', 'rumah.id_rumah')
-            // ->leftJoin('formulir_pesanan', 'list_promo.id_promo', '=', 'formulir_pesanan.id_promo')
-            // ->leftJoin('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-            // ->leftJoin('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
-            // ->leftJoin('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-            // ->where('formulir_pesanan.status_fp','!=','nonactive')
-            ->where('rumah.id_projek', '=', $getProjek->id_projek)
-            ->orderBy('promo.id_promo', 'desc')
-            ->get();
+        $promo = $this->listPromo->getPromoCostumPromo($getProjek->id_projek);
+        $promoMobile = $this->listPromo->getPromoCostumPromo($getProjek->id_projek);
         $getPromoFP =  DB::table('formulir_pesanan')
             ->join('promo', 'formulir_pesanan.id_promo', '=', 'promo.id_promo')
             ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
@@ -101,12 +90,13 @@ class C_Promo extends Controller
                 return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
             }
 
-
+            // dd($promo);
             return view(
                 'V_Admin.promo',
                 compact(
                     'user',
                     'promo',
+                    'promoMobile',
                     'projekUser',
                     'getProjek',
                     'getPromoFP',

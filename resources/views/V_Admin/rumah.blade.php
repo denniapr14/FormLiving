@@ -7,61 +7,27 @@
 @section('content')
 
     <!-- start: main -->
-
     <style>
-        {{--  @media (max-width: 500px) {
-            #rumah-mobile {
+        @media (max-width: 500px) {
+            #rumahMobile {
                 display: block;
             }
 
-            #rumah {
+            #rumahPC {
                 display: none;
             }
         }
 
         @media (min-width: 501px) {
-            #rumah-mobile {
+            #rumahMobile {
                 display: none;
             }
 
-            #rumah {
+            #rumahPC {
                 display: block;
             }
-        }  --}} table {
-            width: 100%;
-            border-collapse: collapse;
         }
 
-
-        .th-table,
-        .td-table {
-            padding: 8px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        /* Styles for smaller screens */
-        @media (max-width: 500px) {
-
-
-
-            .th-table {
-                display: none;
-            }
-
-            .td-table {
-                width: 100%;
-
-            }
-
-            .tr-table {
-                border: 2px;
-                padding: 1rem 1rem 1rem 1rem;
-            }
-
-            /* Add additional styling as needed for the card layout */
-            /* For example, you can add margin, padding, background color, etc. */
-        }
     </style>
 
 
@@ -74,29 +40,30 @@
 
 
     <div class="">
-        <div class="card">
+        <div class="card" id="rumahPC">
 
             <div class="card-body">
                 <div class="card-title">
-                    <div class="row">
-                        <!-- House Information (Left) -->
-                        <div class="col-md-6">
-                            <div>
-                                <i class="bi bi-house-fill"></i>
+                    <table style="width: 100%">
+                        <tr>
+                            <td> <i class="bi bi-house-fill"></i>
                                 <span>Rumah Projek {{ $getProjek->nama_projek }}</span>
-                            </div>
-                        </div>
+                            </td>
+                            <td>
+                                <div class="float-right">
+                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
+                                        <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}"
+                                            class="btn btn-outline-gl" style="float: right"> <i class="bi bi-plus"></i>
+                                            Rumah</a>
+                                    @else
+                                        <!-- You can add additional content or styling for the non-admin case if needed -->
+                                    @endif
+                                </div>
 
-                        <!-- Button Section (Right) -->
-                        <div class="col-md-6 text-md-right mt-2 mt-md-0" style="float: right">
-                            @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}" class="btn btn-outline-primary" style="float: right"> <i
-                                        class="bi bi-plus"></i> Rumah</a>
-                            @else
-                                <!-- You can add additional content or styling for the non-admin case if needed -->
-                            @endif
-                        </div>
-                    </div>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
 
 
@@ -104,13 +71,13 @@
                 <div class="table-responsive">
 
                     <table id="rumah" class="table" style="width: 100%">
-                        <thead>
+                        <thead class="">
                             <tr>
-                                <th style="width: 1rem">No</th>
-                                <th style="width: 40%">Tipe Rumah</th>
-                                <th style="width: 5%">Luas <br> Tanah</th>
-                                <th style="width: 10%">Status</th>
-                                <th style="width: 35%">Pengaturan</th>
+                                <th class="th-table" style="width: 1rem">No</th>
+                                <th class="th-table" style="width: 40%">Tipe Rumah</th>
+                                <th class="th-table" style="width: 5%">Luas <br> Tanah</th>
+                                <th class="th-table" style="width: 10%">Status</th>
+                                <th class="th-table" style="width: 35%">Pengaturan</th>
 
 
                             </tr>
@@ -120,11 +87,12 @@
                             $no = 1;
                             ?>
                             @foreach ($getRumah as $rumah)
-                                <tr>
-                                    <td>{{ $no }}</td>
-                                    <td>{{ $rumah->nama_cluster }} / {{ $rumah->blok }} - {{ $rumah->nomor }}
+                                <tr class="tr-table">
+                                    <td class="td-table">{{ $no }}</td>
+                                    <td class="td-table">{{ $rumah->nama_cluster }} / {{ $rumah->blok }} -
+                                        {{ $rumah->nomor }}
                                         @if ($rumah->img_rumah != null)
-                                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                            <button type="button" class="btn btn-outline-gl" data-toggle="modal"
                                                 data-target=".bd-example-modal-lg{{ $no }}"><i
                                                     class="fas fa-image    "></i></button>
 
@@ -143,33 +111,33 @@
 
 
                                     </td>
-                                    <td>{{ $rumah->luas_tanah }}</td>
-                                    <td>{{ $rumah->status }}</td>
+                                    <td class="td-table">{{ $rumah->luas_tanah }}</td>
+                                    <td class="td-table">{{ $rumah->status }}</td>
                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                        <td>
+                                        <td class="td-table">
 
 
                                             @if ($rumah->status != 'Available')
                                             @else
                                                 <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                    class="btn btn-outline-info"><i class="bi bi-book-fill"></i><span
+                                                    class="btn btn-outline-gl"><i class="bi bi-book-fill"></i><span
                                                         class="badge badge-pill badge-info">
                                                         {{ $rumah->countTipe }}</span></a>
                                             @endif
 
                                             <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
-                                                class="btn btn-outline-info">
+                                                class="btn btn-outline-gl">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
 
 
                                         </td>
                                     @else
-                                        <td>
+                                        <td class="td-table">
 
 
                                             <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                class="btn btn-outline-info"><i class="bi bi-book-fill"></i> aa<span
+                                                class="btn btn-outline-gl"><i class="bi bi-book-fill"></i> aa<span
                                                     class="badge badge-pill badge-info">
                                                     {{ $rumah->countTipe }}</span></a>
 
@@ -197,50 +165,111 @@
 
         </div>
 
-        {{--  <div class="card">
-            <div class="table-responsive">
-
-                <table id="rumah-mobile" class="table">
-                    <thead>
+        <div class="card" id="rumahMobile">
+            <div class="card-body">
+                <div class="card-title">
+                    <table style="width: 100%">
                         <tr>
-                            <th></th>
-
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-
-                        <tr>
+                            <td> <i class="bi bi-house-fill"></i>
+                                <span>Rumah Projek {{ $getProjek->nama_projek }}</span>
+                            </td>
                             <td>
-                                <div class="row w-100">
-                                    @foreach ($getRumah as $rumah)
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-tittle">
-                                                        {{ $rumah->nama_cluster }} / {{ $rumah->blok }} -
-                                                        {{ $rumah->nomor }}
-                                                    </h5>
-                                                    <label for="">{{ $rumah->luas_tanah }}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-
+                                <div class="float-right">
+                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
+                                        <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}"
+                                            class="btn btn-outline-gl" style="float: right"> <i class="bi bi-plus"></i>
+                                            Rumah</a>
+                                    @else
+                                        <!-- You can add additional content or styling for the non-admin case if needed -->
+                                    @endif
                                 </div>
 
                             </td>
-
-
                         </tr>
+                    </table>
+                </div>
+
+                <div class="table-responsive">
+                    <center>
+                        <table id="rumah-mobile" class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
 
 
-                    </tbody>
-                </table>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach ($getRumah as $rumah)
+                                    <tr style="border: none">
+                                        <td style="border: none">
+                                            <center>
+                                                <div class="row w-100">
+                                                    <div class="">
+                                                        <div class="mycard">
+                                                            <div class="">
+                                                                <span class="p-2"> <b> {{ $rumah->nama_cluster }} / {{ $rumah->blok }} -
+                                                                    {{ $rumah->nomor }}</b>
+
+                                                                </span><br>
+                                                                <span for="">Luas Tanah :{{ $rumah->luas_tanah }}
+                                                                    m<sup>2</sup></span> <br>
+                                                                <span for="">{{ $rumah->status }}</span>
+                                                                <center>
+                                                                    <table>
+                                                                        <tr>
+                                                                            @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
+                                                                                <td class="td-table">
+                                                                                    @if ($rumah->status != 'Available')
+                                                                                    @else
+                                                                                        <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
+                                                                                            class="btn btn-outline-gl"><i
+                                                                                                class="bi bi-book-fill"></i><span
+                                                                                                class="badge badge-pill badge-info">
+                                                                                                {{ $rumah->countTipe }}</span></a>
+                                                                                    @endif
+
+                                                                                    <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
+                                                                                        class="btn btn-outline-gl">
+                                                                                        <i class="bi bi-pencil-square"></i>
+                                                                                    </a>
+                                                                                </td>
+                                                                            @else
+                                                                                <td class="td-table">
+                                                                                    <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
+                                                                                        class="btn btn-outline-gl"><i
+                                                                                            class="bi bi-book-fill"></i>
+                                                                                        aa<span
+                                                                                            class="badge badge-pill badge-info">
+                                                                                            {{ $rumah->countTipe }}</span></a>
+                                                                                </td>
+                                                                            @endif
+                                                                        </tr>
+                                                                    </table>
+                                                                </center>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </center>
+                                        </td>
+
+
+                                    </tr>
+                                @endforeach
+
+
+                            </tbody>
+                        </table>
+                    </center>
+
+                </div>
 
             </div>
-        </div>  --}}
+
+        </div>
     </div>
 
     <script>

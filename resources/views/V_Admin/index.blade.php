@@ -37,6 +37,35 @@
             right: 50px;
         }
 
+        .summaryMobile {
+            font-size: 12px;
+        }
+
+        @media(max-width:500px) {
+            .pagetitle {
+                display: none;
+            }
+
+            .summaryPC {
+                display: none
+            }
+
+            .summaryMobile {
+                display: inline;
+            }
+        }
+
+        @media(min-width:501px) {
+            .summaryPC {
+                display: block;
+            }
+
+            .summaryMobile {
+                display: none
+            }
+        }
+
+
     </style>
     <div class="pagetitle">
         <div class="row">
@@ -71,71 +100,79 @@
 
 
         <div class="">
-            <div class="">
-                <h5 class="card-title">
-                    Summary
-                </h5>
-
-                <div class="col-12">
-                    <table style="width: 100%" class="table table-borderless table-responsive">
-                        <tr>
-                            <td class="">
-                                <div class="card align-items-center justify-content-center" style="height: 120px">
-                                    <i class="bi bi-calendar"></i>
-
-                                    <span>{{ $closing->count }}</span>
-                                    <span class="text-center">Closing
-                                        <br>
-                                    Month</span>
-                                </div>
-
-                            </td>
-                            <td class="">
-                                <div class="card align-items-center justify-content-center" style="height: 120px">
-                                    <i class="bi bi-database"></i>
-                                    <span class="">  {{ $closingAll->count }}
-                                    </span>
-                                    <span class="text-center">Closing
-                                        <br> All</span>
-                                </div>
-
-                            </td>
-                            <td class="">
-                                <div class="card align-items-center justify-content-center" style="height: 120px">
-                                    <i class="bi bi-house-exclamation"></i>
-                                    <span>
-                                        {{ $remainHouse->count }}
-                                    </span>
-                                    <span class="text-center">Remain
-                                        <br> House</span>
-                                </div>
-
-                            </td>
-                            <td class="">
-                                <div class="card align-items-center justify-content-center" style="height: 120px">
-                                    <i class="bi bi-headset"></i>
-                                    <span>
-                                        {{ $agentWithCompany->userCount }}
-                                    </span>
-                                    <span class="text-center">Agent <br> With <br> Company</span>
-                                </div>
+            <div class="card">
+                <div class="card-body">
 
 
-                            </td>
-                            <td class="">
-                                <div class="card align-items-center justify-content-center" style="height: 120px">
-                                    <i class="bi bi-headphones"></i>
-                                    <span>
-                                        {{ $agentWithoutCompany->userCount }}
-                                    </span>
-                                    <span class="text-center">Agent <br> Without <br> Company</span>
-                                </div>
+                    <h5 class="card-title">
+                        Summary
+                    </h5>
 
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="col-12 summaryPC">
+                        <table style="width: 100%" class="table table-borderless table-responsive">
+                            <tr>
+                                <td class="" style="">
+                                    <div class="card align-items-center justify-content-center" style="height: 120px">
+                                        <i class="bi bi-calendar"></i>
+
+                                        <span>{{ $closing->count }}</span>
+                                        <span class="text-center">Closing
+
+                                            Bulanan</span>
+                                    </div>
+
+                                </td>
+                                <td class="" style="width: 20%">
+                                    <div class="card align-items-center justify-content-center" style="height: 120px">
+                                        <i class="bi bi-database"></i>
+                                        <span class=""> {{ $closingAll->count }}
+                                        </span>
+                                        <span class="text-center">Semua
+                                             Closing</span>
+                                    </div>
+
+                                </td>
+                                <td class="" style="">
+                                    <div class="card align-items-center justify-content-center" style="height: 120px">
+                                        <i class="bi bi-house-exclamation"></i>
+                                        <span>
+                                            {{ $remainHouse->count }}
+                                        </span>
+                                        <span class="text-center">Sisa
+                                             Rumah</span>
+                                    </div>
+
+                                </td>
+                                <td class="" style="">
+                                    <div class="card align-items-center justify-content-center" style="height: 120px">
+                                        <i class="bi bi-headset"></i>
+                                        <span>
+                                            {{ $agentWithCompany->userCount }}
+                                        </span>
+                                        <span class="text-center">Agen Company</span>
+                                    </div>
+
+
+                                </td>
+                                <td class="" style="">
+                                    <div class="card align-items-center justify-content-center" style="height: 120px">
+                                        <i class="bi bi-headphones"></i>
+                                        <span>
+                                            {{ $agentWithoutCompany->userCount }}
+                                        </span>
+                                        <span class="text-center">Agen</span>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="summaryMobile">
+                        Closing Bulanan: {{ $closing->count }} | Semua Closing: {{ $closingAll->count }} | Sisa Rumah:
+                        {{ $remainHouse->count }} | Agen company: {{ $agentWithCompany->userCount }} |
+                        Agen:{{ $agentWithoutCompany->userCount }}
+                    </div>
                 </div>
-
             </div>
         </div>
 
@@ -234,11 +271,16 @@
                                                     <div>
                                                         No. Rumah: ${item.blok}-${item.nomor}<br>
                                                         Luas Tanah: ${item.luas_tanah} m<sup>2</sup><br>
-                                                        Status: <span id="bg-status" style="background-color:${headingBgClass};" class="btn btn btn-outline-light"> ${item.status} <span>
+                                                        Status: <span id="bg-status" style="color:${headingBgClass};"  class="btn btn-outline-gl"> ${item.status} <span>
                                                     </div>
+                                                    <br>
+                                                    <div class="float-right">
+                                                        <a href="#" class="btn btn-outline-danger close-popover" data-dismiss="alert">Close</a>
+                                                    </div>
+
                                                 `;
 
-                                    var headingPop = `Rumah <a href="#" class="close-popover float-right" data-dismiss="alert">&times;</a>`;
+                                    var headingPop = `<h4 style="color: black;">Rumah </h4>`;
 
                                     // Create and display a dismissible popover
                                     $(idrumah).popover({
@@ -254,8 +296,19 @@
                                     // Show the popover
                                     $(idrumah).popover('show');
                                     $("h3.popover-header").css("background-color", color(item.status));
-                                    $("#bg-status").css("background-color", color(item.status));
+
+                                    $("#bg-status").css("color", color(item.status));
+
                                     $("h3.popover-header").addClass("text-center");
+
+                                    if(color(item.status) == "#f5fcb6"){
+                                        $("h3.popover-header").css("color", "black");
+                                    }else{
+                                        $("h3.popover-header").css("color", "white");
+                                    }
+                                    if(color(item.status) == "#f5fcb6"){
+                                        $("#bg-status").css("color", "#757a46");
+                                    }
 
                                     // Event delegation for the button inside the popover
                                     $(document).on('click', '.close-popover', function() {

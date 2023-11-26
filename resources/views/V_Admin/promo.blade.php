@@ -6,267 +6,323 @@
 
 @section('content')
 
-    <div class="">
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="card-title">
-                    <div class="">
-                        <i class="bi bi-award-fill"></i>
-                        <span>Promo</span>
+    <style>
+        @media (max-width: 500px) {
+            #promoMobile {
+                display: block;
+            }
 
-                    </div>
-                    <div class="invoices__actions">
-                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
-                            <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}"
-                                class="btn btn-outline-info btn--small">Tambah Promo</a>
-                        @endif
-                    </div>
-                </div>
+            #promoPC {
+                display: none;
+            }
+        }
 
-                <div class="table-responsive">
-                    <table id="promo" class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Cluster - No Rumah</th>
+        @media (min-width: 501px) {
+            #promoMobile {
+                display: none;
+            }
 
-                                <th>Promo</th>
+            #promoPC {
+                display: block;
+            }
+        }
+    </style>
+
+    <div class="card mb-3" id="promoPC">
+
+        <div class="card-body">
+            <div class="card-title">
+                <table style="width: 100%">
+                    <tr>
+                        <td> <i class="bi bi-award-fill"></i>
+                            <span>Promo</span>
+                        </td>
+                        <td>
+                            <div class="float-right">
                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
-                                    <th>Pengaturan</th>
+                                    <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}"
+                                        class="btn btn-outline-gl btn--small" style="float: right"><i class="bi bi-plus"></i>
+                                        Promo</a>
                                 @endif
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $noPromo = 1; ?>
-                            @foreach ($promo as $promo)
-                                @if (!empty($promo))
-                                    <tr>
-                                        <td>{{ $noPromo }}</td>
-                                        <td>
-                                            {{ $promo->nama_cluster }} /
-                                            @if (empty($promo->blok))
-                                                tidak ada
-                                            @else
-                                                {{ $promo->blok }} - {{ $promo->nomor }}
-                                            @endif
+                            </div>
 
-                                        </td>
-                                        <td>
-                                            <div id="accordion">
-                                                <!-- ... other code ... -->
+                        </td>
+                    </tr>
+                </table>
 
-                                                    <div id="accordion">
-                                                        <div class="card">
-                                                            <div class="card-header" id="headingOne{{ $noPromo }}">
-                                                                <h5 class="mb-0">
-                                                                    <button class="btn btn-link" data-toggle="collapse"
-                                                                        data-target="#collapseOne{{ $noPromo }}" aria-expanded="true"
-                                                                        aria-controls="collapseOne{{ $noPromo }}">
-                                                                        Detail Promo {{ $promo->promo }} -
-                                                                        {{ $promo->kode_promo }}
-                                                                        @foreach ($getPromoFP as $promoFP)
-                                                                        @if ($promo->id_rumah == $promoFP->id_rumah)
-                                                                        <span class="btn btn-success">
+            </div>
 
-                                                                            <i class="fa fa-check" aria-hidden="true"></i>
-                                                                        </span>
-                                                                        @endif
+            <div class="table-responsive">
+                <table id="promo" class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Cluster - No Rumah</th>
 
+                            <th>Promo</th>
+                            @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
+                                <th>Pengaturan</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $noPromo = 1; ?>
+                        @foreach ($promo as $promo)
+                            @if (!empty($promo))
+                                <tr>
+                                    <td>{{ $noPromo }}</td>
+                                    <td>
+                                        {{ $promo->nama_cluster }} /
+                                        @if (empty($promo->blok))
+                                            tidak ada
+                                        @else
+                                            {{ $promo->blok }} - {{ $promo->nomor }}
+                                        @endif
 
-                                                                        @endforeach
-                                                                    </button>
-                                                                </h5>
-                                                            </div>
+                                    </td>
+                                    <td>
+                                        <div class="accordion" id="accordionExample">
+                                            <div class="accordion-item collabse">
+                                                <h2 class="accordion-header" id="headingOne">
+                                                    <button class="accordion-button" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseOne{{ $noPromo }}"
+                                                        aria-expanded="true" aria-controls="collapseOne">
+                                                        Detail Promo {{ $promo->promo }} -
+                                                        {{ $promo->kode_promo }}
+                                                        &nbsp;
+                                                        @foreach ($getPromoFP as $promoFP)
+                                                            @if ($promo->id_rumah == $promoFP->id_rumah)
+                                                                <span class="btn btn-outline-gl">
 
-                                                            <div id="collapseOne{{ $noPromo }}" class="collapse "
-                                                                aria-labelledby="headingOne{{ $noPromo }}" data-parent="#accordion">
-                                                                <div class="card-body">
-                                                                    <div>
-                                                                        @foreach ($getPromoFP as $promoFP)
-                                                                        @if ($promo->id_rumah == $promoFP->id_rumah)
+                                                                    <i class="bi bi-check" aria-hidden="true"></i>
+                                                                </span>
+                                                            @endif
+                                                        @endforeach
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseOne{{ $noPromo }}" class="accordion-collapse collapse"
+                                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body">
+                                                        <div>
+                                                            @foreach ($getPromoFP as $promoFP)
+                                                                @if ($promo->id_rumah == $promoFP->id_rumah)
+                                                                    <p>Nama Pelanggan : {{ $promoFP->nama_plgn }}
+                                                                    </p>
+                                                                @endif
+                                                            @endforeach
 
-                                                                        <p>Nama Pelanggan : {{ $promoFP->nama_plgn }}</p>
-                                                                        @endif
+                                                            <p></p>
+                                                            <p>Keterangan : {{ $promo->keterangan }}</p>
+                                                            <p>Kode Promo : {{ $promo->kode_promo }}</p>
+                                                            <p>Diskon Promo : {{ rupiah($promo->diskon_promo) }}
+                                                            </p>
+                                                            <p>Tanggal Mulai - Akhir :
+                                                                <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?>
+                                                                -
+                                                                <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?>
+                                                            </p>
+                                                            <p>Tipe Promo : {{ $promo->tipe_promo }}</p>
 
-
-                                                                        @endforeach
-
-                                                                        <p></p>
-                                                                        <p>Keterangan : {{ $promo->keterangan }}</p>
-                                                                        <p>Kode Promo : {{ $promo->kode_promo }}</p>
-                                                                        <p>Diskon Promo : {{ rupiah($promo->diskon_promo) }}</p>
-                                                                        <p>Tanggal Mulai - Akhir :
-                                                                            <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?> -
-                                                                            <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?>
-                                                                        </p>
-                                                                        <p>Tipe Promo : {{ $promo->tipe_promo }}</p>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
 
+                                        </div>
 
+                                    </td>
+                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
+                                        <td>
+                                            <div class="d-flex flex-nowrap">
+                                                <a href="{{ route('updatePromo.admin', [$getProjek->nama_projek, Crypt::encrypt($promo->id_promo)]) }}"
+                                                    class="btn btn-outline-gl"><i class="bi bi-pencil-square"></i></a>
 
                                             </div>
                                         </td>
+                                    @endif
 
+                                </tr>
+                            @endif
 
-
-
-
-                </td>
-                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
-                    <td>
-                        <div class="d-flex flex-nowrap">
-                            <a href="{{ route('updatePromo.admin', [$getProjek->nama_projek, Crypt::encrypt($promo->id_promo)]) }}"
-                                class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
-
-                        </div>
-                    </td>
-                @endif
-
-                </tr>
-                @endif
-
-                <?php $noPromo++; ?>
-                @endforeach
-                </tbody>
+                            <?php $noPromo++; ?>
+                        @endforeach
+                    </tbody>
                 </table>
 
             </div>
 
         </div>
 
-        {{-- <tr>
+    </div>
 
-        <td>{{ $noPromo }}</td>
-        <td>{{ $promo->nama_cluster }} /
-            @if (empty($promo->blok))
-            tidak ada
-            @else
-            {{ $promo->blok }} - {{ $promo->nomor }}
-            @endif
-        </td>
-        <td>
-            <div id="accordion">
-                <div class="card">
-                    <div class="card-header" id="headingOne{{ $noPromo }}">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne{{ $noPromo }}"
-                                aria-expanded="true" aria-controls="collapseOne{{ $noPromo }}">
-                                Detail Promo {{ $promo->promo }} -
-                                {{ $promo->kode_promo }}
+    <div class="card" id="promoMobile">
 
-                                @if (!empty($promo->id_formulir))
-                                <span class="btn btn-success">
-
-                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                </span>
-                                @else
-                                <span class="btn btn-danger">
-
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </span>
+        <div class="card-body">
+            <div class="card-title">
+                <table style="width: 100%">
+                    <tr>
+                        <td> <i class="bi bi-award-fill"></i>
+                            <span>Promo</span>
+                        </td>
+                        <td>
+                            <div class="float-right">
+                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
+                                    <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}"
+                                        class="btn btn-outline-gl btn--small" style="float: right"><i
+                                            class="bi bi-plus"></i> Promo</a>
                                 @endif
-                            </button>
-                        </h5>
-                    </div>
-
-                    <div id="collapseOne{{ $noPromo }}" class="collapse " aria-labelledby="headingOne{{ $noPromo }}"
-                        data-parent="#accordion">
-                        <div class="card-body">
-                            <div>
-                                <p>Keterangan : {{ $promo->keterangan }}</p>
-                                <p>Kode Promo : {{ $promo->kode_promo }}</p>
-                                <p>Diskon Promo : {{ rupiah($promo->diskon_promo) }}</p>
-                                <p>Tanggal Mulai - Akhir :
-                                    <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?> -
-                                    <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?>
-                                </p>
-                                <p>Tipe Promo : {{ $promo->tipe_promo }}</p>
-
                             </div>
-                        </div>
-                    </div>
-                </div>
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="table-responsive">
+                <center>
+                    <table id="promoMobileTable" class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+
+                            $noPromoMobile = 1;
+                            ?>
+
+                            @foreach ($promoMobile as $promoMobile)
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="card-title">
+                                                        {{ $promoMobile->nama_cluster }} /
+                                                        @if (empty($promoMobile->blok))
+                                                            tidak ada
+                                                        @else
+                                                            {{ $promoMobile->blok }} - {{ $promoMobile->nomor }}
+                                                        @endif
+                                                    </div>
+                                                    <p>
+                                                        Kode Promo : {{ $promoMobile->kode_promo }}
+                                                    </p>
+                                                    <div class="accordion" id="accordionExample">
+                                                        <div class="accordion-item collabse">
+                                                            <h2 class="accordion-header" id="headingOne">
+                                                                <button class="accordion-button" type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#collapseOne{{ $noPromoMobile }}"
+                                                                    aria-expanded="true" aria-controls="collapseOne">
+                                                                    Detail Promo {{ $promoMobile->promo }} -
+                                                                    {{ $promoMobile->kode_promo }}
+                                                                    &nbsp;
+                                                                    @foreach ($getPromoFP as $promoFP)
+                                                                        @if ($promoMobile->id_rumah == $promoFP->id_rumah)
+                                                                            <span class="btn btn-outline-gl">
+
+                                                                                <i class="bi bi-check"
+                                                                                    aria-hidden="true"></i>
+                                                                            </span>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapseOne{{ $noPromoMobile }}"
+                                                                class="accordion-collapse collapse"
+                                                                aria-labelledby="headingOne"
+                                                                data-bs-parent="#accordionExample">
+                                                                <div class="accordion-body">
+                                                                    <div>
+                                                                        @foreach ($getPromoFP as $promoFP)
+                                                                            @if ($promoMobile->id_rumah == $promoFP->id_rumah)
+                                                                                <p>Nama Pelanggan :
+                                                                                    {{ $promoFP->nama_plgn }}
+                                                                                </p>
+                                                                            @endif
+                                                                        @endforeach
+
+                                                                        <p></p>
+                                                                        <p>Keterangan : {{ $promoMobile->keterangan }}</p>
+                                                                        <p>Kode Promo : {{ $promoMobile->kode_promo }}</p>
+                                                                        <p>Diskon Promo :
+                                                                            {{ rupiah($promoMobile->diskon_promo) }}
+                                                                        </p>
+                                                                        <p>Tanggal Mulai - Akhir :
+                                                                            <?= date('d M Y', strtotime($promoMobile->tgl_berakhir)) ?>
+                                                                            -
+                                                                            <?= date('d M Y', strtotime($promoMobile->tgl_berakhir)) ?>
+                                                                        </p>
+                                                                        <p>Tipe Promo : {{ $promoMobile->tipe_promo }}</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <br>
+                                                    {{--  END ACCORDION  --}}
+                                                    <div>
+                                                        <center>
+                                                            <table>
+                                                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
+                                                                    <td>
+
+                                                                        <a href="{{ route('updatePromo.admin', [$getProjek->nama_projek, Crypt::encrypt($promo->id_promo)]) }}"
+                                                                            class="btn btn-outline-gl"><i
+                                                                                class="bi bi-pencil-square"></i></a>
 
 
+                                                                    </td>
+                                                                @endif
+                                                            </table>
+                                                        </center>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                @php
+
+                                    $noPromoMobile++;
+                                @endphp
+                            @endforeach
+                        </tbody>
+                    </table>
+                </center>
 
             </div>
 
-
-
-        </td>
-        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
-        <td>
-            <div class="d-flex flex-nowrap">
-                {{ $promo->id_promo }}
-                <a href="{{ route('updatePromo.admin', [$getProjek->nama_projek, Crypt::encrypt($promo->id_promo)]) }}"
-                    class="btn btn-outline-primary"><i class="fas fa-edit    "></i></a>
-
-            </div>
-        </td>
-        @endif
-
-    </tr>
-    @endif --}}
-        {{--
-    <div id="accordion{{ $noPromo }}">
-        <div class="card">
-            <div class="card-header" id="headingOne{{ $noPromo }}">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne{{ $noPromo }}"
-                        aria-expanded="true" aria-controls="collapseOne{{ $noPromo }}">
-                        Detail Promo {{ $promo->promo }} -
-                        {{ $promo->kode_promo }}
-
-                        @if (!empty($promo->id_formulir))
-                        <span class="btn btn-success">
-
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </span>
-                        @else
-                        <span class="btn btn-danger">
-
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </span>
-                        @endif
-                    </button>
-                </h5>
-            </div>
-
-            <div id="collapseOne{{ $noPromo }}" class="collapse" aria-labelledby="headingOne{{ $noPromo }}"
-                data-parent="#accordion{{ $noPromo }}">
-                <div class="card-body">
-                    <div>
-                        <p>Keterangan : {{ $promo->keterangan }}</p>
-                        <p>Kode Promo : {{ $promo->kode_promo }}</p>
-                        <p>Diskon Promo : {{ rupiah($promo->diskon_promo) }}
-                        </p>
-                        <p>Tanggal Mulai - Akhir :
-                            <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?>
-                            -
-                            <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?>
-                        </p>
-                        <p>Tipe Promo : {{ $promo->tipe_promo }}</p>
-
-                    </div>
-                </div>
-            </div>
         </div>
-        --}}
 
-        <script>
-            $(document).ready(function() {
-                $('#promo').DataTable({
-                    lengthMenu: [
-                        [25, 50, 100, -1],
-                        [25, 50, 100, 'All'],
-                    ],
-                });
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#promo').DataTable({
+                lengthMenu: [
+                    [25, 50, 100, -1],
+                    [25, 50, 100, 'All'],
+                ],
             });
-        </script>
+        });
+        $(document).ready(function() {
+            $('#promoMobileTable').DataTable({
+                lengthMenu: [
+                    [25, 50, 100, -1],
+                    [25, 50, 100, 'All'],
+                ],
+            });
+        });
+    </script>
 
-    @endsection
+@endsection

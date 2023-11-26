@@ -59,4 +59,6 @@ class Promo extends Model{
     }
 
 
+
+
 }

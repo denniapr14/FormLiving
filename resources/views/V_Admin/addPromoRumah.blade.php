@@ -93,7 +93,7 @@
                         </div>
                         <div class="float-right">
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-outline-gl">Submit</button>
                         </div>
                     </form>
                 </div>

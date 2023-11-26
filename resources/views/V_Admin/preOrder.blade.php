@@ -21,8 +21,6 @@
 
     <!-- start: content -->
     <div class="">
-
-
         <div class="card mb-3">
             <div class="card-body">
                 <div class="card-title">
@@ -137,64 +135,7 @@
 
 
                                                     @endforeach
-                                                        {{-- @if ($preOrder->status_po == 'pending')
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('changeStatusPreOrder.admin', [
-                                                                    $getProjek->nama_projek,
-                                                                    Crypt::encrypt($preOrder->id_pre_order),
-                                                                    Crypt::encrypt('rejected'),
-                                                                ]) }}">Reject</a>
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('changeStatusPreOrder.admin', [
-                                                                    $getProjek->nama_projek,
-                                                                    Crypt::encrypt($preOrder->id_pre_order),
-                                                                    Crypt::encrypt('confirmed'),
-                                                                ]) }}">Confirm</a>
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('changeStatusPreOrder.admin', [
-                                                                    $getProjek->nama_projek,
-                                                                    Crypt::encrypt($preOrder->id_pre_order),
-                                                                    Crypt::encrypt('overtaken'),
-                                                                ]) }}">Overtaken</a>
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('changeStatusPreOrder.admin', [
-                                                                    $getProjek->nama_projek,
-                                                                    Crypt::encrypt($preOrder->id_pre_order),
-                                                                    Crypt::encrypt('refunded'),
-                                                                ]) }}">Refund</a>
-                                                                 <a class="dropdown-item"
-                                                                 href="{{ route('changeStatusPreOrder.admin', [
-                                                                     $getProjek->nama_projek,
-                                                                     Crypt::encrypt($preOrder->id_pre_order),
-                                                                     Crypt::encrypt('accepted'),
-                                                                 ]) }}">Accept</a>
-                                                        @elseif ($preOrder->status_po == 'confirmed')
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('changeStatusPreOrder.admin', [
-                                                                    $getProjek->nama_projek,
-                                                                    Crypt::encrypt($preOrder->id_pre_order),
-                                                                    Crypt::encrypt('pending'),
-                                                                ]) }}">Reject</a>
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('changeStatusPreOrder.admin', [
-                                                                    $getProjek->nama_projek,
-                                                                    Crypt::encrypt($preOrder->id_pre_order),
-                                                                    Crypt::encrypt('rejected'),
-                                                                ]) }}">Pending</a>
-                                                        @else
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('changeStatusPreOrder.admin', [
-                                                                    $getProjek->nama_projek,
-                                                                    Crypt::encrypt($preOrder->id_pre_order),
-                                                                    Crypt::encrypt('confirmed'),
-                                                                ]) }}">Confirm</a>
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('changeStatusPreOrder.admin', [
-                                                                    $getProjek->nama_projek,
-                                                                    Crypt::encrypt($preOrder->id_pre_order),
-                                                                    Crypt::encrypt('pending'),
-                                                                ]) }}">Pending</a>
-                                                        @endif --}}
+
                                                     </div>
 
 
@@ -263,7 +204,7 @@
 
             </div>
         </div>
-
+    </div>
 
 
 

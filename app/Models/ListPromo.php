@@ -47,4 +47,19 @@ class ListPromo extends Model
         ->delete();
     }
 
+    function getPromoCostumPromo($getProjek) {
+        return ListPromo::select('*')
+        ->join('promo', 'list_promo.id_promo', '=', 'promo.id_promo')
+        ->leftJoin('cluster', 'list_promo.codecluster', '=', 'cluster.codecluster')
+        ->leftJoin('rumah', 'list_promo.id_rumah', '=', 'rumah.id_rumah')
+        // ->leftJoin('formulir_pesanan', 'list_promo.id_promo', '=', 'formulir_pesanan.id_promo')
+        // ->leftJoin('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+        // ->leftJoin('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+        // ->leftJoin('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+        // ->where('formulir_pesanan.status_fp','!=','nonactive')
+        ->where('rumah.id_projek', '=', $getProjek)
+        ->orderBy('promo.id_promo', 'desc')
+        ->get();
+
+    }
 }

@@ -296,7 +296,7 @@
 
                             </div>
                         @endif
-                        <a class="btn btn-outline-info" href="#" id="generate">Tampilkan Kode</a>
+                        <a class="btn btn-outline-gl" href="#" id="generate">Tampilkan Kode</a>
 
                         <br><br>
                         <button type="submit" class="btn btn-outline-primary" id="submitBtn" disabled >Submit</button>
