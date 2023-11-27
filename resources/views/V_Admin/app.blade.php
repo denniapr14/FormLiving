@@ -245,63 +245,7 @@
                     <span>About</span>
                 </a>
             </li>
-            <li class="nav-heading">Pusat Bantuan</li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Formsliving Care Center</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-boxes"></i>
-                    <span>FaQ</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-people"></i>
-                    <span>About</span>
-                </a>
-            </li>
-            <li class="nav-heading">Pusat Bantuan</li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Formsliving Care Center</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-boxes"></i>
-                    <span>FaQ</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-people"></i>
-                    <span>About</span>
-                </a>
-            </li>
-            <li class="nav-heading">Pusat Bantuan</li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Formsliving Care Center</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-boxes"></i>
-                    <span>FaQ</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-people"></i>
-                    <span>About</span>
-                </a>
-            </li>
+
 
         </ul>
 
