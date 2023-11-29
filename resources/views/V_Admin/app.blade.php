@@ -195,10 +195,47 @@
             <li class="nav-heading">
                 <img src="{{ url('Home') }}/images/forms_living.png" style="width: 50%" alt="">
             </li>
+            <li class="nav-heading">
+                @if ($user->nama_ua != "")
+                {{ $user->nama_ua }}
+                @else
+                {{ $user->username_ua }}
+                @endif
+                - {{ $user->nama_ktgr }}
+                </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="true">
+                    <i class="bi bi-person-circle"></i><span> Profile </span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav" style="">
+                  <li>
+                    <a href="/">
+                        <i class="bi bi-house"></i>
+                        <span>Home</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ route('updateUserProfile.admin', Crypt::encrypt($user->id_user_admin)) }}">
+                        <i class="bi bi-person-circle"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ route('updatePasswordProfile.admin', Crypt::encrypt($user->id_user_admin)) }}">
+                        <i class="bi bi-key"></i>
+                        <span>Edit Password</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/logout">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Log out</span>
+                    </a>
+                  </li>
 
+                </ul>
+              </li>
             <li class="nav-heading">Projek</li>
-
-
 
             @foreach ($getUserMenu as $userMenu)
                 @if ($userMenu->status_menu == 'menu')
@@ -224,6 +261,7 @@
                     </li><!-- End Dashboard Nav -->
                 @endif
             @endforeach
+
 
 
             <li class="nav-heading">Pusat Bantuan</li>

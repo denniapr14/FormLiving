@@ -67,34 +67,43 @@
 
 
     </style>
-    <div class="pagetitle">
-        <div class="row">
-            <div class="col-md-3">
+    <div class="col-md-6">
+        <div class="pagetitle card">
+            <div class="card-body">
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-3">
 
-                <p> {{ date('l, j F Y') }} <span id="clock"></span></p>
+                            <p> {{ date('l, j F Y') }} <span id="clock"></span></p>
+                        </div>
+
+
+                    </div>
+
+                    <h3>
+                        <?php
+                        $time = date('H:i');
+
+                        if ($time >= '05:00' && $time < '11:00') {
+                            echo 'Good morning';
+                        } elseif ($time >= '11:00' && $time < '15:00') {
+                            echo 'Good afternoon';
+                        } elseif ($time >= '15:00' && $time < '19:00') {
+                            echo 'Good evening';
+                        } else {
+                            echo 'Good night';
+                        }
+                        ?>
+                        , {{ $user->nama_ktgr }}
+                    </h3>
+
+                </div><!-- End Page Title -->
             </div>
 
-
         </div>
+    </div>
 
-        <h3>
-            <?php
-            $time = date('H:i');
 
-            if ($time >= '05:00' && $time < '11:00') {
-                echo 'Good morning';
-            } elseif ($time >= '11:00' && $time < '15:00') {
-                echo 'Good afternoon';
-            } elseif ($time >= '15:00' && $time < '19:00') {
-                echo 'Good evening';
-            } else {
-                echo 'Good night';
-            }
-            ?>
-            , {{ $user->nama_ktgr }}
-        </h3>
-
-    </div><!-- End Page Title -->
 
     <section class="section dashboard">
 
@@ -271,7 +280,7 @@
                                                     <div>
                                                         No. Rumah: ${item.blok}-${item.nomor}<br>
                                                         Luas Tanah: ${item.luas_tanah} m<sup>2</sup><br>
-                                                        Status: <span id="bg-status" style="color:${headingBgClass};"  class="btn btn-outline-gl"> ${item.status} <span>
+                                                        Status: <span id="bg-status" style="color:${headingBgClass};"  class="btn btn-outline-white"> ${item.status} <span>
                                                     </div>
                                                     <br>
                                                     <div class="float-right">
