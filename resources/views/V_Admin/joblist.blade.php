@@ -14,26 +14,34 @@
     <!-- end: navbar -->
 
     <!-- start: content -->
-    <div class="content__wrapper">
+    <div class="">
 
 
 
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
-                    <div class="card__title">
-                        <i class="bi bi-map"></i>
-                        <span>Pekerjaan {{ $getJob->nama_job }} termin {{ $getJob->termin_job }} lantai {{ $getJob->lantai_job }} di {{ $getProjek->nama_projek }}</span>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
+                    <table style="width: 100%">
+                        <tr>
+                            <td> <i class="bi bi-map"></i>
+                                <span>Pekerjaan {{ $getJob->nama_job }} termin {{ $getJob->termin_job }} lantai
+                                    {{ $getJob->lantai_job }} di {{ $getProjek->nama_projek }}</span>
+                            </td>
+                            <td>
+                                <div class="">
+                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
+                                        <a href="{{ route('addJoblist.admin', [$getProjek->nama_projek, Crypt::encrypt($getJob->id_job)]) }}"
+                                            class="btn btn-outline-gl" style="float: right"><i class="bi bi-plus"></i>Rincian
+                                            Pekerjaan</a>
+                                    @else
+                                    @endif
+                                </div>
 
-                    </div>
-                    <div class="invoices__actions">
-                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
-                            <a href="{{ route('addJoblist.admin', [$getProjek->nama_projek, Crypt::encrypt($getJob->id_job)]) }}"
-                                class="btn-fd-outline btn--small">Tambah Rincian Pekerjaan</a>
-                        @else
-                        @endif
-                    </div>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
                 <div class="table-responsive">
                     <table id="formulirPesanan" class="table">
@@ -70,11 +78,11 @@
                                     </td>
                                     <td>
                                         <div class="d-flex flex-nowrap">
-                                            @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik' )
-                                                <button type="button" class="btn-fd-icon-outline"
+                                            @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
+                                                <button type="button" class="btn btn-outline-gl"
                                                     data-target="#seeKategori{{ $no }}" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg{{ $no }}">
-                                                    <i class="fa fa-edit"></i>
+                                                    <i class="bi bi-pencil-square"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="seeKategori{{ $no }}"
@@ -178,18 +186,18 @@
 
 
 
-                                                                        <div class="row pt-4">
-                                                                            <div class="col-12 mb-1">
-                                                                                <button type="submit"
-                                                                                    class="btn-fd-primary w-100">Submit</button>
-                                                                            </div>
-                                                                            <div class="col-12 mb-1">
+                                                                            <div class="row pt-4">
+                                                                                <div class="col-12 mb-1">
+                                                                                    <button type="submit"
+                                                                                        class="btn-fd-primary w-100">Submit</button>
+                                                                                </div>
+                                                                                <div class="col-12 mb-1">
 
-                                                                                <button
-                                                                                    class="btn-fd-primary bg-danger w-100"
-                                                                                    data-dismiss="modal">Close</button>
+                                                                                    <button
+                                                                                        class="btn-fd-primary bg-danger w-100"
+                                                                                        data-dismiss="modal">Close</button>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
                                                                         </form>
                                                                     </div>
                                                                 </div>

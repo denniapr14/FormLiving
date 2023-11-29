@@ -31,7 +31,7 @@
                                 <div class="float-right">
                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
                             <a href="{{ route('addJob.admin', $getProjek->nama_projek) }}"
-                                class="btn btn-outline-info btn--small" style="float: right"><i class="bi bi-plus"></i> Pekerjaan</a>
+                                class="btn btn-outline-gl btn--small" style="float: right"><i class="bi bi-plus"></i> Pekerjaan</a>
                         @else
                         @endif
                                 </div>
@@ -77,11 +77,11 @@
                                     <td>
                                         <div class="d-flex flex-nowrap">
 
-                                            <a href="{{ route('joblist.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job)]) }}" class="btn btn-outline-info">
+                                            <a href="{{ route('joblist.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job)]) }}" class="btn btn-outline-gl">
                                                 <i class="bi bi-list-task"></i>
                                             </a>
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik' )
-                                                <button type="button" class="btn btn-outline-info"
+                                                <button type="button" class="btn btn-outline-gl"
                                                     data-target="#seeKategori{{ $no }}" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg{{ $no }}">
                                                     <i class="bi bi-pencil-square"></i>

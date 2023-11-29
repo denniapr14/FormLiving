@@ -72,7 +72,7 @@
             <div class="card-body">
                 <div class="">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-12">
 
                             <p> {{ date('l, j F Y') }} <span id="clock"></span></p>
                         </div>
