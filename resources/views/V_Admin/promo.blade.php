@@ -28,6 +28,7 @@
         }
     </style>
 
+
     <div class="card mb-3" id="promoPC">
 
         <div class="card-body">
@@ -41,7 +42,7 @@
                             <div class="float-right">
                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
                                     <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}"
-                                        class="btn btn-outline-gl btn--small" style="float: right"><i class="bi bi-plus"></i>
+                                        class="btn btn-outline-gl btn--small" style="float: right"><i class="fa fa-plus"></i>
                                         Promo</a>
                                 @endif
                             </div>
@@ -81,29 +82,26 @@
 
                                     </td>
                                     <td>
-                                        <div class="accordion" id="accordionExample">
-                                            <div class="accordion-item collabse">
-                                                <h2 class="accordion-header" id="headingOne">
-                                                    <button class="accordion-button" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseOne{{ $noPromo }}"
-                                                        aria-expanded="true" aria-controls="collapseOne">
-                                                        Detail Promo {{ $promo->promo }} -
-                                                        {{ $promo->kode_promo }}
-                                                        &nbsp;
-                                                        @foreach ($getPromoFP as $promoFP)
-                                                            @if ($promo->id_rumah == $promoFP->id_rumah)
-                                                                <span class="btn btn-outline-gl">
+                                        <div id="accordian-3">
+                                            <div class="card">
+                                                <a class="card-header" id="heading11">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ $noPromo }}" aria-expanded="false" aria-controls="collapse1">
+                                                        <h5 class="m-b-0">   Detail Promo {{ $promo->promo }} -
+                                                            {{ $promo->kode_promo }}
+                                                            &nbsp;
+                                                            @foreach ($getPromoFP as $promoFP)
+                                                                @if ($promo->id_rumah == $promoFP->id_rumah)
+                                                                    <span class="btn btn-outline-info">
 
-                                                                    <i class="bi bi-check" aria-hidden="true"></i>
-                                                                </span>
-                                                            @endif
-                                                        @endforeach
+                                                                       <i class="fa fa-check" aria-hidden="true"></i>
+                                                                    </span>
+                                                                @endif
+                                                            @endforeach</h5>
                                                     </button>
-                                                </h2>
-                                                <div id="collapseOne{{ $noPromo }}" class="accordion-collapse collapse"
-                                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
+                                                </a>
+                                                <div id="collapseOne{{ $noPromo }}" class="collapse" aria-labelledby="heading11" data-parent="#accordian-3" style="">
+                                                    <div class="card-body">
+
                                                         <div>
                                                             @foreach ($getPromoFP as $promoFP)
                                                                 @if ($promo->id_rumah == $promoFP->id_rumah)
@@ -131,12 +129,13 @@
 
                                         </div>
 
+
                                     </td>
                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
                                         <td>
                                             <div class="d-flex flex-nowrap">
                                                 <a href="{{ route('updatePromo.admin', [$getProjek->nama_projek, Crypt::encrypt($promo->id_promo)]) }}"
-                                                    class="btn btn-outline-gl"><i class="bi bi-pencil-square"></i></a>
+                                                    class="btn btn-outline-info"><i class="fas fa-edit    "></i></a>
 
                                             </div>
                                         </td>
@@ -170,7 +169,7 @@
                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
                                     <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}"
                                         class="btn btn-outline-gl btn--small" style="float: right"><i
-                                            class="bi bi-plus"></i> Promo</a>
+                                            class="fa fa-plus"></i> Promo</a>
                                 @endif
                             </div>
 
@@ -198,6 +197,7 @@
                                 <tr>
                                     <td>
                                         <div class="row">
+
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="card-title">
@@ -208,63 +208,62 @@
                                                             {{ $promoMobile->blok }} - {{ $promoMobile->nomor }}
                                                         @endif
                                                     </div>
+                                                    <br>
                                                     <p>
                                                         Kode Promo : {{ $promoMobile->kode_promo }}
                                                     </p>
-                                                    <div class="accordion" id="accordionExample">
-                                                        <div class="accordion-item collabse">
-                                                            <h2 class="accordion-header" id="headingOne">
-                                                                <button class="accordion-button" type="button"
-                                                                    data-bs-toggle="collapse"
-                                                                    data-bs-target="#collapseOne{{ $noPromoMobile }}"
-                                                                    aria-expanded="true" aria-controls="collapseOne">
-                                                                    Detail Promo {{ $promoMobile->promo }} -
-                                                                    {{ $promoMobile->kode_promo }}
-                                                                    &nbsp;
-                                                                    @foreach ($getPromoFP as $promoFP)
-                                                                        @if ($promoMobile->id_rumah == $promoFP->id_rumah)
-                                                                            <span class="btn btn-outline-gl">
+                                                    <div class="row">
+                                                        <div id="accordian-3" >
+                                                            <div class="card">
+                                                                <a class="card-header" id="heading11">
+                                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseMobile{{ $noPromoMobile }}" aria-expanded="false" aria-controls="collapse1">
+                                                                        <h5 class="m-b-0">{{ substr($promo->promo, 0, 10)  }} ... -
+                                                                            {{ $promo->kode_promo }}
+                                                                            &nbsp;
+                                                                            @foreach ($getPromoFP as $promoFP)
+                                                                                @if ($promo->id_rumah == $promoFP->id_rumah)
+                                                                                    <span class="btn btn-outline-info">
 
-                                                                                <i class="bi bi-check"
-                                                                                    aria-hidden="true"></i>
-                                                                            </span>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </button>
-                                                            </h2>
-                                                            <div id="collapseOne{{ $noPromoMobile }}"
-                                                                class="accordion-collapse collapse"
-                                                                aria-labelledby="headingOne"
-                                                                data-bs-parent="#accordionExample">
-                                                                <div class="accordion-body">
-                                                                    <div>
-                                                                        @foreach ($getPromoFP as $promoFP)
-                                                                            @if ($promoMobile->id_rumah == $promoFP->id_rumah)
-                                                                                <p>Nama Pelanggan :
-                                                                                    {{ $promoFP->nama_plgn }}
-                                                                                </p>
-                                                                            @endif
-                                                                        @endforeach
+                                                                                       <i class="fa fa-check" aria-hidden="true"></i>
+                                                                                    </span>
+                                                                                @endif
+                                                                            @endforeach</h5>
+                                                                    </button>
+                                                                </a>
+                                                                <div id="collapseMobile{{ $noPromoMobile }}" class="collapse" aria-labelledby="heading11" data-parent="#accordian-3" style="">
+                                                                    <div class="card-body">
 
-                                                                        <p></p>
-                                                                        <p>Keterangan : {{ $promoMobile->keterangan }}</p>
-                                                                        <p>Kode Promo : {{ $promoMobile->kode_promo }}</p>
-                                                                        <p>Diskon Promo :
-                                                                            {{ rupiah($promoMobile->diskon_promo) }}
-                                                                        </p>
-                                                                        <p>Tanggal Mulai - Akhir :
-                                                                            <?= date('d M Y', strtotime($promoMobile->tgl_berakhir)) ?>
-                                                                            -
-                                                                            <?= date('d M Y', strtotime($promoMobile->tgl_berakhir)) ?>
-                                                                        </p>
-                                                                        <p>Tipe Promo : {{ $promoMobile->tipe_promo }}</p>
+                                                                        <div>
+                                                                            <p>
+                                                                               {{$promo->promo}}
+                                                                            </p>
+                                                                            @foreach ($getPromoFP as $promoFP)
+                                                                                @if ($promo->id_rumah == $promoFP->id_rumah)
+                                                                                    <p>Nama Pelanggan : {{ $promoFP->nama_plgn }}
+                                                                                    </p>
+                                                                                @endif
+                                                                            @endforeach
 
+                                                                            <p></p>
+                                                                            <p>Keterangan : {{ $promo->keterangan }}</p>
+                                                                            <p>Kode Promo : {{ $promo->kode_promo }}</p>
+                                                                            <p>Diskon Promo : {{ rupiah($promo->diskon_promo) }}
+                                                                            </p>
+                                                                            <p>Tanggal Mulai - Akhir :
+                                                                                <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?>
+                                                                                -
+                                                                                <?= date('d M Y', strtotime($promo->tgl_berakhir)) ?>
+                                                                            </p>
+                                                                            <p>Tipe Promo : {{ $promo->tipe_promo }}</p>
+
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
 
+                                                        </div>
                                                     </div>
+
                                                     <br>
                                                     {{--  END ACCORDION  --}}
                                                     <div>
@@ -274,8 +273,8 @@
                                                                     <td>
 
                                                                         <a href="{{ route('updatePromo.admin', [$getProjek->nama_projek, Crypt::encrypt($promo->id_promo)]) }}"
-                                                                            class="btn btn-outline-gl"><i
-                                                                                class="bi bi-pencil-square"></i></a>
+                                                                            class="btn btn-outline-info"><i
+                                                                                class="fa fa-edit"></i></a>
 
 
                                                                     </td>

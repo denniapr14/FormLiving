@@ -1,32 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
 
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url('Bootstrap') }}/assets/images/favicon.png">
+    <title>Nice admin Template - The Ultimate Multipurpose admin template</title>
+    <!-- Custom CSS -->
+    <link href="{{ url('Bootstrap') }}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="{{ url('Bootstrap') }}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+    <link href="{{ url('Bootstrap') }}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="{{ url('Bootstrap') }}/dist/css/style.min.css" rel="stylesheet">
 
-    <title>@yield('tittle')</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesnt work if you view the page via file:// -->
 
-    <!-- Favicons -->
-    <link href="{{ url('Bootstrap') }}/img/favicon.png" rel="icon">
-    <link href="{{ url('Bootstrap') }}/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-
-
-
-    <link href="{{ url('Bootstrap') }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="{{ url('Bootstrap') }}/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="{{ url('Bootstrap') }}/vendor/simple-datatables/style.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
@@ -39,299 +33,924 @@
 
     <link rel="stylesheet" href="{{ url('Dashboard') }}/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 <body>
-    <style>
-        .mydropdown{
-            float: right;
-            padding-right: 10%;
-        }
-        @media(max-width:500px){
-            .mydropdown{
-                float: left;
-                padding-left: 10%;
-            }
-        }
-
-        .mycard{
-
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-        }
-        *{
-            color: #8ccca4;
-        }
-        .main{
-            background-color: #edf6ef;
-        }
-        body{
-            background-color: #edf6ef;
-        }
-        .logo span{
-            color: #8ccca4;
-        }
-        .header .toggle-sidebar-btn{
-            color: #8ccca4;
-        }
-        i {
-            color: #8ccca4;
-        }
-        .card-title{
-            color: #8ccca4;
-        }
-        .card-title span{
-            color: #8ccca4;
-        }
-        .sidebar-nav .nav-link.collapsed i{
-            color: #8ccca4;
-        }
-        .sidebar-nav .nav-link i{
-            color: #8ccca4;
-        }
-        .sidebar-nav .nav-heading{
-            color: #8ccca4;
-        }
-        .sidebar-nav .nav-link:hover {
-            color: #8ccca4;
-        }
-
-        .btn-outline-gl{
-            --bs-btn-color: #8ccca4;
-            --bs-btn-border-color: #8ccca4;
-            --bs-btn-hover-color: #fff;
-            --bs-btn-hover-bg: #8ccca4;
-            --bs-btn-hover-border-color: #8ccca4;
-            --bs-btn-focus-shadow-rgb: 13,110,253;
-            --bs-btn-active-color: #fff;
-            --bs-btn-active-bg: #8ccca4;
-            --bs-btn-active-border-color: #8ccca4;
-            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-            --bs-btn-disabled-color: #8ccca4;
-            --bs-btn-disabled-bg: transparent;
-            --bs-btn-disabled-border-color: #8ccca4;
-            --bs-gradient: none;
-        }
-        .btn-outline-gl i{
-
-            --bs-btn-hover-color: #fff;
-
-        }
-
-
-
-        table.dataTable tbody th, table.dataTable tbody td {
-            color:#8ccca4;
-        }
-        table.dataTable thead th, table.dataTable tbody td{
-            color:#8ccca4;
-        }
-
-
-        .accordion-item:first-of-type .accordion-button{
-            color: #8ccca4;
-            background-color: #f8fbf9;
-        }
-
-    </style>
-
-    <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top d-flex align-items-center">
-
-        <div class="d-flex align-items-center justify-content-between">
-            <a href="{{ route('dashboard.admin', Session::get('selectedProjeks')[0]) }}" class="logo d-flex align-items-center">
-                <img src="{{ url('Dashboard') }}/images/logo/forms-logo.png" alt="">
-                <span class="d-none d-lg-block">Form One</span>
-              </a>
-            <i class="bi bi-list toggle-sidebar-btn p-3"></i>
-        </div><!-- End Logo -->
-
-
-
-        <nav class="navbar mydropdown">
-            <div class="d-flex justify-content-center align-items-center">
-
-                <div class="dropdown">
-                    <a class="btn btn-outline-gl dropdown-toggle" href="#" role="button"
-                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ Session::get('selectedProjeks')[0] }}
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
+                        <i class="ti-menu ti-close"></i>
                     </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        @foreach ($projekUser as $projek)
-                            <li><a class="dropdown-item"
-                                    href="{{ url('/set-selected-projek', $projek->nama_projek) }}">{{ $projek->nama_projek }}</a>
-                            </li>
-                            @php
-                                $setProjek;
-                            @endphp
-                        @endforeach
-                    </ul>
-
-
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <a href="index.html" class="logo">
+                            <!-- Logo icon -->
+                            <b class="logo-icon">
+                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                                <!-- Dark Logo icon -->
+                                <img src="{{ url('Bootstrap') }}/assets/images/logo-icon.png" alt="homepage"
+                                    class="dark-logo" />
+                                <!-- Light Logo icon -->
+                                <img src="{{ url('Bootstrap') }}/assets/images/logo-light-icon.png" alt="homepage"
+                                    class="light-logo" />
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+                            <span class="logo-text">
+                                <!-- dark Logo text -->
+                                <img src="{{ url('Bootstrap') }}/assets/images/logo-text.png" alt="homepage"
+                                    class="dark-logo" />
+                                <!-- Light Logo text -->
+                                <img src="{{ url('Bootstrap') }}/assets/images/logo-light-text.png" class="light-logo"
+                                    alt="homepage" />
+                            </span>
+                        </a>
+                        <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)"
+                            data-sidebartype="mini-sidebar">
+                            <i class="mdi mdi-toggle-switch mdi-toggle-switch-off font-20"></i>
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ti-more"></i>
+                    </a>
                 </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right mr-auto">
+
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Projek
+
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown"
+                                aria-labelledby="2">
+                                <span class="with-arrow">
+                                    <span class="bg-danger"></span>
+                                </span>
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="drop-title text-white bg-danger">
+                                            <span class="font-light">Projek</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center message-body">
+                                            <!-- Message -->
+
+                                            <!-- Message -->
+                                            @foreach ($projekUser as $projek)
+                                            <a href="{{ url('/set-selected-projek', $projek->nama_projek) }}" class="message-item">
+                                                <span class="user-img">
+                                                    <img src=""
+                                                        alt="user" class="rounded-circle">
+
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">{{ $projek->nama_projek }}</h5>
+
+                                                </div>
+                                            </a>
+
+                                            @php
+                                                $setProjek;
+                                            @endphp
+                                            @endforeach
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="font-22 mdi mdi-email-outline"></i>
+
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown"
+                                aria-labelledby="2">
+                                <span class="with-arrow">
+                                    <span class="bg-danger"></span>
+                                </span>
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="drop-title text-white bg-danger">
+                                            <h4 class="m-b-0 m-t-5">5 New</h4>
+                                            <span class="font-light">Messages</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center message-body">
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="user-img">
+                                                    <img src="{{ url('Bootstrap') }}/assets/images/users/1.jpg"
+                                                        alt="user" class="rounded-circle">
+                                                    <span class="profile-status online pull-right"></span>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Pavan kumar</h5>
+                                                    <span class="mail-desc">Just see the my admin!</span>
+                                                    <span class="time">9:30 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="user-img">
+                                                    <img src="{{ url('Bootstrap') }}/assets/images/users/2.jpg"
+                                                        alt="user" class="rounded-circle">
+                                                    <span class="profile-status busy pull-right"></span>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Sonu Nigam</h5>
+                                                    <span class="mail-desc">Ive sung a song! See you at</span>
+                                                    <span class="time">9:10 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="user-img">
+                                                    <img src="{{ url('Bootstrap') }}/assets/images/users/3.jpg"
+                                                        alt="user" class="rounded-circle">
+                                                    <span class="profile-status away pull-right"></span>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Arijit Sinh</h5>
+                                                    <span class="mail-desc">I am a singer!</span>
+                                                    <span class="time">9:08 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="user-img">
+                                                    <img src="{{ url('Bootstrap') }}/assets/images/users/4.jpg"
+                                                        alt="user" class="rounded-circle">
+                                                    <span class="profile-status offline pull-right"></span>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Pavan kumar</h5>
+                                                    <span class="mail-desc">Just see the my admin!</span>
+                                                    <span class="time">9:02 AM</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center link text-dark" href="javascript:void(0);">
+                                            <b>See all e-Mails</b>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown border-right">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-bell-outline font-22"></i>
+                                <span class="badge badge-pill badge-info noti">3</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
+                                <span class="with-arrow">
+                                    <span class="bg-primary"></span>
+                                </span>
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="drop-title bg-primary text-white">
+                                            <h4 class="m-b-0 m-t-5">4 New</h4>
+                                            <span class="font-light">Notifications</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center notifications">
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="btn btn-danger btn-circle">
+                                                    <i class="fa fa-link"></i>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Luanch Admin</h5>
+                                                    <span class="mail-desc">Just see the my new admin!</span>
+                                                    <span class="time">9:30 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="btn btn-success btn-circle">
+                                                    <i class="ti-calendar"></i>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Event today</h5>
+                                                    <span class="mail-desc">Just a reminder that you have event</span>
+                                                    <span class="time">9:10 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="btn btn-info btn-circle">
+                                                    <i class="ti-settings"></i>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Settings</h5>
+                                                    <span class="mail-desc">You can customize this template as you
+                                                        want</span>
+                                                    <span class="time">9:08 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="btn btn-primary btn-circle">
+                                                    <i class="ti-user"></i>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Pavan kumar</h5>
+                                                    <span class="mail-desc">Just see the my admin!</span>
+                                                    <span class="time">9:02 AM</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center m-b-5 text-dark" href="javascript:void(0);">
+                                            <strong>Check all notifications</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ url('Bootstrap') }}/assets/images/users/2.jpg" alt="user"
+                                    class="rounded-circle" width="40">
+                                <span class="m-l-5 font-medium d-none d-sm-inline-block">
+                                    @if ($user->nama_ua != '')
+                                        {{ $user->nama_ua }}
+                                    @else
+                                        {{ $user->username_ua }}
+                                    @endif
+                                    <i class="mdi mdi-chevron-down"></i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow">
+                                    <span class="bg-primary"></span>
+                                </span>
+                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                                    <div class="">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/2.jpg" alt="user"
+                                            class="rounded-circle" width="60">
+                                    </div>
+                                    <div class="m-l-10">
+                                        <h4 class="m-b-0">
+                                            @if ($user->nama_ua != '')
+                                                {{ $user->nama_ua }}
+                                            @else
+                                                {{ $user->username_ua }}
+                                            @endif
+                                        </h4>
+                                        <p class=" m-b-0">
+                                            {{ $user->nama_ktgr }}</p>
+                                    </div>
+                                </div>
+                                <div class="profile-dis scrollable">
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
+                                <div class="p-l-30 p-10">
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View
+                                        Profile</a>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar sode">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">
+                            <i class="mdi mdi-dots-horizontal"></i>
+                            <span class="hide-menu">Personal</span>
+                        </li>
 
 
+                        @foreach ($getUserMenu as $userMenu)
+                            @if ($userMenu->status_menu == 'menu')
+                                <li class="sidebar-item ">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif active"
+                                        href="{{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }}"
+                                        aria-expanded="false">
+                                        <i class="{{ $userMenu->icon_menu }}"></i>
+                                        <span class="hide-menu">{{ $userMenu->menu }}</span>
+                                    </a>
+
+                                </li><!-- End Dashboard Nav -->
+                            @endif
+                        @endforeach
+
+                        <li class="nav-small-cap">
+                            <i class="mdi mdi-dots-horizontal"></i>
+                            <span class="hide-menu">Personal</span>
+                        </li>
+                        @foreach ($getUserMenu as $userMenu)
+                            @if ($userMenu->status_menu == 'optional')
+                                <li class="sidebar-item ">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif active"
+                                        href="{{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }}"
+                                        aria-expanded="false">
+                                        <i class="{{ $userMenu->icon_menu }}"></i>
+                                        <span class="hide-menu">{{ $userMenu->menu }}</span>
+                                    </a>
+                                </li><!-- End Dashboard Nav -->
+                            @endif
+                        @endforeach
+                        <li class="nav-small-cap">
+                            <i class="mdi mdi-dots-horizontal"></i>
+                            <span class="hide-menu">Personal</span>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-jsgrid.html"
+                                aria-expanded="false">
+                                <i class="mdi mdi-border-top"></i>
+                                <span class="hide-menu">Formsliving Care Center</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-jsgrid.html"
+                                aria-expanded="false">
+                                <i class="mdi mdi-border-top"></i>
+                                <span class="hide-menu">FaQ</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-jsgrid.html"
+                                aria-expanded="false">
+                                <i class="mdi mdi-border-top"></i>
+                                <span class="hide-menu">About</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
             </div>
-
-
-        </nav><!-- End Icons Navigation -->
-
-    </header><!-- End Header -->
-
-    <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
-
-        <ul class="sidebar-nav" id="sidebar-nav">
-
-            <li class="nav-heading">
-                <img src="{{ url('Home') }}/images/forms_living.png" style="width: 50%" alt="">
-            </li>
-            <li class="nav-heading">
-                @if ($user->nama_ua != "")
-                {{ $user->nama_ua }}
-                @else
-                {{ $user->username_ua }}
-                @endif
-                - {{ $user->nama_ktgr }}
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title">Dashboard</h4>
+                    </div>
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                @yield('flashdata')
+                @yield('content')
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+                All Rights Reserved by Nice admin. Designed and Developed by
+                <a href="https://wrappixel.com">WrapPixel</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- customizer Panel -->
+    <!-- ============================================================== -->
+    <aside class="customizer">
+        <a href="javascript:void(0)" class="service-panel-toggle">
+            <i class="fa fa-spin fa-cog"></i>
+        </a>
+        <div class="customizer-body">
+            <ul class="nav customizer-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                        role="tab" aria-controls="pills-home" aria-selected="true">
+                        <i class="mdi mdi-wrench font-20"></i>
+                    </a>
                 </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="true">
-                    <i class="bi bi-person-circle"></i><span> Profile </span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav" style="">
-                  <li>
-                    <a href="/">
-                        <i class="bi bi-house"></i>
-                        <span>Home</span>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#chat" role="tab"
+                        aria-controls="chat" aria-selected="false">
+                        <i class="mdi mdi-message-reply font-20"></i>
                     </a>
-                  </li>
-                  <li>
-                    <a href="{{ route('updateUserProfile.admin', Crypt::encrypt($user->id_user_admin)) }}">
-                        <i class="bi bi-person-circle"></i>
-                        <span>Edit Profile</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+                        role="tab" aria-controls="pills-contact" aria-selected="false">
+                        <i class="mdi mdi-star-circle font-20"></i>
                     </a>
-                  </li>
-                  <li>
-                    <a href="{{ route('updatePasswordProfile.admin', Crypt::encrypt($user->id_user_admin)) }}">
-                        <i class="bi bi-key"></i>
-                        <span>Edit Password</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/logout">
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span>Log out</span>
-                    </a>
-                  </li>
-
-                </ul>
-              </li>
-            <li class="nav-heading">Projek</li>
-
-            @foreach ($getUserMenu as $userMenu)
-                @if ($userMenu->status_menu == 'menu')
-                    <li class="nav-item ">
-                        <a class="nav-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif navMenu"
-                            href=" {{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }} ">
-                            <i class="{{ $userMenu->icon_menu }}"></i>
-                            <span>{{ $userMenu->menu }}</span>
-                        </a>
-                    </li><!-- End Dashboard Nav -->
-                @endif
-            @endforeach
-
-            <li class="nav-heading">User</li>
-            @foreach ($getUserMenu as $userMenu)
-                @if ($userMenu->status_menu == 'optional')
-                    <li class="nav-item ">
-                        <a class="nav-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif navMenu"
-                            href=" {{ route($userMenu->nama_menu) }} ">
-                            <i class="{{ $userMenu->icon_menu }}"></i>
-                            <span>{{ $userMenu->menu }}</span>
-                        </a>
-                    </li><!-- End Dashboard Nav -->
-                @endif
-            @endforeach
-
-
-
-            <li class="nav-heading">Pusat Bantuan</li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Formsliving Care Center</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-boxes"></i>
-                    <span>FaQ</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-people"></i>
-                    <span>About</span>
-                </a>
-            </li>
-
-
-        </ul>
-
-    </aside><!-- End Sidebar-->
-
-    <main id="main" class="main">
-
-        @yield('content')
-
-
-    </main><!-- End #main -->
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer">
-        <div class="copyright">
-
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <!-- Tab 1 -->
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                    aria-labelledby="pills-home-tab">
+                    <div class="p-15 border-bottom">
+                        <!-- Sidebar -->
+                        <h5 class="font-medium m-b-10 m-t-10">Layout Settings</h5>
+                        <div class="custom-control custom-checkbox m-t-10">
+                            <input type="checkbox" class="custom-control-input" name="theme-view" id="theme-view">
+                            <label class="custom-control-label" for="theme-view">Dark Theme</label>
+                        </div>
+                        <div class="custom-control custom-checkbox m-t-10">
+                            <input type="checkbox" class="custom-control-input sidebartoggler" name="collapssidebar"
+                                id="collapssidebar">
+                            <label class="custom-control-label" for="collapssidebar">Collapse Sidebar</label>
+                        </div>
+                        <div class="custom-control custom-checkbox m-t-10">
+                            <input type="checkbox" class="custom-control-input" name="sidebar-position"
+                                id="sidebar-position">
+                            <label class="custom-control-label" for="sidebar-position">Fixed Sidebar</label>
+                        </div>
+                        <div class="custom-control custom-checkbox m-t-10">
+                            <input type="checkbox" class="custom-control-input" name="header-position"
+                                id="header-position">
+                            <label class="custom-control-label" for="header-position">Fixed Header</label>
+                        </div>
+                        <div class="custom-control custom-checkbox m-t-10">
+                            <input type="checkbox" class="custom-control-input" name="boxed-layout"
+                                id="boxed-layout">
+                            <label class="custom-control-label" for="boxed-layout">Boxed Layout</label>
+                        </div>
+                    </div>
+                    <div class="p-15 border-bottom">
+                        <!-- Logo BG -->
+                        <h5 class="font-medium m-b-10 m-t-10">Logo Backgrounds</h5>
+                        <ul class="theme-color">
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-logobg="skin1"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-logobg="skin2"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-logobg="skin3"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-logobg="skin4"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-logobg="skin5"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-logobg="skin6"></a>
+                            </li>
+                        </ul>
+                        <!-- Logo BG -->
+                    </div>
+                    <div class="p-15 border-bottom">
+                        <!-- Navbar BG -->
+                        <h5 class="font-medium m-b-10 m-t-10">Navbar Backgrounds</h5>
+                        <ul class="theme-color">
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-navbarbg="skin1"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-navbarbg="skin2"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-navbarbg="skin3"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-navbarbg="skin4"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-navbarbg="skin5"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-navbarbg="skin6"></a>
+                            </li>
+                        </ul>
+                        <!-- Navbar BG -->
+                    </div>
+                    <div class="p-15 border-bottom">
+                        <!-- Logo BG -->
+                        <h5 class="font-medium m-b-10 m-t-10">Sidebar Backgrounds</h5>
+                        <ul class="theme-color">
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-sidebarbg="skin1"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-sidebarbg="skin2"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-sidebarbg="skin3"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-sidebarbg="skin4"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-sidebarbg="skin5"></a>
+                            </li>
+                            <li class="theme-item">
+                                <a href="javascript:void(0)" class="theme-link" data-sidebarbg="skin6"></a>
+                            </li>
+                        </ul>
+                        <!-- Logo BG -->
+                    </div>
+                </div>
+                <!-- End Tab 1 -->
+                <!-- Tab 2 -->
+                <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <ul class="mailbox list-style-none m-t-20">
+                        <li>
+                            <div class="message-center chat-scroll">
+                                <a href="javascript:void(0)" class="message-item" id='chat_user_1' data-user-id='1'>
+                                    <span class="user-img">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/1.jpg" alt="user"
+                                            class="rounded-circle">
+                                        <span class="profile-status online pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">Pavan kumar</h5>
+                                        <span class="mail-desc">Just see the my admin!</span>
+                                        <span class="time">9:30 AM</span>
+                                    </div>
+                                </a>
+                                <!-- Message -->
+                                <a href="javascript:void(0)" class="message-item" id='chat_user_2' data-user-id='2'>
+                                    <span class="user-img">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/2.jpg" alt="user"
+                                            class="rounded-circle">
+                                        <span class="profile-status busy pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">Sonu Nigam</h5>
+                                        <span class="mail-desc">I've sung a song! See you at</span>
+                                        <span class="time">9:10 AM</span>
+                                    </div>
+                                </a>
+                                <!-- Message -->
+                                <a href="javascript:void(0)" class="message-item" id='chat_user_3' data-user-id='3'>
+                                    <span class="user-img">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/3.jpg" alt="user"
+                                            class="rounded-circle">
+                                        <span class="profile-status away pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">Arijit Sinh</h5>
+                                        <span class="mail-desc">I am a singer!</span>
+                                        <span class="time">9:08 AM</span>
+                                    </div>
+                                </a>
+                                <!-- Message -->
+                                <a href="javascript:void(0)" class="message-item" id='chat_user_4' data-user-id='4'>
+                                    <span class="user-img">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/4.jpg" alt="user"
+                                            class="rounded-circle">
+                                        <span class="profile-status offline pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">Nirav Joshi</h5>
+                                        <span class="mail-desc">Just see the my admin!</span>
+                                        <span class="time">9:02 AM</span>
+                                    </div>
+                                </a>
+                                <!-- Message -->
+                                <!-- Message -->
+                                <a href="javascript:void(0)" class="message-item" id='chat_user_5' data-user-id='5'>
+                                    <span class="user-img">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/5.jpg" alt="user"
+                                            class="rounded-circle">
+                                        <span class="profile-status offline pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">Sunil Joshi</h5>
+                                        <span class="mail-desc">Just see the my admin!</span>
+                                        <span class="time">9:02 AM</span>
+                                    </div>
+                                </a>
+                                <!-- Message -->
+                                <!-- Message -->
+                                <a href="javascript:void(0)" class="message-item" id='chat_user_6' data-user-id='6'>
+                                    <span class="user-img">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/6.jpg" alt="user"
+                                            class="rounded-circle">
+                                        <span class="profile-status offline pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">Akshay Kumar</h5>
+                                        <span class="mail-desc">Just see the my admin!</span>
+                                        <span class="time">9:02 AM</span>
+                                    </div>
+                                </a>
+                                <!-- Message -->
+                                <!-- Message -->
+                                <a href="javascript:void(0)" class="message-item" id='chat_user_7' data-user-id='7'>
+                                    <span class="user-img">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/7.jpg" alt="user"
+                                            class="rounded-circle">
+                                        <span class="profile-status offline pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">Pavan kumar</h5>
+                                        <span class="mail-desc">Just see the my admin!</span>
+                                        <span class="time">9:02 AM</span>
+                                    </div>
+                                </a>
+                                <!-- Message -->
+                                <!-- Message -->
+                                <a href="javascript:void(0)" class="message-item" id='chat_user_8' data-user-id='8'>
+                                    <span class="user-img">
+                                        <img src="{{ url('Bootstrap') }}/assets/images/users/8.jpg" alt="user"
+                                            class="rounded-circle">
+                                        <span class="profile-status offline pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">Varun Dhavan</h5>
+                                        <span class="mail-desc">Just see the my admin!</span>
+                                        <span class="time">9:02 AM</span>
+                                    </div>
+                                </a>
+                                <!-- Message -->
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End Tab 2 -->
+                <!-- Tab 3 -->
+                <div class="tab-pane fade p-15" id="pills-contact" role="tabpanel"
+                    aria-labelledby="pills-contact-tab">
+                    <h6 class="m-t-20 m-b-20">Activity Timeline</h6>
+                    <div class="steamline">
+                        <div class="sl-item">
+                            <div class="sl-left bg-success">
+                                <i class="ti-user"></i>
+                            </div>
+                            <div class="sl-right">
+                                <div class="font-medium">Meeting today
+                                    <span class="sl-date"> 5pm</span>
+                                </div>
+                                <div class="desc">you can write anything </div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left bg-info">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="sl-right">
+                                <div class="font-medium">Send documents to Clark</div>
+                                <div class="desc">Lorem Ipsum is simply </div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left">
+                                <img class="rounded-circle" alt="user"
+                                    src="{{ url('Bootstrap') }}/assets/images/users/2.jpg">
+                            </div>
+                            <div class="sl-right">
+                                <div class="font-medium">Go to the Doctor
+                                    <span class="sl-date">5 minutes ago</span>
+                                </div>
+                                <div class="desc">Contrary to popular belief</div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left">
+                                <img class="rounded-circle" alt="user"
+                                    src="{{ url('Bootstrap') }}/assets/images/users/1.jpg">
+                            </div>
+                            <div class="sl-right">
+                                <div>
+                                    <a href="javascript:void(0)">Stephen</a>
+                                    <span class="sl-date">5 minutes ago</span>
+                                </div>
+                                <div class="desc">Approve meeting with tiger</div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left bg-primary">
+                                <i class="ti-user"></i>
+                            </div>
+                            <div class="sl-right">
+                                <div class="font-medium">Meeting today
+                                    <span class="sl-date"> 5pm</span>
+                                </div>
+                                <div class="desc">you can write anything </div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left bg-info">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="sl-right">
+                                <div class="font-medium">Send documents to Clark</div>
+                                <div class="desc">Lorem Ipsum is simply </div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left">
+                                <img class="rounded-circle" alt="user"
+                                    src="{{ url('Bootstrap') }}/assets/images/users/4.jpg">
+                            </div>
+                            <div class="sl-right">
+                                <div class="font-medium">Go to the Doctor
+                                    <span class="sl-date">5 minutes ago</span>
+                                </div>
+                                <div class="desc">Contrary to popular belief</div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left">
+                                <img class="rounded-circle" alt="user"
+                                    src="{{ url('Bootstrap') }}/assets/images/users/6.jpg">
+                            </div>
+                            <div class="sl-right">
+                                <div>
+                                    <a href="javascript:void(0)">Stephen</a>
+                                    <span class="sl-date">5 minutes ago</span>
+                                </div>
+                                <div class="desc">Approve meeting with tiger</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Tab 3 -->
+            </div>
         </div>
-        <div class="credits">
+    </aside>
+    <div class="chat-windows"></div>
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="{{ url('Bootstrap') }}/assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{{ url('Bootstrap') }}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="{{ url('Bootstrap') }}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <script src="{{ url('Bootstrap') }}/dist/js/app.min.js"></script>
 
-        </div>
-    </footer><!-- End Footer -->
+    <script>
+        var isDarkMode = "{{ $user->theme_ua }}";
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+        var scriptSrc;
+
+        if (isDarkMode === "light") {
+            scriptSrc = "{{ url('Bootstrap') }}/dist/js/app.init.light.js";
+        } else if (isDarkMode === "dark") {
+            scriptSrc = "{{ url('Bootstrap') }}/dist/js/app.init.dark.js";
+        }
+
+        var scriptElement = document.createElement('script');
+        scriptElement.src = scriptSrc;
+        document.head.appendChild(scriptElement);
+    </script>
 
 
-    <!-- Vendor JS Files -->
+    <script src="{{ url('Bootstrap') }}/dist/js/app-style-switcher.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{{ url('Bootstrap') }}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="{{ url('Bootstrap') }}/assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="{{ url('Bootstrap') }}/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="{{ url('Bootstrap') }}/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="{{ url('Bootstrap') }}/dist/js/custom.min.js"></script>
+    <!--This page JavaScript -->
+    <!--chartis chart-->
+    <script src="{{ url('Bootstrap') }}/assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="{{ url('Bootstrap') }}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <!--c3 charts -->
+    <script src="{{ url('Bootstrap') }}/assets/extra-libs/c3/d3.min.js"></script>
+    <script src="{{ url('Bootstrap') }}/assets/extra-libs/c3/c3.min.js"></script>
+    <script src="{{ url('Bootstrap') }}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="{{ url('Bootstrap') }}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="{{ url('Bootstrap') }}/dist/js/pages/dashboards/dashboard1.js"></script>
 
-    <script src="{{ url('Bootstrap') }}/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/chart.js/chart.umd.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/echarts/echarts.min.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/quill/quill.min.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/tinymce/tinymce.min.js"></script>
-    <script src="{{ url('Bootstrap') }}/vendor/php-email-form/validate.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="{{ url('Bootstrap') }}/js/main.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="{{ url('Dashboard') }}/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="{{ url('Dashboard') }}/js//toastify.js"></script>
-
-
 </body>
-
 
 </html>

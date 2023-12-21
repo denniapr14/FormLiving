@@ -76,13 +76,13 @@
                                         <p class="mb-1">
 
                                             No. telp {{ $fp->no_telp_plgn }} <a href="tel:{{ $fp->no_telp_plgn }}"
-                                                class="btn btn-outline-gl"><i class="bi bi-telephone-outbound"></i></a>
+                                                class="btn btn-outline-info"><i class="fa fa-phone" aria-hidden="true"></i></a>
                                             <br>
                                         </p>
                                         <p>
 
                                             No. WA {{ $fp->no_wa_plgn }} <a href="https://wa.me/{{ $fp->no_wa_plgn }}"
-                                                class="btn btn-outline-gl"> <i class="bi bi-whatsapp"></i></a>
+                                                class="btn btn-outline-info"> <i class="mdi mdi-whatsapp    "></i></a>
                                         </p>
                                     </td>
                                     <td>
@@ -92,17 +92,17 @@
                                         <div class="d-flex flex-nowrap">
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
                                                 <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"
-                                                    class="btn btn-outline-gl">
-                                                    <i class="bi bi-pencil-square"></i>
+                                                    class="btn btn-outline-info">
+                                                    <i class="fas fa-pencil-alt    "></i>
                                                 </a>
                                             @else
                                             @endif
 
                                             <a href="{{ route('cetakSuratPemesananRumah.admin', Crypt::encrypt($fp->id_formulir)) }}"
-                                                class="btn btn-outline-gl">
-                                                <i class="bi bi-printer"></i>
+                                                class="btn btn-outline-info">
+                                                <i class="fa fa-print" aria-hidden="true"></i>
 
-                                                </i>
+
                                             </a>
                                         </div>
                                     </td>
@@ -154,13 +154,13 @@
                                                     <p class="mb-1">
 
                                                         No. telp {{ $fp->no_telp_plgn }} <a href="tel:{{ $fp->no_telp_plgn }}"
-                                                            class="btn btn-outline-gl"><i class="bi bi-telephone-outbound"></i></a>
+                                                            class="btn btn-outline-info"><i class="fa fa-phone" aria-hidden="true"></i></a>
                                                         <br>
                                                     </p>
                                                     <p>
 
                                                         No. WA {{ $fp->no_wa_plgn }} <a href="https://wa.me/{{ $fp->no_wa_plgn }}"
-                                                            class="btn btn-outline-gl"> <i class="bi bi-whatsapp"></i></a>
+                                                            class="btn btn-outline-info"> <i class="mdi mdi-whatsapp    "></i></a>
                                                     </p>
                                                 </div>
                                                 <div>
@@ -174,8 +174,8 @@
                                                     <td>
                                                         @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
                                                         <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"
-                                                            class="btn btn-outline-gl">
-                                                            <i class="bi bi-pencil-square"></i>
+                                                            class="btn btn-outline-info">
+                                                            <i class="fas fa-edit    "></i>
                                                         </a>
                                                     @else
                                                     @endif
@@ -185,8 +185,8 @@
 
 
                                                             <a href="{{ route('cetakSuratPemesananRumah.admin', Crypt::encrypt($fp->id_formulir)) }}"
-                                                                class="btn btn-outline-gl">
-                                                                <i class="bi bi-printer"></i>
+                                                                class="btn btn-outline-info">
+                                                                <i class="fa fa-print" aria-hidden="true"></i>
 
                                                                 </i>
                                                             </a>

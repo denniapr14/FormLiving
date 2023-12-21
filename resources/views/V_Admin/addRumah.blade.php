@@ -22,7 +22,7 @@
                 <div class="card-title">
                     <div class="">
                         <a href="{{ route('rumah.admin', $getProjek->nama_projek) }}" class="btn btn-outline-danger col-1"
-                            style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
+                            style="height: 40px; width: 50px"> <i class="fa fa-arrow-left" aria-hidden="true"></i> </a> &nbsp;
                         <h1>Tambah Rumah </h1>
 
                     </div>

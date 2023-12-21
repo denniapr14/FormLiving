@@ -43,8 +43,12 @@ class C_Job extends Controller
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         //
-        $getJob = $this->job->getJob('*')->collect();
-        $getJob = $getJob->where('id_projek',$getProjek->id_projek);
+        $getJob = $this->job->getJobWhereGroupBy('*',
+        ['id_projek'=>$getProjek->id_projek],
+        'termin_job',
+        'termin_job',
+        'asc')->collect();
+        // $getJob = $getJob->where('id_projek',$getProjek->id_projek)->groupBy('termin_job')->sortBy('termin_job');
         // dd($getJob);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));

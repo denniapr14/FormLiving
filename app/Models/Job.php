@@ -17,6 +17,15 @@ class Job extends Model
 
     }
 
+    function getJobWhereGroupBy($select, $where, $group, $sort, $by) {
+        return Job::select($select)
+        ->where($where)
+        ->groupBy($group)
+        ->orderBy($sort, $by)
+        ->get();
+
+    }
+
     function firstJob($select,$where)  {
         return Job::select($select)
         ->where($where)

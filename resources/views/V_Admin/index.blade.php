@@ -342,12 +342,12 @@
 
                         <div class="float-right">
                             <button class="my-btn0 zoomIn bg-info-light col-md-1" id="plus" onclick="zoom(1.5)">
-                                <i class="bi bi-plus" aria-hidden="true"></i>
+                                <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
 
                             <button class="my-btn0 zoomOut bg-dark-light col-md-1" id="minus" onclick="zoom(0.5)">
 
-                                <i class="bi bi-dash" aria-hidden="true"></i>
+                                <i class="fa fa-minus" aria-hidden="true"></i>
                             </button>
 
 

@@ -107,7 +107,7 @@
             <div class="card">
                 <div class="card-header">
                     <a href="{{ url()->previous() }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i
-                            class="bi bi-arrow-left"></i></a> &nbsp;
+                            class="fa fa-arrow-left"></i></a> &nbsp;
                     Ubah Promo
                 </div>
 
