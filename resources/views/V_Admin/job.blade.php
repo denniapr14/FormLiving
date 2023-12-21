@@ -31,7 +31,7 @@
                                 <div class="float-right">
                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
                             <a href="{{ route('addJob.admin', $getProjek->nama_projek) }}"
-                                class="btn btn-outline-gl btn--small" style="float: right"><i class="bi bi-plus"></i> Pekerjaan</a>
+                                class="btn btn-outline-info btn--small" style="float: right"><i class="fa fa-plus" aria-hidden="true"></i> Pekerjaan</a>
                         @else
                         @endif
                                 </div>
@@ -45,8 +45,7 @@
                     <table id="formulirPesanan" class="table">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Nama Pekerjaan</th>
+
                                 <th>Termin </th>
                                 <th>status</th>
 
@@ -60,13 +59,8 @@
                             ?>
                             @foreach ($getJob as $job)
                                 <tr>
-                                    <td>{{ $no++ }}</td>
 
-                                    <td>
-                                        <span class="client__name">{{ $job->nama_job }} </span>
 
-                                        <span class="client__handled">Lantai {{ $job->lantai_job }}</span>
-                                    </td>
 
                                     <td>
                                         {{ $job->termin_job }}
@@ -77,14 +71,14 @@
                                     <td>
                                         <div class="d-flex flex-nowrap">
 
-                                            <a href="{{ route('joblist.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job)]) }}" class="btn btn-outline-gl">
-                                                <i class="bi bi-list-task"></i>
+                                            <a href="{{ route('jobTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($job->termin_job)]) }}" class="btn btn-outline-info">
+                                               <i class="fas fa-list    "></i>
                                             </a>
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik' )
-                                                <button type="button" class="btn btn-outline-gl"
+                                                <button type="button" class="btn btn-outline-info"
                                                     data-target="#seeKategori{{ $no }}" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg{{ $no }}">
-                                                    <i class="bi bi-pencil-square"></i>
+                                                    <i class="fas fa-edit    "></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="seeKategori{{ $no }}"

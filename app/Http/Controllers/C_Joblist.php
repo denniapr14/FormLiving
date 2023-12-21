@@ -38,15 +38,17 @@ class C_Joblist extends Controller
         $this->projek = new Projek();
         $this->userMenu = new UserMenu();
     }
-    public function getJoblist($projek, $id_job)
+    public function getJoblist($projek, $id_job, $termin)
     {
 
         $decryptedID = Crypt::decrypt($id_job);
+        $decryptedTermin = Crypt::decrypt($termin);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getJob = $this->job->getJob('*')->collect();
         $getJob = $getJob->where('id_projek',$getProjek->id_projek);
         $getJob = $getJob->where('id_job',$decryptedID);
         $getJob = $getJob->first();
+        // dd($getJob);
         $getJoblist = $this->joblist->getJoblist('*')->collect();
         $getJoblist = $getJoblist->where('id_projek', $getProjek->id_projek);
         $getJoblist = $getJoblist->where('id_job', $decryptedID);
@@ -78,7 +80,8 @@ class C_Joblist extends Controller
                     'getJob',
                     'getJoblist',
                     'getProjek',
-                    'getUserMenu'
+                    'getUserMenu',
+                    'decryptedTermin'
 
                 )
             );

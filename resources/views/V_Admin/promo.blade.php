@@ -42,7 +42,7 @@
                             <div class="float-right">
                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
                                     <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}"
-                                        class="btn btn-outline-gl btn--small" style="float: right"><i class="fa fa-plus"></i>
+                                        class="btn btn-outline-info btn--small" style="float: right"><i class="fa fa-plus"></i>
                                         Promo</a>
                                 @endif
                             </div>
@@ -168,7 +168,7 @@
                             <div class="float-right">
                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'CEO')
                                     <a href="/tambah-rumah-promo-admin/{{ $getProjek->nama_projek }}"
-                                        class="btn btn-outline-gl btn--small" style="float: right"><i
+                                        class="btn btn-outline-info btn--small" style="float: right"><i
                                             class="fa fa-plus"></i> Promo</a>
                                 @endif
                             </div>

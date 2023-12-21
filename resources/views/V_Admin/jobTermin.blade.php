@@ -25,20 +25,18 @@
                     <table style="width: 100%">
                         <tr>
                             <td style="width: 50px">
-                                <a href="{{ route('jobTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($getJob->termin_job)]) }}" class="btn btn-outline-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                                <a href="{{ route('job.admin', [$getProjek->nama_projek]) }}" class="btn btn-outline-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                             </td>
-                            <td> <i class="bi bi-map"></i>
-                                <span>Pekerjaan {{ $getJob->nama_job }} termin {{ $getJob->termin_job }} lantai
-                                    {{ $getJob->lantai_job }} di {{ $getProjek->nama_projek }}</span>
+                            <td>   <i class="bi bi-map"></i>
+                                <span>Pekerjaan {{ $getProjek->nama_projek }}</span>
                             </td>
                             <td>
-                                <div class="">
+                                <div class="float-right">
                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
-                                        <a href="{{ route('addJoblist.admin', [$getProjek->nama_projek, Crypt::encrypt($getJob->id_job)]) }}"
-                                            class="btn btn-outline-gl" style="float: right"><i class="bi bi-plus"></i>Rincian
-                                            Pekerjaan</a>
-                                    @else
-                                    @endif
+                            <a href="{{ route('addJob.admin', $getProjek->nama_projek) }}"
+                                class="btn btn-outline-info btn--small" style="float: right"><i class="fa fa-plus" aria-hidden="true"></i> Pekerjaan</a>
+                                @else
+                                @endif
                                 </div>
 
                             </td>
@@ -51,39 +49,46 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Rincian Pekerjaan</th>
-                                <th>Bobot </th>
+                                <th>Termin </th>
+                                <th>Pekerjaan</th>
                                 <th>status</th>
+
                                 <th>Pengaturan</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $no = 1;
                             ?>
-                            @foreach ($getJoblist as $joblist)
+                            @foreach ($getJob as $job)
                                 <tr>
-                                    <td>{{ $no++ }}</td>
-
                                     <td>
-                                        <span class="client__name">{{ $joblist->nama_jl }} </span>
-
-                                        <span class="client__handled">Lantai {{ $joblist->lantai_job }}</span>
-                                    </td>
-
-                                    <td>
-                                        {{ $joblist->bobot_jl }}
+                                        {{ $no }}
                                     </td>
                                     <td>
-                                        {{ $joblist->status_jl }}
+
+                                        {{ $job->nama_job }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ $job->termin_job }}
+                                    </td>
+                                    <td>
+                                        {{ $job->status_job }}
                                     </td>
                                     <td>
                                         <div class="d-flex flex-nowrap">
-                                            @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
+
+                                            <a href="{{ route('joblist.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job), Crypt::encrypt($job->termin_job)]) }}" class="btn btn-outline-info">
+                                               <i class="fas fa-list    "></i>
+                                            </a>
+                                            @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik' )
                                                 <button type="button" class="btn btn-outline-info"
                                                     data-target="#seeKategori{{ $no }}" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg{{ $no }}">
-                                                   <i class="fas fa-edit    "></i>
+                                                    <i class="fas fa-edit    "></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="seeKategori{{ $no }}"
@@ -107,33 +112,20 @@
 
                                                                     <div class="modal-body">
                                                                         <form
-                                                                            action="{{ route('updateJoblistAction.admin', [$getProjek->nama_projek, Crypt::encrypt($joblist->id_joblist)]) }}"
+                                                                            action="{{ route('updateJobAction.admin', [$getProjek->nama_projek, Crypt::encrypt($job->id_job)]) }}"
                                                                             method="post" enctype="multipart/form-data">
                                                                             @csrf
                                                                             <div class="form-group row">
                                                                                 <label
                                                                                     class="col-sm-4 col-form-label align-self-center">
-                                                                                    Nama Rincian Pekerjaan
+                                                                                    Nama Pekerjaan
                                                                                 </label>
                                                                                 <div class="col-sm-8 align-self-center">
                                                                                     <input type="text"
                                                                                         class="form form-control"
-                                                                                        name="nama_jl"
-                                                                                        value="{{ $joblist->nama_jl }}"
+                                                                                        name="nama_job"
+                                                                                        value="{{ $job->nama_job }}"
                                                                                         placeholder="Nama Pekerjaan">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <label
-                                                                                    class="col-sm-4 col-form-label align-self-center">
-                                                                                    Pengurutan Rincian Pekerjaan
-                                                                                </label>
-                                                                                <div class="col-sm-8 align-self-center">
-                                                                                    <input type="text"
-                                                                                        class="form form-control"
-                                                                                        name="sort_jl"
-                                                                                        value="{{ $joblist->sort_jl }}"
-                                                                                        placeholder="Termin Pekerjaan">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
@@ -144,8 +136,8 @@
                                                                                 <div class="col-sm-8 align-self-center">
                                                                                     <input type="text"
                                                                                         class="form form-control"
-                                                                                        name="termin_jl"
-                                                                                        value="{{ $joblist->termin_jl }}"
+                                                                                        name="termin_job"
+                                                                                        value="{{ $job->termin_job }}"
                                                                                         placeholder="Termin Pekerjaan">
                                                                                 </div>
                                                                             </div>
@@ -157,8 +149,8 @@
                                                                                 <div class="col-sm-8 align-self-center">
                                                                                     <input type="text"
                                                                                         class="form form-control"
-                                                                                        name="lantai_jl"
-                                                                                        value="{{ $joblist->lantai_jl }}"
+                                                                                        name="lantai_job"
+                                                                                        value="{{ $job->lantai_job }}"
                                                                                         placeholder="Lantai Pekerjaan">
                                                                                 </div>
                                                                             </div>
@@ -168,9 +160,9 @@
                                                                                     Status
                                                                                 </label>
                                                                                 <div class="col-sm-8 align-self-center">
-                                                                                    <select name="status_jl" id=""
+                                                                                    <select name="status_job" id=""
                                                                                         class="form-control">
-                                                                                        @if ($joblist->status_jl == 'Aktif')
+                                                                                        @if ($job->status_job == 'Aktif')
                                                                                             <option value="Aktif" selected>
                                                                                                 Aktif</option>
                                                                                             <option value="Nonaktif">
@@ -187,18 +179,18 @@
 
 
 
-                                                                            <div class="row pt-4">
-                                                                                <div class="col-12 mb-1">
-                                                                                    <button type="submit"
-                                                                                        class="btn-fd-primary w-100">Submit</button>
-                                                                                </div>
-                                                                                <div class="col-12 mb-1">
-
-                                                                                    <button
-                                                                                        class="btn-fd-primary bg-danger w-100"
-                                                                                        data-dismiss="modal">Close</button>
-                                                                                </div>
+                                                                        <div class="row pt-4">
+                                                                            <div class="col-12 mb-1">
+                                                                                <button type="submit"
+                                                                                    class="btn-fd-primary w-100">Submit</button>
                                                                             </div>
+                                                                            <div class="col-12 mb-1">
+
+                                                                                <button
+                                                                                    class="btn-fd-primary bg-danger w-100"
+                                                                                    data-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                        </div>
                                                                         </form>
                                                                     </div>
                                                                 </div>

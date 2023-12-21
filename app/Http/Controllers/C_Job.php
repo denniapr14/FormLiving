@@ -87,6 +87,48 @@ class C_Job extends Controller
             return redirect('/login');
         }
     }
+    function getJobTermin($projek, $termin) {
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        //
+        $decrypted = Crypt::decrypt($termin);
+        $getJob = $this->job->getJob('*')->collect();
+        $getJob = $getJob->where('termin_job',$getProjek->id_projek);
+        // dd($getJob);
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+
+
+            return view('V_Admin.jobTermin',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getJob',
+                    'getProjek',
+                    'getUserMenu'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
 
     function addJob($projek) {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);

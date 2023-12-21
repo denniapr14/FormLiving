@@ -387,6 +387,7 @@ Route::get('/ubah-status-user-admin/{id}/{status}', [C_UserAdmin::class, 'change
 
 // JOB
 Route::get('/pekerjaan/{projek}',[C_Job::class,'getJob'])->name('job.admin');
+Route::get('/pekerjaanTermin/{projek}/{termin}',[C_Job::class,'getJobTermin'])->name('jobTermin.admin');
 Route::get('/tambah-pekerjaan/{projek}',[C_Job::class,'addJob'])->name('addJob.admin');
 Route::post('/tambah-pekerjaan/action/{projek}',[C_Job::class,'addJobAction'])->name('addJobAction.admin');
 Route::get('/ubah-pekerjaan/{projek}',[C_Job::class,'editJob'])->name('updateJob.admin');
@@ -394,7 +395,7 @@ Route::post('/ubah-pekerjaan/action/{projek}/{id_job}',[C_Job::class,'editJobAct
 Route::get('/ubah-status-pekerjaan/{projek}',[C_Job::class,'deleteJob'])->name('deleteJob.admin');
 
 // JOBLIST
-Route::get('/rincian-pekerjaan/{projek}/{id_job}',[C_Joblist::class,'getJoblist'])->name('joblist.admin');
+Route::get('/rincian-pekerjaan/{projek}/{id_job}/{termin}',[C_Joblist::class,'getJoblist'])->name('joblist.admin');
 Route::get('/tambah-rincian-pekerjaan/{projek}/{id_job}',[C_Joblist::class,'addJoblist'])->name('addJoblist.admin');
 Route::post('/tambah-rincian-pekerjaan/action/{projek}/{id_job}',[C_Joblist::class,'addJoblistAction'])->name('addJoblistAction.admin');
 Route::get('/ubah-rincian-pekerjaan/{projek}',[C_Joblist::class,'editJoblist'])->name('updateJoblist.admin');
