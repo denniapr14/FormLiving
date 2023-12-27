@@ -1,8 +1,10 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
 @extends('flashdata')
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | Promo')
+@section('pageTitle','Promo')
+@section('back',route('promo.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Promo')
+{{--  @section('breadcrumb2','Ubah Pemesanan')  --}}
 
 @section('content')
 
@@ -27,7 +29,6 @@
             }
         }
     </style>
-
 
     <div class="card mb-3" id="promoPC">
 

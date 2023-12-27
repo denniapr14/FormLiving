@@ -1,8 +1,12 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
+
 @extends('flashdata')
-@section('tittle', 'FORMS ONE | Formulir')
+@section('title','Form One | Promo')
+@section('pageTitle','Tambah Promo')
+@section('back',route('promo.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Promo')
+@section('breadcrumb2','Tambah Rumah Promo')
+@section('breadcrumb3','Tambah Promo')
 @section('content')
     <style>
         .myinput {
@@ -106,8 +110,7 @@
         <div class="container-fluid ">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ url()->previous() }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i
-                            class="bi bi-arrow-left"></i></a> &nbsp;
+                    <a href="{{ url()->previous() }}" class="btn btn-outline-danger" style="height:  width: 50px"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a> &nbsp;
                     Tambah Promo
                 </div>
 

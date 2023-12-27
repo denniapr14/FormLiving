@@ -1,9 +1,11 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-
-@section('tittle', 'FORMS | Dashboard')
-
+@section('title','Forms| Rumah')
+@section('pageTitle','Rumah')
+@section('back',route('rumah.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Rumah')
+{{--  @section('breadcrumb2','Tambah Produk')  --}}
 @section('content')
 
     <!-- start: main -->
@@ -177,7 +179,7 @@
                                 <div class="float-right">
                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
                                         <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}"
-                                            class="btn btn-outline-gl" style="float: right"> <i class="fas fa-plus    "></i>
+                                            class="btn btn-outline-info" style="float: right"> <i class="fas fa-plus    "></i>
                                             Rumah</a>
                                     @else
                                         <!-- You can add additional content or styling for the non-admin case if needed -->

@@ -1,8 +1,13 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
+
 @extends('flashdata')
-@section('tittle', 'FORMS ONE | Formulir')
+@section('title','Form One | Pekerjaan')
+@section('pageTitle','Tambah Rincian Pekerjaan Termin')
+@section('back',route('job.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Pekerjaan')
+@section('breadcrumb2','Rincian Pekerjaan Termin')
+@section('breadcrumb3','Rincian Pekerjaan')
+@section('breadcrumb4','Tambah Rincian Pekerjaan')
 @section('content')
 
 <section class="content" id="printcontent">

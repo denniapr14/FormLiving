@@ -1,8 +1,11 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
 @extends('flashdata')
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | Pekerjaan')
+@section('pageTitle','Rincian Pekerjaan Termin')
+@section('back',route('job.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Pekerjaan')
+@section('breadcrumb2','Rincian Pekerjaan Termin')
+{{--  @section('breadcrumb3','Tambah Promo')  --}}
 
 @section('content')
 

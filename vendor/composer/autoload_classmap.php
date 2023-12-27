@@ -17,6 +17,7 @@ return array(
     'App\\Http\\Controllers\\C_Dashboard' => $baseDir . '/app/Http/Controllers/C_Dashboard.php',
     'App\\Http\\Controllers\\C_GambarRumah' => $baseDir . '/app/Http/Controllers/C_GambarRumah.php',
     'App\\Http\\Controllers\\C_Job' => $baseDir . '/app/Http/Controllers/C_Job.php',
+    'App\\Http\\Controllers\\C_Joblist' => $baseDir . '/app/Http/Controllers/C_Joblist.php',
     'App\\Http\\Controllers\\C_Login' => $baseDir . '/app/Http/Controllers/C_Login.php',
     'App\\Http\\Controllers\\C_Payment' => $baseDir . '/app/Http/Controllers/C_Payment.php',
     'App\\Http\\Controllers\\C_PembayaranRumah' => $baseDir . '/app/Http/Controllers/C_PembayaranRumah.php',

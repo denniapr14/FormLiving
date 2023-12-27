@@ -1,9 +1,10 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('flashdata')
-@extends('V_Admin.footer')
 
-@section('tittle', 'FORMS | Dashboard')
+@extends('flashdata')
+@section('title','Form One | Ubah Password')
+@section('pageTitle','Ubah Password')
+@section('back',route('updatePasswordProfile.admin',Crypt::encrypt($getUser->id_user_admin)) )
+@section('breadcrumb','Ubah Password')
 
 @section('content')
 {{-- aawww --}}
@@ -16,40 +17,41 @@
 
     <!-- start: content -->
 
-    <div class="content__wrapper">
 
-        <div class="content__row mb-3">
-            <div class="card__box">
-                <div class="card__header">
-                    <div class="card__title">
+
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
 
                         Ubah Password
 
                     </div>
+                    <form action="{{ route('updatePasswordProfileAction.admin', Crypt::encrypt($getUser->id_user_admin)) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <input type="text" name="username" id="" class="form-control" value="{{ $getUser->username_ua }}" readonly placeholder="Masukan Nama" aria-describedby="helpId">
+                          </div>
+                        <div class="form-group">
+                            <input type="password" name="password" required class="form-control" id="password" placeholder="Masukan Password">
+                            <small id="alertPassword" style="color: red"></small>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="re-password" required class="form-control" id="rePassword" placeholder="Tulis Ulang Password">
+                            <small id="alertRePassword" style="color: red"></small>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="btn btn-primary" disabled>Submit</button>
+
+
+
+
+                    </form>
 
                 </div>
-                <form action="{{ route('updatePasswordProfileAction.admin', Crypt::encrypt($getUser->id_user_admin)) }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <input type="text" name="username" id="" class="form-control" value="{{ $getUser->username_ua }}" readonly placeholder="Masukan Nama" aria-describedby="helpId">
-                      </div>
-                    <div class="form-group">
-                        <input type="password" name="password" required class="form-control" id="password" placeholder="Masukan Password">
-                        <small id="alertPassword" style="color: red"></small>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="re-password" required class="form-control" id="rePassword" placeholder="Tulis Ulang Password">
-                        <small id="alertRePassword" style="color: red"></small>
-                    </div>
 
-                    <button type="submit" id="submitBtn" class="btn btn-primary" disabled>Submit</button>
-
-
-
-
-                </form>
             </div>
-        </div>
+
 
         <script>
 

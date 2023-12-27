@@ -1,8 +1,11 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | Rumah')
+@section('pageTitle','Ubah Rumah')
+@section('back',route('rumah.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Rumah')
+@section('breadcrumb2','Ubah Rumah')
 
 @section('content')
 

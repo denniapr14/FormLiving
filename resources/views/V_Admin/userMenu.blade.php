@@ -1,7 +1,11 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | User')
+@section('pageTitle','User')
+@section('back',route('userKategori.admin') )
+@section('breadcrumb','User')
+
 
 @section('content')
 
@@ -52,7 +56,7 @@
                                         <div class="d-flex flex-nowrap">
                                             <button type="button" class="btn btn-outline-info"
                                                 data-target="#seeUser{{ $no }}" data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-eye"></i>
+                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="fa fa-eye" aria-hidden="true"></i>
                                             </button>
 
                                             <div class="modal modal-form fade" id="seeUser{{ $no }}"
@@ -209,7 +213,7 @@
 
                                             <button type="button" class="btn btn-outline-info"
                                                 data-target="#editUser{{ $no }}" data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-pencil-square"></i>
+                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="fas fa-edit    "></i>
                                             </button>
 
                                             <div class="modal modal-form fade" id="editUser{{ $no }}"

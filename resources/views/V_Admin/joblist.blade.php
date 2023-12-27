@@ -1,8 +1,12 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
+
 @extends('flashdata')
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | Pekerjaan')
+@section('pageTitle','Rincian Pekerjaan Termin')
+@section('back',route('job.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Pekerjaan')
+@section('breadcrumb2','Rincian Pekerjaan Termin')
+@section('breadcrumb3','Rincian Pekerjaan')
 
 @section('content')
 
@@ -27,7 +31,7 @@
                             <td style="width: 50px">
                                 <a href="{{ route('jobTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($getJob->termin_job)]) }}" class="btn btn-outline-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                             </td>
-                            <td> <i class="bi bi-map"></i>
+                            <td> <i class="fa-map-marker-alt"></i>
                                 <span>Pekerjaan {{ $getJob->nama_job }} termin {{ $getJob->termin_job }} lantai
                                     {{ $getJob->lantai_job }} di {{ $getProjek->nama_projek }}</span>
                             </td>
@@ -35,7 +39,7 @@
                                 <div class="">
                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
                                         <a href="{{ route('addJoblist.admin', [$getProjek->nama_projek, Crypt::encrypt($getJob->id_job)]) }}"
-                                            class="btn btn-outline-gl" style="float: right"><i class="bi bi-plus"></i>Rincian
+                                            class="btn btn-outline-info" style="float: right"><i class="fas fa-plus    "></i> Rincian
                                             Pekerjaan</a>
                                     @else
                                     @endif

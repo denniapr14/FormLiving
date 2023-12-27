@@ -1,7 +1,10 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | User Pelanggan')
+@section('pageTitle','User Pelanggan')
+@section('back',route('userPelanggan.admin') )
+@section('breadcrumb','User Pelanggan')
 
 @section('content')
 
@@ -53,14 +56,13 @@
                                         <p class="mb-1">
 
                                             No. telp {{ $userPelanggan->no_telp_plgn }} <a
-                                                href="tel:{{ $userPelanggan->no_telp_plgn }}" class="btn btn-outline-info"><i
-                                                    class="bi bi-telephone-outbound"></i></a> <br>
+                                                href="tel:{{ $userPelanggan->no_telp_plgn }}" class="btn btn-outline-info"><i class="fas fa-phone    "></i></a> <br>
                                         </p>
                                         <p>
 
                                             No. WA {{ $userPelanggan->no_wa_plgn }} <a
                                                 href="https://wa.me/{{ $userPelanggan->no_wa_plgn }}"
-                                                class="btn btn-outline-info"> <i class="bi bi-whatsapp"></i></a>
+                                                class="btn btn-outline-info"><i class="mdi mdi-whatsapp    "></i></a>
                                         </p>
 
                                     </td>
@@ -68,7 +70,7 @@
                                         <div class="d-flex flex-nowrap">
                                             <button type="button" class="btn btn-outline-info"
                                                 data-target="#seeUser{{ $no }}" data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-eye"></i>
+                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="fa fa-eye" aria-hidden="true"></i>
                                             </button>
 
                                             <div class="modal modal-form fade" id="seeUser{{ $no }}"
@@ -249,7 +251,7 @@
 
                                             <button type="button" class="btn btn-outline-info"
                                                 data-target="#editUser{{ $no }}" data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-pencil-square"></i>
+                                                data-target=".bd-example-modal-lg{{ $no }}"> <i class="fas fa-edit    "></i>
                                             </button>
 
                                             <div class="modal modal-form fade" id="editUser{{ $no }}"

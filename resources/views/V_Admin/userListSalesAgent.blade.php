@@ -1,9 +1,10 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-
-@section('tittle', 'FORMS | Sales Agent')
-
+@section('title','Form One | User Agent')
+@section('pageTitle','User Sales dan Agen')
+@section('back',route('userSalesAgent.admin') )
+@section('breadcrumb','User Sales dan Agen')
 @section('content')
 
     <div class="">
@@ -106,7 +107,7 @@
                                                 <button type="button" class="btn btn-outline-info"
                                                     data-target="#seeUser{{ $no }}" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg{{ $no }}">
-                                                    <i class="bi bi-eye"></i>
+                                                   <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="seeUser{{ $no }}"
@@ -284,7 +285,7 @@
                                                 <button type="button" class="btn btn-outline-info"
                                                     data-target="#editUser{{ $no }}" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg{{ $no }}">
-                                                    <i class="bi bi-pencil-square"></i>
+                                                   <i class="fas fa-edit    "></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="editUser{{ $no }}"
@@ -542,7 +543,7 @@
                                                 <button type="button" class="btn btn-outline-info"
                                                     data-target="#delUser{{ $no }}" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg{{ $no }}">
-                                                    <i class="bi bi-trash"></i>
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="delUser{{ $no }}"

@@ -1,7 +1,11 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-@section('tittle', 'FORMS ONE | Tambah Rumah Promo')
+@section('title','Form One | Promo')
+@section('pageTitle','Tambah Promo')
+@section('back',route('promo.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Promo')
+@section('breadcrumb2','Tambah Rumah Promo')
 @section('content')
     <style>
         .myinput {
@@ -46,7 +50,7 @@
             <div class="card-body">
                 <div class="card-title">
                     <div class="">
-                        <a href="{{ url()->previous() }}" class="btn-fd-icon-outline " style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
+                        <a href="{{ url()->previous() }}" class="btn btn-outline-danger " style="height: 40px; width: 50px"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a> &nbsp;
                         <i class="bi bi-award-fill"></i>
                         <span>Promo </span>
 

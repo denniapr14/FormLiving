@@ -49,7 +49,7 @@ Route::get('/Housing/{dataProjek}', [Home::class, 'housing']);
 Route::get('/my-cart', [Home::class, 'MyCart']);
 Route::get('/login', [C_Login::class, 'Login']);
 Route::post('/login', [C_Login::class, 'LoginAction'])->name('login.action');
-Route::get('/logout', [C_Login::class, 'Logout']);
+Route::get('/logout', [C_Login::class, 'Logout'])->name('logout');
 Route::get('/reset-password', [C_Login::class, 'emailForgot']);
 Route::get('/profile/cetak/{code}/{id_formulir}', [Home::class, 'printFP']);
 Route::get('/forgot/{email}', [C_Login::class, 'forgotPassword'])->name('forgot.utama');

@@ -1,8 +1,11 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | Dashboard')
+@section('pageTitle','Dashboard')
+@section('back',route('dashboard.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Dashboard')
+{{--  @section('breadcrumb2','Ubah Rumah')  --}}
 @section('content')
 
 
@@ -103,87 +106,121 @@
         </div>
     </div>
 
+    <div class="summaryPC">
+        <table style="width: 100%" class="table-borderless">
+            <tr>
 
+                <td class="" style="">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-7">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <p class="font-16 m-b-5">Closing
 
-    <section class="section dashboard">
-
-
-        <div class="">
-            <div class="card">
-                <div class="card-body">
-
-
-                    <h5 class="card-title">
-                        Summary
-                    </h5>
-
-                    <div class="col-12 summaryPC">
-                        <table style="width: 100%" class="table table-borderless table-responsive">
-                            <tr>
-                                <td class="" style="">
-                                    <div class="card align-items-center justify-content-center" style="height: 120px">
-                                        <i class="bi bi-calendar"></i>
-
-                                        <span>{{ $closing->count }}</span>
-                                        <span class="text-center">Closing
-
-                                            Bulanan</span>
-                                    </div>
-
-                                </td>
-                                <td class="" style="width: 20%">
-                                    <div class="card align-items-center justify-content-center" style="height: 120px">
-                                        <i class="bi bi-database"></i>
-                                        <span class=""> {{ $closingAll->count }}
-                                        </span>
-                                        <span class="text-center">Semua
-                                             Closing</span>
-                                    </div>
-
-                                </td>
-                                <td class="" style="">
-                                    <div class="card align-items-center justify-content-center" style="height: 120px">
-                                        <i class="bi bi-house-exclamation"></i>
-                                        <span>
-                                            {{ $remainHouse->count }}
-                                        </span>
-                                        <span class="text-center">Sisa
-                                             Rumah</span>
-                                    </div>
-
-                                </td>
-                                <td class="" style="">
-                                    <div class="card align-items-center justify-content-center" style="height: 120px">
-                                        <i class="bi bi-headset"></i>
-                                        <span>
-                                            {{ $agentWithCompany->userCount }}
-                                        </span>
-                                        <span class="text-center">Agen Company</span>
-                                    </div>
-
-
-                                </td>
-                                <td class="" style="">
-                                    <div class="card align-items-center justify-content-center" style="height: 120px">
-                                        <i class="bi bi-headphones"></i>
-                                        <span>
-                                            {{ $agentWithoutCompany->userCount }}
-                                        </span>
-                                        <span class="text-center">Agen</span>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </table>
+                                        Bulanan</p>
+                                </div>
+                                <div class="col-5">
+                                    <h1 class="font-light text-right mb-0">{{ $closing->count }}</h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="summaryMobile">
-                        Closing Bulanan: {{ $closing->count }} | Semua Closing: {{ $closingAll->count }} | Sisa Rumah:
-                        {{ $remainHouse->count }} | Agen company: {{ $agentWithCompany->userCount }} |
-                        Agen:{{ $agentWithoutCompany->userCount }}
+
+
+                </td>
+                <td class="" style="width: 20%">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-7">
+                                    <i class="fas fa-database    "></i>
+                                    <p class="font-16 m-b-5">Semua
+                                        Closing</p>
+                                </div>
+                                <div class="col-5">
+                                    <h1 class="font-light text-right mb-0"> {{ $closingAll->count }}</h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+
+                </td>
+                <td class="" style="">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-7">
+                                    <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                                    <p class="font-16 m-b-5">Sisa
+                                        Rumah</p>
+                                </div>
+                                <div class="col-5">
+                                    <h1 class="font-light text-right mb-0">  {{ $remainHouse->count }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </td>
+                <td class="" style="">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-7">
+                                    <i class="fa fa-headphones" aria-hidden="true"></i>
+                                    <p class="font-16 m-b-5">Agen Company</p>
+                                </div>
+                                <div class="col-5">
+                                    <h1 class="font-light text-right mb-0">{{ $agentWithCompany->userCount }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </td>
+                <td class="" style="">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-7">
+                                    <i class="fas fa-headphones   "></i>
+                                    <p class="font-16 m-b-5">Agen</p>
+                                </div>
+                                <div class="col-5">
+                                    <h1 class="font-light text-right mb-0">  {{ $agentWithoutCompany->userCount }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="summaryMobile">
+        <div class="card">
+            <div class="card-body">
+
+                Closing Bulanan: {{ $closing->count }} | Semua Closing: {{ $closingAll->count }} | Sisa Rumah:
+                {{ $remainHouse->count }} | Agen company: {{ $agentWithCompany->userCount }} |
+                Agen:{{ $agentWithoutCompany->userCount }}
+
+
+
+
             </div>
         </div>
+
+    </div>
+    <section class="">
+
+
 
 
         <div class="card">

@@ -2,8 +2,11 @@
 
 @extends('flashdata')
 
-@section('tittle', 'FORMS | Dashboard')
-
+@section('title','Form One | Rumah')
+@section('pageTitle','Tambah Rumah')
+@section('back',route('rumah.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Rumah')
+@section('breadcrumb2','Tambah Rumah')
 @section('content')
 
     <!-- start: main -->
@@ -21,8 +24,8 @@
             <div class="card-body">
                 <div class="card-title">
                     <div class="">
-                        <a href="{{ route('rumah.admin', $getProjek->nama_projek) }}" class="btn btn-outline-danger col-1"
-                            style="height: 40px; width: 50px"> <i class="fa fa-arrow-left" aria-hidden="true"></i> </a> &nbsp;
+                        <a href="{{ route('rumah.admin', $getProjek->nama_projek) }}" class="btn btn-outline-danger "
+                            style=" width: 50px"> <i class="fa fa-arrow-left" aria-hidden="true"></i> </a> &nbsp;
                         <h1>Tambah Rumah </h1>
 
                     </div>

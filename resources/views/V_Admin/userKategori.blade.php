@@ -1,7 +1,13 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | User')
+@section('pageTitle','User')
+@section('back',route('userKategori.admin') )
+@section('breadcrumb','User')
+{{--  @section('breadcrumb2','Rincian Pekerjaan Termin')
+@section('breadcrumb3','Rincian Pekerjaan')
+@section('breadcrumb4','Tambah Rincian Pekerjaan')  --}}
 
 @section('content')
 
@@ -59,7 +65,7 @@
                                             <button type="button" class="btn btn-outline-info"
                                                 data-target="#seeKategori{{ $no }}" data-toggle="modal"
                                                 data-target=".bd-example-modal-lg{{ $no }}">
-                                                <i class="bi bi-eye"></i>
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
                                             </button>
 
                                             <div class="modal modal-form fade" id="seeKategori{{ $no }}"
@@ -149,7 +155,7 @@
                                             <button type="button" class="btn btn-outline-info"
                                                 data-target="#editUserKategori{{ $no }}" data-toggle="modal"
                                                 data-target=".bd-example-modal-lg{{ $no }}">
-                                                <i class="bi bi-pencil-square"></i>
+                                                <i class="fas fa-edit    "></i>
                                             </button>
 
                                             <div class="modal modal-form fade" id="editUserKategori{{ $no }}"

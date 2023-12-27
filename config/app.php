@@ -185,7 +185,6 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
 
-
         /*
          * Package Service Providers...
          */

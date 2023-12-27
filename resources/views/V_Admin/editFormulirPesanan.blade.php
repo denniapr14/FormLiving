@@ -1,8 +1,11 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
+
 @extends('flashdata')
-@section('tittle', 'FORMS ONE | Formulir')
+@section('title','Form One | Pemesanan')
+@section('pageTitle','Ubah Pemesanan')
+@section('back',route('suratPemesananRumah.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Pemesanan')
+@section('breadcrumb2','Ubah Pemesanan')
 
 @section('content')
 <style type="text/css">

@@ -1,7 +1,10 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-@section('tittle', 'FORMS | Dashboard')
+@section('title','Form One | Pemesanan')
+@section('pageTitle','Pemesanan')
+@section('back',route('suratPemesananRumah.admin',[$getProjek->nama_projek]) )
+@section('breadcrumb','Pemesanan')
 
 @section('content')
 

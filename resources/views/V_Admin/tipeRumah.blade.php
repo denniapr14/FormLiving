@@ -22,14 +22,14 @@
 
                 <br>
                 <div class="card-title">
-                    <div class="card__title">
+
                         <a href="{{  route('rumah.admin', $getProjek->nama_projek)  }}" class="btn btn-outline-danger" style="height: 40px; width: 50px">
-                            <i class="bi bi-arrow-left"></i></a> &nbsp;
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i></a> &nbsp;
                         <i class="bi bi-clipboard2-plus"></i>
                         <span>Tipe Rumah {{ $getRumah->nama_cluster }} / {{ $getRumah->blok }} - {{ $getRumah->nomor }}
                         </span>
 
-                    </div>
+
 
                     <div class="float-right">
                         <a href="{{ route('storeTipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($getRumah->id_rumah)]) }}"
@@ -91,7 +91,7 @@
 
                                                 <button type="button" class="btn btn-outline-info"
                                                     data-target="#tipeRumah{{ $no }}" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-eye"></i>
+                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="tipeRumah{{ $no }}"
@@ -447,12 +447,12 @@
                                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
                                                     <a href="{{ route('updateTipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($tipeRumah->id_tipe_rumah)]) }}"
                                                         class="btn btn-outline-info">
-                                                        <i class="bi bi-pencil-square"></i>
+                                                       <i class="fas fa-edit    "></i>
                                                     </a>
 
                                                     <button type="button" class="btn btn-outline-info"
                                                     data-target="#delTipeRumah{{ $no }}" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i class="bi bi-trash"></i>
+                                                    data-target=".bd-example-modal-lg{{ $no }}"> <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
 
                                                 <div class="modal modal-form fade" id="delTipeRumah{{ $no }}"

@@ -403,23 +403,18 @@
                                     </div>
                                 </div>
                                 <div class="profile-dis scrollable">
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
+                                    <a class="dropdown-item" href="{{ route('updatePasswordProfile.admin',Crypt::encrypt($user->id_user_admin)) }}">
+                                        <i class="ti-user m-r-5 m-l-5"></i> Ubah Password</a>
+
+                                    <a class="dropdown-item" href="{{ route('updateUserProfile.admin',Crypt::encrypt($user->id_user_admin)) }}">
                                         <i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
+                                    <a class="dropdown-item" href="{{ route('logout') }}">
                                         <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
                                     <div class="dropdown-divider"></div>
                                 </div>
                                 <div class="p-l-30 p-10">
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View
-                                        Profile</a>
+
                                 </div>
                             </div>
                         </li>
@@ -524,16 +519,26 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Dashboard</h4>
+                        <h4 class="page-title">@yield('pageTitle')</h4>
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
-                                        <a href="#">Home</a>
+                                        <a href="@yield('back')">@yield('breadcrumb')</a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                                    @if (!empty(trim($__env->yieldContent('breadcrumb2'))))
+                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb2')</li>
+                                    @endif
+
+                                    @if (!empty(trim($__env->yieldContent('breadcrumb3'))))
+                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb3')</li>
+                                    @endif
+
+                                    @if (!empty(trim($__env->yieldContent('breadcrumb4'))))
+                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb4')</li>
+                                    @endif
                                 </ol>
                             </nav>
                         </div>
