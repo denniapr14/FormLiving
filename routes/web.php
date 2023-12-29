@@ -25,6 +25,7 @@ use App\Http\Controllers\C_Joblist;
 use App\Http\Controllers\C_UserKategori;
 use App\Http\Controllers\C_UserMenu;
 use App\Http\Controllers\C_UserPelanggan;
+use App\Http\Controllers\C_Checklist;
 use App\Http\Controllers\Ceo_Dashboard;
 // ADMIN
 use App\Http\Controllers\Direktur_Dashboard;
@@ -402,9 +403,14 @@ Route::get('/ubah-rincian-pekerjaan/{projek}',[C_Joblist::class,'editJoblist'])-
 Route::post('/ubah-rincian-pekerjaan/action/{projek}/{id_job}',[C_Joblist::class,'editJoblistAction'])->name('updateJoblistAction.admin');
 Route::get('/ubah-status-pekerjaan/{projek}',[C_Joblist::class,'deleteJob'])->name('deletelistJob.admin');
 
+// CHECKLIST
+route::get('/checklist/{projek}',[C_Checklist::class,'getChecklist'])->name('checklist.admin');
+
 
 
 // TEST DOKU
 Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');
 Route::post('/generate-payment', [C_Payment::class,'generatePayment'])->name('generate.admin');
 Route::get('/check-payment-status/{orderId}/{requestId}/{expTime}/{signature}', [C_Simulasi::class,'checkStatus'])->name('checkStatusPembayaran');
+
+

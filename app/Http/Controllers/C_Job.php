@@ -22,15 +22,15 @@ class C_Job extends Controller
      */
 
 
-     public $userAdmin;
-     public $userNotif;
-     public $userProjek;
+    public $userAdmin;
+    public $userNotif;
+    public $userProjek;
 
-     public $projek;
-     public $userMenu;
+    public $projek;
+    public $userMenu;
     public $job;
-     public function __construct()
-     {
+    public function __construct()
+    {
         $this->job = new Job();
          $this->userAdmin = new UserAdmin();
          $this->userNotif = new UserNotif();
@@ -38,7 +38,8 @@ class C_Job extends Controller
 
          $this->projek = new Projek();
          $this->userMenu = new UserMenu();
-     }
+    }
+
     public function getJob($projek)
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
