@@ -20,7 +20,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('addJobAction.admin', $getProjek->nama_projek) }}" method="post">
+                <form action="{{ route('addJoblistAction.admin', [$getProjek->nama_projek,Crypt::encrypt($getJob->id_job)]) }}" method="post">
                     @csrf
                     <div id="formFields">
 

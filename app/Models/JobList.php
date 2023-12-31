@@ -24,7 +24,7 @@ class Joblist extends Model
         ->first();
     }
 
-    function insertJob($data) {
+    function insertJobList($data) {
         return Joblist::insert($data);
     }
 }

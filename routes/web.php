@@ -400,7 +400,7 @@ Route::get('/rincian-pekerjaan/{projek}/{id_job}/{termin}',[C_Joblist::class,'ge
 Route::get('/tambah-rincian-pekerjaan/{projek}/{id_job}',[C_Joblist::class,'addJoblist'])->name('addJoblist.admin');
 Route::post('/tambah-rincian-pekerjaan/action/{projek}/{id_job}',[C_Joblist::class,'addJoblistAction'])->name('addJoblistAction.admin');
 Route::get('/ubah-rincian-pekerjaan/{projek}',[C_Joblist::class,'editJoblist'])->name('updateJoblist.admin');
-Route::post('/ubah-rincian-pekerjaan/action/{projek}/{id_job}',[C_Joblist::class,'editJoblistAction'])->name('updateJoblistAction.admin');
+Route::post('/ubah-rincian-pekerjaan/action/{projek}/{id_job}/{id_joblist}',[C_Joblist::class,'editJoblistAction'])->name('updateJoblistAction.admin');
 Route::get('/ubah-status-pekerjaan/{projek}',[C_Joblist::class,'deleteJob'])->name('deletelistJob.admin');
 
 // CHECKLIST

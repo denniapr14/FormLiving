@@ -111,7 +111,7 @@
 
                                                                     <div class="modal-body">
                                                                         <form
-                                                                            action="{{ route('updateJoblistAction.admin', [$getProjek->nama_projek, Crypt::encrypt($joblist->id_joblist)]) }}"
+                                                                            action="{{ route('updateJoblistAction.admin', [$getProjek->nama_projek, Crypt::encrypt($getJob->id_job), Crypt::encrypt($joblist->id_joblist)]) }}"
                                                                             method="post" enctype="multipart/form-data">
                                                                             @csrf
                                                                             <div class="form-group row">
