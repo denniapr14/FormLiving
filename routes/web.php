@@ -21,6 +21,7 @@ use App\Http\Controllers\C_UserAdmin;
 use App\Http\Controllers\C_Payment;
 use App\Http\Controllers\C_Job;
 use App\Http\Controllers\C_Joblist;
+use App\Http\Controllers\C_GambarKerja;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_UserKategori;
 use App\Http\Controllers\C_UserMenu;
@@ -406,7 +407,8 @@ Route::get('/ubah-status-pekerjaan/{projek}',[C_Joblist::class,'deleteJob'])->na
 // CHECKLIST
 route::get('/checklist/{projek}',[C_Checklist::class,'getChecklist'])->name('checklist.admin');
 
-
+// Kerja
+route::get('/gambarKerja/{projek}',[C_GambarKerja::class,'getGambarKerja'])->name('gambarKerja.admin');
 
 // TEST DOKU
 Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');

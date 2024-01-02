@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobList;
-use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Projek;
 use App\Models\UserAdmin;
 use App\Models\UserMenu;
 use App\Models\UserNotif;
 use App\Models\UserProjek;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -34,7 +34,6 @@ class C_Joblist extends Controller
         $this->userAdmin = new UserAdmin();
         $this->userNotif = new UserNotif();
         $this->userProjek = new UserProjek();
-
         $this->projek = new Projek();
         $this->userMenu = new UserMenu();
     }

@@ -84,7 +84,8 @@ class C_Rumah extends Controller
 
     public function storeRumah($projek)
     {
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek)->collect();
+
 
         $getCluster = $this->cluster->getClusterProjekWhere('*', 'projek.nama_projek', '=', $projek);
         if (session()->has('user')) {
