@@ -47,6 +47,7 @@ class Rumah extends Model
             ->leftJoin('tipe_rumah', 'rumah.id_rumah', '=', 'tipe_rumah.id_rumah')
             ->groupBy('rumah.id_rumah')
             ->where($where,$eq,$value)
+            ->where('deleted_tr','=','false')
             ->get();
     }
     public function getRumahSelectCountGroupByWhereAllArr($where)

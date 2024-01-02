@@ -74,7 +74,6 @@ class C_Rumah extends Controller
                     'getRumah',
                     'getProjek',
                     'getUserMenu'
-
                 )
             );
         } else {
@@ -90,7 +89,6 @@ class C_Rumah extends Controller
         $getCluster = $this->cluster->getClusterProjekWhere('*', 'projek.nama_projek', '=', $projek);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
-
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
@@ -129,11 +127,7 @@ class C_Rumah extends Controller
 
     public function storeRumahAction(Request $request)
     {
-
-
-
-
-        $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+     $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
         $dataNotif = [
             'msg_notif' => 'User '.$user->nama_ua.' telah memasukan rumah '.$request->blok.'-'.$request->nomor,
             'status_notif' => 'aktif',
@@ -182,7 +176,6 @@ class C_Rumah extends Controller
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
-
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
