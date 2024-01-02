@@ -144,6 +144,7 @@ class C_Simulasi extends Controller
         // die();
         $tipe = DB::table('tipe_rumah')
             ->where('id_rumah', '=', $id_rumah)
+            ->where('deleted_tr','=','false')
             ->get();
         // dd($tipe);
         if (session()->has('user')) {
