@@ -1,7 +1,7 @@
 @extends('HomeLayout.app')
 @extends('HomeLayout.navbar')
 @extends('HomeLayout.navbarProfile')
-@extends('HomeLayout.sidebar')
+
 @extends('HomeLayout.footerbranch')
 {{-- @extends('HomeLayout.footer') --}}
 @section('tittle','Forms | Home')
@@ -93,6 +93,16 @@
                     <!--    Miliki Unit <i class="bi-chevron-right"></i>-->
                     <!--</div>-->
                 </a>
+                 <a href="/Housing/Kalm" class="item">
+                    <div class="item-img">
+                        <img src="{{ asset('Home') }}/images/kalm-cover-mobile.jpg" alt="">
+                    </div>
+
+
+                    <!-- <div class="float-button">-->
+                    <!--    Miliki Unit <i class="bi-chevron-right"></i>-->
+                    <!--</div>-->
+                </a>
                 <!--<div class="item">-->
                 <!--    <div class="logo">-->
                 <!--        <img src="{{ asset('Home') }}/images/logo-kalm.png" alt="">-->
@@ -135,7 +145,7 @@
                     <div class="units">
                         <a href="/Housing/Greenland" class="item">
                             <div class="item-img">
-                                <img style="width:100%;height:100%;" src="{{ asset('Home') }}/images/mobile-gl.jpg"
+                                <img style="width:100%;height:100%;" src="{{ asset('Home') }}/images/page-picture/mobile-greenland.jpg"
                                     alt="">
                             </div>
                             <h6>Greenland</h6>
@@ -143,7 +153,7 @@
                         </a>
                         <a href="/Housing/Kalm" class="item">
                             <div class="item-img">
-                                <img style="width:100%;height:100%;" src="{{ asset('Home') }}/images/mobile-kalm.jpg"
+                                <img style="width:100%;height:100%;" src="{{ asset('Home') }}/images/page-picture/mobile-kalm.jpg"
                                     alt="">
                             </div>
                             <h6>Kalm</h6>
@@ -176,7 +186,7 @@
         });
     });
 </script>
-<div class="promotions" data-aos="zoom-right" data-aos-offset="0" data-aos-duration="500">
+<div class="promotions"  data-aos="zoom-right" data-aos-offset="0" data-aos-duration="500">
     <div class="container">
         <h5 class="subtitle">
             Promotions
@@ -184,6 +194,39 @@
         <h2 class="title">
             Lebih untung pakai promo!
         </h2>
+        <div class="sliders-index container-fluid" data-aos="zoom-in" style="padding-bottom: 1.8rem !important;">
+    <div class="sliders">
+        <div class="slider-item">
+            <div class="slider-img">
+                <img src="{{ asset('Home') }}/images/promo/promo-desember.jpg" class="w-100" alt="">
+            </div>
+            <div class="slider-content">
+                <h1 class="title">
+                    
+                </h1>
+                <div class="desc questrial">
+                    <div class="text"><h3>Promo Greenland at Tidar</h3></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="mobile-only">
+    <div class="cta-mobile">
+        <div class="container">
+            <div class="sliders-mobile">
+                <div class="item">
+                    <div class="item-img">
+                        <img src="{{ asset('Home') }}/images/promo/promo-desember.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<h5 class="subtitle">
+            Kode Promo
+        </h5>
         <div class="row items">
             @foreach ($promo as $promo)
             <div class="col-12 col-sm-6 col-lg-4 mb-3 align-self-center">
@@ -233,6 +276,8 @@
         </div>
     </div>
 </div>
+
+
 <div class="projects">
     <div class="container">
         <h5 class="subtitle">
@@ -242,13 +287,13 @@
             Our Projects
         </h2>
         <div class="row items">
-            <div class="col-6 col-md-6">
-                <div class="item" data-aos="fade-right">
-                    <img src="{{ asset('Home') }}/images/greenland-project.jpeg" alt="">
+            <div class="col-6 col-lg-6">
+                <div class="item" data-aos="fade-left">
+                    <img src="{{ asset('Home') }}/images/page-picture/greenland-banner.jpg" alt="">
                     <div class="item-text">
                         <h4>Greenland</h4>
-                        <p>Greenland at Tidar</p>
-                        <a href="/Housing/Greenland" class="more">
+                        <p>Perumahan Greenland at Tidar</p>
+                        <a href="/Housing/Kalm" class="more">
                             Learn More <i class="bi bi-chevron-right"></i>
                         </a>
                     </div>
@@ -256,7 +301,7 @@
             </div>
             <div class="col-6 col-lg-6">
                 <div class="item" data-aos="fade-left">
-                    <img src="{{ asset('Home') }}/images/kalm-project.jpeg" alt="">
+                    <img src="{{ asset('Home') }}/images/page-picture/kalm-banner.jpg" alt="">
                     <div class="item-text">
                         <h4>Kalm</h4>
                         <p>-- COMING SOON --</p>
@@ -317,7 +362,7 @@
                 <div class="desc">
                     <div class="text questrial">A beautiful style in green, captivating yet refresh for those who seek
                         comfort </div>
-                    <div class="more">Learn More <i class="bi bi-chevron-right"></i></div>
+                    <!--<div class="more">Learn More <i class="bi bi-chevron-right"></i></div>-->
                 </div>
             </div>
         </div>
