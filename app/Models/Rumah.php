@@ -50,6 +50,7 @@ class Rumah extends Model
             ->where('deleted_tr','=','false')
             ->get();
     }
+
     public function getRumahSelectCountGroupByWhereAllArr($where)
     {
         return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(tipe_rumah.id_tipe_rumah) as countTipe"))
@@ -68,6 +69,7 @@ class Rumah extends Model
         ->where($where)
         ->get();
     }
+    
     public function firstRumahJoinTipeRumahWhere($select,$where){
         return Rumah::select($select)
         ->join('tipe_rumah','tipe_rumah.id_rumah','tipe_rumah.id_rumah')

@@ -45,7 +45,6 @@ class C_Rumah extends Controller
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
-
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
