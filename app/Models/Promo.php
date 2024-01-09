@@ -17,6 +17,13 @@ class Promo extends Model{
         ->where($where,$eq,$value)
         ->get();
     }
+    function getPromoWhereAllProjek($select,$where,$eq,$value) {
+        return Promo::select($select)
+        // ->join('rumah','promo.id_rumah', '=','rumah.id_rumah')
+        // ->join('projek','rumah.id_projek','=','projek.id_projeka')
+        ->where($where,$eq,$value)
+        ->get();
+    }
 
     function getPromoWhereArr($select,$where) {
         return Promo::select($select)

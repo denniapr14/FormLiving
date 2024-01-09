@@ -1,0 +1,36 @@
+.mybtn-white{
+    border-radius: 5px;
+    color: #a47c5a;
+    background-color: white;
+    font-size: 17px;
+}
+
+.semi-font-size-16{
+    font-size: 16px;
+    font-weight: 500;
+
+}
+.font-size-16{
+    font-size: 16px;
+    font-weight: 100;
+
+}
+.font-size-12{
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.scrollable-promo{
+    height: 25rem;
+    overflow-y: auto;
+}
+@media (max-width: 576px) {
+    .semi-font-size-16{
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .scrollable-promo{
+        height: 15rem;
+        overflow-y: auto;
+    }
+}
