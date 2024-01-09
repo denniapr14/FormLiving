@@ -1,6 +1,4 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
 
 @section('tittle', 'FORMS | Dashboard')
 
@@ -21,18 +19,11 @@
             <div class="card__header">
                 <div class="card__title">
 
-<<<<<<< Updated upstream
-                        <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($getTipeRumah->id_rumah)]) }}"
-                            class="btn-fd-icon-outline " style="height: 40px;width: 50px"> <i class="fa fa-arrow-left"></i></a>
-                        <h4> Ubah Tipe Rumah {{ $getTipeRumah->jenis_tr }} </h4>
 
-                    </div>
-=======
                     <a href="{{  route('tipeRumah.admin',[$getProjek->nama_projek,Crypt::encrypt($getTipeRumah->id_rumah)] ) }}"
                         class="btn-fd-icon-outline " style="height: 40px;width: 50px"> <i
                             class="bi bi-arrow-left"></i></a>
                     <h4> Ubah Tipe Rumah {{ $getTipeRumah->jenis_tr }} </h4>
->>>>>>> Stashed changes
 
                 </div>
 

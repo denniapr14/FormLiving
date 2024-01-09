@@ -125,8 +125,7 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="semua-tab" data-bs-toggle="tab" data-bs-target="#semua-tab-pane"
-                        type="button" role="tab" aria-controls="semua-tab-pane" aria-selected="true">Proyek
-                        Kita</button>
+                        type="button" role="tab" aria-controls="semua-tab-pane" aria-selected="true">Proyek Kami</button>
                 </li>
                 {{-- <li class="nav-item" role="presentation">
                     <button class="nav-link" id="perumahaan-tab" data-bs-toggle="tab"
@@ -202,7 +201,7 @@
             </div>
             <div class="slider-content">
                 <h1 class="title">
-                    
+
                 </h1>
                 <div class="desc questrial">
                     <div class="text"><h3>Promo Greenland at Tidar</h3></div>

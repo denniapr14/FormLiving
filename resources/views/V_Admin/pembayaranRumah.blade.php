@@ -1,6 +1,5 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
+
 @extends('flashdata')
 @section('tittle', 'FORMS ONE | Formulir')
 @section('content')

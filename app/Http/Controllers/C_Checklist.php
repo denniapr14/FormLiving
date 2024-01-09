@@ -103,4 +103,61 @@ class C_Checklist extends Controller
             return redirect('/login');
         }
     }
+
+    public function getListChecklist($projek, $id_rumah) {
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+        $getChecklist = DB::table('checklist as a')
+        ->selectRaw("SUM(subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*,
+        IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
+        IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
+        ->where([
+            'r.id_projek' => $getProjek->id_projek
+        ])
+        ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
+        ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
+        ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
+        ->leftJoin('cluster as clus','r.codecluster','clus.codecluster')
+        ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
+        ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
+        ->leftJoin('job as j','jl.id_job','=','j.id_job')
+        ->groupBy('j.termin_jl')
+        ->orderByRaw('jl.termin_jl DESC')
+        ->get();
+
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+
+            return view('V_Admin.listChecklist',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getJob',
+                    'getProjek',
+                    'getUserMenu',
+                    'getChecklist'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
 }

@@ -1,8 +1,8 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
+
 
 @extends('flashdata')
-@extends('V_Admin.footer')
+
 
 @section('tittle', 'FORMS | Dashboard')
 

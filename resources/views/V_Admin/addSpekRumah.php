@@ -1,12 +1,9 @@
 @extends('V_Admin.app')
-@extends('V_Admin.sidebar')
-@extends('V_Admin.footer')
-
 @section('tittle', 'FORMS | Dashboard')
 
 @section('content')
 
-<!-- start: main -->
+<!-- start: main -->`
 
 
 <!-- start: navbar -->

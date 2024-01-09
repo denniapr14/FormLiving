@@ -54,8 +54,8 @@
                             <div class="float-right">
                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' ||
                                 $user->kategori == 'AdminAdv')
-                                <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}" class="btn btn-outline-gl"
-                                    style="float: right"> <i class="bi bi-plus"></i>
+                                <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}" class="btn btn-outline-info"
+                                    style="float: right"> <i class="fas fa-plus    "></i>
                                     Rumah</a>
                                 @else
                                 <!-- You can add additional content or styling for the non-admin case if needed -->
@@ -75,29 +75,13 @@
                 <table id="rumah" class="table" style="width: 100%">
                     <thead class="">
                         <tr>
-<<<<<<< Updated upstream
-                            <td> <i class="bi bi-house-fill"></i>
-                                <span>Rumah Projek {{ $getProjek->nama_projek }}</span>
-                            </td>
-                            <td>
-                                <div class="float-right">
-                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                        <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}"
-                                            class="btn btn-outline-primary" style="float: right"> <i class="fas fa-plus    "></i>
-                                            Rumah</a>
-                                    @else
-                                        <!-- You can add additional content or styling for the non-admin case if needed -->
-                                    @endif
-                                </div>
 
-                            </td>
-=======
                             <th class="th-table" style="width: 1rem">No</th>
                             <th class="th-table" style="width: 40%">Tipe Rumah</th>
                             <th class="th-table" style="width: 5%">Luas <br> Tanah</th>
                             <th class="th-table" style="width: 10%">Status</th>
                             <th class="th-table" style="width: 35%">Pengaturan</th>
->>>>>>> Stashed changes
+
                         </tr>
                     </thead>
                     <tbody>
@@ -139,20 +123,20 @@
                                 @if ($rumah->status != 'Available')
                                 @else
                                 <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                    class="btn btn-outline-gl"><i class="bi bi-book-fill"></i><span
+                                    class="btn btn-outline-info"><i class="fas fa-book    "></i><span
                                         class="badge badge-pill badge-info">
                                         {{ $rumah->countTipe }}</span></a>
                                 @endif
 
                                 <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
-                                    class="btn btn-outline-gl">
-                                    <i class="bi bi-pencil-square"></i>
+                                    class="btn btn-outline-info">
+                                    <i class="fas fa-edit    "></i>
                                 </a>
                             </td>
                             @else
                             <td class="td-table">
                                 <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                    class="btn btn-outline-gl"><i class="bi bi-book-fill"></i> aa<span
+                                    class="btn btn-outline-info"><i class="fas fa-book    "></i><span
                                         class="badge badge-pill badge-info">
                                         {{ $rumah->countTipe }}</span></a>
                             </td>
@@ -187,8 +171,8 @@
                             <div class="float-right">
                                 @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' ||
                                 $user->kategori == 'AdminAdv')
-                                <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}" class="btn btn-outline-gl"
-                                    style="float: right"> <i class="bi bi-plus"></i>
+                                <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}" class="btn btn-outline-info"
+                                    style="float: right"> <i class="fa fa-plus" aria-hidden="true"></i>
                                     Rumah</a>
                                 @else
                                 <!-- You can add additional content or styling for the non-admin case if needed -->
@@ -238,22 +222,22 @@
                                                                         @if ($rumah->status != 'Available')
                                                                         @else
                                                                         <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                                            class="btn btn-outline-gl"><i
-                                                                                class="bi bi-book-fill"></i><span
+                                                                            class="btn btn-outline-info">
+                                                                            <i class="fa fa-book" aria-hidden="true"></i>
+                                                                            <span
                                                                                 class="badge badge-pill badge-info">
                                                                                 {{ $rumah->countTipe }}</span></a>
                                                                         @endif
 
                                                                         <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
-                                                                            class="btn btn-outline-gl">
-                                                                            <i class="bi bi-pencil-square"></i>
+                                                                            class="btn btn-outline-info">
+                                                                           <i class="fas fa-edit    "></i>
                                                                         </a>
                                                                     </td>
                                                                     @else
                                                                     <td class="td-table">
                                                                         <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                                            class="btn btn-outline-gl"><i
-                                                                                class="bi bi-book-fill"></i>
+                                                                            class="btn btn-outline-info"> <i class="fa fa-book" aria-hidden="true"></i>
                                                                             aa<span class="badge badge-pill badge-info">
                                                                                 {{ $rumah->countTipe }}</span></a>
                                                                     </td>
@@ -270,57 +254,15 @@
                                 </td>
 
 
-<<<<<<< Updated upstream
-                                    </td>
-                                    <td class="td-table">{{ $rumah->luas_tanah }}</td>
-                                    <td class="td-table">{{ $rumah->status }}</td>
-                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                        <td class="td-table">
 
-
-                                            @if ($rumah->status != 'Available')
-                                            @else
-                                                <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                    class="btn btn-outline-info"><i class="fas fa-book    "></i><span
-                                                        class="badge badge-pill badge-info">
-                                                        {{ $rumah->countTipe }}</span></a>
-                                            @endif
-
-                                            <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
-                                                class="btn btn-outline-info">
-                                              <i class="fas fa-pencil-alt    "></i>
-                                            </a>
-
-
-                                        </td>
-                                    @else
-                                        <td class="td-table">
-
-
-                                            <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                class="btn btn-outline-gl"><i class="fas fa-book    "></i> aa<span
-                                                    class="badge badge-pill badge-info">
-                                                    {{ $rumah->countTipe }}</span></a>
-
-
-
-
-                                        </td>
-                                    @endif
-
-                                </tr>
                                 <?php
                                 $no++;
                                 ?>
-=======
-                            </tr>
->>>>>>> Stashed changes
                             @endforeach
 
 
                         </tbody>
                     </table>
-<<<<<<< Updated upstream
 
                 </div>
 
@@ -433,9 +375,6 @@
                     </center>
 
                 </div>
-=======
-                </center>
->>>>>>> Stashed changes
 
             </div>
 

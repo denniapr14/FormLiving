@@ -159,7 +159,7 @@
                                     <td>
                                         <a href="#" class="btn btn-outline-info"><i class="fa fa-chevron-right"
                                                 aria-hidden="true"> Termin</i></a><br>
-                                        <a href="#" class="btn btn-outline-info"><i class="fas fa-clipboard-list    ">
+                                        <a href="{{ route('getListChecklist.admin',[$getProjek->id_projek]) }}" class="btn btn-outline-info"><i class="fas fa-clipboard-list    ">
                                                 Ceklist</i></a><br>
                                     </td>
 
