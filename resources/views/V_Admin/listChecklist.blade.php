@@ -4,8 +4,8 @@
 @section('pageTitle', 'Checklist')
 @section('back', route('checklist.admin', [$getProjek->nama_projek]))
 @section('breadcrumb', 'Checklist')
-{{-- @section('breadcrumb2', 'Tambah Rumah Promo')
-@section('breadcrumb3', 'Tambah Promo') --}}
+@section('breadcrumb2', 'Termin Checklist')
+@section('breadcrumb3', 'Rincian Checklist Termin')
 
 @section('content')
 
@@ -28,17 +28,11 @@
                     <table style="width: 100%">
                         <tr>
                             <td> <i class="bi bi-map"></i>
-                                <span>Checklist {{ $getProjek->nama_projek }}</span>
+                                <a href="{{ route('getTerminChecklist.admin', [$getProjek->nama_projek,Crypt::encrypt($getRumah->id_rumah)]) }}" class="btn btn-outline-danger"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                                <span>Checklist {{ $getProjek->nama_projek }} rumah {{ $getRumah->nama_cluster }} /
+                                    {{ $getRumah->blok }} - {{ $getRumah->nomor }} </span>
                             </td>
                             <td>
-                                <div class="float-right">
-                                    @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
-                                        <a href="{{ route('addJob.admin', $getProjek->nama_projek) }}"
-                                            class="btn btn-outline-info btn--small" style="float: right"><i class="fa fa-plus"
-                                                aria-hidden="true"></i> Pekerjaan</a>
-                                    @else
-                                    @endif
-                                </div>
 
                             </td>
                         </tr>
@@ -50,8 +44,7 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Rumah</th>
-                                <th>status</th>
+                                <th>Checklist</th>
                                 <th>Pengawas</th>
                                 <th>Pengaturan</th>
 
@@ -65,111 +58,63 @@
                                 <tr>
                                     <td>{{ $no }}</td>
 
-                                    <td>
-                                        {{ $checklist->blok }} - {{ $checklist->nomor }} / {{ $checklist->nama_cluster }}
-                                        <br>
-                                        <label for="">Persentase :  {{ $checklist->percentase }}%</label>
-                                        @if ($checklist->percentase < 25)
+                                    <td><strong>{{ $checklist->nama_job }}</strong>
+                                        <p>
 
-                                            <div class="progress">
-                                                <div class="progress-bar bg-danger progress-bar-striped" role="progressbar"
-                                                    aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
-                                                    aria-valuemax="100" style="width: {{ $checklist->percentase }}%">
-
-                                                </div>
-                                            </div>
-                                        @elseif($checklist->percentase > 25 && $checklist->percentase < 50)
-                                            <div class="progress">
-                                                <div class="progress-bar bg-warning progress-bar-striped" role="progressbar"
-                                                    aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
-                                                    aria-valuemax="100" style="width: {{ $checklist->percentase }}%">
-
-                                                </div>
-                                            </div>
-                                        @elseif($checklist->percentase > 50 && $checklist->percentase < 75)
-                                            <div class="progress">
-                                                <div class="progress-bar bg-primary progress-bar-striped"  role="progressbar"
-                                                    aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
-                                                    aria-valuemax="100" style="width: {{ $checklist->percentase }}%">
-
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="progress">
-                                                <div class="progress-bar bg-success progress-bar-striped" role="progressbar"
-                                                    aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
-                                                    aria-valuemax="100" style="width: {{ $checklist->percentase }}%">
-
-                                                </div>
-                                            </div>
-                                        @endif
+                                            {{ $checklist->nama_jl }}
+                                        </p>
                                     </td>
                                     <td>
-                                        @php
-                                            $d = strtotime('now');
-                                            $dt = strtotime('-10 days');
-                                            $dtr = strtotime('+20 days');
-                                            $newd = date('d-m-Y', $d);
-                                            $newdt = date('d-m-Y', $dt);
-                                            $newdtr = date('d-m-Y', $dtr);
-                                        @endphp
-                                        @if ($checklist->tgl_deadline < $newd)
-                                            <div class="btn btn-outline-danger">
 
-                                                {{ tgl_indo($checklist->tgl_deadline) }}
-                                                <br> Melebihi Deadline <br> Peringatan Sub Kontraktor
+                                        <div id="accordian-3">
+                                            <div class="card">
+                                                <a class="card-header" id="heading11">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseDetail{{ $no }}" aria-expanded="false" aria-controls="collapse1">
+                                                        <h5 class="m-b-0">Detail Termin @if ($checklist->status_checklist == 'selesai')
+                                                            <span  class="btn btn-outline-success">Selesai</span>
+                                                        @elseif($checklist->status_checklist == 'progress')
+                                                            <span  class="btn btn-outline-warning">Progress</span>
+                                                        @elseif($checklist->status_checklist == 'terkunci')
+                                                            <span  class="btn btn-outline-danger">Terkunci</span>
+                                                        @endif</h5>
+                                                    </button>
+                                                </a>
+                                                <div id="collapseDetail{{ $no }}" class="collapse" aria-labelledby="heading11" data-parent="#accordian-3" style="">
+                                                    <div class="card-body">
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
                                             </div>
-                                        @elseif ($checklist->tgl_deadline > $newdt && $checklist->tgl_deadline < $newdtr)
-                                            <div class="btn btn-outline-warning">
+                                            <div class="card">
+                                                <a class="card-header" id="heading22">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseMaps{{ $no }}" aria-expanded="false" aria-controls="collapse2">
+                                                        <h5 class="m-b-0">Maps</h5>
+                                                    </button>
+                                                </a>
+                                                <div id="collapseMaps{{ $no }}" class="collapse" aria-labelledby="heading22" data-parent="#accordian-3" style="">
+                                                    <div class="card-body">
+                                                        <div style="width: 100%"><iframe width="100%" height="300px" frameborder="0"
+                                                            scrolling="no" marginheight="0" marginwidth="0"
+                                                            src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=en&amp;q={{ $checklist->lat_checklist }},{{ $checklist->long_checklist }}+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
 
-                                                {{ tgl_indo($checklist->tgl_deadline) }}
-                                                <br> Mendekati Deadline
+                                                      </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        @elseif($checklist->tgl_deadline > $newdtr)
-                                            <div class="btn btn-outline-success">
 
-                                                {{ tgl_indo($checklist->tgl_deadline) }}
-                                                <br> Aman
-                                            </div>
-                                        @endif
-
+                                        </div>
                                     </td>
                                     <td>
-                                        <dl>
-                                            <div class="callout callout-info">
-                                                <dt>Pengawas 1</dt>
-                                                <dd>{{ $checklist->pengawas1 }}</dd>
-                                                <dt>Pengawas 2</dt>
-                                                <dd>{{ $checklist->pengawas1 }}</dd>
-                                            </div>
-                                            <div class="callout callout-info">
-                                                <dt>Subkon</dt>
-                                                <dd>{{ $checklist->nama_subkon }}</dd>
-                                            </div>
-                                            <div class="callout callout-info">
-                                                <dt>Lantai {{ $checklist->lantai_jl }}</dt>
+                                        <a href="" class="btn btn-outline-info"> <i class="fa fa-list" aria-hidden="true"></i> Rincian Checklist
 
-                                            </div>
-
-
-
-
-                                        </dl>
+                                        </a>
                                     </td>
-                                    <td>
-                                        <a href="#" class="btn btn-outline-info"><i class="fa fa-chevron-right"
-                                                aria-hidden="true"> Termin</i></a><br>
-                                        <a href="{{ route('getListChecklist.admin',[$getProjek->id_projek]) }}" class="btn btn-outline-info"><i class="fas fa-clipboard-list    ">
-                                                Ceklist</i></a><br>
-                                    </td>
-
-
                                 </tr>
                                 @php
-                                    $no++;
+
+                                $no++;
                                 @endphp
                             @endforeach
-
                         </tbody>
                     </table>
 

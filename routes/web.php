@@ -406,7 +406,8 @@ Route::get('/ubah-status-pekerjaan/{projek}',[C_Joblist::class,'deleteJob'])->na
 
 // CHECKLIST
 route::get('/checklist/{projek}',[C_Checklist::class,'getChecklist'])->name('checklist.admin');
-route::get('/listChecklist/{projek}/{id_rumah}',[C_Checklist::class,'getListChecklist'])->name('getListChecklist.admin');
+route::get('/terminChecklist/{projek}/{id_rumah}',[C_Checklist::class,'getTerminChecklist'])->name('getTerminChecklist.admin');
+route::get('/listChecklist/{projek}/{id_rumah}/{termin}',[C_Checklist::class,'getListChecklist'])->name('getListChecklist');
 
 
 // Kerja

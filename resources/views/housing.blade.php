@@ -589,7 +589,9 @@
 
         <div class="items" id="items_locations">
             <div class="item">
+                <a href="https://www.google.com/maps/dir/Greenland+at+Tidar+Office,+Jalan+Raya+Candi+VI+C,+Karangbesuki,+Kota+Malang,+Jawa+Timur/Malang+Town+Square,+Jalan+Veteran+Malang,+Penanggungan,+Kota+Malang,+Jawa+Timur/@-7.9557682,112.5996403,15.25z/data=!3m1!5s0x2e788278b4d0264b:0x6ea2fbe63af5a350!4m13!4m12!1m5!1m1!1s0x2e788289bdf718e1:0x57f3943c27c6ee37!2m2!1d112.5974764!2d-7.9523291!1m5!1m1!1s0x2e78831c3bed0e97:0x2ae9e42172003648!2m2!1d112.6185925!2d-7.9569786?entry=ttu">
                 <img src="{{ asset('Home') }}/images/img-nearby1.png" alt="Malang Town Square (MATOS)">
+                </a>
                 <div class="text-blur-bg">
                     <h5 class="text">Malang Town Square (MATOS)</h5>
                     <div class="d-flex">
@@ -602,7 +604,9 @@
                 </div>
             </div>
             <div class="item">
+                 <a href="https://www.google.com/maps/dir/Greenland+at+Tidar+Office,+Jalan+Raya+Candi+VI+C,+Karangbesuki,+Kota+Malang,+Jawa+Timur/Mall+Olympic+Garden,+Jl.+Kawi+No.24,+Kauman,+Kec.+Klojen,+Kota+Malang,+Jawa+Timur+65116/@-7.9676055,112.6058593,15.75z/data=!3m1!5s0x2e788278b4d0264b:0x6ea2fbe63af5a350!4m13!4m12!1m5!1m1!1s0x2e788289bdf718e1:0x57f3943c27c6ee37!2m2!1d112.5974764!2d-7.9523291!1m5!1m1!1s0x2dd628212d067cef:0x5b62e516fe60f2b8!2m2!1d112.6233347!2d-7.9772848?entry=ttu">
                 <img src="{{ asset('Home') }}/images/img-nearby2.png" alt="Swimming Pool">
+                </a>
                 <div class="text-blur-bg">
                     <h5 class="text">Mall Olympic Garden (MOG)</h5>
                     <div class="d-flex">
@@ -615,7 +619,10 @@
                 </div>
             </div>
             <div class="item">
+                <a href="https://www.google.com/maps/dir/Greenland+at+Tidar+Office,+Jalan+Raya+Candi+VI+C,+Karangbesuki,+Kota+Malang,+Jawa+Timur/Persada+Hospital,+Jalan+Raden+Panji+Suroso+KAV.II-IV,+Purwodadi,+Kota+Malang,+Jawa+Timur/@-7.9545825,112.6032947,14z/data=!3m2!4b1!5s0x2e788278b4d0264b:0x6ea2fbe63af5a350!4m13!4m12!1m5!1m1!1s0x2e788289bdf718e1:0x57f3943c27c6ee37!2m2!1d112.5974764!2d-7.9523291!1m5!1m1!1s0x2dd62996acc421e3:0xbba5df37aaf2a921!2m2!1d112.6502085!2d-7.9349858?entry=ttu">
+
                 <img src="{{ asset('Home') }}/images/img-nearby3.png" alt="Sport Center">
+                </a>
                 <div class="text-blur-bg">
                     <h5 class="text">Persada Hospital</h5>
                     <div class="d-flex">
@@ -628,7 +635,10 @@
                 </div>
             </div>
             <div class="item">
+                <a href="https://www.google.com/maps/dir/Greenland+at+Tidar+Office,+Jalan+Raya+Candi+VI+C,+Karangbesuki,+Kota+Malang,+Jawa+Timur/Universitas+Brawijaya,+Jalan+Veteran+Malang,+Ketawanggede,+Kota+Malang,+Jawa+Timur/@-7.9551814,112.6004157,16z/data=!3m2!4b1!5s0x2e788278b4d0264b:0x6ea2fbe63af5a350!4m13!4m12!1m5!1m1!1s0x2e788289bdf718e1:0x57f3943c27c6ee37!2m2!1d112.5974764!2d-7.9523291!1m5!1m1!1s0x2e78827f2d620975:0xf19b7459bbee5ed5!2m2!1d112.613677!2d-7.952465?entry=ttu">
+
                 <img src="{{ asset('Home') }}/images/img-nearby4.png" alt="Food Court">
+                </a>
                 <div class="text-blur-bg">
                     <h5 class="text">Universitas Brawijaya (UB)</h5>
                     <div class="d-flex">

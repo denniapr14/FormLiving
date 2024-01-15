@@ -157,9 +157,14 @@
                                         </dl>
                                     </td>
                                     <td>
+                                        @if ($user->kategori == "AdminTeknik" || $user->kategori == "SuperAdmin")
                                         <a href="#" class="btn btn-outline-info"><i class="fa fa-chevron-right"
-                                                aria-hidden="true"> Termin</i></a><br>
-                                        <a href="#" class="btn btn-outline-info"><i class="fas fa-clipboard-list    ">
+                                            aria-hidden="true"> Termin</i></a><br>
+                                        @else
+
+                                        @endif
+
+                                        <a href="{{ route('getTerminChecklist.admin', [ $getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah)]) }}" class="btn btn-outline-info"><i class="fas fa-clipboard-list    ">
                                                 Ceklist</i></a><br>
                                     </td>
 

@@ -1,5 +1,5 @@
 @section('navbar-profile')
-<div class="navbar-mobile active">
+<div class="navbar-mobile active" style="height: 4.5rem">
   <a href="/" class="item">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
