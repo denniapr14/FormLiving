@@ -23,7 +23,7 @@ li {
 
 .content__wrapper {
   width: 100%;
-
+  padding-top: 6rem;
 }
 
 /* Dashboard */
@@ -190,7 +190,6 @@ li {
   flex-wrap: wrap;
   width: 100%;
   padding: 2rem 0 1rem;
-  justify-content: center;
 }
 .transaction__listing .transaction__column {
   display: flex;
@@ -266,8 +265,7 @@ li {
 .table .bank img {
   width: 60px;
   height: 36px;
-  -o-object-fit: fill;
-     object-fit: fill;
+  object-fit: fill;
   margin-right: 0.5rem;
   border-radius: 4px;
 }
@@ -292,16 +290,14 @@ li {
 .table .product-icon img {
   width: 36px;
   height: 36px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 0.5rem;
   border-radius: 4px;
 }
 .table .floor-plan img {
   width: 80px;
   height: 40px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 0.5rem;
   border-radius: 4px;
 }
@@ -361,6 +357,10 @@ li {
 .schedule__details a {
   color: #78828C;
   text-decoration: underline;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .schedule__details a:hover {
@@ -494,6 +494,10 @@ form .required {
   border-radius: 1.5rem;
   text-align: center;
   white-space: nowrap;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
   background: #FFE9C7;
   color: #A47349;
@@ -510,6 +514,10 @@ form .required {
   overflow: hidden;
   border: 1px solid #ffffff;
   cursor: pointer;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .avatar-group .avatar:hover {
@@ -523,8 +531,7 @@ form .required {
 .avatar-group .avatar img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .avatar-group .avatar.avatar--hidden {
   background: #8ACCA1;
@@ -576,6 +583,10 @@ form .required {
   border: 1px solid #EAEAEA;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .board__box .card.card--hide .card__body, .board__box .card.card--hide .card__actions {
@@ -592,6 +603,10 @@ form .required {
 .board__box .card__header span {
   color: #78828C;
   cursor: pointer;
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
   transition: all 0.25s ease;
 }
 .board__box .card__header span:hover {
@@ -670,6 +685,7 @@ form .required {
   width: 100%;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   background-color: transparent;
   border: 1px solid transparent;
@@ -693,6 +709,10 @@ form .required {
   text-transform: none;
   line-height: 1;
   vertical-align: -0.125em;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .input-page__group .input-page__btn.collapsed::before {
@@ -719,6 +739,10 @@ form .required {
   justify-content: space-between;
   background: #FAFAFA;
   padding: 1rem 0.5rem;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   cursor: pointer;
   margin: 0;
@@ -742,8 +766,7 @@ form .required {
   width: 50px;
   height: 50px;
   border-radius: 0.5rem;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .input-page__file-upload .input-page__detail {
   color: #333333;
@@ -805,8 +828,7 @@ form .required {
 .page-header .image-sliders img {
   width: 100%;
   border-bottom-left-radius: 8px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .page-header .text-sliders {
   padding-bottom: 3rem;
@@ -862,6 +884,7 @@ form .required {
 .page-slider .sliders .slick-arrow {
   position: absolute;
   top: 50%;
+  -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
   z-index: 1;
 }
@@ -1100,6 +1123,10 @@ form .required {
   padding-top: 20px;
 }
 .footer .container .copyright .links a {
+  -webkit-transition: all 0.25 ease-in-out;
+  -moz-transition: all 0.25 ease-in-out;
+  -ms-transition: all 0.25 ease-in-out;
+  -o-transition: all 0.25 ease-in-out;
   transition: all 0.25 ease-in-out;
   margin-left: 4rem;
   color: #333333;
@@ -1128,8 +1155,7 @@ form .required {
 .facilities .facilities__item img {
   max-width: 270px;
   border-radius: 8px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin: 0 auto;
 }
 @media only screen and (max-width: 1439px) and (min-width: 320px) {
@@ -1143,8 +1169,7 @@ form .required {
 }
 .testimoni .image-item img {
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .testimoni .item-slider {
   background: #EAEAEA;
@@ -1189,8 +1214,7 @@ form .required {
 }
 .excellent .image-container img {
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .locations {
@@ -1210,8 +1234,7 @@ form .required {
 .locations .locations__item img {
   max-width: 270px;
   border-radius: 8px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin: 0 auto;
 }
 @media only screen and (max-width: 1439px) and (min-width: 320px) {
@@ -1223,6 +1246,10 @@ form .required {
 .footer__link {
   color: #8ACCA1;
   font-weight: 600;
+  -webkit-transition: all 0.25s linear;
+  -moz-transition: all 0.25s linear;
+  -ms-transition: all 0.25s linear;
+  -o-transition: all 0.25s linear;
   transition: all 0.25s linear;
 }
 .footer__link:hover {
@@ -1348,8 +1375,7 @@ form .required {
   align-items: center;
   border-radius: 50%;
   border: 2px solid #58B97D;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .analytic-listing .listing__avatar img {
   width: 100%;
@@ -1433,10 +1459,8 @@ form .required {
 .img-upload__box img {
   width: 170px;
   height: 170px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
+  object-fit: cover;
+  object-position: center;
   border-radius: 50%;
   margin-bottom: 1.5rem;
 }
@@ -1532,6 +1556,10 @@ form .required {
   min-height: 100vh;
   overflow-x: hidden;
   z-index: 99;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -ms-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .sidebar.sidebar--collapsed {
@@ -1607,6 +1635,10 @@ form .required {
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .sidebar__header .sidebar__brand img {
@@ -1648,6 +1680,10 @@ form .required {
 }
 .sidebar__nav .nav__item.dropdown {
   position: relative;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .sidebar__nav .nav__item.dropdown > .nav__link span {
@@ -1669,6 +1705,10 @@ form .required {
   text-transform: none;
   line-height: 1;
   vertical-align: -0.125em;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .sidebar__nav .nav__item.dropdown > .nav__link {
@@ -1694,6 +1734,10 @@ form .required {
   align-items: center;
   padding: 0.5rem 1rem;
   position: relative;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .sidebar__nav .nav__item > .nav__link span {
@@ -1701,6 +1745,10 @@ form .required {
   font-weight: 600;
   text-transform: capitalize;
   white-space: nowrap;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .sidebar__nav .nav__item > .nav__link:not(.active):hover {
@@ -1741,6 +1789,10 @@ form .required {
   height: 0;
   overflow: hidden;
   opacity: 0;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .sidebar__nav .dropdown__menu .dropdown__item {
@@ -1750,6 +1802,10 @@ form .required {
   align-items: center;
   padding: 0.5rem 1rem;
   position: relative;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .sidebar__nav .dropdown__menu .dropdown__item:not(.active):hover {
@@ -1789,6 +1845,10 @@ form .required {
   padding: 1.5rem 1rem;
   position: relative;
   width: calc(100% - 300px);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -ms-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 @media only screen and (max-width: 1439px) and (min-width: 320px) {
@@ -1809,6 +1869,10 @@ form .required {
   position: fixed;
   z-index: 80;
   width: calc(100% - 300px - 2rem);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -ms-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .navbar-content .navbar__sidebar-toggler {
@@ -1817,6 +1881,10 @@ form .required {
   color: #8ACCA1;
   border-radius: 8px;
   font-size: 24px;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .navbar-content .navbar__sidebar-toggler:hover {
@@ -1824,6 +1892,10 @@ form .required {
   border-color: #B9E0C6;
 }
 .navbar-content .navbar__sidebar-toggler.collapsed i::before {
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
   transform: rotate(180deg);
   -ms-transform: rotate(180deg); /* IE 9 */
@@ -1842,6 +1914,10 @@ form .required {
   font-size: 24px;
   padding: 0.2rem 1rem;
   color: #78828C;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .navbar-content .navbar__items .navbar__link:hover {
@@ -1865,6 +1941,10 @@ form .required {
   color: #ffffff;
   font-size: 10px;
   font-weight: 600;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .navbar-content .divider {
@@ -1898,8 +1978,7 @@ form .required {
   width: 48px;
   height: 48px;
   border-radius: 8px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 @media only screen and (max-width: 1439px) and (min-width: 320px) {
   .navbar-content {
@@ -1930,6 +2009,10 @@ button.btn-fd-icon-outline:disabled {
   align-items: center;
   border: 1px solid #8ACCA1;
   border-radius: 4px;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
   color: #8ACCA1;
   padding: 6px;
@@ -1950,13 +2033,17 @@ button.btn-fd-icon-outline:disabled {
 
 .btn-fd-primary, .btn-fd-primary-white, .btn-fd-primary-grey, .btn-fd-outline, .btn-fd-outline-secondary {
   display: inline-block;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   text-transform: capitalize;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   text-align: center;
   white-space: nowrap;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .btn-fd-primary i, .btn-fd-primary-white i, .btn-fd-primary-grey i, .btn-fd-outline i, .btn-fd-outline-secondary i {
@@ -2147,6 +2234,10 @@ button.btn-fd-arrow:disabled {
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .btn-fd-arrow:not(.disabled):hover, .btn-fd-arrow:not(.disabled).active, .btn-fd-arrow:not(.disabled):active {
@@ -2168,6 +2259,10 @@ button.btn-fd-arrow:disabled {
   color: #8ACCA1;
   border-radius: 8px;
   font-size: 24px;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .btn-fd-outline-back:not(.disabled):hover, .btn-fd-outline-back:not(.disabled).active, .btn-fd-outline-back:not(.disabled):active {
@@ -2227,8 +2322,7 @@ input[type=checkbox].custom-checkbox {
   /* Add if not using autoprefixer */
   -webkit-appearance: none;
   /* Remove most all native input styles */
-  -moz-appearance: none;
-       appearance: none;
+  appearance: none;
   /* For iOS < 15 */
   background-color: #ffffff;
   /* Not removed via appearance */
@@ -2581,9 +2675,6 @@ input[type=checkbox].custom-checkbox.custom-checkbox--all:checked::before {
   outline: none;
   border-bottom: 2px solid #ced4da;
 }
-.form__search .fs__input::-moz-placeholder {
-  color: #CCCCCC;
-}
 .form__search .fs__input::placeholder {
   color: #CCCCCC;
 }
@@ -2606,6 +2697,10 @@ input[type=checkbox].custom-checkbox.custom-checkbox--all:checked::before {
   border-radius: 8px;
   display: block;
   padding: 5px;
+  -webkit-transition: all 0.25s linear;
+  -moz-transition: all 0.25s linear;
+  -ms-transition: all 0.25s linear;
+  -o-transition: all 0.25s linear;
   transition: all 0.25s linear;
   cursor: pointer;
   text-align: center;
@@ -2615,6 +2710,10 @@ input[type=checkbox].custom-checkbox.custom-checkbox--all:checked::before {
   display: block;
   font-size: 30px;
   padding-bottom: 5px;
+  -webkit-transition: all 0.25s linear;
+  -moz-transition: all 0.25s linear;
+  -ms-transition: all 0.25s linear;
+  -o-transition: all 0.25s linear;
   transition: all 0.25s linear;
   color: #78828C;
 }
@@ -2654,6 +2753,8 @@ input[type=checkbox].custom-checkbox.custom-checkbox--all:checked::before {
   left: 0;
   content: "";
   display: inline-block;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
   border-radius: 50px;
   border: 1px solid #333333;
   background: #fff;
@@ -2677,6 +2778,8 @@ input[type=checkbox].custom-checkbox.custom-checkbox--all:checked::before {
   width: 10px;
   height: 10px;
   background-color: #58B97D;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
   border-radius: 50px;
 }
 .custom-radio input[type=radio]:checked + label::before {
@@ -2850,8 +2953,7 @@ input[type=checkbox].custom-checkbox.custom-checkbox--all:checked::before {
   bottom: 0;
   position: absolute;
   margin: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 8px;
 }
 .modal-preview .img-cluster {
@@ -2870,8 +2972,7 @@ input[type=checkbox].custom-checkbox.custom-checkbox--all:checked::before {
   bottom: 0;
   position: absolute;
   margin: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 8px;
 }
 .modal-preview .all-cluster-img {
@@ -2892,6 +2993,10 @@ input[type=checkbox].custom-checkbox.custom-checkbox--all:checked::before {
   margin: auto;
   border-radius: 8px;
   color: #ffffff;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
 }
 .modal-preview .all-cluster-img:hover {
@@ -2938,6 +3043,7 @@ button:focus {
 .btn-danger, .btn-warning, .btn-outline-secondary, .btn-outline-danger {
   font-size: 14px;
   padding: 0.5rem 1rem;
+  /*font-weight: $FW_SEMI_BOLD;*/
 }
 .btn-danger.btn--small, .btn-warning.btn--small, .btn-outline-secondary.btn--small, .btn-outline-danger.btn--small {
   padding: 0.3rem 1rem;
