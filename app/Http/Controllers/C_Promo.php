@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clusters;
+use App\Models\KategoriAdmin;
 use App\Models\Projek;
 use App\Models\Rumah;
 use App\Models\UserAdmin;
@@ -26,7 +27,7 @@ class C_Promo extends Controller
     public $projek;
     public $userMenu;
     public $listPromo;
-
+    public $kategoriAdmin;
     public $promo;
 
     public function __construct()
@@ -40,10 +41,12 @@ class C_Promo extends Controller
         $this->userMenu = new UserMenu();
         $this->listPromo = new ListPromo();
         $this->promo = new Promo();
+        $this->kategoriAdmin = new KategoriAdmin();
     }
 
     public function Promo($projek)
     {
+        $getUserAll = $this->userAdmin->getUserAdminAll('*');
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $promo = $this->listPromo->getPromoCostumPromo($getProjek->id_projek);
         $promoMobile = $this->listPromo->getPromoCostumPromo($getProjek->id_projek);
@@ -91,8 +94,7 @@ class C_Promo extends Controller
             }
 
             // dd($promo);
-            return view(
-                'V_Admin.promo',
+            return view('V_Admin.promo',
                 compact(
                     'user',
                     'promo',
@@ -100,7 +102,8 @@ class C_Promo extends Controller
                     'projekUser',
                     'getProjek',
                     'getPromoFP',
-                    'getUserMenu'
+                    'getUserMenu',
+                    'getUserAll'
                 )
             );
         } else {
@@ -529,5 +532,144 @@ class C_Promo extends Controller
         $suggestions = $filteredRumah->pluck('blok')->unique()->values();
 
         return response()->json($suggestions);
+    }
+
+    public function promoNotif($projek, $promoID) {
+        $decryptedID    = Crypt::decrypt($promoID);
+        $getUserAll = $this->userAdmin->getUserAdminAll('*')->collect();
+        $getUserAll = $getUserAll->sortBy('nama_ua');
+        $getPromo = $this->listPromo->firstListPromoJoinPromoRumah('*', 'promo.id_promo', '=', $decryptedID);
+
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $getKategori = $this->kategoriAdmin->getKategori('*');
+
+
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+
+
+            return view('V_Admin.promoNotif',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getProjek',
+                    'getUserMenu',
+                    'getUserAll',
+                    'getKategori',
+                    'getPromo'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
+    function promoNotifAction(Request $request, $projek, $promoID) {
+        $decryptedID    = Crypt::decrypt($promoID);
+        // $getUserAll = $this->userAdmin->getUserAdminAll('*');
+        $getPromo = $this->listPromo->firstListPromoJoinPromoRumah('*', 'promo.id_promo', '=', $decryptedID);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+            // $dataNotif = array();
+
+            // for ($i=0; $i < count($request->userNotifCheckbox) ; $i++) {
+            //     $dataNotif[] = array(
+
+            //         'id_user_admin' => $request->userNotifCheckbox[$i]
+            //     );
+            // }
+            $getUserNotif = "";
+            for ($i = 0; $i < count($request->userNotifCheckbox); ++$i) {
+                $getUserNotif = DB::table('user_admin')
+                    ->whereIn('id_user_admin', $request->userNotifCheckbox)
+                    ->get();
+
+            }
+            // dd($getUserNotif);
+
+            return view('V_Admin.sendNotif',
+            compact(
+                'user',
+                'projekUser',
+                'getProjek',
+                'getUserMenu',
+
+                'getPromo',
+                'getUserNotif'
+
+                )
+            );
+
+
+
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    function sendPromoNotifAction(Request $request,$projek,$promoID) {
+        $decryptedID = Crypt::decrypt($promoID);
+
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+
+
+
+        } else {
+            return redirect('/login');
+        }
+
     }
 }

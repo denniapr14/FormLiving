@@ -1,7 +1,9 @@
 <?php
+use Illuminate\Support\Facades\Http;
 
 
-if(!function_exists('rupiah')){
+
+if (!function_exists('rupiah')) {
     function rupiah($angka)
     {
         $hasil_rupiah = number_format($angka, 0, ',', '.');
@@ -9,7 +11,7 @@ if(!function_exists('rupiah')){
     }
 }
 
-if(!function_exists('penyebut')) {
+if (!function_exists('penyebut')) {
     function penyebut($nilai)
     {
         $nilai = abs($nilai);
@@ -38,12 +40,9 @@ if(!function_exists('penyebut')) {
         }
         return $temp;
     }
-
-
-
 }
 
-if(!function_exists('terbilang')) {
+if (!function_exists('terbilang')) {
     function terbilang($nilai)
     {
         if ($nilai < 0) {
@@ -83,14 +82,15 @@ if (!function_exists('tgl_indo')) {
 }
 
 function round_up($value, $precision)
-    {
-        $pow = pow(10, $precision);
+{
+    $pow = pow(10, $precision);
 
-        return (ceil($pow * $value) + ceil($pow * $value - ceil($pow * $value))) / $pow;
-    }
+    return (ceil($pow * $value) + ceil($pow * $value - ceil($pow * $value))) / $pow;
+}
 
 
-function RandomCode($counter,$projek) {
+function RandomCode($counter, $projek)
+{
 
     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'; // Define the characters to use
     $randomString = '';
@@ -99,18 +99,59 @@ function RandomCode($counter,$projek) {
     for ($i = 0; $i < $counter; $i++) {
         $randomString .= $characters[rand(0, strlen($characters) - 1)];
     }
-    $kodePromo="";
+    $kodePromo = "";
     switch ($projek) {
         case 'Greenland':
-            $kodePromo = 'GL'.  $randomString;
+            $kodePromo = 'GL' .  $randomString;
             break;
 
         case "Kalm":
-            $kodePromo = 'KR'.  $randomString;
+            $kodePromo = 'KR' .  $randomString;
             break;
     }
     return $kodePromo;
+}
 
+function sendWhatsappMessage($sender, $toNumber, $msg) {
+    $data = [
+        'api_key' => 'dd14d7db385a4039ef3f18f9f5bc3b8e729f6f3b',
+        'sender'  => $sender,
+        'number'  => $toNumber,
+        'message' => $msg,
+    ];
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL            => 'https://wa.srv18.wapanels.com/send-message',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING       => '',
+        CURLOPT_MAXREDIRS      => 10,
+        CURLOPT_TIMEOUT        => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST  => 'POST',
+        CURLOPT_POSTFIELDS     => json_encode($data),
+        CURLOPT_HTTPHEADER     => array(
+            'Content-Type: application/json',
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    if ($response === false) {
+        $error = curl_error($curl);
+        curl_close($curl);
+        return "Curl error: $error";
+    }
+
+    curl_close($curl);
+
+    echo "<pre>";
+    print_r ($response);
+    echo "</pre>";
+
+    return $response;
 }
 
 ?>

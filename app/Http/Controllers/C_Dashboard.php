@@ -14,7 +14,7 @@ use App\Models\UserProjek;
 use App\Models\FormulirPesanan;
 
 // =======================
-
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -39,6 +39,18 @@ class C_Dashboard extends Controller
 
     public function index($projek)
     {
+
+        // testing wa
+
+        // $sendmsg = $this->sendWhatsappMessage('081937003001', '081227476463', "test mas PHP");
+
+        // if (strpos($sendmsg, 'Curl error') !== false) {
+        //     // Handle cURL error
+        //     dd($sendmsg);
+        // } else {
+        //     // Process the successful response
+        //     dd($sendmsg);
+        // }
         // dd(Session::get('selectedProjeks',)[0]);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $fp = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
@@ -91,10 +103,10 @@ class C_Dashboard extends Controller
                 return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
             }
 
-            if(
+            if (
                 $user->kategori == 'AdminAgentCompany'
 
-            ){
+            ) {
 
                 $arrWithCompany = array(
                     'ktgr_admin.kategori' => "AgentCompany",
@@ -123,12 +135,10 @@ class C_Dashboard extends Controller
 
                 );
                 $closingAll = $this->formulirPesanan->getFormulirPesananJoin5CountWhereUser($whereClosingAll);
-            }
-
-            elseif(
+            } elseif (
                 $user->kategori == 'AdminSales'
 
-            ){
+            ) {
 
                 $arrWithCompany = array(
                     'ktgr_admin.kategori' => "Sales",
@@ -159,11 +169,7 @@ class C_Dashboard extends Controller
                 );
                 $closingAll = $this->formulirPesanan->getFormulirPesananJoin5CountWhereUser($whereClosingAll);
                 // dd($closingAll);
-            }
-
-
-
-            elseif (
+            } elseif (
                 $user->kategori == 'Sales' ||
                 $user->kategori == 'SalesAgent' ||
                 $user->kategori == 'Agent' ||
@@ -200,9 +206,7 @@ class C_Dashboard extends Controller
                 $agentWithoutCompany = $this->userAdmin->getUserJoinCountWhere($arrWithoutCompany);
 
                 # code...
-            }
-
-            else {
+            } else {
                 $arrWithCompany = array(
                     'ktgr_admin.kategori' => "AgentCompany",
                     'user_admin.status_ua' => "aktif",
@@ -250,12 +254,36 @@ class C_Dashboard extends Controller
         }
     }
 
-    function changeProjek($projek) {
+    function changeProjek($projek)
+    {
 
-            // Store the selected project in the session array
-            Session::pull('selectedProjeks', $projek);
-            Session::push('selectedProjeks', $projek);
-            // dd(Session::get('selectedProjeks',)[0]);
-            return redirect()->route('dashboard.admin',$projek);
+        // Store the selected project in the session array
+        Session::pull('selectedProjeks', $projek);
+        Session::push('selectedProjeks', $projek);
+        // dd(Session::get('selectedProjeks',)[0]);
+        return redirect()->route('dashboard.admin', $projek);
+    }
+
+    function sendWhatsappMessage($id_device, $no_hp, $pesan)
+    {
+        $api_key = 'dd14d7db385a4039ef3f18f9f5bc3b8e729f6f3b';
+        $url = 'https://api.watsap.id/send-message';
+
+        $data_post = [
+            'id_device' => $id_device,
+            'api-key'   => $api_key,
+            'no_hp'     => $no_hp,
+            'pesan'     => $pesan,
+        ];
+
+        try {
+            $response = Http::withHeaders(['Content-Type' => 'application/json'])
+                ->post($url, $data_post);
+
+            return $response->body();
+        } catch (\Exception $e) {
+            // Handle the exception if needed
+            return 'Error: ' . $e->getMessage();
+        }
     }
 }

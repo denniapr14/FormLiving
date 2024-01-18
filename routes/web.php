@@ -350,6 +350,8 @@ Route::get('/selamat/{id}', [C_PreOrder::class, 'selamatPage'])->name('userConfi
 Route::get('/user-sales-agent-admin', [C_UserAdmin::class, 'userAdminSalesAgent'])->name('userSalesAgent.admin');
 Route::get('/download-user-sales-admin', [C_UserAdmin::class, 'DownloadUserAdminSales'])->name('downloadUserAdminSales.admin');
 Route::get('/hapus-user-admin/{id}', [C_UserAdmin::class, 'deleteUserAdmin'])->name('deleteUserAdmin.admin');
+
+
 // PROMO
 Route::get('/promo-admin/{projek}', [C_Promo::class, 'Promo'])->name('promo.admin');
 Route::get('/tambah-rumah-promo-admin/{projek}', [C_Promo::class, 'addRumahPromo'])->name('addPromoRumah.admin');
@@ -362,6 +364,13 @@ Route::post('/tambah-promo-admin/action/{projek}', [C_Promo::class, 'addPromoAct
 
 Route::get('/ubah-promo-admin/{projek}/{id}', [C_Promo::class, 'updatePromo'])->name('updatePromo.admin');
 Route::post('/ubah-promo-admin/action/{projek}/{id}', [C_Promo::class, 'updatePromoAction'])->name('updatePromoAction.admin');
+route::get('/promo-notif/{projek}/{id}',[C_Promo::class,'promoNotif'])->name('promoNotif.admin');
+route::post('/promo-notif-action/{projek}/{id}',[C_Promo::class,'promoNotifAction'])->name('promoNotifAction.admin');
+route::get('/kirim-promo-notif/{projek}/{id}',[C_Promo::class,'sendPromoNotif'])->name('sendPromoNotif.admin');
+route::post('/kirim-promo-notif/{projek}/{id}',[C_Promo::class,'sendPromoNotifAction'])->name('sendPromoNotifAction.admin');
+
+
+
 // Route::get('/hapus-list-promo/{projek}/{id}',[C_ListPromo,'deleteListPromo'])->name('deleteListPromo.admin');
 
 // PROFILEEEEEE
