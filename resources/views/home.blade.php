@@ -73,6 +73,12 @@
             asNavFor: '.image-sliders'
         });
     </script>
+    <style>
+        .no-scroll-promo {
+            height: 15rem;
+            overflow-y: hidden;
+        }
+    </style>
 
     <div class="mobile-only">
         <div class="cta-mobile">
@@ -204,7 +210,32 @@
             <h5 class="subtitle">
                 Kode Promo
             </h5>
+            <div class="col-6 col-sm-6 col-lg-4 mb-4 align-self-center" style="z-index: 4;">
+                <div class="card" style="background: linear-gradient(to bottom, #7F3C00, #A47449;">
+                    <div class="card-body text-white">
+                        <div class="card-title">
+                            <center>
+                                <!-- Your content goes here -->
+                            </center>
+                        </div>
+                        <center>
+                            <small class="semi-font-size-16">
+                                <!-- Your content goes here -->
+                            </small>
+                        </center>
+                        <small class="font-size-12">
+                            <!-- Your content goes here -->
+                        </small>
+                    </div>
+                    <div class="card-footer text-white">
+                        <center>
+                            <!-- Your content goes here -->
+                        </center>
+                    </div>
+                </div>
+            </div>
             <div class="row items">
+
 
 
                 @foreach ($promo as $promo)
