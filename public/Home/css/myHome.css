@@ -21,16 +21,56 @@
 }
 
 .scrollable-promo{
-    height: 25rem;
-    overflow-y: auto;
+    height: 20rem;
+
+    width: 15rem;
 }
+
+
+.scrolling-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .scrolling-item {
+    display: inline-block;
+    min-width: 200px; /* Set the minimum width of each item */
+    padding: 10px;    /* Optional: Add padding to each item */
+  }
+
+  .fixed-item {
+    position: sticky;
+    left: 0;
+
+    /* Adjust background color as needed */
+    z-index: 1; /* Ensure the fixed item is above the scrolling items */
+  }
+
+
 @media (max-width: 576px) {
     .semi-font-size-16{
         font-size: 16px;
         font-weight: 500;
     }
     .scrollable-promo{
-        height: 15rem;
-        overflow-y: auto;
+        height: 20rem;
+        width: 10rem;
+        overflow-x: auto;
+
     }
+    .mybtn-white{
+        border-radius: 5px;
+        color: #a47c5a;
+        background-color: white;
+        font-size: 17px;
+        padding: 1rem ;
+    }
+
+    .fixed-item {
+        position: sticky;
+        left: 0;
+
+        /* Adjust background color as needed */
+        z-index: 1; /* Ensure the fixed item is above the scrolling items */
+      }
 }

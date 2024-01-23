@@ -52,7 +52,7 @@
             <div class="row">
 
                 <div id="accordian-3" class="col-md-12">
-                    <form action="{{ route('promoNotifAction.admin',[$getProjek->nama_projek, Crypt::encrypt($getPromo->id_promo)]) }}" method="POST" enctype="multipart/form-data" >
+                    <form action="{{ route('sendPromoNotifAction.admin',[$getProjek->nama_projek, Crypt::encrypt($getPromo->id_promo)]) }}" method="POST" enctype="multipart/form-data" >
                         @csrf
                         @foreach ($getUserNotif as $userNotif)
 
@@ -69,12 +69,12 @@
                         @endforeach
                         <div class="form-group">
                           <label for="">Notifikasi</label>
-                          <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input type="text" name="nameNotif" id="" class="form-control" placeholder="" aria-describedby="helpId">
 
                         </div>
                         <div class="form-group">
                           <label for="">Detail Notifikasi</label>
-                          <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                          <textarea name="deskripsiNotif" class="form-control" id="" cols="30" rows="10"></textarea>
                         </div>
                         <button type="submit" class="btn btn-outline-primary">Simpan</button>
                 </form>

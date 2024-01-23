@@ -195,169 +195,189 @@
             });
         });
     </script>
-    <div class="promotions" data-aos="zoom-right" data-aos-offset="0" data-aos-duration="500">
-        <div class="container">
-            <h5 class="subtitle">
-                Promotions
-            </h5>
-            <h2 class="title">
-                Lebih untung pakai promo!
-            </h2>
-            <div class="sliders-index container-fluid" data-aos="zoom-in" style="padding-bottom: 1.8rem !important;">
+    <style>
+        .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
 
+
+
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-12 scrolling-wrapper">
+        <!-- Fixed Item -->
+        <div class="scrolling-item fixed-item">
+            <div class="card scrollable-promo" style="background: linear-gradient(to bottom, #7F3C00, #A47449);">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <center>
+
+                            <img src="{{ url('home') }}/images/logo-tidar-white.png" style="width: 70%" alt="">
+
+                        </center>
+                    </h5>
+                    <p class="card-text text-white">
+                      untuk download
+                    </p>
+                </div>
+                <div class="card-footer text-white">
+                    <center>
+                       aaaaaaaaaaaaaaaaaaa
+                    </center>
+                </div>
             </div>
+        </div>
+        @foreach ($promo as $promo)
+        <!-- Scrollable Items -->
+        <div class="scrolling-item">
+            <div class="card scrollable-promo" style="background: linear-gradient(to bottom, #7F3C00, #A47449); ">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <center>
+                            @if ($promo->nama_projek == 'Greenland')
+                                <img src="{{ url('home') }}/images/logo-tidar-white.png" style="width: 70%" alt="">
+                            @else
+                                <img src="{{ url('home') }}/images/logo-tidar-white.png" style="width: 70%" alt="">
+                            @endif
+                        </center>
+                    </h5>
+                    <p class="card-text text-white">
+                        <center>
+                            <small class="semi-font-size-16 text-white">
+                                {{ substr($promo->promo, 0, 20) }}
+                            </small>
+                        </center>
+                        <p class="ellipsis text-white">
+                            {{$promo->keterangan}}
+                        </p>
+                    </p>
+                </div>
+                <div class="card-footer text-white">
+                    <center>
+                        <small class="font-size-12">
+                            berlaku hingga
+                            <br>
+                            {{ tgl_indo($promo->tgl_berakhir) }}
+                        </small>
+                        <p class="semi-font-size-16">SALIN PROMO</p>
+                        <div class="mybtn-white">{{ $promo->kode_promo }}</div>
+                    </center>
+                </div>
+            </div>
+        </div>
+    @endforeach
+        <!-- Add more items as needed -->
+      </div>
+    </div>
+  </div>
 
-            <h5 class="subtitle">
-                Kode Promo
-            </h5>
-            <div class="col-6 col-sm-6 col-lg-4 mb-4 align-self-center" style="z-index: 4;">
-                <div class="card" style="background: linear-gradient(to bottom, #7F3C00, #A47449;">
-                    <div class="card-body text-white">
-                        <div class="card-title">
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12 scrolling-wrapper">
+                <!-- Fixed Item -->
+                <div class="scrolling-item fixed-item">
+                    <div class="card" style="background: linear-gradient(to bottom, #7F3C00, #A47449;">
+                        <div class="card-body text-white">
+                            <div class="card-title">
+                                <center>
+                                    <!-- Your content goes here -->
+                                </center>
+                            </div>
+                            <center>
+                                <small class="semi-font-size-16">
+                                    <!-- Your content goes here -->
+                                </small>
+                            </center>
+                            <small class="font-size-12">
+                                <!-- Your content goes here -->
+                            </small>
+                        </div>
+                        <div class="card-footer text-white">
                             <center>
                                 <!-- Your content goes here -->
                             </center>
                         </div>
-                        <center>
-                            <small class="semi-font-size-16">
-                                <!-- Your content goes here -->
-                            </small>
-                        </center>
-                        <small class="font-size-12">
-                            <!-- Your content goes here -->
-                        </small>
-                    </div>
-                    <div class="card-footer text-white">
-                        <center>
-                            <!-- Your content goes here -->
-                        </center>
                     </div>
                 </div>
-            </div>
-            <div class="row items">
 
 
 
-                @foreach ($promo as $promo)
-                    <div class=" col-6 col-sm-6 col-lg-4 mb-4 align-self-center ">
-                        <div class="card scrollable-promo"
-                            style="background: linear-gradient(to bottom, #7F3C00, #A47449); ">
-                            <div class="card-body text-white">
-                                <div class="card-title">
-                                    <center>
-                                        @if ($promo->nama_projek == 'Greenland')
-                                            <img src="{{ url('home') }}/images/logo-tidar-white.png" style="width: 70%"
-                                                alt="">
-                                        @else
-                                            <img src="{{ url('home') }}/images/logo-tidar-white.png" style="width: 70%"
-                                                alt="">
-                                        @endif
-                                    </center>
-                                </div>
-                                <center>
-                                    <small class="semi-font-size-16">
-                                        {{ substr($promo->promo, 0, 20) }}
-                                    </small>
-                                </center>
-                                <small class="font-size-12">
-                                    <p>{{ $promo->keterangan }}</p>
-                                </small>
-                            </div>
-                            <div class="card-footer text-white">
-                                <center>
-                                    <small class="font-size-12">
-                                        berlaku hingga {{ tgl_indo($promo->tgl_berakhir) }}
-                                    </small>
-                                    <p class="semi-font-size-16">KLIK DISINI SALIN KODE PROMO</p>
-                                    <div class="btn mybtn-white">{{ $promo->kode_promo }}</div>
-                                </center>
-                            </div>
-                        </div>
-
-                    </div>
-                    {{--  <div class="col-6 col-sm-6 col-lg-4 mb-3 align-self-center">
-
-                <div class="item brown">
-                    <div class="cashback">
-                        <div class="text-cashback">
-                            <h6>{{$promo->promo}}</h6>
-                            <br>
-                            <!--<h3>Free promo</h3>-->
-                            <h6>{{$promo->keterangan}}</h6>
-                            <small>Berlaku hingga: {{
-                                \Carbon\Carbon::parse($promo->tgl_berakhir)->format('d-M-Y')}}</small>
-                            <div class="mobile-only">
-                                <p id="codePromoTxt">{{$promo->kode_promo}}</p>
-                                <button onclick="copyToClipboard('#codePromoTxt')" type="button"
-                                    class="btn btn-white">Salin Kode <img class="ms-2"
-                                        src="{{ asset('Home') }}/images/ic-copy.png" alt=""></button>
-                            </div>
-                        </div>
-
-                        <div class="bg-cashback">
-
-                        </div>
-                        <div class="promo-date">
-                            <div class="date-text questrial">
-                                <i class="bi-clock"></i>
-                                {{ \Carbon\Carbon::parse($promo->tgl_aktif)->format('d-M-Y')}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="line">
-                        <img src="{{ asset('Home') }}/images/line-coupon.png" alt="">
-                    </div>
-                    <div class="qr">
-                        <!--<div class="qr-img">-->
-                        <!--    <img src="{{ asset('Home') }}/images/qr-code.png" alt="">-->
-                        <!--</div>-->
-                        <p>Copy the code</p>
-                        <p id="codePromoTxt">{{$promo->kode_promo}}</p>
-                        <button onclick="copyToClipboard('#codePromoTxt')" type="button" class="btn btn-white">Salin
-                            Kode <img class="ms-2" src="{{ asset('Home') }}/images/ic-copy.png" alt=""></button>
-                    </div>
-                </div>
-            </div>  --}}
-                @endforeach
             </div>
         </div>
-    </div>
+        <div class="promotions" data-aos="zoom-right" data-aos-offset="0" data-aos-duration="500">
+            <div class="container">
+                <h5 class="subtitle">
+                    Promotions
+                </h5>
+                <h2 class="title">
+                    Lebih untung pakai promo!
+                </h2>
+                <div class="sliders-index container-fluid" data-aos="zoom-in" style="padding-bottom: 1.8rem !important;">
 
+                </div>
 
-    <div class="projects">
-        <div class="container">
-            <h5 class="subtitle">
-                Projects
-            </h5>
-            <h2 class="title">
-                Our Projects
-            </h2>
-            <div class="row items">
-                <div class="col-6 col-lg-6">
-                    <div class="item" data-aos="fade-left">
-                        <img src="{{ asset('Home') }}/images/page-picture/greenland-banner.jpg" alt="">
-                        <div class="item-text">
-                            <h4>Greenland</h4>
-                            <p>Perumahan Greenland at Tidar</p>
-                            <a href="/Housing/Kalm" class="more">
-                                Learn More <i class="bi bi-chevron-right"></i>
-                            </a>
+                <h5 class="subtitle">
+                    Kode Promo
+                </h5>
+                <div class="row">
+                    <div class="row col-md-3">
+                        <div class="col-6 col-sm-6 col-lg-4 mb-4 align-self-center" style="z-index: 4;">
+
                         </div>
                     </div>
-                </div>
-                <div class="col-6 col-lg-6">
-                    <div class="item" data-aos="fade-left">
-                        <img src="{{ asset('Home') }}/images/page-picture/kalm-banner.jpg" alt="">
-                        <div class="item-text">
-                            <h4>Kalm</h4>
-                            <p>-- COMING SOON --</p>
-                            <a href="/Housing/Kalm" class="more">
-                                Learn More <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </div>
+                    <div class="row">
+
                     </div>
                 </div>
-                {{-- <div class="col-12 col-lg-6">
+
+                <div class="row items">
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="projects">
+            <div class="container">
+                <h5 class="subtitle">
+                    Projects
+                </h5>
+                <h2 class="title">
+                    Our Projects
+                </h2>
+                <div class="row items">
+                    <div class="col-6 col-lg-6">
+                        <div class="item" data-aos="fade-left">
+                            <img src="{{ asset('Home') }}/images/page-picture/greenland-banner.jpg" alt="">
+                            <div class="item-text">
+                                <h4>Greenland</h4>
+                                <p>Perumahan Greenland at Tidar</p>
+                                <a href="/Housing/Kalm" class="more">
+                                    Learn More <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-6">
+                        <div class="item" data-aos="fade-left">
+                            <img src="{{ asset('Home') }}/images/page-picture/kalm-banner.jpg" alt="">
+                            <div class="item-text">
+                                <h4>Kalm</h4>
+                                <p>-- COMING SOON --</p>
+                                <a href="/Housing/Kalm" class="more">
+                                    Learn More <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="col-12 col-lg-6">
                 <div class="item" data-aos="fade-right">
                     <img src="{{ asset('Home') }}/images/img-hotel.png" alt="">
                     <div class="item-text">
@@ -371,7 +391,7 @@
                     </div>
                 </div>
             </div> --}}
-                {{-- <div class="col-12 col-lg-6">
+                    {{-- <div class="col-12 col-lg-6">
                 <div class="item" data-aos="fade-left">
                     <img src="{{ asset('Home') }}/images/img-mall.png" alt="">
                     <div class="item-text">
@@ -385,65 +405,66 @@
                     </div>
                 </div>
             </div> --}}
-                {{-- <div class="col-12">
+                    {{-- <div class="col-12">
                 <div class="d-flex justify-content-center">
                     <button type="button" class="btn btn-primary">Tampilkan Semua</button>
                 </div>
             </div> --}}
-            </div>
-
-        </div>
-    </div>
-
-    <div class="sliders-index container-fluid" data-aos="zoom-in">
-        <div class="sliders">
-            <div class="slider-item">
-                <div class="slider-img">
-                    <img src="{{ asset('Home') }}/images/landslide-1.jpeg" class="w-100" alt="">
                 </div>
-                <div class="slider-content">
-                    <h1 class="title">
-                        The ARC
-                    </h1>
-                    <div class="desc">
-                        <div class="text questrial">A beautiful style in green, captivating yet refresh for those who seek
-                            comfort </div>
-                        <!--<div class="more">Learn More <i class="bi bi-chevron-right"></i></div>-->
+
+            </div>
+        </div>
+
+        <div class="sliders-index container-fluid" data-aos="zoom-in">
+            <div class="sliders">
+                <div class="slider-item">
+                    <div class="slider-img">
+                        <img src="{{ asset('Home') }}/images/landslide-1.jpeg" class="w-100" alt="">
+                    </div>
+                    <div class="slider-content">
+                        <h1 class="title">
+                            The ARC
+                        </h1>
+                        <div class="desc">
+                            <div class="text questrial">A beautiful style in green, captivating yet refresh for those who
+                                seek
+                                comfort </div>
+                            <!--<div class="more">Learn More <i class="bi bi-chevron-right"></i></div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item">
+                    <div class="slider-img">
+                        <img src="{{ asset('Home') }}/images/slider-1.png" class="w-100" alt="">
+                    </div>
+                    <div class="slider-content">
+                        <h1 class="title">
+                            Enjoy your Life
+                        </h1>
+                        <div class="desc questrial">
+                            <div class="text">Family is always place to return to. </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="slider-item">
-                <div class="slider-img">
-                    <img src="{{ asset('Home') }}/images/slider-1.png" class="w-100" alt="">
-                </div>
-                <div class="slider-content">
-                    <h1 class="title">
-                        Enjoy your Life
-                    </h1>
-                    <div class="desc questrial">
-                        <div class="text">Family is always place to return to. </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
 
-    <script>
-        $(document).ready(function() {
-            $('.sliders').slick();
-        });
-    </script>
-
+        <script>
+            $(document).ready(function() {
+                $('.sliders').slick();
+            });
+        </script>
 
 
-    <script>
-        function copyToClipboard(element) {
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val($(element).text()).select();
-            document.execCommand("copy");
-            $temp.remove();
-        }
-    </script>
 
-@endsection
+        <script>
+            function copyToClipboard(element) {
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val($(element).text()).select();
+                document.execCommand("copy");
+                $temp.remove();
+            }
+        </script>
+
+    @endsection

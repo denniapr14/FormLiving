@@ -663,6 +663,22 @@ class C_Promo extends Controller
                     break;
                 }
             }
+            for ($i = 0; $i < count($request->id_user_admin); ++$i) {
+                $getUserNotif = DB::table('user_admin')
+                    ->whereIn('id_user_admin', $request->id_user_admin)
+                    ->get();
+
+            }
+            foreach($getUserNotif as $userNotif)
+            {
+                sendWhatsappMessage('081937003001','081227476463', $request->nameNotif.
+$request->deskripsiNotif
+            );
+            }
+
+
+
+            return redirect()->route('promo.admin',[ $projek])->with('success','informasi promo sudah terkirim');
 
 
 

@@ -112,46 +112,40 @@ function RandomCode($counter, $projek)
     return $kodePromo;
 }
 
-function sendWhatsappMessage($sender, $toNumber, $msg) {
-    $data = [
-        'api_key' => 'dd14d7db385a4039ef3f18f9f5bc3b8e729f6f3b',
-        'sender'  => $sender,
-        'number'  => $toNumber,
-        'message' => $msg,
-    ];
+if (!function_exists('sendWhatsappMessage')) {
+    function sendWhatsappMessage($from,$number, $message) {
+        $apiUrl = 'https://wa.srv18.wapanels.com/send-message';
 
-    $curl = curl_init();
+        $data = [
+            'api_key' => 'Vhs0upK2nxJjOpVB7RvDYuQMMb2CPw',
+            'sender' => $from,
+            'number' => $number,
+            'message' => $message,
+        ];
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL            => 'https://wa.srv18.wapanels.com/send-message',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING       => '',
-        CURLOPT_MAXREDIRS      => 10,
-        CURLOPT_TIMEOUT        => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST  => 'POST',
-        CURLOPT_POSTFIELDS     => json_encode($data),
-        CURLOPT_HTTPHEADER     => array(
-            'Content-Type: application/json',
-        ),
-    ));
+        $curl = curl_init();
 
-    $response = curl_exec($curl);
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $apiUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+            ],
+        ]);
 
-    if ($response === false) {
-        $error = curl_error($curl);
+        $response = curl_exec($curl);
+
         curl_close($curl);
-        return "Curl error: $error";
+
+        return $response;
     }
-
-    curl_close($curl);
-
-    echo "<pre>";
-    print_r ($response);
-    echo "</pre>";
-
-    return $response;
 }
 
 ?>
