@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAccounting;
 // NEW
 use App\Http\Controllers\AdminADV_Dashboard;
 // ======================================
+use App\Http\Controllers\C_Brosur;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AdminFormsLiving_Dashboard;
 use App\Http\Controllers\AdminFormsLiving_User;
@@ -22,6 +23,7 @@ use App\Http\Controllers\C_Payment;
 use App\Http\Controllers\C_Job;
 use App\Http\Controllers\C_Joblist;
 use App\Http\Controllers\C_GambarKerja;
+use app\Http\Controllers\C_Browsur;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_UserKategori;
 use App\Http\Controllers\C_UserMenu;
@@ -428,3 +430,7 @@ Route::post('/generate-payment', [C_Payment::class,'generatePayment'])->name('ge
 Route::get('/check-payment-status/{orderId}/{requestId}/{expTime}/{signature}', [C_Simulasi::class,'checkStatus'])->name('checkStatusPembayaran');
 
 
+// Brosur
+Route::get('/brosur/{projek}', [C_Brosur::class, 'index'])->name('brosur.admin');
+Route::post('/addBrosurAction/{projek}', [C_Brosur::class, 'addBrosurAction'])->name('addBrosurAction.admin');
+route::post('/editBrosurAction/{projek}/{id}',[C_Brosur::class,'editBrosurAction'])->name('editBrosurAction.admin');

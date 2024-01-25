@@ -396,8 +396,8 @@ class ComposerStaticInit5943e19143647f1a34439f98ce3b87ae
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -693,6 +693,7 @@ class ComposerStaticInit5943e19143647f1a34439f98ce3b87ae
         'App\\Http\\Requests\\updatePasswordRequest' => __DIR__ . '/../..' . '/app/Http/Requests/updatePasswordRequest.php',
         'App\\Mail\\MailAttachment' => __DIR__ . '/../..' . '/app/Mail/MailAttachment.php',
         'App\\Mail\\MailNotify' => __DIR__ . '/../..' . '/app/Mail/MailNotify.php',
+        'App\\Models\\Browsur' => __DIR__ . '/../..' . '/app/Models/Browsur.php',
         'App\\Models\\Clusters' => __DIR__ . '/../..' . '/app/Models/Clusters.php',
         'App\\Models\\FormulirPesanan' => __DIR__ . '/../..' . '/app/Models/FormulirPesanan.php',
         'App\\Models\\GambarRumah' => __DIR__ . '/../..' . '/app/Models/GambarRumah.php',
@@ -840,6 +841,7 @@ class ComposerStaticInit5943e19143647f1a34439f98ce3b87ae
         'DOKU\\Service\\DokuVa' => __DIR__ . '/..' . '/doku/jokul-php-library/src/DOKU/Service/DokuVa.php',
         'DOKU\\Service\\MandiriVa' => __DIR__ . '/..' . '/doku/jokul-php-library/src/DOKU/Service/MandiriVa.php',
         'DOKU\\Service\\Notification' => __DIR__ . '/..' . '/doku/jokul-php-library/src/DOKU/Service/Notification.php',
+        'Database\\Factories\\BrowsurFactory' => __DIR__ . '/../..' . '/database/factories/BrowsurFactory.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
