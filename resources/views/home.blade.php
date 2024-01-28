@@ -205,157 +205,11 @@
 
 
 
-<div class="container mt-3">
-    <div class="row">
-      <div class="col-12 scrolling-wrapper">
-        <!-- Fixed Item -->
-        <div class="scrolling-item fixed-item">
-            <div class="card scrollable-promo" style="background: linear-gradient(to bottom, #7F3C00, #A47449);">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
 
-                            <img src="{{ url('home') }}/images/logo-tidar-white.png" style="width: 70%" alt="">
 
-                        </center>
-                    </h5>
-                    <p class="card-text text-white">
-                      untuk download
-                    </p>
-                </div>
-                <div class="card-footer text-white">
-                    <center>
-                       aaaaaaaaaaaaaaaaaaa
-                    </center>
-                </div>
-            </div>
-        </div>
-        @foreach ($promo as $promo)
-        <!-- Scrollable Items -->
-        <div class="scrolling-item">
-            <div class="card scrollable-promo" style="background: linear-gradient(to bottom, #7F3C00, #A47449); ">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            @if ($promo->nama_projek == 'Greenland')
-                                <img src="{{ url('home') }}/images/logo-tidar-white.png" style="width: 70%" alt="">
-                            @else
-                                <img src="{{ url('home') }}/images/logo-tidar-white.png" style="width: 70%" alt="">
-                            @endif
-                        </center>
-                    </h5>
-                    <p class="card-text text-white">
-                        <center>
-                            <small class="semi-font-size-16 text-white">
-                                {{ substr($promo->promo, 0, 20) }}
-                            </small>
-                        </center>
-                        <p class="ellipsis text-white">
-                            {{$promo->keterangan}}
-                            <br>
-                            <br>
-                            <a href="#" id="readMoreBtn{{ $promo->id_promo }}" onclick="setupEventListeners('readMoreBtn{{ $promo->id_promo }}', '#promoModal{{ $promo->id_promo }}')" class="mybtn-white" data-toggle="modal" data-target="#promoModal">
-                                Read More
-                            </a>
-                            <div class="modal fade" id="promoModal{{ $promo->id_promo }}" tabindex="-1" role="dialog" aria-labelledby="promoModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="promoModalLabel">Promo Details</h5>
-                                            <h5 class="card-title">
-
-                                            </h5>
-                                        </div>
-                                        <div class="modal-body" style="word-wrap: break-word; overflow-y: auto;">
-                                            <!-- Centered text with responsive font size -->
-                                            <center>
-                                                <p class="text-md">{{ $promo->promo }}</p>
-                                            </center>
-                                            <!-- Regular text with responsive font size -->
-                                            <p class="text-md">{{ $promo->keterangan }}</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" onclick="customCloseFunction('#promoModal{{ $promo->id_promo }}')" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </p>
-                    </p>
-                </div>
-                <div class="card-footer text-white">
-                    <center>
-                        <small class="font-size-12">
-                            berlaku hingga
-                            <br>
-                            {{ tgl_indo($promo->tgl_berakhir) }}
-                        </small>
-                        <p class="semi-font-size-16">SALIN PROMO</p>
-                        <div class="mybtn-white">{{ $promo->kode_promo }}</div>
-                    </center>
-                </div>
-            </div>
-        </div>
-    @endforeach
-        <!-- Add more items as needed -->
-      </div>
-    </div>
-  </div>
-  <script>
-
-    function openPromoModal(id) {
-        $(id).modal('show');
-    }
-
-    // Function to set up event listeners
-    function setupEventListeners(btn,id) {
-        // Attach the function to the "Read More" link
-        document.getElementById(btn).addEventListener('click', openPromoModal(id));
-    }
-    function customCloseFunction(modalId) {
-        // Add your custom close behavior here
-        console.log("Custom close function executed");
-        // If you still want to close the modal, you can do this:
-        $(modalId).modal('hide');
-    }
-
-    // Call the function to set up event listeners
-
-    </script>
 
     <div class="container mt-3">
-        <div class="row">
-            <div class="col-12 scrolling-wrapper">
-                <!-- Fixed Item -->
-                <div class="scrolling-item fixed-item">
-                    <div class="card" style="background: linear-gradient(to bottom, #7F3C00, #A47449;">
-                        <div class="card-body text-white">
-                            <div class="card-title">
-                                <center>
-                                    <!-- Your content goes here -->
-                                </center>
-                            </div>
-                            <center>
-                                <small class="semi-font-size-16">
-                                    <!-- Your content goes here -->
-                                </small>
-                            </center>
-                            <small class="font-size-12">
-                                <!-- Your content goes here -->
-                            </small>
-                        </div>
-                        <div class="card-footer text-white">
-                            <center>
-                                <!-- Your content goes here -->
-                            </center>
-                        </div>
-                    </div>
-                </div>
 
-
-
-            </div>
-        </div>
         <div class="promotions" data-aos="zoom-right" data-aos-offset="0" data-aos-duration="500">
             <div class="container">
                 <h5 class="subtitle">
@@ -371,26 +225,174 @@
                 <h5 class="subtitle">
                     Kode Promo
                 </h5>
+
+
+            </div>
+            <div class="container mt-3">
                 <div class="row">
-                    <div class="row col-md-3">
-                        <div class="col-6 col-sm-6 col-lg-4 mb-4 align-self-center" style="z-index: 4;">
+                    <div class="col-12 scrolling-wrapper">
+                        <!-- Fixed Item -->
+                        <div class="scrolling-item fixed-item">
+                            <div class="card scrollable-promo"
+                                style="background: linear-gradient(to bottom, #7F3C00, #A47449);">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <center class="">
 
+                                        </center>
+                                    </h5>
+                                    <p class="card-text text-white">
+                                        untuk download
+                                        <br>
+                                        Brosur
+                                    </p>
+                                </div>
+                                <div class="card-footer text-white">
+                                    <center>
+                                        @if ($getBrosur->brosur_file == null)
+                                            <a href="{{ $getBrosur->link_brosur }}" class="mybtn-white">unduh</a>
+                                        @else
+                                            <a href="{{ url('File') }}/brosur/{{ $getBrosur->brosur_file }}"
+                                                download="{{ $getBrosur->brosur_file }}" class="mybtn-white">unduh</a>
+                                        @endif
+
+
+                                    </center>
+
+                                </div>
+                            </div>
                         </div>
+                        @foreach ($promo as $promo)
+                            <!-- Scrollable Items -->
+                            <div class="scrolling-item">
+                                <div class="card scrollable-promo"
+                                    style="background: linear-gradient(to bottom, #7F3C00, #A47449); ">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <center>
+                                                @if ($promo->nama_projek == 'Greenland')
+                                                    <img src="{{ url('home') }}/images/logo-tidar-white.png"
+                                                        style="width: 70%" alt="">
+                                                @else
+                                                    <img src="{{ url('home') }}/images/logo-tidar-white.png"
+                                                        style="width: 70%" alt="">
+                                                @endif
+                                            </center>
+                                        </h5>
+                                        <p class="card-text text-white">
+                                            <center>
+                                                <small class="semi-font-size-16 text-white">
+                                                    {{ substr($promo->promo, 0, 20) }}
+                                                </small>
+                                            </center>
+                                        <p class="ellipsis text-white">
+                                            {{ $promo->keterangan }}
+                                            <br>
+
+                                            <a href="#" id="readMoreBtn{{ $promo->id_promo }}"
+                                                onclick="setupEventListeners('readMoreBtn{{ $promo->id_promo }}', '#promoModal{{ $promo->id_promo }}')"
+                                                class="btn-small">
+                                                <strong>Read More</strong>
+                                            </a>
+                                        <div class="modal fade" id="promoModal{{ $promo->id_promo }}" tabindex="-2"
+                                            role="dialog" aria-labelledby="promoModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="promoModalLabel">Promo Details</h5>
+                                                        <h5 class="card-title">
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                        style="word-wrap: break-word; overflow-y: auto;">
+                                                        <!-- Centered text with responsive font size -->
+                                                        <center>
+                                                            <p class="text-md">{{ $promo->promo }}</p>
+                                                        </center>
+                                                        <!-- Regular text with responsive font size -->
+                                                        <p class="text-md">{{ $promo->keterangan }}</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            onclick="customCloseFunction('#promoModal{{ $promo->id_promo }}')"
+                                                            data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            function openPromoModal(id) {
+                                                $(id).modal('show');
+                                                $('.modal-backdrop').remove();
+                                            }
+
+                                            // Function to set up event listeners
+                                            function setupEventListeners(btn, id) {
+                                                // Attach the function to the "Read More" link
+                                                document.getElementById(btn).addEventListener('click', openPromoModal(id));
+                                            }
+
+                                            function customCloseFunction(modalId) {
+                                                // Add your custom close behavior here
+                                                console.log("Custom close function executed");
+                                                // If you still want to close the modal, you can do this:
+                                                $(modalId).modal('hide');
+                                            }
+
+                                            // Call the function to set up event listeners
+                                        </script>
+                                        </p>
+
+                                    </div>
+                                    <div class="card-footer text-white">
+                                        <center>
+                                            <small class="font-size-12">
+                                                berlaku hingga
+                                                <br>
+                                                {{ tgl_indo($promo->tgl_berakhir) }}
+                                            </small>
+                                            <p class="semi-font-size-16">SALIN PROMO</p>
+                                            <button class="mybtn-white promo-code-btn" data-promo-code="{{ $promo->kode_promo }}">
+                                                {{ $promo->kode_promo }}
+                                            </button>
+
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        <!-- Add more items as needed -->
                     </div>
-                    <div class="row">
-
-                    </div>
-                </div>
-
-                <div class="row items">
-
-
-
-
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var promoCodeButtons = document.querySelectorAll('.promo-code-btn');
 
+                promoCodeButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        var promoCode = this.getAttribute('data-promo-code');
+
+                        // Create a temporary textarea element
+                        var tempTextarea = document.createElement('textarea');
+                        tempTextarea.value = promoCode;
+                        document.body.appendChild(tempTextarea);
+
+                        // Select and copy the text
+                        tempTextarea.select();
+                        document.execCommand('copy');
+
+                        // Remove the temporary textarea
+                        document.body.removeChild(tempTextarea);
+
+                        // Optionally, provide some feedback to the user
+                        alert('Promo code copied to clipboard: ' + promoCode);
+                    });
+                });
+            });
+        </script>
 
         <div class="projects">
             <div class="container">

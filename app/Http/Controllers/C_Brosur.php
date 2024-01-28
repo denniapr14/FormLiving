@@ -92,6 +92,7 @@ class C_Brosur extends Controller
 
         // Create Brosur record
         $dataInputBrosur=[
+            "id_projek" =>$request->input('id_projek'),
             'nama_brosur' => $request->input('nama_brosur'),
             'brosur_file' => $fileName,
             'link_brosur' => $request->input('link_brosur'),

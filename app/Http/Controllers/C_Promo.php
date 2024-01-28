@@ -671,8 +671,8 @@ class C_Promo extends Controller
             }
             foreach($getUserNotif as $userNotif)
             {
-                sendWhatsappMessage('081937003001','081227476463', $request->nameNotif.
-$request->deskripsiNotif
+                sendWhatsappMessage('081937003001',$userNotif->no_tlp_ua, $request->nameNotif.
+                $request->deskripsiNotif
             );
             }
 

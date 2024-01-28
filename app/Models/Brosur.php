@@ -37,4 +37,10 @@ class Brosur extends Model
         return Brosur::insert($data);
 
     }
+    function firstBrosurLastest()  {
+        return Brosur::select('*')
+        ->orderBy('tgl_input_brosur','desc')
+        ->first();
+
+    }
 }

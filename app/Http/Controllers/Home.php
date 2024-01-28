@@ -14,6 +14,7 @@ use App\Models\Promo;
 use App\Models\Departemen;
 use App\Models\Rumah;
 use App\Models\UserPelanggan;
+use App\Models\Brosur;
 use Illuminate\Contracts\Auth\Guard;
 
 // Controller
@@ -32,8 +33,10 @@ class Home extends Controller
     public $clusterList;
     public  $promoList;
     public $userList;
+    public $brosur;
     public function __construct()
     {
+        $this->brosur = new Brosur();
         $this->clusterList = new Rumah();
         $this->promoList = new Promo();
         $this->userList = new UserPelanggan();
@@ -45,8 +48,10 @@ class Home extends Controller
 
     public function index()
     {
-        $promo = $this->promoList->getPromoWhereAll('*', 'status', '=', 'aktif');
 
+        $promo = $this->promoList->getPromoWhereAll('*', 'status', '=', 'aktif');
+        $getBrosur = $this->brosur->firstBrosurLastest();
+        // dd($getBrosur);
         if (session()->has('user')) {
             $user = \App\Models\UserAdmin::where([
                 'id_user_admin' => session::get('user'),
@@ -54,18 +59,26 @@ class Home extends Controller
 
             // dd($user);
             // die();
-            return view('home', compact('user', 'promo'));
+            return view('home', compact(
+                'user',
+                 'promo',
+                'getBrosur'));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
-                'id_pelanggan' => session::get('guest', 'promo'),
+                'id_pelanggan' => session::get(
+                    'guest',
+                     'promo'),
             ])->first();
             // dd($userPelanggan);
             // die();
-            return view('home', compact('userPelanggan', 'promo'));
+            return view('home', compact(
+                'userPelanggan',
+             'promo',
+             'getBrosur'));
         }
         // end sess
-        return view('home', compact('promo'));
+        return view('home', compact('promo','getBrosur'));
     }
 
     public function housing($dataProjek)

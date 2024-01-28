@@ -1,9 +1,9 @@
 @extends('V_Admin.app')
 @extends('flashdata')
-@section('title','Penjawalan')
-@section('pageTitle','Penjadwalan')
+@section('title','Brosur')
+@section('pageTitle','Brosur')
 @section('back',route('brosur.admin',[$getProjek->nama_projek ]) )
-@section('breadcrumb','Penjawalan')
+@section('breadcrumb','Brosur')
 {{--  @section('breadcrumb2','Tambah Produk')  --}}
 @section('content')
 
@@ -120,7 +120,7 @@
                          <td>{{ $brosur->status_brosur }}</td>
                          <td>{{ $brosur->tgl_input_brosur }}</td>
                          <td>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal{{ $brosur->id_brosur }}">
+                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#editModal{{ $brosur->id_brosur }}">
                                 <i class="fas fa-edit    "></i>
                             </button>
 
@@ -170,6 +170,12 @@
                                     </div>
                                 </div>
                             </div>
+                            @if ($brosur->brosur_file == null)
+                            <a href="{{ $brosur->link_brosur }}" class="btn btn-outline-info"><i class="fa fa-download" aria-hidden="true"></i></a>
+                        @else
+                            <a href="{{ url('File') }}/brosur/{{ $brosur->brosur_file }}"
+                                download="{{ $brosur->brosur_file }}" class="btn btn-outline-info"><i class="fa fa-download" aria-hidden="true"></i></a>
+                        @endif
                         </td>
                       </tr>
                    @endforeach
