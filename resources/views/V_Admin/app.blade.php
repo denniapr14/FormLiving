@@ -395,8 +395,16 @@
                             <i class="mdi mdi-dots-horizontal"></i>
                             <span class="hide-menu">Personal</span>
                         </li>
-
                         <li class="sidebar-item">
+
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                                aria-expanded="false">
+                                <i class="mdi mdi-border-top"></i>
+                                <span class="hide-menu">Halaman Depan</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-jsgrid.html"
                                 aria-expanded="false">
                                 <i class="mdi mdi-border-top"></i>

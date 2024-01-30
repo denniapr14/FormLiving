@@ -22,18 +22,25 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('Home') }}/css/myHome.css">
+
     <link rel="stylesheet" href="{{ asset('Home') }}/css/app.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
         integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{asset('Dashboard')}}/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="{{ asset('Dashboard') }}/css/jquery.dataTables.css" />
+
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
@@ -44,10 +51,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript" src="{{url('Dashboard')}}/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ url('Dashboard') }}/js/jquery.dataTables.js"></script>
     <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body class="@yield('body')">
@@ -74,90 +83,48 @@
 </script>
 
 <script>
-    @if(Session::has('success'))
-  toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-top-left",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "200",
-  "hideDuration": "1000",
-  "timeOut": "1800",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
-  		toastr.success("{{ session('success') }}");
+    @if (Session::has('success'))
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-left",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "200",
+            "hideDuration": "1000",
+            "timeOut": "1800",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.success("{{ session('success') }}");
+    @endif
 
-  @endif
-
-  @if(Session::has('error'))
-  toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-top-center",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "200",
-  "hideDuration": "1000",
-  "timeOut": "3000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
-    toastr.warning("{{ session('error') }}");
-
-  @endif
-
+    @if (Session::has('error'))
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "200",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.warning("{{ session('error') }}");
+    @endif
 </script>
 
-<!--<script type="text/javascript">-->
-<!--   $(document).ready(function(){-->
-<!--     $('.hunian-cluster').slick({-->
-<!--       dots: false,-->
-<!--         infinite: false,-->
-<!--         speed: 300,-->
-<!--         slidesToShow: 4,-->
-<!--         slidesToScroll: 4,-->
-<!-- responsive: [-->
-<!--   {-->
-<!--     breakpoint: 1024,-->
-<!--     settings: {-->
-<!--       slidesToShow: 3,-->
-<!--       slidesToScroll: 3,-->
-<!--       infinite: true,-->
-<!--       dots: true-->
-<!--     }-->
-<!--   },-->
-<!--   {-->
-<!--     breakpoint: 600,-->
-<!--     settings: {-->
-<!--       slidesToShow: 2,-->
-<!--       slidesToScroll: 2-->
-<!--     }-->
-<!--   },-->
-<!--   {-->
-<!--     breakpoint: 480,-->
-<!--     settings: {-->
-<!--       slidesToShow: 1,-->
-<!--       slidesToScroll: 1-->
-<!--     }-->
-<!--   }-->
-<!--// You can unslick at a given breakpoint now by adding:-->
-<!--// settings: "unslick"-->
-<!--// instead of a settings object-->
-<!-- ]-->
-<!--     });-->
-<!--   });-->
-<!-- </script>-->
 
 </html>
