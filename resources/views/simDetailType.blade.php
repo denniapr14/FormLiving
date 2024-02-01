@@ -508,7 +508,12 @@
                                     </tr>
                                     <tr>
                                         <td>Tangga</td>
-                                        <td>{{ $tipeRumah->tangga_tr }}</td>
+                                        <td>@if ($tipeRumah->tangga_tr == "")
+                                            Tidak Ada
+                                            @else
+                                            {{ $tipeRumah->tangga_tr }}
+                                            @endif
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
