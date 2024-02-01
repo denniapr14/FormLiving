@@ -209,7 +209,6 @@ class C_PreOrder extends Controller
             }
 
             if ($decryptedStatus == "accepted" && $getPreOrder[0]->tipe_booking_po == 'refundable') {
-                # code...
                 $dataRumah = [
                     'status' => "keepRefundable"
                 ];
@@ -217,7 +216,6 @@ class C_PreOrder extends Controller
             }
 
             if ($decryptedStatus == "accepted" && $getPreOrder[0]->tipe_booking_po == 'non-refundable') {
-                # code...
               $getPreOrderRefundable = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUserArr(
                     '*',
                     [
@@ -266,7 +264,6 @@ class C_PreOrder extends Controller
             }
 
             if ($decryptedStatus == "rejected" && $getPreOrder[0]->tipe_booking_po == 'non-refundable') {
-                # code...
 
                 $dataRumah = [
                     'status' => "KeepRefundable"
@@ -277,14 +274,12 @@ class C_PreOrder extends Controller
 
 
             if ($decryptedStatus == "pending") {
-                # code...
                 $dataRumah = [
                     'status' => "Keep"
                 ];
                 $template = 'mail.mailPOPending';
             }
             if ($decryptedStatus == "userconfirmed") {
-                # code...
                 $dataRumah = [
                     'status' => "Sold"
                 ];
