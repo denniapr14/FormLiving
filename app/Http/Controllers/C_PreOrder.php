@@ -97,9 +97,7 @@ class C_PreOrder extends Controller
             }
             if(
                 $user->kategori == 'AdminAgentCompany'
-
             ){
-
                 $getPreOrder = $this->preOrder->getPreOrderWhereAllOrderByJoinProjekUserRumahClusterPelangganKategoriUserArr(
                     '*',
                     [

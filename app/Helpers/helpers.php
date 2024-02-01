@@ -82,11 +82,18 @@ if (!function_exists('tgl_indo')) {
 }
 
 function round_up($value, $precision)
+<<<<<<< Updated upstream
 {
     $pow = pow(10, $precision);
 
     return (ceil($pow * $value) + ceil($pow * $value - ceil($pow * $value))) / $pow;
 }
+=======
+    {
+        $pow = pow(10, $precision);
+        return (ceil($pow * $value) + ceil($pow * $value - ceil($pow * $value))) / $pow;
+    }
+>>>>>>> Stashed changes
 
 
 function RandomCode($counter, $projek)
