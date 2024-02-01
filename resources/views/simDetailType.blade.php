@@ -275,8 +275,12 @@
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <p>Type: {{ $tipeRumah->jenis_tr }}</p>
                     <div class="d-flex">
+                        <div class="small-info me-3">
+                            <strong>
+                                <h5>Type: {{ $tipeRumah->jenis_tr }}</h5>
+                            </strong>
+                        </div>
                         <div class="small-info me-3">
                             <img src="{{ asset('Home') }}/images/ic_bedroom.png" alt="">{{ $tipeRumah->kmr_tidur_tr }}
                             Kamar Tidur
@@ -285,6 +289,7 @@
                             <img src="{{ asset('Home') }}/images/ic_bathroom.png" alt="">{{ $tipeRumah->kmr_mandi_tr }}
                             Kamar Mandi
                         </div>
+
                     </div>
                 </div>
                 <div class="desktop-only">
