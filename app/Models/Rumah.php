@@ -33,12 +33,13 @@ class Rumah extends Model
 
     public function getRumahSelectCountGroupBy()
     {
-        return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(tipe_rumah.id_tipe_rumah) as countTipe"))
+        return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(CASE WHEN tipe_rumah.deleted_tr = 'false' THEN tipe_rumah.id_tipe_rumah END) as countTipe"))
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->leftJoin('tipe_rumah', 'rumah.id_rumah', '=', 'tipe_rumah.id_rumah')
             ->groupBy('rumah.id_rumah')
             ->get();
     }
+    
     public function getRumahSelectCountGroupByWhereAll($where,$eq, $value)
     {
         return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(CASE WHEN tipe_rumah.deleted_tr = 'false' THEN tipe_rumah.id_tipe_rumah END) as countTipe"))
@@ -47,17 +48,17 @@ class Rumah extends Model
             ->leftJoin('tipe_rumah', 'rumah.id_rumah', '=', 'tipe_rumah.id_rumah')
             ->groupBy('rumah.id_rumah')
             ->where($where,$eq,$value)
-            ->where('deleted_tr','=','false')
+            ->orderBy('rumah.status','asc')
             ->get();
     }
-
-    public function getRumahSelectCountGroupByWhereAllArr($where)
+    
+    public function getRumahSelectCountGroupByWhereAllArr($where,$eq, $value)
     {
-        return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(CASE WHEN tipe_rumah.deleted_tr = 'false' THEN tipe_rumah.id_tipe_rumah END) as countTipe"))
+        return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(tipe_rumah.id_tipe_rumah) as countTipe"))
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
             ->leftJoin('tipe_rumah', 'rumah.id_rumah', '=', 'tipe_rumah.id_rumah')
             ->groupBy('rumah.id_rumah')
-            ->where($where)
+           ->where($where,$eq,$value)
             ->get();
     }
 
@@ -69,7 +70,6 @@ class Rumah extends Model
         ->where($where)
         ->get();
     }
-    
     public function firstRumahJoinTipeRumahWhere($select,$where){
         return Rumah::select($select)
         ->join('tipe_rumah','tipe_rumah.id_rumah','tipe_rumah.id_rumah')

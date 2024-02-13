@@ -13,11 +13,13 @@ use App\Models\UserProjek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Collection;
 use Intervention\Image\Facades\Image;
 
 class C_Rumah extends Controller
 {
     public $rumah;
+    public $tipeRumah;
     public $cluster;
     public $userAdmin;
     public $userProjek;
@@ -30,6 +32,7 @@ class C_Rumah extends Controller
         $this->userNotif = new UserNotif();
         $this->projek = new Projek();
         $this->rumah = new Rumah();
+        $this->tipeRumah = new TipeRumah();
         $this->cluster = new Clusters();
         $this->userAdmin = new UserAdmin();
         $this->userProjek = new UserProjek();
@@ -40,11 +43,11 @@ class C_Rumah extends Controller
     {
         $getRumah = $this->rumah->getRumahSelectCountGroupByWhereAll('projek.nama_projek', '=', $projek);
         // dd($getRumah);
-
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+            //dd($user);
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
@@ -73,6 +76,7 @@ class C_Rumah extends Controller
                     'getRumah',
                     'getProjek',
                     'getUserMenu'
+
                 )
             );
         } else {
@@ -82,12 +86,12 @@ class C_Rumah extends Controller
 
     public function storeRumah($projek)
     {
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek)->collect();
-
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
         $getCluster = $this->cluster->getClusterProjekWhere('*', 'projek.nama_projek', '=', $projek);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
@@ -126,7 +130,11 @@ class C_Rumah extends Controller
 
     public function storeRumahAction(Request $request)
     {
-     $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+
+
+
+
+        $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
         $dataNotif = [
             'msg_notif' => 'User '.$user->nama_ua.' telah memasukan rumah '.$request->blok.'-'.$request->nomor,
             'status_notif' => 'aktif',
@@ -175,6 +183,7 @@ class C_Rumah extends Controller
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
