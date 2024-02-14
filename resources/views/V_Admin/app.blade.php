@@ -101,10 +101,10 @@
                             <b class="logo-icon">
                                 <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                                 <!-- Dark Logo icon -->
-                                <img src="{{ url('Bootstrap') }}/assets/images/logo-icon.png" alt="homepage"
+                                <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png" alt="homepage"
                                     class="dark-logo" />
                                 <!-- Light Logo icon -->
-                                <img src="{{ url('Bootstrap') }}/assets/images/logo-light-icon.png" alt="homepage"
+                                <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png" alt="homepage"
                                     class="light-logo" />
                             </b>
                             <!--End Logo icon -->
@@ -174,7 +174,7 @@
                                             @foreach ($projekUser as $projek)
                                             <a href="{{ url('/set-selected-projek', $projek->nama_projek) }}" class="message-item">
                                                 <span class="user-img">
-                                                    <img src=""
+                                                    <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png"
                                                         alt="user" class="rounded-circle">
 
                                                 </span>
@@ -288,7 +288,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ url('Bootstrap') }}/assets/images/users/2.jpg" alt="user"
+                                <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png" alt="user"
                                     class="rounded-circle" width="40">
                                 <span class="m-l-5 font-medium d-none d-sm-inline-block">
                                     @if ($user->nama_ua != '')
@@ -305,7 +305,7 @@
                                 </span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                                     <div class="">
-                                        <img src="{{ url('Bootstrap') }}/assets/images/users/2.jpg" alt="user"
+                                        <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png" alt="user"
                                             class="rounded-circle" width="60">
                                     </div>
                                     <div class="m-l-10">
@@ -786,7 +786,7 @@
                         <div class="sl-item">
                             <div class="sl-left">
                                 <img class="rounded-circle" alt="user"
-                                    src="{{ url('Bootstrap') }}/assets/images/users/2.jpg">
+                                    src="{{ url('Home') }}/images/logo-website/fo-favicon.png">
                             </div>
                             <div class="sl-right">
                                 <div class="font-medium">Go to the Doctor
