@@ -894,7 +894,7 @@
                     </p>
                     <p>
                         Malang,
-                        <?= tgl_indo(date('Y-m-d', strtotime($getFormulirPesanan->tgl_input_getFormulirPesanan))) ?>
+                        <?= tgl_indo(date('Y-m-d', strtotime($getFormulirPesanan->tgl_input_fp))) ?>
                         </php>
                     </p>
                     <center>

@@ -417,9 +417,15 @@ Route::get('/ubah-status-pekerjaan/{projek}',[C_Joblist::class,'deleteJob'])->na
 
 // CHECKLIST
 route::get('/checklist/{projek}',[C_Checklist::class,'getChecklist'])->name('checklist.admin');
+route::post('/tambah-checklist/action',[C_Checklist::class,'addChecklistAction'])->name('addChecklist.admin');
+route::get('/nextTermin/{projek}/{id_rumah}',[C_Checklist::class,'nexTermin'])->name('nextTermin.admin');
+route::post('/costumTermin/{projek}/{id_rumah}',[C_Checklist::class,'customTermin'])->name('customTermin.admin');
 route::get('/terminChecklist/{projek}/{id_rumah}',[C_Checklist::class,'getTerminChecklist'])->name('getTerminChecklist.admin');
-route::get('/listChecklist/{projek}/{id_rumah}/{termin}',[C_Checklist::class,'getListChecklist'])->name('getListChecklist');
+route::get('/listChecklist/{projek}/{id_rumah}/{termin}',[C_Checklist::class,'getListChecklist'])->name('getListChecklist.admin');
+route::get('/editCheclist/{projek}/{id_rumah}/{termin}/{id_checklist}',[C_Checklist::class,'editChecklist'])->name('editChecklist.admin');
+route::post('/editChecklistAction/{projek}/{id_rumah}/{termin}/{id_checklist}',[C_Checklist::class,'editChecklistAction'])->name('editChecklistAction.admin');
 
+route::post('/checkPinPendamping/{projek}/{id_rumah}/{termin}/{id_checklist}',[C_Checklist::class,'checkPinPendamping'])->name('checkPinPendamping.admin');
 
 // Kerja
 route::get('/gambarKerja/{projek}',[C_GambarKerja::class,'getGambarKerja'])->name('gambarKerja.admin');

@@ -75,7 +75,7 @@
                                         </p>
                                     </td>
                                     <td>
-                                        <a href="{{ route('getListChecklist', [$getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah),Crypt::encrypt($checklist->termin_job)]) }}" class="btn btn-outline-info"> <i class="fa fa-list" aria-hidden="true"></i> Rincian Checklist
+                                        <a href="{{ route('getListChecklist.admin', [$getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah),Crypt::encrypt($checklist->termin_job)]) }}" class="btn btn-outline-info"> <i class="fa fa-list" aria-hidden="true"></i> Rincian Checklist
 
                                         </a>
                                     </td>

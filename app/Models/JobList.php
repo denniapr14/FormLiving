@@ -17,6 +17,13 @@ class Joblist extends Model
 
     }
 
+    function getJoblistWhere($where) {
+        return
+        Joblist::where($where)
+        ->join('job','joblist.id_job','job.id_job')
+        ->get();
+    }
+
     function firstJob($select,$where)  {
         return Joblist::select($select)
         ->join('job','joblist.id_job','job.id_job')

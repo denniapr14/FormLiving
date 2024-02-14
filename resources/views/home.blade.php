@@ -294,54 +294,7 @@
                                                 class="btn-small">
                                                 <strong>Read More</strong>
                                             </a>
-                                        <div class="modal fade" id="promoModal{{ $promo->id_promo }}" tabindex="-2"
-                                            role="dialog" aria-labelledby="promoModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="promoModalLabel">Promo Details</h5>
-                                                        <h5 class="card-title">
 
-                                                        </h5>
-                                                    </div>
-                                                    <div class="modal-body"
-                                                        style="word-wrap: break-word; overflow-y: auto;">
-                                                        <!-- Centered text with responsive font size -->
-                                                        <center>
-                                                            <p class="text-md">{{ $promo->promo }}</p>
-                                                        </center>
-                                                        <!-- Regular text with responsive font size -->
-                                                        <p class="text-md">{{ $promo->keterangan }}</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            onclick="customCloseFunction('#promoModal{{ $promo->id_promo }}')"
-                                                            data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <script>
-                                            function openPromoModal(id) {
-                                                $(id).modal('show');
-                                                $('.modal-backdrop').remove();
-                                            }
-
-                                            // Function to set up event listeners
-                                            function setupEventListeners(btn, id) {
-                                                // Attach the function to the "Read More" link
-                                                document.getElementById(btn).addEventListener('click', openPromoModal(id));
-                                            }
-
-                                            function customCloseFunction(modalId) {
-                                                // Add your custom close behavior here
-                                                console.log("Custom close function executed");
-                                                // If you still want to close the modal, you can do this:
-                                                $(modalId).modal('hide');
-                                            }
-
-                                            // Call the function to set up event listeners
-                                        </script>
                                         </p>
 
                                     </div>
@@ -361,6 +314,56 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="modal fade" id="promoModal{{ $promo->id_promo }}" tabindex="-2"
+                                role="dialog" aria-labelledby="promoModalLabel" style=" align-items: center;
+                                justify-content: center; white-space:normal !important" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="promoModalLabel">Promo Details</h5>
+                                            <h5 class="card-title">
+
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body"
+                                            style="word-wrap: break-word; overflow-y: auto;">
+                                            <!-- Centered text with responsive font size -->
+                                            <center>
+                                                <p class="text-md">{{ $promo->promo }}</p>
+                                            </center>
+                                            <!-- Regular text with responsive font size -->
+                                            <p class="text-md">{{ $promo->keterangan }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                onclick="customCloseFunction('#promoModal{{ $promo->id_promo }}')"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                function openPromoModal(id) {
+                                    $(id).modal('show');
+                                    $('.modal-backdrop').remove();
+                                }
+
+                                // Function to set up event listeners
+                                function setupEventListeners(btn, id) {
+                                    // Attach the function to the "Read More" link
+                                    document.getElementById(btn).addEventListener('click', openPromoModal(id));
+                                }
+
+                                function customCloseFunction(modalId) {
+                                    // Add your custom close behavior here
+                                    console.log("Custom close function executed");
+                                    // If you still want to close the modal, you can do this:
+                                    $(modalId).modal('hide');
+                                }
+
+                                // Call the function to set up event listeners
+                            </script>
                         @endforeach
                         <!-- Add more items as needed -->
                     </div>

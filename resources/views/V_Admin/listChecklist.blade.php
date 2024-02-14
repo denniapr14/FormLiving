@@ -105,7 +105,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="" class="btn btn-outline-info"> <i class="fa fa-list" aria-hidden="true"></i> Rincian Checklist
+                                        <a href="{{ route('editChecklist.admin', [ $getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah),Crypt::encrypt($checklist->termin_job),Crypt::encrypt($checklist->id_checklist)]) }}" class="btn btn-outline-info"> <i class="fas fa-edit    "></i>
 
                                         </a>
                                     </td>
