@@ -17,6 +17,7 @@
     <link href="{{ url('Bootstrap') }}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{{ url('Bootstrap') }}/dist/css/style.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesnt work if you view the page via file:// -->
@@ -28,12 +29,14 @@
     <script src="{{ url('Dashboard') }}/js/jquery.min.js"></script>
     <script src="{{ url('Dashboard') }}/js/svg-pan-zoom.js"></script>
 
+
     <link rel="stylesheet" type="text/css" href="{{ url('Dashboard') }}/css/toastify.min.css">
     {{-- Datatabless --}}
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
     <link rel="stylesheet" href="{{ url('Dashboard') }}/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -868,7 +871,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="{{ url('Bootstrap') }}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="{{ url('Bootstrap') }}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- apps -->

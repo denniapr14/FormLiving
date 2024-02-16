@@ -33,7 +33,6 @@ class C_Checklist extends Controller
     public $checklist;
     public $subkon;
     public $joblist;
-    public $checklist;
     public function __construct()
     {
         $this->job = new Job();
@@ -160,45 +159,40 @@ class C_Checklist extends Controller
 
     function addChecklistAction(Request $request, $projek) {
         $getChecklist = $this->checklist->getChecklistWhere(['checklist.id_rumah' => $request->rumah]);
-
-        if ($getChecklist !== null) {
-            return redirect()->back()->with('error','Checklist sudah ada!');
+        // dd($getChecklist);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        // dd($getChecklist);
+        if ($getChecklist->isEmpty()) {
+            // $getChecklist is empty
+        } else {
+            return redirect()->back()->with('error', 'Checklist sudah ada!');
         }
-
         $getJoblist = $this->joblist->getJoblistWhere(['joblist.lantai_jl'=>$request->lantai]);
-        $dataInput = "";
+        // dd($request->lantai);
         $nextMonth = "";
         if ($request->lantai == 1) {
             $nextMonth = date("Y-m-d", strtotime("+1 month"));
         } if ($request->lantai == 2) {
             $nextMonth = date("Y-m-d", strtotime("+2 month"));
         }
-
+        $dataInput = [];
         foreach ($getJoblist as $joblist) {
-            # code...
-            if ($joblist->termin_jl == 1) {
-                $dataInput = [
-                    'id_rumah' => $request->rumah,
-                    'id_subkon' => $request->subkon,
-                    'id_pengawas1' => $request->pengawas1,
-                    'id_pengawas2' => $request->pengawas2,
-                    'tgl_deadline' => $nextMonth,
-                    'status_checklist' =>"progress"
-                ];
-            }else{
-                $dataInput = [
-                    'id_rumah' => $request->rumah,
-                    'id_subkon' => $request->subkon,
-                    'id_pengawas1' => $request->pengawas1,
-                    'id_pengawas2' => $request->pengawas2,
-                    'tgl_deadline' => $nextMonth,
-                    'status_checklist' =>"terkunci"
-                ];
-            }
+            $data = [
+                'id_rumah' => $request->rumah,
+                'id_subkon' => $request->subkon,
+                'id_joblist' => $joblist->id_joblist,
+                'id_pengawas1' => $request->pengawas1,
+                'id_pengawas2' => $request->pengawas2,
+                'tgl_deadline' => $nextMonth,
+                'status_checklist' => ($joblist->termin_jl == 1) ? "progress" : "terkunci"
+            ];
 
-
-
+            // Push $data into $dataInput array
+            $dataInput[] = $data;
         }
+
+        dd($dataInput);
+        $this->checklist->insertChecklist($dataInput);
         return redirect()->back()->with('success','Checklist berhasil ditambahkan!');
 
     }
@@ -403,6 +397,81 @@ class C_Checklist extends Controller
                     'getProjek',
                     'getUserMenu',
                     'getChecklist'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
+
+
+    public function printChecklist($projek, $id_rumah) {
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+
+        $decryptedID = Crypt::decrypt($id_rumah);
+        $getRumah = $this->rumah->getRumahWhere('id_rumah','=',$decryptedID);
+        $getChecklist = $this->checklist->getChecklistJoinJoblistJob(['checklist.id_rumah' => $decryptedID])->collect();
+        $getTermin = $getChecklist->groupBy('termin_jl');
+        // $getJob = $getTermin->groupBy('id_job');
+        // dd($getRumah);
+
+        $getPengawas = DB::table('checklist as a')
+        ->selectRaw("SUM(subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*, j.*,
+IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
+IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
+        ->where([
+            'r.id_projek' => $getProjek->id_projek,
+            'r.id_rumah' => $decryptedID
+        ])
+        ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
+        ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
+        ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
+        ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
+        ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
+        ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
+        ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
+        ->groupBy('j.termin_job')
+        ->orderByRaw('j.termin_job ASC')
+        ->first();
+
+        $getJob = $this->job->getJob('*');
+
+        // dd($getJob);
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+
+
+            return view(
+                'V_Admin.printChecklist',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getProjek',
+                    'getUserMenu',
+                    'getChecklist',
+                    'getTermin',
+                    'getRumah',
+                    'getJob',
+                    'getPengawas'
 
                 )
             );

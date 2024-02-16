@@ -38,21 +38,23 @@
                                                           <h4 class="modal-title">Modal Header</h4>
                                                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
-
+                                                        <form action="{{ route('addChecklist.admin', $getProjek->nama_projek ) }}" method="POST">
+                                                            @csrf
                                                         <!-- Modal Body -->
                                                         <div class="modal-body">
                                                           <div class="form-group">
                                                             <label for="">Pilih Rumah</label>
-                                                            <select class="js-example-basic-single form-control" name="rumah">
+                                                            <select class="js-example-basic-single form-control" id="rumah" name="rumah" style="width: 100%">
                                                                 <option value="">--Rumah--</option>
                                                                 @foreach ($getRumah as $rumah)
-                                                                <option value="{{ $rumah->id_rumah }}">{{ $rumah->blok }} / {{ $rumah->nomor }}</option>
+                                                                <option value="{{ $rumah->id_rumah }}">{{ $rumah->blok }} - {{ $rumah->nomor }}</option>
                                                                 @endforeach
                                                               </select>
+
                                                           </div>
                                                           <div class="form-group">
                                                             <label for="">Lantai</label>
-                                                            <select name="lantai" class="form-control" id="">
+                                                            <select name="lantai" class="js-example-basic-single form-control" style="width: 100%" id="">
                                                                 <option value="">-- Lantai --</option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
@@ -61,7 +63,7 @@
                                                           </div>
                                                           <div class="form-group">
                                                             <label for="">Subkon</label>
-                                                            <select name="subkon" class="js-example-basic-single form-control" id="">
+                                                            <select name="subkon" class="js-example-basic-single form-control" id="" style="width: 100%">
                                                                 <option value="">--subkon--</option>
                                                                 @foreach ($getSubkon as $subkon)
                                                                 <option value="{{ $subkon->id_subkon }}">{{ $subkon->nama_subkon }}</option>
@@ -70,7 +72,7 @@
                                                           </div>
                                                           <div class="form-group">
                                                             <label for="">Pengawas 1</label>
-                                                            <select name="pengawas1" class="js-example-basic-single form-control" id="">
+                                                            <select name="pengawas1" class="js-example-basic-single form-control" id="" style="width: 100%">
                                                                 <option value="">--Pengawas 1--</option>
                                                                 @foreach ($getPengawas as $pengawas)
                                                                 <option value="{{ $pengawas->id_user_admin }}">{{ $pengawas->nama_ua }}</option>
@@ -79,7 +81,7 @@
                                                           </div>
                                                           <div class="form-group">
                                                             <label for="">Pengawas 2</label>
-                                                            <select name="pengawas2" class="js-example-basic-single form-control" id="">
+                                                            <select name="pengawas2" class="js-example-basic-single form-control" id="" style="width: 100%">
                                                                 <option value="">--Pengawas 2--</option>
                                                                 @foreach ($getPengawas as $pengawas)
                                                                 <option value="{{ $pengawas->id_user_admin }}">{{ $pengawas->nama_ua }}</option>
@@ -93,7 +95,7 @@
                                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                           <button type="submit" class="btn btn-outline-success">Submit</button>
                                                         </div>
-
+                                                    </form>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -107,7 +109,7 @@
 
                 </div>
                 <div class="table-responsive">
-                    <table id="formulirPesanan" class="table">
+                    <table id="checklistTable" class="table">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -200,7 +202,8 @@
                                                 <dt>Pengawas 1</dt>
                                                 <dd>{{ $checklist->pengawas1 }}</dd>
                                                 <dt>Pengawas 2</dt>
-                                                <dd>{{ $checklist->pengawas1 }}</dd>
+                                                <dd>{{ $checklist->pengawas2 }}</dd>
+
                                             </div>
                                             <div class="callout callout-info">
                                                 <dt>Subkon</dt>
@@ -254,6 +257,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <br>
+                                            <a href="{{ route('printChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}" class="btn btn-outline-info"><i class="fa fa-print" aria-hidden="true"></i></a>
+                                            <br>
                                         @else
                                         @endif
 
@@ -291,13 +297,15 @@
             }
             setInterval(updateTime, 1000);
         </script>
-
         <script>
-            $(".js-example-templating").select2({
-                templateSelection: formatState
-              });
             $(document).ready(function() {
-                $('#formulirPesanan').DataTable({
+                $('.js-example-basic-single').select2();
+            });
+        </script>
+        <script>
+
+            $(document).ready(function() {
+                $('#checklistTable').DataTable({
                     lengthMenu: [
                         [25, 50, 100, -1],
                         [25, 50, 100, 'All'],
@@ -313,6 +321,7 @@
                     autoWidth: true
                 });
             });
+
         </script>
 
     @endsection

@@ -19,8 +19,9 @@ class Joblist extends Model
 
     function getJoblistWhere($where) {
         return
-        Joblist::where($where)
+        Joblist::select('*')
         ->join('job','joblist.id_job','job.id_job')
+        ->where($where)
         ->get();
     }
 
