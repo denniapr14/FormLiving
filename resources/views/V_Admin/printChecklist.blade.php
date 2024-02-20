@@ -73,7 +73,7 @@
                                     </tr>
                                 </table>
 
-                                <table class="table table-bordered" style="font-weight: 100">
+                                <table class="table table-bordered table-responsive-lg" style="font-weight: 100">
                                     <thead>
                                         <tr>
                                             <th>No</th>

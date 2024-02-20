@@ -24,6 +24,7 @@ use App\Http\Controllers\C_Job;
 use App\Http\Controllers\C_Joblist;
 use App\Http\Controllers\C_GambarKerja;
 use app\Http\Controllers\C_Browsur;
+use App\Http\Controllers\C_SPP;
 // ADMIN FORMS LIVING
 use App\Http\Controllers\C_UserKategori;
 use App\Http\Controllers\C_UserMenu;
@@ -430,6 +431,9 @@ route::post('/checkPinPendamping/{projek}/{id_rumah}/{termin}/{id_checklist}',[C
 
 // Kerja
 route::get('/gambarKerja/{projek}',[C_GambarKerja::class,'getGambarKerja'])->name('gambarKerja.admin');
+
+// SPP
+route::get('/buat-spp/{projek}',[C_SPP::class,'createSPP'])->name('createSPP.admin');
 
 // TEST DOKU
 Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');
