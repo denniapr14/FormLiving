@@ -352,9 +352,9 @@ class C_Checklist extends Controller
                     ->where([
                         'r.id_projek' => $getProjek->id_projek,
                         'r.id_rumah' => $decryptedID,
-                        'a.id_pengawas' => $user->id_user_admin,
+                        'c.id_user_admin' => $user->id_user_admin,
                     ])
-                    ->orWhere('a.id_pengawas2', $user->id_user_admin) // Add this condition
+                    ->orWhere('b.id_user_admin', $user->id_user_admin) // Add this condition
                     ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
                     ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
                     ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
@@ -485,7 +485,9 @@ IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
 
 
         $decryptedID = Crypt::decrypt($id_rumah);
+        // dd($decryptedID);
         $decryptedTermin = Crypt::decrypt($termin);
+        // dd($decryptedTermin);
         $getRumah = $this->rumah->firstRumahWhereJoinCluster('*', 'rumah.id_rumah', '=', $decryptedID);
 
 
@@ -512,33 +514,42 @@ IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
             $getChecklist = "";
             if ($user->kategori == "Pengawas") {
                 $getChecklist = DB::table('checklist as a')
-                    ->selectRaw("a.*, jl.*, j.*")
+                    ->selectRaw("a.*, jl.*, j.*, IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
+                    IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
                     ->where([
-                        'a.id_rumah'   => $decryptedID,
-                        'j.termin_job' => $decryptedTermin,
-                        'a.id_pengawas' => $user->id_user_admin,
+                        ['a.id_rumah', '=', $decryptedID],
+                        ['j.termin_job', '=', $decryptedTermin],
+                        ['b.id_user_admin', '=', $user->id_user_admin],
                     ])
-                    ->orWhere('a.id_pengawas2', $user->id_user_admin) // Add this condition
+                    ->orWhere([
+                        ['a.id_rumah', '=', $decryptedID],
+                        ['j.termin_job', '=', $decryptedTermin],
+                        ['c.id_user_admin', '=', $user->id_user_admin],
+                    ])
+                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
+                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
                     ->Join('joblist as jl', 'a.id_joblist', '=', 'jl.id_joblist')
-
                     ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
-
                     ->orderByRaw('jl.sort_jl ASC')
                     ->get();
+                    // dd($getChecklist);
             } else {
                 $getChecklist = DB::table('checklist as a')
-                    ->selectRaw("a.*, jl.*, j.*")
+                    ->selectRaw("a.*, jl.*, j.*,IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
+                    IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
                     ->where([
                         'a.id_rumah'   => $decryptedID,
                         'j.termin_job' => $decryptedTermin,
                     ])
-
+                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
+                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
                     ->Join('joblist as jl', 'a.id_joblist', '=', 'jl.id_joblist')
 
                     ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
 
                     ->orderByRaw('jl.sort_jl ASC')
                     ->get();
+                // dd($getChecklist);
             }
 
             return view(
@@ -596,12 +607,17 @@ IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
                 $getChecklist = DB::table('checklist as a')
                     ->selectRaw("a.*, jl.*, j.*")
                     ->where([
-                        'a.id_rumah'        => $decryptedID,
-                        'j.termin_job'      => $decryptedTermin,
-                        'a.id_checklist'    => $decryptedIdChecklist,
-                        'a.id_pengawas'     => $user->id_user_admin
+                        ['a.id_rumah', '=', $decryptedID],
+                        ['j.termin_job', '=', $decryptedTermin],
+                        ['b.id_user_admin', '=', $user->id_user_admin],
                     ])
-                    ->orWhere('a.id_pengawas2', $user->id_user_admin) // Add this condition
+                    ->orWhere([
+                        ['a.id_rumah', '=', $decryptedID],
+                        ['j.termin_job', '=', $decryptedTermin],
+                        ['c.id_user_admin', '=', $user->id_user_admin],
+                    ])
+                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
+                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
                     ->Join('joblist as jl', 'a.id_joblist', '=', 'jl.id_joblist')
 
                     ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
@@ -689,9 +705,9 @@ IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
                 // Compress the uploaded image
                 $dataInput = [
                     'foto' => $getChecklist->foto,
-                    'status_cek_pengawas1' => $request->status_cek_pengawas1,
-                    'status_cek_pengawas2' => $request->status_cek_pengawas2,
-                    'status_checklist'     => $request->status_checklist,
+                    'status_cek_pengawas1' => $request->status_cek_pengawas1 !== '' ? $request->status_cek_pengawas1 : 'belum selesai',
+                    'status_cek_pengawas2' => $request->status_cek_pengawas2 !== '' ? $request->status_cek_pengawas2 : 'belum selesai',
+                    'status_checklist'     => $request->status_checklist !== '' ? $request->status_checklist : 'progress',
                     'subbobot'             => $request->bobot,
                     'lat_checklist'        => $request->lat_checklist,
                     'long_checklist'       => $request->long_checklist,
@@ -700,16 +716,20 @@ IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
             } else {
                 $compressedImage = Image::make($foto)->encode('jpg', 50); // Adjust the quality as needed
 
+                // Generate a unique filename
+                $fileName = uniqid() . '.' . 'jpg'; // You can use any logic to generate a unique filename here
+
+                // Move the compressed image to the public directory
+                $compressedImage->save(public_path('Home/images/termin/' . $fileName));
                 // Store the compressed image in storage and get its path
-                $fotoPath = $compressedImage->store('Home/images/termin', 'public');
 
                 // Get the filename from the $fotoPath
-                $filename = basename($fotoPath);
+
                 $dataInput = [
-                    'foto' => $filename,
-                    'status_cek_pengawas1' => $request->status_cek_pengawas1,
-                    'status_cek_pengawas2' => $request->status_cek_pengawas2,
-                    'status_checklist'     => $request->status_checklist,
+                    'foto' => $fileName,
+                    'status_cek_pengawas1' => $request->status_cek_pengawas1 !== '' ? $request->status_cek_pengawas1 : 'belum selesai',
+                    'status_cek_pengawas2' => $request->status_cek_pengawas2 !== '' ? $request->status_cek_pengawas2 : 'belum selesai',
+                    'status_checklist'     => $request->status_checklist !== '' ? $request->status_checklist : 'progress',
                     'subbobot'             => $request->bobot,
                     'lat_checklist'        => $request->lat_checklist,
                     'long_checklist'       => $request->long_checklist,

@@ -23,7 +23,7 @@
             </div>
 
             <div class="form-group">
-                <img id="imagePreview" src="{{ asset($getChecklist->foto) }}" class="img-fluid" alt="Preview Image">
+                <img id="imagePreview" src="{{ asset('Home/images/termin/'.$getChecklist->foto) }}" class="img-fluid" alt="Preview Image">
             </div>
 
             @if ($getChecklist->id_pengawas1 == $user->id_user_admin)
@@ -61,7 +61,7 @@
                 @endif
 
             <!-- Repeat similar blocks for other fields -->
-              <input type="text" hidden name="status_checklist" id="statusChecklist" class="form-control" placeholder="" value="belum" aria-describedby="helpId">
+              <input type="text" hidden name="status_checklist" id="statusChecklist" class="form-control" placeholder="" value="{{ $getChecklist->status_checklist }}" aria-describedby="helpId">
               <input type="text" hidden name="bobot" value="{{ $getChecklist->bobot_jl }}">
             <div class="form-group">
                 <label for="lat_checklist">Latitude:</label>
@@ -81,10 +81,11 @@
             <table style="width: 100%">
                 <tr>
                     <td>
+                        @if($getChecklist->id_pengawas2 != $user->id_user_admin)
                         <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#pinModal">
                             Insert PIN
                         </a>
-
+                        @endif
                         <div class="modal fade" id="pinModal" tabindex="-1" role="dialog" aria-labelledby="pinModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -111,7 +112,8 @@
                         </div>
 
                     </td>
-                    <td>   <button type="submit" id="submitBtn" class="btn btn-outline-success float-right" disabled>Submit</button></td>
+                    <td>  <button type="submit" id="submitBtn" class="btn btn-outline-success float-right" {{ !$getChecklist->id_pengawas2 != $user->id_user_admin ? '' : 'disabled' }}>Submit</button>
+                    </td>
                 </tr>
             </table>
 

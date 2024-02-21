@@ -81,7 +81,24 @@
                                                 </a>
                                                 <div id="collapseDetail{{ $no }}" class="collapse" aria-labelledby="heading11" data-parent="#accordian-3" style="">
                                                     <div class="card-body">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                                        <p>
+                                                            Pengawas 1 : {{ $checklist->pengawas1 }} @if ($checklist->status_cek_pengawas1 == "selesai")
+                                                            <span class="btn btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                        @else
+                                                            <span class="btn btn-outline-danger"><i class="fas fa-spinner fa-spin"></i> </span>
+                                                        @endif
+                                                    </p>
+                                                    <p>
+                                                        Pengawas 2 :  {{ $checklist->pengawas2 }} @if ($checklist->status_cek_pengawas2 == "selesai")
+                                                        <span class="btn btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                    @else
+                                                        <span class="btn btn-outline-danger"><i class="fas fa-spinner fa-spin"></i> </span>
+                                                    @endif
+                                                </p>
+                                                <p>
+
+                                                    Keterangan : {{ $checklist->keterangan }}
+                                                </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -105,9 +122,14 @@
                                         </div>
                                     </td>
                                     <td>
+                                        @if ($user->kategori == "Pengawas" && $checklist->status_checklist =="terkunci")
+
+                                        @else
                                         <a href="{{ route('editChecklist.admin', [ $getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah),Crypt::encrypt($checklist->termin_job),Crypt::encrypt($checklist->id_checklist)]) }}" class="btn btn-outline-info"> <i class="fas fa-edit    "></i>
 
                                         </a>
+                                        @endif
+
                                     </td>
                                 </tr>
                                 @php

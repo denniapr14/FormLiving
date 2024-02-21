@@ -877,18 +877,21 @@
                         Harga Belum
                         Termasuk : AJB, BBN, BPHTB, Biaya KPR.</p>
                     <p style="padding-left: 5pt;text-indent: 0pt;line-height: 229%;text-align: justify;">Promo :
-                        @if (empty($promo))
+                        @if (empty($getPromo))
                         Tidak menggunakan promo
                         @else
-                        {{ $promo->kode_promo }}
+                        {{ $getPromo->kode_promo }}
                         @endif
+                        <a href="#" data-toggle="modal" data-target="#editPromo" class="btn btn-outline-info btn--small" >
+                       <i class="fas fa-edit    "></i> Promo</a>
+
 
                         <br>
 
-                        @if (empty($promo))
+                        @if (empty($getPromo))
                         Tidak menggunakan promo
                         @else
-                        {{ $promo->keterangan }}
+                        {{ $getPromo->keterangan }}
                         @endif
 
                     </p>
@@ -905,9 +908,48 @@
         </div>
     </div>
     </div>
+    <div class="modal" id="editPromo">
+        <div class="modal-dialog">
+          <div class="modal-content">
 
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Ubah Promo</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form action="{{ route('editPromoSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($getFormulirPesanan->id_formulir)] ) }}" method="POST">
+                @csrf
+            <!-- Modal Body -->
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="">Pilih Promo</label>
+                <select class="js-example-basic-single form-control" id="promo" name="promo" style="width: 100%">
+                    <option value="">--Promo--</option>
+                    @foreach ($getPromoAll as $promoAll)
+                        <option value="{{ $promoAll->id_promo }}">{{ $promoAll->promo }} - {{ $promoAll->keterangan }}</option>
+                    @endforeach
+                  </select>
+
+              </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-outline-success">Submit</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
 
 </body>
 
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script>
 
 @endsection

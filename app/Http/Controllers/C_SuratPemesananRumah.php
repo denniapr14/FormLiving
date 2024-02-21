@@ -140,13 +140,14 @@ class C_SuratPemesananRumah extends Controller
         $decryptedID = Crypt::decrypt($id);
         $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananJoin7Where($decryptedID);
         $getPromo = '';
+        $getPromoAll = $this->promo->getPromoWhereAll('*','status','=',"aktif");
         // dd($getFormulirPesanan);
         if (!empty($getFormulirPesanan->id_promo)) {
-            $getPromo = $this->promo->getPromoWhereAll('*', 'id_promo', '=', $getFormulirPesanan->id_promo);
+            $getPromo = $this->promo->firstPromo('*', ['id_promo' => $getFormulirPesanan->id_promo]);
         } else {
             $getPromo = '';
         }
-
+        // dd($getPromo);
         $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
 
         if (session()->has('user')) {
@@ -178,7 +179,8 @@ class C_SuratPemesananRumah extends Controller
                 'getPromo',
                 'getPembayaranRumah',
                 'getProjek',
-                'getUserMenu'
+                'getUserMenu',
+                'getPromoAll'
 
             ));
         } else {
@@ -237,7 +239,7 @@ class C_SuratPemesananRumah extends Controller
                     'tgl_staff_acc_fp'  => date('d-m-y h:m:s'),
                 ];
             }
-            
+
             if ($user->kategori == "AdminAccounting") {
                 $dataUpdate = [
                     'no_fp' => $request->nofp,
@@ -272,7 +274,7 @@ class C_SuratPemesananRumah extends Controller
             return redirect('/login');
         }
     }
-    
+
     function cetakSuratPemesananRumah($id) {
 
             $decryptedID = Crypt::decrypt($id);
@@ -316,5 +318,19 @@ class C_SuratPemesananRumah extends Controller
             $filename = $path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf';
             set_time_limit(2000);
         return $pdf->download('FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '.pdf');
+    }
+    public function editPromoSuratPemesananRumahAction(Request $request, $projek, $id) {
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+        $dataUpdate  = array(
+            'id_promo' => $request->promo
+        );
+
+        $decryptedID = Crypt::decrypt($id);
+        DB::table('formulir_pesanan')
+        ->where('id_formulir', $decryptedID)
+        ->update($dataUpdate);
+
+        return redirect()->route('editSuratPemesananRumah.admin',[$getProjek->nama_projek, Crypt::encrypt($decryptedID)])->with('success','promo telah di ubah!');
     }
 }
