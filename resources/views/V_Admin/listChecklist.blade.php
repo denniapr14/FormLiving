@@ -78,6 +78,21 @@
                                                             <span  class="btn btn-outline-danger">Terkunci</span>
                                                         @endif</h5>
                                                     </button>
+                                                    @if ($checklist->id_pengawas1 == $user->id_user_admin)
+                                                        @if ($checklist->status_cek_pengawas1 == "belum selesai")
+                                                        <span class="btn btn-outline-warning float-right"> <i class="fas fa-spinner fa-spin"></i> </span>
+                                                        @else($checklist->status_cek_pengawas1 == "selesai")
+                                                        <span class="btn btn-outline-success float-right"> <i class="fa fa-check " aria-hidden="true"></i> </span>
+                                                        @endif
+                                                    @elseif($checklist->id_pengawas2 == $user->id_user_admin)
+                                                    @if ($checklist->status_cek_pengawas2 == "belum selesai")
+                                                    <span class="btn btn-outline-warning float-right"> <i class="fas fa-spinner fa-spin"></i> </span>
+                                                    @else($checklist->status_cek_pengawas2 == "selesai")
+                                                    <span class="btn btn-outline-success float-right"> <i class="fa fa-check " aria-hidden="true"></i> </span>
+
+                                                    @endif
+                                                    @endif
+
                                                 </a>
                                                 <div id="collapseDetail{{ $no }}" class="collapse" aria-labelledby="heading11" data-parent="#accordian-3" style="">
                                                     <div class="card-body">
@@ -128,6 +143,34 @@
                                         <a href="{{ route('editChecklist.admin', [ $getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah),Crypt::encrypt($checklist->termin_job),Crypt::encrypt($checklist->id_checklist)]) }}" class="btn btn-outline-info"> <i class="fas fa-edit    "></i>
 
                                         </a>
+                                        @endif
+
+                                        @if ($checklist->foto != null)
+                                        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#seeImage">
+                                            <i class="fas fa-image    "></i>
+                                          </button>
+
+                                          <!-- Modal -->
+                                          <div class="modal fade" id="seeImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img id="imagePreview" style="width: 100%" src="{{ asset('Home/images/termin/' . $checklist->foto) }}" class="img-fluid"
+                        alt="Preview Image">
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
                                         @endif
 
                                     </td>

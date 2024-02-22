@@ -26,79 +26,98 @@
                                 <div class="float-right">
                                     @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminTeknik')
                                         <a href="#" data-toggle="modal" data-target="#addChecklist"
-                                            class="btn btn-outline-info btn--small" style="float: right"><i class="fa fa-plus"
-                                                aria-hidden="true"></i> Pekerjaan</a>
+                                            class="btn btn-outline-info btn--small" style="float: right"><i
+                                                class="fa fa-plus" aria-hidden="true"></i> Pekerjaan</a>
 
-                                                <div class="modal" id="addChecklist">
-                                                    <div class="modal-dialog">
-                                                      <div class="modal-content">
+                                        <div class="modal" id="addChecklist">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
 
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                          <h4 class="modal-title">Modal Header</h4>
-                                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <form action="{{ route('addChecklist.admin', $getProjek->nama_projek ) }}" method="POST">
-                                                            @csrf
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Modal Header</h4>
+                                                        <button type="button" class="close"
+                                                            data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <form
+                                                        action="{{ route('addChecklist.admin', $getProjek->nama_projek) }}"
+                                                        method="POST">
+                                                        @csrf
                                                         <!-- Modal Body -->
                                                         <div class="modal-body">
-                                                          <div class="form-group">
-                                                            <label for="">Pilih Rumah</label>
-                                                            <select class="js-example-basic-single form-control" id="rumah" name="rumah" style="width: 100%">
-                                                                <option value="">--Rumah--</option>
-                                                                @foreach ($getRumah as $rumah)
-                                                                <option value="{{ $rumah->id_rumah }}">{{ $rumah->blok }} - {{ $rumah->nomor }}</option>
-                                                                @endforeach
-                                                              </select>
+                                                            <div class="form-group">
+                                                                <label for="">Pilih Rumah</label>
+                                                                <select class="js-example-basic-single form-control"
+                                                                    id="rumah" name="rumah" style="width: 100%">
+                                                                    <option value="">--Rumah--</option>
+                                                                    @foreach ($getRumah as $rumah)
+                                                                        <option value="{{ $rumah->id_rumah }}">
+                                                                            {{ $rumah->blok }} - {{ $rumah->nomor }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
 
-                                                          </div>
-                                                          <div class="form-group">
-                                                            <label for="">Lantai</label>
-                                                            <select name="lantai" class="js-example-basic-single form-control" style="width: 100%" id="">
-                                                                <option value="">-- Lantai --</option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-                                                            </select>
-                                                          </div>
-                                                          <div class="form-group">
-                                                            <label for="">Subkon</label>
-                                                            <select name="subkon" class="js-example-basic-single form-control" id="" style="width: 100%">
-                                                                <option value="">--subkon--</option>
-                                                                @foreach ($getSubkon as $subkon)
-                                                                <option value="{{ $subkon->id_subkon }}">{{ $subkon->nama_subkon }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                          </div>
-                                                          <div class="form-group">
-                                                            <label for="">Pengawas 1</label>
-                                                            <select name="pengawas1" class="js-example-basic-single form-control" id="" style="width: 100%">
-                                                                <option value="">--Pengawas 1--</option>
-                                                                @foreach ($getPengawas as $pengawas)
-                                                                <option value="{{ $pengawas->id_user_admin }}">{{ $pengawas->nama_ua }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                          </div>
-                                                          <div class="form-group">
-                                                            <label for="">Pengawas 2</label>
-                                                            <select name="pengawas2" class="js-example-basic-single form-control" id="" style="width: 100%">
-                                                                <option value="">--Pengawas 2--</option>
-                                                                @foreach ($getPengawas as $pengawas)
-                                                                <option value="{{ $pengawas->id_user_admin }}">{{ $pengawas->nama_ua }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                          </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="">Lantai</label>
+                                                                <select name="lantai"
+                                                                    class="js-example-basic-single form-control"
+                                                                    style="width: 100%" id="">
+                                                                    <option value="">-- Lantai --</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="">Subkon</label>
+                                                                <select name="subkon"
+                                                                    class="js-example-basic-single form-control"
+                                                                    id="" style="width: 100%">
+                                                                    <option value="">--subkon--</option>
+                                                                    @foreach ($getSubkon as $subkon)
+                                                                        <option value="{{ $subkon->id_subkon }}">
+                                                                            {{ $subkon->nama_subkon }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="">Pengawas 1</label>
+                                                                <select name="pengawas1"
+                                                                    class="js-example-basic-single form-control"
+                                                                    id="" style="width: 100%">
+                                                                    <option value="">--Pengawas 1--</option>
+                                                                    @foreach ($getPengawas as $pengawas)
+                                                                        <option value="{{ $pengawas->id_user_admin }}">
+                                                                            {{ $pengawas->nama_ua }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="">Pengawas 2</label>
+                                                                <select name="pengawas2"
+                                                                    class="js-example-basic-single form-control"
+                                                                    id="" style="width: 100%">
+                                                                    <option value="">--Pengawas 2--</option>
+                                                                    @foreach ($getPengawas as $pengawas)
+                                                                        <option value="{{ $pengawas->id_user_admin }}">
+                                                                            {{ $pengawas->nama_ua }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
                                                         </div>
 
                                                         <!-- Modal Footer -->
                                                         <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                          <button type="submit" class="btn btn-outline-success">Submit</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit"
+                                                                class="btn btn-outline-success">Submit</button>
                                                         </div>
                                                     </form>
-                                                      </div>
-                                                    </div>
-                                                  </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @else
                                     @endif
                                 </div>
@@ -158,9 +177,10 @@
                                             </div>
                                         @else
                                             <div class="progress">
-                                                <div class="progress-bar bg-success progress-bar-striped" role="progressbar"
-                                                    aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
-                                                    aria-valuemax="100" style="width: {{ $checklist->percentase }}%">
+                                                <div class="progress-bar bg-success progress-bar-striped"
+                                                    role="progressbar" aria-valuenow="{{ $checklist->percentase }}"
+                                                    aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{ $checklist->percentase }}%">
 
                                                 </div>
                                             </div>
@@ -175,7 +195,7 @@
                                             $newdt = date('d-m-Y', $dt);
                                             $newdtr = date('d-m-Y', $dtr);
                                         @endphp
-                                        @if ($checklist->tgl_deadline < $newd)
+                                        @if ($checklist->tgl_deadline > $newd)
                                             <div class="btn btn-outline-danger">
 
                                                 {{ tgl_indo($checklist->tgl_deadline) }}
@@ -221,46 +241,58 @@
                                     </td>
                                     <td>
                                         @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
-                                            <a href="{{ route('nextTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}" class="btn btn-outline-info"><i class="fa fa-chevron-right"
+                                            <a href="{{ route('nextTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                class="btn btn-outline-info"><i class="fa fa-chevron-right"
                                                     aria-hidden="true"> Termin</i></a><br>
-                                            <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#dateModal">
-                                                Costum Termin
+
+
+                                            <a href="#" class="btn btn-outline-info" data-toggle="modal"
+                                                data-target="#dateModal">
+                                                Costum Deadline
                                             </a>
 
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="dateModal" tabindex="-1"
-                                                aria-labelledby="dateModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
+                                            <div class="modal fade" id="dateModal" tabindex="-1" role="dialog"
+                                                aria-labelledby="pinModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="dateModalLabel">Select Date</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
+                                                            <h5 class="modal-title" id="pinModalLabel">Enter PIN</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
                                                         </div>
-                                                        <form action="{{ route('customTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)] ) }}" method="POST">
-                                                        <div class="modal-body">
+                                                        <form
+                                                            action="{{ route('customTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <div class="modal-body">
 
                                                                 <div class="mb-3">
                                                                     <label for="dateInput" class="form-label">Date</label>
-                                                                    <input type="date" name="tanggalTermin" class="form-control"
-                                                                        id="dateInput">
+                                                                    <input type="date" name="tanggalTermin"
+                                                                        class="form-control" id="dateInput">
                                                                 </div>
 
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-outline-success">Submit</button>
-                                                        </div>
-                                                    </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-outline-success">Submit</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <br>
-                                            <a href="{{ route('printChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}" class="btn btn-outline-info"><i class="fa fa-print" aria-hidden="true"></i></a>
-                                            <br>
-                                        @else
+
+
+                                                <br>
+                                                <a href="{{ route('printChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                    class="btn btn-outline-info"><i class="fa fa-print"
+                                                        aria-hidden="true"></i></a>
+                                                <br>
+                                            @else
                                         @endif
 
                                         <a href="{{ route('getTerminChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
@@ -303,7 +335,6 @@
             });
         </script>
         <script>
-
             $(document).ready(function() {
                 $('#checklistTable').DataTable({
                     lengthMenu: [
@@ -321,7 +352,6 @@
                     autoWidth: true
                 });
             });
-
         </script>
 
     @endsection

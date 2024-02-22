@@ -27,7 +27,8 @@
                 <div class="card-title">
                     <table style="width: 100%">
                         <tr>
-                            <td> <a href="{{ route('checklist.admin', $getProjek->nama_projek) }}" class="btn btn-outline-danger"> <i class="fa fa-arrow-left" aria-hidden="true"></i> </a>
+                            <td> <a href="{{ route('checklist.admin', $getProjek->nama_projek) }}"
+                                    class="btn btn-outline-danger"> <i class="fa fa-arrow-left" aria-hidden="true"></i> </a>
                                 <span>Checklist {{ $getProjek->nama_projek }} rumah {{ $getRumah->nama_cluster }} /
                                     {{ $getRumah->blok }} - {{ $getRumah->nomor }}</span>
                             </td>
@@ -54,32 +55,46 @@
                             $no = 1;
                             ?>
                             @foreach ($getChecklist as $checklist)
-                                <tr>
+                                @foreach ($getCountChecklist as $countChecklist)
+                                    @if ($checklist->termin_jl == $countChecklist->termin_jl)
+                                        <tr>
 
-                                    <td>{{ $checklist->termin_job }}</td>
-                                    <td>
-                                        <p>
-                                            Pengawas 1 : {{ $checklist->pengawas1 }}
-                                        </p>
-                                        <p>
-                                            Pengawas 2 : {{ $checklist->pengawas2 }}
-                                        </p>
-                                        <p>Subkon : {{ $checklist->nama_subkon }}</p>
-                                        <p> Status : @if ($checklist->status_checklist == 'selesai')
-                                                <span  class="btn btn-outline-success">Selesai</span>
-                                            @elseif($checklist->status_checklist == 'progress')
-                                                <span  class="btn btn-outline-warning">Progress</span>
-                                            @elseif($checklist->status_checklist == 'terkunci')
-                                                <span  class="btn btn-outline-danger">Terkunci</span>
-                                            @endif
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('getListChecklist.admin', [$getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah),Crypt::encrypt($checklist->termin_job)]) }}" class="btn btn-outline-info"> <i class="fa fa-list" aria-hidden="true"></i> Rincian Checklist
+                                            <td>{{ $checklist->termin_job }}</td>
+                                            <td>
+                                                <p>
+                                                    Pengawas 1 : {{ $checklist->pengawas1 }}
+                                                    <span class="btn btn-outline-info">
 
-                                        </a>
-                                    </td>
-                                </tr>
+                                                        {{ $countChecklist->countSelesaiPengawas1 }} / {{ $countChecklist->countCekPengawas1 }} selesai
+                                                    </span>
+                                                </p>
+                                                <p>
+                                                    Pengawas 2 : {{ $checklist->pengawas2 }}  <span class="btn btn-outline-info">
+
+                                                        {{ $countChecklist->countSelesaiPengawas2 }} / {{ $countChecklist->countCekPengawas2 }} selesai
+                                                    </span>
+                                                </p>
+                                                <p>Subkon : {{ $checklist->nama_subkon }}</p>
+                                                <p> Status : @if ($checklist->status_checklist == 'selesai')
+                                                        <span class="btn btn-outline-success">Selesai</span>
+                                                    @elseif($checklist->status_checklist == 'progress')
+                                                        <span class="btn btn-outline-warning">Progress</span>
+                                                    @elseif($checklist->status_checklist == 'terkunci')
+                                                        <span class="btn btn-outline-danger">Terkunci</span>
+                                                    @endif
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('getListChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah), Crypt::encrypt($checklist->termin_jl)]) }}"
+                                                    class="btn btn-outline-info"> <i class="fa fa-list"
+                                                        aria-hidden="true"></i> Rincian Checklist
+
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @else
+                                    @endif
+                                @endforeach
                             @endforeach
                         </tbody>
                     </table>
