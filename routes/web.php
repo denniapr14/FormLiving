@@ -434,12 +434,15 @@ route::post('/checkPinPendamping/{projek}/{id_rumah}/{termin}/{id_checklist}',[C
 route::get('/gambarKerja/{projek}',[C_GambarKerja::class,'getGambarKerja'])->name('gambarKerja.admin');
 
 // SPP
-route::get('/buat-spp/{projek}',[C_SPP::class,'createSPP'])->name('createSPP.admin');
+route::get('/spp/{projek}',[C_SPP::class,'getSPP'])->name('spp.admin');
+route::get('/buat-spp/{projek}/{id_formulir}',[C_SPP::class,'createSPP'])->name('createSPP.admin');
 
 // TEST DOKU
 Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');
 Route::post('/generate-payment', [C_Payment::class,'generatePayment'])->name('generate.admin');
 Route::get('/check-payment-status/{orderId}/{requestId}/{expTime}/{signature}', [C_Simulasi::class,'checkStatus'])->name('checkStatusPembayaran');
+
+
 
 
 // Brosur

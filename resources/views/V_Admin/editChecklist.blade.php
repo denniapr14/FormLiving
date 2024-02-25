@@ -80,6 +80,18 @@
                 @endif
 
                 <!-- Repeat similar blocks for other fields -->
+                @if ($user->kategori =="Pendamping")
+                <div class="form-group">
+                    <label for="">Status Pekerjaan :</label>
+                    <select class="form-control" id="" name="status_checklist">
+                        <option value="selesai" @if ($getChecklist->status_checklist == 'selesai') selected @endif>Selesai</option>
+                        <option value="progress" @if ($getChecklist->status_checklist == 'progress') selected @endif>Progress</option>
+                    </select>
+                </div>
+                @else
+                <input type="text" hidden name="status_checklist" id="statusChecklist" class="form-control"
+                placeholder="" value="{{ $getChecklist->status_checklist }}" aria-describedby="helpId">
+                @endif
                 <input type="text" hidden name="status_checklist" id="statusChecklist" class="form-control"
                     placeholder="" value="{{ $getChecklist->status_checklist }}" aria-describedby="helpId">
                 <input type="text" hidden name="bobot" value="{{ $getChecklist->bobot_jl }}">

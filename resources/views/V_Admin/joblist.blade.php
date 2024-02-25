@@ -169,6 +169,20 @@
                                                                             <div class="form-group row">
                                                                                 <label
                                                                                     class="col-sm-4 col-form-label align-self-center">
+                                                                                    Bobot
+                                                                                </label>
+                                                                                <div class="col-sm-8 align-self-center">
+                                                                                    <input type="number"
+                                                                                    class="form form-control"
+                                                                                    name="bobot_jl"
+                                                                                    value="{{ $joblist->bobot_jl }}"
+                                                                                    placeholder="Lantai Pekerjaan"
+                                                                                    step="0.01">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label
+                                                                                    class="col-sm-4 col-form-label align-self-center">
                                                                                     Status
                                                                                 </label>
                                                                                 <div class="col-sm-8 align-self-center">

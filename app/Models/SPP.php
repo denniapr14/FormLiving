@@ -1,10 +1,12 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class SPP extends Model{
     protected $table = "spp";
 
-    
+
+    protected $primaryKey = 'id_spp';
+
 }

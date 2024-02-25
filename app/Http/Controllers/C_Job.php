@@ -93,7 +93,7 @@ class C_Job extends Controller
         //
         $decrypted = Crypt::decrypt($termin);
         $getJob = $this->job->getJob('*')->collect();
-        $getJob = $getJob->where('termin_job',$getProjek->id_projek);
+        $getJob = $getJob->where('termin_job',$decrypted);
         // dd($getJob);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
@@ -249,7 +249,7 @@ class C_Job extends Controller
                 ->update($dataJob);
 
 
-            return redirect()->route('job.admin',$getProjek->nama_projek)->with('success','Perkerjaan berhasil di ubah');
+            return redirect()->route('jobTermin.admin',[$getProjek->nama_projek, Crypt::encrypt($request->termin_job)])->with('success','Perkerjaan berhasil di ubah');
         } else {
             return redirect('/login');
         }

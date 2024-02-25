@@ -795,6 +795,7 @@ class C_Checklist extends Controller
                     'lat_checklist'        => $request->lat_checklist,
                     'long_checklist'       => $request->long_checklist,
                     'keterangan'           => $request->keterangan,
+                    // 'ada'                   =>"foto",
                 ];
                 // Update the database record with the new photo path
 

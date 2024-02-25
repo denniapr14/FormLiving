@@ -92,7 +92,7 @@
                                         {{ date('d M Y', strtotime($fp->tgl_input_fp)) }}
                                     </td>
                                     <td>
-                                        <div class="d-flex flex-nowrap">
+
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
                                                 <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"
                                                     class="btn btn-outline-info">
@@ -107,7 +107,9 @@
 
 
                                             </a>
-                                        </div>
+
+                                        @endif
+
                                     </td>
 
                                 </tr>
@@ -193,6 +195,13 @@
 
                                                                 </i>
                                                             </a>
+
+                                                    </td>
+                                                    <td>
+                                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
+                                                        <a href="" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i>SPP</a>
+                                                    @else
+                                                    @endif
 
                                                     </td>
                                                 </table>
