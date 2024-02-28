@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url('Bootstrap') }}/assets/images/favicon.png">
-    <title>Nice admin Template - The Ultimate Multipurpose admin template</title>
+    <title>Forms One</title>
     <!-- Custom CSS -->
     <link href="{{ url('Bootstrap') }}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
     <link href="{{ url('Bootstrap') }}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
@@ -113,12 +113,14 @@
                             <!--End Logo icon -->
                             <!-- Logo text -->
                             <span class="logo-text">
-                                <!-- dark Logo text -->
+                                Forms One
+
+                                {{--  <!-- dark Logo text -->
                                 <img src="{{ url('Bootstrap') }}/assets/images/logo-text.png" alt="homepage"
                                     class="dark-logo" />
                                 <!-- Light Logo text -->
                                 <img src="{{ url('Bootstrap') }}/assets/images/logo-light-text.png" class="light-logo"
-                                    alt="homepage" />
+                                    alt="homepage" />  --}}
                             </span>
                         </a>
                         <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)"
@@ -360,7 +362,7 @@
                     <ul id="sidebarnav">
                         <li class="nav-small-cap">
                             <i class="mdi mdi-dots-horizontal"></i>
-                            <span class="hide-menu">Personal</span>
+                            <span class="hide-menu">Menu</span>
                         </li>
 
 
@@ -378,11 +380,18 @@
                             @endif
                         @endforeach
 
+
+
+                        @foreach ($getUserMenu as $userMenu)
+                        @if (empty($userMenu->status_menu == 'optional'))
+
+                        @else
                         <li class="nav-small-cap">
                             <i class="mdi mdi-dots-horizontal"></i>
                             <span class="hide-menu">Personal</span>
                         </li>
-                        @foreach ($getUserMenu as $userMenu)
+                        @endif
+
                             @if ($userMenu->status_menu == 'optional')
                                 <li class="sidebar-item ">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif active"

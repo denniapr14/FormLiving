@@ -436,6 +436,9 @@ route::get('/gambarKerja/{projek}',[C_GambarKerja::class,'getGambarKerja'])->nam
 // SPP
 route::get('/spp/{projek}',[C_SPP::class,'getSPP'])->name('spp.admin');
 route::get('/buat-spp/{projek}/{id_formulir}',[C_SPP::class,'createSPP'])->name('createSPP.admin');
+route::get('/edit-spp/{projek}/{id_spp}',[C_SPP::class,'editSPP'])->name('editSPP.admin');
+route::post('/edit-spp/action/{projek}/{id_spp}',[C_SPP::class,'editSPPAction'])->name('editSPPAction.admin');
+route::get('/print-spp/{projek}/{id_spp}',[C_SPP::class,'printSPP'])->name('printSPP.admin');
 
 // TEST DOKU
 Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');

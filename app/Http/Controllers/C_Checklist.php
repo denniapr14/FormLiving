@@ -176,7 +176,9 @@ class C_Checklist extends Controller
         } else {
             return redirect()->back()->with('error', 'Checklist sudah ada!');
         }
-        $getJoblist = $this->joblist->getJoblistWhere(['joblist.lantai_jl' => $request->lantai]);
+        $getJoblist = $this->joblist->getJoblistWhere(['joblist.lantai_jl' => $request->lantai,
+        'joblist.status_jl' => "Aktif"
+    ]);
         // dd($request->lantai);
         $nextMonth = "";
         if ($request->lantai == 1) {
