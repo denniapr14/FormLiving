@@ -84,6 +84,7 @@ class C_Login extends Controller
                     return back()->with('error','Harap hubungi pihak admin projek anda belum ditambahkan ');
                     # code...
                 }
+
                 Session::push('selectedProjeks', $getProjekUser->nama_projek);
                 $userRole = $this->Role(Session::get('user'));
 

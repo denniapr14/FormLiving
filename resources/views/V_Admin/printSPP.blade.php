@@ -286,7 +286,7 @@
                                                     @else
                                                         <i class="fas fa-times"> belum di validasi</i>
                                                     @endif
-
+                                                        <br>
                                                     <u><b>Andreas Wibisono</b></u>
                                                     <br>
                                                     <b>Manajer Keuangan</b>

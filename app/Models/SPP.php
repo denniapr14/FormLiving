@@ -26,11 +26,13 @@ class SPP extends Model{
         ->first();
     }
 
-    public function getSPPJoinRumahFormulirPelangganOrder($order,$by) {
+    public function getSPPJoinRumahFormulirPelangganOrder($where, $order,$by) {
         return SPP::select('*')
         ->join('rumah','spp.id_rumah','rumah.id_rumah')
+        ->join('projek','rumah.id_projek','projek.id_projek')
         ->join('formulir_pesanan','spp.id_formulir','formulir_pesanan.id_formulir')
         ->join('user_pelanggan','spp.id_pelanggan','user_pelanggan.id_pelanggan')
+        ->where($where)
         ->orderBy($order, $by)
 
         ->get();

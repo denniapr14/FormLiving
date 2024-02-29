@@ -43,7 +43,7 @@
     <![endif]-->
 
     <style>
-        .paginate_button{
+        .paginate_button {
             border: 2px solid gray;
             color: gray;
             padding: 10px 20px;
@@ -55,7 +55,8 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .current{
+
+        .current {
             border: 2px solid gray;
             background-color: gray;
             color: white;
@@ -177,21 +178,22 @@
 
                                             <!-- Message -->
                                             @foreach ($projekUser as $projek)
-                                            <a href="{{ url('/set-selected-projek', $projek->nama_projek) }}" class="message-item">
-                                                <span class="user-img">
-                                                    <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png"
-                                                        alt="user" class="rounded-circle">
+                                                <a href="{{ url('/set-selected-projek', $projek->nama_projek) }}"
+                                                    class="message-item">
+                                                    <span class="user-img">
+                                                        <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png"
+                                                            alt="user" class="rounded-circle">
 
-                                                </span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">{{ $projek->nama_projek }}</h5>
+                                                    </span>
+                                                    <div class="mail-contnet">
+                                                        <h5 class="message-title">{{ $projek->nama_projek }}</h5>
 
-                                                </div>
-                                            </a>
+                                                    </div>
+                                                </a>
 
-                                            @php
-                                                $setProjek;
-                                            @endphp
+                                                @php
+                                                    $setProjek;
+                                                @endphp
                                             @endforeach
                                         </div>
                                     </li>
@@ -310,8 +312,8 @@
                                 </span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                                     <div class="">
-                                        <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png" alt="user"
-                                            class="rounded-circle" width="60">
+                                        <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png"
+                                            alt="user" class="rounded-circle" width="60">
                                     </div>
                                     <div class="m-l-10">
                                         <h4 class="m-b-0">
@@ -326,10 +328,12 @@
                                     </div>
                                 </div>
                                 <div class="profile-dis scrollable">
-                                    <a class="dropdown-item" href="{{ route('updatePasswordProfile.admin',Crypt::encrypt($user->id_user_admin)) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('updatePasswordProfile.admin', Crypt::encrypt($user->id_user_admin)) }}">
                                         <i class="ti-user m-r-5 m-l-5"></i> Ubah Password</a>
 
-                                    <a class="dropdown-item" href="{{ route('updateUserProfile.admin',Crypt::encrypt($user->id_user_admin)) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('updateUserProfile.admin', Crypt::encrypt($user->id_user_admin)) }}">
                                         <i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}">
@@ -380,17 +384,20 @@
                             @endif
                         @endforeach
 
-
+                        @php
+                            $personalDisplayed = false;
+                        @endphp
 
                         @foreach ($getUserMenu as $userMenu)
-                        @if (empty($userMenu->status_menu == 'optional'))
-
-                        @else
-                        <li class="nav-small-cap">
-                            <i class="mdi mdi-dots-horizontal"></i>
-                            <span class="hide-menu">Personal</span>
-                        </li>
-                        @endif
+                            @if (!$personalDisplayed)
+                                <li class="nav-small-cap">
+                                    <i class="mdi mdi-dots-horizontal"></i>
+                                    <span class="hide-menu">Personal</span>
+                                </li>
+                                @php
+                                    $personalDisplayed = true;
+                                @endphp
+                            @endif
 
                             @if ($userMenu->status_menu == 'optional')
                                 <li class="sidebar-item ">
@@ -467,15 +474,15 @@
                                         <a href="@yield('back')">@yield('breadcrumb')</a>
                                     </li>
                                     @if (!empty(trim($__env->yieldContent('breadcrumb2'))))
-                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb2')</li>
+                                        <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb2')</li>
                                     @endif
 
                                     @if (!empty(trim($__env->yieldContent('breadcrumb3'))))
-                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb3')</li>
+                                        <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb3')</li>
                                     @endif
 
                                     @if (!empty(trim($__env->yieldContent('breadcrumb4'))))
-                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb4')</li>
+                                        <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb4')</li>
                                     @endif
                                 </ol>
                             </nav>

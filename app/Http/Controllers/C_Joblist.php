@@ -228,7 +228,7 @@ class C_Joblist extends Controller
                     'bobot_jl'    => $request->bobot_jl,
                     'termin_jl'    => $request->termin_jl,
                     'lantai_jl'    => $request->lantai_jl,
-                    'status_jl'    => "Aktif"
+                    'status_jl'    => $request->status_jl
                 ];
             DB::table('joblist')
                 ->where('id_joblist', $decryptedID)
