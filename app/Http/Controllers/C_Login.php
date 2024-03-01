@@ -80,7 +80,7 @@ class C_Login extends Controller
                 $getProjekUser = $this->userProjek->firstProjectUserWhere(['user_admin.id_user_admin' => $user->id_user_admin]);
 
                 // dd($getProjekUser);
-                if (empty($getProjekUser) || $getProjekUser ==null ) {
+                if (empty($getProjekUser) || $getProjekUser == null ) {
                     return back()->with('error','Harap hubungi pihak admin projek anda belum ditambahkan ');
                     # code...
                 }

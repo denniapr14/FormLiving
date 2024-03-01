@@ -48,7 +48,9 @@ class C_SPP extends Controller
             $projek,
             'formulir_pesanan.tgl_input_fp',
             'desc'
-        );
+        )
+        
+        ;
         $getSPP = $this->spp->getSPPJoinRumahFormulirPelangganOrder(['projek.nama_projek' => $projek],'spp.tgl_input_spp','desc');
         // dd($getFormulirPesanan);
         $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahAll();
