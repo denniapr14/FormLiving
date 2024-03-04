@@ -8,42 +8,42 @@
 
 @section('content')
 
-    <style>
-        .map {
-            width: 100%;
-            height: 100%;
+<style>
+    .map {
+        width: 100%;
+        height: 100%;
 
-        }
+    }
 
-        .zoomIn {
-            position: absolute;
-            z-index: 2;
-            top: 150px;
-            right: 50px;
-        }
+    .zoomIn {
+        position: absolute;
+        z-index: 2;
+        top: 150px;
+        right: 50px;
+    }
 
-        .zoomOut {
-            position: absolute;
-            z-index: 2;
-            top: 180px;
-            right: 50px;
-        }
-    </style>
-    <!-- start: main -->
+    .zoomOut {
+        position: absolute;
+        z-index: 2;
+        top: 180px;
+        right: 50px;
+    }
+</style>
+<!-- start: main -->
 
 
-    <!-- start: navbar -->
+<!-- start: navbar -->
 
-    <!-- end: navbar -->
+<!-- end: navbar -->
 
-    <!-- start: content -->
-    <div class="content__wrapper">
+<!-- start: content -->
+<div class="content__wrapper">
 
-        <div class="content__row">
-            <div class="content__column">
-                <div class="card__box greeting__box">
-                    <div class="greeting__text">
-                        <?php
+    <div class="content__row">
+        <div class="content__column">
+            <div class="card__box greeting__box">
+                <div class="greeting__text">
+                    <?php
                         $time = date('H:i');
 
                         if ($time >= '05:00' && $time < '11:00') {
@@ -56,133 +56,132 @@
                             echo 'Good night 🌙';
                         }
                         ?>
-                        , {{ $user->nama_ktgr }}
-                    </div>
-                    <div class="greeting__date">{{ date('l, j F Y') }}</div>
-                    <div class="greeting__question">Would you like to see today s sales analysis?</div>
+                    , {{ $user->nama_ktgr }}
+                </div>
+                <div class="greeting__date">{{ date('l, j F Y') }}</div>
+                <div class="greeting__question">Would you like to see today s sales analysis?</div>
 
-                    <?php
+                <?php
 
 
                     if ($time >= '04:00' && $time < '17:00') {
                         ?>
 
-                    <img style="width: 25%" src="{{ url('Dashboard') }}/images/content/sun_illustration.png"
-                        alt="sun_illustration">
-                    <?php
+                <img style="width: 25%" src="{{ url('Dashboard') }}/images/content/sun_illustration.png"
+                    alt="sun_illustration">
+                <?php
                     } else {
                         ?>
-                    <img style="width: 25%" src="{{ url('Dashboard') }}/images/content/night.png" alt="night">
-                    <?php
+                <img style="width: 25%" src="{{ url('Dashboard') }}/images/content/night.png" alt="night">
+                <?php
                     }
                     ?>
 
-                    <span class="btn btn-outline-primary float-right" id="clock"></span>
-                </div>
+                <span class="btn btn-outline-primary float-right" id="clock"></span>
             </div>
-            <div class="content__column">
-                <div class="card__box dashboard__box">
-                    <div class="card__header">
-                        <div class="card__title">
-                            <i class="bi bi-lightning-charge"></i>
-                            <span>Summary</span>
-                        </div>
-
+        </div>
+        <div class="content__column">
+            <div class="card__box dashboard__box">
+                <div class="card__header">
+                    <div class="card__title">
+                        <i class="bi bi-lightning-charge"></i>
+                        <span>Summary</span>
                     </div>
-                    <div class="transaction__listing">
 
-                        <div class="transaction__column">
-                            <div class="transaction__icon transaction__icon--web-page">
-                                <i class="bi bi-file-earmark-code"></i>
-                            </div>
-                            <div class="transaction__count">{{ $closingAll->count }}</div>
-                            <div class="transaction__title">Semua Closing</div>
+                </div>
+                <div class="transaction__listing">
+
+                    <div class="transaction__column">
+                        <div class="transaction__icon transaction__icon--web-page">
+                            <i class="bi bi-file-earmark-code"></i>
                         </div>
-                        <div class="transaction__column">
-                            <div class="transaction__icon transaction__icon--customer">
-                                <i class="bi bi-person"></i>
-                            </div>
-                            <div class="transaction__count">{{ $closing->count }}</div>
-                            <div class="transaction__title">Bulanan Closing</div>
+                        <div class="transaction__count">{{ $closingAll->count }}</div>
+                        <div class="transaction__title">Semua Closing</div>
+                    </div>
+                    <div class="transaction__column">
+                        <div class="transaction__icon transaction__icon--customer">
+                            <i class="bi bi-person"></i>
                         </div>
-                        @if (
-                            $user->kategori == 'Sales' ||
-                                $user->kategori == 'SalesAgent' ||
-                                $user->kategori == 'Agent' ||
-                                $user->kategori == 'AgentCompany')
-                        @elseif($user->kategori == 'AdminAgentCompany' || $user->kategori == 'AdminSales')
-                            <div class="transaction__column">
-                                <div class="transaction__icon transaction__icon--agents">
-                                    <i class="bi bi-person-workspace"></i>
-                                </div>
-                                <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
-                                <div class="transaction__title">
-                                    @if ($user->kategori == 'AdminSales')
-                                        Sales
-                                    @elseif($user->kategori == 'AdminAgentCompany')
-                                        Agent
-                                    @endif
-
-                                </div>
-                            </div>
-                        @else
-                            <div class="transaction__column">
-                                <div class="transaction__icon transaction__icon--agents">
-                                    <i class="bi bi-person-workspace"></i>
-                                </div>
-                                <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
-                                <div class="transaction__title">Agen Dengan Company</div>
-                            </div>
-                            <div class="transaction__column">
-                                <div class="transaction__icon transaction__icon--invoice">
-                                    <i class="bi bi-file-earmark-pdf"></i>
-                                </div>
-                                <div class="transaction__count">{{ $agentWithoutCompany->userCount }}</div>
-                                <div class="transaction__title">Agen</div>
-                            </div>
-
-                        @endif
-
-
-                        <div class="transaction__column">
-                            <div class="transaction__icon transaction__icon--order-forms">
-                                <i class="bi bi-file-earmark-font"></i>
-                            </div>
-                            <div class="transaction__count">{{ $remainHouse->count }}</div>
-                            <div class="transaction__title">Sisa Rumah</div>
+                        <div class="transaction__count">{{ $closing->count }}</div>
+                        <div class="transaction__title">Bulanan Closing</div>
+                    </div>
+                    @if (
+                    $user->kategori == 'Sales' ||
+                    $user->kategori == 'SalesAgent' ||
+                    $user->kategori == 'Agent' ||
+                    $user->kategori == 'AgentCompany')
+                    @elseif($user->kategori == 'AdminAgentCompany' || $user->kategori == 'AdminSales')
+                    <div class="transaction__column">
+                        <div class="transaction__icon transaction__icon--agents">
+                            <i class="bi bi-person-workspace"></i>
                         </div>
+                        <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
+                        <div class="transaction__title">
+                            @if ($user->kategori == 'AdminSales')
+                            Sales
+                            @elseif($user->kategori == 'AdminAgentCompany')
+                            Agent
+                            @endif
+
+                        </div>
+                    </div>
+                    @else
+                    <div class="transaction__column">
+                        <div class="transaction__icon transaction__icon--agents">
+                            <i class="bi bi-person-workspace"></i>
+                        </div>
+                        <div class="transaction__count"> {{ $agentWithCompany->userCount }}</div>
+                        <div class="transaction__title">Agen Dengan Company</div>
+                    </div>
+                    <div class="transaction__column">
+                        <div class="transaction__icon transaction__icon--invoice">
+                            <i class="bi bi-file-earmark-pdf"></i>
+                        </div>
+                        <div class="transaction__count">{{ $agentWithoutCompany->userCount }}</div>
+                        <div class="transaction__title">Agen</div>
+                    </div>
+
+                    @endif
+
+
+                    <div class="transaction__column">
+                        <div class="transaction__icon transaction__icon--order-forms">
+                            <i class="bi bi-file-earmark-font"></i>
+                        </div>
+                        <div class="transaction__count">{{ $remainHouse->count }}</div>
+                        <div class="transaction__title">Sisa Rumah</div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="content__row">
-            @if ($rumah != null && $rumah != '')
-                @php
+    <div class="content__row">
+        @if ($rumah != null && $rumah != '')
+        @php
 
-                    $fileSVG = 'views/' . $getProjek->nama_projek . '.svg';
-                @endphp
-                <div class="content__row mb-3">
-                    <div class="card__box">
-                        <div class="card__header">
-                            <div class="card__title">
-                                <i class="bi bi-map"></i>
-                                <span>Site Plan</span>
+        $fileSVG = 'views/' . $getProjek->nama_projek . '.svg';
+        @endphp
+        <div class="content__row mb-3">
+            <div class="card__box">
+                <div class="card__header">
+                    <div class="card__title">
+                        <i class="bi bi-map"></i>
+                        <span>Site Plan</span>
 
-                            </div>
+                    </div>
 
-                        </div>
-                        <div class="table-responsive">
+                </div>
+                <div class="table-responsive">
 
-                            <div class="map svg-container"
-                                style="background-color: white ;width: 100%;
+                    <div class="map svg-container" style="background-color: white ;width: 100%;
                             ">
 
-                                {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
-                                {{-- @include('map.svg') --}}
-                                {!! file_get_contents(resource_path($fileSVG)) !!}
-                                <script>
-                                    var svg = document.getElementById('Layer_1');
+                        {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt="" /> --}}
+                        {{-- @include('map.svg') --}}
+                        {!! file_get_contents(resource_path($fileSVG)) !!}
+                        <script>
+                            var svg = document.getElementById('Layer_1');
 
 
 
@@ -293,27 +292,27 @@
 
                                     // Function to close the popover
 
-                                </script>
+                        </script>
 
 
 
-                            </div>
+                    </div>
 
-                            <div class="float-right">
-                                <button class="btn-fd-icon-outline zoomIn col-md-1" id="plus" onclick="zoom(1.5)"><i
-                                        class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="float-right">
+                        <button class="btn-fd-icon-outline zoomIn col-md-1" id="plus" onclick="zoom(1.5)"><i
+                                class="fa fa-plus" aria-hidden="true"></i></button>
 
-                                <button class="btn-fd-icon-outline zoomOut col-md-1" id="minus" onclick="zoom(0.5)"><i
-                                        class="fa fa-minus" aria-hidden="true"></i></button>
-
-
-                            </div>
+                        <button class="btn-fd-icon-outline zoomOut col-md-1" id="minus" onclick="zoom(0.5)"><i
+                                class="fa fa-minus" aria-hidden="true"></i></button>
 
 
+                    </div>
 
 
-                            <script>
-                                var svg = document.querySelector('.svg-container > svg');
+
+
+                    <script>
+                        var svg = document.querySelector('.svg-container > svg');
                                 var currentScale = 1;
                                 var maxZoom = 2;
                                 var isPanning = true;
@@ -358,10 +357,10 @@
                                 };
 
 
-                            </script>
+                    </script>
 
-                        </div>
-                    </div>
+                </div>
+            </div>
             @endif
         </div>
 
@@ -389,4 +388,4 @@
         });
     </script>
 
-@endsection
+    @endsection

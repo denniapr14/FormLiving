@@ -34,10 +34,9 @@ class Checklist extends Model{
         ->Join('job','joblist.id_job','job.id_job')
         ->where($where)
         ->get();
-
     }
+    
     function insertChecklist($data)  {
         return Checklist::insert($data);
-
     }
 }

@@ -22,10 +22,12 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesnt work if you view the page via file:// -->
 
-    <link href="{{ url('Bootstrap') }}/vendor/simple-datatables/style.css" rel="stylesheet">
+    {{--
+    <link href="{{ url('Bootstrap') }}/vendor/simple-datatables/style.css" rel="stylesheet"> --}}
 
     <!-- Template Main CSS File -->
-    <link href="{{ url('Bootstrap') }}/css/style.css" rel="stylesheet">
+    {{--
+    <link href="{{ url('Bootstrap') }}/assets/css/style.css" rel="stylesheet"> --}}
     <script src="{{ url('Dashboard') }}/js/jquery.min.js"></script>
     <script src="{{ url('Dashboard') }}/js/svg-pan-zoom.js"></script>
 
@@ -34,7 +36,8 @@
     {{-- Datatabless --}}
 
 
-    <link rel="stylesheet" href="{{ url('Dashboard') }}/css/jquery.dataTables.css" />
+    {{--
+    <link rel="stylesheet" href="{{ url('Dashboard') }}/css/jquery.dataTables.css" /> --}}
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
     <!--[if lt IE 9]>
@@ -100,7 +103,7 @@
                     <!-- Logo -->
                     <!-- ============================================================== -->
                     <div class="navbar-brand">
-                        <a href="index.html" class="logo">
+                        <a href="#" class="logo">
                             <!-- Logo icon -->
                             <b class="logo-icon">
                                 <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -116,12 +119,13 @@
                             <span class="logo-text">
                                 Forms One
 
-                                {{--  <!-- dark Logo text -->
+                                {{--
+                                <!-- dark Logo text -->
                                 <img src="{{ url('Bootstrap') }}/assets/images/logo-text.png" alt="homepage"
                                     class="dark-logo" />
                                 <!-- Light Logo text -->
                                 <img src="{{ url('Bootstrap') }}/assets/images/logo-light-text.png" class="light-logo"
-                                    alt="homepage" />  --}}
+                                    alt="homepage" /> --}}
                             </span>
                         </a>
                         <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)"
@@ -178,22 +182,22 @@
 
                                             <!-- Message -->
                                             @foreach ($projekUser as $projek)
-                                                <a href="{{ url('/set-selected-projek', $projek->nama_projek) }}"
-                                                    class="message-item">
-                                                    <span class="user-img">
-                                                        <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png"
-                                                            alt="user" class="rounded-circle">
+                                            <a href="{{ url('/set-selected-projek', $projek->nama_projek) }}"
+                                                class="message-item">
+                                                <span class="user-img">
+                                                    <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png"
+                                                        alt="user" class="rounded-circle">
 
-                                                    </span>
-                                                    <div class="mail-contnet">
-                                                        <h5 class="message-title">{{ $projek->nama_projek }}</h5>
+                                                </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">{{ $projek->nama_projek }}</h5>
 
-                                                    </div>
-                                                </a>
+                                                </div>
+                                            </a>
 
-                                                @php
-                                                    $setProjek;
-                                                @endphp
+                                            @php
+                                            $setProjek;
+                                            @endphp
                                             @endforeach
                                         </div>
                                     </li>
@@ -212,8 +216,8 @@
                         <!-- Comment -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown border-right">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href=""
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-bell-outline font-22"></i>
                                 <span class="badge badge-pill badge-info noti">3</span>
                             </a>
@@ -299,9 +303,9 @@
                                     class="rounded-circle" width="40">
                                 <span class="m-l-5 font-medium d-none d-sm-inline-block">
                                     @if ($user->nama_ua != '')
-                                        {{ $user->nama_ua }}
+                                    {{ $user->nama_ua }}
                                     @else
-                                        {{ $user->username_ua }}
+                                    {{ $user->username_ua }}
                                     @endif
                                     <i class="mdi mdi-chevron-down"></i>
                                 </span>
@@ -312,15 +316,15 @@
                                 </span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                                     <div class="">
-                                        <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png"
-                                            alt="user" class="rounded-circle" width="60">
+                                        <img src="{{ url('Home') }}/images/logo-website/fo-favicon.png" alt="user"
+                                            class="rounded-circle" width="60">
                                     </div>
                                     <div class="m-l-10">
                                         <h4 class="m-b-0">
                                             @if ($user->nama_ua != '')
-                                                {{ $user->nama_ua }}
+                                            {{ $user->nama_ua }}
                                             @else
-                                                {{ $user->username_ua }}
+                                            {{ $user->username_ua }}
                                             @endif
                                         </h4>
                                         <p class=" m-b-0">
@@ -371,44 +375,44 @@
 
 
                         @foreach ($getUserMenu as $userMenu)
-                            @if ($userMenu->status_menu == 'menu')
-                                <li class="sidebar-item ">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif active"
-                                        href="{{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }}"
-                                        aria-expanded="false">
-                                        <i class="{{ $userMenu->icon_menu }}"></i>
-                                        <span class="hide-menu">{{ $userMenu->menu }}</span>
-                                    </a>
+                        @if ($userMenu->status_menu == 'menu')
+                        <li class="sidebar-item ">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif active"
+                                href="{{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }}"
+                                aria-expanded="false">
+                                <i class="{{ $userMenu->icon_menu }}"></i>
+                                <span class="hide-menu">{{ $userMenu->menu }}</span>
+                            </a>
 
-                                </li><!-- End Dashboard Nav -->
-                            @endif
+                        </li><!-- End Dashboard Nav -->
+                        @endif
                         @endforeach
 
                         @php
-                            $personalDisplayed = false;
+                        $personalDisplayed = false;
                         @endphp
 
                         @foreach ($getUserMenu as $userMenu)
-                            @if (!$personalDisplayed)
-                                <li class="nav-small-cap">
-                                    <i class="mdi mdi-dots-horizontal"></i>
-                                    <span class="hide-menu">Personal</span>
-                                </li>
-                                @php
-                                    $personalDisplayed = true;
-                                @endphp
-                            @endif
+                        @if (!$personalDisplayed)
+                        <li class="nav-small-cap">
+                            <i class="mdi mdi-dots-horizontal"></i>
+                            <span class="hide-menu">Personal</span>
+                        </li>
+                        @php
+                        $personalDisplayed = true;
+                        @endphp
+                        @endif
 
-                            @if ($userMenu->status_menu == 'optional')
-                                <li class="sidebar-item ">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif active"
-                                        href="{{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }}"
-                                        aria-expanded="false">
-                                        <i class="{{ $userMenu->icon_menu }}"></i>
-                                        <span class="hide-menu">{{ $userMenu->menu }}</span>
-                                    </a>
-                                </li><!-- End Dashboard Nav -->
-                            @endif
+                        @if ($userMenu->status_menu == 'optional')
+                        <li class="sidebar-item ">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link @if (request()->segment(1) != $userMenu->url_menu) collapsed @endif active"
+                                href="{{ route($userMenu->nama_menu, Session::get('selectedProjeks')[0]) }}"
+                                aria-expanded="false">
+                                <i class="{{ $userMenu->icon_menu }}"></i>
+                                <span class="hide-menu">{{ $userMenu->menu }}</span>
+                            </a>
+                        </li><!-- End Dashboard Nav -->
+                        @endif
                         @endforeach
                         <li class="nav-small-cap">
                             <i class="mdi mdi-dots-horizontal"></i>
@@ -416,8 +420,7 @@
                         </li>
                         <li class="sidebar-item">
 
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
-                                aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/" aria-expanded="false">
                                 <i class="mdi mdi-border-top"></i>
                                 <span class="hide-menu">Halaman Depan</span>
                             </a>
@@ -474,15 +477,15 @@
                                         <a href="@yield('back')">@yield('breadcrumb')</a>
                                     </li>
                                     @if (!empty(trim($__env->yieldContent('breadcrumb2'))))
-                                        <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb2')</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb2')</li>
                                     @endif
 
                                     @if (!empty(trim($__env->yieldContent('breadcrumb3'))))
-                                        <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb3')</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb3')</li>
                                     @endif
 
                                     @if (!empty(trim($__env->yieldContent('breadcrumb4'))))
-                                        <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb4')</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@yield('breadcrumb4')</li>
                                     @endif
                                 </ol>
                             </nav>
@@ -532,8 +535,8 @@
         <div class="customizer-body">
             <ul class="nav customizer-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
-                        role="tab" aria-controls="pills-home" aria-selected="true">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                        aria-controls="pills-home" aria-selected="true">
                         <i class="mdi mdi-wrench font-20"></i>
                     </a>
                 </li>
@@ -544,16 +547,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
-                        role="tab" aria-controls="pills-contact" aria-selected="false">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                        aria-controls="pills-contact" aria-selected="false">
                         <i class="mdi mdi-star-circle font-20"></i>
                     </a>
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <!-- Tab 1 -->
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                    aria-labelledby="pills-home-tab">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div class="p-15 border-bottom">
                         <!-- Sidebar -->
                         <h5 class="font-medium m-b-10 m-t-10">Layout Settings</h5>
@@ -577,8 +579,7 @@
                             <label class="custom-control-label" for="header-position">Fixed Header</label>
                         </div>
                         <div class="custom-control custom-checkbox m-t-10">
-                            <input type="checkbox" class="custom-control-input" name="boxed-layout"
-                                id="boxed-layout">
+                            <input type="checkbox" class="custom-control-input" name="boxed-layout" id="boxed-layout">
                             <label class="custom-control-label" for="boxed-layout">Boxed Layout</label>
                         </div>
                     </div>
@@ -778,8 +779,7 @@
                 </div>
                 <!-- End Tab 2 -->
                 <!-- Tab 3 -->
-                <div class="tab-pane fade p-15" id="pills-contact" role="tabpanel"
-                    aria-labelledby="pills-contact-tab">
+                <div class="tab-pane fade p-15" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                     <h6 class="m-t-20 m-b-20">Activity Timeline</h6>
                     <div class="steamline">
                         <div class="sl-item">
@@ -923,7 +923,8 @@
     <!--This page JavaScript -->
     <!--chartis chart-->
     <script src="{{ url('Bootstrap') }}/assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="{{ url('Bootstrap') }}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="{{ url('Bootstrap') }}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js">
+    </script>
     <!--c3 charts -->
     <script src="{{ url('Bootstrap') }}/assets/extra-libs/c3/d3.min.js"></script>
     <script src="{{ url('Bootstrap') }}/assets/extra-libs/c3/c3.min.js"></script>
@@ -932,7 +933,7 @@
     <script src="{{ url('Bootstrap') }}/dist/js/pages/dashboards/dashboard1.js"></script>
 
     <script type="text/javascript" src="{{ url('Dashboard') }}/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="{{ url('Dashboard') }}/js//toastify.js"></script>
+    <script type="text/javascript" src="{{ url('Dashboard') }}/js/toastify.js"></script>
 </body>
 
 </html>

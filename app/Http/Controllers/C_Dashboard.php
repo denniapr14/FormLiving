@@ -53,6 +53,7 @@ class C_Dashboard extends Controller
         // }
         // dd(Session::get('selectedProjeks',)[0]);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        
         $fp = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
             'formulir_pesanan.status_fp',
             '!=',

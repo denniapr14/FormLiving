@@ -5,86 +5,84 @@
 @section('pageTitle','Dashboard')
 @section('back',route('dashboard.admin',[$getProjek->nama_projek]) )
 @section('breadcrumb','Dashboard')
-{{--  @section('breadcrumb2','Ubah Rumah')  --}}
+{{-- @section('breadcrumb2','Ubah Rumah') --}}
 @section('content')
 
 
-    <style>
-        .map {
-            width: 100%;
-            height: 100%;
+<style>
+    .map {
+        width: 100%;
+        height: 100%;
 
+    }
+
+    .zoomIn {
+        position: absolute;
+        z-index: 2;
+        top: 150px;
+        right: 50px;
+
+    }
+
+    .my-btn0 {
+        height: 40px;
+        padding: 3px 8px !important;
+        font-size: 9px;
+        width: 40px;
+        border-radius: 6px;
+
+    }
+
+    .zoomOut {
+        position: absolute;
+        z-index: 2;
+        top: 200px;
+        right: 50px;
+    }
+
+    .summaryMobile {
+        font-size: 12px;
+    }
+
+    @media(max-width:500px) {
+        .pagetitle {
+            display: none;
         }
 
-        .zoomIn {
-            position: absolute;
-            z-index: 2;
-            top: 150px;
-            right: 50px;
-
-        }
-
-        .my-btn0 {
-            height: 40px;
-            padding: 3px 8px !important;
-            font-size: 9px;
-            width: 40px;
-            border-radius: 6px;
-
-        }
-
-        .zoomOut {
-            position: absolute;
-            z-index: 2;
-            top: 200px;
-            right: 50px;
+        .summaryPC {
+            display: none
         }
 
         .summaryMobile {
-            font-size: 12px;
+            display: inline;
+        }
+    }
+
+    @media(min-width:501px) {
+        .summaryPC {
+            display: block;
         }
 
-        @media(max-width:500px) {
-            .pagetitle {
-                display: none;
-            }
-
-            .summaryPC {
-                display: none
-            }
-
-            .summaryMobile {
-                display: inline;
-            }
+        .summaryMobile {
+            display: none
         }
+    }
+</style>
+<div class="col-md-6">
+    <div class="pagetitle card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-12">
 
-        @media(min-width:501px) {
-            .summaryPC {
-                display: block;
-            }
-
-            .summaryMobile {
-                display: none
-            }
-        }
-
-
-    </style>
-    <div class="col-md-6">
-        <div class="pagetitle card">
-            <div class="card-body">
-                <div class="">
-                    <div class="row">
-                        <div class="col-md-12">
-
-                            <p> {{ date('l, j F Y') }} <span id="clock"></span></p>
-                        </div>
-
-
+                        <p> {{ date('l, j F Y') }} <span id="clock"></span></p>
                     </div>
 
-                    <h3>
-                        <?php
+
+                </div>
+
+                <h3>
+                    <?php
                         $time = date('H:i');
 
                         if ($time >= '05:00' && $time < '11:00') {
@@ -97,155 +95,155 @@
                             echo 'Good night';
                         }
                         ?>
-                        , {{ $user->nama_ktgr }}
-                    </h3>
+                    , {{ $user->nama_ktgr }}
+                </h3>
 
-                </div><!-- End Page Title -->
-            </div>
+            </div><!-- End Page Title -->
+        </div>
+
+    </div>
+</div>
+
+
+<div class="summaryPC">
+    <table style="width: 100%" class="table-borderless">
+        <tr>
+
+            <td class="" style="">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-7">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                <p class="font-16 m-b-5">Closing
+
+                                    Bulanan</p>
+                            </div>
+                            <div class="col-5">
+                                <h1 class="font-light text-right mb-0">{{ $closing->count }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </td>
+            <td class="" style="width: 20%">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-7">
+                                <i class="fas fa-database    "></i>
+                                <p class="font-16 m-b-5">Semua
+                                    Closing</p>
+                            </div>
+                            <div class="col-5">
+                                <h1 class="font-light text-right mb-0"> {{ $closingAll->count }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </td>
+            <td class="" style="">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-7">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                                <p class="font-16 m-b-5">Sisa
+                                    Rumah</p>
+                            </div>
+                            <div class="col-5">
+                                <h1 class="font-light text-right mb-0"> {{ $remainHouse->count }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </td>
+            <td class="" style="">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-7">
+                                <i class="fa fa-headphones" aria-hidden="true"></i>
+                                <p class="font-16 m-b-5">Agen Company</p>
+                            </div>
+                            <div class="col-5">
+                                <h1 class="font-light text-right mb-0">{{ $agentWithCompany->userCount }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </td>
+            <td class="" style="">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-7">
+                                <i class="fas fa-headphones   "></i>
+                                <p class="font-16 m-b-5">Agen </p>
+                            </div>
+                            <div class="col-5">
+                                <h1 class="font-light text-right mb-0"> {{ $agentWithoutCompany->userCount }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="summaryMobile">
+    <div class="card">
+        <div class="card-body">
+
+            Closing Bulanan: {{ $closing->count }} | Semua Closing: {{ $closingAll->count }} | Sisa Rumah:
+            {{ $remainHouse->count }} | Agen company: {{ $agentWithCompany->userCount }} |
+            Agen:{{ $agentWithoutCompany->userCount }}
+
+
+
 
         </div>
     </div>
 
-    <div class="summaryPC">
-        <table style="width: 100%" class="table-borderless">
-            <tr>
-
-                <td class="" style="">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-7">
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    <p class="font-16 m-b-5">Closing
-
-                                        Bulanan</p>
-                                </div>
-                                <div class="col-5">
-                                    <h1 class="font-light text-right mb-0">{{ $closing->count }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </td>
-                <td class="" style="width: 20%">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-7">
-                                    <i class="fas fa-database    "></i>
-                                    <p class="font-16 m-b-5">Semua
-                                        Closing</p>
-                                </div>
-                                <div class="col-5">
-                                    <h1 class="font-light text-right mb-0"> {{ $closingAll->count }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </td>
-                <td class="" style="">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-7">
-                                    <i class="fa fa-hourglass-end" aria-hidden="true"></i>
-                                    <p class="font-16 m-b-5">Sisa
-                                        Rumah</p>
-                                </div>
-                                <div class="col-5">
-                                    <h1 class="font-light text-right mb-0">  {{ $remainHouse->count }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </td>
-                <td class="" style="">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-7">
-                                    <i class="fa fa-headphones" aria-hidden="true"></i>
-                                    <p class="font-16 m-b-5">Agen Company</p>
-                                </div>
-                                <div class="col-5">
-                                    <h1 class="font-light text-right mb-0">{{ $agentWithCompany->userCount }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </td>
-                <td class="" style="">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-7">
-                                    <i class="fas fa-headphones   "></i>
-                                    <p class="font-16 m-b-5">Agen</p>
-                                </div>
-                                <div class="col-5">
-                                    <h1 class="font-light text-right mb-0">  {{ $agentWithoutCompany->userCount }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="summaryMobile">
-        <div class="card">
-            <div class="card-body">
-
-                Closing Bulanan: {{ $closing->count }} | Semua Closing: {{ $closingAll->count }} | Sisa Rumah:
-                {{ $remainHouse->count }} | Agen company: {{ $agentWithCompany->userCount }} |
-                Agen:{{ $agentWithoutCompany->userCount }}
+</div>
+<section class="">
 
 
 
 
-            </div>
-        </div>
-
-    </div>
-    <section class="">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title"> <i class="bi bi-map"></i> Site Plan</h4>
 
 
+            @if ($rumah != null && $rumah != '')
+            @php
 
+            $fileSVG = 'views/' . $getProjek->nama_projek . '.svg';
+            @endphp
 
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title"> <i class="bi bi-map"></i> Site Plan</h4>
+            <div class="table-responsive">
 
-
-                @if ($rumah != null && $rumah != '')
-                    @php
-
-                        $fileSVG = 'views/' . $getProjek->nama_projek . '.svg';
-                    @endphp
-
-                    <div class="table-responsive">
-
-                        <div class="map svg-container"
-                            style="background-color: white ;width: 100%;
+                <div class="map svg-container" style="background-color: white ;width: 100%;
                                     ">
 
 
-                            {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt=""/> --}}
-                            {{-- @include('map.svg') --}}
-                            {!! file_get_contents(resource_path($fileSVG)) !!}
-                            <script>
-                                var svg = document.getElementById('Layer_1');
+                    {{-- <img src="{{ asset('Home') }}/images/svg/map.svg" alt="" /> --}}
+                    {{-- @include('map.svg') --}}
+                    {!! file_get_contents(resource_path($fileSVG)) !!}
+                    <script>
+                        var svg = document.getElementById('Layer_1');
 
 
 
@@ -371,30 +369,30 @@
                                 }
 
                                 // Function to close the popover
-                            </script>
+                    </script>
 
 
 
-                        </div>
+                </div>
 
-                        <div class="float-right">
-                            <button class="my-btn0 zoomIn bg-info-light col-md-1" id="plus" onclick="zoom(1.5)">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
+                <div class="float-right">
+                    <button class="my-btn0 zoomIn bg-info-light col-md-1" id="plus" onclick="zoom(1.5)">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
 
-                            <button class="my-btn0 zoomOut bg-dark-light col-md-1" id="minus" onclick="zoom(0.5)">
+                    <button class="my-btn0 zoomOut bg-dark-light col-md-1" id="minus" onclick="zoom(0.5)">
 
-                                <i class="fa fa-minus" aria-hidden="true"></i>
-                            </button>
-
-
-                        </div>
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
 
 
+                </div>
 
 
-                        <script>
-                            var svg = document.querySelector('.svg-container > svg');
+
+
+                <script>
+                    var svg = document.querySelector('.svg-container > svg');
                             var currentScale = 1;
                             var maxZoom = 6;
                             var isPanning = true;
@@ -437,19 +435,19 @@
                                 // Add click event listeners for your custom buttons
 
                             };
-                        </script>
+                </script>
                 @endif
             </div>
 
         </div>
-        </div>
+    </div>
 
 
 
-    </section>
+</section>
 
-    <script>
-        function updateTime() {
+<script>
+    function updateTime() {
             const now = new Date();
             const hours = now.getHours();
             const minutes = now.getMinutes();
@@ -458,7 +456,7 @@
             document.getElementById('clock').textContent = timeString;
         }
         setInterval(updateTime, 1000);
-    </script>
+</script>
 
 
 @endsection

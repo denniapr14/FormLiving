@@ -203,146 +203,134 @@
                     <input type="text" name="tangga[]" id="" value="{{ $getTipeRumah->tangga_tr }}" class="form-control"
                         placeholder="Masukan Tangga" aria-describedby="helpId">
 
-<<<<<<< Updated upstream
-                    </div>
                     <div class="form-group">
                         <label for="">Gambar Tipe Rumah</label>
-                        <input type="file" name="gambarTipe[]" id="" class="form-control"
-                            placeholder="Masukan Tangga" aria-describedby="helpId">
+                        <input type="file" name="gambarTipe[]" id="" class="form-control" placeholder="Masukan Tangga"
+                            aria-describedby="helpId">
                         @if (empty($getTipeRumah->img_tr))
                         @else
-                            <img src="{{ url('Home') }}/images/tipe/{{ $getTipeRumah->img_tr }}" alt="">
+                        <img src="{{ url('Home') }}/images/tipe/{{ $getTipeRumah->img_tr }}" alt="">
                         @endif
-=======
-                </div>
-                <div class="form-group">
-                    <label for="">Gambar Tipe Rumah</label>
-                    <input type="file" name="gambarTipe[]" id="" class="form-control" placeholder="Masukan Tangga"
-                        aria-describedby="helpId">
-                    @if (empty($getTipeRumah->img_tr))
-                    @else
-                    <img src="{{ url('Home') }}/images/tipe/{{ $getTipeRumah->img_tr }}" alt="">
-                    @endif
->>>>>>> Stashed changes
-
-                </div>
-
-                <h4>Gallery</h4>
-
-                <div id="accordion">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <a class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                    aria-expanded="true" aria-controls="collapseOne">
-                                    <i class="fa fa-image" aria-hidden="true"></i> Gambar Tipe Rumah
-                                </a>
-                            </h5>
-                        </div>
-
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                            data-parent="#accordion">
-                            <div class="card-body">
-
-                                <div class="product-listing">
-
-                                    @foreach ($getGambar as $gambar)
-                                    @if ($gambar->jenis_img == 'denah')
-                                    <div class="product__item">
 
 
-                                        <div class="product__card">
+                    </div>
 
-                                            <div class="product__img">
-                                                <img src="{{ url('Home') }}/images/denah/{{ $gambar->img_rumah }}"
-                                                    alt="product-1" id="denah{{ $gambar->id_gambar_rumah }}">
+                    <h4>Gallery</h4>
+
+                    <div id="accordion">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <a class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        <i class="fa fa-image" aria-hidden="true"></i> Gambar Tipe Rumah
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                data-parent="#accordion">
+                                <div class="card-body">
+
+                                    <div class="product-listing">
+
+                                        @foreach ($getGambar as $gambar)
+                                        @if ($gambar->jenis_img == 'denah')
+                                        <div class="product__item">
+
+
+                                            <div class="product__card">
+
+                                                <div class="product__img">
+                                                    <img src="{{ url('Home') }}/images/denah/{{ $gambar->img_rumah }}"
+                                                        alt="product-1" id="denah{{ $gambar->id_gambar_rumah }}">
+                                                </div>
+                                                <p> {{ $gambar->jenis_img }}</p>
+                                                @if ($gambar->status_gr != 'nonaktif')
+                                                <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                    class="btn btn-danger"><i class="fa fa-toggle-off"
+                                                        aria-hidden="true"></i> Nonaktif</a>
+                                                @else
+                                                <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                    class="btn btn-primary"><i class="fa fa-toggle-on"
+                                                        aria-hidden="true"></i> Aktif</a>
+                                                @endif
+
+                                                <button type="button" class="btn btn-info"
+                                                    data-target="#tipeRumah{{ $gambar->id_gambar_rumah }}"
+                                                    data-toggle="modal"
+                                                    data-target=".bd-example-modal-lg{{ $gambar->id_gambar_rumah }}">
+                                                    <i class="fas fa-edit    "></i>
+                                                </button>
+
+
                                             </div>
-                                            <p> {{ $gambar->jenis_img }}</p>
-                                            @if ($gambar->status_gr != 'nonaktif')
-                                            <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                class="btn btn-danger"><i class="fa fa-toggle-off"
-                                                    aria-hidden="true"></i> Nonaktif</a>
-                                            @else
-                                            <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                class="btn btn-primary"><i class="fa fa-toggle-on"
-                                                    aria-hidden="true"></i> Aktif</a>
-                                            @endif
-
-                                            <button type="button" class="btn btn-info"
-                                                data-target="#tipeRumah{{ $gambar->id_gambar_rumah }}"
-                                                data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $gambar->id_gambar_rumah }}">
-                                                <i class="fas fa-edit    "></i>
-                                            </button>
-
-
                                         </div>
-                                    </div>
-                                    @endif
+                                        @endif
 
 
-                                    @if ($gambar->jenis_img == 'gambar')
-                                    <div class="product__item">
-                                        <div class="product__card">
-                                            <div class="product__img">
-                                                <img src="{{ url('Home') }}/images/tipe/{{ $gambar->img_rumah }}"
-                                                    alt="product-1" id="gambar{{ $gambar->id_gambar_rumah }}">
+                                        @if ($gambar->jenis_img == 'gambar')
+                                        <div class="product__item">
+                                            <div class="product__card">
+                                                <div class="product__img">
+                                                    <img src="{{ url('Home') }}/images/tipe/{{ $gambar->img_rumah }}"
+                                                        alt="product-1" id="gambar{{ $gambar->id_gambar_rumah }}">
+                                                </div>
+                                                <p> {{ $gambar->jenis_img }}</p>
+                                                @if ($gambar->status_gr != 'nonaktif')
+                                                <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                    class="btn btn-danger"><i class="fa fa-toggle-off"
+                                                        aria-hidden="true"></i>
+                                                    Nonaktif</a>
+                                                @else
+                                                <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
+                                                    class="btn btn-primary"><i class="fa fa-toggle-on"
+                                                        aria-hidden="true"></i>
+                                                    Aktif</a>
+                                                @endif
+                                                <button type="button" class="btn btn-info"
+                                                    data-target="#tipeRumah{{ $gambar->id_gambar_rumah }}"
+                                                    data-toggle="modal"
+                                                    data-target=".bd-example-modal-lg{{ $gambar->id_gambar_rumah }}">
+                                                    <i class="fas fa-edit    "></i>
+                                                </button>
+
+
+
                                             </div>
-                                            <p> {{ $gambar->jenis_img }}</p>
-                                            @if ($gambar->status_gr != 'nonaktif')
-                                            <a href="/gambar-rumah/status/nonaktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                class="btn btn-danger"><i class="fa fa-toggle-off"
-                                                    aria-hidden="true"></i>
-                                                Nonaktif</a>
-                                            @else
-                                            <a href="/gambar-rumah/status/aktif/{{ Crypt::encrypt($gambar->id_gambar_rumah) }}"
-                                                class="btn btn-primary"><i class="fa fa-toggle-on"
-                                                    aria-hidden="true"></i>
-                                                Aktif</a>
-                                            @endif
-                                            <button type="button" class="btn btn-info"
-                                                data-target="#tipeRumah{{ $gambar->id_gambar_rumah }}"
-                                                data-toggle="modal"
-                                                data-target=".bd-example-modal-lg{{ $gambar->id_gambar_rumah }}">
-                                                <i class="fas fa-edit    "></i>
-                                            </button>
-
-
-
                                         </div>
+                                        @endif
+                                        @endforeach
                                     </div>
-                                    @endif
-                                    @endforeach
+
                                 </div>
-
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <br>
+                    <br>
 
-                <div id="fileInput0">
-                    <label for="">Gambar Tipe Rumah</label><br>
-                    <label for="fileInput">Select a file:</label>
-                    <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
-                    <input type="file" id="fileInput" name="fileInput[]">
+                    <div id="fileInput0">
+                        <label for="">Gambar Tipe Rumah</label><br>
+                        <label for="fileInput">Select a file:</label>
+                        <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
+                        <input type="file" id="fileInput" name="fileInput[]">
 
-                    <select name="jenisGambar[]" id="" class="form form-control">
-                        <option value="">---Pilih Jenis Gambar---</option>
-                        <option value="Denah">Denah</option>
-                        <option value="Gambar">Gambar</option>
-                    </select>
+                        <select name="jenisGambar[]" id="" class="form form-control">
+                            <option value="">---Pilih Jenis Gambar---</option>
+                            <option value="Denah">Denah</option>
+                            <option value="Gambar">Gambar</option>
+                        </select>
 
-                </div>
+                    </div>
 
-                <button type="button" class="btn btn-success" onclick="addFile(id= 0)">Add File Input</button>
-                <br><br>
-
+                    <button type="button" class="btn btn-success" onclick="addFile(id= 0)">Add File Input</button>
+                    <br><br>
 
 
-                <br>
-                <button class="btn btn-primary" type="submit">Submit</button>
+
+                    <br>
+                    <button class="btn btn-primary" type="submit">Submit</button>
             </form>
             @foreach ($getGambar as $gambar)
             <div class="modal modal-form fade" id="tipeRumah{{ $gambar->id_gambar_rumah }}" data-backdrop="static"
@@ -440,7 +428,7 @@
                         </div>
                     </div>
 
-<<<<<<< Updated upstream
+
                     <div class="modal modal-form fade" id="tipeRumah{{ $gambar->id_gambar_rumah }}"
                         data-backdrop="static" data-keyboard="false" tabindex="-1"
                         aria-labelledby="order-informationLabel" aria-hidden="true">
@@ -488,106 +476,6 @@
                                         </form>
                                         <script>
                                             $(document).ready(function() {
-                                                $("#uploadButton{{ $gambar->id_gambar_rumah }}").click(function() {
-                                                    var formData = new FormData();
-                                                    formData.append("img", $("#img")[0].files[0]);
-                                                    formData.append("_token", "{{ csrf_token() }}");
-
-                                                    $.ajax({
-                                                        url: "{{ route('updateImageTipeRumahAction.admin', [$getProjek->nama_projek, $getTipeRumah->id_tipe_rumah, $gambar->id_gambar_rumah]) }}", // Replace with your Laravel route
-                                                        type: "POST",
-                                                        data: formData,
-                                                        processData: false,
-                                                        contentType: false,
-                                                        success: function(response) {
-                                                            let url = "{{ url('Home') }}/images/tipe/"
-                                                            // Handle success response (e.g., update image preview)
-                                                            $("#gambar{{ $gambar->id_gambar_rumah }}").attr("src", url + response
-                                                                .img_rumah);
-                                                            $(document).ready(function() {
-                                                                Toastify({
-                                                                    text: 'Gambar tipe rumah telah diubah', // Add single quotes around the variable to make it a valid JavaScript string
-                                                                    duration: 3000,
-                                                                    gravity: "top",
-                                                                    positionLeft: false,
-                                                                    close: true,
-                                                                    backgroundColor: "linear-gradient(to right, #8ACCA1, #458f60)",
-                                                                    stopOnFocus: true
-                                                                }).showToast();
-                                                            });
-                                                        },
-                                                        error: function(error) {
-                                                            // Handle error response (e.g., show an error message)
-                                                            console.error(error.responseText);
-                                                            // alert("Error uploading image. Please try again.");
-                                                        }
-                                                    });
-                                                });
-                                            });
-                                        </script>
-
-
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                @endforeach
-=======
-                </div>
-
-            </div>
-
-            <div class="modal modal-form fade" id="tipeRumah{{ $gambar->id_gambar_rumah }}" data-backdrop="static"
-                data-keyboard="false" tabindex="-1" aria-labelledby="order-informationLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Detail Tipe Rumah
-
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="product-listing">
-                                <form enctype="multipart/form-data" id="imageUploadForm">
-                                    @csrf
-
-
-                                    <div class="modal-body">
-                                        <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label align-self-center">
-                                                Gambar Tipe Rumah
-                                            </label>
-                                            <div class="col-sm-8 align-self-center">
-                                                <input type="file" class="form-control" name="img"
-                                                    placeholder="masukan gambar" id="img">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row pt-4">
-                                            <div class="col-12">
-
-                                                <button class="btn btn-primary w-100 mb-1" type="button"
-                                                    name="submitImg"
-                                                    id="uploadButton{{ $gambar->id_gambar_rumah }}">Submit</button>
-                                                <button class="btn btn-danger w-100" type=""
-                                                    data-dismiss="modal">Close</button>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </form>
-                                <script>
-                                    $(document).ready(function() {
                                                                                     $("#uploadButton{{ $gambar->id_gambar_rumah }}").click(function() {
                                                                                         var formData = new FormData();
                                                                                         formData.append("img", $("#img")[0].files[0]);
@@ -624,24 +512,24 @@
                                                                                         });
                                                                                     });
                                                                                 });
-                                </script>
+                                        </script>
 
 
+                                    </div>
+
+
+                                </div>
                             </div>
 
-
                         </div>
+
+
                     </div>
+                    @endforeach
 
                 </div>
->>>>>>> Stashed changes
-
             </div>
-            @endforeach
-
         </div>
-    </div>
-</div>
 
 
 
@@ -649,12 +537,13 @@
 
 
 
-<!-- Modal order information-->
+        <!-- Modal order information-->
 
 
 
-<script>
-    function addFile(id) {
+        <script>
+            function addFile(id) {
+           
 
             const fileInputContainer = document.createElement("div");
             fileInputContainer.innerHTML = `
@@ -670,6 +559,7 @@
                     </select>
                 `;
             document.querySelector("#fileInput" + id).appendChild(fileInputContainer);
+        
         }
 
         function deleteFile(id) {
@@ -850,10 +740,10 @@
                 formToRemove.remove();
             }
         }
-</script>
+        </script>
 
-<script type="text/javascript">
-    $('#rumahSubmit').click(function(e) {
+        <script type="text/javascript">
+            $('#rumahSubmit').click(function(e) {
             e.preventDefault();
 
             let cluster = $('#inputCluster').val();
@@ -946,15 +836,15 @@
                 },
             });
         });
-</script>
+        </script>
 
-<script>
-    $(document).ready(function() {
+        <script>
+            $(document).ready(function() {
             $('#formulirPesanan').DataTable();
         });
-</script>
+        </script>
 
 
 
 
-@endsection
+        @endsection

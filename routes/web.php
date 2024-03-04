@@ -452,3 +452,21 @@ Route::get('/check-payment-status/{orderId}/{requestId}/{expTime}/{signature}', 
 Route::get('/brosur/{projek}', [C_Brosur::class, 'index'])->name('brosur.admin');
 Route::post('/addBrosurAction/{projek}', [C_Brosur::class, 'addBrosurAction'])->name('addBrosurAction.admin');
 route::post('/editBrosurAction/{projek}/{id}',[C_Brosur::class,'editBrosurAction'])->name('editBrosurAction.admin');
+
+
+// REM
+route::get('/laporan-harian/{projek}',[C_LaporanHarian::class,'laporanHarian'])->name('laporanHarian.admin');
+
+
+route::get('/harian-lampu-taman/{projek}',[C_HarianLampuTaman::class,'harianLampuTaman'])->name('harianLampuTaman.admin');
+Route::get('/buat-harian-lampu-taman/{projek}', [C_HarianLampuTaman::class, 'addLampuTaman'])->name('addLampuTaman.admin');
+route::post('/buat-harian-lampu-taman/action/{projek}',[C_HarianLampuTaman::class,'addLampuTamanAction'])->name('addHarianLampuTamanAction.admin');
+
+
+route::get('/petugas-keamanan/{projek}',[C_PetugasKeamanan::class,'petugasKeamanan'])->name('petugasKeamanan.admin');
+Route::get('/buat-harian-petugas-keamanan/{projek}', [C_HarianLampuTaman::class, 'addHarianPetugasKeamanan'])->name('addHarianPetugasKeamanan.admin');
+route::post('/buat-harian-petugas-keamanan/action/{projek}',[C_HarianLampuTaman::class,'addHarianPetugasKeamananAction'])->name('addHarianPetugasKeamananAction.admin');
+
+route::get('/taman-REM/{projek}',[C_TamanREM::class,'tamanREM'])->name('tamanREM.admin');
+Route::get('/buat-harian-taman-REM/{projek}', [C_HarianLampuTaman::class, 'addHarianTamanREM'])->name('addHarianTamanREM.admin');
+route::post('/buat-harian-taman-REM/action/{projek}',[C_HarianLampuTaman::class,'addHarianTamanREMAction'])->name('addHarianTamanREMAction.admin');

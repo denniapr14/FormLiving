@@ -37,6 +37,7 @@ class C_UserKategori extends Controller
     {
         // $getCluster = $this->cluster->getRumahJoinClusterWhere('*', 'rumah.id_rumah', '=', $id);
         // dd($getRumah);
+        
         $getProjekAll = $this->projek->getProjekAll();
 
         $getKategoriAll = $this->kategori->getKategori('*');

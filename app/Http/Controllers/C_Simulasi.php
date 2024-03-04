@@ -196,6 +196,15 @@ class C_Simulasi extends Controller
                 'jenis_img' => 'gambar',
             ]
         );
+        $imgGallery = $this->gambarRumah->getGambarRumahWhereArr(
+            '*',
+            [
+                'id_rumah' => $id_rumah,
+                'id_tipe' => $id_tipe,
+               
+                'status_gr' => 'aktif',
+            ]
+        );
         $imgRumah = $this->gambarRumah->getGambarRumahWhereArr(
             '*',
             [
@@ -225,8 +234,8 @@ class C_Simulasi extends Controller
         );
 
         // dd($imgRumah2);
-
-        // dd($imgDenah);
+        // dd($imgGallery);
+        
         // die();
 
         if (!session()->has('guest') && !session()->has('user')) {
@@ -252,7 +261,8 @@ class C_Simulasi extends Controller
                 'imgRumahSingle',
                 'imgRumah',
                 'imgRumah2',
-                'imgDenah'
+                'imgDenah',
+                'imgGallery'
             ));
         }
         if (session()->has('guest')) {

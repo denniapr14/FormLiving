@@ -319,23 +319,52 @@
                     <div class="tab-pane fade show active" id="galeri" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
 
+                                <div class="swiper-slide">
+                                    @foreach ($imgGallery as $gallery)
+
+                                    @if ($gallery->jenis_img == "video")
                                     <div class="container">
-                                        <h1>YouTube Video</h1>
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe style="width: 100%; height: 500px;"
-                                                src="https://www.youtube.com/embed/D3UALFSM-FA?si=PiHmSkHSGs3Ee4fR"
-                                                title="YouTube video player" frameborder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                allowfullscreen></iframe>
-                                        </div>
+
+
+
+                                        <br>
+                                        <center>
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe style="width: 100%; height: 600px;"
+                                                    src="{{ $gallery->img_rumah }}" title="YouTube video player"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    allowfullscreen></iframe>
+                                            </div>
+                                        </center>
+
+
+
+
                                     </div>
+                                    @else
+
+                                    @endif
+                                    @endforeach
                                 </div>
-                                <div class="swiper-slide"><img
-                                        src="https://images.tokopedia.net/img/cache/700/VqbcmM/2022/12/3/ad5d7cb6-6995-4028-be0a-5ae074f75729.jpg"
-                                        alt=""></div>
-                                <div class="swiper-slide">Slide 3</div>
+                                @foreach ($imgGallery as $gallery)
+                                @if ($gallery->jenis_img != 'video' && $gallery->jenis_img == "gambar")
+                                <div class="swiper-slide">
+                                    <br>
+                                    <center>
+                                        <img style="width: 80%"
+                                            src="{{ asset('Home') }}/images/denah/{{ $gallery->img_rumah }}" alt="">
+                                    </center>
+                                </div>
+
+
+                                @else
+
+                                @endif
+
+                                @endforeach
+
                                 <!-- Add more slides as needed -->
                             </div>
                             <!-- Pagination -->
@@ -366,6 +395,7 @@
                             $noZoom = 0;
                             @endphp
                             @foreach ($imgDenah as $denah)
+                            @if ($denah->jenis_img =="denah")
                             <div class="img-denah img-magnifier-container" onmousemove="zoomImage(event, this)"
                                 ontouchmove="zoomImage(event, this)">
                                 @if (empty($denah->img_rumah))
@@ -375,6 +405,10 @@
                                     src="{{ asset('Home') }}/images/denah/{{ $denah->img_rumah }}" alt="">
                                 @endif
                             </div>
+                            @else
+
+                            @endif
+
                             @endforeach
 
                             <script>
