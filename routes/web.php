@@ -30,6 +30,11 @@ use App\Http\Controllers\C_UserKategori;
 use App\Http\Controllers\C_UserMenu;
 use App\Http\Controllers\C_UserPelanggan;
 use App\Http\Controllers\C_Checklist;
+use App\Http\Controllers\C_PetugasKeamanan;
+use App\Http\Controllers\C_LaporanHarian;
+use App\Http\Controllers\C_LampuTaman;
+use App\Http\Controllers\C_TamanREM;
+
 use App\Http\Controllers\Ceo_Dashboard;
 // ADMIN
 use App\Http\Controllers\Direktur_Dashboard;
@@ -458,15 +463,15 @@ route::post('/editBrosurAction/{projek}/{id}',[C_Brosur::class,'editBrosurAction
 route::get('/laporan-harian/{projek}',[C_LaporanHarian::class,'laporanHarian'])->name('laporanHarian.admin');
 
 
-route::get('/harian-lampu-taman/{projek}',[C_HarianLampuTaman::class,'harianLampuTaman'])->name('harianLampuTaman.admin');
-Route::get('/buat-harian-lampu-taman/{projek}', [C_HarianLampuTaman::class, 'addLampuTaman'])->name('addLampuTaman.admin');
-route::post('/buat-harian-lampu-taman/action/{projek}',[C_HarianLampuTaman::class,'addLampuTamanAction'])->name('addHarianLampuTamanAction.admin');
+route::get('/harian-lampu-taman/{projek}',[C_LampuTaman::class,'harianLampuTaman'])->name('harianLampuTaman.admin');
+Route::get('/buat-harian-lampu-taman/{projek}', [C_LampuTaman::class, 'addLampuTaman'])->name('addLampuTaman.admin');
+route::post('/buat-harian-lampu-taman/action/{projek}',[C_LampuTaman::class,'addLampuTamanAction'])->name('addHarianLampuTamanAction.admin');
 
 
 route::get('/petugas-keamanan/{projek}',[C_PetugasKeamanan::class,'petugasKeamanan'])->name('petugasKeamanan.admin');
-Route::get('/buat-harian-petugas-keamanan/{projek}', [C_HarianLampuTaman::class, 'addHarianPetugasKeamanan'])->name('addHarianPetugasKeamanan.admin');
-route::post('/buat-harian-petugas-keamanan/action/{projek}',[C_HarianLampuTaman::class,'addHarianPetugasKeamananAction'])->name('addHarianPetugasKeamananAction.admin');
+Route::get('/buat-harian-petugas-keamanan/{projek}', [C_PetugasKeamanan::class, 'addHarianPetugasKeamanan'])->name('addHarianPetugasKeamanan.admin');
+route::post('/buat-harian-petugas-keamanan/action/{projek}',[C_PetugasKeamanan::class,'addHarianPetugasKeamananAction'])->name('addHarianPetugasKeamananAction.admin');
 
 route::get('/taman-REM/{projek}',[C_TamanREM::class,'tamanREM'])->name('tamanREM.admin');
-Route::get('/buat-harian-taman-REM/{projek}', [C_HarianLampuTaman::class, 'addHarianTamanREM'])->name('addHarianTamanREM.admin');
-route::post('/buat-harian-taman-REM/action/{projek}',[C_HarianLampuTaman::class,'addHarianTamanREMAction'])->name('addHarianTamanREMAction.admin');
+Route::get('/buat-harian-taman-REM/{projek}', [C_TamanREM::class, 'addHarianTamanREM'])->name('addHarianTamanREM.admin');
+route::post('/buat-harian-taman-REM/action/{projek}',[C_TamanREM::class,'addHarianTamanREMAction'])->name('addHarianTamanREMAction.admin');
