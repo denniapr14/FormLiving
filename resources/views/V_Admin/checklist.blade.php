@@ -275,7 +275,6 @@
         </div>
     </div>
 
-
     <br>
     <a href="{{ route('printChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
         class="btn btn-outline-info"><i class="fa fa-print" aria-hidden="true"></i></a>
