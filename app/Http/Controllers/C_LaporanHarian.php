@@ -12,10 +12,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 
 class C_LaporanHarian extends Controller
 {
-    //
     public $userAdmin;
     public $userNotif;
     public $userProjek;
@@ -37,12 +37,34 @@ class C_LaporanHarian extends Controller
 
     public function laporanHarian($projek)
     {
+
+        $currentDate = Carbon::now();
+
+// Define the start and end dates of the current month
+$startOfMonth = $currentDate->startOfMonth();
+$endOfMonth = $currentDate->endOfMonth();
+
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         //
+        
+        
         $getLaporanREM = $this->laporanRem->select('*')
         ->where(['id_projek' => $getProjek->id_projek])
         ->orderBy('laporan_rem.tgl_input_LREM','desc')
-        ->get();
+        ->get()->collect();
+        $getCountTaman = $getLaporanREM->filter(function ($item) use ($startOfMonth, $endOfMonth) {
+            $tglInputLREM = Carbon::parse($item->tgl_input_LREM);
+            return $tglInputLREM->between($startOfMonth, $endOfMonth) && $item->tipe_laporan === 'HTR';
+        })->count();
+        $getCountLampuTaman = $getLaporanREM->filter(function ($item) use ($startOfMonth, $endOfMonth) {
+            $tglInputLREM = Carbon::parse($item->tgl_input_LREM);
+            return $tglInputLREM->between($startOfMonth, $endOfMonth) && $item->tipe_laporan === 'LHR';
+        })->count();
+        $getCountPetugasKeamanan = $getLaporanREM->filter(function ($item) use ($startOfMonth, $endOfMonth) {
+            $tglInputLREM = Carbon::parse($item->tgl_input_LREM);
+            return $tglInputLREM->between($startOfMonth, $endOfMonth) && $item->tipe_laporan === 'HPKR';
+        })->count();
+        
         // dd($getLaporanREM);
         // $getJob = $getJob->where('id_projek',$getProjek->id_projek)->groupBy('termin_job')->sortBy('termin_job');
         // dd($getJob);
@@ -75,7 +97,10 @@ class C_LaporanHarian extends Controller
                     'projekUser',
                     'getProjek',
                     'getUserMenu',
-                    'getLaporanREM'
+                    'getLaporanREM',
+                    'getCountTaman',
+                    'getCountLampuTaman',
+                    'getCountPetugasKeamanan'
 
 
                 )

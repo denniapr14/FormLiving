@@ -314,18 +314,21 @@
                         <label for="">Gambar Tipe Rumah</label><br>
                         <label for="fileInput">Select a file:</label>
                         <input type="text" name="counter[]" id="counterID" value="0" readonly hidden>
-                        <input type="file" id="fileInput" name="fileInput[]">
+                        <input type="file" id="fileInputGambar0" name="fileInput[]">
 
-                        <select name="jenisGambar[]" id="" class="form form-control">
+                        <select name="jenisGambar[]" id="jenisGambar0" class="form form-control"
+                            onchange="jenisGambarChanged(0)">
                             <option value="">---Pilih Jenis Gambar---</option>
                             <option value="Denah">Denah</option>
                             <option value="Gambar">Gambar</option>
+                            <option value="Video">Video</option>
                         </select>
 
                     </div>
 
                     <button type="button" class="btn btn-success" onclick="addFile(id= 0)">Add File Input</button>
                     <br><br>
+
 
 
 
@@ -543,23 +546,38 @@
 
         <script>
             function addFile(id) {
-           
+            let idCounter = id;
+            idCounter++;
+            console.log(idCounter);
 
             const fileInputContainer = document.createElement("div");
             fileInputContainer.innerHTML = `
                 <br>
-                    <input type="text" name="counter[]" id="counterID" value="` + id + `"  readonly hidden>
+                    <input type="text" name="counter[]" id="counterID" value="${idCounter}"  readonly hidden>
                     <label for="fileInput">Select a file:</label>
-                    <input type="file" name="fileInput[]">
+                    <input type="file" name="fileInput[]" id="fileInputGambar${idCounter}">
                     <button type="button" class="btn btn-danger" onclick="deleteFile()"><i class="fa fa-times" aria-hidden="true"></i></button>
-                    <select name="jenisGambar[]" id="" class="form form-control">
+                    <select name="jenisGambar[]" id="jenisGambar${idCounter}" class="form form-control" onchange="jenisGambarChanged(${idCounter})">
                         <option value="">---Pilih Jenis Gambar---</option>
                         <option value="Denah">Denah</option>
                         <option value="Gambar">Gambar</option>
+                        <option value="Video">Video</option>
                     </select>
                 `;
             document.querySelector("#fileInput" + id).appendChild(fileInputContainer);
         
+        }
+        function jenisGambarChanged(id) {
+            const jenisGambarSelect = document.getElementById('jenisGambar' + id);
+            const fileInputGambar = document.getElementById('fileInputGambar'+id);
+
+            if (jenisGambarSelect.value == 'Video') {
+                fileInputGambar.setAttribute('type', 'text');
+                
+            } else {
+                fileInputGambar.setAttribute('type', 'file');
+               
+            }
         }
 
         function deleteFile(id) {
