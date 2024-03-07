@@ -59,6 +59,8 @@ class C_TipeRumah extends Controller
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
         $getTipeRumah = $this->tipeRumah->getGambarTipeRumahSelectCountGroupByWhere('rumah.id_rumah', '=', $decryptedID)->collect();
         $getTipeRumah = $getTipeRumah->where('deleted_tr', 'false');
+        $getVideoTipeRumah = $getTipeRumah->where('jenis_gambar','Video');
+        // dd($getVideoTipeRumah);
         $whereGambar = [
             // 'status_gr' => "aktif",
             'id_rumah' => $decryptedID,
@@ -100,7 +102,8 @@ class C_TipeRumah extends Controller
                     'getTipeRumah',
                     'getGambar',
                     'getProjek',
-                    'getUserMenu'
+                    'getUserMenu',
+                    'getVideoTipeRumah'
 
                 )
             );
@@ -408,8 +411,7 @@ class C_TipeRumah extends Controller
                     );
             }
 
-            $dataGambarTipe = [];
-
+          
             if ($request->hasFile('fileInput')) {
                 $images = $request->file('fileInput');
                 for ($counter = 0; $counter < count($request->counter); ++$counter) {

@@ -25,8 +25,9 @@
                 <div class="card__title">
                     <a href="{{ route('tipeRumah.admin',[$getProjek->nama_projek,Crypt::encrypt($getRumah->id_rumah)] ) }}"
                         class="btn btn-outline-danger col-1" style="height: 40px; width: 50px"> <i
-                            class="bi bi-arrow-left"></i></a> &nbsp;
-                    <h1>Tambah Tipe Rumah </h1>
+                            class="fa fa-arrow-left"></i></a>
+                    <h1v>Tambah Tipe Rumah </h1> &nbsp;
+
 
                 </div>
 
