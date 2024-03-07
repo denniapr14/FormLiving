@@ -63,13 +63,11 @@
                             </td>
                             <td>
 
-
                                 <div class="d-flex flex-nowrap">
                                     <div class="d-flex flex-row bd-highlight mb-3">
                                         <div class="p-2 bd-highlight">
                                             <i class="fa fa-bath" aria-hidden="true"></i>
                                             <span class="badge badge--primary">{{ $tipeRumah->kmr_mandi_tr }}</span>
-
 
                                             <i class="fa fa-bed" aria-hidden="true"></i>
                                             <span class="badge badge--primary">{{ $tipeRumah->kmr_tidur_tr }}</span>
