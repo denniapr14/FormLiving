@@ -59,7 +59,7 @@ class C_TipeRumah extends Controller
         $getRumah = $this->rumah->getRumahJoinClusterWhere('*', 'id_rumah', '=', $decryptedID);
         $getTipeRumah = $this->tipeRumah->getGambarTipeRumahSelectCountGroupByWhere('rumah.id_rumah', '=', $decryptedID)->collect();
         $getTipeRumah = $getTipeRumah->where('deleted_tr', 'false');
-        $getVideoTipeRumah = $getTipeRumah->where('jenis_gambar','Video');
+        $getVideoTipeRumah = $this->gambarRumah->getGambarRumahWhereArr('*',['id_rumah' => $decryptedID, 'jenis_img' => "Video"]);
         // dd($getVideoTipeRumah);
         $whereGambar = [
             // 'status_gr' => "aktif",
@@ -93,8 +93,7 @@ class C_TipeRumah extends Controller
             //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
             // }
 
-            return view(
-                'V_Admin.tipeRumah',
+            return view('V_Admin.tipeRumah',
                 compact(
                     'user',
                     'projekUser',
@@ -411,7 +410,7 @@ class C_TipeRumah extends Controller
                     );
             }
 
-          
+
             if ($request->hasFile('fileInput')) {
                 $images = $request->file('fileInput');
                 for ($counter = 0; $counter < count($request->counter); ++$counter) {
@@ -549,5 +548,54 @@ class C_TipeRumah extends Controller
             ->where('id_tipe_rumah', $decryptedID)
             ->update($dtDelete);
         return redirect()->back()->with('success', 'Data tipe rumah telah berhasil dihapus');
+    }
+    function addVideoTipeRumahAction(Request $request, $projek, $id) {
+        $decryptedID = Crypt::decrypt($id);
+        $getTipeRumah = $this->tipeRumah->firstTipeRumah('*',['tipe_rumah.id_tipe_rumah'  => $decryptedID]);
+        $dataGambarTipe =
+        [
+            'id_rumah' => $getTipeRumah->id_rumah,
+            'id_tipe' => $getTipeRumah->id_tipe_rumah,
+            'jenis_img' => $request->jenis_img,
+            'img_rumah'     => $request->img_rumah
+        ];
+
+        // dd($dataGambarTipe);
+        $this->gambarRumah->insertGambarRumah($dataGambarTipe);
+        return redirect()->back( )->with('success','Berhasil Menambahkan Video Tipe Rumah');
+
+    }
+
+    function updateVideoTipeRumahAction(Request $request,$projek,$id_tipe,$id_gambar) {
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $decryptID = Crypt::decrypt($id_tipe);
+        $decryptID_gambar = Crypt::decrypt($id_gambar);
+
+        $videoUrl = $request->input('videoUrl');
+        $dataVideo = ['img_rumah' => $request->input('videoUrl')];
+        DB::table('gambar_rumah')
+        ->where('id_gambar_rumah', $request->input('formId'))
+        ->update($dataVideo);
+
+
+        // Process the data, e.g., update the video URL in the database
+        // You can also return a response if needed
+        return response()->json(['success' => true]);
+    }
+
+    public function deleteVideoTipeRumahAction(Request $request, $projek, $id_tipe, $id_gambar)
+    {
+        // Decrypt IDs
+        $decryptID_tipe = Crypt::decrypt($id_tipe);
+        $decryptID_gambar = Crypt::decrypt($id_gambar);
+
+        // Update status_gr to "nonaktif" to simulate deletion
+        $dataVideo = ['status_gr' => "nonaktif"];
+        DB::table('gambar_rumah')
+            ->where('id_gambar_rumah', $decryptID_gambar)
+            ->update($dataVideo);
+
+        // Return success response
+        return response()->json(['success' => true]);
     }
 }

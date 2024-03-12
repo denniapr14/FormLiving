@@ -327,6 +327,9 @@ Route::post('/ubah-gambar-tipe-rumah-admin/action/{projek}/{id}/{id_gambar}', [C
 ->name('updateImageTipeRumahAction.admin');
 Route::get('/hapus-tipe-rumah-admin/{id}', [C_TipeRumah::class, 'deleteTipeRumahAction'])->name('deleteTipeRumah.admin');
 
+route::get('/tambah-video-tipe-rumah/action/{projek}/{id}',[C_TipeRumah::class,'addVideoTipeRumahAction'])->name('addVideoTipeRumahAction.admin');
+route::post('/ubah-video-tipe-rumah/action/{projek}/{id}/{id_gambar}',[C_TipeRumah::class,'updateVideoTipeRumahAction'])->name('updateVideoTipeRumahAction.admin');
+route::delete('/hapus-video-tipe-rumah/action/{projek}/{id}/{id_gambar}',[C_TipeRumah::class,'deleteVideoTipeRumahAction'])->name('deleteVideoTipeRumahAction.admin');
 Route::get('/gambar-rumah/status/{status}/{id}', [C_GambarRumah::class, 'changeGambarRumahStatus']);
 
 // SURAT PEMESANAN RUMAH

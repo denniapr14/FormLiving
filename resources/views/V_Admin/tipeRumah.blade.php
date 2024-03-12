@@ -492,7 +492,7 @@
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Video</h5>
@@ -501,26 +501,55 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form action="">
+                                                <form action="{{ route('addVideoTipeRumahAction.admin', [$getProjek->nama_projek,Crypt::encrypt($tipeRumah->id_tipe_rumah)]) }}">
                                                     @csrf
-                                                </form>
-                                                <div class="modal-body">
-                                                    @if ($getVideoTipeRumah == null)
-                                                    <span class="btn bg-danger">Belum Ada Video </span>
-                                                    @else
 
-                                                    @endif
+                                                <div class="modal-body">
+                                                    <table>
+                                                        @foreach ($getVideoTipeRumah as $video)
+                                                            @if ($video->id_tipe == $tipeRumah->id_tipe_rumah && $video->status_gr =="aktif")
+                                                                <tr>
+                                                                    <td>
+
+                                                                        <a href="{{ $video->img_rumah }}" class="" id="link{{ $video->id_gambar_rumah }}"> {{ $video->img_rumah }}</a></td>
+                                                                    <td>
+                                                                        <!-- View Button -->
+                                                                        <a href="{{ $video->img_rumah }}" id="see{{ $video->id_gambar_rumah }}" class="btn btn-outline-info" target="_blank">
+                                                                            <i class="fa fa-eye" aria-hidden="true"></i> View
+                                                                        </a>
+                                                                        <!-- Edit Button -->
+                                                                        <button type="button" class="btn btn-outline-info edit-button" data-id="{{ $video->id_gambar_rumah }}">
+                                                                            <i class="fas fa-edit"></i> Edit
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-outline-danger delete-button" data-id="{{ $video->id_gambar_rumah }}">
+                                                                            <i class="fas fa-trash"></i> Delete
+                                                                        </button>
+                                                                        <!-- Edit Form -->
+                                                                        <div class="edit-form" id="editForm{{ $video->id_gambar_rumah }}" style="display: none;">
+                                                                            <input type="text" class="form-control edit-video-url" placeholder="Edit Video URL" value="{{ $video->img_rumah }}">
+                                                                            <button type="button" class="btn btn-primary submit-edit-button" data-id="{{ $video->id_gambar_rumah }}">Submit</button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                    </table>
+
+
                                                     <div class="form-group">
                                                         <label for="">Video</label>
-                                                        <input type="text" name="video" class="form-control"
+                                                        <input type="text" name="jenis_img" value="video" hidden>
+                                                        <input type="text" name="img_rumah" class="form-control"
                                                             placeholder="masukan link video youtube">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
+                                                    <button type="button" class="btn btn-secondary float-left"
                                                         data-dismiss="modal">Close</button>
                                                     <!-- Additional buttons or actions here -->
+                                                    <button type="submit" class="btn btn-outline-success float-right">Submit</button>
                                                 </div>
+                                            </form>
                                             </div>
                                         </div>
                                     </div>
@@ -546,6 +575,99 @@
     </div>
     <!-- end: content -->
 
+    <script>
+        // JavaScript to handle edit button click and form submission
+        document.addEventListener("DOMContentLoaded", function() {
+            const editButtons = document.querySelectorAll(".edit-button");
+
+            editButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const formId = this.getAttribute("data-id");
+                    const editForm = document.getElementById(`editForm${formId}`);
+                    editForm.style.display = "block";
+                });
+            });
+
+            const submitButtons = document.querySelectorAll(".submit-edit-button");
+
+            submitButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const formId = this.getAttribute("data-id");
+                    const editForm = document.getElementById(`editForm${formId}`);
+                    const videoUrl = editForm.querySelector(".edit-video-url").value;
+                    console.log(videoUrl);
+                    // AJAX request to submit the edited video URL
+                    // Replace the URL with your actual endpoint
+                    // Example using fetch API
+                    fetch("{{ route('updateVideoTipeRumahAction.admin', [$getProjek->nama_projek, Crypt::encrypt($tipeRumah->id_tipe_rumah),  Crypt::encrypt($video->id_gambar_rumah)]) }}", { // Using Laravel named route
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-Token": "{{ csrf_token() }}" // Add CSRF token for security
+                        },
+                        body: JSON.stringify({ id: formId, videoUrl: videoUrl }),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Handle success
+                            console.log("Video URL submitted successfully.");
+                            const link = document.getElementById(`link${formId}`);
+                            link.href = videoUrl;
+                            link.textContent = videoUrl;
+                            const see = document.getElementById(`see${formId}`);
+                            see.href = videoUrl;
+                            editForm.style.display = "none";
+
+                        } else {
+                            alert('video gagal');
+                            // Handle error
+                            console.error("Failed to submit video URL.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
+                });
+            });
+
+            const deleteButtons = document.querySelectorAll(".delete-button");
+
+            deleteButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const formId = this.getAttribute("data-id");
+
+                    // Confirm deletion
+                    if (confirm("Are you sure you want to delete this video?")) {
+                        fetch("{{ route('deleteVideoTipeRumahAction.admin', [$getProjek->nama_projek, Crypt::encrypt($tipeRumah->id_tipe_rumah),  Crypt::encrypt($video->id_gambar_rumah)]) }}", {
+                            method: "DELETE",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-Token": "{{ csrf_token() }}"
+                            },
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log("Video deleted successfully.");
+                                const row = button.closest('tr');
+                                row.parentNode.removeChild(row);
+                                // Optionally, you can remove the row from the table
+                                // button.closest('tr').remove();
+                            } else {
+                                alert('Failed to delete video.');
+                                console.error("Failed to delete video.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
 
     <script>
         function updateTime() {
