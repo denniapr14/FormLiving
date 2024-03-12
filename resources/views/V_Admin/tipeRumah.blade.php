@@ -539,7 +539,7 @@
                                                     <div class="form-group">
                                                         <label for="">Video</label>
                                                         <input type="text" name="jenis_img" value="video" hidden>
-                                                        <input type="text" name="img_rumah" class="form-control"
+                                                        <input type="text" name="img_rumah" required class="form-control"
                                                             placeholder="masukan link video youtube">
                                                     </div>
                                                 </div>
@@ -576,7 +576,7 @@
     <!-- end: content -->
 
     <script>
-        // JavaScript to handle edit button click and form submission
+        @if (!empty($video))
         document.addEventListener("DOMContentLoaded", function() {
             const editButtons = document.querySelectorAll(".edit-button");
 
@@ -605,7 +605,7 @@
                             "Content-Type": "application/json",
                             "X-CSRF-Token": "{{ csrf_token() }}" // Add CSRF token for security
                         },
-                        body: JSON.stringify({ id: formId, videoUrl: videoUrl }),
+                        body: JSON.stringify({ formId: formId, videoUrl: videoUrl }),
                     })
                     .then(response => {
                         if (response.ok) {
@@ -666,6 +666,11 @@
 
 
         });
+
+        @else
+
+        @endif
+        // JavaScript to handle edit button click and form submission
 
     </script>
 

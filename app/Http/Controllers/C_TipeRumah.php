@@ -572,9 +572,9 @@ class C_TipeRumah extends Controller
         $decryptID_gambar = Crypt::decrypt($id_gambar);
 
         $videoUrl = $request->input('videoUrl');
-        $dataVideo = ['img_rumah' => $request->input('videoUrl')];
+        $dataVideo = ['img_rumah' => $request->videoUrl];
         DB::table('gambar_rumah')
-        ->where('id_gambar_rumah', $request->input('formId'))
+        ->where('id_gambar_rumah', $request->formId)
         ->update($dataVideo);
 
 
