@@ -158,32 +158,32 @@ class C_SuratPemesananRumah extends Controller
                 'user_menu.id_kategori' => $user->id_kategori
             ])->collect();
 
-            $dataHarga = [];   
+            $dataHarga = [];
 
             if(empty($getPromo)){
-                $dataHarga = [
+                $dataHarga = array([
                     'hargaPricelist' => $getFormulirPesanan->harga_awal,
-                    'hargaDiskon' => "0",
+                    'hargaDiskon' =>  0,
                     'hargaNetto' => rupiah($getFormulirPesanan->total_harga / 1.1),
                     'hargaPPN' => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
-                    ];
+                    ]);
             }else{
-                $dataHarga = [
+                $dataHarga = ([
                     'code_promo' => $getPromo->id_promo,
                     'hargaPricelist' => $getFormulirPesanan->harga_awal,
                     'hargaDiskon' => $getFormulirPesanan->total_diskon,
                     'hargaNetto' => rupiah($getFormulirPesanan->total_harga / 1.1),
                     'hargaPPN' => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
-                    ];
+                    ]);
             }
-            
-            if ($getPromo->freekpr_promo == "yes") {
+            if (!empty($getPromo) && $getPromo->freekpr_promo == "yes") {
                 $dataHarga['hargaPPN'] = 0;
                 $dataHarga['hargaNetto'] = $getFormulirPesanan->total_harga;
             }
-            
-            var_dump($dataHarga);
-            
+            // dd($dataHarga);
+
+            // var_dump($dataHarga);
+
             // dd($getUserMenu);
             $foundMatchingMenu = false;
 
