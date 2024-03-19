@@ -132,9 +132,38 @@ class C_SuratPemesananRumah extends Controller
         }
     }
 
+public function checkPromoDiskon($arrayPromo,$arrayFP)
+{
+   if (!empty($arrayPromo)) {
+        if (!($arrayPromo['diskon_promo'] == 0)) {
+            return $arrayFP['total_diskon']; 
+        }
+    }else{
+        return 0;
+    }
+}
+    
+public function checkFreePPN($arrayPromo,$arrayFP)
+{
+   if (!empty($arrayPromo)) {
+        if (($arrayPromo['free_ppn_promo'] == "yes")) {
+            return [
+                'hargaPricelist' => $arrayFP['harga_non_ppn'],
+                'hargaNetto' => ($arrayFP['harga_non_ppn'] - $arrayFP['total_diskon']),
+                'hargaPPN' => 0
+            ]; 
+        }
+    }else{
+        return [
+            'hargaPricelist' => $arrayFP['harga_awal'],
+            'hargaNetto' => $arrayFP['total_harga'] / 1.1,
+            'hargaPPN' => (11 / 100) * ($arrayFP['total_harga'] / 1.11)
+        ]; 
+    }
+} 
+
     public function editSuratPemesananRumah($projek, $id)
     {
-
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
         $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananJoin7Where($decryptedID);
@@ -160,6 +189,11 @@ class C_SuratPemesananRumah extends Controller
 
             $dataHarga = [];
 
+            $cekHargaPromo = $this->checkPromoDiskon($getPromo,$getFormulirPesanan);
+            $cekAdaFreePPN = $this->checkFreePPN($getPromo,$getFormulirPesanan);
+
+            // dd($cekAdaFreePPN);
+
             if(empty($getPromo)){
                 $dataHarga = array([
                     'hargaPricelist' => $getFormulirPesanan->harga_awal,
@@ -168,18 +202,15 @@ class C_SuratPemesananRumah extends Controller
                     'hargaPPN' => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
                     ]);
             }else{
-                $dataHarga = ([
+                $dataHarga = array([
                     'code_promo' => $getPromo->id_promo,
-                    'hargaPricelist' => $getFormulirPesanan->harga_awal,
-                    'hargaDiskon' => $getFormulirPesanan->total_diskon,
-                    'hargaNetto' => rupiah($getFormulirPesanan->total_harga / 1.1),
-                    'hargaPPN' => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
+                    'hargaPricelist' => $cekAdaFreePPN['hargaPricelist'],
+                    'hargaDiskon' => $cekHargaPromo,
+                    'hargaNetto' => $cekAdaFreePPN['hargaNetto'],
+                    'hargaPPN' => $cekAdaFreePPN['hargaPPN']
                     ]);
             }
-            if (!empty($getPromo) && $getPromo->freekpr_promo == "yes") {
-                $dataHarga['hargaPPN'] = 0;
-                $dataHarga['hargaNetto'] = $getFormulirPesanan->total_harga;
-            }
+
             // dd($dataHarga);
 
             // var_dump($dataHarga);
@@ -207,7 +238,6 @@ class C_SuratPemesananRumah extends Controller
                 'getUserMenu',
                 'getPromoAll',
                 'dataHarga'
-
             ));
         } else {
             return redirect('/login');
@@ -216,8 +246,6 @@ class C_SuratPemesananRumah extends Controller
 
     public function editSuratPemesananRumahAction(Request $request, $projek, $id)
     {
-
-
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
         $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananJoin7Where($decryptedID);
@@ -246,6 +274,7 @@ class C_SuratPemesananRumah extends Controller
                     'status_staf_acc_fp'   => "accept",
                     'tgl_staff_acc_fp'  => date('d-m-y h:m:s'),
                 ];
+                
                 $dataUpdateUSer = [
                     'nama_plgn' => $request->namaPlgn,
                     'npwp_plgn' => $request->npwp,
@@ -269,18 +298,15 @@ class C_SuratPemesananRumah extends Controller
             if ($user->kategori == "AdminAccounting") {
                 $dataUpdate = [
                     'no_fp' => $request->nofp,
-                    'status_acc_fp'   => "accept",
+                    'status_acc_fp'  => "accept",
                     'tgl_acc_fp'  => date('d-m-y h:m:s'),
-
                 ];
             }
             if ($user->kategori == "AdminLegal") {
 
                 $dataUpdate = [
-
                     'status_legal_fp'   => "accept",
                     'tgl_legal_fp'  => date('d-m-y h:m:s'),
-
                 ];
             }
 
