@@ -454,9 +454,7 @@
                                     Dengan Harga yang
                                     diperhitungkan sebagai berikut :</p>
                                 <p style="text-indent: 0pt;text-align: left;"><br /></p>
-
-                                @if (empty($promo))
-
+                                @foreach ($dataHarga as $dataHarga)
                                 <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
                                     <tr style="height:14pt">
                                         <td style="width:215pt">
@@ -475,7 +473,7 @@
                                         <td style="width:86pt">
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->harga_tr) }},-</p>
+                                                {{ rupiah($getFormulirPesanan->harga_awal) }},-</p>
                                         </td>
                                     </tr>
                                     <tr style="height:14pt">
@@ -494,7 +492,11 @@
                                         <td style="width:86pt">
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                -,-</p>
+                                                @if(!empty($dataHarga))
+                                                {{ number_format($dataHarga['hargaDiskon'], 2) }}</p>
+                                            @else
+                                            No data available</p>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr style="height:14pt">
@@ -514,7 +516,7 @@
                                         <td style="width:86pt">
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->total_harga / 1.11) }},-</p>
+                                                {{ rupiah($getFormulirPesanan->total_harga)}},-</p>
                                         </td>
                                     </tr>
                                     <tr style="height:16pt">
@@ -534,7 +536,7 @@
                                         <td style="width:86pt">
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                                {{ rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11)) }},-
+                                                {{-- {{ rupiah($dataHarga->hargaPPN) }},- --}}
                                             </p>
                                         </td>
                                     </tr>
@@ -556,215 +558,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                @else
-                                @if ($promo->bphtb_promo == 'yes')
-                                <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
-                                    <tr style="height:14pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                a.
-                                                Harga
-                                                Pricelist</p>
-                                        </td>
-                                        <td style="width:29pt">
-                                            <p class="s2"
-                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                Rp.
-                                            </p>
-                                        </td>
-                                        <td style="width:86pt">
-                                            <p class="s2"
-                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->harga_tr) }},-</p>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:14pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                b.
-                                                Diskon</p>
-                                        </td>
-                                        <td style="width:29pt">
-                                            <p class="s2"
-                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                Rp.
-                                            </p>
-                                        </td>
-                                        <td style="width:86pt">
-                                            <p class="s2"
-                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($promo->diskon_promo) }},-</p>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:14pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                c.
-                                                Harga
-                                                Netto</p>
-                                        </td>
-                                        <td style="width:29pt">
-                                            <p class="s2"
-                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                Rp.
-                                            </p>
-                                        </td>
-                                        <td style="width:86pt">
-                                            <p class="s2"
-                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah(($getFormulirPesanan->total_harga + 3000000) / 1.16) }},-
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:16pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                                d.
-                                                PPN (
-                                                Pajak Pertambahan Nilai)</p>
-                                        </td>
-                                        <td style="width:29pt">
-                                            <p class="s2"
-                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                                Rp.
-                                            </p>
-                                        </td>
-                                        <td style="width:86pt">
-                                            <p class="s2"
-                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                                {{ rupiah((11 / 100) * (($getFormulirPesanan->total_harga + 3000000) /
-                                                1.16)) }},-
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:17pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                                                Sehinggal TOTAL harga sebesar</p>
-                                        </td>
-                                        <td style="width:29pt;border-top-style:solid;border-top-width:1pt">
-                                            <p class="s2"
-                                                style="padding-top: 3pt;padding-left: 3pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                                                Rp.</p>
-                                        </td>
-                                        <td style="width:86pt;border-top-style:solid;border-top-width:1pt">
-                                            <p class="s2"
-                                                style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->total_harga) }},-</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                                @elseif ($promo->bphtb_promo == 'no')
-                                <table style="border-collapse:collapse;margin-left:38.524pt" cellspacing="0">
-                                    <tr style="height:14pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                a.
-                                                Harga
-                                                Pricelist</p>
-                                        </td>
-                                        <td style="width:29pt">
-                                            <p class="s2"
-                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                Rp.
-                                            </p>
-                                        </td>
-                                        <td style="width:86pt">
-                                            <p class="s2"
-                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->harga_tr) }},-</p>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:14pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                b.
-                                                Diskon</p>
-                                        </td>
-                                        <td style="width:29pt">
-                                            <p class="s2"
-                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                Rp.
-                                            </p>
-                                        </td>
-                                        <td style="width:86pt">
-                                            <p class="s2"
-                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($promo->diskon_promo) }},-</p>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:14pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                c.
-                                                Harga
-                                                Netto</p>
-                                        </td>
-                                        <td style="width:29pt">
-                                            <p class="s2"
-                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                                                Rp.
-                                            </p>
-                                        </td>
-                                        <td style="width:86pt">
-                                            <p class="s2"
-                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->total_harga / 1.11) }},-</p>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:16pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                                d.
-                                                PPN (
-                                                Pajak Pertambahan Nilai)</p>
-                                        </td>
-                                        <td style="width:29pt">
-                                            <p class="s2"
-                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                                                Rp.
-                                            </p>
-                                        </td>
-                                        <td style="width:86pt">
-                                            <p class="s2"
-                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                                {{ rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11)) }},-
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:17pt">
-                                        <td style="width:215pt">
-                                            <p class="s2"
-                                                style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                                                Sehinggal TOTAL harga sebesar</p>
-                                        </td>
-                                        <td style="width:29pt;border-top-style:solid;border-top-width:1pt">
-                                            <p class="s2"
-                                                style="padding-top: 3pt;padding-left: 3pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                                                Rp.</p>
-                                        </td>
-                                        <td style="width:86pt;border-top-style:solid;border-top-width:1pt">
-                                            <p class="s2"
-                                                style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->total_harga) }},-</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                                @endif
-
-
-                                @endif
-
-
+                                @endforeach
                             </li>
                             <li data-list-text="6.">
                                 <p class="s3"
@@ -882,8 +676,9 @@
                         @else
                         {{ $getPromo->kode_promo }}
                         @endif
-                        <a href="#" data-toggle="modal" data-target="#editPromo" class="btn btn-outline-info btn--small" >
-                       <i class="fas fa-edit    "></i> Promo</a>
+                        <a href="#" data-toggle="modal" data-target="#editPromo"
+                            class="btn btn-outline-info btn--small">
+                            <i class="fas fa-edit    "></i> Promo</a>
 
 
                         <br>
@@ -910,39 +705,43 @@
     </div>
     <div class="modal" id="editPromo">
         <div class="modal-dialog">
-          <div class="modal-content">
+            <div class="modal-content">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Ubah Promo</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Ubah Promo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form
+                    action="{{ route('editPromoSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($getFormulirPesanan->id_formulir)] ) }}"
+                    method="POST">
+                    @csrf
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Pilih Promo</label>
+                            <select class="js-example-basic-single form-control" id="promo" name="promo"
+                                style="width: 100%">
+                                <option value="">--Promo--</option>
+                                @foreach ($getPromoAll as $promoAll)
+                                <option value="{{ $promoAll->id_promo }}">{{ $promoAll->promo }} - {{
+                                    $promoAll->keterangan }}</option>
+                                @endforeach
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-success">Submit</button>
+                    </div>
+                </form>
             </div>
-            <form action="{{ route('editPromoSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($getFormulirPesanan->id_formulir)] ) }}" method="POST">
-                @csrf
-            <!-- Modal Body -->
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="">Pilih Promo</label>
-                <select class="js-example-basic-single form-control" id="promo" name="promo" style="width: 100%">
-                    <option value="">--Promo--</option>
-                    @foreach ($getPromoAll as $promoAll)
-                        <option value="{{ $promoAll->id_promo }}">{{ $promoAll->promo }} - {{ $promoAll->keterangan }}</option>
-                    @endforeach
-                  </select>
-
-              </div>
-
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-outline-success">Submit</button>
-            </div>
-        </form>
-          </div>
         </div>
-      </div>
+    </div>
 
 </body>
 

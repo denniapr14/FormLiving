@@ -135,7 +135,6 @@ class C_SuratPemesananRumah extends Controller
     public function editSuratPemesananRumah($projek, $id)
     {
 
-
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
         $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananJoin7Where($decryptedID);
@@ -158,9 +157,35 @@ class C_SuratPemesananRumah extends Controller
                 'user_menu.status_um' => 'aktif',
                 'user_menu.id_kategori' => $user->id_kategori
             ])->collect();
+
+            $dataHarga = [];   
+
+            if(empty($getPromo)){
+                $dataHarga = [
+                    'hargaPricelist' => $getFormulirPesanan->harga_awal,
+                    'hargaDiskon' => "0",
+                    'hargaNetto' => rupiah($getFormulirPesanan->total_harga / 1.1),
+                    'hargaPPN' => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
+                    ];
+            }else{
+                $dataHarga = [
+                    'code_promo' => $getPromo->id_promo,
+                    'hargaPricelist' => $getFormulirPesanan->harga_awal,
+                    'hargaDiskon' => $getFormulirPesanan->total_diskon,
+                    'hargaNetto' => rupiah($getFormulirPesanan->total_harga / 1.1),
+                    'hargaPPN' => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
+                    ];
+            }
+            
+            if ($getPromo->freekpr_promo == "yes") {
+                $dataHarga['hargaPPN'] = 0;
+                $dataHarga['hargaNetto'] = $getFormulirPesanan->total_harga;
+            }
+            
+            var_dump($dataHarga);
+            
             // dd($getUserMenu);
             $foundMatchingMenu = false;
-
 
             foreach ($getUserMenu as $menu) {
                 if ($menu->url_menu == request()->segment(1)) {
@@ -180,7 +205,8 @@ class C_SuratPemesananRumah extends Controller
                 'getPembayaranRumah',
                 'getProjek',
                 'getUserMenu',
-                'getPromoAll'
+                'getPromoAll',
+                'dataHarga'
 
             ));
         } else {
