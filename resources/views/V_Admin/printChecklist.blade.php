@@ -14,7 +14,7 @@
     $d = strtotime('now');
     $newd = date('m - Y', $d);
 
-    $newdall = date('d - m - Y', $d);
+    $newdall = date('Y - m - d', $d);
     ?>
     <div class="col-lg-12">
         <div id="accordion-3">
@@ -111,15 +111,20 @@
                                                         <i class="fa fa-times" aria-hidden="true"></i>
                                                     @endif
                                                 </td>
-                                                <td style="width: 10rem; text-align: center">{{ $item->tgl_deadline }}</td>
+                                                <td style="width: 10rem; text-align: center">
+                                                    @if (empty($item->tgl_update))
+                                                    @else
+                                                        {{ tgl_indo($item->tgl_update) }}
+                                                    @endif
+                                                </td>
                                                 <td>{{ $item->keterangan }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                                 <div style="width: 100%; font-weight: 100">
-                                    <p class="float-left">Diperiksa tanggal &nbsp; <?php echo $newdall; ?></p>
-                                    <p class="float-right">Malang, &nbsp; <?php echo $newdall; ?><br>
+                                    <p class="float-left">Diperiksa tanggal {{ tgl_indo($newdall) }}</p>
+                                    <p class="float-right">Malang, {{ tgl_indo($newdall) }}<br>
                                         Diajukan</p>
                                     <br><br><br><br><br><br>
                                     @if ($terminGroup->first()->termin_jl == 5)
@@ -134,24 +139,29 @@
                                                     <br>Pengawas 2
                                                 </td>
                                                 <td>
-                                                    <u>{{ $getPengawas->nama_subkon }}</u>
-                                                    <br>
-                                                    Subkont
-                                                </td>
-                                                <td class="text-right"> <u>Sunyoto</u>
+                                                    <u>Sunyoto</u>
                                                     <br>Pendamping
                                                     <br>
+                                                </td>
+                                                <td class="text-right">
+                                                    <br>
+                                                    <u>{{ $getPengawas->nama_subkon }}</u><br>
+                                                    Subkont
+
 
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
+                                                    <br><br><br>
                                                     Arsitek
                                                 </td>
                                                 <td>
+                                                    <br><br><br>
                                                     Sales
                                                 </td>
                                                 <td colspan="2">
+                                                    <br><br><br>
                                                     REM
                                                 </td>
 
@@ -170,6 +180,27 @@
                                                 </td>
                                             </tr>
                                         </table>
+                                    @elseif($terminGroup->first()->termin_jl == 4)
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td> <u>{{ $getPengawas->pengawas1 }}</u>
+                                                    <br>
+                                                    Pengawas 1
+                                                </td>
+                                                <td>
+                                                    <u>{{ $getPengawas->pengawas2 }}</u>
+                                                    <br>Pengawas 2
+                                                </td>
+                                                <td class="text-right">
+                                                    <u>Sunyoto</u>
+                                                    <br>Pendamping
+                                                    <br>
+
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
                                     @else
                                         <table style="width: 100%">
                                             <tr>
@@ -182,13 +213,15 @@
                                                     <br>Pengawas 2
                                                 </td>
                                                 <td>
+                                                    <u>Sunyoto</u>
+                                                    <br>Pendamping
+                                                    <br>
+
+                                                </td>
+                                                <td class="text-right">
                                                     <u>{{ $getPengawas->nama_subkon }}</u>
                                                     <br>
                                                     Subkont
-                                                </td>
-                                                <td class="text-right"> <u>Sunyoto</u>
-                                                    <br>Pendamping
-                                                    <br>
 
                                                 </td>
                                             </tr>

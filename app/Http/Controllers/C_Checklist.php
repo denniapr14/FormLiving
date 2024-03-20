@@ -775,6 +775,7 @@ class C_Checklist extends Controller
                     'lat_checklist'        => $request->lat_checklist,
                     'long_checklist'       => $request->long_checklist,
                     'keterangan'           => $request->keterangan,
+                    'tgl_update'           =>  date("Y-m-d")
                 ];
             } else {
                 $compressedImage = Image::make($foto)->encode('jpg', 50); // Adjust the quality as needed
@@ -797,6 +798,7 @@ class C_Checklist extends Controller
                     'lat_checklist'        => $request->lat_checklist,
                     'long_checklist'       => $request->long_checklist,
                     'keterangan'           => $request->keterangan,
+                    'tgl_update'           =>  date("Y-m-d")
                     // 'ada'                   =>"foto",
                 ];
                 // Update the database record with the new photo path
