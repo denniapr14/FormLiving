@@ -22,7 +22,7 @@ use App\Http\Controllers\C_UserAdmin;
 use App\Http\Controllers\C_Payment;
 use App\Http\Controllers\C_Job;
 use App\Http\Controllers\C_Joblist;
-use App\Http\Controllers\C_GambarKerja;
+use App\Http\Controllers\C_SPK;
 use app\Http\Controllers\C_Browsur;
 use App\Http\Controllers\C_SPP;
 // ADMIN FORMS LIVING
@@ -83,6 +83,8 @@ Route::get('/komisi-sales', [Home::class, 'Commission']);
 Route::get('/edit-profile', [Home::class, 'editProfile']);
 Route::get('/filter-result', [Home::class, 'filterResult']);
 Route::get('/search-item', [Home::class, 'SearchItem']);
+
+route::get('/download-pdf',[Home::class,'downloadPdf'])->name('download.pdf');
 
 Route::get('/sign-up', [Home::class, 'SignUp']);
 Route::post('/sign-up/create', [Home::class, 'SignUpAction'])->name('sign-up.action');
@@ -381,7 +383,8 @@ route::post('/promo-notif-action/{projek}/{id}',[C_Promo::class,'promoNotifActio
 route::get('/kirim-promo-notif/{projek}/{id}',[C_Promo::class,'sendPromoNotif'])->name('sendPromoNotif.admin');
 route::post('/kirim-promo-notif/{projek}/{id}',[C_Promo::class,'sendPromoNotifAction'])->name('sendPromoNotifAction.admin');
 
-
+// Route to Gambar Kerja
+route::get('/gambarKerja/{projek}',[C_GambarKerja::class,'getGambarKerja'])->name('gambarKerja.admin');
 
 // Route::get('/hapus-list-promo/{projek}/{id}',[C_ListPromo,'deleteListPromo'])->name('deleteListPromo.admin');
 
@@ -438,8 +441,12 @@ route::post('/editChecklistAction/{projek}/{id_rumah}/{termin}/{id_checklist}',[
 
 route::post('/checkPinPendamping/{projek}/{id_rumah}/{termin}/{id_checklist}',[C_Checklist::class,'checkPinPendamping'])->name('checkPinPendamping.admin');
 
-// Kerja
-route::get('/gambarKerja/{projek}',[C_GambarKerja::class,'getGambarKerja'])->name('gambarKerja.admin');
+// SPK
+route::get('/SPK/{projek}',[C_SPK::class,'getSPK'])->name('spk.admin');
+route::get('/TambahSPK/{projek}', [C_SPK::class,'addSPK' ])->name('addSPK.admin');
+route::post('/TambahSPK/action/{projek}' , [ C_SPK :: class ,'addSPKAction'] ) -> name ('addSPKAction.admin') ;
+route::get('/editSPK/{projek}', [C_SPK::class,'editSPK' ] )->name('editSPK.admin');
+route::post('/simpanEditSPK/action/{projek}/{id}',  [C_SPK::class,'editSPKAction'] )->name('editSPKAction.admin');
 
 // SPP
 route::get('/spp/{projek}',[C_SPP::class,'getSPP'])->name('spp.admin');

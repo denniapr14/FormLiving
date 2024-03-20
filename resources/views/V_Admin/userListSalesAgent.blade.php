@@ -2,17 +2,17 @@
 
 @extends('flashdata')
 @section('title','Form One | User Agent')
-@section('pageTitle','User Sales dan Agen')
+@section('pageTitle','User Sales dan Agent')
 @section('back',route('userSalesAgent.admin') )
-@section('breadcrumb','User Sales dan Agen')
+@section('breadcrumb','User Sales dan Agent')
 @section('content')
 
     <div class="">
         <div class="card mb-3">
             <div class="card-body">
                 <div class="card-title">
-                    <div class="card__title">
-                        <i class="bi bi-people-fill"></i>
+                    <div class="card__title" style="margin-bottom:2rem;">
+                        <i class="fa fa-user"></i>
                         <span>User
                             @if ($user->kategori == 'SuperAdmin')
                             @else
@@ -22,7 +22,7 @@
                         @if ($user->kategori != 'AdminSales' && $user->kategori != 'AdminAgentCompany')
                             <a style="position :absolute; right:10px;" href="{{ route('downloadUserAdminSales.admin') }}"
                                 class="btn btn-success">
-                                <i class="bi bi-download"></i> Download List User
+                                <i class="fa fa-download"></i> Download List User
                                 @if ($user->kategori == 'SuperAdmin')
                                 @else
                                     Agent Atau Sales
@@ -38,9 +38,10 @@
                         <thead>
                             <tr>
                                 <th style="width: 1rem">No</th>
-
                                 <th>Nama</th>
+                                <th>Kode User</th>
                                 @if ($user->kategori == 'SuperAdmin')
+                                <th>Kategori</th>
                                 @else
                                     <th>Kategori</th>
                                 @endif
@@ -61,9 +62,18 @@
                                     <td>{{ $no++ }}</td>
                                     <td>
                                         <span class="client__name">{{ $userSales->nama_ua }}</span>
-                                        <span class="client__handled"> Kode : {{ $userSales->code_id_ua }}</span>
+                                    </td>
+                                    <td>
+                                        @if(empty($userSales->code_id_ua))
+                                            - - -
+                                        @else
+                                        {{ $userSales->code_id_ua }}
+                                        @endif
                                     </td>
                                     @if ($user->kategori == 'SuperAdmin')
+                                     <td>
+                                            {{ $userSales->kategori }}
+                                        </td>
                                     @else
                                         <td>
                                             {{ $userSales->kategori }}
