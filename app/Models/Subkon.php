@@ -13,4 +13,10 @@ class Subkon extends Model{
         ->get();
 
     }
+    function getSubkonWhere($where)  {
+        return Subkon::select('*')
+        ->where($where)
+        ->get();
+
+    }
 }

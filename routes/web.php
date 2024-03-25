@@ -441,12 +441,7 @@ route::post('/editChecklistAction/{projek}/{id_rumah}/{termin}/{id_checklist}',[
 
 route::post('/checkPinPendamping/{projek}/{id_rumah}/{termin}/{id_checklist}',[C_Checklist::class,'checkPinPendamping'])->name('checkPinPendamping.admin');
 
-// SPK
-route::get('/SPK/{projek}',[C_SPK::class,'getSPK'])->name('spk.admin');
-route::get('/TambahSPK/{projek}', [C_SPK::class,'addSPK' ])->name('addSPK.admin');
-route::post('/TambahSPK/action/{projek}' , [ C_SPK :: class ,'addSPKAction'] ) -> name ('addSPKAction.admin') ;
-route::get('/editSPK/{projek}', [C_SPK::class,'editSPK' ] )->name('editSPK.admin');
-route::post('/simpanEditSPK/action/{projek}/{id}',  [C_SPK::class,'editSPKAction'] )->name('editSPKAction.admin');
+
 
 // SPP
 route::get('/spp/{projek}',[C_SPP::class,'getSPP'])->name('spp.admin');
@@ -454,6 +449,14 @@ route::get('/buat-spp/{projek}/{id_formulir}',[C_SPP::class,'createSPP'])->name(
 route::get('/edit-spp/{projek}/{id_spp}',[C_SPP::class,'editSPP'])->name('editSPP.admin');
 route::post('/edit-spp/action/{projek}/{id_spp}',[C_SPP::class,'editSPPAction'])->name('editSPPAction.admin');
 route::get('/print-spp/{projek}/{id_spp}',[C_SPP::class,'printSPP'])->name('printSPP.admin');
+
+// SPK
+route::get('/SPK/{projek}',[C_SPK::class,'getSPK'])->name('spk.admin');
+route::get('/TambahSPK/{projek}/{id_spp}', [C_SPK::class,'addSPK' ])->name('addSPK.admin');
+route::post('/TambahSPK/action/{projek}/{id_spp}' , [ C_SPK :: class ,'addSPKAction'] ) -> name ('addSPKAction.admin') ;
+route::get('/editSPK/{projek}/{id_spk}', [C_SPK::class,'editSPK' ] )->name('editSPK.admin');
+route::post('/simpanEditSPK/action/{projek}/{id_spk}',  [C_SPK::class,'editSPKAction'] )->name('editSPKAction.admin');
+
 
 // TEST DOKU
 Route::get('/payment', [C_Payment::class,'showPaymentForm'])->name('payment.admin');

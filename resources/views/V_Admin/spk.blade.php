@@ -1,36 +1,34 @@
-@ -0,0 +1,372 @@
 @extends('V_Admin.app')
 
 @extends('flashdata')
-@section('title','Forms| SPK')
-@section('pageTitle','SPK')
-@section('back',route('spk.admin',[$getProjek->nama_projek]) )
-@section('breadcrumb','SPK')
-{{--  @section('breadcrumb2','Tambah Produk')  --}}
+@section('title', 'Forms| SPK')
+@section('pageTitle', 'SPK')
+@section('back', route('spk.admin', [$getProjek->nama_projek]))
+@section('breadcrumb', 'SPK')
+{{-- @section('breadcrumb2', 'Tambah Produk') --}}
 @section('content')
 
     <!-- start: main -->
     <style>
         @media (max-width: 500px) {
-            #rumahMobile {
+            #SPK_Mobile {
                 display: block;
             }
 
-            #rumahPC {
+            #SPK_PC {
                 display: none;
             }
         }
 
         @media (min-width: 501px) {
-            #rumahMobile {
+            #SPK_Mobile {
                 display: none;
             }
 
-            #rumahPC {
+            #SPK_PC {
                 display: block;
             }
         }
-
     </style>
 
 
@@ -41,6 +39,9 @@
     <!-- start: content -->
 
     <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#spp" role="tab"><span
+                    class="hidden-sm-up">SPP</a>
+        </li>
         <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#spk" role="tab"><span
                     class="hidden-sm-up">SPK</a>
         </li>
@@ -51,8 +52,50 @@
 
     </ul>
     <div class="tab-content tabcontent-border">
+        <div class="tab-pane" id="spp" role="tabpanel">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table" id="tableSPP">
+                        <thead>
+                            <tr>
+                                <th>no</th>
+                                <th>Rumah</th>
+                                <th>Pengaturan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $noSPP = 1;
+                            @endphp
+                            @foreach ($getSPP as $spp)
+                                <tr>
+                                    <td scope="row">{{ $noSPP }}</td>
+                                    <td>{{ $spp->blok }} - {{ $spp->nomor }}</td>
+                                    <td>
+                                        @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
+                                            <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
+                                                class="btn btn-outline-info float-right"><i class="fa fa-plus"
+                                                    aria-hidden="true"></i> SPK</a>
+                                    </td>
+                                @else
+                            @endif
+
+                            </tr>
+                            @php
+                                $noSPP++;
+                            @endphp
+                            @endforeach
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
         <div class="tab-pane active" id="spk" role="tabpanel">
-            <div class="card" id="rumahPC">
+            <div class="card" id="SPK_PC">
 
                 <div class="card-body">
                     <div class="card-title">
@@ -62,7 +105,7 @@
                                     <span>SPK {{ $getProjek->nama_projek }}</span>
                                 </td>
                                 <td>
-                                 <a href="{{ route('addSPK.admin', $getProjek->nama_projek  ) }}" class="btn btn-outline-info float-right"><i class="fa fa-plus" aria-hidden="true"></i> SPK</a>
+
 
                                 </td>
                             </tr>
@@ -79,107 +122,103 @@
                                 <tr>
                                     <th class="th-table" style="width: 1rem">No</th>
                                     <th class="th-table" style="width: 10%">No Rumah</th>
-                                    <th class="th-table" style="width: 40%">Detail</th>
-                                    <th class="th-table" style="width: 10%">Status</th>
+                                    <th>Detail</th>
                                     <th class="th-table" style="width: 35%">Pengaturan</th>
 
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $no = 1;
-                                ?>
-                                @foreach ($getRumah as $rumah)
-                                    <tr class="tr-table">
-                                        <td class="td-table">{{ $no }}</td>
-                                        <td class="td-table">{{ $rumah->nama_cluster }} / {{ $rumah->blok }} -
-                                            {{ $rumah->nomor }}
-                                            @if ($rumah->img_rumah != null)
-                                                <button type="button" class="btn btn-outline-gl" data-toggle="modal"
-                                                    data-target=".bd-example-modal-lg{{ $no }}"><i
-                                                        class="fas fa-image    "></i></button>
+                                @php
+                                    $nospk = 1;
+                                @endphp
+                                @foreach ($getSPK as $spk)
+                                    <tr>
+                                        <td>{{ $nospk }}</td>
+                                        <td>{{ $spk->blok }} - {{ $spk->nomor }}</td>
+                                        <td>
 
-                                                <div class="modal fade bd-example-modal-lg{{ $no }}" tabindex="-1"
-                                                    role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <img src="{{ url('Home') }}/images/rumah/{{ $rumah->img_rumah }}"
-                                                                style="width: 100%" class="img-fluid" alt="Responsive image"
-                                                                alt="product-1">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-
-
-                                        </td>
-                                        <td class="td-table">
                                             <div id="accordian-3">
                                                 <div class="card">
                                                     <a class="card-header" id="heading11">
-                                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                                            <h5 class="m-b-0">Detail Gambar Kerja</h5>
+                                                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                            data-target="#spk{{ $spk->id_spk }}" aria-expanded="false"
+                                                            aria-controls="collapse1">
+                                                            <h5 class="m-b-0"> Detail SPK
+                                                            </h5>
                                                         </button>
                                                     </a>
-                                                    <div id="collapse1" class="collapse" aria-labelledby="heading11" data-parent="#accordian-3" style="">
+                                                    <div id="spk{{ $spk->id_spk }}" class="collapse"
+                                                        aria-labelledby="heading11" data-parent="#accordian-3"
+                                                        style="">
                                                         <div class="card-body">
-                                                                   <p>
-                                                                    Gambar Kerja : {{ $rumah->nama_cluster }} / {{ $rumah->blok }} -
-                                                                    {{ $rumah->nomor }} <a href="path/to/your/file.zip" class="btn btn-outline-info" download="filename.zip" ><i class="fa fa-download" aria-hidden="true"></i></a>
-                                                                </p>
-                                                                <p>Keterangan :</p>
-                                                                Tambahan Cat
 
+                                                            <p>Berkas SPK : {{ $spk->file_spk }} <a
+                                                                    href="{{ asset('File/file_spk/' . $spk->file_spk) }}"
+                                                                    class="btn btn-outline-info"><i class="fa fa-download"
+                                                                        aria-hidden="true"></i></a></p>
+                                                            <p>
+
+                                                                Status : {{ $spk->status_spk }}
+                                                            </p>
+                                                            Denah :
+                                                            @foreach ($getImageSPK as $img_spk)
+                                                                @if ($img_spk->id_spk == $spk->id_spk)
+                                                                    <a href="#" class="btn btn-outline-info"
+                                                                        data-toggle="modal"
+                                                                        data-target="#imageModal{{ $img_spk->id_img_spk }}">
+                                                                        <i class="fas fa-image    "></i>
+
+                                                                    </a>
+
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade"
+                                                                        id="imageModal{{ $img_spk->id_img_spk }}" tabindex="-1"
+                                                                        role="dialog"
+                                                                        aria-labelledby="imageModalLabel{{ $img_spk->id_img_spk }}"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="imageModalLabel{{ $img_spk->id_img_spk }}">
+                                                                                        Gambar Denah
+                                                                                        </h5>
+                                                                                    <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                        <span
+                                                                                            aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <img src="{{ asset('File/denah_spk/' . $img_spk->img_spk) }}" style="width: 100%"
+                                                                                        class="img-fluid" alt="Image">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
 
                                             </div>
+
+
                                         </td>
-                                        <td class="td-table">progress</td>
-                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                            <td class="td-table">
-
-
-                                                @if ($rumah->status != 'Available')
-                                                @else
-                                                    <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                        class="btn btn-outline-info"><i class="fas fa-book    "></i><span
-                                                            class="badge badge-pill badge-info">
-                                                            {{ $rumah->countTipe }}</span></a>
-                                                @endif
-
-                                                <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
-                                                    class="btn btn-outline-info">
-                                                  <i class="fas fa-pencil-alt    "></i>
-                                                </a>
-
-
-                                            </td>
-                                        @else
-                                            <td class="td-table">
-
-
-                                                <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                    class="btn btn-outline-gl"><i class="fas fa-book    "></i> aa<span
-                                                        class="badge badge-pill badge-info">
-                                                        {{ $rumah->countTipe }}</span></a>
-
-
-
-
-                                            </td>
-                                        @endif
-
+                                        <td>
+                                            <a href="{{ route('editSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spk->id_spk)]) }}" class="btn btn-outline-info"><i class="fas fa-edit    "></i></a>
+                                        </td>
                                     </tr>
-                                    <?php
-                                    $no++;
-                                    ?>
-                                @endforeach
+                                    @php
 
+                                        $nospk++;
+                                    @endphp
+                                @endforeach
                             </tbody>
+
                         </table>
 
                     </div>
@@ -191,7 +230,7 @@
 
             </div>
 
-            <div class="card" id="rumahMobile">
+            <div class="card" id="SPK_Mobile">
                 <div class="card-body">
                     <div class="card-title">
                         <table style="width: 100%">
@@ -203,7 +242,8 @@
                                     <div class="float-right">
                                         @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
                                             <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}"
-                                                class="btn btn-outline-info" style="float: right"> <i class="fas fa-plus    "></i>
+                                                class="btn btn-outline-info" style="float: right"> <i
+                                                    class="fas fa-plus    "></i>
                                                 Rumah</a>
                                         @else
                                             <!-- You can add additional content or styling for the non-admin case if needed -->
@@ -235,26 +275,41 @@
                                                         <div class="">
                                                             <div class="mycard">
                                                                 <div class="">
-                                                                    <span class="p-2"> <b> {{ $rumah->nama_cluster }} / {{ $rumah->blok }} -
-                                                                        {{ $rumah->nomor }}</b>
+                                                                    <span class="p-2"> <b> {{ $rumah->nama_cluster }} /
+                                                                            {{ $rumah->blok }} -
+                                                                            {{ $rumah->nomor }}</b>
 
                                                                     </span><br>
                                                                     <div id="accordian-3">
                                                                         <div class="card">
                                                                             <a class="card-header" id="heading11">
-                                                                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse1">
-                                                                                    <h5 class="m-b-0">Detail Gambar Kerja</h5>
+                                                                                <button class="btn btn-link collapsed"
+                                                                                    data-toggle="collapse"
+                                                                                    data-target="#collapse2"
+                                                                                    aria-expanded="false"
+                                                                                    aria-controls="collapse1">
+                                                                                    <h5 class="m-b-0">Detail Gambar Kerja
+                                                                                    </h5>
                                                                                 </button>
                                                                             </a>
-                                                                            <div id="collapse2" class="collapse" aria-labelledby="heading11" data-parent="#accordian-3" style="">
+                                                                            <div id="collapse2" class="collapse"
+                                                                                aria-labelledby="heading11"
+                                                                                data-parent="#accordian-3" style="">
                                                                                 <div class="card-body">
-                                                                                           <p>
-                                                                                            Gambar Kerja : {{ $rumah->nama_cluster }} / {{ $rumah->blok }} -
-                                                                                            {{ $rumah->nomor }} <a href="path/to/your/file.zip" class="btn btn-outline-info" download="filename.zip" ><i class="fa fa-download" aria-hidden="true"></i></a>
-                                                                                        </p>
-                                                                                        <p>Status : Progress</p>
-                                                                                        <p>Keterangan :</p>
-                                                                                        Tambahan Cat
+                                                                                    <p>
+                                                                                        Gambar Kerja :
+                                                                                        {{ $rumah->nama_cluster }} /
+                                                                                        {{ $rumah->blok }} -
+                                                                                        {{ $rumah->nomor }} <a
+                                                                                            href="path/to/your/file.zip"
+                                                                                            class="btn btn-outline-info"
+                                                                                            download="filename.zip"><i
+                                                                                                class="fa fa-download"
+                                                                                                aria-hidden="true"></i></a>
+                                                                                    </p>
+                                                                                    <p>Status : Progress</p>
+                                                                                    <p>Keterangan :</p>
+                                                                                    Tambahan Cat
 
                                                                                 </div>
                                                                             </div>
@@ -270,7 +325,8 @@
                                                                                         @else
                                                                                             <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
                                                                                                 class="btn btn-outline-info">
-                                                                                                <i class="fa fa-book" aria-hidden="true"></i>
+                                                                                                <i class="fa fa-book"
+                                                                                                    aria-hidden="true"></i>
                                                                                                 <span
                                                                                                     class="badge badge-pill badge-info">
                                                                                                     {{ $rumah->countTipe }}</span></a>
@@ -278,14 +334,16 @@
 
                                                                                         <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
                                                                                             class="btn btn-outline-info">
-                                                                                            <i class="fas fa-pencil-alt    "></i>
+                                                                                            <i
+                                                                                                class="fas fa-pencil-alt    "></i>
                                                                                         </a>
                                                                                     </td>
                                                                                 @else
                                                                                     <td class="td-table">
                                                                                         <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
                                                                                             class="btn btn-outline-info">
-                                                                                            <i class="fa fa-book" aria-hidden="true"></i>
+                                                                                            <i class="fa fa-book"
+                                                                                                aria-hidden="true"></i>
                                                                                             <span
                                                                                                 class="badge badge-pill badge-info">
                                                                                                 {{ $rumah->countTipe }}</span></a>
@@ -317,8 +375,106 @@
 
             </div>
         </div>
-        <div class="tab-pane  p-20" id="cicilanSPK" role="tabpanel">
+        <div class="tab-pane" id="cicilanSPK" role="tabpanel">
+            <div class="card">
 
+                <div class="card-body">
+                    <table class="table" id="tableCicilanSPK">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>User</th>
+                                <th>Cicilan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $noCicilanSPK = 1;
+                            @endphp
+                            @foreach ($getTambahanSPK as $tambahBangunan)
+                                <tr>
+                                    <td scope="row">{{ $noCicilanSPK }}</td>
+                                    <td>
+                                        Rumah : {{ $tambahBangunan->blok }} - {{ $tambahBangunan->nomor }} <br>
+                                        Pelanggan : {{ $tambahBangunan->nama_plgn }}
+                                    </td>
+                                    <td>
+                                        <div id="accordian-3">
+                                            <div class="card">
+                                                <a class="card-header" id="heading11">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#cicilanSPK{{ $tambahBangunan->id_spk }}" aria-expanded="false"
+                                                        aria-controls="collapse1">
+                                                        <h5 class="m-b-0"> Cicilan SPK
+                                                        </h5>
+                                                    </button>
+                                                </a>
+                                                <div id="cicilanSPK{{ $tambahBangunan->id_spk }}" class="collapse"
+                                                    aria-labelledby="heading11" data-parent="#accordian-3"
+                                                    style="">
+                                                    <div class="card-body">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Tagihan</th>
+                                                                    <th>Status</th>
+                                                                    <th>Tanggal Deadline</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @php
+                                                                    $noTagihan = 1;
+                                                                    $sumTagihan = 0; // Initialize sumTagihan
+                                                                @endphp
+                                                                @forelse ($getCicilanSPK as $cicilanSPK)
+                                                                    @if ($cicilanSPK->id_spk == $tambahBangunan->id_spk)
+                                                                        <tr>
+                                                                            <td scope="row">{{ $noTagihan++ }}</td>
+                                                                            <td>{{ rupiah($cicilanSPK->pembayaran_cs) }}</td>
+                                                                            <td>
+                                                                                @if ($cicilanSPK->status_cs == 'belum')
+                                                                                    <i class="fa fa-times"
+                                                                                        aria-hidden="true"></i>
+                                                                                @else
+                                                                                    <i class="fa fa-check"
+                                                                                        aria-hidden="true"></i>
+                                                                                @endif
+                                                                            </td>
+                                                                            <td>{{ tgl_indo($cicilanSPK->tgl_bayar_cs) }}</td>
+                                                                        </tr>
+                                                                        @php
+                                                                            $sumTagihan += $cicilanSPK->sisa_cs; // Sum up the payments
+                                                                        @endphp
+                                                                    @endif
+                                                                @empty
+                                                                    <tr>
+                                                                        <td colspan="3">No data available</td>
+                                                                    </tr>
+                                                                @endforelse
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- Display the sum of payments -->
+                                                        <p>Total Tagihan: {{ rupiah($sumTagihan) }}</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    </td>
+                                </tr>
+                            @endforeach
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
     </div>
