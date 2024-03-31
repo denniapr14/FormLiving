@@ -542,6 +542,35 @@
                                                         <input type="text" name="img_rumah" required class="form-control"
                                                             placeholder="masukan link video youtube">
                                                     </div>
+                                                    <br>
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                          <div class="card-header">
+                                                            <h5 class="mb-0">
+                                                              <button class="btn btn-link" data-toggle="collapse" data-target="#step1">
+                                                                Langkah-langkah Mengambil Link Embed Video YouTube
+                                                              </button>
+                                                            </h5>
+                                                          </div>
+                                                          <div id="step1" class="collapse" data-parent="#accordion">
+                                                            <div class="card-body">
+                                                                <ol>
+                                                                    <li><strong>Buka Video YouTube:</strong> Mulailah dengan membuka video YouTube yang ingin Anda sematkan di situs web atau platform lain.</li>
+                                                                    <li><strong>Klik Tombol Bagikan:</strong> Di bawah video, Anda akan melihat tombol "Bagikan". Klik tombol ini untuk melanjutkan.</li>
+                                                                    <li><strong>Pilih Opsi Embed:</strong> Setelah Anda klik tombol "Bagikan", pilih opsi "Embed".</li>
+                                                                    <li><strong>Salin Link Embed:</strong> Setelah Anda memilih opsi "Embed", Anda akan melihat kode HTML yang mencakup link embed video YouTube. Temukan dan salin link embed saja.</li>
+                                                                    <li><strong>Gunakan Link Embed:</strong> Anda dapat menempelkan link embed ini di mana pun Anda butuhkan dalam kode HTML halaman web atau platform lainnya. Ini akan menghasilkan video YouTube yang disematkan di situs tersebut.</li>
+                                                                  </ol>
+                                                                <strong>Contoh</strong>
+                                                                <div class="alert bg-gray-25">
+
+                                                                    &lt;iframe width="560" height="315" src="<strong><u>https://www.youtube.com/embed/NZp4rr5wh3o?si=A84fPYFsBPq6Vw_T</u></strong>"  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen&gt;&lt;/iframe&gt;
+                                                                </div>
+
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary float-left"
