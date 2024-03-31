@@ -73,9 +73,17 @@
                                     <td>{{ $spp->blok }} - {{ $spp->nomor }}</td>
                                     <td>
                                         @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
-                                            <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
-                                                class="btn btn-outline-info float-right"><i class="fa fa-plus"
-                                                    aria-hidden="true"></i> SPK</a>
+                                        @foreach ($getSPK as $spk)
+                                        @if ($spp->id_spp == $spk->id_spp)
+                                        <p>SPK Telah di buat</p>
+                                        @else
+
+                                        <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
+                                            class="btn btn-outline-info "><i class="fa fa-plus"
+                                            aria-hidden="true"></i> SPK</a>
+                                            @endif
+                                        @endforeach
+
                                     </td>
                                 @else
                             @endif
@@ -230,150 +238,7 @@
 
             </div>
 
-            <div class="card" id="SPK_Mobile">
-                <div class="card-body">
-                    <div class="card-title">
-                        <table style="width: 100%">
-                            <tr>
-                                <td> <i class="bi bi-house-fill"></i>
-                                    <span>SPK {{ $getProjek->nama_projek }}</span>
-                                </td>
-                                <td>
-                                    <div class="float-right">
-                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                            <a href="/tambah-rumah-admin/{{ $getProjek->nama_projek }}"
-                                                class="btn btn-outline-info" style="float: right"> <i
-                                                    class="fas fa-plus    "></i>
-                                                Rumah</a>
-                                        @else
-                                            <!-- You can add additional content or styling for the non-admin case if needed -->
-                                        @endif
-                                    </div>
 
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="table-responsive">
-                        <center>
-                            <table id="rumah-mobile" class="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @foreach ($getRumah as $rumah)
-                                        <tr style="border: none">
-                                            <td style="border: none">
-                                                <center>
-                                                    <div class="row w-100">
-                                                        <div class="">
-                                                            <div class="mycard">
-                                                                <div class="">
-                                                                    <span class="p-2"> <b> {{ $rumah->nama_cluster }} /
-                                                                            {{ $rumah->blok }} -
-                                                                            {{ $rumah->nomor }}</b>
-
-                                                                    </span><br>
-                                                                    <div id="accordian-3">
-                                                                        <div class="card">
-                                                                            <a class="card-header" id="heading11">
-                                                                                <button class="btn btn-link collapsed"
-                                                                                    data-toggle="collapse"
-                                                                                    data-target="#collapse2"
-                                                                                    aria-expanded="false"
-                                                                                    aria-controls="collapse1">
-                                                                                    <h5 class="m-b-0">Detail Gambar Kerja
-                                                                                    </h5>
-                                                                                </button>
-                                                                            </a>
-                                                                            <div id="collapse2" class="collapse"
-                                                                                aria-labelledby="heading11"
-                                                                                data-parent="#accordian-3" style="">
-                                                                                <div class="card-body">
-                                                                                    <p>
-                                                                                        Gambar Kerja :
-                                                                                        {{ $rumah->nama_cluster }} /
-                                                                                        {{ $rumah->blok }} -
-                                                                                        {{ $rumah->nomor }} <a
-                                                                                            href="path/to/your/file.zip"
-                                                                                            class="btn btn-outline-info"
-                                                                                            download="filename.zip"><i
-                                                                                                class="fa fa-download"
-                                                                                                aria-hidden="true"></i></a>
-                                                                                    </p>
-                                                                                    <p>Status : Progress</p>
-                                                                                    <p>Keterangan :</p>
-                                                                                    Tambahan Cat
-
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <center>
-                                                                        <table>
-                                                                            <tr>
-                                                                                @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'AdminAdv')
-                                                                                    <td class="td-table">
-                                                                                        @if ($rumah->status != 'Available')
-                                                                                        @else
-                                                                                            <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                                                                class="btn btn-outline-info">
-                                                                                                <i class="fa fa-book"
-                                                                                                    aria-hidden="true"></i>
-                                                                                                <span
-                                                                                                    class="badge badge-pill badge-info">
-                                                                                                    {{ $rumah->countTipe }}</span></a>
-                                                                                        @endif
-
-                                                                                        <a href="{{ route('updateRumah.admin', [$getProjek->nama_projek, $rumah->id_rumah]) }}"
-                                                                                            class="btn btn-outline-info">
-                                                                                            <i
-                                                                                                class="fas fa-pencil-alt    "></i>
-                                                                                        </a>
-                                                                                    </td>
-                                                                                @else
-                                                                                    <td class="td-table">
-                                                                                        <a href="{{ route('tipeRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($rumah->id_rumah)]) }}"
-                                                                                            class="btn btn-outline-info">
-                                                                                            <i class="fa fa-book"
-                                                                                                aria-hidden="true"></i>
-                                                                                            <span
-                                                                                                class="badge badge-pill badge-info">
-                                                                                                {{ $rumah->countTipe }}</span></a>
-                                                                                    </td>
-                                                                                @endif
-                                                                            </tr>
-                                                                        </table>
-                                                                    </center>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </center>
-                                            </td>
-
-
-                                        </tr>
-                                    @endforeach
-
-
-                                </tbody>
-                            </table>
-                        </center>
-
-                    </div>
-
-                </div>
-
-            </div>
         </div>
         <div class="tab-pane" id="cicilanSPK" role="tabpanel">
             <div class="card">
@@ -406,13 +271,33 @@
                                                         data-target="#cicilanSPK{{ $tambahBangunan->id_spk }}" aria-expanded="false"
                                                         aria-controls="collapse1">
                                                         <h5 class="m-b-0"> Cicilan SPK
+
                                                         </h5>
+
                                                     </button>
+
                                                 </a>
                                                 <div id="cicilanSPK{{ $tambahBangunan->id_spk }}" class="collapse"
                                                     aria-labelledby="heading11" data-parent="#accordian-3"
                                                     style="">
                                                     <div class="card-body">
+                                                        <div>
+                                                            <table class="table-info" style="width: 100%">
+                                                                <tr>
+                                                                    <td>
+                                                                        <h3>
+
+                                                                            Tagihan Tambah Kurang Bangunan
+                                                                        </h3>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="{{ route('addCicilanSPK.admin', [$getProjek->nama_projek,Crypt::encrypt($spk->id_spk)]) }}" class="btn btn-outline-info float-right"> <i class="fa fa-plus" aria-hidden="true"></i> Tagihan</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+
+
+                                                        </div>
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
@@ -420,6 +305,7 @@
                                                                     <th>Tagihan</th>
                                                                     <th>Status</th>
                                                                     <th>Tanggal Deadline</th>
+                                                                    <th>Pengaturan</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -442,6 +328,11 @@
                                                                                 @endif
                                                                             </td>
                                                                             <td>{{ tgl_indo($cicilanSPK->tgl_bayar_cs) }}</td>
+                                                                            <td>
+
+                                                                                <a href="" class="btn btn-outline-info"> <i class="fas fa-edit    "></i></a>
+                                                                                <a href="" class="btn btn-outline-info"> <i class="fas fa-university"></i> Pembayaran</a>
+                                                                            </td>
                                                                         </tr>
                                                                         @php
                                                                             $sumTagihan += $cicilanSPK->sisa_cs; // Sum up the payments

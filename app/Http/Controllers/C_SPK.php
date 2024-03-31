@@ -43,15 +43,15 @@ class C_SPK extends Controller
         $this->projek = new Projek();
         $this->userMenu = new UserMenu();
         $this->rumah = new Rumah();
-        $this->spp = new SPP();
         $this->spk =  new SPK();
-        $this->img_spk = new Image_SPK();
         $this->cicilanspk = new CicilanSPK();
+        $this->spp = new SPP();
+        $this->img_spk = new Image_SPK();
         $this->subkon = new Subkon();
     }
     public function getSPK($projek)
     {
-
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
         $getSPP = $this->spp->getSPPJoinRumahFormulirPelangganOrder(
             [
@@ -62,7 +62,7 @@ class C_SPK extends Controller
             'desc'
         );
         // dd($getSPP);
-        $getSPK = $this->spk->getSPKOrder('tgl_input_spk', 'desc');
+        $getSPK = $this->spk->getSPKJoinRumahWhereOrder(['rumah.id_projek'=> $getProjek->id_projek],'tgl_input_spk', 'desc');
 
         $getTambahanSPK = $this->spk->getSPKWhereJoinRumahPelanggan(['spk.tambah_bangunan_spk' => "Ada"]);
         // dd($getTambahanSPK);
@@ -73,7 +73,7 @@ class C_SPK extends Controller
         $getImageSPK = $this->img_spk->getImageSPK(['status_ipk' => 'Aktif']);
         // dd($getRumah);
 
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
 
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
@@ -311,53 +311,185 @@ class C_SPK extends Controller
         }
     }
 
-    function editSPK($projek, $id_spk)  {
-            $decryptedID = Crypt::decrypt($id_spk);
+    function editSPK($projek, $id_spk)
+    {
+        $decryptedID = Crypt::decrypt($id_spk);
 
-            $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-            $getPengawas= $this->userAdmin->getUserAdminWhere('*',['ktgr_admin.kategori' => 'Pengawas']);
-            $getSubkon = $this->subkon->getSubkonWhere(['status_subkon' => "Aktif"]);
+        $getPengawas = $this->userAdmin->getUserAdminWhere('*', ['ktgr_admin.kategori' => 'Pengawas']);
+        $getSubkon = $this->subkon->getSubkonWhere(['status_subkon' => "Aktif"]);
+        $getImageSPK = $this->img_spk->getImageSPK([
+            'id_spk' => $decryptedID,
+            'status_ipk' => "Aktif"
+        ]);
+        $getSPK = $this->spk->firstSPK(['id_spk' => $decryptedID]);
+        $getCicilanSPK = $this->cicilanspk->getCicilanSPKWhere(['id_spk' => $decryptedID]);
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
-            $getSPK = $this->spk->firstSPK(['id_spk' => $decryptedID]);
-            if (session()->has('user')) {
-                $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
-
-                $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
-                $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-                    'user_menu.status_um' => 'aktif',
-                    'user_menu.id_kategori' => $user->id_kategori
-                ])->collect();
-                // dd($getUserMenu);
-                $foundMatchingMenu = false;
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
 
 
-                foreach ($getUserMenu as $menu) {
-                    if ($menu->url_menu == request()->segment(1)) {
-                        $foundMatchingMenu = true;
-                        break;
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            // if (!$foundMatchingMenu) {
+            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            // }
+
+            return view(
+                'V_Admin.editSPK',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getProjek',
+                    'getUserMenu',
+                    'getSPK',
+                    'getPengawas',
+                    'getSubkon',
+                    'getImageSPK',
+                    'getCicilanSPK'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+    }
+    function editSPKAction(Request $request, $projek, $id_spk)
+    {
+        $decryptedID = Crypt::decrypt($id_spk);
+        $getSPK = $this->spk->firstSPK(['id_spk' => $decryptedID]);
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+            $filenameSPK = "";
+            if (!empty($request->file('file_spk'))) {
+                $file_spk = $request->file('file_spk');
+                $fileName = time() . '.' . $file_spk->getClientOriginalExtension();
+
+                // Upload original image
+                $file_spk->move(public_path('File/file_spk'), $fileName);
+
+                // Compress and save a new version
+
+
+                $filenameSPK = $fileName;
+            } else {
+                $filenameSPK = $getSPK->file_spk;
+            }
+            $dataUpdate  = [
+                'no_surat_spk' => $request->no_surat_spk,
+                'id_req_pengawas' => $request->req_pengawas,
+                'file_spk'  => $filenameSPK,
+                'id_subkon'     => $request->subkon,
+                'ket_tambah_bangunan' =>  $request->keterangan,
+                'status_spk'            => $request->status_spk
+            ];
+
+
+            if ($request->hasFile('denah')) {
+                $images = $request->file('denah');
+
+                foreach ($images as $image) {
+                    // Check if the file is valid
+                    if ($image->isValid()) {
+                        // Generate a unique filename for each image
+                        $filename = uniqid() . '_' . $image->getClientOriginalName();
+
+                        // Customize the storage path according to your needs
+                        $path = $image->storeAs('File/denah_spk', $filename, 'public'); // Changed storage path
+                        $image->move(public_path('File/denah_spk'), $filename);
+                        // Save the filename and SPK ID to the array
+                        $dataImage[] = [
+                            'id_spk' => $decryptedID,
+                            'img_spk' => $filename,
+
+                        ];
+
+                        // You can save $path and $filename to your database if needed
                     }
                 }
+                // dd($dataImage);
+                // Insert the data into the database table
+                DB::table('img_spk')->insert($dataImage);
 
-                // if (!$foundMatchingMenu) {
-                //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-                // }
-
-                return view('V_Admin.editSPK',
-                    compact(
-                        'user',
-                        'projekUser',
-                        'getProjek',
-                        'getUserMenu',
-                        'getSPK',
-                        'getPengawas',
-                        'getSubkon',
-
-                    )
-                );
-            } else {
-                return redirect('/login');
+                // You can return or do something with $dataImage here if necessary
             }
-    }
+            DB::table('spk')
+                ->where('id_spk', $decryptedID)
+                ->update($dataUpdate);
+            return redirect()->route('spk.admin', [$projek])->with('success', 'spk berhasil di update');
+            // if (!$foundMatchingMenu) {
+            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            // }
 
+
+        } else {
+            return redirect('/login');
+        }
+    }
+    function editImageSPKAction(Request $request, $projek, $id_img_spk) {
+        $decryptedID = Crypt::decrypt($id_img_spk);
+        $filenameSPK = "";
+        if (!empty($request->file('imageDenah'))) {
+            $file_spk = $request->file('imageDenah');
+            $fileName = time() . '.' . $file_spk->getClientOriginalExtension();
+
+            // Upload original image
+            $file_spk->move(public_path('File/denah_spk'), $fileName);
+
+            // Compress and save a new version
+
+
+            $filenameSPK = $fileName;
+        } else {
+            $filenameSPK = "";
+        }
+        DB::table('img_spk')
+        ->where('id_img_spk', $decryptedID)
+        ->update(['img_spk' => $filenameSPK]);
+
+
+        return redirect()->back()->with('success','Gambar denah telah di ubah');
+    }
+    function changeStatusImageSPK($projek, $id_img_spk, $status) {
+
+
+        $decryptedID = Crypt::decrypt($id_img_spk);
+        $decryptedStatus = Crypt::decrypt($status);
+
+        // dd($decryptedID);
+        DB::table('img_spk')
+        ->where('id_img_spk', $decryptedID)
+        ->update(['status_ipk' => $decryptedStatus]);
+        return redirect()->back()->with("success",'Gambar telah di hapus');
+
+    }
 }

@@ -16,4 +16,5 @@ class Image_SPK extends Model
         ->get();
 
     }
+
 }

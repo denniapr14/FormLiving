@@ -18,6 +18,14 @@ class SPK extends Model{
         ->orderBy($order,$by)
         ->get();
     }
+    function getSPKJoinRumahWhereOrder($where,$order,$by){
+        return SPK::select('*')
+        ->join('rumah','spk.id_rumah','rumah.id_rumah')
+        ->join('projek','rumah.id_projek','projek.id_projek')
+        ->where($where)
+        ->orderBy($order,$by)
+        ->get();
+    }
 
     function getSPKWhereJoinRumahPelanggan($where) {
         return SPK::select('*')

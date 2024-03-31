@@ -12,4 +12,18 @@ class CicilanSPK extends Model{
         return CicilanSPK::select('*')
         ->get();
     }
+    function getCicilanSPKWhere($where)  {
+        return CicilanSPK::select('*')
+        ->where($where)
+        ->get();
+    }
+    function firstCicilanSPKWhere( $where ) {
+        return CicilanSPK::select('*')
+        ->where($where)
+        ->first();
+    }
+    function insertCicilanSPK($data)  {
+        return CicilanSPK::insert($data);
+    }
+
 }
