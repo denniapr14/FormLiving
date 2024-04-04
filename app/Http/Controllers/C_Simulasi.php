@@ -1291,6 +1291,7 @@ class C_Simulasi extends Controller
                 'signature_pr'     => $generatePayment['signature']
             );
 
+            
             dd($dataUpdatePembayaran);
 
             DB::table('pembayaran_rumah')
@@ -1360,6 +1361,10 @@ class C_Simulasi extends Controller
             } catch (Exception $e) {
                 // return response()->json(['Sorry! Please try again latter']);
             }
+
+            
+            sendWhatsappMessage('082229997190',$userNotif->no_tlp_ua, "ada pembelian rumah di ".$rumah->no."-".$rumah->blok." oleh ".$userAdmin->nama_ua );
+
 
             return redirect('/congratulation/' . $fp)->with('success', 'Data has been send!');
             // dd($user);

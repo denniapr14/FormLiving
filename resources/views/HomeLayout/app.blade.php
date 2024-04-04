@@ -1,48 +1,192 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
+
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0YJJK1HQ7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0YJJK1HQ7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-Z0YJJK1HQ7');
-</script>
+  </script>
 
-  <!-- Basic -->
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('tittle')</title>
-  <meta name="keywords" content="FORMS Dashboard" />
-  <meta name="description" content="FORMS Dashboard - Responsive HTML5 Template">
-  <meta name="author" content="FORMS">
 
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=1920, shrink-to-fit=no">
+  <!--trial costum css-->
+  <style>
+    .balloon {
+      position: relative;
+      background: white;
+      /* Your desired background color */
+      /* other styling for your dropdown item */
+    }
 
-  <!-- Favicons -->
-      <link rel="icon" type="image/png" sizes="16x16" href="{{ url('Home') }}/images/logo-website/fl-favicon.png">
+    .balloon:after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      /* Positioning the triangle at the bottom of the balloon */
+      left: 50%;
+      /* Centering the triangle */
+      margin-left: -10px;
+      /* Adjust as necessary */
+      border-width: 10px;
+      /* Adjust size of the triangle */
+      border-style: solid;
+      border-color: white transparent transparent transparent;
+      /* The first value is the color of the triangle */
+    }
+  </style>
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.2/font/bootstrap-icons.min.css"
+    integrity="sha512-YzwGgFdO1NQw1CZkPoGyRkEnUTxPSbGWXvGiXrWk8IeSqdyci0dEDYdLLjMxq1zCoU0QBa4kHAFiRhUL3z2bow=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"
+    integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"
+    integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('Home') }}/css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+    integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+    integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <!-- Vendor CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{url('Dashboard')}}/css/style.css" type="text/css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 
-<body>
+<body class="@yield('body')">
 
-    @yield('sidebar')
+  @yield('navbar')
+  @yield('sidebar')
 
-    @yield('content')
+  @yield('flashdata')
+  @yield('content')
+  @yield('map')
 
-    @yield('footer')
-    @yield('script')
+  @yield('navbar-profile')
 
+  {{-- @yield('branch') --}}
+  @yield('footer')
+  @yield('script')
 </body>
+
+<script>
+  AOS.init({
+        offset: 150,
+        once: true,
+    });
+</script>
+
+<script>
+  @if(Session::has('success'))
+  toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-top-left",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "200",
+  "hideDuration": "1000",
+  "timeOut": "1800",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+  		toastr.success("{{ session('success') }}");
+  		
+  @endif
+  
+  @if(Session::has('error'))
+  toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-top-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "200",
+  "hideDuration": "1000",
+  "timeOut": "3000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+    toastr.warning("{{ session('error') }}");
+  		
+  @endif
+</script>
+
+<!--<script type="text/javascript">-->
+<!--   $(document).ready(function(){-->
+<!--     $('.hunian-cluster').slick({-->
+<!--       dots: false,-->
+<!--         infinite: false,-->
+<!--         speed: 300,-->
+<!--         slidesToShow: 4,-->
+<!--         slidesToScroll: 4,-->
+<!-- responsive: [-->
+<!--   {-->
+<!--     breakpoint: 1024,-->
+<!--     settings: {-->
+<!--       slidesToShow: 3,-->
+<!--       slidesToScroll: 3,-->
+<!--       infinite: true,-->
+<!--       dots: true-->
+<!--     }-->
+<!--   },-->
+<!--   {-->
+<!--     breakpoint: 600,-->
+<!--     settings: {-->
+<!--       slidesToShow: 2,-->
+<!--       slidesToScroll: 2-->
+<!--     }-->
+<!--   },-->
+<!--   {-->
+<!--     breakpoint: 480,-->
+<!--     settings: {-->
+<!--       slidesToShow: 1,-->
+<!--       slidesToScroll: 1-->
+<!--     }-->
+<!--   }-->
+<!--// You can unslick at a given breakpoint now by adding:-->
+<!--// settings: "unslick"-->
+<!--// instead of a settings object-->
+<!-- ]-->
+<!--     });-->
+<!--   });-->
+<!-- </script>-->
+
 </html>

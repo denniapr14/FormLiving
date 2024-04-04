@@ -8,373 +8,373 @@
 {{-- @section('breadcrumb2', 'Tambah Produk') --}}
 @section('content')
 
-    <!-- start: main -->
-    <style>
-        @media (max-width: 500px) {
-            #SPK_Mobile {
-                display: block;
-            }
-
-            #SPK_PC {
-                display: none;
-            }
+<!-- start: main -->
+<style>
+    @media (max-width: 500px) {
+        #SPK_Mobile {
+            display: block;
         }
 
-        @media (min-width: 501px) {
-            #SPK_Mobile {
-                display: none;
-            }
-
-            #SPK_PC {
-                display: block;
-            }
+        #SPK_PC {
+            display: none;
         }
-    </style>
+    }
+
+    @media (min-width: 501px) {
+        #SPK_Mobile {
+            display: none;
+        }
+
+        #SPK_PC {
+            display: block;
+        }
+    }
+</style>
 
 
-    <!-- start: navbar -->
+<!-- start: navbar -->
 
-    <!-- end: navbar -->
+<!-- end: navbar -->
 
-    <!-- start: content -->
+<!-- start: content -->
 
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#spp" role="tab"><span
-                    class="hidden-sm-up">SPP</a>
-        </li>
-        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#spk" role="tab"><span
-                    class="hidden-sm-up">SPK</a>
-        </li>
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#cicilanSPK" role="tab"><span
-                    class="hidden-sm-up">
-                    Cicilan SPK
-            </a> </li>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#spp" role="tab"><span
+                class="hidden-sm-up">SPP</a>
+    </li>
+    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#spk" role="tab"><span
+                class="hidden-sm-up">SPK</a>
+    </li>
+    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#cicilanSPK" role="tab"><span
+                class="hidden-sm-up">
+                Cicilan SPK
+        </a> </li>
 
-    </ul>
-    <div class="tab-content tabcontent-border">
-        <div class="tab-pane" id="spp" role="tabpanel">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table" id="tableSPP">
-                        <thead>
+</ul>
+<div class="tab-content tabcontent-border">
+    <div class="tab-pane" id="spp" role="tabpanel">
+        <div class="card">
+            <div class="card-body">
+                <table class="table" id="tableSPP">
+                    <thead>
+                        <tr>
+                            <th>no</th>
+                            <th>Rumah</th>
+                            <th>Pengaturan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                        $noSPP = 1;
+                        @endphp
+                        @foreach ($getSPP as $spp)
+                        <tr>
+                            <td scope="row">{{ $noSPP }}</td>
+                            <td>{{ $spp->blok }} - {{ $spp->nomor }}</td>
+                            <td>
+                                @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
+                                @foreach ($getSPK as $spk)
+                                @if ($spp->id_spp == $spk->id_spp)
+                                <p>SPK Telah di buat</p>
+                                @else
+
+                                <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
+                                    class="btn btn-outline-info "><i class="fa fa-plus" aria-hidden="true"></i> SPK</a>
+                                @endif
+                                @endforeach
+                                <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
+                                    class="btn btn-outline-info "><i class="fa fa-plus" aria-hidden="true"></i> SPK</a>
+                                @else
+                                @endif
+                            </td>
+
+
+                        </tr>
+                        @php
+                        $noSPP++;
+                        @endphp
+                        @endforeach
+
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane active" id="spk" role="tabpanel">
+        <div class="card" id="SPK_PC">
+
+            <div class="card-body">
+                <div class="card-title">
+                    <table style="width: 100%">
+                        <tr>
+                            <td> <i class="bi bi-house-fill"></i>
+                                <span>SPK {{ $getProjek->nama_projek }}</span>
+                            </td>
+                            <td>
+
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+
+
+                <div class="table-responsive">
+
+                    <table id="rumah" class="table" style="width: 100%">
+                        <thead class="">
                             <tr>
-                                <th>no</th>
-                                <th>Rumah</th>
-                                <th>Pengaturan</th>
+                                <th class="th-table" style="width: 1rem">No</th>
+                                <th class="th-table" style="width: 10%">No Rumah</th>
+                                <th>Detail</th>
+                                <th class="th-table" style="width: 35%">Pengaturan</th>
+
+
                             </tr>
                         </thead>
                         <tbody>
                             @php
-                                $noSPP = 1;
+                            $nospk = 1;
                             @endphp
-                            @foreach ($getSPP as $spp)
-                                <tr>
-                                    <td scope="row">{{ $noSPP }}</td>
-                                    <td>{{ $spp->blok }} - {{ $spp->nomor }}</td>
-                                    <td>
-                                        @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
-                                        @foreach ($getSPK as $spk)
-                                        @if ($spp->id_spp == $spk->id_spp)
-                                        <p>SPK Telah di buat</p>
-                                        @else
-
-                                        <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
-                                            class="btn btn-outline-info "><i class="fa fa-plus"
-                                            aria-hidden="true"></i> SPK</a>
-                                            @endif
-                                        @endforeach
-
-                                    </td>
-                                @else
-                            @endif
-
-                            </tr>
-                            @php
-                                $noSPP++;
-                            @endphp
-                            @endforeach
-
-
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-        <div class="tab-pane active" id="spk" role="tabpanel">
-            <div class="card" id="SPK_PC">
-
-                <div class="card-body">
-                    <div class="card-title">
-                        <table style="width: 100%">
+                            @foreach ($getSPK as $spk)
                             <tr>
-                                <td> <i class="bi bi-house-fill"></i>
-                                    <span>SPK {{ $getProjek->nama_projek }}</span>
-                                </td>
+                                <td>{{ $nospk }}</td>
+                                <td>{{ $spk->blok }} - {{ $spk->nomor }}</td>
                                 <td>
 
+                                    <div id="accordian-3">
+                                        <div class="card">
+                                            <a class="card-header" id="heading11">
+                                                <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                    data-target="#spk{{ $spk->id_spk }}" aria-expanded="false"
+                                                    aria-controls="collapse1">
+                                                    <h5 class="m-b-0"> Detail SPK
+                                                    </h5>
+                                                </button>
+                                            </a>
+                                            <div id="spk{{ $spk->id_spk }}" class="collapse" aria-labelledby="heading11"
+                                                data-parent="#accordian-3" style="">
+                                                <div class="card-body">
 
-                                </td>
-                            </tr>
-                        </table>
+                                                    <p>Berkas SPK : {{ $spk->file_spk }} <a
+                                                            href="{{ asset('File/file_spk/' . $spk->file_spk) }}"
+                                                            class="btn btn-outline-info"><i class="fa fa-download"
+                                                                aria-hidden="true"></i></a></p>
+                                                    <p>
 
-                    </div>
+                                                        Status : {{ $spk->status_spk }}
+                                                    </p>
+                                                    Denah :
+                                                    @foreach ($getImageSPK as $img_spk)
+                                                    @if ($img_spk->id_spk == $spk->id_spk)
+                                                    <a href="#" class="btn btn-outline-info" data-toggle="modal"
+                                                        data-target="#imageModal{{ $img_spk->id_img_spk }}">
+                                                        <i class="fas fa-image    "></i>
 
-
-
-                    <div class="table-responsive">
-
-                        <table id="rumah" class="table" style="width: 100%">
-                            <thead class="">
-                                <tr>
-                                    <th class="th-table" style="width: 1rem">No</th>
-                                    <th class="th-table" style="width: 10%">No Rumah</th>
-                                    <th>Detail</th>
-                                    <th class="th-table" style="width: 35%">Pengaturan</th>
-
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $nospk = 1;
-                                @endphp
-                                @foreach ($getSPK as $spk)
-                                    <tr>
-                                        <td>{{ $nospk }}</td>
-                                        <td>{{ $spk->blok }} - {{ $spk->nomor }}</td>
-                                        <td>
-
-                                            <div id="accordian-3">
-                                                <div class="card">
-                                                    <a class="card-header" id="heading11">
-                                                        <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                            data-target="#spk{{ $spk->id_spk }}" aria-expanded="false"
-                                                            aria-controls="collapse1">
-                                                            <h5 class="m-b-0"> Detail SPK
-                                                            </h5>
-                                                        </button>
                                                     </a>
-                                                    <div id="spk{{ $spk->id_spk }}" class="collapse"
-                                                        aria-labelledby="heading11" data-parent="#accordian-3"
-                                                        style="">
-                                                        <div class="card-body">
 
-                                                            <p>Berkas SPK : {{ $spk->file_spk }} <a
-                                                                    href="{{ asset('File/file_spk/' . $spk->file_spk) }}"
-                                                                    class="btn btn-outline-info"><i class="fa fa-download"
-                                                                        aria-hidden="true"></i></a></p>
-                                                            <p>
-
-                                                                Status : {{ $spk->status_spk }}
-                                                            </p>
-                                                            Denah :
-                                                            @foreach ($getImageSPK as $img_spk)
-                                                                @if ($img_spk->id_spk == $spk->id_spk)
-                                                                    <a href="#" class="btn btn-outline-info"
-                                                                        data-toggle="modal"
-                                                                        data-target="#imageModal{{ $img_spk->id_img_spk }}">
-                                                                        <i class="fas fa-image    "></i>
-
-                                                                    </a>
-
-                                                                    <!-- Modal -->
-                                                                    <div class="modal fade"
-                                                                        id="imageModal{{ $img_spk->id_img_spk }}" tabindex="-1"
-                                                                        role="dialog"
-                                                                        aria-labelledby="imageModalLabel{{ $img_spk->id_img_spk }}"
-                                                                        aria-hidden="true">
-                                                                        <div class="modal-dialog" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="imageModalLabel{{ $img_spk->id_img_spk }}">
-                                                                                        Gambar Denah
-                                                                                        </h5>
-                                                                                    <button type="button" class="close"
-                                                                                        data-dismiss="modal"
-                                                                                        aria-label="Close">
-                                                                                        <span
-                                                                                            aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <img src="{{ asset('File/denah_spk/' . $img_spk->img_spk) }}" style="width: 100%"
-                                                                                        class="img-fluid" alt="Image">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="imageModal{{ $img_spk->id_img_spk }}"
+                                                        tabindex="-1" role="dialog"
+                                                        aria-labelledby="imageModalLabel{{ $img_spk->id_img_spk }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"
+                                                                        id="imageModalLabel{{ $img_spk->id_img_spk }}">
+                                                                        Gambar Denah
+                                                                    </h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <img src="{{ asset('File/denah_spk/' . $img_spk->img_spk) }}"
+                                                                        style="width: 100%" class="img-fluid"
+                                                                        alt="Image">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                            </div>
-
-
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('editSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spk->id_spk)]) }}" class="btn btn-outline-info"><i class="fas fa-edit    "></i></a>
-                                        </td>
-                                    </tr>
-                                    @php
-
-                                        $nospk++;
-                                    @endphp
-                                @endforeach
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-        <div class="tab-pane" id="cicilanSPK" role="tabpanel">
-            <div class="card">
-
-                <div class="card-body">
-                    <table class="table" id="tableCicilanSPK">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>User</th>
-                                <th>Cicilan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $noCicilanSPK = 1;
-                            @endphp
-                            @foreach ($getTambahanSPK as $tambahBangunan)
-                                <tr>
-                                    <td scope="row">{{ $noCicilanSPK }}</td>
-                                    <td>
-                                        Rumah : {{ $tambahBangunan->blok }} - {{ $tambahBangunan->nomor }} <br>
-                                        Pelanggan : {{ $tambahBangunan->nama_plgn }}
-                                    </td>
-                                    <td>
-                                        <div id="accordian-3">
-                                            <div class="card">
-                                                <a class="card-header" id="heading11">
-                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                        data-target="#cicilanSPK{{ $tambahBangunan->id_spk }}" aria-expanded="false"
-                                                        aria-controls="collapse1">
-                                                        <h5 class="m-b-0"> Cicilan SPK
-
-                                                        </h5>
-
-                                                    </button>
-
-                                                </a>
-                                                <div id="cicilanSPK{{ $tambahBangunan->id_spk }}" class="collapse"
-                                                    aria-labelledby="heading11" data-parent="#accordian-3"
-                                                    style="">
-                                                    <div class="card-body">
-                                                        <div>
-                                                            <table class="table-info" style="width: 100%">
-                                                                <tr>
-                                                                    <td>
-                                                                        <h3>
-
-                                                                            Tagihan Tambah Kurang Bangunan
-                                                                        </h3>
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="{{ route('addCicilanSPK.admin', [$getProjek->nama_projek,Crypt::encrypt($spk->id_spk)]) }}" class="btn btn-outline-info float-right"> <i class="fa fa-plus" aria-hidden="true"></i> Tagihan</a>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-
-
-                                                        </div>
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>No</th>
-                                                                    <th>Tagihan</th>
-                                                                    <th>Status</th>
-                                                                    <th>Tanggal Deadline</th>
-                                                                    <th>Pengaturan</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @php
-                                                                    $noTagihan = 1;
-                                                                    $sumTagihan = 0; // Initialize sumTagihan
-                                                                @endphp
-                                                                @forelse ($getCicilanSPK as $cicilanSPK)
-                                                                    @if ($cicilanSPK->id_spk == $tambahBangunan->id_spk)
-                                                                        <tr>
-                                                                            <td scope="row">{{ $noTagihan++ }}</td>
-                                                                            <td>{{ rupiah($cicilanSPK->pembayaran_cs) }}</td>
-                                                                            <td>
-                                                                                @if ($cicilanSPK->status_cs == 'belum')
-                                                                                    <i class="fa fa-times"
-                                                                                        aria-hidden="true"></i>
-                                                                                @else
-                                                                                    <i class="fa fa-check"
-                                                                                        aria-hidden="true"></i>
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>{{ tgl_indo($cicilanSPK->tgl_bayar_cs) }}</td>
-                                                                            <td>
-
-                                                                                <a href="" class="btn btn-outline-info"> <i class="fas fa-edit    "></i></a>
-                                                                                <a href="" class="btn btn-outline-info"> <i class="fas fa-university"></i> Pembayaran</a>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @php
-                                                                            $sumTagihan += $cicilanSPK->sisa_cs; // Sum up the payments
-                                                                        @endphp
-                                                                    @endif
-                                                                @empty
-                                                                    <tr>
-                                                                        <td colspan="3">No data available</td>
-                                                                    </tr>
-                                                                @endforelse
-                                                            </tbody>
-                                                        </table>
-                                                        <!-- Display the sum of payments -->
-                                                        <p>Total Tagihan: {{ rupiah($sumTagihan) }}</p>
-
-                                                    </div>
+                                                    @endif
+                                                    @endforeach
                                                 </div>
                                             </div>
-
                                         </div>
 
+                                    </div>
 
 
+                                </td>
+                                <td>
+                                    <a href="{{ route('editSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spk->id_spk)]) }}"
+                                        class="btn btn-outline-info"><i class="fas fa-edit    "></i></a>
+                                </td>
+                            </tr>
+                            @php
 
-                                    </td>
-                                </tr>
+                            $nospk++;
+                            @endphp
                             @endforeach
-
-
                         </tbody>
+
                     </table>
+
                 </div>
+
+
+
             </div>
 
+
         </div>
-    </div>
-    <div class="">
+
 
     </div>
+    <div class="tab-pane" id="cicilanSPK" role="tabpanel">
+        <div class="card">
 
-    <script>
-        $(document).ready(function() {
+            <div class="card-body">
+                <table class="table" id="tableCicilanSPK">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>User</th>
+                            <th>Cicilan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                        $noCicilanSPK = 1;
+                        @endphp
+                        @foreach ($getTambahanSPK as $tambahBangunan)
+                        <tr>
+                            <td scope="row">{{ $noCicilanSPK }}</td>
+                            <td>
+                                Rumah : {{ $tambahBangunan->blok }} - {{ $tambahBangunan->nomor }} <br>
+                                Pelanggan : {{ $tambahBangunan->nama_plgn }}
+                            </td>
+                            <td>
+                                <div id="accordian-3">
+                                    <div class="card">
+                                        <a class="card-header" id="heading11">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                data-target="#cicilanSPK{{ $tambahBangunan->id_spk }}"
+                                                aria-expanded="false" aria-controls="collapse1">
+                                                <h5 class="m-b-0"> Cicilan SPK
+
+                                                </h5>
+
+                                            </button>
+
+                                        </a>
+                                        <div id="cicilanSPK{{ $tambahBangunan->id_spk }}" class="collapse"
+                                            aria-labelledby="heading11" data-parent="#accordian-3" style="">
+                                            <div class="card-body">
+                                                <div>
+                                                    <table class="table-info" style="width: 100%">
+                                                        <tr>
+                                                            <td>
+                                                                <h3>
+
+                                                                    Tagihan Tambah Kurang Bangunan
+                                                                </h3>
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ route('addCicilanSPK.admin', [$getProjek->nama_projek,Crypt::encrypt($spk->id_spk)]) }}"
+                                                                    class="btn btn-outline-info float-right"> <i
+                                                                        class="fa fa-plus" aria-hidden="true"></i>
+                                                                    Tagihan</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+
+                                                </div>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Tagihan</th>
+                                                            <th>Status</th>
+                                                            <th>Tanggal Deadline</th>
+                                                            <th>Pengaturan</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php
+                                                        $noTagihan = 1;
+                                                        $sumTagihan = 0; // Initialize sumTagihan
+                                                        @endphp
+                                                        @forelse ($getCicilanSPK as $cicilanSPK)
+                                                        @if ($cicilanSPK->id_spk == $tambahBangunan->id_spk)
+                                                        <tr>
+                                                            <td scope="row">{{ $noTagihan++ }}</td>
+                                                            <td>{{ rupiah($cicilanSPK->pembayaran_cs) }}</td>
+                                                            <td>
+                                                                @if ($cicilanSPK->status_cs == 'belum')
+                                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                                @else
+                                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ tgl_indo($cicilanSPK->tgl_bayar_cs) }}</td>
+                                                            <td>
+
+                                                                <a href="" class="btn btn-outline-info"> <i
+                                                                        class="fas fa-edit    "></i></a>
+                                                                <a href="" class="btn btn-outline-info"> <i
+                                                                        class="fas fa-university"></i> Pembayaran</a>
+                                                            </td>
+                                                        </tr>
+                                                        @php
+                                                        $sumTagihan += $cicilanSPK->sisa_cs; // Sum up the payments
+                                                        @endphp
+                                                        @endif
+                                                        @empty
+                                                        <tr>
+                                                            <td colspan="3">No data available</td>
+                                                        </tr>
+                                                        @endforelse
+                                                    </tbody>
+                                                </table>
+                                                <!-- Display the sum of payments -->
+                                                <p>Total Tagihan: {{ rupiah($sumTagihan) }}</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+                            </td>
+                        </tr>
+                        @endforeach
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="">
+
+</div>
+
+<script>
+    $(document).ready(function() {
             $("#myButton").click(function() {
                 alert("Button clicked");
             });
@@ -415,6 +415,6 @@
                 ] // Kolom "Status" diurutkan secara ascending (A ke Z)
             });
         });  --}}
-    </script>
+</script>
 
 @endsection
