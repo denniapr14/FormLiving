@@ -317,7 +317,7 @@
                                                         @if ($cicilanSPK->id_spk == $tambahBangunan->id_spk)
                                                         <tr>
                                                             <td scope="row">{{ $noTagihan++ }}</td>
-                                                            <td>{{ rupiah($cicilanSPK->pembayaran_cs) }}</td>
+                                                            <td>Rp. {{ rupiah($cicilanSPK->pembayaran_cs) }}</td>
                                                             <td>
                                                                 @if ($cicilanSPK->status_cs == 'belum')
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
@@ -328,8 +328,50 @@
                                                             <td>{{ tgl_indo($cicilanSPK->tgl_bayar_cs) }}</td>
                                                             <td>
 
-                                                                <a href="" class="btn btn-outline-info"> <i
-                                                                        class="fas fa-edit    "></i></a>
+                                                                <a href="#" class="btn btn-outline-info"
+                                                                    data-toggle="modal" data-target="#myModal">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a>
+
+                                                                <!-- Modal -->
+                                                                <div class="modal" id="myModal">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <!-- Modal Header -->
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title">Edit Tagihan
+                                                                                </h4>
+                                                                                <button type="button" class="close"
+                                                                                    data-dismiss="modal">&times;</button>
+                                                                            </div>
+                                                                            <form action=""></form>
+                                                                            <!-- Modal Body -->
+                                                                            <div class="modal-body">
+                                                                                <div class="form-group">
+                                                                                    <label for="">Tagihan</label>
+                                                                                    <input type="text" name="tagihan_cs"
+                                                                                        id="" class="form-control"
+                                                                                        value="{{ $cicilanSPK->pembayaran_cs }}"
+                                                                                        placeholder=""
+                                                                                        aria-describedby="helpId">
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <!-- Modal Footer -->
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-outline-danger float-left"
+                                                                                    data-dismiss="modal">Close</button>
+                                                                                <button type="button"
+                                                                                    class="btn btn-outline-success float-right">
+                                                                                    Submit </button>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                                 <a href="" class="btn btn-outline-info"> <i
                                                                         class="fas fa-university"></i> Pembayaran</a>
                                                             </td>
@@ -346,7 +388,7 @@
                                                     </tbody>
                                                 </table>
                                                 <!-- Display the sum of payments -->
-                                                <p>Total Tagihan: {{ rupiah($sumTagihan) }}</p>
+                                                <p>Total Tagihan: Rp. {{ rupiah($sumTagihan) }}</p>
 
                                             </div>
                                         </div>
