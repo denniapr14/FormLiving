@@ -481,7 +481,7 @@ class C_Simulasi extends Controller
             // print_r ($tipeRumah->harga_tr * ($request->persentase / 100));
             // echo "</pre>";
 
-            // dd($dataInputKalkulator);
+            dd($dataInputKalkulator);
             $getIDKalkulator = $this->kalkulatorKPR->insertGetIDKalkulatorKPR($dataInputKalkulator);
 
             return redirect()->route('simulasiPelanggan', [$id_rumah, $id_tipe, $getIDKalkulator, $request->jenis, $kodePromo])->with('success', 'silahkan lanjutkan proses');
