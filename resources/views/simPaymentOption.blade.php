@@ -312,7 +312,7 @@
                                                         style="opacity: 10%" class="btn btn-primary">Lanjutkan</button>
                                                 </div>
 
-
+                                                {{ $tipeRumah->harga_freeppn_tr }}
 
 
                                             </form>
@@ -614,7 +614,7 @@
     {{-- script find query promo selector --}}
     <script>
         var priceFinal = {{ $tipeRumah->harga_tr }};
-           
+
 
         const promoCodeBtns = document.querySelectorAll(".promoCodeBtn");
             var selectedPromoCodeInput = document.getElementById("selectedPromoCode");
@@ -635,7 +635,7 @@
                     bphtbPromo = promoCodeBtn.getAttribute('data-bphtb-promo');
                     freeKPRPromo = promoCodeBtn.getAttribute('data-freekpr-promo');
                     freePPNPromo = promoCodeBtn.getAttribute('data-freeppn-promo');
-                    
+
 
                     const dataPromo = {
                         promoCode: promoCodeBtn.dataset.promoCode,
@@ -667,10 +667,10 @@
                     if (freePPNPromo == "yes") {
                         priceFinal = {{ $tipeRumah->harga_freeppn_tr }}
                         console.log("Harga Baru = "+priceFinal);
-                       
+
                         document.getElementById('textjumlahKPR').innerText = "Rp. " + priceFinal;
                         document.getElementById('jumlahHargaCicilan').innerText = "Jumlah harga Rp. " + priceFinal;
-                        
+
                         var existingInput1 = document.getElementById('jumlahKPR');
 
                         // Create a new input element
@@ -685,7 +685,7 @@
 
                         // Replace the existing input element with the new one
                         existingInput1.parentNode.replaceChild(newInput1, existingInput1);
-                        
+
                         var existingInput2 = document.getElementById('jumlahHarga');
 
 // Create a new input element
@@ -704,7 +704,7 @@
                         // Replace the existing input element with the new one
                         existingInput2.parentNode.replaceChild(newInput2, existingInput2);
 
-                        
+
                     }
 
                     selectedPromoCodeInput.value = promoCode;

@@ -98,8 +98,7 @@ class C_SPK extends Controller
                 return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
             }
 
-            return view(
-                'V_Admin.spk',
+            return view('V_Admin.spk',
                 compact(
                     'user',
                     'projekUser',

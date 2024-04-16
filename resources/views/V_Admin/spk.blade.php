@@ -305,7 +305,11 @@
                                                             <th>Tagihan</th>
                                                             <th>Status</th>
                                                             <th>Tanggal Deadline</th>
+                                                            @if ($user->kategori =="AdminAccounting" || $user->kategori =="StafAcc" || $user->kategori="SuperAdmin")
                                                             <th>Pengaturan</th>
+
+                                                            @endif
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -326,15 +330,16 @@
                                                                 @endif
                                                             </td>
                                                             <td>{{ tgl_indo($cicilanSPK->tgl_bayar_cs) }}</td>
+                                                            @if ($user->kategori =="AdminAccounting" || $user->kategori =="StafAcc" || $user->kategori="SuperAdmin")
                                                             <td>
 
                                                                 <a href="#" class="btn btn-outline-info"
-                                                                    data-toggle="modal" data-target="#myModal">
+                                                                    data-toggle="modal" data-target="#myModal{{ $cicilanSPK->id_cicilan_spk }}">
                                                                     <i class="fas fa-edit"></i>
                                                                 </a>
 
                                                                 <!-- Modal -->
-                                                                <div class="modal" id="myModal">
+                                                                <div class="modal" id="myModal{{ $cicilanSPK->id_cicilan_spk }}">
                                                                     <div class="modal-dialog">
                                                                         <div class="modal-content">
                                                                             <!-- Modal Header -->
@@ -344,12 +349,13 @@
                                                                                 <button type="button" class="close"
                                                                                     data-dismiss="modal">&times;</button>
                                                                             </div>
-                                                                            <form action=""></form>
+                                                                            <form action="{{ route('editTagihanAction.admin',[$getProjek->nama_projek,Crypt::encrypt($cicilanSPK->id_cicilan_spk)]) }}" method="POST" enctype="multipart/form-data">
                                                                             <!-- Modal Body -->
+                                                                            @csrf
                                                                             <div class="modal-body">
                                                                                 <div class="form-group">
                                                                                     <label for="">Tagihan</label>
-                                                                                    <input type="text" name="tagihan_cs"
+                                                                                    <input type="number" name="tagihan_cs"
                                                                                         id="" class="form-control"
                                                                                         value="{{ $cicilanSPK->pembayaran_cs }}"
                                                                                         placeholder=""
@@ -363,18 +369,20 @@
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-danger float-left"
                                                                                     data-dismiss="modal">Close</button>
-                                                                                <button type="button"
+                                                                                <button type="submit"
                                                                                     class="btn btn-outline-success float-right">
                                                                                     Submit </button>
 
                                                                             </div>
-
+                                                                        </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <a href="" class="btn btn-outline-info"> <i
+                                                                <a href="{{ route('pembayaranCicilanSPK.admin', [$getProjek->nama_projek,Crypt::encrypt($cicilanSPK->id_cicilan_spk)]) }}" class="btn btn-outline-info"> <i
                                                                         class="fas fa-university"></i> Pembayaran</a>
                                                             </td>
+                                                            @endif
+
                                                         </tr>
                                                         @php
                                                         $sumTagihan += $cicilanSPK->sisa_cs; // Sum up the payments

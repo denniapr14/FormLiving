@@ -141,20 +141,24 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="">Total Tagihan</label>
-                  <input type="text" name="total_spk" id="" value="{{ $getSPK->total_spk }}" class="form-control" placeholder="Total harga tambah bangunan" aria-describedby="helpId">
-
-                </div>
 
                 <div class="form-group">
                   <label for="">Tagihan</label>
-                  <input type="text" name="tagihan_cs" id="" pattern="[0-9]*" class="form-control" placeholder="masukan cicilan SPK" aria-describedby="helpId">
+                  <input type="text" name="tagihan_cs" id="" pattern="[0-9]*" class="form-control" value="{{ $firstCicilanSPK->sisa_cs }}" placeholder="masukan cicilan SPK" aria-describedby="helpId">
 
                 </div>
                 <div class="form-group">
-                  <label for="">Tanggal Bayar</label>
-                  <input type="date" name="tgl_bayar_cs" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                  <label for="">Bukti Pembayaran</label>
+                  <input type="file" name="img_cs" id="" class="form-control" id="img_cs" placeholder="" aria-describedby="helpId" accept="image/*" onchange="previewImage(event)">
+
+                  <div id="imagePreview"></div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="">Tanggal Bayar</label>
+                    <input type="date" name="tgl_bayar_cs" id="tgl_bayar_cs" class="form-control" placeholder="" aria-describedby="helpId" value="{{ date('Y-m-d') }}">
 
                 </div>
 
@@ -162,6 +166,15 @@
             </form>
 
         </div>
-
+        <script>
+            function previewImage(event) {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var output = document.getElementById('imagePreview');
+                    output.innerHTML = '<img src="' + reader.result + '" style="max-width: 200px; max-height: 200px;" />';
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+            </script>
 
     @endsection

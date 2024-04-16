@@ -201,7 +201,7 @@ class C_Simulasi extends Controller
             [
                 'id_rumah' => $id_rumah,
                 'id_tipe' => $id_tipe,
-               
+
                 'status_gr' => 'aktif',
             ]
         );
@@ -235,7 +235,7 @@ class C_Simulasi extends Controller
 
         // dd($imgRumah2);
         // dd($imgGallery);
-        
+
         // die();
 
         if (!session()->has('guest') && !session()->has('user')) {
@@ -395,9 +395,11 @@ class C_Simulasi extends Controller
                             'harga_awal' => (float) $tipeRumah->harga_tr,
                             'total_harga' => (float) $request->jumlah,
                             'total_diskon'  => $request->diskonInputKPR,
+                            'harga_netto_kkpr' => $request->jumlah/1.11,
+                            'harga_ppn_kkpr' => $request->jumlah * 0.11,
                             'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
-                            'uang_muka' => (float) (($tipeRumah->harga_tr * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR)) - $request->diskonInputKPR,
-                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'uang_muka' => (float) (($request->jumlah * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR)) - $request->diskonInputKPR,
+                            'kpr' => (float) $request->jumlah - ($request->jumlah * ($request->persentase / 100)),
                             'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
                             'cicilan_um' => $request->cicilanUM,
                         ];
@@ -409,10 +411,12 @@ class C_Simulasi extends Controller
                             'harga_awal' => (float) $tipeRumah->harga_tr,
                             'total_harga' => (float) $request->jumlah,
                             'total_diskon'  => $request->diskonInputKPR,
+                            'harga_netto_kkpr' => $request->jumlah/1.11,
+                            'harga_ppn_kkpr' => $request->jumlah * 0.11,
                             'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
-                            'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR),
-                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'uang_muka' => (float) ($request->jumlah * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR),
+                            'kpr' => (float) $request->jumlah - ($request->jumlah * ($request->persentase / 100)),
+                            'terbilang' => terbilang($request->jumlah * ($request->persentase / 100)),
                             'cicilan_um' => $request->cicilanUM,
                         ];
                     }
@@ -424,10 +428,12 @@ class C_Simulasi extends Controller
                             'harga_awal' => (float) $tipeRumah->harga_tr,
                             'total_harga' => (float) $request->jumlah,
                             'total_diskon'  => $request->diskonInputKPR,
+                            'harga_netto_kkpr' => $request->jumlah/1.11,
+                            'harga_ppn_kkpr' => $request->jumlah * 0.11,
                             'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
-                            'uang_muka' => (float) (($tipeRumah->harga_tr * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR)) - $request->diskonInputKPR,
-                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'uang_muka' => (float) (($request->jumlah * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR)) - $request->diskonInputKPR,
+                            'kpr' => (float) $request->jumlah - ($request->jumlah * ($request->persentase / 100)),
+                            'terbilang' => terbilang($request->jumlah * ($request->persentase / 100)),
                             'cicilan_um' => 1,
                         ];
                         $kodePromo = $request->promoKPR;
@@ -438,10 +444,12 @@ class C_Simulasi extends Controller
                             'harga_awal' => (float) $tipeRumah->harga_tr,
                             'total_harga' => (float) $request->jumlah,
                             'total_diskon'  => $request->diskonInputKPR,
+                            'harga_netto_kkpr' => $request->jumlah/1.11,
+                            'harga_ppn_kkpr' => $request->jumlah * 0.11,
                             'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeKPR),
-                            'uang_muka' => (float) ($tipeRumah->harga_tr * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR),
-                            'kpr' => (float) $tipeRumah->harga_tr - ($tipeRumah->harga_tr * ($request->persentase / 100)),
-                            'terbilang' => terbilang($tipeRumah->harga_tr * ($request->persentase / 100)),
+                            'uang_muka' => (float) ($request->jumlah * ($request->persentase / 100)) - str_replace(['.', ','], '', $request->bookingFeeKPR),
+                            'kpr' => (float) $request->jumlah - ($request->jumlah * ($request->persentase / 100)),
+                            'terbilang' => terbilang($request->jumlah * ($request->persentase / 100)),
                             'cicilan_um' => 1,
                         ];
                     }
@@ -454,6 +462,8 @@ class C_Simulasi extends Controller
                         'harga_awal' => (float) $tipeRumah->harga_tr,
                         'total_harga' => (float) $request->jumlah,
                         'total_diskon'  => $request->diskonInputCicilan,
+                        'harga_netto_kkpr' => $request->jumlah/1.11,
+                        'harga_ppn_kkpr' => $request->jumlah * 0.11,
                         'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeCicilan),
                         'uang_muka' => (float) str_replace(['.', ','], '', $request->bookingFeeCicilan),
                         'kpr' => 0,
@@ -467,6 +477,8 @@ class C_Simulasi extends Controller
                         'luas_bangunan_kkpr' => $tipeRumah->luas_bangunan_tr,
                         'harga_awal' => (float) $tipeRumah->harga_tr,
                         'total_harga' => (float)  $request->jumlah,
+                        'harga_netto_kkpr' => $request->jumlah/1.11,
+                        'harga_ppn_kkpr' => $request->jumlah * 0.11,
                         'booking_fee_kkpr' => str_replace(['.', ','], '', $request->bookingFeeCicilan),
                         'uang_muka' => (float) str_replace(['.', ','], '', $request->bookingFeeCicilan),
                         'kpr' => 0,
@@ -481,7 +493,7 @@ class C_Simulasi extends Controller
             // print_r ($tipeRumah->harga_tr * ($request->persentase / 100));
             // echo "</pre>";
 
-            dd($dataInputKalkulator);
+            // dd($dataInputKalkulator);
             $getIDKalkulator = $this->kalkulatorKPR->insertGetIDKalkulatorKPR($dataInputKalkulator);
 
             return redirect()->route('simulasiPelanggan', [$id_rumah, $id_tipe, $getIDKalkulator, $request->jenis, $kodePromo])->with('success', 'silahkan lanjutkan proses');
@@ -1240,65 +1252,65 @@ class C_Simulasi extends Controller
             $getDataPembayaran = $getDataPembayaran->sortBy('id_pem_rumah');
             $getDataPembayaran = $getDataPembayaran->first();
 
-            $generatePayment = $this->generatePayment(
-                $getDataPembayaran->id_pem_rumah,
-                $pelanggan->id_pelanggan,
-                $id_rumah,
-                $fp,
-                "Greenland",
-                1000,
-                10080,
-                $pelanggan->nama_pelanggan,
-                $pelanggan->email_plgn,
-                $pelanggan->no_wa_plgn,
-                $pelanggan->alamat_plgn,
-                "ID"
+            // $generatePayment = $this->generatePayment(
+            //     $getDataPembayaran->id_pem_rumah,
+            //     $pelanggan->id_pelanggan,
+            //     $id_rumah,
+            //     $fp,
+            //     "Greenland",
+            //     1000,
+            //     10080,
+            //     $pelanggan->nama_pelanggan,
+            //     $pelanggan->email_plgn,
+            //     $pelanggan->no_wa_plgn,
+            //     $pelanggan->alamat_plgn,
+            //     "ID"
 
-            );
+            // );
 
-            $checkRequestID = $this->pembayaranRumah->getPembayaranRumahWhereAllArr(
-                '*',
-                [
-                    'request_id_pr' => $generatePayment['request_id'],
-                    'invoice_pr'    => $generatePayment['invoice']
-                ]
-            );
-            if (!empty($checkRequestID)) {
-                $generatePayment = $this->generatePayment(
-                    $getDataPembayaran->id_pem_rumah,
-                    $pelanggan->id_pelanggan,
-                    $id_rumah,
-                    $fp,
-                    "Greenland",
-                    1000,
-                    10080,
-                    $pelanggan->nama_pelanggan,
-                    $pelanggan->email_plgn,
-                    $pelanggan->no_wa_plgn,
-                    $pelanggan->alamat_plgn,
-                    "ID"
+            // $checkRequestID = $this->pembayaranRumah->getPembayaranRumahWhereAllArr(
+            //     '*',
+            //     [
+            //         'request_id_pr' => $generatePayment['request_id'],
+            //         'invoice_pr'    => $generatePayment['invoice']
+            //     ]
+            // );
+            // if (!empty($checkRequestID)) {
+            //     $generatePayment = $this->generatePayment(
+            //         $getDataPembayaran->id_pem_rumah,
+            //         $pelanggan->id_pelanggan,
+            //         $id_rumah,
+            //         $fp,
+            //         "Greenland",
+            //         1000,
+            //         10080,
+            //         $pelanggan->nama_pelanggan,
+            //         $pelanggan->email_plgn,
+            //         $pelanggan->no_wa_plgn,
+            //         $pelanggan->alamat_plgn,
+            //         "ID"
 
-                );
-                # code...
-            }
+            //     );
+            //     # code...
+            // }
 
-            $dataSuccess = json_decode($generatePayment[0], true);
+            // $dataSuccess = json_decode($generatePayment[0], true);
 
-            $dataUpdatePembayaran = array(
-                'request_id_pr' => $generatePayment['request_id'],
-                'invoice_pr'    => $generatePayment['invoice'],
-                'exp_time_pr'   => $generatePayment['expTime'],
-                'signature_pr'     => $generatePayment['signature']
-            );
+            // $dataUpdatePembayaran = array(
+            //     'request_id_pr' => $generatePayment['request_id'],
+            //     'invoice_pr'    => $generatePayment['invoice'],
+            //     'exp_time_pr'   => $generatePayment['expTime'],
+            //     'signature_pr'     => $generatePayment['signature']
+            // );
 
-            
-            dd($dataUpdatePembayaran);
+            dd($dtPembayaran);
+            // dd($dataUpdatePembayaran);
 
-            DB::table('pembayaran_rumah')
-                ->where('id_pem_rumah', $getDataPembayaran->id_pem_rumah)
-                ->update(
-                    $dataUpdatePembayaran
-                );
+            // DB::table('pembayaran_rumah')
+            //     ->where('id_pem_rumah', $getDataPembayaran->id_pem_rumah)
+            //     ->update(
+            //         $dataUpdatePembayaran
+            //     );
 
             $pdf = \PDF::loadView('pdf.printSPR-ttd-non-promo', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
             // $pdf = PDF::loadView('mail.index');
@@ -1362,7 +1374,7 @@ class C_Simulasi extends Controller
                 // return response()->json(['Sorry! Please try again latter']);
             }
 
-            
+
             sendWhatsappMessage('082229997190',$userNotif->no_tlp_ua, "ada pembelian rumah di ".$rumah->no."-".$rumah->blok." oleh ".$userAdmin->nama_ua );
 
 
@@ -1756,107 +1768,7 @@ class C_Simulasi extends Controller
     }
 
 
-    public function generatePayment($id_pembayaran, $id_pelanggan, $id_rumah, $id_formulir, $projek, $amount, $expTime, $costumerName, $email, $phoneNumber, $address, $country)
-    {
 
-        // Get the form data from the request
-        $amount = $amount;
-        $expiredTime = $expTime;
-        $customerName = $costumerName;
-        $email = $email;
-        $phoneNumber = $phoneNumber;
-        $address = $address;
-        $country = $country;
-
-        // Fetch DOKU credentials from .env
-        $mallId = env('DOKU_MALL_ID');
-        $sharedKey = env('DOKU_SHARED_KEY');
-        $isSandbox = env('DOKU_SANDBOX');
-
-        // DOKU API endpoint (sandbox or production)
-        $apiBaseUrl = $isSandbox ? 'https://sandbox.doku.com' : 'https://api.doku.com';
-        $randomCode = $this->randomCode(5, $projek);
-        // Construct the request payload
-        $invoice_number = 'INV-' . $randomCode . $id_pembayaran . $id_pelanggan . $id_rumah . $id_formulir . rand(1, 1000000);
-        $requestBody = [
-            'order' => [
-                'amount' => $amount,
-                'invoice_number' => $invoice_number,
-                'currency' => 'IDR',
-                'callback_url' => 'https://merchant.com/return-url',
-                'line_items' => [
-                    [
-                        'name' => 'DOKU Plate',
-                        'price' => $amount,
-                        'quantity' => 1,
-                    ],
-                ],
-            ],
-            'payment' => [
-                'payment_due_date' => $expiredTime,
-            ],
-            'customer' => [
-                'id' => 'CUST-' . $randomCode . $id_pelanggan . $id_rumah . $id_formulir . rand(1, 1000000),
-                'name' => $customerName,
-                'email' => $email,
-                'phone' => $phoneNumber,
-                'address' => $address,
-                'country' => $country,
-            ],
-        ];
-
-        // Generate request headers
-        $clientId = $mallId;
-        $requestId = rand(1, 100000);
-        $dateTime = gmdate('Y-m-d H:i:s');
-        $isoDateTime = date(DATE_ISO8601, strtotime($dateTime));
-        $dateTimeFinal = substr($isoDateTime, 0, 19) . 'Z';
-
-        // Generate digest
-        $digestValue = base64_encode(hash('sha256', json_encode($requestBody), true));
-
-        // Prepare signature component
-        $componentSignature = "Client-Id:" . $clientId . "\n" .
-            "Request-Id:" . $requestId . "\n" .
-            "Request-Timestamp:" . $dateTimeFinal . "\n" .
-            "Request-Target:/checkout/v2/payment" . "\n" .
-            "Digest:" . $digestValue;
-
-        // Generate signature
-        $signature = base64_encode(hash_hmac('sha256', $componentSignature, $sharedKey, true));
-
-        // Construct the final URL
-        $url = $apiBaseUrl . '/checkout/v2/payment';
-
-        // Create a Guzzle HTTP client
-        $client = new Client();
-
-        // Make a POST request to DOKU API
-        $response = $client->post($url, [
-            'json' => $requestBody,
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Client-Id' => $clientId,
-                'Request-Id' => $requestId,
-                'Request-Timestamp' => $dateTimeFinal,
-                'Signature' => 'HMACSHA256=' . $signature,
-            ],
-        ]);
-        $dataDoku = array(
-            'request_id' => $requestId,
-            'invoice'   => $invoice_number,
-            'expTime' => $expiredTime,
-            'signature' => $signature,
-        );
-        // Get the response as JSON
-        $responseJson = $response->getBody()->getContents();
-        array_push($dataDoku, $responseJson);
-
-
-        $data = json_decode($responseJson, true);
-        // Return the response to the view
-        return $dataDoku;
-    }
 
 
     // public function checkPayment($invoiceNumber, $reqID, $date)
@@ -1997,7 +1909,7 @@ class C_Simulasi extends Controller
                 'Client-Id' => $clientId,
                 'Request-Id' => $requestId,
                 'Request-Timestamp' => $dateTimeFinal,
-                
+
                 'Signature' => 'HMACSHA256=' . $signature,
             ],
         ]);

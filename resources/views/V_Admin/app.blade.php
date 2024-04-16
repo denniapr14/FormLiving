@@ -390,14 +390,14 @@
                                 </li><!-- End Dashboard Nav -->
                             @endif
                         @endforeach
-                        
+
                         <!-- user management untuk special user admin-->
                         <li class="nav-small-cap">
                             <i class="mdi mdi-dots-horizontal"></i>
                             <span class="hide-menu">Managemen User</span>
                         </li>
                         @foreach ($getUserMenu as $userMenu)
-                       
+
 
                             @if ($userMenu->status_menu == 'optional')
                                 <li class="sidebar-item ">
@@ -414,7 +414,7 @@
                             <i class="mdi mdi-dots-horizontal"></i>
                             <span class="hide-menu">Pusat Bantuan</span>
                         </li>
-                       
+
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-jsgrid.html"
                                 aria-expanded="false">
@@ -900,6 +900,7 @@
         scriptElement.src = scriptSrc;
         document.head.appendChild(scriptElement);
     </script>
+
 
 
     <script src="{{ url('Bootstrap') }}/dist/js/app-style-switcher.js"></script>

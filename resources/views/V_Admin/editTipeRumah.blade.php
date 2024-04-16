@@ -61,6 +61,11 @@
                         placeholder="Masukan Harga" aria-describedby="helpId">
                 </div>
                 <div class="form-group">
+                    <label for="hargaFreePPN">Harga Free PPN</label>
+                    <input type="text" name="hargaFreePPN[]" id="hargaFreePPN" value="{{ $getTipeRumah->harga_freeppn_tr }}" class="form-control" placeholder="Enter numbers only" aria-describedby="helpId" onkeypress="return isNumberKey(event)">
+
+                </div>
+                <div class="form-group">
                     <label for="">Harga Perkiraan</label>
                     <input type="text" name="hargaText[]" id="" class="form-control"
                         placeholder="Masukan Harga Perkiraan" value="{{ $getTipeRumah->harga_text_tr }}"
@@ -571,7 +576,7 @@ function addFile(id) {
             <option value="">---Pilih Jenis Gambar---</option>
             <option value="Denah">Denah</option>
             <option value="Gambar">Gambar</option>
-           
+
         </select>
     `;
     fileInputContainer.appendChild(newFileInputDiv);
@@ -580,8 +585,8 @@ function addFile(id) {
         //     function addFile(id) {
         //     let idCounter = id;
         //     idCounter++;
-            
-            
+
+
         //     console.log(idCounter);
 
         //     const fileInputContainer = document.createElement("div");
@@ -599,7 +604,7 @@ function addFile(id) {
         //             </select>
         //         `;
         //     document.querySelector("#fileInput" + id).appendChild(fileInputContainer);
-        
+
         // }
         function jenisGambarChanged(id) {
             const jenisGambarSelect = document.getElementById('jenisGambar' + id);
@@ -607,11 +612,11 @@ function addFile(id) {
 
             if (jenisGambarSelect.value == 'Video') {
                 fileInputGambar.setAttribute('type', 'text');
-                
-                
+
+
             } else {
                 fileInputGambar.setAttribute('type', 'file');
-                
+
             }
         }
 

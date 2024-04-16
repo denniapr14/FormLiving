@@ -63,6 +63,11 @@
                         aria-describedby="helpId">
                 </div>
                 <div class="form-group">
+                    <label for="hargaFreePPN">Harga Free PPN</label>
+                    <input type="text" name="hargaFreePPN[]" id="hargaFreePPN" class="form-control" placeholder="Enter numbers only" aria-describedby="helpId" onkeypress="return isNumberKey(event)">
+
+                </div>
+                <div class="form-group">
 
                     <input type="text" name="hargaText[]" id="" class="form-control"
                         placeholder="Masukan Harga Perkiraan" aria-describedby="helpId">
@@ -226,6 +231,15 @@
     <!-- Modal order information-->
 
     <script>
+
+
+            function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                return true;
+            }
+
         function addFile(id) {
 
                     const fileInputContainer = document.createElement("div");
@@ -290,6 +304,11 @@
                 <div class="form-group">
                     <input type="number" name="harga[]" id="" class="form-control" placeholder="Masukan Harga"
                         aria-describedby="helpId">
+                </div>
+                <div class="form-group">
+                    <label for="hargaFreePPN">Harga Free PPN</label>
+                    <input type="text" name="hargaFreePPN[]" id="hargaFreePPN" class="form-control" placeholder="Enter numbers only" aria-describedby="helpId" onkeypress="return isNumberKey(event)">
+
                 </div>
                 <div class="form-group">
                     <input type="text" name="hargaText[]" id="" class="form-control" placeholder="Masukan Harga Perkiraan"

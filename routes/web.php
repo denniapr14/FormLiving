@@ -469,6 +469,7 @@ route::get('/editCicilanSPK/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'edi
 route::post('/editCicilanSPK/action/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'editCicilanSPK'])->name('editCicilanSPKAction.admin');
 route::get('/pembayaranCicilanSPK/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'pembayaranCicilanSPK'])->name('pembayaranCicilanSPK.admin');
 route::get('/PembayaranCicilanSPK/action/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'pembayaranCicilanSPKAction'])->name('pembayaranCicilanAction.admin');
+route::post('/editTagihan/action/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'editTagihanAction'])->name('editTagihanAction.admin');
 
 
 
