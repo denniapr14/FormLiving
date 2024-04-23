@@ -118,8 +118,8 @@ class C_CicilanSPK extends Controller
                 ->where('id_spk', $decryptedID)
                 ->update(
                     [
-                        'total_spk' => $request->total_spk,
-                        'sisa_spk'  => $request->total_spk,
+                        // 'total_spk' => $request->tagihan_cs+$request->total_spk,
+                        // 'sisa_spk'  => $request->tagihan_cs+$request->total_spk,
                         'cicilan_spk' => $getSPK->cicilan_spk + 1
                     ]
                 );
@@ -128,7 +128,8 @@ class C_CicilanSPK extends Controller
                 'pembayaran_cs' => $request->tagihan_cs,
                 'sisa_cs' => $request->tagihan_cs,
                 'status_cs' => "belum",
-                'id_spk'    => $decryptedID
+                'id_spk'    => $decryptedID,
+                'tgl_bayar_cs' => $request->tgl_bayar_cs
             ];
 
             $this->cicilanspk->insertCicilanSPK($dataInsert);
@@ -142,90 +143,7 @@ class C_CicilanSPK extends Controller
             return redirect('/login');
         }
     }
-    function editCicilanSPK($projek, $id_cicilan_spk)
-    {
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-        $decryptedID = Crypt::decrypt($id_cicilan_spk);
-
-        $getCicilanSPK = $this->cicilanspk->firstCicilanSPKWhere(['id_cicilan_spk' => $decryptedID]);
-        $getSPK = $this->spk->firstSPK(['id_spk' => $getCicilanSPK->id_spk]);
-        if (session()->has('user')) {
-            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
-
-            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
-            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-                'user_menu.status_um' => 'aktif',
-                'user_menu.id_kategori' => $user->id_kategori
-            ])->collect();
-            // dd($getUserMenu);
-            $foundMatchingMenu = false;
-
-
-            foreach ($getUserMenu as $menu) {
-                if ($menu->url_menu == request()->segment(1)) {
-                    $foundMatchingMenu = true;
-                    break;
-                }
-            }
-
-            // if (!$foundMatchingMenu) {
-            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-            // }
-
-            return view(
-                'V_Admin.editCicilanSPK',
-                compact(
-                    'user',
-                    'projekUser',
-                    'getProjek',
-                    'getUserMenu',
-                    'getSPK',
-                    'getCicilanSPK'
-
-
-                )
-            );
-        } else {
-            return redirect('/login');
-        }
-    }
-    function editCicilanSPKAction($projek, $id_cicilan_spk)
-    {
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-
-        $decryptedID = Crypt::decrypt($id_cicilan_spk);
-
-        $getSPK = $this->spk->firstSPK(['id_spk' => $decryptedID]);
-        $getCicilanSPK = $this->cicilanspk->getCicilanSPKWhere(['id_cicilan_spk' => $decryptedID]);
-        if (session()->has('user')) {
-            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
-
-            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
-            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-                'user_menu.status_um' => 'aktif',
-                'user_menu.id_kategori' => $user->id_kategori
-            ])->collect();
-            // dd($getUserMenu);
-            $foundMatchingMenu = false;
-
-
-            foreach ($getUserMenu as $menu) {
-                if ($menu->url_menu == request()->segment(1)) {
-                    $foundMatchingMenu = true;
-                    break;
-                }
-            }
-
-            // if (!$foundMatchingMenu) {
-            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-            // }
-
-
-        } else {
-            return redirect('/login');
-        }
-    }
     public function pembayaranCicilanSPK($projek, $id_cicilan_spk)
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
@@ -306,10 +224,29 @@ class C_CicilanSPK extends Controller
                     break;
                 }
             }
+            $fileName ='';
+            // Handle file upload
+            if ($request->hasFile('img_cs')) {
+                $images = $request->file('img_cs');
+                // Store the uploaded file
+                $fileName = uniqid() . '_' . $images->getClientOriginalName();
+                $path = $images->storeAs('File/pembayaran_spk/', $fileName, 'public'); // Changed storage path
+                $images->move(public_path('File/pembayaran_spk/'), $fileName);
+
+                // Update database with the image path
+
+            }else{
+                $fileName = $firstCicilanSPK->img_cs;
+            }
+
             $dataUpdate = [
 
-                'sisa_cs'       => $request->tagihan_cs
+                'sisa_cs'       => $firstCicilanSPK->sisa_cs - $request->tagihan_cs,
+                'status_cs'     => $firstCicilanSPK->sisa_cs - $request->tagihan_cs == 0 ? 'lunas' : 'kurang',
+                'tgl_bayar_cs'  => $request->tgl_bayar_cs,
+                'img_cs'        => $fileName
             ];
+            // dd($request->all());
             DB::table('cicilan_spk')
                 ->where('id_cicilan_spk', $decryptedID)
                 ->update(
@@ -339,7 +276,7 @@ class C_CicilanSPK extends Controller
         $decryptedID = Crypt::decrypt($id_cicilan_spk);
 
         // $getSPK = $this->spk->firstSPK(['id_spk' => $decryptedID]);
-        $getCicilanSPK = $this->cicilanspk->getCicilanSPKWhere(['id_cicilan_spk' => $decryptedID]);
+        $firstCicilanSPK = $this->cicilanspk->firstCicilanSPKWhere(['id_cicilan_spk' => $decryptedID]);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
 
@@ -359,10 +296,18 @@ class C_CicilanSPK extends Controller
                 }
             }
 
+            $newSisaCS = $firstCicilanSPK->sisa_cs;
+            if ($firstCicilanSPK->sisa_cs != $request->tagihan_cs) {
+                $newSisaCS += $request->sisa_cs;
+            }
+
+            // Update the fields
             $dataUpdate = [
                 'pembayaran_cs' => $request->tagihan_cs,
-                'sisa_cs'       => $request->tagihan_cs
+                'sisa_cs'       => $newSisaCS,
+                'status_cs'     => $firstCicilanSPK->status_cs
             ];
+
             DB::table('cicilan_spk')
                 ->where('id_cicilan_spk', $decryptedID)
                 ->update(

@@ -320,11 +320,17 @@
                                                         @forelse ($getCicilanSPK as $cicilanSPK)
                                                         @if ($cicilanSPK->id_spk == $tambahBangunan->id_spk)
                                                         <tr>
-                                                            <td scope="row">{{ $noTagihan++ }}</td>
-                                                            <td>Rp. {{ rupiah($cicilanSPK->pembayaran_cs) }}</td>
+                                                            <td scope="row">{{ $noTagihan++ }}
+
+                                                            </td>
+                                                            <td>Rp. {{ rupiah($cicilanSPK->pembayaran_cs) }} <br>
+                                                                <span class="badge badge--danger text-danger"> - Rp. {{ rupiah($cicilanSPK->sisa_cs) }}</span>
+                                                            </td>
                                                             <td>
                                                                 @if ($cicilanSPK->status_cs == 'belum')
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
+                                                                @elseif ($cicilanSPK->status_cs == "kurang")
+                                                                <i class="fas fa-spinner fa-spin"></i>
                                                                 @else
                                                                 <i class="fa fa-check" aria-hidden="true"></i>
                                                                 @endif
@@ -358,6 +364,15 @@
                                                                                     <input type="number" name="tagihan_cs"
                                                                                         id="" class="form-control"
                                                                                         value="{{ $cicilanSPK->pembayaran_cs }}"
+                                                                                        placeholder=""
+                                                                                        aria-describedby="helpId">
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="">Sisa Tagihan  <span class="badge badge--danger text-danger"> - Rp. {{ rupiah($cicilanSPK->sisa_cs) }}</span></label>
+                                                                                    <input type="number" name="sisa_cs"
+                                                                                        id="" class="form-control"
+                                                                                        value=""
                                                                                         placeholder=""
                                                                                         aria-describedby="helpId">
 

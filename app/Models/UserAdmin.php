@@ -118,4 +118,12 @@ class UserAdmin extends Authenticatable
         ->get();
 
     }
+    function getUserAdminWhereKategori($select, $where) {
+        return UserAdmin::select($select)
+        ->join('ktgr_admin','user_admin.id_kategori','ktgr_admin.id_kategori')
+        ->leftjoin('departemen','ktgr_admin.id_departemen','departemen.id_departemen')
+        ->where($where)
+        ->get();
+
+    }
 }

@@ -863,6 +863,11 @@ class C_Simulasi extends Controller
             ],
             'tipe_rumah.id_tipe_rumah'
         );
+
+        $userNotif = $this->userAdmin->getUserAdminWhereKategori('*',[
+            'kategori' => 'AdminAccounting',
+            'status_ua' => 'Aktif'
+        ]);
         $kkpr = $this->kalkulatorKPR->firstKalkulatorKPRArr('*', [
             'id_kkpr' => $id_kkpr,
         ]);
@@ -1228,7 +1233,7 @@ class C_Simulasi extends Controller
             // ->update(
             //     $dtUpdate
             // );
-
+            sendWhatsappMessage('082229997190',$userNotif->no_tlp_ua, "ada pembelian rumah di ".$rumah->no."-".$rumah->blok." oleh ".$userAdmin->nama_ua );
             $accounting = DB::table('user_admin')
                 ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
                 ->join('departemen', 'ktgr_admin.id_departemen', '=', 'departemen.id_departemen')
@@ -1303,7 +1308,7 @@ class C_Simulasi extends Controller
             //     'signature_pr'     => $generatePayment['signature']
             // );
 
-            dd($dtPembayaran);
+            // dd($dtPembayaran);
             // dd($dataUpdatePembayaran);
 
             // DB::table('pembayaran_rumah')
@@ -1331,7 +1336,7 @@ class C_Simulasi extends Controller
                 'body' => '',
                 'nama' => $pelanggan->nama_plgn,
                 'attachment' => $filename,
-                'url-pembayaran' => $dataSuccess['payment']['url'],
+                // 'url-pembayaran' => $dataSuccess['payment']['url'],
             ];
             // $dataEmail2 = [
             //     'to' => $user->email_ua,
@@ -1375,7 +1380,7 @@ class C_Simulasi extends Controller
             }
 
 
-            sendWhatsappMessage('082229997190',$userNotif->no_tlp_ua, "ada pembelian rumah di ".$rumah->no."-".$rumah->blok." oleh ".$userAdmin->nama_ua );
+
 
 
             return redirect('/congratulation/' . $fp)->with('success', 'Data has been send!');

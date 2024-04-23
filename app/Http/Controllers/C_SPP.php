@@ -237,6 +237,7 @@ class C_SPP extends Controller
                 'tgl_accept_ceo'   => $request->tglCEO,
                 'pem_akhir_spp'    => $request->tgldanbank,
                 'tgl_max_bangun'   => $request->tglBangun,
+                'stats_spk'        => $request->statusCEO == "validated" ? "spk" : $getSPP->stats_spk
             ];
             DB::table('spp')
             ->where('id_spp',$decryptedID)

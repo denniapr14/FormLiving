@@ -384,8 +384,6 @@ route::post('/promo-notif-action/{projek}/{id}',[C_Promo::class,'promoNotifActio
 route::get('/kirim-promo-notif/{projek}/{id}',[C_Promo::class,'sendPromoNotif'])->name('sendPromoNotif.admin');
 route::post('/kirim-promo-notif/{projek}/{id}',[C_Promo::class,'sendPromoNotifAction'])->name('sendPromoNotifAction.admin');
 
-// Route to Gambar Kerja
-route::get('/gambarKerja/{projek}',[C_GambarKerja::class,'getGambarKerja'])->name('gambarKerja.admin');
 
 // Route::get('/hapus-list-promo/{projek}/{id}',[C_ListPromo,'deleteListPromo'])->name('deleteListPromo.admin');
 
@@ -466,9 +464,9 @@ route::get('/changeStatusImageSPK/{projek}/{id_img_spk}/{status}',[C_SPK::class,
 route::get('/addCicilanSPK/{projek}/{id_spk}',[C_CicilanSPK::class,'addCicilanSPK'])->name('addCicilanSPK.admin');
 route::post('/addCicilanSPK/action/{projek}/{id_spk}',[C_CicilanSPK::class,'addCicilanSPKAction'])->name('addCicilanSPKAction.admin');
 route::get('/editCicilanSPK/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'editCicilanSPK'])->name('editCicilanSPK.admin');
-route::post('/editCicilanSPK/action/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'editCicilanSPK'])->name('editCicilanSPKAction.admin');
+route::post('/editCicilanSPK/action/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'editCicilanSPKAction'])->name('editCicilanSPKAction.admin');
 route::get('/pembayaranCicilanSPK/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'pembayaranCicilanSPK'])->name('pembayaranCicilanSPK.admin');
-route::get('/PembayaranCicilanSPK/action/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'pembayaranCicilanSPKAction'])->name('pembayaranCicilanAction.admin');
+route::post('/PembayaranCicilanSPK/action/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'pembayaranCicilanSPKAction'])->name('pembayaranCicilanAction.admin');
 route::post('/editTagihan/action/{projek}/{id_cicilan_spk}',[C_CicilanSPK::class,'editTagihanAction'])->name('editTagihanAction.admin');
 
 
