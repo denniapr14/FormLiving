@@ -351,6 +351,7 @@ class C_Promo extends Controller
                 'tgl_aktif' => $request->tgl_mulai,
                 'tgl_berakhir' => $request->tgl_berakhir,
                 'bphtb_promo' => $request->bphtb,
+                'free_ppn_promo'=> $request->ppn,
                 'freekpr_promo' => $request->kpr,
                 'extra_cicilan' => $request->extra_cicilan,
                 'jumlah_extra_cicilan' => $request->jumlah_cicilan
