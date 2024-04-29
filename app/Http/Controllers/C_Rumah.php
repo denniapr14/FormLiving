@@ -360,4 +360,10 @@ class C_Rumah extends Controller
 
 
     }
+
+    function getRumahApi() {
+        $rumah = $this->rumah->getRumahAll();
+
+        return response()->json($rumah);
+    }
 }
