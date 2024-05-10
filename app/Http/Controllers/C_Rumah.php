@@ -361,8 +361,19 @@ class C_Rumah extends Controller
 
     }
 
-    function getRumahApi() {
-        $rumah = $this->rumah->getRumahAll();
+    function getProjekApi() {
+        $projek = $this->projek->getProjekAll();
+
+        return response()->json($projek);
+        // return ['nama' => "hehe"];
+    }
+    function getRumahWhereApi($projek,$min_harga,$max_harga) {
+        $arrProjek = array($projek);
+        $rumah = $this->rumah->getRumahWhereTipeRumahApi(["rumah.blok","rumah.nomor","tipe_rumah.harga_tr","projek.nama_projek","cluster.nama_cluster"] ,$arrProjek,[
+           [ 'tipe_rumah.harga_tr' ,'>=', $min_harga,],
+            ['tipe_rumah.harga_tr' ,'<=', $max_harga,]
+        ]);
+        // dd($rumah);
 
         return response()->json($rumah);
     }

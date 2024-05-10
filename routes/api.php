@@ -19,4 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-route::get('/getRumah',[C_Rumah::class, 'getRumahApi'])->name('getRumah.api');
+route::get('/getProjek',[C_Rumah::class,'getProjekApi'])->name('getProjek.api');
+route::get('/getRumah/{projek}/{harga_min}/{harga_max}',[C_Rumah::class, 'getRumahWhereApi'])->name('getRumahWhere.api');
+

@@ -9,6 +9,10 @@ class Projek extends Model{
         return Projek::select('*')
         ->get();
     }
+    function getProjekSelectAll($select) {
+        return Projek::select($select)
+        ->get();
+    }
     function firstProjek($select,$where,$eq, $value) {
         return Projek::select($select)
         ->where($where,$eq,$value)

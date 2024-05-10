@@ -39,7 +39,7 @@ class Rumah extends Model
             ->groupBy('rumah.id_rumah')
             ->get();
     }
-    
+
     public function getRumahSelectCountGroupByWhereAll($where,$eq, $value)
     {
         return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(CASE WHEN tipe_rumah.deleted_tr = 'false' THEN tipe_rumah.id_tipe_rumah END) as countTipe"))
@@ -51,7 +51,7 @@ class Rumah extends Model
             ->orderBy('rumah.status','asc')
             ->get();
     }
-    
+
     public function getRumahSelectCountGroupByWhereAllArr($where,$eq, $value)
     {
         return Rumah::select('*','rumah.id_rumah',TipeRumah::raw("COUNT(tipe_rumah.id_tipe_rumah) as countTipe"))
@@ -135,6 +135,17 @@ class Rumah extends Model
                 $where
             )
             ->first();
+    }
+
+    public function getRumahWhereTipeRumahApi($select,$projek,$where)  {
+        return Rumah::select($select)
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->join('projek','rumah.id_projek','=','projek.id_projek')
+        ->join('tipe_rumah', 'rumah.id_rumah', '=', 'tipe_rumah.id_rumah')
+        ->whereIn('projek.nama_projek',$projek)
+        ->where($where)
+        ->get();
+
     }
 
      // INSERT
