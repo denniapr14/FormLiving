@@ -361,6 +361,7 @@ class C_Rumah extends Controller
 
     }
 
+
     function getProjekApi() {
         $projek = $this->projek->getProjekAll();
 
@@ -376,5 +377,11 @@ class C_Rumah extends Controller
         // dd($rumah);
 
         return response()->json($rumah);
+    }
+
+    function getTipeRumahApi($tipeRumah)  {
+
+        $data = $this->rumah->firstRumahWhereTipeRumahApi('*',['tipe_rumah.id_tipe_rumah' => $tipeRumah]);
+        return response()->json($data);
     }
 }

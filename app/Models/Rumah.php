@@ -148,6 +148,17 @@ class Rumah extends Model
 
     }
 
+    public function firstRumahWhereTipeRumahApi($select,$where)  {
+        return Rumah::select($select)
+        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+        ->join('projek','rumah.id_projek','=','projek.id_projek')
+        ->join('tipe_rumah', 'rumah.id_rumah', '=', 'tipe_rumah.id_rumah')
+
+        ->where($where)
+        ->first();
+
+    }
+
      // INSERT
 
      public function insertRumah($dataInput)
@@ -201,4 +212,6 @@ class Rumah extends Model
         ->orWhere('rumah.status','=','KeepRefundable')
         ->first();
     }
+
+
 }
