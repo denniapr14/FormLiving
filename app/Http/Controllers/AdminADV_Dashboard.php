@@ -43,7 +43,7 @@ class AdminADV_Dashboard extends Controller
             ->get();
         $getRumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->where('rumah.status','=','available')
+            ->where('rumah.status', '=', 'available')
 
             ->get();
 
@@ -128,22 +128,22 @@ class AdminADV_Dashboard extends Controller
 
             return redirect('/login');
         }
-        # code...
     }
 
-    function TipeRumah($id_rumah) {
+    function TipeRumah($id_rumah)
+    {
         $getRumah = DB::table('rumah')
-        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
 
-        ->first();
+            ->first();
 
         $getTipeRumah =  DB::table('tipe_rumah')
 
-        ->where([
+            ->where([
 
-            'id_rumah' => $id_rumah,
-        ])
-        ->get();
+                'id_rumah' => $id_rumah,
+            ])
+            ->get();
 
         if (session()->has('user')) {
 
@@ -170,11 +170,12 @@ class AdminADV_Dashboard extends Controller
             return redirect('/login');
         }
     }
-    function addTipeRumah($id_rumah) {
+    function addTipeRumah($id_rumah)
+    {
         $getRumah = DB::table('rumah')
-        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
 
-        ->first();
+            ->first();
 
         if (session()->has('user')) {
 
@@ -202,15 +203,16 @@ class AdminADV_Dashboard extends Controller
         }
     }
 
-    function listImageTipeRumah($id_tipe_rumah)  {
+    function listImageTipeRumah($id_tipe_rumah)
+    {
         $getRumah = DB::table('tipe_rumah')
-        ->join('rumah','tipe_rumah.id_rumah','=','rumah.id_rumah')
-        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-        ->where('tipe_rumah.id_tipe_rumah','=',$id_tipe_rumah)
-        ->first();
+            ->join('rumah', 'tipe_rumah.id_rumah', '=', 'rumah.id_rumah')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->where('tipe_rumah.id_tipe_rumah', '=', $id_tipe_rumah)
+            ->first();
         $getImageTipeRumah = DB::table('gambar_rumah')
-        ->where('id_tipe','=',$id_tipe_rumah)
-        ->get();
+            ->where('id_tipe', '=', $id_tipe_rumah)
+            ->get();
 
 
         if (session()->has('user')) {
@@ -239,12 +241,13 @@ class AdminADV_Dashboard extends Controller
         }
     }
 
-    function addImgTipeRumah($id_rumah)  {
+    function addImgTipeRumah($id_rumah)
+    {
         $getRumah = DB::table('tipe_rumah')
-        ->join('rumah','tipe_rumah.id_rumah','=','rumah.id_rumah')
-        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-        ->where('rumah.id_rumah','=',$id_rumah)
-        ->first();
+            ->join('rumah', 'tipe_rumah.id_rumah', '=', 'rumah.id_rumah')
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->where('rumah.id_rumah', '=', $id_rumah)
+            ->first();
         if (session()->has('user')) {
 
             $user = DB::table('user_admin')

@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Http;
 
 
@@ -111,11 +112,12 @@ function RandomCode($counter, $projek)
 }
 
 if (!function_exists('sendWhatsappMessage')) {
-    function sendWhatsappMessage($from,$number, $message) {
+    function sendWhatsappMessage($from, $number, $message)
+    {
         $apiUrl = 'https://wa.srv18.wapanels.com/send-message';
 
         $data = [
-            'api_key' => 'Vhs0upK2nxJjOpVB7RvDYuQMMb2CPw',
+            'api_key' => '1mRAXDdNpaDcYPnbetRdHvLgWqwWVR',
             'sender' => $from,
             'number' => $number,
             'message' => $message,
@@ -145,5 +147,3 @@ if (!function_exists('sendWhatsappMessage')) {
         return $response;
     }
 }
-
-?>
