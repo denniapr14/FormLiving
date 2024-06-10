@@ -1,17 +1,17 @@
 @extends('V_Admin.app')
 @extends('flashdata')
-@section('title', 'Tambah Cicilan SPK')
-@section('pageTitle', 'Tambah Cicilan SPK')
+@section('title', 'Pembayaran Cicilan SPK')
+@section('pageTitle', 'Pembayaran Cicilan SPK')
 @section('back', route('spk.admin', $getProjek->nama_projek))
 @section('breadcrumb', 'SPK')
-@section('breadcrumb2', 'Tambah Cicilan SPK')
+@section('breadcrumb2', 'Pembayaran Cicilan SPK')
 @section('content')
 
 
     <div class="card">
         <div class="card-header">
             <a href="{{ route('spk.admin', [$getProjek->nama_projek]) }}" class="btn btn-outline-danger"><i
-                    class="fa fa-arrow-left" aria-hidden="true"></i></a> Tambah Cicilan SPK
+                    class="fa fa-arrow-left" aria-hidden="true"></i></a> Pembayaran Cicilan SPK
         </div>
         <div class="card-body">
             <div id="accordion">

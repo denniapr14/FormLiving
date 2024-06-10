@@ -79,7 +79,7 @@
                                             <th>No</th>
                                             <th>Pekerjaan</th>
                                             <th>Status</th>
-                                            <th>Tanggal Deadline</th>
+                                            <th>Tanggal Divalidasi</th>
                                             <th>Keterangan</th>
                                         </tr>
                                     </thead>
