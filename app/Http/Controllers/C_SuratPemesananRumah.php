@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\helpers;
 use App\Models\Clusters;
 use App\Models\FormulirPesanan;
 use App\Models\PembayaranRumah;
@@ -168,14 +169,14 @@ public function checkFreePPN($arrayPromo,$arrayFP)
         $decryptedID = Crypt::decrypt($id);
         $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananJoin7Where($decryptedID);
         $getPromo = '';
-        $getPromoAll = $this->promo->getPromoWhereAll('*','status','=',"aktif");
+        $getPromoAll = $this->promo->getPromoWhereAll('*', 'status', '=', "aktif");
         // dd($getFormulirPesanan);
         if (!empty($getFormulirPesanan->id_promo)) {
             $getPromo = $this->promo->firstPromo('*', ['id_promo' => $getFormulirPesanan->id_promo]);
         } else {
             $getPromo = '';
         }
-        // dd($getPromo);
+        //dd($getFormulirPesanan);
         $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
 
         if (session()->has('user')) {
@@ -186,37 +187,9 @@ public function checkFreePPN($arrayPromo,$arrayFP)
                 'user_menu.status_um' => 'aktif',
                 'user_menu.id_kategori' => $user->id_kategori
             ])->collect();
-
-            $dataHarga = [];
-
-            $cekHargaPromo = $this->checkPromoDiskon($getPromo,$getFormulirPesanan);
-            $cekAdaFreePPN = $this->checkFreePPN($getPromo,$getFormulirPesanan);
-
-            // dd($cekAdaFreePPN);
-
-            if(empty($getPromo)){
-                $dataHarga = array([
-                    'hargaPricelist' => $getFormulirPesanan->harga_awal,
-                    'hargaDiskon' =>  0,
-                    'hargaNetto' => rupiah($getFormulirPesanan->total_harga / 1.1),
-                    'hargaPPN' => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
-                    ]);
-            }else{
-                $dataHarga = array([
-                    'code_promo' => $getPromo->id_promo,
-                    'hargaPricelist' => $cekAdaFreePPN['hargaPricelist'],
-                    'hargaDiskon' => $cekHargaPromo,
-                    'hargaNetto' => $cekAdaFreePPN['hargaNetto'],
-                    'hargaPPN' => $cekAdaFreePPN['hargaPPN']
-                    ]);
-            }
-
-            // dd($dataHarga);
-
-            // var_dump($dataHarga);
-
             // dd($getUserMenu);
             $foundMatchingMenu = false;
+
 
             foreach ($getUserMenu as $menu) {
                 if ($menu->url_menu == request()->segment(1)) {
@@ -224,6 +197,50 @@ public function checkFreePPN($arrayPromo,$arrayFP)
                     break;
                 }
             }
+
+            if ($getPromo->free_ppn_promo == "yes") {
+                $dataHarga = array([
+                    'hargaPricelist' => $getFormulirPesanan->harga_awal,
+                    'hargaDiskon' => $getFormulirPesanan->total_diskon,
+                    'hargaNetto' => $getFormulirPesanan->harga_netto,
+                    'hargaPPN' => $getFormulirPesanan->harga_ppn,
+                    'hargaTotal' => $getFormulirPesanan->total_harga
+                ]);
+            } else {
+                // Adjust these values based on your requirements
+                $dataHarga = array([
+                    'hargaPricelist' => $getFormulirPesanan->harga_awal,
+                    'hargaDiskon' => $getFormulirPesanan->total_diskon,
+                    'hargaNetto' => $getFormulirPesanan->harga_netto,
+                    'hargaPPN' => $getFormulirPesanan->harga_ppn,
+                    'hargaTotal' => $getFormulirPesanan->total_harga
+                ]);
+            }
+
+            // if(empty($getPromo)){
+            //     $dataHarga = [
+            //         hargaPricelist => $getFormulirPesanan->harga_awal,
+            //         hargaDiskon => 0,
+            //         hargaNetto => rupiah($getFormulirPesanan->total_harga / 1.1),
+            //         hargaPPN => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
+            //         ];
+            // }elseif($getPromo->bphtp_promo=="yes"){
+            //     $dataHarga = [
+            //         hargaPricelist => $getFormulirPesanan->harga_awal,
+            //         hargaDiskon => 0,
+            //         hargaNetto => rupiah(($getFormulirPesanan->total_harga + 3000000) / 1.16),
+            //         hargaPPN => rupiah((11 / 100) * (($getFormulirPesanan->total_harga + 3000000) / 1.16))
+            //         ];
+            // }elseif($getPromo->bphtp_promo=="no" && $getPromo->freekpr_promo=="yes"){
+            //     $dataHarga = [
+            //         hargaPricelist => $getFormulirPesanan->harga_free_kpr,
+            //         hargaDiskon => 0,
+            //         hargaNetto => rupiah($getFormulirPesanan->total_harga / 1.1),
+            //         hargaPPN => rupiah((11 / 100) * ($getFormulirPesanan->total_harga / 1.11))
+            //         ];
+            // }
+
+            // var_dump($dataHarga);
 
             // if (!$foundMatchingMenu) {
             //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
@@ -238,6 +255,7 @@ public function checkFreePPN($arrayPromo,$arrayFP)
                 'getUserMenu',
                 'getPromoAll',
                 'dataHarga'
+
             ));
         } else {
             return redirect('/login');
@@ -268,26 +286,26 @@ public function checkFreePPN($arrayPromo,$arrayFP)
 
             if ($user->kategori == "AdminFormsLiving" || $user->kategori == "SuperAdmin") {
                 $dataUpdate = [
-                    'no_fp' => $request->nofp.$request->nofp2,
+                    'no_fp' => $request->nofp . $request->nofp2,
                     'status_market_fp'   => "accept",
                     'tgl_market_fp'  => date('d-m-y h:m:s'),
                     'status_staf_acc_fp'   => "accept",
                     'tgl_staff_acc_fp'  => date('d-m-y h:m:s'),
                 ];
-                
+
                 $dataUpdateUSer = [
                     'nama_plgn' => $request->namaPlgn,
                     'npwp_plgn' => $request->npwp,
                     'no_ktp_plgn' => $request->ktp,
                     'alamat_plgn' => $request->alamat,
-                    'no_tlp_plgn' => $request->tlp,
+                    'no_telp_plgn' => $request->tlp,
                     'email_plgn' => $request->email,
                 ];
             }
 
             if ($user->kategori == "StaffAcc" || $user->kategori == "SuperAdmin") {
                 $dataUpdate = [
-                    'no_fp' => $request->nofp.$request->nofp2,
+                    'no_fp' => $request->nofp . $request->nofp2,
                     'status_market_fp'   => "accept",
                     'tgl_market_fp'  => date('d-m-y h:m:s'),
                     'status_staf_acc_fp'   => "accept",
@@ -297,11 +315,21 @@ public function checkFreePPN($arrayPromo,$arrayFP)
 
             if ($user->kategori == "AdminAccounting") {
                 $dataUpdate = [
-                    'no_fp' => $request->nofp,
-                    'status_acc_fp'  => "accept",
+                    'no_fp' => $request->nofp . $request->nofp2,
+                    'status_acc_fp'   => "accept",
                     'tgl_acc_fp'  => date('d-m-y h:m:s'),
+
+                ];
+                $dataUpdateUSer = [
+                    'nama_plgn' => $request->namaPlgn,
+                    'npwp_plgn' => $request->npwp,
+                    'no_ktp_plgn' => $request->ktp,
+                    'alamat_plgn' => $request->alamat,
+                    'no_telp_plgn' => $request->tlp,
+                    'email_plgn' => $request->email,
                 ];
             }
+
             if ($user->kategori == "AdminLegal") {
 
                 $dataUpdate = [
@@ -310,16 +338,20 @@ public function checkFreePPN($arrayPromo,$arrayFP)
                 ];
             }
 
-
-            if ($user->kategori == "AdminLegal" || $user->kategori == "SuperAdmin" ) {
+            if ($user->kategori == "AdminLegal" || $user->kategori == "SuperAdmin") {
                 $dataRumah = ['luas_tanah'    => $request->luasTanah];
                 DB::table('rumah')
                     ->where('id_rumah', $getFormulirPesanan->id_rumah)
                     ->update($dataRumah);
             }
+
             DB::table('formulir_pesanan')
                 ->where('id_formulir', $decryptedID)
                 ->update($dataUpdate);
+
+            DB::table('user_pelanggan')
+                ->where('id_pelanggan', $getFormulirPesanan->id_pelanggan)
+                ->update($dataUpdateUSer);
 
             return redirect()->route('suratPemesananRumah.admin', $getProjek->nama_projek)->with('success', 'Data berhasil diubah');
         } else {
@@ -327,51 +359,69 @@ public function checkFreePPN($arrayPromo,$arrayFP)
         }
     }
 
-    function cetakSuratPemesananRumah($id) {
+    function cetakSuratPemesananRumah($id)
+    {
 
-            $decryptedID = Crypt::decrypt($id);
+        $decryptedID = Crypt::decrypt($id);
 
 
         $fpJadi = DB::table('formulir_pesanan')
-        ->select('*','rumah.id_projek')
-        ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
-        ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
+            ->select('*', 'rumah.id_projek')
+            ->join('kalkulator_kpr', 'formulir_pesanan.id_kkpr', '=', 'kalkulator_kpr.id_kkpr')
+            ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
 
-        ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-        ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
-        ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
-        ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
-        ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
-        ->where('id_formulir', '=', $decryptedID)
-        ->first();
-
-
-    // dd($fpJadi);
-    $dataPembayaran = DB::table('pembayaran_rumah')
-        ->where('id_formulir', '=', $decryptedID)
-        ->get();
-    $promo = '';
-    if (!empty($fpJadi->id_promo)) {
-        $promo = DB::table('promo')
-            ->where('id_promo', '=', $fpJadi->id_promo)
+            ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
+            ->join('tipe_rumah', 'formulir_pesanan.id_tipe_rumah', '=', 'tipe_rumah.id_tipe_rumah')
+            ->join('user_admin', 'formulir_pesanan.id_user_admin', '=', 'user_admin.id_user_admin')
+            ->join('ktgr_admin', 'user_admin.id_kategori', '=', 'ktgr_admin.id_kategori')
+            ->where('id_formulir', '=', $decryptedID)
             ->first();
+
+
+        // dd($fpJadi);
+        $dataPembayaran = DB::table('pembayaran_rumah')
+            ->where('id_formulir', '=', $decryptedID)
+            ->get();
+        $promo = '';
+        if (!empty($fpJadi->id_promo)) {
+            $promo = DB::table('promo')
+                ->where('id_promo', '=', $fpJadi->id_promo)
+                ->first();
+        }
+
+        if ($promo->free_ppn_promo == "yes") {
+            $dataHarga = array([
+                'hargaPricelist' => $fpJadi->harga_awal,
+                'hargaDiskon' => $fpJadi->total_diskon,
+                'hargaNetto' => $fpJadi->harga_netto,
+                'hargaPPN' => $fpJadi->harga_ppn,
+                'hargaTotal' => $fpJadi->total_harga
+            ]);
+        } else {
+            // Adjust these values based on your requirements
+            $dataHarga = array([
+                'hargaPricelist' => $fpJadi->harga_awal,
+                'hargaDiskon' => $fpJadi->total_diskon,
+                'hargaNetto' => $fpJadi->harga_netto,
+                'hargaPPN' => $fpJadi->harga_ppn,
+                'hargaTotal' => $fpJadi->total_harga
+            ]);
+        }
+        //function cetak 
+
+        $pdf = \PDF::loadView('pdf.printSPR-dashboard', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo, 'dataHarga' => $dataHarga]);
+        $pdf->setPaper('F4', 'potrait');
+        $pdf->render();
+        $pdfData = $pdf->output();
+        $path = './Home/pdf/';
+        $pdf->save($path . 'SPR-' . $fpJadi->blok . '-' . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf');
+        $filename = $path . 'SPR-' . $fpJadi->blok . '-' . $fpJadi->nomor . '-' . $fpJadi->id_formulir . '.pdf';
+        set_time_limit(2000);
+        return $pdf->download('SPR-' . $fpJadi->blok . "-" . $fpJadi->nomor . '.pdf');
     }
-         $pdf = \PDF::loadView('pdf.printSPR-dashboard', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo]);
-            // $pdf = PDF::loadView('mail.index');
-            $pdf->setPaper('F4', 'potrait');
-            // Storage::put('public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf', $pdf->output());
-            $pdf->render();
-            $pdfData = $pdf->output();
-            // $filename = 'public/Home/pdf/FP-'.$fp->blok."-".$fp->nomor.'.pdf';
-            // Storage::put($filename, $pdfData);
-            // dd($filename);
-            $path = './Home/pdf/';
-            $pdf->save($path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf');
-            $filename = $path.'FP-'.$fpJadi->blok.'-'.$fpJadi->nomor.'-'.$fpJadi->id_formulir.'.pdf';
-            set_time_limit(2000);
-        return $pdf->download('FP-' . $fpJadi->blok . "-" . $fpJadi->nomor . '.pdf');
-    }
-    public function editPromoSuratPemesananRumahAction(Request $request, $projek, $id) {
+    public function editPromoSuratPemesananRumahAction(Request $request, $projek, $id)
+    {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
         $dataUpdate  = array(
@@ -380,9 +430,9 @@ public function checkFreePPN($arrayPromo,$arrayFP)
 
         $decryptedID = Crypt::decrypt($id);
         DB::table('formulir_pesanan')
-        ->where('id_formulir', $decryptedID)
-        ->update($dataUpdate);
+            ->where('id_formulir', $decryptedID)
+            ->update($dataUpdate);
 
-        return redirect()->route('editSuratPemesananRumah.admin',[$getProjek->nama_projek, Crypt::encrypt($decryptedID)])->with('success','promo telah di ubah!');
+        return redirect()->route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($decryptedID)])->with('success', 'promo telah di ubah!');
     }
 }
