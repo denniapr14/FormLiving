@@ -94,7 +94,8 @@ class C_Promo extends Controller
             }
 
             // dd($promo);
-            return view('V_Admin.promo',
+            return view(
+                'V_Admin.promo',
                 compact(
                     'user',
                     'promo',
@@ -117,9 +118,9 @@ class C_Promo extends Controller
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $rumah = DB::table('rumah')
             ->join('cluster', 'rumah.codecluster', '=', 'cluster.codecluster')
-            ->join('projek','rumah.id_projek','projek.id_projek')
+            ->join('projek', 'rumah.id_projek', 'projek.id_projek')
             ->where('rumah.status', '=', 'Available')
-            ->where('projek.nama_projek',"=",$projek)
+            ->where('projek.nama_projek', "=", $projek)
             ->get();
 
         if (session()->has('user')) {
@@ -221,11 +222,11 @@ class C_Promo extends Controller
                     'id_rumah' => $request->rumah,
                 ];
             }
-            $kodePromo = RandomCode(4,$projek);
-            $getPromo = $this->promo->firstPromo('*',['kode_promo' => $kodePromo]);
+            $kodePromo = RandomCode(4, $projek);
+            $getPromo = $this->promo->firstPromo('*', ['kode_promo' => $kodePromo]);
             if ($getPromo != null) {
                 if ($kodePromo == $getPromo->kode_promo) {
-                    $kodePromo = randomCode(4,$projek);
+                    $kodePromo = randomCode(4, $projek);
                 }
             }
 
@@ -295,7 +296,8 @@ class C_Promo extends Controller
             //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
             // }
 
-            return view('V_Admin.addPromo',
+            return view(
+                'V_Admin.addPromo',
                 compact(
                     'user',
                     'rumah2',
@@ -315,7 +317,7 @@ class C_Promo extends Controller
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-// dd($request);
+        // dd($request);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere(
                 'user_admin.id_user_admin',
@@ -347,11 +349,11 @@ class C_Promo extends Controller
                 'status_diskon' => $request->statusDiskon,
                 'diskon_promo' => $request->diskon_promo,
                 'status_max_diskon' => $request->statusMaxDiskon,
-                'max_diskon'        =>$request->maxDiskon,
+                'max_diskon'        => $request->maxDiskon,
                 'tgl_aktif' => $request->tgl_mulai,
                 'tgl_berakhir' => $request->tgl_berakhir,
                 'bphtb_promo' => $request->bphtb,
-                'free_ppn_promo'=> $request->ppn,
+                'free_ppn_promo' => $request->ppn,
                 'freekpr_promo' => $request->kpr,
                 'extra_cicilan' => $request->extra_cicilan,
                 'jumlah_extra_cicilan' => $request->jumlah_cicilan
@@ -490,7 +492,7 @@ class C_Promo extends Controller
                 'status_diskon' => $request->statusDiskon,
                 'diskon_promo' => $request->diskon_promo,
                 'status_max_diskon' => $request->status_max_diskon,
-                'max_diskon'        =>$request->maxDiskon,
+                'max_diskon'        => $request->maxDiskon,
                 'tgl_aktif' => $request->tgl_mulai,
                 'tgl_berakhir' => $request->tgl_berakhir,
                 'bphtb_promo' => $request->bphtb,
@@ -535,7 +537,8 @@ class C_Promo extends Controller
         return response()->json($suggestions);
     }
 
-    public function promoNotif($projek, $promoID) {
+    public function promoNotif($projek, $promoID)
+    {
         $decryptedID    = Crypt::decrypt($promoID);
         $getUserAll = $this->userAdmin->getUserAdminAll('*')->collect();
         $getUserAll = $getUserAll->sortBy('nama_ua');
@@ -566,7 +569,8 @@ class C_Promo extends Controller
 
 
 
-            return view('V_Admin.promoNotif',
+            return view(
+                'V_Admin.promoNotif',
                 compact(
                     'user',
                     'projekUser',
@@ -582,7 +586,8 @@ class C_Promo extends Controller
             return redirect('/login');
         }
     }
-    function promoNotifAction(Request $request, $projek, $promoID) {
+    function promoNotifAction(Request $request, $projek, $promoID)
+    {
         $decryptedID    = Crypt::decrypt($promoID);
         // $getUserAll = $this->userAdmin->getUserAdminAll('*');
         $getPromo = $this->listPromo->firstListPromoJoinPromoRumah('*', 'promo.id_promo', '=', $decryptedID);
@@ -619,31 +624,29 @@ class C_Promo extends Controller
                 $getUserNotif = DB::table('user_admin')
                     ->whereIn('id_user_admin', $request->userNotifCheckbox)
                     ->get();
-
             }
             // dd($getUserNotif);
 
-            return view('V_Admin.sendNotif',
-            compact(
-                'user',
-                'projekUser',
-                'getProjek',
-                'getUserMenu',
+            return view(
+                'V_Admin.sendNotif',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getProjek',
+                    'getUserMenu',
 
-                'getPromo',
-                'getUserNotif'
+                    'getPromo',
+                    'getUserNotif'
 
                 )
             );
-
-
-
         } else {
             return redirect('/login');
         }
     }
 
-    function sendPromoNotifAction(Request $request,$projek,$promoID) {
+    function sendPromoNotifAction(Request $request, $projek, $promoID)
+    {
         $decryptedID = Crypt::decrypt($promoID);
 
         if (session()->has('user')) {
@@ -668,24 +671,15 @@ class C_Promo extends Controller
                 $getUserNotif = DB::table('user_admin')
                     ->whereIn('id_user_admin', $request->id_user_admin)
                     ->get();
-
             }
-            foreach($getUserNotif as $userNotif)
-            {
-                sendWhatsappMessage('082229997190',$userNotif->no_tlp_ua, $request->nameNotif.
-                $request->deskripsiNotif);
+            foreach ($getUserNotif as $userNotif) {
+                sendWhatsappMessage('082229997190', $userNotif->no_tlp_ua, $request->nameNotif .
+                    $request->deskripsiNotif);
             }
 
-
-
-            return redirect()->route('promo.admin',[ $projek])->with('success','informasi promo sudah terkirim');
-
-
-
-
+            return redirect()->route('promo.admin', [$projek])->with('success', 'informasi promo sudah terkirim');
         } else {
             return redirect('/login');
         }
-
     }
 }

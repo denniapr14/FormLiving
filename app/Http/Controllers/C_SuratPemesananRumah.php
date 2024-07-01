@@ -133,36 +133,6 @@ class C_SuratPemesananRumah extends Controller
         }
     }
 
-public function checkPromoDiskon($arrayPromo,$arrayFP)
-{
-   if (!empty($arrayPromo)) {
-        if (!($arrayPromo['diskon_promo'] == 0)) {
-            return $arrayFP['total_diskon']; 
-        }
-    }else{
-        return 0;
-    }
-}
-    
-public function checkFreePPN($arrayPromo,$arrayFP)
-{
-   if (!empty($arrayPromo)) {
-        if (($arrayPromo['free_ppn_promo'] == "yes")) {
-            return [
-                'hargaPricelist' => $arrayFP['harga_non_ppn'],
-                'hargaNetto' => ($arrayFP['harga_non_ppn'] - $arrayFP['total_diskon']),
-                'hargaPPN' => 0
-            ]; 
-        }
-    }else{
-        return [
-            'hargaPricelist' => $arrayFP['harga_awal'],
-            'hargaNetto' => $arrayFP['total_harga'] / 1.1,
-            'hargaPPN' => (11 / 100) * ($arrayFP['total_harga'] / 1.11)
-        ]; 
-    }
-} 
-
     public function editSuratPemesananRumah($projek, $id)
     {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
@@ -410,7 +380,7 @@ public function checkFreePPN($arrayPromo,$arrayFP)
         }
         //function cetak 
 
-        $pdf = \PDF::loadView('pdf.printSPR-dashboard', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo, 'dataHarga' => $dataHarga]);
+        $pdf = PDF::loadView('pdf.printSPR-dashboard', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo, 'dataHarga' => $dataHarga]);
         $pdf->setPaper('F4', 'potrait');
         $pdf->render();
         $pdfData = $pdf->output();
