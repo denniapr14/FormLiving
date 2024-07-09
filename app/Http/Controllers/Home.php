@@ -61,24 +61,27 @@ class Home extends Controller
             // die();
             return view('home', compact(
                 'user',
-                 'promo',
-                'getBrosur'));
+                'promo',
+                'getBrosur'
+            ));
         }
         if (session()->has('guest')) {
             $userPelanggan = \App\Models\UserPelanggan::where([
                 'id_pelanggan' => session::get(
                     'guest',
-                     'promo'),
+                    'promo'
+                ),
             ])->first();
             // dd($userPelanggan);
             // die();
             return view('home', compact(
                 'userPelanggan',
-             'promo',
-             'getBrosur'));
+                'promo',
+                'getBrosur'
+            ));
         }
         // end sess
-        return view('home', compact('promo','getBrosur'));
+        return view('home', compact('promo', 'getBrosur'));
     }
 
     public function housing($dataProjek)
@@ -86,7 +89,7 @@ class Home extends Controller
         $cluster1;
         if ($dataProjek == "Greenland") {
             $cluster1 = $this->clusterList->getRumahBaseProjekClusterCount($dataProjek);
-        }else{
+        } else {
             $cluster1 = $this->clusterList->getCountRumahWithStatus($dataProjek);
         }
 
@@ -192,7 +195,7 @@ class Home extends Controller
     {
         $user = \App\Models\UserAdmin::where([
             'username_ua' => $request->username,
-            'password_ua' => md5($request->password),F
+            'password_ua' => md5($request->password), F
         ])->first();
 
         // CHECK PELANGGAN
@@ -789,174 +792,6 @@ class Home extends Controller
         # code...
     }
 
-    public function SignUp()
-    {
-        return view('signUp');
-    }
-    public function SignUpAction(Request $request)
-    {
-        // dd($request->all());
-        // if (!session()->has('guest') && !session()->has('user')) {
-        //     // $hasilSess = Session::get('guest');
-        //     // response()->json('hasilSess');
-        //     return redirect("/login")->with('error', "You not sign in or sign up!");
-        //     # code...
-
-        // }
-        $this->validate($request, [
-            'nama' => 'required|min:3',
-            'username' => 'required|min:5|max:20',
-            'email' => 'required',
-            'phone' => 'required|numeric',
-
-            'kelamin' => 'required',
-            'password' => 'required|min:6',
-        ]);
-
-        $userP = \App\Models\UserPelanggan::where([
-            'username_plgn' => $request->username,
-        ])->first();
-        $userUA = DB::table('user_admin')
-            ->where('username_ua', '=', $request->username)
-            ->first();
-
-        $userEmail = \App\Models\UserPelanggan::where([
-            'email_plgn' => $request->email,
-        ])->first();
-        $userUAEmail = DB::table('user_admin')
-            ->where('email_ua', '=', $request->email)
-            ->first();
-
-        if (!empty($userP) && !empty($userUA)) {
-            return redirect('/sign-up')->with('error', 'Username is use!');
-        }
-        if (!empty($userEmail) && !empty($userUAEmail)) {
-            return redirect('/sign-up')->with('error', 'Email is use!');
-        }
-        if ($request->userTipe == "pelanggan") {
-            $dataInput = array(
-                'nama_plgn' => $request->nama,
-                'username_plgn' => $request->username,
-                'password_plgn' => md5($request->password),
-                'email_plgn' => $request->email,
-                'no_telp_plgn' => $request->phone,
-                // 'no_wa_plgn'            => $request->wa,
-                'kategori_plgn' => "guest",
-                'jenis_kelamin_status' => $request->kelamin,
-
-            );
-
-            // dd($dataInput);
-            // die();
-
-            DB::table('user_pelanggan')->insert(
-                $dataInput
-            );
-        }
-        if ($request->userTipe == "agentWithCompany") {
-            $dataInput = array(
-                'id_kategori' => 24,
-                'code_id_ua' => "XMP" . date("dmy", strtotime($request->tanggalLahir)) . "AGC",
-                'username_ua' => $request->username,
-                'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
-                'password_ua' => md5($request->password),
-                'email_ua' => $request->email,
-                'no_tlp_ua' => $request->phone,
-                'status_ua' => "Aktif",
-                // 'no_wa_plgn'            => $request->wa,
-                // 'jenis_kelamin_status' => $request->kelamin,
-            );
-             $getIDUser = DB::table('user_admin')->insertGetId(
-                $dataInput
-            );
-
-
-            $dataUserProjek =  [
-                'id_projek'    => 1,
-                'id_user_admin' => $getIDUser
-            ];
-
-
-            DB::table('user_projek')->insert(
-                $dataUserProjek
-            );
-        }
-        if ($request->userTipe == "agentWithoutCompany") {
-            $dataInput = array(
-                'id_kategori' => 5,
-                'code_id_ua' => "MDT" . date("dmy", strtotime($request->tanggalLahir)) . "AG",
-                'username_ua' => $request->username,
-                'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
-                'password_ua' => md5($request->password),
-                'email_ua' => $request->email,
-                'no_tlp_ua' => $request->phone,
-                'status_ua' => "Aktif",
-                // 'no_wa_plgn'            => $request->wa,
-                // 'jenis_kelamin_status' => $request->kelamin,
-            );
-            $getIDUser = DB::table('user_admin')->insertGetId(
-                $dataInput
-            );
-
-
-            $dataUserProjek =  [
-                'id_projek'    => 1,
-                'id_user_admin' => $getIDUser
-            ];
-
-
-            DB::table('user_projek')->insert(
-                $dataUserProjek
-            );
-        }
-        if ($request->userTipe == "sales") {
-            $dataInput = array(
-                'id_kategori' => 4,
-                'code_id_ua' => "GL" . date("dmy", strtotime($request->tanggalLahir)) . "SL",
-                'username_ua' => $request->username,
-                'nama_ua' => $request->nama,
-                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
-                'password_ua' => md5($request->password),
-                'email_ua' => $request->email,
-                'no_tlp_ua' => $request->phone,
-                'status_ua' => "Aktif",
-                // 'no_wa_plgn'            => $request->wa,
-                // 'jenis_kelamin_status' => $request->kelamin,
-            );
-              $getIDUser = DB::table('user_admin')->insertGetId(
-                $dataInput
-            );
-
-            $dataUserProjek =  [
-                'id_projek'    => 1,
-                'id_user_admin' => $getIDUser
-            ];
-
-            DB::table('user_projek')->insert(
-                $dataUserProjek
-            );
-        }
-        $data = [
-            "subject" => "Form Living",
-            "body" => "Form Living",
-            "nama" => $request->nama,
-
-        ];
-        $template = 'mail.mailRegister';
-        // MailNotify class that is extend from Mailable class.
-        try {
-            Mail::to($request->email)->send(new MailNotify($data, $template));
-            // return response()->json(['Great! Successfully send in your mail']);
-        } catch (Exception $e) {
-            // return response()->json(['Sorry! Please try again latter']);
-        }
-        return redirect('/login')->with('success', 'Your Account ' . $request->username . ' has been created');
-        // return view('signUp');
-        # code...
-    }
-
     public function DashboardProfile()
     {
         if (!session()->has('guest') && !session()->has('user')) {
@@ -1464,7 +1299,7 @@ class Home extends Controller
             ])
             ->where('status_gr', '=', 'aktif')
             ->get();
-            // dd($imgRumah2);
+        // dd($imgRumah2);
         $imgDenah = DB::table('gambar_rumah')
             ->where([
                 'id_rumah' => $id_rumah,
@@ -2902,32 +2737,7 @@ class Home extends Controller
     }
     public function Congratulation()
     {
-        if (!session()->has('guest') && !session()->has('user')) {
-            // $hasilSess = Session::get('guest');
-            // response()->json('hasilSess');
-            return redirect("/login")->with('error', "You not sign in or sign up!");
-        }
-
-        if (session()->has('user')) {
-            $user = \App\Models\UserAdmin::where([
-                'id_user_admin' => session::get('user'),
-            ])->first();
-
-            // dd($user);
-            // die();
-            return view('congratulation', compact('user'));
-        }
-        if (session()->has('guest')) {
-            $userPelanggan = \App\Models\UserPelanggan::where([
-                'id_pelanggan' => session::get('guest'),
-            ])->first();
-            // dd($userPelanggan);
-            // die();
-            return view('congratulation', compact('userPelanggan'));
-        }
-
         return view('congratulation');
-        # code...
     }
 
     // =================- END SIMULATION -========================
@@ -2940,9 +2750,10 @@ class Home extends Controller
     }
 
     public function Terms()
-    {   $dataVA = strval("8888444433339999");
-        $va = str_split($dataVA,4);
-        $data =[
+    {
+        $dataVA = strval("8888444433339999");
+        $va = str_split($dataVA, 4);
+        $data = [
             'id' => Crypt::encrypt('14'),
             'expire' => Carbon::now()->format('d-m-Y H:i:s'),
             'blok' => 'A',
@@ -2950,11 +2761,11 @@ class Home extends Controller
             'tipe' => 'Non - Refundable',
             'va' => $va
         ];
-        $dataText =([
+        $dataText = ([
             'title' => 'Konfirmasi Sukses!',
             'text' => "Konfirmasi pembayaran anda telah dikirim. Mohon menunggu email balasan bahwa konfirmasi email anda telah diterima oleh kami."
         ]);
-        return view('mail.mailForgot',compact('data','dataText'));
+        return view('mail.mailForgot', compact('data', 'dataText'));
     }
     public function About()
     {

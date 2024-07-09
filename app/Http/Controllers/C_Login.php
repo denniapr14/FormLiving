@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
+
 class C_Login extends Controller
 {
     public $userAdmin;
@@ -235,5 +236,166 @@ class C_Login extends Controller
         Session::flush('user');
 
         return redirect('/')->with('success', "You're sign out!");
+    }
+
+    public function SignUp()
+    {
+        return view('signUp');
+    }
+    public function SignUpAction(Request $request)
+    {
+        // dd($request->all());
+        // if (!session()->has('guest') && !session()->has('user')) {
+        //     // $hasilSess = Session::get('guest');
+        //     // response()->json('hasilSess');
+        //     return redirect("/login")->with('error', "You not sign in or sign up!");
+        //     # code...
+
+        // }
+        $this->validate($request, [
+            'nama' => 'required|min:3',
+            'username' => 'required|min:5|max:20',
+            'email' => 'required',
+            'phone' => 'required|numeric',
+            'kelamin' => 'required',
+            'password' => 'required|min:6',
+        ]);
+
+        $userP = \App\Models\UserPelanggan::where([
+            'username_plgn' => $request->username,
+        ])->first();
+        $userUA = DB::table('user_admin')
+            ->where('username_ua', '=', $request->username)
+            ->first();
+
+        $userEmail = \App\Models\UserPelanggan::where([
+            'email_plgn' => $request->email,
+        ])->first();
+        $userUAEmail = DB::table('user_admin')
+            ->where('email_ua', '=', $request->email)
+            ->first();
+
+        if (!empty($userP) && !empty($userUA)) {
+            return redirect('/sign-up')->with('error', 'Username Sudah Dipakai');
+        }
+        if (!empty($userEmail) && !empty($userUAEmail)) {
+            return redirect('/sign-up')->with('error', 'Email sudah terpakai');
+        }
+        if ($request->userTipe == "pelanggan") {
+            $dataInput = array(
+                'nama_plgn' => $request->nama,
+                'username_plgn' => $request->username,
+                'password_plgn' => md5($request->password),
+                'email_plgn' => $request->email,
+                'no_telp_plgn' => $request->phone,
+                // 'no_wa_plgn'            => $request->wa,
+                'kategori_plgn' => "guest",
+                'jenis_kelamin_status' => $request->kelamin,
+
+            );
+
+            // dd($dataInput);
+            // die();
+
+            DB::table('user_pelanggan')->insert(
+                $dataInput
+            );
+        }
+        if ($request->userTipe == "agentWithCompany") {
+            $dataInput = array(
+                'id_kategori' => 24,
+                'code_id_ua' => "XMP" . date("dmy", strtotime($request->tanggalLahir)) . "AGC",
+                'username_ua' => $request->username,
+                'nama_ua' => $request->nama,
+                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
+                'password_ua' => md5($request->password),
+                'email_ua' => $request->email,
+                'no_tlp_ua' => $request->phone,
+                'status_ua' => "Aktif",
+                // 'no_wa_plgn'            => $request->wa,
+                // 'jenis_kelamin_status' => $request->kelamin,
+            );
+            $getIDUser = DB::table('user_admin')->insertGetId(
+                $dataInput
+            );
+
+
+            $dataUserProjek =  [
+                'id_projek'    => 1,
+                'id_user_admin' => $getIDUser
+            ];
+
+
+            DB::table('user_projek')->insert(
+                $dataUserProjek
+            );
+        }
+        if ($request->userTipe == "agentWithoutCompany") {
+            $dataInput = array(
+                'id_kategori' => 5,
+                'code_id_ua' => "MDT" . date("dmy", strtotime($request->tanggalLahir)) . "AG",
+                'username_ua' => $request->username,
+                'nama_ua' => $request->nama,
+                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
+                'password_ua' => md5($request->password),
+                'email_ua' => $request->email,
+                'no_tlp_ua' => $request->phone,
+                'status_ua' => "Aktif",
+                // 'no_wa_plgn'            => $request->wa,
+                // 'jenis_kelamin_status' => $request->kelamin,
+            );
+            $getIDUser = DB::table('user_admin')->insertGetId(
+                $dataInput
+            );
+
+
+            $dataUserProjek =  [
+                'id_projek'    => 1,
+                'id_user_admin' => $getIDUser
+            ];
+
+
+            DB::table('user_projek')->insert(
+                $dataUserProjek
+            );
+        }
+        if ($request->userTipe == "sales") {
+            $dataInput = array(
+                'id_kategori' => 4,
+                'code_id_ua' => "GL" . date("dmy", strtotime($request->tanggalLahir)) . "SL",
+                'username_ua' => $request->username,
+                'nama_ua' => $request->nama,
+                'tgl_lahir_ua' => $request->tahun . '-' . $request->bulan . '-' . $request->tanggal,
+                'password_ua' => md5($request->password),
+                'email_ua' => $request->email,
+                'no_tlp_ua' => $request->phone,
+                'status_ua' => "Aktif",
+                // 'no_wa_plgn'            => $request->wa,
+                // 'jenis_kelamin_status' => $request->kelamin,
+            );
+            $getIDUser = DB::table('user_admin')->insertGetId(
+                $dataInput
+            );
+
+            $dataUserProjek =  [
+                'id_projek'    => 1,
+                'id_user_admin' => $getIDUser
+            ];
+
+            DB::table('user_projek')->insert(
+                $dataUserProjek
+            );
+        }
+        $data = [
+            "subject" => "Form Living",
+            "body" => "Form Living",
+            "nama" => $request->nama,
+
+        ];
+        $template = 'mail.mailRegister';
+        // MailNotify class that is extend from Mailable class.
+        return redirect('/login')->with('success', 'Your Account ' . $request->username . ' has been created');
+        // return view('signUp');
+        # code...
     }
 }
