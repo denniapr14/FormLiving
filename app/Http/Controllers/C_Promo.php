@@ -394,9 +394,7 @@ class C_Promo extends Controller
 
     function updatePromo($projek, $id)
     {
-
         $decryptedID = Crypt::decrypt($id);
-
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $getPromo = $this->listPromo->firstListPromoJoinPromoRumah('*', 'promo.id_promo', '=', $decryptedID);
         $getListPromo = $this->listPromo->getListPromoJoinPromoRumah('*', 'promo.id_promo', '=', $decryptedID);

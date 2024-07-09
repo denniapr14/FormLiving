@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
-
 class C_Login extends Controller
 {
     public $userAdmin;
@@ -80,8 +79,8 @@ class C_Login extends Controller
                 $getProjekUser = $this->userProjek->firstProjectUserWhere(['user_admin.id_user_admin' => $user->id_user_admin]);
 
                 // dd($getProjekUser);
-                if (empty($getProjekUser) || $getProjekUser == null ) {
-                    return back()->with('error','Harap hubungi pihak admin projek anda belum ditambahkan ');
+                if (empty($getProjekUser) || $getProjekUser == null) {
+                    return back()->with('error', 'Harap hubungi pihak admin projek anda belum ditambahkan ');
                     # code...
                 }
 
@@ -113,7 +112,6 @@ class C_Login extends Controller
                         break;
                 }
             }
-
         }
 
         if (!empty($userPelanggan)) {
