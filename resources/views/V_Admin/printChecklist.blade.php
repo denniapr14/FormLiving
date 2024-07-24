@@ -16,6 +16,11 @@
 
     $newdall = date('Y - m - d', $d);
     ?>
+    <style>
+        table tr td{
+            font-family: sans-serif;
+        }
+    </style>
     <div class="col-lg-12">
         <div id="accordion-3">
             @foreach ($getTermin as $terminGroup)
@@ -66,21 +71,25 @@
                                 <table style="font-weight: 100">
                                     <tr>
                                         <td>KAVLING / TYPE:</td>
-                                        <td> No. SPK:</td>
+                                        <td> No. SPK:
+                                            @if ($getSPK!=null)
+                                            {{ $getSPK->no_spk }}
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">PERIODE: {{ $newd }}</td>
                                     </tr>
                                 </table>
 
-                                <table class="table table-bordered table-responsive-lg" style="font-weight: 100">
+                                <table class="table-bordered" style="font-weight: 100; width:100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Pekerjaan</th>
-                                            <th>Status</th>
-                                            <th>Tanggal Divalidasi</th>
-                                            <th>Keterangan</th>
+                                            <th style="text-align: center">Pekerjaan</th>
+                                            <th style="text-align: center">Status</th>
+                                            <th style="text-align: center">Tanggal Divalidasi</th>
+                                            <th style="text-align: center">Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -93,16 +102,16 @@
                                             @endphp
                                             @if ($jobName != $currentJob)
                                                 <tr>
-                                                    <td colspan="5"><strong>{{ $jobName }}</strong></td>
+                                                    <td colspan="5"><strong><b>{{ $jobName }}</b></strong></td>
                                                 </tr>
                                                 @php
                                                     $currentJob = $jobName;
                                                 @endphp
                                             @endif
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td style="width: 40%">{{ $item->nama_jl }}</td>
-                                                <td style="width: 2rem; text-align: center">
+                                            <tr style="height: 12px;">
+                                                <td style="height: 12px; width: 6px; text-align: center">{{ $loop->iteration }}</td>
+                                                <td style="height: 12px; width: 40%">{{ $item->nama_jl }}</td>
+                                                <td style="height: 12px; width: 2rem; text-align: center">
                                                     @if ($item->status_checklist == 'selesai')
                                                         <i class="fas fa-check"></i>
                                                     @elseif ($item->status_checklist == 'terkunci')
@@ -111,7 +120,7 @@
                                                         <i class="fa fa-times" aria-hidden="true"></i>
                                                     @endif
                                                 </td>
-                                                <td style="width: 10rem; text-align: center">
+                                                <td style="height: 12px; width: 10rem; text-align: center">
                                                     @if (empty($item->tgl_update))
                                                     @else
                                                         {{ tgl_indo($item->tgl_update) }}

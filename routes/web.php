@@ -435,7 +435,7 @@ route::get('/terminChecklist/{projek}/{id_rumah}', [C_Checklist::class, 'getTerm
 route::get('/listChecklist/{projek}/{id_rumah}/{termin}', [C_Checklist::class, 'getListChecklist'])->name('getListChecklist.admin');
 route::get('/editCheclist/{projek}/{id_rumah}/{termin}/{id_checklist}', [C_Checklist::class, 'editChecklist'])->name('editChecklist.admin');
 route::post('/editChecklistAction/{projek}/{id_rumah}/{termin}/{id_checklist}', [C_Checklist::class, 'editChecklistAction'])->name('editChecklistAction.admin');
-
+route::post('/editPengawas/action/{projek}/{id_rumah}',[C_Checklist::class,'EditPengawas'])->name('editPengawas.admin');
 route::post('/checkPinPendamping/{projek}/{id_rumah}/{termin}/{id_checklist}', [C_Checklist::class, 'checkPinPendamping'])->name('checkPinPendamping.admin');
 
 

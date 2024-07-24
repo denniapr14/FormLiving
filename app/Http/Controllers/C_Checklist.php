@@ -494,6 +494,10 @@ class C_Checklist extends Controller
             ->groupBy('j.termin_job')
             ->orderByRaw('j.termin_job ASC')
             ->first();
+        $getSPK = DB::table('spk')
+            ->where('id_rumah', '=', $id_rumah)
+            ->first();
+        // dd($getSPK);
 
         $getJob = $this->job->getJob('*');
 
@@ -530,7 +534,8 @@ class C_Checklist extends Controller
                     'getTermin',
                     'getRumah',
                     'getJob',
-                    'getPengawas'
+                    'getPengawas',
+                    'getSPK'
 
                 )
             );
@@ -816,6 +821,25 @@ class C_Checklist extends Controller
         }
     }
 
+    public function EditPengawas(Request $request, $projek, $id_rumah)
+    {
+        $decryptedID = Crypt::decrypt($id_rumah);
+        if (!empty($request)) {
+            $dataInput = [
+
+                'id_pengawas1' => $request->pengawas1,
+                'id_pengawas2' => $request->pengawas2,
+
+                // 'ada'                   =>"foto",
+            ];
+            DB::table('checklist')
+                ->where('id_rumah', $decryptedID)
+                ->update($dataInput);
+            return redirect()->back()->with('success', 'Success change pengawas');
+        } else {
+            return redirect('/login');
+        }
+    }
 
 
 
