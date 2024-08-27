@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PelangganProjek;
 use App\Models\PembayaranRumah;
 use App\Models\Projek;
 use App\Models\RincianPembayaran;
 use App\Models\Rumah;
 use App\Models\UserAdmin;
 use App\Models\UserMenu;
+use App\Models\UserPelanggan;
 use App\Models\UserProjek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -15,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 
-class C_PembayaranRumah extends Controller
+class C_PembayaranPelanggan extends Controller
 {
     public $pembayaranRumah;
     public $userAdmin;
@@ -24,6 +26,8 @@ class C_PembayaranRumah extends Controller
     public $rincianPembayaran;
     public $rumah;
     public $userMenu;
+    public $userPelanggan;
+    public $pelangganProjek;
 
     public function __construct()
     {
@@ -34,56 +38,55 @@ class C_PembayaranRumah extends Controller
         $this->projek = new Projek();
         $this->rincianPembayaran = new RincianPembayaran();
         $this->userMenu = new UserMenu();
+        $this->userPelanggan = new UserPelanggan;
+        $this->pelangganProjek = new PelangganProjek;
     }
-    public function listPembayaranRumah($getProjek, $id) {
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $getProjek);
-        $decryptedID = Crypt::decrypt($id);
-        $getPembayaranRumah = $this->pembayaranRumah->firstPembayaranRumahWhere('*', 'id_pem_rumah', '=', $decryptedID);
-        $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $getPembayaranRumah->id_rumah);
-        $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
+    public function index($projek)
+    {
 
-        // $getRincianPembayaran = $this->pembayaranRumah->getPembayaranRumahRincianJoinWhereAll('*', 'pembayaran_rumah.id_pem_rumah', '=', $decryptedID);
-        // dd($getPembayaranRumah);
-        if (session()->has('user')) {
-            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+        if (session()->has('guest')) {
+            $userPelanggan = $this->userPelanggan->firstUserPelangganWhere('id_pelanggan', '=', session::get('guest'));
+            $getPelangganProjek = $this->pelangganProjek->getProjectPelangganWhere('user_pelanggan.id_pelanggan', '=', $userPelanggan->id_pelanggan);
+            $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+            // dd("INI GUESTTTTTT");
+// dd($userPelanggan);
+            $currentMonth = date('Y-m-d');
+// dd($currentMonth);
+            $currentYear = date('Y-m-d');
 
-            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+// Get next month and year
+            $nextMonth = date('Y-m-d', strtotime('+1 month'));
+            $nextYear = date('Y-m-d', strtotime('+1 month'));
+            $getBillMonthNow = $this->pembayaranRumah->firstPembayaranRumahWhereMonthAndYearArr('*', [
+                'id_pelanggan' => $userPelanggan->id_pelanggan,
+            ],
+                'tgl_pr', now()->month, 'tgl_pr', now()->year);
 
-            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-                'user_menu.status_um' => 'aktif',
-                'user_menu.id_kategori' => $user->id_kategori
-            ])->collect();
-            // dd($getUserMenu);
-            $foundMatchingMenu = false;
+            $getBillNextMonth = $this->pembayaranRumah->firstPembayaranRumahWhereMonthAndYearArr('*', [
+                'id_pelanggan' => $userPelanggan->id_pelanggan,
+            ], 'tgl_pr', now()->addMonth()->month, 'tgl_pr', now()->addMonth()->year);
 
+            $getBillPelanggan = $this->pembayaranRumah->getPembayaranRumahWhereAllArr('*',['id_pelanggan' => $userPelanggan->id_pelanggan]);
+            // dd($getPembayaranPelanggan);
+            return view('V_Guest.pembayaran',
+                compact(
+                    'userPelanggan',
+                    'getProjek',
+                    'getPelangganProjek',
+                    'getBillMonthNow',
+                    'getBillNextMonth',
+                    'getBillPelanggan'
 
-            foreach ($getUserMenu as $menu) {
-                if ($menu->url_menu == request()->segment(1)) {
-                    $foundMatchingMenu = true;
-                    break;
-                }
-            }
-
-            // if (!$foundMatchingMenu) {
-            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-            // }
-            return view('V_Admin.listPembayaranRumah', compact(
-                'user',
-                'projekUser',
-                'getPembayaranRumah',
-                'getProjek',
-                'getPembayaranRumah',
-                'getRumah',
-                'getUserMenu'
-
-            ));
-        } else {
-            return redirect('/login');
+                )
+            );
         }
+        // CHECK AS GUEST
+
+        return redirect('/login');
+
     }
     public function pembayaranRumah($projek, $id)
     {
-
 
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
@@ -98,11 +101,10 @@ class C_PembayaranRumah extends Controller
 
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
-                'user_menu.id_kategori' => $user->id_kategori
+                'user_menu.id_kategori' => $user->id_kategori,
             ])->collect();
             // dd($getUserMenu);
             $foundMatchingMenu = false;
-
 
             foreach ($getUserMenu as $menu) {
                 if ($menu->url_menu == request()->segment(1)) {
@@ -147,15 +149,15 @@ class C_PembayaranRumah extends Controller
                 $img = $request->file('image');
 
                 // Generate a unique filename based on the current timestamp and the original file extension
-                $filename = $getRumah->blok.'-'.$getRumah->nomor.'-pembayaran-'.time().'.'.$img->getClientOriginalExtension();
+                $filename = $getRumah->blok . '-' . $getRumah->nomor . '-pembayaran-' . time() . '.' . $img->getClientOriginalExtension();
 
                 // Store the image in the 'images' folder under the 'public' disk
                 $path = 'Home/images/pembayaran/';
                 $img = Image::make($img);
-                $img->save(public_path($path.$filename));
+                $img->save(public_path($path . $filename));
                 $img->resize(100, 100, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($path.'/'.$filename);
+                })->save($path . '/' . $filename);
             }
             $getSisa = $getPembayaranRumah->sisa_pr - $request->harga;
             $statusSisa = 'kurang';
@@ -183,14 +185,14 @@ class C_PembayaranRumah extends Controller
             // dd($dataRincianPembayaran);
 
             DB::table('pembayaran_rumah')
-            ->where('id_pem_rumah', $getPembayaranRumah->id_pem_rumah)
-            ->update(
-                $dataPembayaran
-            );
+                ->where('id_pem_rumah', $getPembayaranRumah->id_pem_rumah)
+                ->update(
+                    $dataPembayaran
+                );
 
             $this->rincianPembayaran->insertRincianPembayaran($dataRincianPembayaran);
 
-            return redirect()->route('listPembayaranRumah.admin', ['projek' => $getProjek->nama_projek, 'id' => Crypt::encrypt($getPembayaranRumah->id_formulir)])->with('success', 'Pembayaran Rumah '.$getRumah->blok.'-'.$getRumah->nomor.' berhasil di simpan');
+            return redirect()->route('listPembayaranRumah.admin', ['projek' => $getProjek->nama_projek, 'id' => Crypt::encrypt($getPembayaranRumah->id_formulir)])->with('success', 'Pembayaran Rumah ' . $getRumah->blok . '-' . $getRumah->nomor . ' berhasil di simpan');
         } else {
             return redirect('/login');
         }
@@ -209,11 +211,10 @@ class C_PembayaranRumah extends Controller
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
-                'user_menu.id_kategori' => $user->id_kategori
+                'user_menu.id_kategori' => $user->id_kategori,
             ])->collect();
             // dd($getUserMenu);
             $foundMatchingMenu = false;
-
 
             foreach ($getUserMenu as $menu) {
                 if ($menu->url_menu == request()->segment(1)) {
@@ -269,8 +270,8 @@ class C_PembayaranRumah extends Controller
                     $dataUpdate
                 );
 
-            return redirect('/list-pembayaran-rumah-admin/'.$getProjek->nama_projek.'/'.
-            Crypt::encrypt($dtPembayaran->id_formulir)
+            return redirect('/list-pembayaran-rumah-admin/' . $getProjek->nama_projek . '/' .
+                Crypt::encrypt($dtPembayaran->id_formulir)
             )->with('success', 'Jumlah pembayaran rumah telah terupdate');
         } else {
             return redirect('/login');

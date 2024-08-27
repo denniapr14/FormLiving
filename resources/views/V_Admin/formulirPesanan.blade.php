@@ -98,6 +98,9 @@
                                                     class="btn btn-outline-info">
                                                     <i class="fas fa-pencil-alt    "></i>
                                                 </a>
+                                                <a href="{{ route('listPembayaranRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}" class="btn btn-outline-info">
+                                                    <i class="fas fa-edit    ">Pembayaran</i>
+                                                </a>
                                             @else
                                             @endif
 
@@ -180,6 +183,9 @@
                                                         <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"
                                                             class="btn btn-outline-info">
                                                             <i class="fas fa-edit    "></i>
+                                                        </a>
+                                                        <a href="{{ route('listPembayaranRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}">
+                                                            <i class="fas fa-edit    ">Pembayaran</i>
                                                         </a>
                                                     @else
                                                     @endif

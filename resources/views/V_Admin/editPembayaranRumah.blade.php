@@ -105,7 +105,7 @@
         <div class="container-fluid ">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ url()->previous() }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="bi bi-arrow-left"></i></a> &nbsp;
+                    <a href="{{ url()->previous() }}" class="btn btn-outline-primary" style="height: 40px; width: 50px"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a> &nbsp;
                     Ubah Pembayaran Rumah
                 </div>
                 <div class="card-body">

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -18,8 +17,10 @@ use App\Models\Rumah;
 use App\Models\Subkon;
 use App\Models\JobList;
 use App\Models\Checklist;
+use App\Models\UserPelanggan;
+use App\Models\PelangganProjek;
 
-class C_Checklist extends Controller
+class C_ChecklistPelanggan extends Controller
 {
     //
 
@@ -33,6 +34,8 @@ class C_Checklist extends Controller
     public $checklist;
     public $subkon;
     public $joblist;
+    public $userPelanggan;
+    public $pelangganProjek;
     public function __construct()
     {
         $this->job = new Job();
@@ -45,126 +48,37 @@ class C_Checklist extends Controller
         $this->subkon = new Subkon();
         $this->joblist = new JobList();
         $this->checklist = new Checklist();
+        $this->userPelanggan = new UserPelanggan;
+        $this->pelangganProjek = new PelangganProjek;
     }
 
-    public function getChecklist($projek)
+    public function index($projek)
     {
 
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        //
-        $getJob = $this->job->getJobWhereGroupBy(
-            '*',
-            ['id_projek' => $getProjek->id_projek],
-            'termin_job',
-            'termin_job',
-            'asc'
-        )->collect();
 
+        if (session()->has('guest')) {
+            $userPelanggan = $this->userPelanggan->firstUserPelangganWhere('id_pelanggan', '=', session::get('guest'));
+            $getPelangganProjek = $this->pelangganProjek->getProjectPelangganWhere('user_pelanggan.id_pelanggan','=',$userPelanggan->id_pelanggan);
+            $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+            // dd("INI GUESTTTTTT");
+// dd($userPelanggan);
 
-        // dd($getChecklist);
-        // $getJob = $getJob->where('id_projek',$getProjek->id_projek)->groupBy('termin_job')->sortBy('termin_job');
-        // dd($getJob);
-        if (session()->has('user')) {
-
-            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
-
-            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
-            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-                'user_menu.status_um' => 'aktif',
-                'user_menu.id_kategori' => $user->id_kategori
-            ])->collect();
-            // dd($getUserMenu);
-            $foundMatchingMenu = false;
-
-            $getChecklist = "";
-
-            if ($user->kategori == "Pengawas") {
-                $getChecklist = DB::table('checklist as a')
-                    ->selectRaw("SUM(a.subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*,
-        IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
-        IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
-                    ->where([
-                        ['r.id_projek', '=', $getProjek->id_projek],
-
-                        ['a.id_pengawas1', '=', $user->id_user_admin],
-
-                    ])
-                    ->orWhere(
-                        [
-                            ['r.id_projek', '=', $getProjek->id_projek],
-
-                            ['a.id_pengawas2', '=', $user->id_user_admin],
-
-                        ]
-                    ) // Add this condition
-                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
-                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
-                    ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
-                    ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
-                    ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
-                    ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
-
-                    ->orderByRaw('jl.termin_jl AND a.id_checklist DESC')
-                    ->groupBy('r.id_rumah')
-                    ->get();
-                // dd($getChecklist);
-            } else {
-                $getChecklist = DB::table('checklist as a')
-                    ->selectRaw("SUM(subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*,
-        IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
-        IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
-                    ->where([
-                        'r.id_projek' => $getProjek->id_projek,
-
-                    ])
-                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
-                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
-                    ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
-                    ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
-                    ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
-                    ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
-
-                    ->orderByRaw('jl.termin_jl AND a.id_checklist DESC')
-                    ->groupBy('r.id_rumah')
-                    ->get();
-            }
-
-            $getRumah = $this->rumah->getRumahProjekWhereAll('status', '=', 'Sold');
-            $getSubkon = $this->subkon->getSubkon();
-            $getPengawas = $this->userAdmin->getUserAdminWhere('*', ['ktgr_admin.kategori' => "Pengawas"]);
-            // dd($getPengawas);
-
-            foreach ($getUserMenu as $menu) {
-                if ($menu->url_menu == request()->segment(1)) {
-                    $foundMatchingMenu = true;
-                    break;
-                }
-            }
-            if (!$foundMatchingMenu) {
-                return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
-            }
-
-
-            return view(
-                'V_Admin.checklist',
+            return view('V_Guest.checklist',
                 compact(
-                    'user',
-                    'projekUser',
-                    'getJob',
-                    'getProjek',
-                    'getUserMenu',
-                    'getChecklist',
-                    'getRumah',
-                    'getSubkon',
-                    'getPengawas'
+                   'userPelanggan',
+                   'getProjek',
+                   'getPelangganProjek'
+
 
                 )
             );
-        } else {
-            return redirect('/login');
         }
-    }
+        // CHECK AS GUEST
 
+
+            return redirect('/login');
+
+    }
     function addChecklistAction(Request $request, $projek)
     {
         $getChecklist = $this->checklist->getChecklistWhere(['checklist.id_rumah' => $request->rumah]);

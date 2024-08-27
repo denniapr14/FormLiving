@@ -12,6 +12,7 @@ use App\Models\UserAdmin;
 use App\Models\UserMenu;
 use App\Models\UserProjek;
 use App\Models\FormulirPesanan;
+use App\Models\UserPelanggan;
 
 // =======================
 use Illuminate\Support\Facades\Http;
@@ -27,6 +28,7 @@ class C_Dashboard extends Controller
     public $userProject;
     public $projek;
     public $userMenu;
+    public $userPelanggan;
     public function __construct()
     {
         $this->rumah = new Rumah;
@@ -35,6 +37,7 @@ class C_Dashboard extends Controller
         $this->userProject = new UserProjek;
         $this->projek = new Projek;
         $this->userMenu = new UserMenu;
+        $this->userPelanggan = new UserPelanggan;
     }
 
     public function index($projek)
@@ -53,7 +56,7 @@ class C_Dashboard extends Controller
         // }
         // dd(Session::get('selectedProjeks',)[0]);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        
+
         $fp = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
             'formulir_pesanan.status_fp',
             '!=',
@@ -249,10 +252,15 @@ class C_Dashboard extends Controller
 
                 )
             );
-        } else {
+        }else{
 
             return redirect('/login');
         }
+
+        // CHECK AS GUEST
+
+
+
     }
 
     function changeProjek($projek)

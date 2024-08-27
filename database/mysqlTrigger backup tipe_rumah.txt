@@ -1,0 +1,107 @@
+BEGIN
+    DECLARE max_harga DOUBLE;
+    DECLARE max_tidur INT;
+    DECLARE max_mandi INT;
+    DECLARE var_max_harga DOUBLE;
+    DECLARE var_max_tidur INT;
+    DECLARE var_max_mandi INT;
+
+    -- Corrected SELECT INTO statement
+    SELECT max_harga_rumah, max_kamar_tidur, max_kamar_mandi
+    INTO var_max_harga, var_max_tidur, var_max_mandi
+    FROM var_tipe_rumah
+    WHERE id_var_tipe_rumah = 1;
+
+    -- Check and update max_harga
+    IF NEW.harga_tr > var_max_harga THEN
+        SET max_harga = NEW.harga_tr;
+
+        -- Update the var_tipe_rumah table with the new max_harga
+        UPDATE var_tipe_rumah
+        SET max_harga_rumah = max_harga
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+
+    -- Check and update max_tidur
+    IF NEW.kmr_tidur_tr > var_max_tidur THEN
+        SET max_tidur = NEW.kmr_tidur_tr;
+
+        -- Update the var_tipe_rumah table with the new max_kamar_tidur
+        UPDATE var_tipe_rumah
+        SET max_kamar_tidur = max_tidur
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+
+    -- Check and update max_mandi
+    IF NEW.kmr_mandi_tr > var_max_mandi THEN
+        SET max_mandi = NEW.kmr_mandi_tr;
+
+        -- Update the var_tipe_rumah table with the new max_kamar_mandi
+        UPDATE var_tipe_rumah
+        SET max_kamar_mandi = max_mandi
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+
+    -- Check and update max_harga if NEW.harga_tr is greater than or equal to var_max_harga
+    IF old.harga_tr >= var_max_harga THEN
+
+        SET max_harga = var_max_harga;
+
+        -- Update the var_tipe_rumah table with the new max_harga
+        UPDATE var_tipe_rumah
+        SET max_harga_rumah = max_harga
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+
+    -- Check and update max_tidur if NEW.kmr_tidur_tr is greater than or equal to var_max_tidur
+    IF old.kmr_tidur_tr >= var_max_tidur THEN
+        SET max_tidur = var_max_tidur;
+
+        -- Update the var_tipe_rumah table with the new max_kamar_tidur
+        UPDATE var_tipe_rumah
+        SET max_kamar_tidur = max_tidur
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+
+    -- Check and update max_mandi if NEW.kmr_mandi_tr is greater than or equal to var_max_mandi
+    IF old.kmr_mandi_tr >= var_max_mandi THEN
+        SET max_mandi = var_max_mandi;
+
+        -- Update the var_tipe_rumah table with the new max_kamar_mandi
+        UPDATE var_tipe_rumah
+        SET max_kamar_mandi = max_mandi
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+
+	IF old.harga_tr = var_max_harga THEN
+        SELECT MAX(harga_tr) INTO var_max_harga FROM tipe_rumah;
+        SET max_harga = var_max_harga;
+
+        -- Update the var_tipe_rumah table with the new max_harga
+        UPDATE var_tipe_rumah
+        SET max_harga_rumah = max_harga
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+
+    -- Check and update max_tidur if NEW.kmr_tidur_tr is greater than or equal to var_max_tidur
+    IF old.kmr_tidur_tr = var_max_tidur THEN
+        SELECT MAX(kmr_tidur_tr) INTO var_max_tidur FROM tipe_rumah;
+        SET max_tidur = var_max_tidur;
+
+        -- Update the var_tipe_rumah table with the new max_kamar_tidur
+        UPDATE var_tipe_rumah
+        SET max_kamar_tidur = max_tidur
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+
+    -- Check and update max_mandi if NEW.kmr_mandi_tr is greater than or equal to var_max_mandi
+    IF old.kmr_mandi_tr = var_max_mandi THEN
+        SELECT MAX(kmr_mandi_tr) INTO var_max_mandi FROM tipe_rumah;
+        SET max_mandi = var_max_mandi;
+
+        -- Update the var_tipe_rumah table with the new max_kamar_mandi
+        UPDATE var_tipe_rumah
+        SET max_kamar_mandi = max_mandi
+        WHERE id_var_tipe_rumah = 1;
+    END IF;
+END

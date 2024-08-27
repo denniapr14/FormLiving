@@ -95,7 +95,10 @@
                             echo 'Good night';
                         }
                         ?>
-                    , {{ $user->nama_ktgr }}
+                    , @if (!empty($user))
+                    {{ $user->nama_ktgr }}
+                    @endif
+
                 </h3>
 
             </div><!-- End Page Title -->

@@ -116,8 +116,7 @@ class C_SuratPemesananRumah extends Controller
                 );
             }
 
-            return view(
-                'V_Admin.formulirPesanan',
+            return view('V_Admin.formulirPesanan',
                 compact(
                     'user',
                     'projekUser',
@@ -364,8 +363,8 @@ class C_SuratPemesananRumah extends Controller
             $dataHarga = array([
                 'hargaPricelist' => $fpJadi->harga_awal,
                 'hargaDiskon' => $fpJadi->total_diskon,
-                'hargaNetto' => $fpJadi->harga_netto,
-                'hargaPPN' => $fpJadi->harga_ppn,
+                'hargaNetto' => $fpJadi->harga_netto_kkpr,
+                'hargaPPN' => $fpJadi->harga_ppn_kkpr,
                 'hargaTotal' => $fpJadi->total_harga
             ]);
         } else {
@@ -378,7 +377,7 @@ class C_SuratPemesananRumah extends Controller
                 'hargaTotal' => $fpJadi->total_harga
             ]);
         }
-        //function cetak 
+        //function cetak
 
         $pdf = PDF::loadView('pdf.printSPR-dashboard', ['fp' => $fpJadi, 'dtPembayaran' => $dataPembayaran, 'promo' => $promo, 'dataHarga' => $dataHarga]);
         $pdf->setPaper('F4', 'potrait');

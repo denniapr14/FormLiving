@@ -41,6 +41,16 @@ use App\Http\Controllers\Ceo_Dashboard;
 // ADMIN
 use App\Http\Controllers\Direktur_Dashboard;
 use App\Http\Controllers\Home;
+
+
+
+// PELANGGAN
+use App\Http\Controllers\C_DashboardPelanggan;
+use App\Http\Controllers\C_PembayaranPelanggan;
+use App\Http\Controllers\C_ChecklistPelanggan;
+use App\Http\Controllers\C_Profile;
+
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -343,6 +353,7 @@ Route::post('/ubah-surat-pemesanan-rumah/action/{projek}/{id}', [C_SuratPemesana
 route::post('/ubah-promo-surat-pemesanan-rumah/action/{projek}/{id}', [C_SuratPemesananRumah::class, 'editPromoSuratPemesananRumahAction'])->name('editPromoSuratPemesananRumah.admin');
 Route::get('/cetak-surat-pemesanan-rumah/{id}', [C_SuratPemesananRumah::class, 'cetakSuratPemesananRumah'])->name('cetakSuratPemesananRumah.admin');
 
+Route::get('/list-pembayaran-rumah-admin/{projek}/{id}',[C_PembayaranRumah::class,'listPembayaranRumah'])->name('listPembayaranRumah.admin');
 Route::get('/ubah-pembayaran-rumah-admin/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumah'])->name('editPembayaranRumah.admin');
 Route::post('/ubah-pembayaran-rumah-admin/action/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumahAction'])->name('editPembayaranRumahAction.admin');
 
@@ -463,6 +474,7 @@ route::get('/addCicilanSPK/{projek}/{id_spk}', [C_CicilanSPK::class, 'addCicilan
 route::post('/addCicilanSPK/action/{projek}/{id_spk}', [C_CicilanSPK::class, 'addCicilanSPKAction'])->name('addCicilanSPKAction.admin');
 route::get('/editCicilanSPK/{projek}/{id_cicilan_spk}', [C_CicilanSPK::class, 'editCicilanSPK'])->name('editCicilanSPK.admin');
 route::post('/editCicilanSPK/action/{projek}/{id_cicilan_spk}', [C_CicilanSPK::class, 'editCicilanSPKAction'])->name('editCicilanSPKAction.admin');
+
 route::get('/pembayaranCicilanSPK/{projek}/{id_cicilan_spk}', [C_CicilanSPK::class, 'pembayaranCicilanSPK'])->name('pembayaranCicilanSPK.admin');
 route::post('/PembayaranCicilanSPK/action/{projek}/{id_cicilan_spk}', [C_CicilanSPK::class, 'pembayaranCicilanSPKAction'])->name('pembayaranCicilanAction.admin');
 route::post('/editTagihan/action/{projek}/{id_cicilan_spk}', [C_CicilanSPK::class, 'editTagihanAction'])->name('editTagihanAction.admin');
@@ -501,3 +513,21 @@ Route::get('/buat-harian-taman-REM/{projek}', [C_TamanREM::class, 'addHarianTama
 route::post('/buat-harian-taman-REM/action/{projek}', [C_TamanREM::class, 'addHarianTamanREMAction'])->name('addHarianTamanREMAction.admin');
 
 route::get('/pesandong/{param}', [LaporanRem::class, 'test_message'])->name('test.message');
+
+
+// USER PELANGGAN
+route::get('/dashboard-guest/{projek}',[C_DashboardPelanggan::class,'index'])->name('dashboard.guest');
+
+// USER PELANGGAN PEMBAYARAN
+route::get('/pembayaran-guest/{projek}',[C_PembayaranPelanggan::class ,'index'])->name('pembayaran.guest');
+
+// USER CHECKLIST
+route::get('/checklist-guest/{projek}',[C_ChecklistPelanggan::class,'index'])->name('checklist.guest');
+
+
+// USER PELANGGAN PROFILE
+Route::get('/change-password-guest/{projek}',[C_Profile::class,'ChangePasswordUserPelanggan'])->name('changePassword.guest');
+Route::post('/change-password-guest-action/{projek}',[C_Profile::class,'ChangePasswordUserPelangganAction'])->name('changePasswordAction.guest');
+
+Route::get('/edit-profile-guest/{projek}',[C_Profile::class,'editUserPelanggan'])->name('editProfile.guest');
+Route::post('/edit-profile-guest-action/{projek}',[C_Profile::class,'editUserPelangganAction'])->name('editUserPelangganAction.guest');

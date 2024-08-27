@@ -51,11 +51,16 @@ class UserPelanggan extends Authenticatable
         ->get();
     }
     function firstUserPelangganWhere($where, $eq, $value){
-        return UserAdmin::where($where, $eq, $value)
+        return UserPelanggan::where($where, $eq, $value)
         ->first();
     }
     function insertGetIDUserPelanggan($data) {
         return UserPelanggan::insertGetId($data);
+
+    }
+    function updateUserPelanggan($data, $where) {
+        return UserPelanggan::where($where)
+        ->update($data);
 
     }
 }

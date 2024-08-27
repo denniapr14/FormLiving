@@ -6,6 +6,7 @@ use App\Models\UserAdmin;
 // Controller
 // =======================
 use App\Models\UserProjek;
+use App\Models\PelangganProjek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,10 +18,12 @@ class C_Login extends Controller
 {
     public $userAdmin;
     public $userProjek;
+    public $pelangganProjek;
     public function __construct()
     {
         $this->userAdmin = new UserAdmin();
         $this->userProjek = new UserProjek();
+        $this->pelangganProjek = new PelangganProjek();
     }
     public function Login()
     {
@@ -118,9 +121,10 @@ class C_Login extends Controller
         if (!empty($userPelanggan)) {
             if (Auth::guard('guest')->attempt(['username_plgn' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
                 Session::put('guest', $userPelanggan->id_pelanggan);
-
-                return redirect('/Greenland')
-
+                $getPelangganProjek = $this->pelangganProjek->firstProjectPelangganWhere(['user_pelanggan.id_pelanggan'=>$userPelanggan->id_pelanggan]);
+                Session::push('selectedProjeks', $getPelangganProjek->nama_projek);
+                // dd($getPelangganProjek);
+                return redirect('/dashboard-guest/'.$getPelangganProjek->nama_projek)->with('success','')
                     ->with('success', 'Anda berhasil masuk!');
             }
         }
