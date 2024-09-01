@@ -26,18 +26,23 @@
                                     </center>
                                 </h6>
                                 <h3>
+                                    >
+                                @if ($getBillMonthNow)
                                     <center>
-                                        <h4>{{ $getBillMonthNow->detail_pr }}</h4>
+                                        <h4>{{ ($getBillMonthNow->detail_pr) }}</h4>
                                         Rp .{{ rupiah($getBillMonthNow->harga_pr) }}
                                         <br>
                                         @if ($getBillMonthNow->sisa_pr == 0)
                                             <i class="fa fa-check" class="text-success" aria-hidden="true"></i>
                                         @else
-                                            <small class="text-danger" style="font-size: 16px">- Rp
-                                                .{{ rupiah($getBillMonthNow->sisa_pr) }}</small>
+                                            <small class="text-danger" style="font-size: 16px">- Rp .{{ rupiah($getBillMonthNow->sisa_pr) }}</small>
                                         @endif
-
                                     </center>
+                                @else
+                                    <center>
+                                        <h4>Tidak ada tagihan</h4>
+                                    </center>
+                                @endif
                                 </h3>
                             </div>
                             <div class="col-md-6">
@@ -48,18 +53,21 @@
                                     </center>
                                 </h6>
                                 <h3>
-                                    <center>
-                                        <h4>{{ $getBillNextMonth->detail_pr }}</h4>
-                                        Rp .{{ rupiah($getBillNextMonth->harga_pr) }}
-                                        <br>
-                                        @if ($getBillNextMonth->sisa_pr == 0)
-                                            <i class="fa fa-check" class="text-success" aria-hidden="true"></i>
-                                        @else
-                                            <small class="text-danger" style="font-size: 16px">- Rp
-                                                .{{ rupiah($getBillNextMonth->sisa_pr) }}</small>
-                                        @endif
-
-                                    </center>
+                                    @if ($getBillNextMonth)
+                                <center>
+                                    <h4>{{ ($getBillNextMonth->detail_pr) }}</h4>
+                                Rp .{{ rupiah($getBillNextMonth->harga_pr) }}
+                                <br>
+                                @if ($getBillNextMonth->sisa_pr == 0)
+                                    <i class="fa fa-check" class="text-success" aria-hidden="true"></i>
+                                @else
+                                <small class="text-danger" style="font-size: 16px">- Rp .{{ rupiah($getBillNextMonth->sisa_pr) }}</small>
+                                @endif
+                                @else
+                                <center>
+                                    <h4>Tidak ada tagihan</h4>
+                                </center>
+                                    @endif
                                 </h3>
                             </div>
                         </div>

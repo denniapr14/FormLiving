@@ -132,24 +132,45 @@ class C_Profile extends Controller
 
         return redirect('/login');
     }
-    public function editUserPelangganAction($projek){
+    public function editUserPelangganAction(Request $request, $projek){
         if (session()->has('guest')) {
             $userPelanggan = $this->userPelanggan->firstUserPelangganWhere('id_pelanggan', '=', session::get('guest'));
             $getPelangganProjek = $this->pelangganProjek->getProjectPelangganWhere('user_pelanggan.id_pelanggan', '=', $userPelanggan->id_pelanggan);
             $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
+            $dataPelanggan= [
+                'nama_plgn' => $request->nama_plgn,
+                'email_plgn' => $request->email_plgn,
+                'no_telp_plgn' => $request->no_hp_plgn,
+                'alamat_plgn' => $request->alamat_plgn,
+                'no_wa_plgn' => $request->no_wa_plgn,
+                'id_ig_plgn' => $request->id_ig_plgn,
+                'pekerjaan_plgn' => $request->pekerjaan_plgn,
+                'tempat_lahir_plgn' => $request->tempat_lahir_plgn,
+                'tgl_lahir_plgn' => $request->tgl_lahir_plgn,
+                'jenis_kelamin_status' => $request->jenis_kelamin_status,
+                'pekerjaan_plgn' => $request->pekerjaan_plgn,
+                'status_pernikahan_plgn' => $request->status_pernikahan_plgn,
+                'npwp_plgn' => $request->npwp_plgn,
+                'sumber_dana_plgn' => $request->sumber_dana_plgn,
 
-            return view('V_Guest.dashboard',
-                compact(
-                    'userPelanggan',
-                    'getProjek',
-                    'getPelangganProjek',
-                    'getBillMonthNow',
-                    'getBillNextMonth'
+            ];
+
+            DB::table('user_pelanggan')
+            ->where('id_pelanggan', session::get('guest'))
+            ->update($dataPelanggan);
+            return redirect()->back()->with('success','Data pribadi berhasil diubah.');
+            // return view('V_Guest.dashboard',
+            //     compact(
+            //         'userPelanggan',
+            //         'getProjek',
+            //         'getPelangganProjek',
+            //         'getBillMonthNow',
+            //         'getBillNextMonth'
 
 
-                )
-            );
+            //     )
+            // );
         }
         // CHECK AS GUEST
 

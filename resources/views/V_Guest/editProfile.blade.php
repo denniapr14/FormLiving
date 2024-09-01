@@ -54,11 +54,7 @@
                                 <input type="text" class="form-control" id="no_wa_plgn" name="no_wa_plgn"
                                     value="{{ $userPelanggan->no_wa_plgn }}">
                             </div>
-                            <div class="form-group">
-                                <label for="id_line_plgn">ID Line</label>
-                                <input type="text" class="form-control" id="id_line_plgn" name="id_line_plgn"
-                                    value="{{ $userPelanggan->id_line_plgn }}">
-                            </div>
+
                             <div class="form-group">
                                 <label for="id_ig_plgn">ID Instagram</label>
                                 <input type="text" class="form-control" id="id_ig_plgn" name="id_ig_plgn"
@@ -71,8 +67,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="status_pernikahan_plgn">Status Pernikahan</label>
-                                <input type="text" class="form-control" id="status_pernikahan_plgn"
-                                    name="status_pernikahan_plgn" value="{{ $userPelanggan->status_pernikahan_plgn }}">
+                                <select class="form-control" id="status_pernikahan_plgn" name="status_pernikahan_plgn">
+                                    <option value="Menikah" {{ $userPelanggan->status_pernikahan_plgn == 'Menikah' ? 'selected' : '' }}>Menikah</option>
+                                    <option value="Belum Menikah" {{ $userPelanggan->status_pernikahan_plgn == 'Belum Menikah' ? 'selected' : '' }}>Belum Menikah</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="npwp_plgn">NPWP</label>
@@ -96,29 +94,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="jenis_kelamin_status">Jenis Kelamin</label>
-                                <input type="text" class="form-control" id="jenis_kelamin_status"
-                                    name="jenis_kelamin_status" value="{{ $userPelanggan->jenis_kelamin_status }}">
+                                <select class="form-control" id="jenis_kelamin_status" name="jenis_kelamin_status">
+                                    <option value="Laki-Laki" {{ $userPelanggan->jenis_kelamin_status == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki</option>
+                                    <option value="Perempuan" {{ $userPelanggan->jenis_kelamin_status == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                </select>
+
                             </div>
-                            <div class="form-group">
-                                <label for="qr_code_plgn">QR Code</label>
-                                <input type="text" class="form-control" id="qr_code_plgn" name="qr_code_plgn"
-                                    value="{{ $userPelanggan->qr_code_plgn }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="foto_ktp">Foto KTP</label>
-                                <input type="text" class="form-control" id="foto_ktp" name="foto_ktp"
-                                    value="{{ $userPelanggan->foto_ktp }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="kategori_plgn">Kategori</label>
-                                <input type="text" class="form-control" id="kategori_plgn" name="kategori_plgn"
-                                    value="{{ $userPelanggan->kategori_plgn }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="sales_plgn">Sales</label>
-                                <input type="text" class="form-control" id="sales_plgn" name="sales_plgn"
-                                    value="{{ $userPelanggan->sales_plgn }}">
-                            </div>
+
+
+
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
 

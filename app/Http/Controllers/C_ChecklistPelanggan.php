@@ -18,6 +18,7 @@ use App\Models\Subkon;
 use App\Models\JobList;
 use App\Models\Checklist;
 use App\Models\UserPelanggan;
+use App\Models\FormulirPesanan;
 use App\Models\PelangganProjek;
 
 class C_ChecklistPelanggan extends Controller
@@ -36,6 +37,7 @@ class C_ChecklistPelanggan extends Controller
     public $joblist;
     public $userPelanggan;
     public $pelangganProjek;
+    public $formulirPesanan;
     public function __construct()
     {
         $this->job = new Job();
@@ -50,6 +52,7 @@ class C_ChecklistPelanggan extends Controller
         $this->checklist = new Checklist();
         $this->userPelanggan = new UserPelanggan;
         $this->pelangganProjek = new PelangganProjek;
+        $this->formulirPesanan = new FormulirPesanan();
     }
 
     public function index($projek)
@@ -57,17 +60,54 @@ class C_ChecklistPelanggan extends Controller
 
 
         if (session()->has('guest')) {
+
             $userPelanggan = $this->userPelanggan->firstUserPelangganWhere('id_pelanggan', '=', session::get('guest'));
             $getPelangganProjek = $this->pelangganProjek->getProjectPelangganWhere('user_pelanggan.id_pelanggan','=',$userPelanggan->id_pelanggan);
             $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
             // dd("INI GUESTTTTTT");
 // dd($userPelanggan);
+            $getRumah = $this->formulirPesanan->getFormulirPesanan6Join(['id_pelanggan' => $userPelanggan->id_pelanggan]);
+            // dd($getRumah);
+            foreach ($getRumah as $getRumah) {
+                # code...
+                $getChecklist = $this->checklist->countChecklistJoinJoblistJob("*",['id_rumah' => $getRumah->id_rumah])->collect();
 
+                $getChecklistAll = DB::table('checklist as a')
+                ->selectRaw("SUM(subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*,
+    IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
+    IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
+                ->where([
+                    'a.id_rumah' => $getRumah->id_rumah,
+
+                ])
+                ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
+                ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
+                ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
+                ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
+                ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
+                ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
+
+                ->orderByRaw('jl.termin_jl AND a.id_checklist DESC')
+                ->groupBy('r.id_rumah')
+                ->get();
+            }
+
+            $countChecklist = count($getChecklist);
+            $countChecklistDone = $getChecklist->where('status_checklist', 'selesai')->count($getChecklist);
+            // $getChecklistSelesai = $this->checklist->countChecklistJoinJoblistJob('*,Count(*) as TotalDone',['id_rumah' => $getRumah->id_rumah, 'checklist.status_checklist' => 'selesai']);
+            dd($getChecklistAll);
             return view('V_Guest.checklist',
                 compact(
                    'userPelanggan',
                    'getProjek',
-                   'getPelangganProjek'
+                   'getPelangganProjek',
+                     'getRumah',
+                        'getChecklist',
+                        'countChecklist',
+
+                        'countChecklistDone',
+                        'getChecklistAll'
+
 
 
                 )

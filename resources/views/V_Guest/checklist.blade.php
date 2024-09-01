@@ -21,30 +21,28 @@
                             <div class="col-md-6">
                                 <h6>
                                 <center>
-                                    Pembayaran Cicilan
-                                    <br>
-                                    Bulan ini
+                                   Pekerjaan Selesai
                                 </center>
                             </h6>
-                            <h3>
-                                <center>
-                                Rp. 10.000.000
-                            </center>
-                            </h3>
+                                <h3>
+                                    <center>
+                                        {{ $countChecklistDone }}
+                                    </center>
+                                </h3>
+
+
                             </div>
                             <div class="col-md-6">
                                 <h6>
                                     <center>
-                                        Pembayaran Cicilan
-                                    <br>
-                                    Bulan depan
+                                       Semua Pekerjaan
                                     </center>
                                 </h6>
-                                <h3>
-                                    <center>
-                                        Rp. 10.000.000
-                                    </center>
-                                </h3>
+                                    <h3>
+                                        <center>
+                                            {{ $countChecklist }}
+                                        </center>
+                                    </h3>
 
                                </div>
                         </div>
@@ -63,21 +61,26 @@
                         </div>
                         <div class="card-body">
                             <table class="w-100">
-                                <tr>
-                                    <td>1</td>
-                                    <td style="width: "> <div class="card">
-                                        <div class="card w-100">
-
-                                                <h3 class="card-title">Rumah A - 11</h3>
-
-                                            <div class="progress" style="height: 2rem">
-                                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                @foreach($getChecklistAll as $checklist)
+                                    <tr>
+                                        <td></td>
+                                        <td style="width: ">
+                                            <div class="card">
+                                                <div class="card w-100">
+                                                    <h3 class="card-title">{{ $checklist->blok }} - {{ $checklist->nomor }} /{{ $checklist->nama_cluster }}</h3>
+                                                    <div class="progress" style="height: 2rem">
+                                                        <div class="progress-bar" role="progressbar" style="width: {{ $checklist->subbobot }}%;" aria-valuenow="{{ $checklist->subbobot }}" aria-valuemin="0" aria-valuemax="100">{{ $checklist->subbobot }}%</div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </td>
+                                        <td>{{ $checklist->pengawas1 }} <br>
+                                            {{ $checklist->pengawas2 }} <br>
+                                            {{ $checklist->nama_subkon }}
+                                        </td>
 
-                                        </div>
-
-                                    </div></td>
-                                </tr>
+                                    </tr>
+                                @endforeach
                             </table>
 
 

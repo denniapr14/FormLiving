@@ -172,6 +172,13 @@ class FormulirPesanan extends Model
             ->first();
     }
 
+     function getFormulirPesanan6Join($where)
+    {
+        return  FormulirPesanan::select('*')
+            ->where($where )
+
+            ->get();
+    }
     // INSERT
 
     function insertGetIDFormulirPesanan($data) {
