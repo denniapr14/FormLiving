@@ -92,8 +92,120 @@
                                         {{ date('d M Y', strtotime($fp->tgl_input_fp)) }}
                                     </td>
                                     <td>
+                                        <a  class="btn btn-outline-info" data-target="#seeFormulir{{ $fp->id_formulir }}" data-toggle="modal"> <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="modal modal-form fade" id="seeFormulir{{ $fp->id_formulir }}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="order-informationLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"> Formulir Pesanan {{ $fp->blok }}-{{ $fp->nomor }} {{ $fp->nama_plgn }}
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
 
+                                                            <div class="modal-body">
+                                                                <h5>Data Pelanggan</h5>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>Nama</td>
+                                                                        <td>: {{ $fp->nama_plgn }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:30%;">NPWP</td>
+                                                                        <td>: {{ $fp->npwp_plgn }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:30%;">KTP/SIM No.</td>
+                                                                        <td>: {{ $fp->no_ktp_plgn }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Alamat</td>
+                                                                        <td>: {{ $fp->alamat_plgn }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>No. Telepon</td>
+                                                                        <td>: {{ $fp->no_telp_plgn }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Email</td>
+                                                                        <td>: {{ $fp->email_plgn }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tempat & Tgl. Lahir</td>
+                                                                        <td>: {{ $fp->tempat_lahir_plgn }}, {{ tgl_indo(date('Y-m-d', strtotime($fp->tgl_lahir_plgn))) }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Sumber Dana</td>
+                                                                        <td>: {{ $fp->sumber_dana_plgn }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tujuan transaksi</td>
+                                                                        <td>: -</td>
+                                                                    </tr>
+                                                                </table>
+                                                                <br>
+                                                                <h5>Data Rumah dan Tipe Rumah</h5>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>Tipe Unit</td>
+                                                                        <td>: {{ $fp->jenis_tr }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Cluster – Blok</td>
+                                                                        <td>: {{ $fp->blok }} - {{ $fp->nomor }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Luas Tanah</td>
+                                                                        <td>: {{ $fp->luas_tanah }} m2</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Luas Bangunan</td>
+                                                                        <td>: {{ $fp->luas_bangunan_kkpr }} m2</td>
+                                                                    </tr>
+                                                                </table>
+                                                                <br>
+                                                                <h5>Harga</h5>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>DP</td>
+                                                                        <td>: Rp. {{ rupiah($fp->uang_muka ?? 0) }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Harga Pricelist</td>
+                                                                        <td>: Rp. {{ rupiah($fp->harga_awal) }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Diskon</td>
+                                                                        <td>: Rp. {{ rupiah($fp->total_diskon ?? 0) }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Harga Netto</td>
+                                                                        <td>: Rp. {{ rupiah($fp->harga_netto_kkpr ?? 0) }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>PPN (Pajak Pertambahan Nilai)</td>
+                                                                        <td>: Rp. {{ rupiah($fp->harga_ppn_kpr ?? 0) }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>TOTAL</td>
+                                                                        <td>: Rp. {{ rupiah($fp->harga_awal) }}</td>
+                                                                    </tr>
+                                                                </table>
+
+
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                             @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
+
+
                                                 <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"
                                                     class="btn btn-outline-info">
                                                     <i class="fas fa-pencil-alt    "></i>
@@ -101,6 +213,7 @@
                                                 <a href="{{ route('listPembayaranRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}" class="btn btn-outline-info">
                                                     <i class="fas fa-edit    ">Pembayaran</i>
                                                 </a>
+
                                             @else
                                             @endif
 
