@@ -38,10 +38,10 @@ class C_PembayaranRumah extends Controller
     public function listPembayaranRumah($getProjek, $id) {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $getProjek);
         $decryptedID = Crypt::decrypt($id);
-        $getPembayaranRumah = $this->pembayaranRumah->firstPembayaranRumahWhere('*', 'id_pem_rumah', '=', $decryptedID);
+        $getPembayaranRumah = $this->pembayaranRumah->firstPembayaranRumahWhere('*', 'id_formulir', '=', $decryptedID);
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $getPembayaranRumah->id_rumah);
         $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
-
+        
         // $getRincianPembayaran = $this->pembayaranRumah->getPembayaranRumahRincianJoinWhereAll('*', 'pembayaran_rumah.id_pem_rumah', '=', $decryptedID);
         // dd($getPembayaranRumah);
         if (session()->has('user')) {

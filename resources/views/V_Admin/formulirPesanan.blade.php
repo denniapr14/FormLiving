@@ -110,7 +110,7 @@
                                                                 <h5>Data Pelanggan</h5>
                                                                 <table>
                                                                     <tr>
-                                                                        <td>Nama</td>
+                                                                        <td>Nama   </td>
                                                                         <td>: {{ $fp->nama_plgn }}</td>
                                                                     </tr>
                                                                     <tr>
