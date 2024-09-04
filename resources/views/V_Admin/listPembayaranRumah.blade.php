@@ -2,7 +2,7 @@
 
 @extends('flashdata')
 @section('title', 'Form One | Pemesanan')
-@section('pageTitle', 'Pembayaran')
+@section('pageTitle', 'Pembayaran '. $getRumah->blok . ' - ' . $getRumah->nomor )
 @section('back', route('suratPemesananRumah.admin', [$getProjek->nama_projek]))
 @section('breadcrumb', 'Pemesanan')
 @section('breadcrumb2', 'Pembayaran')
@@ -14,7 +14,7 @@
     <div class="card-header">
         <a href="{{ route('suratPemesananRumah.admin', $getProjek->nama_projek) }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="fa fa-arrow-left"></i></a> &nbsp;
        JADWAL PEMBAYARAN
-            ANGSURAN {{ $getRumah->blok }} - {{ $getRumah->nomor }}
+            ANGSURAN
     </div>
 
 
