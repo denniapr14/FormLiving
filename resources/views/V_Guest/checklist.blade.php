@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Informasi Pembayaran</h3>
+                        <h3 class="card-title">Informasi Checklist</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -61,26 +61,33 @@
                         </div>
                         <div class="card-body">
                             <table class="w-100">
-                                @foreach($getChecklistAll as $checklist)
-                                    <tr>
-                                        <td></td>
-                                        <td style="width: ">
-                                            <div class="card">
-                                                <div class="card w-100">
-                                                    <h3 class="card-title">{{ $checklist->blok }} - {{ $checklist->nomor }} /{{ $checklist->nama_cluster }}</h3>
-                                                    <div class="progress" style="height: 2rem">
-                                                        <div class="progress-bar" role="progressbar" style="width: {{ $checklist->subbobot }}%;" aria-valuenow="{{ $checklist->subbobot }}" aria-valuemin="0" aria-valuemax="100">{{ $checklist->subbobot }}%</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>{{ $checklist->pengawas1 }} <br>
-                                            {{ $checklist->pengawas2 }} <br>
-                                            {{ $checklist->nama_subkon }}
-                                        </td>
+                               @if (!empty($getChecklistAll))
+                               @foreach($getChecklistAll as $checklist)
+                               <tr>
+                                   <td></td>
+                                   <td style="width: ">
+                                       <div class="card">
+                                           <div class="card w-100">
+                                               <h3 class="card-title">{{ $checklist->blok }} - {{ $checklist->nomor }} /{{ $checklist->nama_cluster }}</h3>
+                                               <div class="progress" style="height: 2rem">
+                                                   <div class="progress-bar" role="progressbar" style="width: {{ $checklist->percentase }}%;" aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0" aria-valuemax="100">{{ $checklist->percentase }}%</div>
+                                               </div>
+                                               <br>
+                                               <h5>Pengawas 1 : {{ $checklist->pengawas1 }}</h5>
+                                                <h5>Pengawas 2 : {{ $checklist->pengawas2 }} </h5>
+                                                <h5>Subkon :  {{ $checklist->nama_subkon }}</h5>
+                                              
+                                           </div>
+                                       </div>
+                                   </td>
+                                   
 
-                                    </tr>
-                                @endforeach
+                               </tr>
+                           @endforeach
+                           @else
+                               <h2>Anda Tidak Memiliki Rumah</h2>
+                               @endif
+                              
                             </table>
 
 

@@ -12,13 +12,13 @@
 
    <div class="card-body">
     <div class="card-header">
-        <a href="http://127.0.0.1:8000/promo-admin/Greenland" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="fa fa-arrow-left"></i></a> &nbsp;
+        <a href="{{ route('suratPemesananRumah.admin', $getProjek->nama_projek) }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="fa fa-arrow-left"></i></a> &nbsp;
        JADWAL PEMBAYARAN
             ANGSURAN
     </div>
 
 
-    <table class="table table-responsive" style="width: 100%">
+    <table class="table table-responsive-lg" style="width: 100%">
         <thead class="">
             <tr>
                 <th>No.</th>
@@ -31,8 +31,8 @@
         <tbody>
             <?php $no = 1; ?>
             @foreach ($getPembayaranRumah as $dtpem)
-            <tr>
-                <td>{{ $no }}</td>
+            <tr >
+                <td style="width: 10px">{{ $no }}</td>
                 <td>{{ $dtpem->detail_pr }}</td>
                 <td>
                     @if ($dtpem->tgl_pr != '0000-00-00')

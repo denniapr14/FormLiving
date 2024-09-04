@@ -91,11 +91,18 @@ class C_ChecklistPelanggan extends Controller
                 ->groupBy('r.id_rumah')
                 ->get();
             }
-
-            $countChecklist = count($getChecklist);
-            $countChecklistDone = $getChecklist->where('status_checklist', 'selesai')->count($getChecklist);
-            // $getChecklistSelesai = $this->checklist->countChecklistJoinJoblistJob('*,Count(*) as TotalDone',['id_rumah' => $getRumah->id_rumah, 'checklist.status_checklist' => 'selesai']);
-            dd($getChecklistAll);
+            if (!empty($getChecklist) && !empty($getChecklistAll)) {
+                # code...
+                $countChecklist = count($getChecklist);
+                $countChecklistDone = $getChecklist->where('status_checklist', 'selesai')->count($getChecklist);
+                // $getChecklistSelesai = $this->checklist->countChecklistJoinJoblistJob('*,Count(*) as TotalDone',['id_rumah' => $getRumah->id_rumah, 'checklist.status_checklist' => 'selesai']);
+                // dd($getChecklistAll);
+            }else{
+                $getChecklist="";
+                $countChecklist="";
+                $countChecklistDone="";
+                $getChecklistAll="";
+            }
             return view('V_Guest.checklist',
                 compact(
                    'userPelanggan',

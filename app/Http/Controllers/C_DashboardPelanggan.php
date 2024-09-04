@@ -15,8 +15,10 @@ use App\Models\FormulirPesanan;
 use App\Models\UserPelanggan;
 use App\Models\PelangganProjek;
 use App\Models\PembayaranRumah;
+use App\Models\Checklist;
 
 // =======================
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -33,6 +35,7 @@ class C_DashboardPelanggan extends Controller
     public $userPelanggan;
     public $pelangganProjek;
     public $pembayaranRumah;
+    public $checklist;
     public function __construct()
     {
         $this->rumah = new Rumah;
@@ -44,6 +47,7 @@ class C_DashboardPelanggan extends Controller
         $this->userPelanggan = new UserPelanggan;
         $this->pelangganProjek = new PelangganProjek;
         $this->pembayaranRumah = new PembayaranRumah;
+        $this->checklist = new Checklist();
     }
 
     public function index($projek)
@@ -73,7 +77,43 @@ class C_DashboardPelanggan extends Controller
                 'id_pelanggan' => $userPelanggan->id_pelanggan
             ], 'tgl_pr', now()->addMonth()->month, 'tgl_pr', now()->addMonth()->year);
             // Query for the next month and year
+            $getRumah = $this->formulirPesanan->getFormulirPesanan6Join(['id_pelanggan' => $userPelanggan->id_pelanggan]);
+            // dd($getRumah);
+            foreach ($getRumah as $getRumah) {
+                # code...
+                $getChecklist = $this->checklist->countChecklistJoinJoblistJob("*",['id_rumah' => $getRumah->id_rumah])->collect();
 
+                $getChecklistAll = DB::table('checklist as a')
+                ->selectRaw("SUM(subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*,
+    IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
+    IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
+                ->where([
+                    'a.id_rumah' => $getRumah->id_rumah,
+
+                ])
+                ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
+                ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
+                ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
+                ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
+                ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
+                ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
+
+                ->orderByRaw('jl.termin_jl AND a.id_checklist DESC')
+                ->groupBy('r.id_rumah')
+                ->get();
+            }
+            if (!empty($getChecklist) && !empty($getChecklistAll)) {
+                # code...
+                $countChecklist = count($getChecklist);
+                $countChecklistDone = $getChecklist->where('status_checklist', 'selesai')->count($getChecklist);
+                // $getChecklistSelesai = $this->checklist->countChecklistJoinJoblistJob('*,Count(*) as TotalDone',['id_rumah' => $getRumah->id_rumah, 'checklist.status_checklist' => 'selesai']);
+                // dd($getChecklistAll);
+            }else{
+                $getChecklist="";
+                $countChecklist="";
+                $countChecklistDone="";
+                $getChecklistAll="";
+            }
 
 
             // dd($getBillMonthNow);
@@ -84,7 +124,10 @@ class C_DashboardPelanggan extends Controller
                     'getProjek',
                     'getPelangganProjek',
                     'getBillMonthNow',
-                    'getBillNextMonth'
+                    'getBillNextMonth',
+                    'getChecklistAll',
+                    'countChecklist',
+                    'countChecklistDone'
 
 
                 )

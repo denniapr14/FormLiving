@@ -175,7 +175,8 @@ class C_SuratPemesananRumah extends Controller
                     'hargaDiskon' => $getFormulirPesanan->total_diskon,
                     'hargaNetto' => $getFormulirPesanan->harga_netto,
                     'hargaPPN' => $getFormulirPesanan->harga_ppn,
-                    'hargaTotal' => $getFormulirPesanan->total_harga
+                    'hargaTotal' => $getFormulirPesanan->total_harga,
+                    'hargaBPHTB'    => $getFormulirPesanan->harga_bphtb
                 ]);
             } else {
                 // Adjust these values based on your requirements
@@ -184,7 +185,8 @@ class C_SuratPemesananRumah extends Controller
                     'hargaDiskon' => $getFormulirPesanan->total_diskon,
                     'hargaNetto' => $getFormulirPesanan->harga_netto,
                     'hargaPPN' => $getFormulirPesanan->harga_ppn,
-                    'hargaTotal' => $getFormulirPesanan->total_harga
+                    'hargaTotal' => $getFormulirPesanan->total_harga,
+                    'hargaBPHTB'    => $getFormulirPesanan->harga_bphtb
                 ]);
             }
 
@@ -285,7 +287,13 @@ class C_SuratPemesananRumah extends Controller
             }
 
             if ($user->kategori == "AdminAccounting") {
+                $dataKKPR = [
+                    'total_diskon' => $request->hargaDiskon,
+                    'harga_netto'  => $request->hargaNetto,
+                    'harga_bphtb' => $request->hargaBPHTB
+                ];
                 $dataUpdate = [
+                    
                     'no_fp' => $request->nofp . $request->nofp2,
                     'status_acc_fp'   => "accept",
                     'tgl_acc_fp'  => date('d-m-y h:m:s'),
@@ -315,7 +323,9 @@ class C_SuratPemesananRumah extends Controller
                     ->where('id_rumah', $getFormulirPesanan->id_rumah)
                     ->update($dataRumah);
             }
-
+            DB::table('kalkulator_kpr')
+            ->where('id_formulir', $decryptedID)
+            ->update($dataKKPR);
             DB::table('formulir_pesanan')
                 ->where('id_formulir', $decryptedID)
                 ->update($dataUpdate);

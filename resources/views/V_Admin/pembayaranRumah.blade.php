@@ -117,7 +117,7 @@
                         <div class="card">
                             <h5 class="card-header">Rincian Pembayaran</h5>
                             <div class="card-body">
-                                <table class="table" id="dtPembayaran">
+                                <table class="table" id="dtPembayaran" style="width: 100%">
                                     <thead>
                                         <tr>
                                             <th>Nominal</th>

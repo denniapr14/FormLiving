@@ -25,12 +25,12 @@
                                         Bulan ini
                                     </center>
                                 </h6>
-                                <h3>
-                                    >
+                                
+                                    
                                 @if ($getBillMonthNow)
                                     <center>
                                         <h4>{{ ($getBillMonthNow->detail_pr) }}</h4>
-                                        Rp .{{ rupiah($getBillMonthNow->harga_pr) }}
+                                        Rp {{ rupiah($getBillMonthNow->harga_pr) }}
                                         <br>
                                         @if ($getBillMonthNow->sisa_pr == 0)
                                             <i class="fa fa-check" class="text-success" aria-hidden="true"></i>
@@ -43,7 +43,7 @@
                                         <h4>Tidak ada tagihan</h4>
                                     </center>
                                 @endif
-                                </h3>
+                                
                             </div>
                             <div class="col-md-6">
                                 <h6 class="">
@@ -52,11 +52,11 @@
                                         Bulan Depan
                                     </center>
                                 </h6>
-                                <h3>
+                                
                                     @if ($getBillNextMonth)
                                 <center>
                                     <h4>{{ ($getBillNextMonth->detail_pr) }}</h4>
-                                Rp .{{ rupiah($getBillNextMonth->harga_pr) }}
+                                Rp {{ rupiah($getBillNextMonth->harga_pr) }}
                                 <br>
                                 @if ($getBillNextMonth->sisa_pr == 0)
                                     <i class="fa fa-check" class="text-success" aria-hidden="true"></i>
@@ -68,7 +68,7 @@
                                     <h4>Tidak ada tagihan</h4>
                                 </center>
                                     @endif
-                                </h3>
+                                
                             </div>
                         </div>
                     </div>

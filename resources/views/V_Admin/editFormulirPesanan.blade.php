@@ -473,7 +473,13 @@
                                         <td style="width:86pt">
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($price['hargaPricelist']) }},-</p>
+                                                @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
+                                                    
+                                                <input type="number" name="hargaPricelist" class="form-control" value="{{ $price['hargaPricelist'] }}">
+                                                @else
+                                                    {{ rupiah($price['hargaPricelist']) }}
+                                                @endif
+                                                </p>
                                         </td>
                                     </tr>
                                     <tr style="height:14pt">
@@ -495,9 +501,22 @@
 
                                                 @if (!empty($price))
                                                 @if ($price['hargaDiskon'] = 0)
-                                                0,-
+                                                @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
+                                                    
+                                                <input type="number" name="hargaDiskon" class="form-control" value="0">
                                                 @else
-                                                {{ number_format($price['hargaDiskon'], 2) }}
+                                                    0,-
+                                                @endif
+                                                
+                                                @else
+                                                @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
+                                                    
+                                                
+                                                <input type="number" name="hargaDiskon" class="form-control" value="{{ $price['hargaDiskon'] }}">
+                                                @else
+                                                    0,-
+                                                @endif
+                                                {{-- {{ number_format($price['hargaDiskon'], 2) }} --}}
                                                 @endif
                                             </p>
                                             @else
@@ -522,7 +541,15 @@
                                         <td style="width:86pt">
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->total_harga) }},-</p>
+                                                @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
+                                                    
+                                                
+                                                <input type="number" name="hargaNetto" class="form-control" value="{{ $getFormulirPesanan->total_harga}}">
+                                                @else
+                                                    {{ rupiah($getFormulirPesanan->total_harga) }}
+                                                @endif
+                                                
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr style="height:16pt">
@@ -542,7 +569,39 @@
                                         <td style="width:86pt">
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
-                                                {{ number_format($price['hargaPPN'], 2) }}
+                                                @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
+                                                    
+                                                
+                                                 <input type="number" name="hargaPPN" class="form-control" value="{{ $price['hargaPPN']}}">
+                                                @else
+                                                    {{ number_format($price['hargaPPN'], 2) }}
+                                                @endif
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:16pt">
+                                        <td style="width:215pt">
+                                            <p class="s2"
+                                                style="padding-left: 2pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                                e.
+                                                BPHTB</p>
+                                        </td>
+                                        <td style="width:29pt">
+                                            <p class="s2"
+                                                style="padding-left: 3pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                                                Rp.
+                                            </p>
+                                        </td>
+                                        <td style="width:86pt">
+                                            <p class="s2"
+                                                style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
+                                                @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
+                                                    
+                                                
+                                                 <input type="number" name="hargaBPHTB" class="form-control" value="{{ $price['hargaBPHTB']}}">
+                                                @else
+                                                    {{ number_format($price['hargaBPHTB'], 2) }}
+                                                @endif
                                             </p>
                                         </td>
                                     </tr>
