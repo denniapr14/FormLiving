@@ -14,7 +14,7 @@
     <div class="card-header">
         <a href="{{ route('suratPemesananRumah.admin', $getProjek->nama_projek) }}" class="btn-fd-icon-outline col-1" style="height: 40px; width: 50px"> <i class="fa fa-arrow-left"></i></a> &nbsp;
        JADWAL PEMBAYARAN
-            ANGSURAN
+            ANGSURAN {{ $getRumah->blok }} - {{ $getRumah->nomor }}
     </div>
 
 
