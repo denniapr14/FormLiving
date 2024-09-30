@@ -473,8 +473,9 @@ class C_Checklist extends Controller
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $decryptedID);
         $getChecklist = $this->checklist->getChecklistJoinJoblistJob(['checklist.id_rumah' => $decryptedID])->collect();
         $getTermin = $getChecklist->groupBy('termin_jl');
+        $getLantai = $getChecklist->pluck('lantai_jl')->first();
         // $getJob = $getTermin->groupBy('id_job');
-        // dd($getRumah);
+        // dd($getLantai);
 
         $getPengawas = DB::table('checklist as a')
             ->selectRaw("SUM(subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*, j.*,
@@ -493,11 +494,11 @@ class C_Checklist extends Controller
             ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
             ->groupBy('j.termin_job')
             ->orderByRaw('j.termin_job ASC')
-            ->first();
+            ->get();
+            // dd($getPengawas);
         $getSPK = DB::table('spk')
             ->where('id_rumah', '=', $id_rumah)
             ->first();
-        // dd($getSPK);
 
         $getJob = $this->job->getJob('*');
 
@@ -534,8 +535,10 @@ class C_Checklist extends Controller
                     'getTermin',
                     'getRumah',
                     'getJob',
+                    'getLantai',
                     'getPengawas',
-                    'getSPK'
+                    'getSPK',
+
 
                 )
             );
@@ -834,6 +837,9 @@ class C_Checklist extends Controller
             ];
             DB::table('checklist')
                 ->where('id_rumah', $decryptedID)
+                ->where('status_checklist', "progress")
+
+                ->orWhere('status_checklist', "terkunci")
                 ->update($dataInput);
             return redirect()->back()->with('success', 'Success change pengawas');
         } else {

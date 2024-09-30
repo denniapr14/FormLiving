@@ -42,6 +42,7 @@
                                 @elseif ($terminGroup->first()->termin_jl == 5)
                                     IV
                                 @endif
+                                RUMAH {{ $getLantai }} LANTAI
                             </h5>
                         </button>
                         <button class="btn btn-outline-info" onclick="printTable('printTermin-{{ $loop->index }}')"><i
@@ -65,7 +66,8 @@
                                             @elseif ($terminGroup->first()->termin_jl == 5)
                                                 IV
                                             @endif
-                                            RUMAH {{ $getPengawas->lantai_job }} LANTAI
+
+                                            RUMAH {{ $getLantai }} LANTAI
                                     </h3>
                                 </center>
                                 <table style="font-weight: 100">
@@ -137,112 +139,110 @@
                                         Diajukan</p>
                                     <br><br><br><br><br><br>
                                     @if ($terminGroup->first()->termin_jl == 5)
-                                        <table style="width: 100%">
-                                            <tr>
-                                                <td> <u>{{ $getPengawas->pengawas1 }}</u>
-                                                    <br>
-                                                    Pengawas 1
-                                                </td>
-                                                <td>
-                                                    <u>{{ $getPengawas->pengawas2 }}</u>
-                                                    <br>Pengawas 2
-                                                </td>
-                                                <td>
-                                                    <u>Sunyoto</u>
-                                                    <br>Pendamping
-                                                    <br>
-                                                </td>
-                                                <td class="text-right">
-                                                    <br>
-                                                    <u>{{ $getPengawas->nama_subkon }}</u><br>
-                                                    Subkont
+                                    @foreach ($getPengawas as $pengawas)
+                                        @if ($pengawas->termin_job == 5)
+                                            <table style="width: 100%">
+                                                <tr>
+                                                    <td>
+                                                        <u>{{ $pengawas->pengawas1 }}</u>
+                                                        <br>Pengawas 1
+                                                    </td>
+                                                    <td>
+                                                        <u>{{ $pengawas->pengawas2 }}</u>
+                                                        <br>Pengawas 2
+                                                    </td>
+                                                    <td>
+                                                        <u>Sunyoto</u>
+                                                        <br>Pendamping
+                                                        <br>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <u>{{ $pengawas->nama_subkon }}</u>
+                                                        <br>Subkont
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><br><br><br>Arsitek</td>
+                                                    <td><br><br><br>Sales</td>
+                                                    <td colspan="2"><br><br><br>REM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        Menyetujui
+                                                        <br><br><br><br>
+                                                        <u>Robert Martee</u>
+                                                    </td>
+                                                    <td colspan="2" class="text-right">
+                                                        Mengetahui
+                                                        <br><br><br><br>
+                                                        <u>Gilbert Setiawan</u>
+                                                        <br> CEO
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        @endif
+                                    @endforeach
 
+                                @elseif ($terminGroup->first()->termin_jl == 4)
+                                    @foreach ($getPengawas as $pengawas)
+                                        @if ($pengawas->termin_job == 4)
+                                            <table style="width: 100%">
+                                                <tr>
+                                                    <td>
+                                                        <u>{{ $pengawas->pengawas1 }}</u>
+                                                        <br>Pengawas 1
+                                                    </td>
+                                                    <td>
+                                                        <u>{{ $pengawas->pengawas2 }}</u>
+                                                        <br>Pengawas 2
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <u>Sunyoto</u>
+                                                        <br>Pendamping
+                                                        <br>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        @endif
+                                    @endforeach
 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <br><br><br>
-                                                    Arsitek
-                                                </td>
-                                                <td>
-                                                    <br><br><br>
-                                                    Sales
-                                                </td>
-                                                <td colspan="2">
-                                                    <br><br><br>
-                                                    REM
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    Menyetujui
-                                                    <br><br><br><br>
-                                                    <u>Robert Martee</u>
-                                                </td>
-                                                <td colspan="2" class="text-right">
-                                                    Mengetahui
-                                                    <br><br><br><br>
-                                                    <u>Gilbert Setiawan</u>
-                                                    <br> CEO
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    @elseif($terminGroup->first()->termin_jl == 4)
-                                        <table style="width: 100%">
-                                            <tr>
-                                                <td> <u>{{ $getPengawas->pengawas1 }}</u>
-                                                    <br>
-                                                    Pengawas 1
-                                                </td>
-                                                <td>
-                                                    <u>{{ $getPengawas->pengawas2 }}</u>
-                                                    <br>Pengawas 2
-                                                </td>
-                                                <td class="text-right">
-                                                    <u>Sunyoto</u>
-                                                    <br>Pendamping
-                                                    <br>
-
-                                                </td>
-
-                                            </tr>
-
-                                        </table>
                                     @else
-                                        <table style="width: 100%">
-                                            <tr>
-                                                <td> <u>{{ $getPengawas->pengawas1 }}</u>
-                                                    <br>
-                                                    Pengawas 1
-                                                </td>
-                                                <td>
-                                                    <u>{{ $getPengawas->pengawas2 }}</u>
-                                                    <br>Pengawas 2
-                                                </td>
-                                                <td>
-                                                    <u>Sunyoto</u>
-                                                    <br>Pendamping
-                                                    <br>
+                                    @php $displayed = false; @endphp
+                                    @foreach ($getPengawas as $pengawas)
+                                        @if ($pengawas->termin_job != 4 && $pengawas->termin_job != 5 && !$displayed)
+                                            <table style="width: 100%">
+                                                <tr>
+                                                    <td>
+                                                        <u>{{ $pengawas->pengawas1 }}</u>
+                                                        <br>Pengawas 1
+                                                    </td>
+                                                    <td>
+                                                        <u>{{ $pengawas->pengawas2 }}</u>
+                                                        <br>Pengawas 2
+                                                    </td>
+                                                    <td>
+                                                        <u>Sunyoto</u>
+                                                        <br>Pendamping
+                                                        <br>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <u>{{ $pengawas->nama_subkon }}</u>
+                                                        <br>Subkont
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4" class="text-right"><br>
+                                                        Mengetahui
+                                                        <br><br><br><br>
+                                                        <u>Gilbert Setiawan</u><br>CEO
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            @php $displayed = true; @endphp
+                                        @endif
+                                    @endforeach
+                                @endif
 
-                                                </td>
-                                                <td class="text-right">
-                                                    <u>{{ $getPengawas->nama_subkon }}</u>
-                                                    <br>
-                                                    Subkont
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4" class="text-right"><br>
-                                                    Mengetahui
-                                                    <br><br><br><br>
-                                                    <u>Gilbert Setiawan</u><br>CEO
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    @endif
 
                                 </div>
                             </div>

@@ -239,7 +239,7 @@
             </div>
         </div>
     </div>
-    <div id="fpMobile">
+   <div id="fpMobile">
         <div class="card mb-3">
             <div class="card-body">
                 <div class="card-title">
@@ -259,79 +259,88 @@
 
                                 </tr>
                             </thead>
+                            @foreach ($getFormulirPesananMobile as $fpMobile)
                             <tbody>
-                                @foreach ($getFormulirPesanan as $fp)
                                 <tr>
                                     <td>
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="card-title">
-                                                    <h4>{{ $fp->no_fp }} / {{ $fp->blok }}-{{ $fp->nomor }}</h4>
-                                                    <span>Nama : {{ $fp->nama_plgn }}</span>
-                                                    <span>Dari {{ $fp->nama_ktgr }} ({{ $fp->nama_ua }})</span>
+                                                    <h4>{{ $fpMobile->no_fp }} / {{ $fpMobile->blok }}-{{ $fpMobile->nomor
+                                                        }}</h4>
+                                                    <span>Nama : {{ $fpMobile->nama_plgn }}</span>
+                                                    <span>Dari {{ $fpMobile->nama_ktgr }} ({{ $fpMobile->nama_ua }})</span>
                                                 </div>
                                                 <div>
                                                     <p class="mb-1">
 
-                                                        No. telp {{ $fp->no_telp_plgn }} <a href="tel:{{ $fp->no_telp_plgn }}"
-                                                            class="btn btn-outline-info"><i class="fa fa-phone" aria-hidden="true"></i></a>
+                                                        No. telp {{ $fpMobile->no_telp_plgn }} <a
+                                                            href="tel:{{ $fpMobile->no_telp_plgn }}"
+                                                            class="btn btn-outline-info"><i class="fa fa-phone"
+                                                                aria-hidden="true"></i></a>
                                                         <br>
                                                     </p>
                                                     <p>
 
-                                                        No. WA {{ $fp->no_wa_plgn }} <a href="https://wa.me/{{ $fp->no_wa_plgn }}"
-                                                            class="btn btn-outline-info"> <i class="mdi mdi-whatsapp    "></i></a>
+                                                        No. WA {{ $fpMobile->no_wa_plgn }} <a
+                                                            href="https://wa.me/{{ $fpMobile->no_wa_plgn }}"
+                                                            class="btn btn-outline-info"> <i
+                                                                class="mdi mdi-whatsapp    "></i></a>
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    Tanggal :   {{ date('d M Y', strtotime($fp->tgl_input_fp)) }}
+                                                    Tanggal : {{ date('d M Y', strtotime($fpMobile->tgl_input_fp)) }}
                                                 </div>
 
                                             </div>
                                             <div>
                                                 <center>
-                                                <table>
-                                                    <td>
-                                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
-                                                        <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"
-                                                            class="btn btn-outline-info">
-                                                            <i class="fas fa-edit    "></i>
-                                                        </a>
-                                                        <a href="{{ route('listPembayaranRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}">
-                                                            <i class="fas fa-edit    ">Pembayaran</i>
-                                                        </a>
-                                                    @else
-                                                    @endif
+                                                    <table>
+                                                        <td>
+                                                            @if ($user->kategori == 'SuperAdmin' || $user->kategori ==
+                                                            'AdminAccounting' || $user->kategori == 'StafAcc')
+                                                            <a href="{{ route('editSuratPemesananRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fpMobile->id_formulir)]) }}"
+                                                                class="btn btn-outline-info">
+                                                                <i class="fas fa-edit    "></i>
+                                                            </a>
+                                                            <a
+                                                                href="{{ route('listPembayaranRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fpMobile->id_formulir)]) }}">
+                                                                <i class="fas fa-edit    ">Pembayaran</i>
+                                                            </a>
+                                                            @else
+                                                            @endif
 
-                                                    </td>
-                                                    <td>
+                                                        </td>
+                                                        <td>
 
 
-                                                            <a href="{{ route('cetakSuratPemesananRumah.admin', Crypt::encrypt($fp->id_formulir)) }}"
+                                                            <a href="{{ route('cetakSuratPemesananRumah.admin', Crypt::encrypt($fpMobile->id_formulir)) }}"
                                                                 class="btn btn-outline-info">
                                                                 <i class="fa fa-print" aria-hidden="true"></i>
 
                                                                 </i>
                                                             </a>
 
-                                                    </td>
-                                                    <td>
-                                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
-                                                        <a href="" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i>SPP</a>
-                                                    @else
-                                                    @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($user->kategori == 'SuperAdmin' || $user->kategori ==
+                                                            'AdminAccounting' || $user->kategori == 'StafAcc')
+                                                            <a href="" class="btn btn-outline-info"><i class="fa fa-plus"
+                                                                    aria-hidden="true"></i>SPP</a>
+                                                            @else
+                                                            @endif
 
-                                                    </td>
-                                                </table>
-                                            </center>
+                                                        </td>
+                                                    </table>
+                                                </center>
                                             </div>
                                         </div>
 
 
                                     </td>
                                 </tr>
-                                @endforeach
                             </tbody>
+                            @endforeach
                         </table>
                     </center>
 

@@ -11,6 +11,7 @@ use App\Models\UserAdmin;
 use App\Models\UserMenu;
 use App\Models\UserPelanggan;
 use App\Models\UserProjek;
+use App\Models\CounterNotifPelanggan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +51,7 @@ class C_PembayaranPelanggan extends Controller
             $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
             // dd("INI GUESTTTTTT");
 // dd($userPelanggan);
+$notificationsCounter = CounterNotifPelanggan::where('id_pelanggan',$userPelanggan->id_pelanggan)->first();
             $currentMonth = date('Y-m-d');
 // dd($currentMonth);
             $currentYear = date('Y-m-d');
@@ -75,7 +77,8 @@ class C_PembayaranPelanggan extends Controller
                     'getPelangganProjek',
                     'getBillMonthNow',
                     'getBillNextMonth',
-                    'getBillPelanggan'
+                    'getBillPelanggan',
+                    'notificationsCounter'
 
                 )
             );

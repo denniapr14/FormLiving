@@ -147,3 +147,10 @@ if (!function_exists('sendWhatsappMessage')) {
         return $response;
     }
 }
+
+if (!function_exists('removePeriods')) {
+    function removePeriods($number) {
+        // Use str_replace to remove periods (.) from the number
+        return str_replace('.', '', $number);
+    }
+}

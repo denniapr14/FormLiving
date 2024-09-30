@@ -125,36 +125,46 @@
                     <h3 class="card-title">Proses Pembangunan Rumah</h3>
                 </div>
                 <div class="card-body">
-                    <table class="w-100">
+
+                       <div class="row">
                         @if (!empty($getChecklistAll))
                         @foreach($getChecklistAll as $checklist)
-                        <tr>
-                            <td></td>
-                            <td style="width: ">
-                                <div class="card">
-                                    <div class="card w-100">
-                                        <h3 class="card-title">{{ $checklist->blok }} - {{ $checklist->nomor }} /{{
-                                            $checklist->nama_cluster }}</h3>
-                                        <div class="progress" style="height: 2rem">
-                                            <div class="progress-bar" role="progressbar"
-                                                style="width: {{ $checklist->percentase }}%;"
-                                                aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
-                                                aria-valuemax="100">{{ $checklist->percentase }}%</div>
-                                        </div>
-                                        <br>
-                                        
-                                    </div>
+                        <div class="col-md-4 ">
+                        <div class="card border rounded-md" style="width: 18rem;">
+                            <center>
+                            @if (!empty($checklist->foto))
+                            {{--  <img src="{{ asset('Home/images/') }}/NoImg.jpg" class="card-img-top img-fluid" style="width: 100%" alt="">  --}}
+
+                            <img src="{{ asset('Home/images/termin/' . $checklist->foto) }}" class="card-img-top img-fluid" style="width: 100%" alt="">
+                            @else
+                            <img src="{{ asset('Home/images/') }}/NoImg.jpg" class="card-img-top img-fluid" style="width: 100%" alt="">
+
+                            @endif
+                        </center>
+                            <div class="card-body">
+                              <h5 class="card-title">{{ $checklist->blok }} - {{ $checklist->nomor }} /{{
+                                $checklist->nama_cluster }}</h5>
+
+                                <div class="progress" style="height: 2rem">
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: {{ $checklist->percentase }}%;"
+                                        aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
+                                        aria-valuemax="100">{{ $checklist->percentase }}%</div>
                                 </div>
-                            </td>
-
-
-                        </tr>
+<br>
+<a href="{{ route('listChecklist.guest', [$getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah)]) }}" class="btn btn-outline-info"> <i
+    class="fa fa-eye" aria-hidden="true"></i> Lihat
+Proses</a>
+                            </div>
+                          </div>
+                       </div>
                         @endforeach
                         @else
-                        <h2>Anda Tidak Memiliki Rumah</h2>
+                        <h2>Rumah belum dibangun atau belum melakukan pembelian rumah</h2>
                         @endif
+                    </div>
 
-                    </table>
+
 
                 </div>
             </div>

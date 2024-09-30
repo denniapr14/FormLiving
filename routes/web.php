@@ -49,6 +49,7 @@ use App\Http\Controllers\C_DashboardPelanggan;
 use App\Http\Controllers\C_PembayaranPelanggan;
 use App\Http\Controllers\C_ChecklistPelanggan;
 use App\Http\Controllers\C_Profile;
+use App\Http\Controllers\C_NotificationPelanggan;
 
 
 use Illuminate\Support\Facades\Route;
@@ -356,7 +357,7 @@ Route::get('/cetak-surat-pemesanan-rumah/{id}', [C_SuratPemesananRumah::class, '
 Route::get('/list-pembayaran-rumah-admin/{projek}/{id}',[C_PembayaranRumah::class,'listPembayaranRumah'])->name('listPembayaranRumah.admin');
 Route::get('/ubah-pembayaran-rumah-admin/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumah'])->name('editPembayaranRumah.admin');
 Route::post('/ubah-pembayaran-rumah-admin/action/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumahAction'])->name('editPembayaranRumahAction.admin');
-
+Route::delete('/hapus-pembayaran-rumah-admin/{id}', [C_PembayaranRumah::class, 'deletePembayaran'])->name('delete.pembayaran');
 Route::get('/pembayaran-rumah/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumah'])->name('pembayaranRumah.Admin');
 Route::post('/pembayaran-rumah/action/{projek}/{id}', [C_PembayaranRumah::class, 'pembayaranRumahAction'])->name('pembayaranRumahAction.Admin');
 
@@ -523,6 +524,7 @@ route::get('/pembayaran-guest/{projek}',[C_PembayaranPelanggan::class ,'index'])
 
 // USER CHECKLIST
 route::get('/checklist-guest/{projek}',[C_ChecklistPelanggan::class,'index'])->name('checklist.guest');
+route::get('/list-checklist-guest/{projek}/{id_rumah}',[C_ChecklistPelanggan::class,'getTerminChecklistPelanggan'])->name('listChecklist.guest');
 
 
 // USER PELANGGAN PROFILE
@@ -531,3 +533,8 @@ Route::post('/change-password-guest-action/{projek}',[C_Profile::class,'ChangePa
 
 Route::get('/edit-profile-guest/{projek}',[C_Profile::class,'editUserPelanggan'])->name('editProfile.guest');
 Route::post('/edit-profile-guest-action/{projek}',[C_Profile::class,'editUserPelangganAction'])->name('editUserPelangganAction.guest');
+
+// GET NOTIFICATION
+Route::get('/notificationsPelanggan', [C_NotificationPelanggan::class, 'fetchNotifications'])->name('notifications.fetch');
+Route::post('/notificationsPelangganAsRead', [C_NotificationPelanggan::class, 'markAsRead'])->name('notifications.markAsRead');
+// "SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status_notif' in 'field list' (SQL: update `user_pelanggan` set `status_notif` = read where `id_pelanggan` = 1)"

@@ -68,6 +68,7 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
     </style>
 </head>
 
@@ -209,81 +210,117 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                        <!--<li class="nav-item dropdown border-right">-->
-                        <!--    <a class="nav-link dropdown-toggle waves-effect waves-dark" href=""-->
-                        <!--        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                        <!--        <i class="mdi mdi-bell-outline font-22"></i>-->
-                        <!--        <span class="badge badge-pill badge-info noti">3</span>-->
-                        <!--    </a>-->
-                        <!--    <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">-->
-                        <!--        <span class="with-arrow">-->
-                        <!--            <span class="bg-primary"></span>-->
-                        <!--        </span>-->
-                        <!--        <ul class="list-style-none">-->
-                        <!--            <li>-->
-                        <!--                <div class="drop-title bg-primary text-white">-->
-                        <!--                    <h4 class="m-b-0 m-t-5">4 New</h4>-->
-                        <!--                    <span class="font-light">Notifications</span>-->
-                        <!--                </div>-->
-                        <!--            </li>-->
-                        <!--            <li>-->
-                        <!--                <div class="message-center notifications">-->
-                                            <!-- Message -->
-                        <!--                    <a href="javascript:void(0)" class="message-item">-->
-                        <!--                        <span class="btn btn-danger btn-circle">-->
-                        <!--                            <i class="fa fa-link"></i>-->
-                        <!--                        </span>-->
-                        <!--                        <div class="mail-contnet">-->
-                        <!--                            <h5 class="message-title">Luanch Admin</h5>-->
-                        <!--                            <span class="mail-desc">Just see the my new admin!</span>-->
-                        <!--                            <span class="time">9:30 AM</span>-->
-                        <!--                        </div>-->
-                        <!--                    </a>-->
-                                            <!-- Message -->
-                        <!--                    <a href="javascript:void(0)" class="message-item">-->
-                        <!--                        <span class="btn btn-success btn-circle">-->
-                        <!--                            <i class="ti-calendar"></i>-->
-                        <!--                        </span>-->
-                        <!--                        <div class="mail-contnet">-->
-                        <!--                            <h5 class="message-title">Event today</h5>-->
-                        <!--                            <span class="mail-desc">Just a reminder that you have event</span>-->
-                        <!--                            <span class="time">9:10 AM</span>-->
-                        <!--                        </div>-->
-                        <!--                    </a>-->
-                                            <!-- Message -->
-                        <!--                    <a href="javascript:void(0)" class="message-item">-->
-                        <!--                        <span class="btn btn-info btn-circle">-->
-                        <!--                            <i class="ti-settings"></i>-->
-                        <!--                        </span>-->
-                        <!--                        <div class="mail-contnet">-->
-                        <!--                            <h5 class="message-title">Settings</h5>-->
-                        <!--                            <span class="mail-desc">You can customize this template as you-->
-                        <!--                                want</span>-->
-                        <!--                            <span class="time">9:08 AM</span>-->
-                        <!--                        </div>-->
-                        <!--                    </a>-->
-                                            <!-- Message -->
-                        <!--                    <a href="javascript:void(0)" class="message-item">-->
-                        <!--                        <span class="btn btn-primary btn-circle">-->
-                        <!--                            <i class="ti-user"></i>-->
-                        <!--                        </span>-->
-                        <!--                        <div class="mail-contnet">-->
-                        <!--                            <h5 class="message-title">Pavan kumar</h5>-->
-                        <!--                            <span class="mail-desc">Just see the my admin!</span>-->
-                        <!--                            <span class="time">9:02 AM</span>-->
-                        <!--                        </div>-->
-                        <!--                    </a>-->
-                        <!--                </div>-->
-                        <!--            </li>-->
-                        <!--            <li>-->
-                        <!--                <a class="nav-link text-center m-b-5 text-dark" href="javascript:void(0);">-->
-                        <!--                    <strong>Check all notifications</strong>-->
-                        <!--                    <i class="fa fa-angle-right"></i>-->
-                        <!--                </a>-->
-                        <!--            </li>-->
-                        <!--        </ul>-->
-                        <!--    </div>-->
-                        <!--</li>-->
+                        <li class="nav-item dropdown border-right">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="notificationDropdown">
+                                <i class="mdi mdi-bell-outline font-22"></i>
+                                <span class="badge badge-pill badge-info noti" id="notificationCount">
+                                    @if (!empty($notificationsCounter->unread_notif))
+                                    {{ $notificationsCounter->unread_notif }}
+                                        @else
+                                        0
+                                    @endif
+                                </span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" id="notificationDropdownMenu">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <ul class="list-style-none" id="notificationList">
+                                    <li>
+                                        <div class="drop-title bg-primary text-white">
+                                            <h4 class="m-b-0 m-t-5">New</h4>
+                                            <span class="font-light">Notifications</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center notifications"></div>
+                                    </li>
+                                    {{--  <li>
+                                        <a class="nav-link text-center m-b-5 text-dark" href="javascript:void(0);">
+                                            <strong>Check all notifications</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>  --}}
+                                </ul>
+                            </div>
+
+                        </li>
+
+
+                        <script>
+                            $(document).ready(function () {
+                                // Function to fetch notifications
+                                function fetchNotifications() {
+                                    $.ajax({
+                                        url: "{{ route('notifications.fetch') }}",
+                                        method: 'GET',
+                                        success: function (response) {
+                                            let notifications = response.notifications;
+                                            let unreadCount = response.unread_count;
+
+                                            $('#notificationList .message-center').html(''); // Clear existing notifications
+
+                                            notifications.forEach(function (notification) {
+                                                console.log(notification);
+                                                let notificationItem = `
+                                                    <a href="#" class="message-item" data-id_notif=${notification.id_notif}>
+                                                        <span class="btn btn-circle">
+                                                            <i class="${notification.icon_pelanggan_notif} fa-2x"></i>
+                                                        </span>
+                                                        <div class="mail-contnet">
+                                                            <h5 class="message-title">${notification.title_pelanggan_notif}</h5>
+                                                            <span class="mail-desc">${notification.msg_notif}</span>
+                                                            <span class="time">${notification.tgl_notif}</span>
+                                                        </div>
+                                                    </a>
+                                                `;
+                                                $('#notificationList .message-center').append(notificationItem);
+                                            });
+
+                                            // Update the notification count
+                                            $('#notificationCount').text(unreadCount);
+                                        },
+                                        error: function (error) {
+                                            console.log("Error fetching notifications:", error);
+                                        }
+                                    });
+                                }
+
+                                // Fetch notifications when dropdown is clicked
+                                $('#notificationDropdown').on('click', function () {
+                                    fetchNotifications();
+                                });
+
+                                // Mark notification as read when a notification item is clicked
+                                $(document).on('click', '.message-item', function (e) {
+                                    e.preventDefault();
+                                    {{--  let notificationId = $(this).data('id');  --}}
+                                    let notificationId = $(this).data('id_notif');
+                                    console.log(notificationId);
+
+                                    $.ajax({
+                                        url: "{{ route('notifications.markAsRead') }}", // Adjust your route here
+                                        method: 'POST',
+                                        data: {
+                                            _token: "{{ csrf_token() }}", // CSRF token for security
+                                            id: notificationId
+                                        },
+                                        success: function (response) {
+                                            console.log('Notification marked as read:', response);
+                                            // Optionally, refresh the notifications list or update the notification count
+                                            fetchNotifications(); // To refresh the list
+                                        },
+                                        error: function (error) {
+                                            console.log('Error marking notification as read:', error);
+                                        }
+                                    });
+                                });
+                            });
+
+
+                        </script>
+
+
                         <!-- ============================================================== -->
                         <!-- End Comment -->
                         <!-- ============================================================== -->

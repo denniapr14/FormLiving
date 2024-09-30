@@ -20,10 +20,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h6>
-                                <center>
-                                   Pekerjaan Selesai
-                                </center>
-                            </h6>
+                                    <center>
+                                        Pekerjaan Selesai
+                                    </center>
+                                </h6>
                                 <h3>
                                     <center>
                                         {{ $countChecklistDone }}
@@ -35,16 +35,16 @@
                             <div class="col-md-6">
                                 <h6>
                                     <center>
-                                       Semua Pekerjaan
+                                        Semua Pekerjaan
                                     </center>
                                 </h6>
-                                    <h3>
-                                        <center>
-                                            {{ $countChecklist }}
-                                        </center>
-                                    </h3>
+                                <h3>
+                                    <center>
+                                        {{ $countChecklist }}
+                                    </center>
+                                </h3>
 
-                               </div>
+                            </div>
                         </div>
                     </div>
 
@@ -58,40 +58,100 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Proses Pembangunan Rumah</h3>
-                        </div>
-                        <div class="card-body">
-                            <table class="w-100">
-                               @if (!empty($getChecklistAll))
-                               @foreach($getChecklistAll as $checklist)
-                               <tr>
-                                   <td></td>
-                                   <td style="width: ">
-                                       <div class="card">
-                                           <div class="card w-100">
-                                               <h3 class="card-title">{{ $checklist->blok }} - {{ $checklist->nomor }} /{{ $checklist->nama_cluster }}</h3>
-                                               <div class="progress" style="height: 2rem">
-                                                   <div class="progress-bar" role="progressbar" style="width: {{ $checklist->percentase }}%;" aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0" aria-valuemax="100">{{ $checklist->percentase }}%</div>
-                                               </div>
-                                               <br>
-                                               <h5>Pengawas 1 : {{ $checklist->pengawas1 }}</h5>
-                                                <h5>Pengawas 2 : {{ $checklist->pengawas2 }} </h5>
-                                                <h5>Subkon :  {{ $checklist->nama_subkon }}</h5>
-                                              
-                                           </div>
-                                       </div>
-                                   </td>
-                                   
+                    </div>
+                    <div class="card-body">
+                        <table class="w-100">
+                            @if (!empty($getChecklistAll))
+                                @foreach ($getChecklistAll as $checklist)
+                                    <tr>
 
-                               </tr>
-                           @endforeach
-                           @else
-                               <h2>Anda Tidak Memiliki Rumah</h2>
-                               @endif
-                              
-                            </table>
+                                        <td style="width: ">
+                                            <div class="card">
+                                                <div class="card w-100">
+                                                    <h3 class="card-title">{{ $checklist->blok }} - {{ $checklist->nomor }}
+                                                        / {{ $checklist->nama_cluster }}</h3>
+                                                    <div class="progress" style="height: 2rem">
+                                                        <div class="progress-bar" role="progressbar"
+                                                            style="width: {{ $checklist->percentase }}%;"
+                                                            aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
+                                                            aria-valuemax="100">
+                                                            <h3>{{ $checklist->percentase }}%
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <center>
+                                                                        <h5>Pengawas 1 </h5>
+                                                                        <h3>
+                                                                            {{ $checklist->pengawas1 }}
+
+                                                                        </h3>
+                                                                    </center>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <center>
+                                                                        <h5>Pengawas 2 </h5>
+                                                                        <h3>
+                                                                            {{ $checklist->pengawas2 }}
+
+                                                                        </h3>
+                                                                    </center>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <center>
+                                                                        <h5>Subkon </h5>
+                                                                        <h3>
+                                                                            {{ $checklist->nama_subkon }}
+
+                                                                        </h3>
+                                                                    </center>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <center>
+                                                                        <h5>Pendamping </h5>
+                                                                        <h3>
+                                                                            Sunyoto
+
+                                                                        </h3>
+                                                                    </center>
+                                                                </div>
 
 
-                        </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <center>
+                                                                <a href="{{ route('listChecklist.guest', [$getProjek->nama_projek,Crypt::encrypt($checklist->id_rumah)]) }}" class="btn btn-outline-primary"> <i
+                                                                        class="fa fa-eye" aria-hidden="true"></i> Lihat
+                                                                    Proses</a>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <h2>Anda Tidak Memiliki Rumah</h2>
+                            @endif
+
+                        </table>
+
+
+                    </div>
                 </div>
 
             </div>

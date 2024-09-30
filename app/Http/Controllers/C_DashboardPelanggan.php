@@ -15,6 +15,7 @@ use App\Models\FormulirPesanan;
 use App\Models\UserPelanggan;
 use App\Models\PelangganProjek;
 use App\Models\PembayaranRumah;
+use App\Models\CounterNotifPelanggan;
 use App\Models\Checklist;
 
 // =======================
@@ -60,6 +61,9 @@ class C_DashboardPelanggan extends Controller
             $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
             // dd("INI GUESTTTTTT");
             // dd($userPelanggan);
+            $notificationsCounter = CounterNotifPelanggan::where('id_pelanggan',$userPelanggan->id_pelanggan)
+        ->first();
+        // dd($notificationsCounter);
             $currentMonth = date('Y-m-d');
             // dd($currentMonth);
             $currentYear = date('Y-m-d');
@@ -127,7 +131,8 @@ class C_DashboardPelanggan extends Controller
                     'getBillNextMonth',
                     'getChecklistAll',
                     'countChecklist',
-                    'countChecklistDone'
+                    'countChecklistDone',
+                    'notificationsCounter'
 
 
                 )

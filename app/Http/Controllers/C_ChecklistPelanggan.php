@@ -20,6 +20,7 @@ use App\Models\Checklist;
 use App\Models\UserPelanggan;
 use App\Models\FormulirPesanan;
 use App\Models\PelangganProjek;
+use App\Models\CounterNotifPelanggan;
 
 class C_ChecklistPelanggan extends Controller
 {
@@ -66,6 +67,9 @@ class C_ChecklistPelanggan extends Controller
             $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
             // dd("INI GUESTTTTTT");
 // dd($userPelanggan);
+$notificationsCounter = CounterNotifPelanggan::where('id_pelanggan',$userPelanggan->id_pelanggan)
+->first();
+            // dd($notificationsCounter);
             $getRumah = $this->formulirPesanan->getFormulirPesanan6Join(['id_pelanggan' => $userPelanggan->id_pelanggan]);
             // dd($getRumah);
             foreach ($getRumah as $getRumah) {
@@ -113,7 +117,8 @@ class C_ChecklistPelanggan extends Controller
                         'countChecklist',
 
                         'countChecklistDone',
-                        'getChecklistAll'
+                        'getChecklistAll',
+                        'notificationsCounter'
 
 
 
@@ -126,296 +131,79 @@ class C_ChecklistPelanggan extends Controller
             return redirect('/login');
 
     }
-    function addChecklistAction(Request $request, $projek)
+
+    public function getTerminChecklistPelanggan($projek, $id_rumah)
     {
-        $getChecklist = $this->checklist->getChecklistWhere(['checklist.id_rumah' => $request->rumah]);
-        // dd($getChecklist);
+        $userPelanggan = $this->userPelanggan->firstUserPelangganWhere('id_pelanggan', '=', session::get('guest'));
+        $getPelangganProjek = $this->pelangganProjek->getProjectPelangganWhere('user_pelanggan.id_pelanggan','=',$userPelanggan->id_pelanggan);
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-        // dd($getChecklist);
-        if ($getChecklist->isEmpty()) {
-            // $getChecklist is empty
-        } else {
-            return redirect()->back()->with('error', 'Checklist sudah ada!');
-        }
-        $getJoblist = $this->joblist->getJoblistWhere([
-            'joblist.lantai_jl' => $request->lantai,
-            'joblist.status_jl' => "Aktif"
-        ]);
-        // dd($request->lantai);
-        $nextMonth = "";
-        if ($request->lantai == 1) {
-            $nextMonth = date("Y-m-d", strtotime("+1 month"));
-        }
-        if ($request->lantai == 2) {
-            $nextMonth = date("Y-m-d", strtotime("+2 month"));
-        }
-        $dataInput = [];
-        foreach ($getJoblist as $joblist) {
-            $data = [
-                'id_rumah' => $request->rumah,
-                'id_subkon' => $request->subkon,
-                'id_joblist' => $joblist->id_joblist,
-                'id_pengawas1' => $request->pengawas1,
-                'id_pengawas2' => $request->pengawas2,
-                'tgl_deadline' => $nextMonth,
-                'status_checklist' => ($joblist->termin_jl == 1) ? "progress" : "terkunci"
-            ];
-
-            // Push $data into $dataInput array
-            $dataInput[] = $data;
-        }
-
-        // dd($dataInput);
-        $this->checklist->insertChecklist($dataInput);
-        return redirect()->back()->with('success', 'Checklist berhasil ditambahkan!');
-    }
-
-    public function nextTermin($projek, $id_rumah)
-    {
-
+        $notificationsCounter = CounterNotifPelanggan::where('id_pelanggan',$userPelanggan->id_pelanggan)->first();
         $decryptedID = Crypt::decrypt($id_rumah);
-
-        $lantai = DB::table('checklist')
-            ->join('joblist', 'checklist.id_joblist', 'joblist.id_joblist')
-            ->where([
-                'checklist.id_rumah' => $decryptedID,
-                'checklist.status_checklist' => "selesai"
-            ])
-            ->orderByDesc('id_checklist')
-            ->first();
-
-        // dd($lantai);
-
-        $setTermin = $lantai->termin_jl + 1;
-        if ($lantai->termin_jl == 5) {
-
-            return redirect()->back()->with('error', 'Termin sudah selesai!');
-        }
-
-
-        $rumah = DB::table('rumah')->where('id_rumah', $id_rumah)->get();
-
-        if ($lantai->lantai_jl == 1) {
-            $nextMonth = date("Y-m-d", strtotime("+1 month"));
-            DB::table('checklist')
-                ->join('joblist', 'checklist.id_joblist', 'joblist.id_joblist')
-                ->where([
-                    'checklist.id_rumah' => $decryptedID,
-                    'joblist.termin_jl' =>  $setTermin,
-                    'checklist.status_checklist' => "terkunci"
-                ])
-                ->update([
-                    'checklist.status_checklist' => "progress",
-                    'checklist.tgl_deadline' => $nextMonth
-                ]);
-        }
-        if ($lantai->lantai_jl == 2) {
-            $nextMonth = date("Y-m-d", strtotime("+2 month"));
-            DB::table('checklist')
-                ->join('joblist', 'checklist.id_joblist', 'joblist.id_joblist')
-                ->where([
-                    'checklist.id_rumah' => $decryptedID,
-                    'joblist.termin_jl' =>  $setTermin,
-                    'checklist.status_checklist' => "terkunci"
-                ])
-                ->update([
-                    'checklist.status_checklist' => "progress",
-                    'checklist.tgl_deadline' => $nextMonth
-                ]);
-        }
+// dd($decryptedID);
+        if (session()->has('guest')) {
 
 
 
-        return redirect()->back()->with('success', 'Termin sudah menjadi termin ' . $setTermin);
-    }
 
-    public function customTermin(Request $request, $projek, $id_rumah)
-    {
-        $decryptedID = Crypt::decrypt($id_rumah);
-        $lantai = DB::table('checklist')
-            ->join('joblist', 'checklist.id_joblist', 'joblist.id_joblist')
-            ->where([
-                'checklist.id_rumah' => $decryptedID,
-                'checklist.status_checklist' => "selesai"
-            ])
-            ->orderByDesc('id_checklist')
-            ->first();
-        // dd($lantai);
-
-        $setTermin = $lantai->termin_jl + 1;
-        if ($lantai->termin_jl == 5) {
-            return redirect()->back()->with('error', 'Termin sudah selesai!');
-        }
-
-
-
-        if ($lantai->lantai_jl == 1) {
-            DB::table('checklist')
-                ->join('joblist', 'checklist.id_joblist', 'joblist.id_joblist')
-                ->where([
-                    'checklist.id_rumah' => $decryptedID,
-                    'joblist.termin_jl' =>  $setTermin,
-                    'checklist.status_checklist' => "terkunci"
-                ])
-                ->update([
-                    'checklist.status_checklist' => "progress",
-                    'checklist.tgl_deadline' => $request->tanggalTermin,
-                ]);
-        }
-        if ($lantai->lantai_jl == 2) {
-            $nextMonth = date("Y-m-d", strtotime("+2 month"));
-            DB::table('checklist')
-                ->join('joblist', 'checklist.id_joblist', 'joblist.id_joblist')
-                ->where([
-                    'checklist.id_rumah' => $decryptedID,
-                    'joblist.termin_jl' =>  $setTermin,
-                    'checklist.status_checklist' => "terkunci"
-                ])
-                ->update([
-                    'checklist.status_checklist' => "progress",
-                    'checklist.tgl_deadline' => $request->tanggalTermin,
-                ]);
-        }
-
-
-        return redirect()->back()->with('success', 'Termin sudah menjadi termin ' . $setTermin);
-    }
-
-
-
-    public function getTerminChecklist($projek, $id_rumah)
-    {
-        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
-
-
-        $decryptedID = Crypt::decrypt($id_rumah);
-        $getRumah = $this->rumah->firstRumahWhereJoinCluster('*', 'rumah.id_rumah', '=', $decryptedID);
-
-
-
-        if (session()->has('user')) {
-            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
-
-            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
-            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
-                'user_menu.status_um' => 'aktif',
-                'user_menu.id_kategori' => $user->id_kategori
-            ])->collect();
-            // dd($getUserMenu);
-            $foundMatchingMenu = false;
-
-
-            foreach ($getUserMenu as $menu) {
-                if ($menu->url_menu == request()->segment(1)) {
-                    $foundMatchingMenu = true;
-                    break;
-                }
-            }
             $getChecklist = "";
 
-            if ($user->kategori == "Pengawas") {
-                $getChecklist = DB::table('checklist as a')
-                    ->selectRaw("SUM(subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*, j.*,
-                    IF(a.id_pengawas1 IS NULL,'N/A',b.nama_ua) as pengawas1,
-                    IF(a.id_pengawas2 IS NULL,'N/A',c.nama_ua) as pengawas2")
-                    ->where([
-                        ['a.id_rumah', '=', $decryptedID],
-                        ['a.id_pengawas1', '=', $user->id_user_admin],
-                    ])
-                    ->orWhere([
-                        ['a.id_rumah', '=', $decryptedID],
-                        ['a.id_pengawas2', '=', $user->id_user_admin],
-                    ])
-                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas1')
-                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas2')
-                    ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
-                    ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
-                    ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
-                    ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
-                    ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
-                    ->groupBy('jl.termin_jl')
-                    ->orderByRaw('jl.sort_jl ASC')
-                    ->get();
-                $getCountChecklist = DB::table('checklist as a')
-                    ->selectRaw("  a.*, r.*, jl.*, sub.*, clus.*, j.*,
-                        COUNT(a.status_cek_pengawas1) as countCekPengawas1,
-                        COUNT(a.status_cek_pengawas2) as countCekPengawas2,
-                        SUM(CASE WHEN a.status_cek_pengawas1 = 'selesai' THEN 1 ELSE 0 END) as countSelesaiPengawas1,
-                        SUM(CASE WHEN a.status_cek_pengawas2 = 'selesai' THEN 1 ELSE 0 END) as countSelesaiPengawas2
-                        ")
-                    ->where([
-                        ['a.id_rumah', '=', $decryptedID],
-                        ['a.id_pengawas1', '=', $user->id_user_admin],
-                    ])
-                    ->orWhere([
-                        ['a.id_rumah', '=', $decryptedID],
-                        ['a.id_pengawas2', '=', $user->id_user_admin],
-                    ])
-                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas1')
-                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas2')
-                    ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
-                    ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
-                    ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
-                    ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
-                    ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
-                    ->groupBy('jl.termin_jl')
-                    ->orderByRaw('jl.sort_jl ASC')
-                    ->get();
-            } else {
-                $getChecklist = DB::table('checklist as a')
-                    ->selectRaw("SUM(subbobot) as percentase,  a.*, r.*, jl.*, sub.*, clus.*, j.*,
-                    IF(a.id_pengawas1 IS NULL,'N/A',b.nama_ua) as pengawas1,
-                    IF(a.id_pengawas2 IS NULL,'N/A',c.nama_ua) as pengawas2")
-                    ->where([
-                        'r.id_projek' => $getProjek->id_projek,
-                        'r.id_rumah' => $decryptedID
-                    ])
-                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas1')
-                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas2')
-                    ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
-                    ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
-                    ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
-                    ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
-                    ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
-                    ->groupBy('jl.termin_jl')
-                    ->orderByRaw('jl.sort_jl ASC')
-                    ->get();
-                // dd($getChecklist);
-                $getCountChecklist = DB::table('checklist as a')
-                    ->selectRaw("  a.*, r.*, jl.*, sub.*, clus.*, j.*,
-                        COUNT(a.status_cek_pengawas1) as countCekPengawas1,
-                        COUNT(a.status_cek_pengawas2) as countCekPengawas2,
-                        SUM(CASE WHEN a.status_cek_pengawas1 = 'selesai' THEN 1 ELSE 0 END) as countSelesaiPengawas1,
-                        SUM(CASE WHEN a.status_cek_pengawas2 = 'selesai' THEN 1 ELSE 0 END) as countSelesaiPengawas2
-                        ")
-                    ->where([
-                        'r.id_projek' => $getProjek->id_projek,
-                        'r.id_rumah' => $decryptedID
-                    ])
-                    ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas1')
-                    ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas2')
-                    ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
-                    ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
-                    ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
-                    ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
-                    ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
-                    ->groupBy('jl.termin_jl')
-                    ->orderByRaw('jl.sort_jl ASC')
-                    ->get();
-            }
 
+            $getChecklistAll = DB::table('checklist as a')
+            ->selectRaw(" a.*, r.*, jl.*, sub.*, clus.*,
+IF(a.id_pengawas1 IS NULL,'N/A',c.nama_ua) as pengawas1,
+IF(a.id_pengawas2 IS NULL,'N/A',b.nama_ua) as pengawas2")
+            ->where([
+                'a.id_rumah' => $decryptedID,
+                'a.status_checklist' => 'selesai'
+
+            ])
+            ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas2')
+            ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas1')
+            ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
+            ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
+            ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
+            ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
+
+            ->orderByRaw('jl.termin_jl AND a.id_checklist DESC')
+            ->orderByRaw('jl.sort_jl ASC')
+            // ->groupBy('r.id_rumah')
+            ->get();
+                // $getCountChecklist = DB::table('checklist as a')
+                //     ->selectRaw("  a.*, r.*, jl.*, sub.*, clus.*, j.*,
+                //         COUNT(a.status_cek_pengawas1) as countCekPengawas1,
+                //         COUNT(a.status_cek_pengawas2) as countCekPengawas2,
+                //         SUM(CASE WHEN a.status_cek_pengawas1 = 'selesai' THEN 1 ELSE 0 END) as countSelesaiPengawas1,
+                //         SUM(CASE WHEN a.status_cek_pengawas2 = 'selesai' THEN 1 ELSE 0 END) as countSelesaiPengawas2
+                //         ")
+                //     ->where([
+                //         ['a.id_rumah', '=', $decryptedID],
+
+                //     ])
+                //     ->leftJoin('user_admin as b', 'b.id_user_admin', '=', 'a.id_pengawas1')
+                //     ->leftJoin('user_admin as c', 'c.id_user_admin', '=', 'a.id_pengawas2')
+                //     ->leftJoin('rumah as r', 'r.id_rumah', '=', 'a.id_rumah')
+                //     ->leftJoin('cluster as clus', 'r.codecluster', 'clus.codecluster')
+                //     ->leftJoin('joblist as jl', 'jl.id_joblist', '=', 'a.id_joblist')
+                //     ->leftJoin('subkon as sub', 'sub.id_subkon', '=', 'a.id_subkon')
+                //     ->Join('job as j', 'jl.id_job', '=', 'j.id_job')
+                //     ->groupBy('jl.termin_jl')
+                //     ->orderByRaw('jl.sort_jl ASC')
+                //     ->get();
+
+// dd($getChecklistAll);
 
 
             return view(
-                'V_Admin.terminChecklist',
+                'V_Guest\listChecklist',
                 compact(
-                    'user',
-                    'projekUser',
-                    'getRumah',
+                    'userPelanggan',
+                    'getPelangganProjek',
+                    // 'getRumah',
                     'getProjek',
-                    'getUserMenu',
-                    'getChecklist',
-                    'getCountChecklist'
+                    // 'getUserMenu',
+                    'getChecklistAll',
+                    // 'getCountChecklist'
+                    'notificationsCounter'
 
                 )
             );

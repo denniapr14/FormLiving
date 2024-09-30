@@ -89,6 +89,14 @@ class C_SuratPemesananRumah extends Controller
                     'formulir_pesanan.tgl_input_fp',
                     'desc'
                 );
+                $getFormulirPesananMobile = $this->formulirPesanan->getFormulirPesananProjekJoin6WhereArr(
+                    [
+                        'projek.nama_projek' => $projek,
+                        'user_admin.id_kepala_ua' => session::get('user')
+                    ],
+                    'formulir_pesanan.tgl_input_fp',
+                    'desc'
+                );
 
             } elseif (
                 $user->kategori == 'Sales' ||
@@ -107,6 +115,16 @@ class C_SuratPemesananRumah extends Controller
                     'formulir_pesanan.tgl_input_fp',
                     'desc'
                 );
+                $getFormulirPesananMobile = $this->formulirPesanan->getFormulirPesananProjekJoin6Where2(
+                    'projek.nama_projek',
+                    '=',
+                    $projek,
+                    'user_admin.id_user_admin',
+                    '=',
+                    $user->id_user_admin,
+                    'formulir_pesanan.tgl_input_fp',
+                    'desc'
+                );
             } else {
                 $getFormulirPesanan = $this->formulirPesanan->getFormulirPesananProjekJoin6Where(
                     'projek.nama_projek',
@@ -115,14 +133,23 @@ class C_SuratPemesananRumah extends Controller
                     'formulir_pesanan.tgl_input_fp',
                     'desc'
                 );
+                $getFormulirPesananMobile = $this->formulirPesanan->getFormulirPesananProjekJoin6Where(
+                    'projek.nama_projek',
+                    '=',
+                    $projek,
+                    'formulir_pesanan.tgl_input_fp',
+                    'desc'
+                );
                 // dd($getFormulirPesanan);
             }
+            // dd($getFormulirPesananMobile);
 
             return view('V_Admin.formulirPesanan',
                 compact(
                     'user',
                     'projekUser',
                     'getFormulirPesanan',
+                    'getFormulirPesananMobile',
                     'rumah',
                     'getProjek',
                     'getUserMenu'
@@ -190,6 +217,8 @@ class C_SuratPemesananRumah extends Controller
                 ]);
             }
 
+
+
             // if(empty($getPromo)){
             //     $dataHarga = [
             //         hargaPricelist => $getFormulirPesanan->harga_awal,
@@ -248,7 +277,45 @@ class C_SuratPemesananRumah extends Controller
         } else {
             $getPromo = '';
         }
+        $dataPembayaranUpdate = array();
 
+        for ($i = 0; $i < count($request->input('id_pembayaran')); $i++) {
+            $dataPembayaranUpdate[] = array(
+                'id_pem_rumah' => $request->input('id_pembayaran')[$i],
+                'detail_pr'    => $request->input('keterangan')[$i],
+                'tgl_pr'       => $request->input('tglPembayaran')[$i],
+                'harga_pr'     => removePeriods($request->input('nominal')[$i]),
+                'sisa_pr'      => removePeriods($request->input('nominal')[$i]),
+            );
+        }
+
+
+        // Now perform the update on the database
+        foreach ($dataPembayaranUpdate as $data) {
+            DB::table('pembayaran_rumah')
+                ->where('id_pem_rumah', $data['id_pem_rumah'])
+                ->update([
+                    'detail_pr' => $data['detail_pr'],
+                    'tgl_pr'    => $data['tgl_pr'],
+                    'harga_pr'  => $data['harga_pr'],
+                    'sisa_pr'   => $data['sisa_pr']
+                ]);
+        }
+        $dataPembayaranNew = array();
+        for ($k = 0; $k < count($request->input('tipePembayaran')); $k++){
+            $dataPembayaranNew[] = array(
+                'id_rumah' => $getFormulirPesanan->id_rumah,
+                'id_formulir' => $getFormulirPesanan->id_formulir,
+                'id_pelanggan' => $getFormulirPesanan->id_pelanggan,
+                'detail_pr'     => $request->input('tipePembayaran')[$k],
+                'tgl_pr'       => $request->input('tglPembayaranBaru')[$k],
+                'harga_pr'     => removePeriods($request->input('nominalBaru')[$k]),
+                'sisa_pr'      => removePeriods($request->input('nominalBaru')[$k]),
+            );
+        }
+        // dd($dataPembayaranNew); // This is for debugging to see the array structure
+        $this->pembayaranRumah->insertPembayaranRumah($dataPembayaranNew);
+        // dd($request->input('keterangan'));
         $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
 
         if (session()->has('user')) {
@@ -293,7 +360,7 @@ class C_SuratPemesananRumah extends Controller
                     'harga_bphtb' => $request->hargaBPHTB
                 ];
                 $dataUpdate = [
-                    
+
                     'no_fp' => $request->nofp . $request->nofp2,
                     'status_acc_fp'   => "accept",
                     'tgl_acc_fp'  => date('d-m-y h:m:s'),
@@ -308,7 +375,7 @@ class C_SuratPemesananRumah extends Controller
                     'email_plgn' => $request->email,
                 ];
             }
-
+            // dd($dataKKPR);
             if ($user->kategori == "AdminLegal") {
 
                 $dataUpdate = [
@@ -323,9 +390,13 @@ class C_SuratPemesananRumah extends Controller
                     ->where('id_rumah', $getFormulirPesanan->id_rumah)
                     ->update($dataRumah);
             }
-            DB::table('kalkulator_kpr')
-            ->where('id_formulir', $decryptedID)
-            ->update($dataKKPR);
+
+            if(!empty($dataKKPR)){
+                DB::table('kalkulator_kpr')
+                ->where('id_formulir', $decryptedID)
+                ->update($dataKKPR);
+            }
+
             DB::table('formulir_pesanan')
                 ->where('id_formulir', $decryptedID)
                 ->update($dataUpdate);

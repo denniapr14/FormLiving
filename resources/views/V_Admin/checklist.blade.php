@@ -244,36 +244,33 @@
                                         </dl>
                                     </td>
                                     <td>
-                                        <div class="row" style="padding-bottom: 1rem; width:80%">
-                                            <div class="col-md-3">
                                                 <a href="{{ route('getTerminChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
                                                     class="btn btn-outline-info"><i class="fas fa-clipboard-list    ">
                                                         Ceklist</i></a><br>
-                                            </div>
+
 
                                             @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
-                                                <div class="col-md-3">
+
                                                     <a href="{{ route('nextTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
                                                         class="btn btn-outline-info"><i class="fa fa-chevron-right"
                                                             aria-hidden="true"> Termin</i></a>
-                                                </div>
-                                                <div class="col-md-3">
+
                                                     <a href="{{ route('printChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
                                                         class="btn btn-outline-info"><i class="fa fa-print"
                                                             aria-hidden="true"></i></a>
-                                                </div>
+
                                             @endif
 
-                                        </div>
+
 
                                         @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
-                                            <div class="row">
-                                                <div class="col-md-3">
+
+                                        <br>
                                                     <a href="#" class="btn btn-outline-info" data-toggle="modal"
                                                     data-target="#ChangePengawas">
                                                     <i class="fas fa-edit    "></i> Pengawas
                                                 </a>
-                                                </div>
+
 
 
 
@@ -325,12 +322,12 @@
                                                 </div>
 
 
-                                                <div class="col-md-3">
+
                                                     <a href="#" class="btn btn-outline-info" data-toggle="modal"
                                                         data-target="#dateModal">
                                                         <i class="fa fa-calendar" aria-hidden="true"></i> Deadline
                                                     </a>
-                                                </div>
+
 
                                                 <div class="modal fade" id="dateModal" tabindex="-1" role="dialog"
                                                     aria-labelledby="pinModalLabel" aria-hidden="true">
@@ -369,7 +366,7 @@
                                                 </div>
 
 
-                                            </div>
+
                                         @else
                                         @endif
 

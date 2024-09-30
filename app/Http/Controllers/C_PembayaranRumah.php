@@ -35,13 +35,14 @@ class C_PembayaranRumah extends Controller
         $this->rincianPembayaran = new RincianPembayaran();
         $this->userMenu = new UserMenu();
     }
-    public function listPembayaranRumah($getProjek, $id) {
+    public function listPembayaranRumah($getProjek, $id)
+    {
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $getProjek);
         $decryptedID = Crypt::decrypt($id);
         $getPembayaranRumah = $this->pembayaranRumah->firstPembayaranRumahWhere('*', 'id_formulir', '=', $decryptedID);
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $getPembayaranRumah->id_rumah);
         $getPembayaranRumah = $this->pembayaranRumah->getPembayaranRumahWhereAll('*', 'id_formulir', '=', $decryptedID);
-        
+
         // $getRincianPembayaran = $this->pembayaranRumah->getPembayaranRumahRincianJoinWhereAll('*', 'pembayaran_rumah.id_pem_rumah', '=', $decryptedID);
         // dd($getPembayaranRumah);
         if (session()->has('user')) {
@@ -147,15 +148,15 @@ class C_PembayaranRumah extends Controller
                 $img = $request->file('image');
 
                 // Generate a unique filename based on the current timestamp and the original file extension
-                $filename = $getRumah->blok.'-'.$getRumah->nomor.'-pembayaran-'.time().'.'.$img->getClientOriginalExtension();
+                $filename = $getRumah->blok . '-' . $getRumah->nomor . '-pembayaran-' . time() . '.' . $img->getClientOriginalExtension();
 
                 // Store the image in the 'images' folder under the 'public' disk
                 $path = 'Home/images/pembayaran/';
                 $img = Image::make($img);
-                $img->save(public_path($path.$filename));
+                $img->save(public_path($path . $filename));
                 $img->resize(100, 100, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($path.'/'.$filename);
+                })->save($path . '/' . $filename);
             }
             $getSisa = $getPembayaranRumah->sisa_pr - $request->harga;
             $statusSisa = 'kurang';
@@ -183,14 +184,14 @@ class C_PembayaranRumah extends Controller
             // dd($dataRincianPembayaran);
 
             DB::table('pembayaran_rumah')
-            ->where('id_pem_rumah', $getPembayaranRumah->id_pem_rumah)
-            ->update(
-                $dataPembayaran
-            );
+                ->where('id_pem_rumah', $getPembayaranRumah->id_pem_rumah)
+                ->update(
+                    $dataPembayaran
+                );
 
             $this->rincianPembayaran->insertRincianPembayaran($dataRincianPembayaran);
 
-            return redirect()->route('listPembayaranRumah.admin', ['projek' => $getProjek->nama_projek, 'id' => Crypt::encrypt($getPembayaranRumah->id_formulir)])->with('success', 'Pembayaran Rumah '.$getRumah->blok.'-'.$getRumah->nomor.' berhasil di simpan');
+            return redirect()->route('listPembayaranRumah.admin', ['projek' => $getProjek->nama_projek, 'id' => Crypt::encrypt($getPembayaranRumah->id_formulir)])->with('success', 'Pembayaran Rumah ' . $getRumah->blok . '-' . $getRumah->nomor . ' berhasil di simpan');
         } else {
             return redirect('/login');
         }
@@ -269,11 +270,35 @@ class C_PembayaranRumah extends Controller
                     $dataUpdate
                 );
 
-            return redirect('/list-pembayaran-rumah-admin/'.$getProjek->nama_projek.'/'.
-            Crypt::encrypt($dtPembayaran->id_formulir)
+            return redirect(
+                '/list-pembayaran-rumah-admin/' . $getProjek->nama_projek . '/' .
+                    Crypt::encrypt($dtPembayaran->id_formulir)
             )->with('success', 'Jumlah pembayaran rumah telah terupdate');
         } else {
             return redirect('/login');
+        }
+    }
+
+    public function deletePembayaran($id)
+    {
+        try {
+            // Find and delete the record by ID
+            $deleted = DB::table('pembayaran_rumah')->where('id_pem_rumah', $id)->delete();
+
+            // Check if the deletion was successful
+            if ($deleted) {
+                // Return a JSON response indicating success
+                return response()->json(['success' => true, 'message' => 'Record deleted successfully.']);
+            } else {
+                // Return a JSON response indicating the record wasn't found
+                return response()->json(['success' => false, 'message' => 'Record not found.'], 404);
+            }
+        } catch (\Exception $e) {
+            // Log the error for debugging purposes
+            // \Log::error("Error deleting record: " . $e->getMessage());
+
+            // Return a JSON response indicating failure with a 500 status code
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 }
