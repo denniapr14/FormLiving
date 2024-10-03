@@ -391,18 +391,19 @@
                                             value="{{ $getFormulirPesanan->no_telp_plgn }}" style="width: 95%"></td>
                                 </tr>
                                 <tr>
-                                    <td>Email</td>
-                                    <td>: <input type="email" name="tlp"
-                                            value="{{ $getFormulirPesanan->email_plgn }}" style="width: 95%"></td>
+                                    <td>rupiahNonNon</td>
+                                    <td>: <input type="text" name="email"
+                                            value="{{ $getFormulirPesanan->rupiahNonNon_plgn }}" style="width: 95%"></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         Tempat & Tgl. Lahir
                                     </td>
                                     <td>
-                                        : <input type="text" name="tlp"
+                                        : <input type="text" name="tempat"
                                             value="{{ $getFormulirPesanan->tempat_lahir_plgn }}" style="width: 30%">,
-                                        {{ tgl_indo(date('Y-m-d', strtotime($getFormulirPesanan->tgl_lahir_plgn))) }}
+                                            <input type="date" name="tanggalLahir" value="{{ $getFormulirPesanan->tgl_lahir_plgn }}">
+                                        {{-- {{ tgl_indo(date('Y-m-d', strtotime($getFormulirPesanan->tgl_lahir_plgn))) }} --}}
                                     </td>
                                 </tr>
                                 <tr>
@@ -475,14 +476,14 @@
                                                         Rp.
                                                     </p>
                                                 </td>
-                                                <td style="width:86pt">
+                                                <td style="width:10rem">
                                                     <p class="s2"
                                                         style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
                                                         @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
-                                                            <input type="number" name="hargaPricelist" class="form-control"
-                                                                value="{{ $price['hargaPricelist'] }}">
+                                                            <input type="text" name="hargaPricelist" class="form-control" oninput="formatInput(this)"
+                                                                value="{{ rupiahNon($price['hargaPricelist']) }}">
                                                         @else
-                                                            {{ rupiah($price['hargaPricelist']) }}
+                                                            {{ rupiahNon($price['hargaPricelist']) }}
                                                         @endif
                                                     </p>
                                                 </td>
@@ -507,16 +508,16 @@
                                                         @if (!empty($price))
                                                             @if ($price['hargaDiskon'] = 0)
                                                                 @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
-                                                                    <input type="number" name="hargaDiskon"
+                                                                    <input type="text" name="hargaDiskon" oninput="formatInput(this)"
                                                                         class="form-control" value="0">
                                                                 @else
                                                                     0,-
                                                                 @endif
                                                             @else
                                                                 @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
-                                                                    <input type="number" name="hargaDiskon"
+                                                                    <input type="text" name="hargaDiskon" oninput="formatInput(this)"
                                                                         class="form-control"
-                                                                        value="{{ $price['hargaDiskon'] }}">
+                                                                        value="{{ rupiahNon($price['hargaDiskon']) }}">
                                                                 @else
                                                                     0,-
                                                                 @endif
@@ -546,10 +547,10 @@
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 11pt;text-align: right;">
                                                 @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
-                                                    <input type="number" name="hargaNetto" class="form-control"
-                                                        value="{{ $getFormulirPesanan->total_harga }}">
+                                                    <input type="text" name="hargaNetto" class="form-control" oninput="formatInput(this)"
+                                                        value="{{ rupiahNon($getFormulirPesanan->harga_netto) }}">
                                                 @else
-                                                    {{ rupiah($getFormulirPesanan->total_harga) }}
+                                                    {{ rupiahNon($getFormulirPesanan->harga_netto) }}
                                                 @endif
 
                                             </p>
@@ -573,8 +574,8 @@
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                                 @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
-                                                    <input type="number" name="hargaPPN" class="form-control"
-                                                        value="{{ $price['hargaPPN'] }}">
+                                                    <input type="text" name="hargaPPN" class="form-control" oninput="formatInput(this)"
+                                                        value="{{ rupiahNon($price['hargaPPN']) }}">
                                                 @else
                                                     {{ number_format($price['hargaPPN'], 2) }}
                                                 @endif
@@ -598,8 +599,8 @@
                                             <p class="s2"
                                                 style="padding-right: 5pt;text-indent: 0pt;line-height: 13pt;text-align: right;">
                                                 @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
-                                                    <input type="number" name="hargaBPHTB" class="form-control"
-                                                        value="{{ $price['hargaBPHTB'] }}">
+                                                    <input type="text" name="hargaBPHTB" class="form-control" oninput="formatInput(this)"
+                                                        value="{{ rupiahNon($price['hargaBPHTB']) }}">
                                                 @else
                                                     {{ number_format($price['hargaBPHTB'], 2) }}
                                                 @endif
@@ -618,9 +619,15 @@
                                                 Rp.</p>
                                         </td>
                                         <td style="width:86pt;border-top-style:solid;border-top-width:1pt">
-                                            <p class="s2"
-                                                style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
-                                                {{ rupiah($getFormulirPesanan->total_harga) }},-</p>
+                                            @if ($user->kategori == 'StaffAcc' || $user->kategori == 'AdminAccounting' || $user->kategori == 'SuperAdmin')
+                                            <input type="text" name="hargaTotal" class="form-control" oninput="formatInput(this)"
+                                                value="{{ rupiahNon($getFormulirPesanan->total_harga) }}">
+                                        @else
+                                        <p class="s2"
+                                        style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
+                                        {{ rupiahNon($getFormulirPesanan->total_harga) }},-</p>
+                                        @endif
+                                          
                                         </td>
                                     </tr>
                                     </table>
@@ -652,29 +659,56 @@
 
                             <?php $no = 1; ?>
                             @foreach ($getPembayaranRumah as $dtpem)
-                                <tr style="height:16pt">
-                                    <td style="text-align: center;" class="row-number">{{ $no }}</td>
-                                    <td>
-                                        <input type="text" name="id_pembayaran[]" value="{{ $dtpem->id_pem_rumah }}" hidden>
-                                        <input type="text" name="keterangan[]" value="{{ $dtpem->detail_pr }}" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="date" value="{{ $dtpem->tgl_pr }}" name="tglPembayaran[]">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="nominal[]" value="{{ rupiah($dtpem->harga_pr) }}"  oninput="formatInput(this)">
-                                        @if ($dtpem->sisa_pr <= 0)
-                                            <span class="badge badge-secondary"><i class="fa fa-check" aria-hidden="true"></i></span>
-                                        @endif
-                                    </td>
-                                    @if (in_array($user->kategori, ['StaffAcc', 'SuperAdmin', 'AdminAccounting']))
-                                    <td style="text-align: center;">
-                                        <a href="#" class="remove btn btn-outline-danger" data-id="{{ $dtpem->id_pem_rumah }}" onclick="openDeleteModal(this)">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
+                            @if ($dtpem->detail_pr =="KPR")
+                            <tr style="height:16pt">
+                                <td style="text-align: center;" class="row-number">{{ $no }}</td>
+                                <td>
+                                    <input type="text" name="id_pembayaran[]" value="{{ $dtpem->id_pem_rumah }}" hidden>
+                                    <input type="text" name="keterangan[]" value="{{ $dtpem->detail_pr }}" style="width: 100%;">
+                                </td>
+                                <td>
+                                    <input type="text" value="00/00/0000" name="tglPembayaran[]">
+                                </td>
+                                <td>
+                                    <input type="text" name="nominal[]" value="{{ rupiahNon($dtpem->harga_pr) }}"  oninput="formatInput(this)">
+                                    @if ($dtpem->sisa_pr <= 0)
+                                        <span class="badge badge-secondary"><i class="fa fa-check" aria-hidden="true"></i></span>
                                     @endif
-                                </tr>
+                                </td>
+                                @if (in_array($user->kategori, ['StaffAcc', 'SuperAdmin', 'AdminAccounting']))
+                                <td style="text-align: center;">
+                                    <a href="#" class="remove btn btn-outline-danger" data-id="{{ $dtpem->id_pem_rumah }}" onclick="openDeleteModal(this)">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                @endif
+                            </tr>
+                            @else
+                            <tr style="height:16pt">
+                                <td style="text-align: center;" class="row-number">{{ $no }}</td>
+                                <td>
+                                    <input type="text" name="id_pembayaran[]" value="{{ $dtpem->id_pem_rumah }}" hidden>
+                                    <input type="text" name="keterangan[]" value="{{ $dtpem->detail_pr }}" style="width: 100%;">
+                                </td>
+                                <td>
+                                    <input type="date" value="{{ $dtpem->tgl_pr }}" name="tglPembayaran[]">
+                                </td>
+                                <td>
+                                    <input type="text" name="nominal[]" value="{{ rupiahNon($dtpem->harga_pr) }}"  oninput="formatInput(this)">
+                                    @if ($dtpem->sisa_pr <= 0)
+                                        <span class="badge badge-secondary"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                    @endif
+                                </td>
+                                @if (in_array($user->kategori, ['StaffAcc', 'SuperAdmin', 'AdminAccounting']))
+                                <td style="text-align: center;">
+                                    <a href="#" class="remove btn btn-outline-danger" data-id="{{ $dtpem->id_pem_rumah }}" onclick="openDeleteModal(this)">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                @endif
+                            </tr>
+                            @endif
+                               
                                 <?php $no++; ?>
                             @endforeach
 

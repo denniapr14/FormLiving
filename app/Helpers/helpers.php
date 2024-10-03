@@ -7,11 +7,17 @@ use Illuminate\Support\Facades\Http;
 if (!function_exists('rupiah')) {
     function rupiah($angka)
     {
+        $hasil_rupiah = number_format($angka, 0, ',', '.') . ',00';
+        return $hasil_rupiah;
+    }
+}
+if (!function_exists('rupiahNon')) {
+    function rupiahNon($angka)
+    {
         $hasil_rupiah = number_format($angka, 0, ',', '.');
         return $hasil_rupiah;
     }
 }
-
 if (!function_exists('penyebut')) {
     function penyebut($nilai)
     {

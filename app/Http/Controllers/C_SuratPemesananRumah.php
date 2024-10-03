@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF; // Gunakan facade PDF
+
 
 class C_SuratPemesananRumah extends Controller
 {
@@ -280,6 +282,9 @@ class C_SuratPemesananRumah extends Controller
         $dataPembayaranUpdate = array();
 
         for ($i = 0; $i < count($request->input('id_pembayaran')); $i++) {
+            // if ($request->in) {
+            //     # code...
+            // }
             $dataPembayaranUpdate[] = array(
                 'id_pem_rumah' => $request->input('id_pembayaran')[$i],
                 'detail_pr'    => $request->input('keterangan')[$i],
@@ -340,6 +345,8 @@ class C_SuratPemesananRumah extends Controller
                     'alamat_plgn' => $request->alamat,
                     'no_telp_plgn' => $request->tlp,
                     'email_plgn' => $request->email,
+                    'tempat_lahir_plgn' => $request->tempat,
+                    'tgl_lahir_plgn'    => $request->tanggalLahir
                 ];
             }
 
@@ -355,9 +362,12 @@ class C_SuratPemesananRumah extends Controller
 
             if ($user->kategori == "AdminAccounting") {
                 $dataKKPR = [
-                    'total_diskon' => $request->hargaDiskon,
-                    'harga_netto'  => $request->hargaNetto,
-                    'harga_bphtb' => $request->hargaBPHTB
+                    'harga_awal'    => removePeriods($request->hargaPricelist),
+                    'total_diskon' => removePeriods($request->hargaDiskon),
+                    'harga_netto'  => removePeriods($request->hargaNetto),
+                    'harga_bphtb' => removePeriods($request->hargaBPHTB),
+                    'harga_ppn'     => removePeriods($request->hargaPPN),
+                    'total_harga'  => removePeriods($request->hargaTotal),
                 ];
                 $dataUpdate = [
 
@@ -373,6 +383,8 @@ class C_SuratPemesananRumah extends Controller
                     'alamat_plgn' => $request->alamat,
                     'no_telp_plgn' => $request->tlp,
                     'email_plgn' => $request->email,
+                    'tempat_lahir_plgn' => $request->tempat,
+                    'tgl_lahir_plgn'    => $request->tanggalLahir
                 ];
             }
             // dd($dataKKPR);

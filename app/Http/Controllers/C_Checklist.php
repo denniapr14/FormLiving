@@ -222,7 +222,7 @@ class C_Checklist extends Controller
             ])
             ->orderByDesc('id_checklist')
             ->first();
-
+            
         // dd($lantai);
 
         $setTermin = $lantai->termin_jl + 1;
@@ -812,6 +812,20 @@ class C_Checklist extends Controller
                 ];
                 // Update the database record with the new photo path
 
+            }
+            if ($request->status_checklist == "selesai") {
+                $dataInput = array(
+                    'id_pelanggan' => $getChecklist->id_pelanggan,
+                    'from_pelanggan_notif' => "Teknik",
+                    'icon_pelanggan_notif' => "fa fa-building",
+                    'title_pelanggan_notif' => "Pembangunan Rumah " .$getRumah->blok.' - '.$getRumah->nomor,
+                    'msg_notif' => "Pekerjaan pembangunan untuk proyek ".$getChecklist->nama_jl." di ".$getRumah->blok.' - '.$getRumah->nomor." telah mencapai Termin ".$getChecklist->termin_jl.". Pengawas proyek kami baru saja mengupdate statusnya. Mohon cek dashboard Anda untuk informasi lebih lanjut.",
+                    'tgl_notif' => Carbon::now(), // Set tanggal sekarang
+                    'status_notif' => 'unread',
+                );
+            
+                // Insert ke database menggunakan DB facade
+                DB::table('pelanggan_notif')->insert($dataInput);
             }
 
             // dd($dataInput);
