@@ -139,6 +139,7 @@ $notificationsCounter = CounterNotifPelanggan::where('id_pelanggan',$userPelangg
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
         $getPembayaranRumah = $this->pembayaranRumah->firstPembayaranRumahWhere('*', 'id_pem_rumah', '=', $decryptedID);
+        $getPelanggan = $this->userPelanggan->firstUserPelangganWhere('id_pelanggan','=',$getPembayaranRumah->id_pelanggan);
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $getPembayaranRumah->id_rumah);
         // dd($getPembayaranRumah);
 
@@ -182,6 +183,18 @@ $notificationsCounter = CounterNotifPelanggan::where('id_pelanggan',$userPelangg
                 'status_rp' => $statusSisa,
             ];
 
+            $dataInput = array(
+                'id_pelanggan' => $getPembayaranRumah->id_pelanggan,
+                'from_pelanggan_notif' => "Accounting",
+                'icon_pelanggan_notif' => "fa fa-file-invoice-dollar",
+                'title_pelanggan_notif' => "Pembangunan Rumah " .$getRumah->blok.' - '.$getRumah->nomor,
+                'msg_notif' => "Terima kasih, ".$getPelanggan->nama_plgn."! Pembayaran Anda sebesar Rp. ".rupiahNon( $request->harga)." telah berhasil diterima.",
+                'tgl_notif' => Carbon::now(), // Set tanggal sekarang
+                'status_notif' => 'unread',
+            );
+
+            // Insert ke database menggunakan DB facade
+            DB::table('pelanggan_notif')->insert($dataInput);
             // echo "<pre>";
             // print_r ($dataPembayaran);
             // echo "</pre>";

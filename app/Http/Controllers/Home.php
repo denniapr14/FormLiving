@@ -110,6 +110,12 @@ class Home extends Controller
             ])->first();
             return view($namaPage, compact('user', 'cluster1', 'dataProjek'));
         }
+        if (session()->has('guest')) {
+            $userPelanggan = \App\Models\UserPelanggan::where([
+                'id_pelanggan' => session::get('guest'),
+            ])->first();
+            return view($namaPage, compact('userPelanggan', 'cluster1', 'dataProjek'));
+        }
         return view($namaPage, compact('cluster1', 'dataProjek'));
     }
 

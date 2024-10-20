@@ -81,7 +81,7 @@
 
         <div class="action">
 
-            <a href="/dashboard-admin/Greenland" type="button" class="btn btn-outline-secondary">{{
+            <a href="/dashboard-guest/Greenland" type="button" class="btn btn-outline-secondary">{{
                 $userPelanggan->nama_plgn }}</a>
             {{-- <a href="/my-cart">
                 <img src="{{ asset('Home') }}/images/ic-cart.png" alt="">

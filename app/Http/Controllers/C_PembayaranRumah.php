@@ -9,11 +9,13 @@ use App\Models\Rumah;
 use App\Models\UserAdmin;
 use App\Models\UserMenu;
 use App\Models\UserProjek;
+use App\Models\UserPelanggan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
+use Carbon\Carbon;
 
 class C_PembayaranRumah extends Controller
 {
@@ -24,7 +26,7 @@ class C_PembayaranRumah extends Controller
     public $rincianPembayaran;
     public $rumah;
     public $userMenu;
-
+    public $userPelanggan;
     public function __construct()
     {
         $this->rumah = new Rumah();
@@ -34,6 +36,7 @@ class C_PembayaranRumah extends Controller
         $this->projek = new Projek();
         $this->rincianPembayaran = new RincianPembayaran();
         $this->userMenu = new UserMenu();
+        $this->userPelanggan = new UserPelanggan;
     }
     public function listPembayaranRumah($getProjek, $id)
     {
@@ -135,6 +138,7 @@ class C_PembayaranRumah extends Controller
         $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
         $decryptedID = Crypt::decrypt($id);
         $getPembayaranRumah = $this->pembayaranRumah->firstPembayaranRumahWhere('*', 'id_pem_rumah', '=', $decryptedID);
+        $getPelanggan = $this->userPelanggan->firstUserPelangganWhere('id_pelanggan','=',$getPembayaranRumah->id_pelanggan);
         $getRumah = $this->rumah->getRumahWhere('id_rumah', '=', $getPembayaranRumah->id_rumah);
         // dd($getPembayaranRumah);
 
@@ -177,7 +181,18 @@ class C_PembayaranRumah extends Controller
                 'tgl_bayar_rp' => $request->tanggal,
                 'status_rp' => $statusSisa,
             ];
+            $dataInput = array(
+                'id_pelanggan' => $getPembayaranRumah->id_pelanggan,
+                'from_pelanggan_notif' => "Accounting",
+                'icon_pelanggan_notif' => "fa fa-file-invoice-dollar",
+                'title_pelanggan_notif' => "Pembangunan Rumah " .$getRumah->blok.' - '.$getRumah->nomor,
+                'msg_notif' => "Terima kasih, ".$getPelanggan->nama_plgn."! Pembayaran Anda sebesar Rp. ".rupiahNon( $request->harga)." telah berhasil diterima.",
+                'tgl_notif' => Carbon::now(), // Set tanggal sekarang
+                'status_notif' => 'unread',
+            );
 
+            // Insert ke database menggunakan DB facade
+            DB::table('pelanggan_notif')->insert($dataInput);
             // echo "<pre>";
             // print_r ($dataPembayaran);
             // echo "</pre>";
@@ -269,6 +284,8 @@ class C_PembayaranRumah extends Controller
                 ->update(
                     $dataUpdate
                 );
+
+
 
             return redirect(
                 '/list-pembayaran-rumah-admin/' . $getProjek->nama_projek . '/' .

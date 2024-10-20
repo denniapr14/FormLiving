@@ -1,7 +1,7 @@
 @section('navbar-profile')
 <div class="navbar-mobile active" style="height:4.5rem">
     <a href="/" class="item">
-        <svg width="20" height="20"  viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M2.5 7.49999L10 1.66666L17.5 7.49999V16.6667C17.5 17.1087 17.3244 17.5326 17.0118 17.8452C16.6993 18.1577 16.2754 18.3333 15.8333 18.3333H4.16667C3.72464 18.3333 3.30072 18.1577 2.98816 17.8452C2.67559 17.5326 2.5 17.1087 2.5 16.6667V7.49999Z"
                 stroke="#B8BABC" stroke-linecap="round" stroke-linejoin="round" />
@@ -31,31 +31,31 @@
         </svg>
         <p>Perumahan</p>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="justify-content: center;width: 100%;
+    transform: translate3d(0px, -54px, 0px);">
+        <li >
             <a class="dropdown-item" href="/Housing/Greenland">
-                <div>
+                <div class="balloon">
                     <center>
-                        <img style="width: 50%;
-                        height: 55%;" src="{{ asset('Home') }}/images/logo-tidar-green.png" alt="">
+                        <img style="width:60%" src="{{ asset('Home') }}/images/logo-tidar-green-large.png" alt="">
                     </center>
                 </div>
             </a>
         </li>
         <br>
 
-        <li>
-            <a class="dropdown-item" href="/Housing/Kalm">
-                <div>
-                    <center>
-                        <img style="width:40%; height:40%;" src="{{ asset('Home') }}/images/logo-kalm.png" alt="">
-                    </center>
-                </div>
-            </a>
-        </li>
+        <!--<li>-->
+        <!--    <a class="dropdown-item" href="/Housing/Kalm">-->
+        <!--        <div>-->
+        <!--            <center>-->
+        <!--                <img style="width:40%; height:40%;" src="{{ asset('Home') }}/images/logo-kalm.png" alt="">-->
+        <!--            </center>-->
+        <!--        </div>-->
+        <!--    </a>-->
+        <!--</li>-->
     </ul>
     @if (!empty(Session::get('guest')))
-    <a href="" class="item">
+    <a href="/dashboard-guest/Greenland" class="item">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" id="user">
             <path fill="#B8BABC"
                 d="M7.763 2A6.77 6.77 0 0 0 1 8.763c0 1.807.703 3.505 1.98 4.782a6.718 6.718 0 0 0 4.783 1.981 6.77 6.77 0 0 0 6.763-6.763A6.77 6.77 0 0 0 7.763 2ZM3.675 13.501a5.094 5.094 0 0 1 3.958-1.989c.024.001.047.007.071.007h.023c.022 0 .042-.006.064-.007a5.087 5.087 0 0 1 3.992 2.046 6.226 6.226 0 0 1-4.02 1.468 6.212 6.212 0 0 1-4.088-1.525zm4.032-2.494c-.025 0-.049.004-.074.005a2.243 2.243 0 0 1-2.167-2.255 2.246 2.246 0 0 1 2.262-2.238 2.246 2.246 0 0 1 2.238 2.262c0 1.212-.97 2.197-2.174 2.232-.028-.001-.056-.006-.085-.006Zm4.447 2.215a5.594 5.594 0 0 0-3.116-2.052 2.749 2.749 0 0 0 1.428-2.412A2.747 2.747 0 0 0 7.704 6.02a2.747 2.747 0 0 0-2.738 2.762 2.73 2.73 0 0 0 1.422 2.386 5.602 5.602 0 0 0-3.081 1.995 6.22 6.22 0 0 1-1.806-4.398 6.27 6.27 0 0 1 6.263-6.263 6.27 6.27 0 0 1 6.263 6.263 6.247 6.247 0 0 1-1.873 4.457z">

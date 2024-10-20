@@ -42,8 +42,8 @@
 
         }
 
-        
-        
+
+
         .zoomIn {
             position: absolute;
             z-index: 2;
@@ -74,7 +74,7 @@
                 height: 300px;
             }
 
-            
+
 
             .zoomIn {
                 position: absolute;
@@ -96,8 +96,8 @@
                 border-radius: 0.5rem;
             }
         }
-        
-    
+
+
 
     </style>
     <div class="cluster">
@@ -232,7 +232,7 @@
                                     return iro;
                                 }
 
-                               
+
                                 // Function to close the popover
                     </script>
 
@@ -301,7 +301,7 @@
                         </div>
                     @endif
                 </div>
-                
+
         <style>
         .mobile-only .legend-item{
             margin-bottom: 10px;
@@ -349,9 +349,9 @@
                     </div>
                 </div>
                     </div>
-                   
+
                    <!--Mobile only view legend-->
-                
+
                 <div class="mobile-only">
                     <div class="d-flex flex-wrap justify-content-start">
                     <table style="border:none; padding-left:0;">
@@ -376,14 +376,14 @@
                     </table>
                 </div>
                 </div>
-                
+
                 </center>
-                
+
             </div>
         </div>
     </div>
 </div>
-       
+
                 <br>
                  <h2 style="text-align:center;">
                      Unit Kita
@@ -437,7 +437,7 @@
                                     @foreach ($rumah as $home)
                                         @if ($home->codecluster == $cluster->codecluster)
                                             <div class="col-6 col-lg-3">
-                                                <a href="{{ route('simulationTipe', $home->id_rumah) }}">
+                                                <a href="{{ Auth::check('guest') ? route('simulationTipe', $home->id_rumah) : '#' }}">
                                                     <div class="item">
                                                         <div class="item-image">
                                                             @if ($home->img_rumah != null)

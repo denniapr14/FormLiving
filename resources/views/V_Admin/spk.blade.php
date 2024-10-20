@@ -73,19 +73,27 @@
                             <td>{{ $spp->blok }} - {{ $spp->nomor }}</td>
                             <td>
                                 @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
-                                @foreach ($getSPK as $spk)
-                                @if ($spp->id_spp == $spk->id_spp)
-                                <p>SPK Telah di buat</p>
-                                @else
+                                @php
+                                    $spkExist = false;
+                                @endphp
 
-                                <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
-                                    class="btn btn-outline-info "><i class="fa fa-plus" aria-hidden="true"></i> SPK</a>
-                                @endif
+                                @foreach ($getSPK as $spk)
+                                    @if ($spp->id_spp == $spk->id_spp)
+                                        <p>SPK Telah dibuat</p>
+                                        @php
+                                            $spkExist = true;
+                                        @endphp
+                                        @break
+                                    @endif
                                 @endforeach
-                                <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
-                                    class="btn btn-outline-info "><i class="fa fa-plus" aria-hidden="true"></i> SPK</a>
-                                @else
+
+                                @if (!$spkExist)
+                                    <a href="{{ route('addSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spp->id_spp)]) }}"
+                                        class="btn btn-outline-info">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> SPK
+                                    </a>
                                 @endif
+                            @endif
                             </td>
 
 

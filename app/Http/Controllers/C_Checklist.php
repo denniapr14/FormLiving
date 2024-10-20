@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
+use Carbon\Carbon;
 
 use App\Models\Job;
 use App\Models\Projek;
@@ -222,7 +223,7 @@ class C_Checklist extends Controller
             ])
             ->orderByDesc('id_checklist')
             ->first();
-            
+
         // dd($lantai);
 
         $setTermin = $lantai->termin_jl + 1;
@@ -823,7 +824,7 @@ class C_Checklist extends Controller
                     'tgl_notif' => Carbon::now(), // Set tanggal sekarang
                     'status_notif' => 'unread',
                 );
-            
+
                 // Insert ke database menggunakan DB facade
                 DB::table('pelanggan_notif')->insert($dataInput);
             }
