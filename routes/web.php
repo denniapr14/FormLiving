@@ -36,7 +36,7 @@ use App\Http\Controllers\C_LaporanHarian;
 use App\Http\Controllers\C_LampuTaman;
 use App\Http\Controllers\C_TamanREM;
 use App\Http\Controllers\C_CicilanSPK;
-
+use App\Http\Controllers\C_Komisi;
 use App\Http\Controllers\Ceo_Dashboard;
 // ADMIN
 use App\Http\Controllers\Direktur_Dashboard;
@@ -514,6 +514,11 @@ Route::get('/buat-harian-taman-REM/{projek}', [C_TamanREM::class, 'addHarianTama
 route::post('/buat-harian-taman-REM/action/{projek}', [C_TamanREM::class, 'addHarianTamanREMAction'])->name('addHarianTamanREMAction.admin');
 
 route::get('/pesandong/{param}', [LaporanRem::class, 'test_message'])->name('test.message');
+
+
+
+// KOMISI
+route::get('/komisi/{projek}', [C_Komisi::class, 'index'])->name('komisi.admin');
 
 
 // USER PELANGGAN
