@@ -518,10 +518,13 @@ route::get('/pesandong/{param}', [LaporanRem::class, 'test_message'])->name('tes
 
 
 // KOMISI
-route::get('/komisi/{projek}', [C_Komisi::class, 'index'])->name('komisi.admin');
+route::get('/komisi/{projek}', [C_Komisi::class, 'Komisi'])->name('komisi.admin');
+route::get('/tambah-komisi/{projek}/{id_formulirc}', [C_Komisi::class, 'addKomisiAction'])->name('addKomisi.admin');
+route::post('/edit-komisi/{projek}/{id_komisi}', [C_Komisi::class, 'editKomisiAction'])->name('editKomisi.admin');
 
 
-// USER PELANGGAN
+
+//  ================================= USER PELANGGAN =====================================
 route::get('/dashboard-guest/{projek}',[C_DashboardPelanggan::class,'index'])->name('dashboard.guest');
 
 // USER PELANGGAN PEMBAYARAN

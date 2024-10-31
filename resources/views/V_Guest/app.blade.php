@@ -431,7 +431,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-small-cap">
+                        {{--  <li class="nav-small-cap">
                             <i class="mdi mdi-dots-horizontal"></i>
                             <span class="hide-menu">Pusat Bantuan</span>
                         </li>
@@ -456,7 +456,7 @@
                                 <i class="fa fa-exclamation-circle"></i>
                                 <span class="hide-menu">About</span>
                             </a>
-                        </li>
+                        </li>  --}}
 
                     </ul>
                 </nav>

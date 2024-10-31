@@ -25,8 +25,8 @@
                                         Bulan ini
                                     </center>
                                 </h6>
-                                
-                                    
+
+
                                 @if ($getBillMonthNow)
                                     <center>
                                         <h4>{{ ($getBillMonthNow->detail_pr) }}</h4>
@@ -43,7 +43,7 @@
                                         <h4>Tidak ada tagihan</h4>
                                     </center>
                                 @endif
-                                
+
                             </div>
                             <div class="col-md-6">
                                 <h6 class="">
@@ -52,7 +52,7 @@
                                         Bulan Depan
                                     </center>
                                 </h6>
-                                
+
                                     @if ($getBillNextMonth)
                                 <center>
                                     <h4>{{ ($getBillNextMonth->detail_pr) }}</h4>
@@ -68,7 +68,7 @@
                                     <h4>Tidak ada tagihan</h4>
                                 </center>
                                     @endif
-                                
+
                             </div>
                         </div>
                     </div>
@@ -114,7 +114,13 @@
 
 
                                         </td>
-                                        <td>{{ tgl_indo($bill->tgl_pr) }}</td>
+                                        <td>
+                                            @if (!empty($bill->tgl_pr))
+                                            {{ tgl_indo($bill->tgl_pr) }}
+                                            @else
+
+                                            @endif
+                                           </td>
                                     </tr>
                                     @endforeach
                             </tbody>

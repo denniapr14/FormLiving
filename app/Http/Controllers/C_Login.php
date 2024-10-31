@@ -121,7 +121,33 @@ class C_Login extends Controller
         if (!empty($userPelanggan)) {
             if (Auth::guard('guest')->attempt(['username_plgn' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
                 Session::put('guest', $userPelanggan->id_pelanggan);
+
+
                 $getPelangganProjek = $this->pelangganProjek->firstProjectPelangganWhere(['user_pelanggan.id_pelanggan'=>$userPelanggan->id_pelanggan]);
+
+                if ($getPelangganProjek == null) {
+                    // Get the project and house ID from the order form
+                    $formulirPesanan = DB::table('formulir_pesanan')
+                        ->where('id_pelanggan', $userPelanggan->id_pelanggan)
+                        ->first();
+
+                    if ($formulirPesanan) {
+                        $idRumah = $formulirPesanan->id_rumah;
+                        $idProjek = DB::table('rumah')
+                            ->where('id_rumah', $idRumah)
+                            ->value('id_projek');
+
+                        // Insert new pelanggan projek
+                        DB::table('pelanggan_projek')->insert([
+                            'id_pelanggan' => $userPelanggan->id_pelanggan,
+                            'id_projek' => $idProjek,
+                        ]);
+
+                        $getPelangganProjek = DB::table('pelanggan_projek')
+                            ->where('id_pelanggan', $userPelanggan->id_pelanggan)
+                            ->first();
+                    }
+                }
                 Session::push('selectedProjeks', $getPelangganProjek->nama_projek);
                 // dd($getPelangganProjek);
                 return redirect('/dashboard-guest/'.$getPelangganProjek->nama_projek)->with('success','')
@@ -130,6 +156,54 @@ class C_Login extends Controller
         }
 
         return redirect('login')->with('error', 'Login details are not valid');
+    }
+
+    public function redirectLogin(Request $request){
+        //dd($request->all());
+        // Attempt to log in using the LoginAction function
+        $loginSuccess = $this->LoginAction($request);
+        if ($loginSuccess) {
+            // Get the redirect URL from the request
+            $redirectUrl = $request->input('link-direct');
+
+            // If a redirect URL is provided, redirect to it
+            if ($redirectUrl) {
+                return redirect($redirectUrl)->with('success', "Berhasil Masuk");
+            }
+
+
+            // If no redirect URL is provided, use role-based redirection
+
+                    // dd($getProjekUser);
+                    $userRole = $this->Role(Session::get('user'));
+
+            switch ($userRole) {
+                case 'AdminAccounting':
+                case 'Admin':
+                    return redirect('/dashboard-admin/Greenland')->with('success', "You're signed in!");
+                case 'CEO':
+                    return redirect('/dashboard-admin/Greenland')->with('success', "You're signed in!");
+                case 'SuperAdmin':
+                    return redirect('/dashboard-admin/Greenland')->with('success', "You're signed in!");
+                case 'AdminFormsLiving':
+                    return redirect('/dashboard-admin/Greenland')->with('success', "You're signed in!");
+                default:
+                    return redirect('/')->with('success', "You're signed in!");
+            }
+        }
+
+        if (!empty($userPelanggan)) {
+                if (Auth::guard('guest')->attempt(['username_plgn' => $request->username, 'password' => md5($request->password)], $request->get('remember'))) {
+                    Session::put('guest', $userPelanggan->id_pelanggan);
+
+                    return redirect('/Greenland')
+
+                        ->with('success', 'Anda berhasil masuk!');
+                }
+            }
+
+        // If login fails, redirect back with an error
+        return redirect()->back()->withErrors(['login' => 'Username atau Password Salah, silahkan coba lagi']);
     }
 
     public function Role($idUser)
@@ -143,8 +217,10 @@ class C_Login extends Controller
 
         // dd($user->kategori);
         // die();
+        if(!empty($user)){
+            return $user->kategori;
+        }
 
-        return $user->kategori;
     }
 
     public function emailForgot()
