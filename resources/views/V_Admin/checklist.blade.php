@@ -137,21 +137,18 @@
                                 <th>status</th>
                                 <th>Pengawas</th>
                                 <th>Pengaturan</th>
-
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $no = 1;
                             ?>
-                            @foreach ($getChecklist as $checklist)
+                            @foreach ($getChecklist->sortBy('percentase') as $checklist)
                                 <tr>
                                     <td>{{ $no }}</td>
-
                                     <td>
                                         {{ $checklist->blok }}-{{ $checklist->nomor }} / {{ $checklist->nama_cluster }}
                                         <br>
-
                                     </td>
                                     <td>
                                         <label for="">Persentase : {{ $checklist->percentase }}%</label>
@@ -160,7 +157,6 @@
                                                 <div class="progress-bar bg-danger progress-bar-striped" role="progressbar"
                                                     aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
                                                     aria-valuemax="100" style="width: {{ $checklist->percentase }}%">
-
                                                 </div>
                                             </div>
                                         @elseif($checklist->percentase > 25 && $checklist->percentase < 50)
@@ -168,7 +164,6 @@
                                                 <div class="progress-bar bg-warning progress-bar-striped" role="progressbar"
                                                     aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
                                                     aria-valuemax="100" style="width: {{ $checklist->percentase }}%">
-
                                                 </div>
                                             </div>
                                         @elseif($checklist->percentase > 50 && $checklist->percentase < 75)
@@ -176,7 +171,6 @@
                                                 <div class="progress-bar bg-primary progress-bar-striped" role="progressbar"
                                                     aria-valuenow="{{ $checklist->percentase }}" aria-valuemin="0"
                                                     aria-valuemax="100" style="width: {{ $checklist->percentase }}%">
-
                                                 </div>
                                             </div>
                                         @else
@@ -185,11 +179,9 @@
                                                     role="progressbar" aria-valuenow="{{ $checklist->percentase }}"
                                                     aria-valuemin="0" aria-valuemax="100"
                                                     style="width: {{ $checklist->percentase }}%">
-
                                                 </div>
                                             </div>
                                         @endif
-
                                         <br>
                                         @php
                                             $d = strtotime('now');
@@ -201,24 +193,20 @@
                                         @endphp
                                         @if ($checklist->tgl_deadline > $newd)
                                             <div class="btn btn-outline-danger">
-
                                                 {{ tgl_indo($checklist->tgl_deadline) }}
                                                 <br> Melebihi Deadline <br> Peringatan Sub Kontraktor
                                             </div>
                                         @elseif ($checklist->tgl_deadline > $newdt && $checklist->tgl_deadline < $newdtr)
                                             <div class="btn btn-outline-warning">
-
                                                 {{ tgl_indo($checklist->tgl_deadline) }}
                                                 <br> Mendekati Deadline
                                             </div>
                                         @elseif($checklist->tgl_deadline > $newdtr)
                                             <div class="btn btn-outline-success">
-
                                                 {{ tgl_indo($checklist->tgl_deadline) }}
                                                 <br> Aman
                                             </div>
                                         @endif
-
                                     </td>
                                     <td>
                                         <dl>
@@ -227,7 +215,6 @@
                                                 <dd>{{ $checklist->pengawas1 }}</dd>
                                                 <dt>Pengawas 2</dt>
                                                 <dd>{{ $checklist->pengawas2 }}</dd>
-
                                             </div>
                                             <div class="callout callout-info">
                                                 <dt>Subkon</dt>
@@ -235,155 +222,125 @@
                                             </div>
                                             <div class="callout callout-info">
                                                 <dt>Lantai {{ $checklist->lantai_jl }}</dt>
-
                                             </div>
-
-
-
-
                                         </dl>
                                     </td>
                                     <td>
-                                                <a href="{{ route('getTerminChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
-                                                    class="btn btn-outline-info"><i class="fas fa-clipboard-list    ">
-                                                        Ceklist</i></a><br>
-
-
-                                            @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
-
-                                                    <a href="{{ route('nextTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
-                                                        class="btn btn-outline-info"><i class="fa fa-chevron-right"
-                                                            aria-hidden="true"> Termin</i></a>
-
-                                                    <a href="{{ route('printChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
-                                                        class="btn btn-outline-info"><i class="fa fa-print"
-                                                            aria-hidden="true"></i></a>
-
-                                            @endif
-
-
-
+                                        <a href="{{ route('getTerminChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                            class="btn btn-outline-info"><i class="fas fa-clipboard-list"></i>
+                                            Ceklist</a><br>
                                         @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
-
-                                        <br>
-                                                    <a href="#" class="btn btn-outline-info" data-toggle="modal"
-                                                    data-target="#ChangePengawas">
-                                                    <i class="fas fa-edit    "></i> Pengawas
-                                                </a>
-
-
-
-
-                                                <div class="modal fade" id="ChangePengawas" tabindex="-1" role="dialog"
-                                                    aria-labelledby="pinModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="pinModalLabel">Edit Pengawas</h5>
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <form
-                                                                action="{{ route('editPengawas.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <div class="modal-body">
-
-                                                                    <div class="form-group">
-                                                                      <label for="">Pengawas 1</label>
-                                                                     <select name="pengawas1" id="" class="form-control" required>
-                                                                        <option value="{{ $checklist->id_pengawas1 }}">{{ $checklist->pengawas1 }}</option>
+                                            <a href="{{ route('nextTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                class="btn btn-outline-info"><i class="fa fa-chevron-right"
+                                                    aria-hidden="true"> Termin</i></a>
+                                            <a href="{{ route('printChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                class="btn btn-outline-info"><i class="fa fa-print"
+                                                    aria-hidden="true"></i></a>
+                                        @endif
+                                        @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
+                                            <br>
+                                            <a href="#" class="btn btn-outline-info" data-toggle="modal"
+                                                data-target="#ChangePengawas">
+                                                <i class="fas fa-edit"></i> Pengawas
+                                            </a>
+                                            <div class="modal fade" id="ChangePengawas" tabindex="-1" role="dialog"
+                                                aria-labelledby="pinModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="pinModalLabel">Edit Pengawas</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form
+                                                            action="{{ route('editPengawas.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label for="">Pengawas 1</label>
+                                                                    <select name="pengawas1" id=""
+                                                                        class="form-control" required>
+                                                                        <option value="{{ $checklist->id_pengawas1 }}">
+                                                                            {{ $checklist->pengawas1 }}</option>
                                                                         @foreach ($getPengawas as $pengawas)
-                                                                            <option value="{{ $pengawas->id_user_admin }}">{{ $pengawas->nama_ua }}</option>
+                                                                            <option
+                                                                                value="{{ $pengawas->id_user_admin }}">
+                                                                                {{ $pengawas->nama_ua }}</option>
                                                                         @endforeach
-                                                                     </select>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="">Pengawas 2</label>
-                                                                       <select name="pengawas2" id="" class="form-control" required>
-                                                                          <option value="{{ $checklist->id_pengawas2 }}">{{ $checklist->pengawas2 }}</option>
-                                                                          @foreach ($getPengawas as $pengawas)
-                                                                          <option value="{{ $pengawas->id_user_admin }}">{{ $pengawas->nama_ua }}</option>
-                                                                      @endforeach
-                                                                       </select>
-                                                                      </div>
+                                                                    </select>
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-outline-success">Submit</button>
+                                                                <div class="form-group">
+                                                                    <label for="">Pengawas 2</label>
+                                                                    <select name="pengawas2" id=""
+                                                                        class="form-control" required>
+                                                                        <option value="{{ $checklist->id_pengawas2 }}">
+                                                                            {{ $checklist->pengawas2 }}</option>
+                                                                        @foreach ($getPengawas as $pengawas)
+                                                                            <option
+                                                                                value="{{ $pengawas->id_user_admin }}">
+                                                                                {{ $pengawas->nama_ua }}</option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                    <a href="#" class="btn btn-outline-info" data-toggle="modal"
-                                                        data-target="#dateModal">
-                                                        <i class="fa fa-calendar" aria-hidden="true"></i> Deadline
-                                                    </a>
-
-
-                                                <div class="modal fade" id="dateModal" tabindex="-1" role="dialog"
-                                                    aria-labelledby="pinModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="pinModalLabel">Change Deadline</h5>
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
                                                             </div>
-                                                            <form
-                                                                action="{{ route('customTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <div class="modal-body">
-
-                                                                    <div class="mb-3">
-                                                                        <label for="dateInput"
-                                                                            class="form-label">Date</label>
-                                                                        <input type="date" name="tanggalTermin"
-                                                                            class="form-control" id="dateInput">
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-outline-success">Submit</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-outline-success">Submit</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
-
-
-
+                                            </div>
+                                            <a href="#" class="btn btn-outline-info" data-toggle="modal"
+                                                data-target="#dateModal">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i> Deadline
+                                            </a>
+                                            <div class="modal fade" id="dateModal" tabindex="-1" role="dialog"
+                                                aria-labelledby="pinModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="pinModalLabel">Change Deadline
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form
+                                                            action="{{ route('customTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <div class="modal-body">
+                                                                <div class="mb-3">
+                                                                    <label for="dateInput" class="form-label">Date</label>
+                                                                    <input type="date" name="tanggalTermin"
+                                                                        class="form-control" id="dateInput">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-outline-success">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @else
                                         @endif
-
-
-
-
-
-
                                     </td>
-
-
                                 </tr>
                                 @php
                                     $no++;
                                 @endphp
                             @endforeach
-
                         </tbody>
                     </table>
 
@@ -392,6 +349,95 @@
 
             </div>
         </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title">
+                    <h5>Checklist Completed (100%)</h5>
+                </div>
+                <div class="table-responsive">
+                    <table id="completedChecklistTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Rumah</th>
+                                <th>Status</th>
+                                <th>Pengawas</th>
+                                <th>Pengaturan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            ?>
+                            @foreach ($getChecklist as $checklist)
+                                @if ($checklist->percentase == 100)
+                                    <tr>
+                                        <td>{{ $no }}</td>
+                                        <td>{{ $checklist->blok }}-{{ $checklist->nomor }} /
+                                            {{ $checklist->nama_cluster }}</td>
+                                        <td>
+                                            <label for="">Persentase : {{ $checklist->percentase }}%</label>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success progress-bar-striped"
+                                                    role="progressbar" aria-valuenow="{{ $checklist->percentase }}"
+                                                    aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{ $checklist->percentase }}%">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <dl>
+                                                <div class="callout callout-info">
+                                                    <dt>Pengawas 1</dt>
+                                                    <dd>{{ $checklist->pengawas1 }}</dd>
+                                                    <dt>Pengawas 2</dt>
+                                                    <dd>{{ $checklist->pengawas2 }}</dd>
+                                                </div>
+                                                <div class="callout callout-info">
+                                                    <dt>Subkon</dt>
+                                                    <dd>{{ $checklist->nama_subkon }}</dd>
+                                                </div>
+                                                <div class="callout callout-info">
+                                                    <dt>Lantai {{ $checklist->lantai_jl }}</dt>
+                                                </div>
+                                            </dl>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('getTerminChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                class="btn btn-outline-info"><i class="fas fa-clipboard-list"></i>
+                                                Ceklist</a><br>
+                                            @if ($user->kategori == 'AdminTeknik' || $user->kategori == 'SuperAdmin')
+                                                <a href="{{ route('nextTermin.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                    class="btn btn-outline-info"><i class="fa fa-chevron-right"
+                                                        aria-hidden="true"> Termin</i></a>
+                                                <a href="{{ route('printChecklist.admin', [$getProjek->nama_projek, Crypt::encrypt($checklist->id_rumah)]) }}"
+                                                    class="btn btn-outline-info"><i class="fa fa-print"
+                                                        aria-hidden="true"></i></a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $no++;
+                                    @endphp
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('#completedChecklistTable').DataTable({
+                    lengthMenu: [
+                        [25, 50, 100, -1],
+                        [25, 50, 100, 'All'],
+                    ],
+                    searching: true,
+                    autoWidth: true
+                });
+            });
+        </script>
         <!-- end: content -->
 
 
