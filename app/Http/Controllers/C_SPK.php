@@ -490,4 +490,52 @@ class C_SPK extends Controller
         return redirect()->back()->with("success",'Gambar telah di hapus');
 
     }
+
+    function PrintSPK($projek, $id_spk) {
+
+        $decryptedID = Crypt::decrypt($id_spk);
+
+        $firstSPK = $this->spk->firstJoinSPK(['spk.id_spk' => $decryptedID]);
+        // dd($getSPP);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+        if (session()->has('user')) {
+            $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
+
+            $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+            $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+                'user_menu.status_um' => 'aktif',
+                'user_menu.id_kategori' => $user->id_kategori
+            ])->collect();
+            // dd($getUserMenu);
+            $foundMatchingMenu = false;
+
+
+            foreach ($getUserMenu as $menu) {
+                if ($menu->url_menu == request()->segment(1)) {
+                    $foundMatchingMenu = true;
+                    break;
+                }
+            }
+
+            // if (!$foundMatchingMenu) {
+            //     return redirect('/login')->with('danger', 'anda tidak dapat mengakses halaman ini');
+            // }
+
+            return view(
+                'V_Admin.printSPK',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getProjek',
+                    'getUserMenu',
+                    'firstSPK'
+
+                )
+            );
+        } else {
+            return redirect('/login');
+        }
+
+    }
 }

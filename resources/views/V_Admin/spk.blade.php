@@ -60,6 +60,7 @@
                         <tr>
                             <th>no</th>
                             <th>Rumah</th>
+
                             <th>Pengaturan</th>
                         </tr>
                     </thead>
@@ -224,6 +225,10 @@
                                 <td>
                                     <a href="{{ route('editSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spk->id_spk)]) }}"
                                         class="btn btn-outline-info"><i class="fas fa-edit    "></i></a>
+
+                                <a href="{{ route('printSPK.admin', [$getProjek->nama_projek, Crypt::encrypt($spk->id_spk)]) }}" class="btn btn-outline-info">
+                                    <i class="fas fa-print"></i> Print SPK
+                                </a>
                                 </td>
                             </tr>
                             @php

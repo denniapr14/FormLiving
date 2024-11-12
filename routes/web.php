@@ -465,6 +465,7 @@ route::get('/TambahSPK/{projek}/{id_spp}', [C_SPK::class, 'addSPK'])->name('addS
 route::post('/TambahSPK/action/{projek}/{id_spp}', [C_SPK::class, 'addSPKAction'])->name('addSPKAction.admin');
 route::get('/editSPK/{projek}/{id_spk}', [C_SPK::class, 'editSPK'])->name('editSPK.admin');
 route::post('/simpanEditSPK/action/{projek}/{id_spk}',  [C_SPK::class, 'editSPKAction'])->name('editSPKAction.admin');
+route::get('/printSPK/{projek}/{id_spk}', [C_SPK::class, 'printSPK'])->name('printSPK.admin');
 
 // IMAGE SPK
 route::post('/editImageSPK/action/{projek}/{id_img_spk}', [C_SPK::class, 'editImageSPKAction'])->name('editImageSPKAction.admin');
