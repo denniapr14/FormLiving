@@ -1,3 +1,14 @@
+
+@extends('V_Admin.app')
+
+@extends('flashdata')
+@section('title', 'Forms| SPK')
+@section('pageTitle', 'SPK')
+@section('back', route('spk.admin', [$getProjek->nama_projek]))
+@section('breadcrumb', 'SPK')
+{{-- @section('breadcrumb2', 'Tambah Produk') --}}
+@section('content')
+
 <style>
 .myinput {
   height: 30px;
@@ -117,18 +128,14 @@ table.no-space th {
           <h3 class="card-title">Collapsable</h3>
 
           <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-            </button>
+            {{--  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>  --}}
           </div>
           <!-- /.card-tools -->
         </div>
         <!-- /.card-header -->
-        <div class="card-body" id="printcontent">
-          <?php
-                if (!empty($spk)) {
+        <div class="card-body" id="">
 
-                    foreach ($spk as $spk) {
-                        ?>
 
 
           <div>
@@ -140,7 +147,7 @@ table.no-space th {
 
               <p>
 
-                <input type="text" name="" style="font-weight:bold" class="my-input" value="">
+                <input type="text" name="" style="font-weight:bold" class="my-input" value="{{ $firstSPK->no_spk }}">
 
               </p>
               <br>
@@ -178,7 +185,7 @@ table.no-space th {
               <tr>
                 <td style="width:20px;">1. </td>
                 <td style="width:200px;">Nama </td>
-                <td>: <?=$spk->nama_plgn ?></td>
+                <td>: {{ $firstSPK->nama_plgn }}</td>
 
               </tr>
               <tr>
@@ -211,20 +218,20 @@ table.no-space th {
               <tr>
                 <td style="">2. </td>
                 <td>Nama </td>
-                <td>: <?= $spk->nama_subkon?></td>
+                <td>: {{ $firstSPK->nama_subkon }}</td>
 
               </tr>
 
               <tr>
                 <td></td>
                 <td>Bertindak atas nama </td>
-                <td>: <?= $spk->perusahaan_subkon ?></td>
+                <td>: {{ $firstSPK->perusahaan_subkon }}</td>
 
               </tr>
               <tr>
                 <td></td>
                 <td>Alamat </td>
-                <td>: <?= $spk->alamat_subkon ?></td>
+                <td>: {{ $firstSPK->alamat_subkon }}</td>
               </tr>
               <tr>
                 <td></td>
@@ -262,8 +269,8 @@ table.no-space th {
           <div>
             <p style="line-height: 1.5;">
               Pihak Kesatu memberikan pekerjaan kepada Pihak Kedua berupa : <br>
-              Rumah tipe <?= $spk->tipe ?>/<?= $spk->luas_tanah?> blok <?= $spk->blok.' - '. $spk->nomor ?> <input
-                type="text" class="myinput" placeholder="masukan edisi" value="<?= $spk->catatan_khusus ?>" required
+              Rumah tipe {{ $firstSPK->tipe }}/{{ $firstSPK->luas_tanah }} blok {{ $firstSPK->blok.' - '. $firstSPK->nomor }}<input
+                type="text" class="myinput" placeholder="masukan edisi" value="{{ $firstSPK->catatan_khusus }}" required
                 style="width: 30%;">
 
             </p>
@@ -285,7 +292,7 @@ table.no-space th {
               <li>Nilai borongan untuk pekerjaan tersebut : <br>
                 <table>
                   <tr>
-                    <td>Blok <?= $spk->blok.' - '. $spk->nomor ?> tipe <?= $spk->tipe ?> </td>
+                    <td>Blok {{ $firstSPK->blok.' - '. $firstSPK->nomor }} tipe {{ $firstSPK->tipe }} </td>
                     <td>x </td>
                     <td>Rp.&nbsp;
 
@@ -301,7 +308,7 @@ table.no-space th {
                     <td>PPN 10%
                     </td>
                     <td>= <u>Rp. <input type="number" class="myinput" id="ppn" name=""
-                          value="<?= rupiah($spk->ppn_spk) ?>"></u>
+                          value="{{ rupiah($firstSPK->ppn_spk) }}"></u>
 
                     </td>
 
@@ -312,7 +319,7 @@ table.no-space th {
                     <td>Total
                     </td>
                     <td>= Rp. <input type="number" class="myinput" id="totalHarga" name="" onkeyup="hasilTotal()"
-                        value="<?= rupiah($spk->ppn_spk) ?>">
+                        value="{{ rupiah($firstSPK->ppn_spk) }}">
                       <a href="#"
                         onclick="terbilangSetInput('totalHarga', 'terisi'); return convertToRupiah(document.getElementById('totalharga').value, 'textHarga1'); "
                         class="btn btn-outline-primary noprint">
@@ -490,7 +497,7 @@ table.no-space th {
                 <p style="line-height: 1.5;">Untuk mengawasi jalannya pekerjaan yang diborongkan, Pihak Kesatu menunjuk
                   Teknik Perencanaan dan
                   Pengawas Lapangan selaku penanggung jawab di bidang teknik dan kualitas pekerjaan (c.q Saudara
-                  <?= $spk->pengawas1 ?>).</p>
+                   {{ $firstSPK->nama_ua }} ).</p>
               </li>
               <li>
                 <p style="line-height: 1.5;">Pihak Kedua wajib memberikan laporan tertulis pada wakil Pihak Kesatu
@@ -663,7 +670,7 @@ table.no-space th {
               </tr>
               <tr>
                 <td><b>ROBERT MARTEE</b></td>
-                <td><b><?=$spk->nama_subkon?></b></td>
+                <td><b>{{ $firstSPK->nama_subkon }}</b></td>
 
               </tr>
             </table>
@@ -683,12 +690,6 @@ table.no-space th {
       </div>
 
 
-      <?php
-		$getTipe = $spk->tipe;
-
-		}
-
-                }?>
 
 
 
@@ -739,3 +740,5 @@ table.no-space th {
 
       }
       </script>
+
+      @endsection
