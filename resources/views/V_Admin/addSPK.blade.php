@@ -24,7 +24,7 @@
 
             </div>
 
-            <div class="form-group">
+            {{--  <div class="form-group">
                 <label for="">Berkas </label>
                 <input type="file" name="file_spk" id="" class="form-control" placeholder=""
                     aria-describedby="helpId">
@@ -40,9 +40,9 @@
                     </div>
                 </div>
 
-            </div>
+            </div>  --}}
             <div class="form-group">
-                <label for="">Tambah bangunan?</label>
+                <label for="">Tambah Mutu?</label>
                 <select name="tambah_bangunan_spk" class="form-control" id="tambah_bangunan_spk">
                     <option value="">--Pilih--</option>
                     <option value="ada">Ada</option>
@@ -50,8 +50,14 @@
 
                 </select>
             </div>
+            {{--  <div id="TambahBangunanKet" style="display: none">
 
-            <div id="TambahBangunan" style="display: none">
+            </div>  --}}
+            <div class="form-group">
+                <label for="">Keterangan Tambah Mutu</label>
+                <textarea name="keterangan" id="" class="form-control" cols="30" rows="2"></textarea>
+            </div>
+            {{--  <div id="TambahBangunan" style="display: none">
                 <div class="form-group">
                     <label for="">Harga Tambah Bangunan</label>
                     <input type="number" name="total_spk" id="total_spk" class="form-control" placeholder=""
@@ -68,11 +74,8 @@
                 </div>
                 <div id="installment-table"></div>
 
-                <div class="form-group">
-                  <label for="">Keterangan Tambah Kurang</label>
-                  <textarea name="keterangan" id="" class="form-control" cols="30" rows="2"></textarea>
-                </div>
-            </div>
+
+            </div>  --}}
 
             <button type="submit" class="btn btn-outline-success">Submit</button>
 

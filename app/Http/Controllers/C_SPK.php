@@ -226,11 +226,11 @@ class C_SPK extends Controller
                     'id_formulir' => $getSPPAdd->id_formulir,
                     'id_pelanggan' => $getSPPAdd->id_pelanggan,
                     'id_rumah'      => $getSPPAdd->id_rumah,
-                    'id_subkon'     => $getSPPAdd->id_subkon,
-                    'file_spk'      => $filenameSPK,
+                    // 'id_subkon'     => $getSPPAdd->id_subkon,
+                    // 'file_spk'      => $filenameSPK,
                     'no_surat_spk'  => $request->no_surat_spk,
-                    'total_spk'     => $request->total_spk,
-                    'cicilan_spk'   => $request->cicilan == null ? 0 : $request->cicilan,
+                    // 'total_spk'     => $request->total_spk,
+                    // 'cicilan_spk'   => $request->cicilan == null ? 0 : $request->cicilan,
                     'status_spk'    => "pengajuan",
                     'tambah_bangunan_spk' => $request->tambah_bangunan_spk == null ? "tidak ada" : $request->tambah_bangunan_spk,
                     'ket_tambah_bangunan' => $request->keterangan,
@@ -271,34 +271,34 @@ class C_SPK extends Controller
 
 
 
-            $dataCicilan = array();
-            if ($request->tambah_bangunan_spk == "ada") {
+            // $dataCicilan = array();
+            // if ($request->tambah_bangunan_spk == "ada") {
 
 
-                $cicilanSPK = $request->input('cicilanSPK'); // Array of installment amounts
-                $tanggalBayar = $request->input('tanggal_bayar'); // Array of payment dates
+            //     $cicilanSPK = $request->input('cicilanSPK'); // Array of installment amounts
+            //     $tanggalBayar = $request->input('tanggal_bayar'); // Array of payment dates
 
 
 
-                // Loop through each installment amount and corresponding payment date
-                for ($i = 0; $i < count($cicilanSPK); $i++) {
-                    $cicilan = $cicilanSPK[$i];
-                    $tanggal = $tanggalBayar[$i];
+            //     // Loop through each installment amount and corresponding payment date
+            //     for ($i = 0; $i < count($cicilanSPK); $i++) {
+            //         $cicilan = $cicilanSPK[$i];
+            //         $tanggal = $tanggalBayar[$i];
 
-                    // Assuming $getInputSPK is already defined
-                    $dataCicilan[] = [
-                        'id_spk' => $getInputSPK,
-                        'pembayaran_cs' => $cicilan,
-                        'sisa_cs' => $cicilan, // Assuming sisa_cs has the same value as pembayaran_cs initially
-                        'tgl_bayar_cs' => $tanggal // Add the payment date to the array
+            //         // Assuming $getInputSPK is already defined
+            //         $dataCicilan[] = [
+            //             'id_spk' => $getInputSPK,
+            //             'pembayaran_cs' => $cicilan,
+            //             'sisa_cs' => $cicilan, // Assuming sisa_cs has the same value as pembayaran_cs initially
+            //             'tgl_bayar_cs' => $tanggal // Add the payment date to the array
 
-                    ];
+            //         ];
 
-                    // Save $cicilan and $tanggal to your database or perform any other operations
-                }
-                // dd($dataCicilan);
-                DB::table('cicilan_spk')->insert($dataCicilan);
-            }
+            //         // Save $cicilan and $tanggal to your database or perform any other operations
+            //     }
+            //     // dd($dataCicilan);
+            //     DB::table('cicilan_spk')->insert($dataCicilan);
+            // }
             return redirect()->route('spk.admin', [$getProjek->nama_projek])->with('success', 'SPK telah di buat');
 
             // if (!$foundMatchingMenu) {
@@ -326,7 +326,7 @@ class C_SPK extends Controller
         $getCicilanSPK = $this->cicilanspk->getCicilanSPKWhere(['id_spk' => $decryptedID]);
         if (session()->has('user')) {
             $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', session::get('user'));
-
+            // dd($user);
             $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
             $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
                 'user_menu.status_um' => 'aktif',
@@ -408,7 +408,7 @@ class C_SPK extends Controller
                 'file_spk'  => $filenameSPK,
                 'id_subkon'     => $request->subkon,
                 'ket_tambah_bangunan' =>  $request->keterangan,
-                'status_spk'            => $request->status_spk
+                // 'status_spk'            => $request->status_spk
             ];
 
 
