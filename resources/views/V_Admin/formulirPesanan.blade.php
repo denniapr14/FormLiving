@@ -213,6 +213,11 @@
                                                 <a href="{{ route('listPembayaranRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}" class="btn btn-outline-info">
                                                     <i class="fas fa-edit    ">Pembayaran</i>
                                                 </a>
+                                                <a href="" class="btn btn-outline-info"><i class="fa fa-plus"
+                                                    aria-hidden="true"></i> SPP</a>
+                                                    <a
+                                                    href="{{ route('cetakSuratPemesananRumahCostum.admin', [$getProjek->nama_projek, Crypt::encrypt($fp->id_formulir)]) }}"  class="btn btn-outline-info">
+                                                    <i class="fas fa-edit    "></i> Costum Print</a>
 
                                             @else
                                             @endif
@@ -305,6 +310,11 @@
                                                     <a
                                                     href="{{ route('listPembayaranRumah.admin', [$getProjek->nama_projek, Crypt::encrypt($fpMobile->id_formulir)]) }}"  class="btn btn-outline-info">
                                                     <i class="fas fa-edit    "></i> Pembayaran</a>
+                                                <a href="" class="btn btn-outline-info"><i class="fa fa-plus"
+                                                        aria-hidden="true"></i> SPP</a>
+                                                        <a
+                                                        href="{{ route('cetakSuratPemesananRumahCostum.admin', [$getProjek->nama_projek, Crypt::encrypt($fpMobile->id_formulir)]) }}"  class="btn btn-outline-info">
+                                                        <i class="fas fa-edit    "></i> Costum Print</a>
                                                 @else
                                                 @endif
                                                 <a href="{{ route('cetakSuratPemesananRumah.admin', Crypt::encrypt($fpMobile->id_formulir)) }}"

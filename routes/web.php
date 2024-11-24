@@ -353,6 +353,7 @@ Route::get('/ubah-surat-pemesanan-rumah/{projek}/{id}', [C_SuratPemesananRumah::
 Route::post('/ubah-surat-pemesanan-rumah/action/{projek}/{id}', [C_SuratPemesananRumah::class, 'editSuratPemesananRumahAction'])->name('editSuratPemesananRumahAction.admin');
 route::post('/ubah-promo-surat-pemesanan-rumah/action/{projek}/{id}', [C_SuratPemesananRumah::class, 'editPromoSuratPemesananRumahAction'])->name('editPromoSuratPemesananRumah.admin');
 Route::get('/cetak-surat-pemesanan-rumah/{id}', [C_SuratPemesananRumah::class, 'cetakSuratPemesananRumah'])->name('cetakSuratPemesananRumah.admin');
+route::get('/costum-cetak-surat-pemesanan-rumah/{projek}/{id}', [C_SuratPemesananRumah::class, 'cetakSuratPemesananRumahCostum'])->name('cetakSuratPemesananRumahCostum.admin');
 
 Route::get('/list-pembayaran-rumah-admin/{projek}/{id}',[C_PembayaranRumah::class,'listPembayaranRumah'])->name('listPembayaranRumah.admin');
 Route::get('/ubah-pembayaran-rumah-admin/{projek}/{id_pembayaran_rumah}', [C_PembayaranRumah::class, 'updatePembayaranRumah'])->name('editPembayaranRumah.admin');
