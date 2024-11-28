@@ -627,7 +627,7 @@
                                         style="padding-top: 3pt;padding-right: 5pt;text-indent: 0pt;line-height: 12pt;text-align: right;">
                                         {{ rupiahNon($getFormulirPesanan->total_harga) }},-</p>
                                         @endif
-                                          
+
                                         </td>
                                     </tr>
                                     </table>
@@ -708,7 +708,7 @@
                                 @endif
                             </tr>
                             @endif
-                               
+
                                 <?php $no++; ?>
                             @endforeach
 
@@ -819,12 +819,7 @@ $('#deleteConfirmationModal').modal('hide');  --}}
                                             <input list="paymentTypes" name="tipePembayaran[]" id="paymentType" placeholder="Pilih atau ketik manual">
 
                                             <!-- Datalist with predefined options -->
-                                            <datalist id="paymentTypes">
-                                                <!-- Cicilan Uang Muka 1 - 10 -->
-                                                <option value="Cicilan Uang Muka 1">
-                                                <option value="Cicilan Uang Muka 2">
-                                                <option value="Cicilan Uang Muka 3">
-                                                <option value="Cicilan Uang Muka 4">
+
                                                 <option value="Cicilan Uang Muka 5">
                                                 <option value="Cicilan Uang Muka 6">
                                                 <option value="Cicilan Uang Muka 7">

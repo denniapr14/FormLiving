@@ -1088,7 +1088,11 @@
                                     <p>{{ $dtpem->detail_pr }}</p>
                                 </td>
                                 <td>
-                                    <p>{{ $dtpem->tgl_pr }}</p>
+                                    <p>@if($dtpem->tgl_pr != "0000-00-00")
+                                        <?= tgl_indo(date('Y-m-d', strtotime($dtpem->tgl_pr))) ?>
+                                        @else
+                                            -
+                                        @endif</p>
                                 </td>
                                 <td>
                                     <p>{{ rupiahNon($dtpem->harga_pr) }}</p>
