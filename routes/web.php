@@ -523,6 +523,8 @@ route::get('/pesandong/{param}', [LaporanRem::class, 'test_message'])->name('tes
 route::get('/komisi/{projek}', [C_Komisi::class, 'Komisi'])->name('komisi.admin');
 route::get('/tambah-komisi/{projek}/{id_formulirc}', [C_Komisi::class, 'addKomisiAction'])->name('addKomisi.admin');
 route::post('/edit-komisi/{projek}/{id_komisi}', [C_Komisi::class, 'editKomisiAction'])->name('editKomisi.admin');
+route::get('/cetak-komisi/{projek}/{id}', [C_Komisi::class, 'cetakKomisi'])->name('cetakKomisi.admin');
+route::post('/cetak-komisi-action/{id}', [C_Komisi::class, 'cetakKomisiAction'])->name('cetakKomisiAction.admin');
 
 
 

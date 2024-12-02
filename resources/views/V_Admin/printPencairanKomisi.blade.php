@@ -1,5 +1,14 @@
-<!DOCTYPE html>
-<html>
+
+@extends('V_Admin.app')
+
+@extends('flashdata')
+@section('title', 'Forms| Komisi')
+@section('pageTitle', 'Komisi')
+@section('back', route('komisi.admin', [$getProjek->nama_projek]))
+@section('breadcrumb', 'Komisi')
+{{-- @section('breadcrumb2', 'Tambah Produk') --}}
+@section('content')
+
 <head>
     <style>
         table {
@@ -42,107 +51,113 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>TERMIN PENCAIRAN FEE SALES</h2>
-        <p>Bulan Closing : April 2024</p>
-        <p>Sales : Indira</p>
-    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="header">
+                <h2>TERMIN PENCAIRAN FEE SALES</h2>
+                <p>Bulan Closing : April 2024</p>
+                <p>Sales : Indira</p>
+            </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Tgl. Closing</th>
-                <th>Nama User</th>
-                <th>Blok</th>
-                <th>LB/LT</th>
-                <th>Pembayaran</th>
-                <th>Harga Jual</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Tgl. Closing</th>
+                        <th>Nama User</th>
+                        <th>Blok</th>
+                        <th>LB/LT</th>
+                        <th>Pembayaran</th>
+                        <th>Harga Jual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <h3>Prosentase Fee Sales</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Termin</th>
-                <th>Keterangan</th>
-                <th>Tanggal</th>
-                <th>Jumlah</th>
-                <th>Cek-list</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>30%</td>
-                <td>Fee Closing</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>35%</td>
-                <td>Bonus Penjualan setelah Realisasi (KPR) / Uang Masuk 50% (In-House)</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>35%</td>
-                <td>Bonus Penjualan setelah BAST (Berita Acara Serah Terima)</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="2">Total</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+            <h3>Prosentase Fee Sales</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Termin</th>
+                        <th>Keterangan</th>
+                        <th>Tanggal</th>
+                        <th>Jumlah</th>
+                        <th>Cek-list</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>30%</td>
+                        <td>Fee Closing</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>35%</td>
+                        <td>Bonus Penjualan setelah Realisasi (KPR) / Uang Masuk 50% (In-House)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>35%</td>
+                        <td>Bonus Penjualan setelah BAST (Berita Acara Serah Terima)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <div class="note">
-        Note : Fee Closing Maksimal Rp 5.000.000
-    </div>
+            <div class="note">
+                Note : Fee Closing Maksimal Rp 5.000.000
+            </div>
 
-    <div class="signatures">
-        <div class="signature-block">
-            <p>Disetujui Oleh,</p>
-            <br><br>
-            <p>Gilbert Setiawan</p>
-            <p><i>Chief Executive Officer</i></p>
+            <div class="signatures">
+                <div class="signature-block">
+                    <p>Disetujui Oleh,</p>
+                    <br><br>
+                    <p>Gilbert Setiawan</p>
+                    <p><i>Chief Executive Officer</i></p>
+                </div>
+                <div class="signature-block">
+                    <p>Diketahui Oleh,</p>
+                    <br><br>
+
+                    <p>Andreas Wibisono</p>
+                    <p><i>Accounting Manager</i></p>
+                </div>
+                <div class="signature-block">
+                    <p>Dibuat Oleh,</p>
+                    <br><br>
+                    <p>Indira</p>
+                    <p><i>Sales</i></p>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 20px;">
+                Malang, ....................................
+            </div>
         </div>
-        <div class="signature-block">
-            <p>Diketahui Oleh,</p>
-            <br><br>
-
-            <p>Andreas Wibisono</p>
-            <p><i>Accounting Manager</i></p>
-        </div>
-        <div class="signature-block">
-            <p>Dibuat Oleh,</p>
-            <br><br>
-            <p>Indira</p>
-            <p><i>Sales</i></p>
-        </div>
     </div>
 
-    <div style="text-align: right; margin-top: 20px;">
-        Malang, ....................................
-    </div>
 </body>
-</html>
+
+@endsection

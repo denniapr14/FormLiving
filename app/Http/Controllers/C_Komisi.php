@@ -59,7 +59,7 @@ class C_Komisi extends Controller
             ->join('rumah', 'formulir_pesanan.id_rumah', '=', 'rumah.id_rumah')
             ->join('projek', 'rumah.id_projek', '=', 'projek.id_projek')
             ->join('user_admin', 'komisi.id_user_admin', '=', 'user_admin.id_user_admin')
-            ->join('user_pelanggan','formulir_pesanan.id_pelanggan','=','user_pelanggan.id_pelanggan')
+            ->join('user_pelanggan', 'formulir_pesanan.id_pelanggan', '=', 'user_pelanggan.id_pelanggan')
             // ->where('id_projek', $getProjek->id_projek)
             ->get();
         // dd($getKomisi);
@@ -144,53 +144,95 @@ class C_Komisi extends Controller
     }
 
 
-        public function addKomisiAction($projek, $idFormulir, Request $request)
-        {
+    public function addKomisiAction($projek, $idFormulir, Request $request)
+    {
 
-            $getFP = $this->formulirPesanan->getFormulirPesananJoin7Where($idFormulir);
-            $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+        $getFP = $this->formulirPesanan->getFormulirPesananJoin7Where($idFormulir);
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
 
-            // dd($getFP);
-            $komisiRumah = $getFP->harga_awal * 0.01;
-            $data = [
-                'id_user_admin' => $getFP->id_user_admin,
-                'id_formulir' => $idFormulir,
-                'harga_rumah_komisi' => $getFP->harga_awal,
-                'komisi_rumah' => $komisiRumah,
+        // dd($getFP);
+        $komisiRumah = $getFP->harga_awal * 0.01;
+        $data = [
+            'id_user_admin' => $getFP->id_user_admin,
+            'id_formulir' => $idFormulir,
+            'harga_rumah_komisi' => $getFP->harga_awal,
+            'komisi_rumah' => $komisiRumah,
 
-                'komisi1' => $request->komisi1,
-                'komisi2' => $request->komisi2,
-                'komisi3' => $request->komisi3,
-                'total_komisi1' => $komisiRumah * 0.35,
-                'total_komisi2' => $komisiRumah * 0.30,
-                'total_komisi3' => $komisiRumah * 0.30,
-                'tgl_input' => Carbon::now()
-            ];
+            'komisi1' => $request->komisi1,
+            'komisi2' => $request->komisi2,
+            'komisi3' => $request->komisi3,
+            'total_komisi1' => $komisiRumah * 0.35,
+            'total_komisi2' => $komisiRumah * 0.30,
+            'total_komisi3' => $komisiRumah * 0.30,
+            'tgl_input' => Carbon::now()
+        ];
 
-            DB::table('komisi')->insert($data);
+        DB::table('komisi')->insert($data);
 
 
 
-            return redirect()->back()->with('success', 'Komisi berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Komisi berhasil ditambahkan');
+    }
+    public function editKomisiAction($projek, $id_komisi, Request $request)
+    {
+
+
+        $decryptedIdKomisi = Crypt::decrypt($id_komisi);
+        $getKomisi = DB::table('komisi')->where('id_komisi', $decryptedIdKomisi)->first();
+
+        $data = [
+            'komisi1' => $request->komisi1,
+            'komisi2' => $request->komisi2,
+            'komisi3' => $request->komisi3,
+        ];
+
+        DB::table('komisi')->where('id_komisi', $decryptedIdKomisi)->update($data);
+
+
+
+        return redirect()->back()->with('success', 'Komisi berhasil diubah');
+    }
+
+    public function cetakKomisi($projek, $id_komisi)
+    {
+
+        $user = $this->userAdmin->getUserKategoriWhere('user_admin.id_user_admin', '=', Session::get('user'));
+
+        $projekUser = $this->userProjek->getProjectUserWhere('user_admin.id_user_admin', '=', session::get('user'));
+        $getUserMenu = $this->userMenu->getUserMenuWhereArr('*', [
+            'user_menu.status_um' => 'aktif',
+            'user_menu.id_kategori' => $user->id_kategori
+        ])->collect();
+        $decryptedIdKomisi = Crypt::decrypt($id_komisi);
+        $getKomisi = DB::table('komisi')->where('id_komisi', $decryptedIdKomisi)->first();
+        $getProjek = $this->projek->firstProjek('*', 'nama_projek', '=', $projek);
+
+        $getFP = $this->formulirPesanan->getFormulirPesananJoin7Where($getKomisi->id_formulir);
+        $getFP->username_ua= "Nining";
+        $getFP->id_user_admin = 68;
+        // dd($getFP);
+
+        if ($getFP->username_ua == "Nining" || $getFP->id_user_admin == 68 || $getFP->username_ua == "NiningSales" || $getFP->id_user_admin == 6) {
+            return view('V_Admin.printPencairanKomisiNining',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getProjek',
+                    'getUserMenu',
+                    'getKomisi',
+
+                )
+            );
+        } else {
+            return view('V_Admin.printPencairanKomisi',
+                compact(
+                    'user',
+                    'projekUser',
+                    'getProjek',
+                    'getUserMenu',
+                    'getKomisi',
+                )
+            );
         }
-        public function editKomisiAction($projek, $id_komisi, Request $request)
-        {
-
-
-            $decryptedIdKomisi = Crypt::decrypt($id_komisi);
-            $getKomisi = DB::table('komisi')->where('id_komisi', $decryptedIdKomisi)->first();
-
-            $data = [
-                'komisi1' => $request->komisi1,
-                'komisi2' => $request->komisi2,
-                'komisi3' => $request->komisi3,
-            ];
-
-            DB::table('komisi')->where('id_komisi', $decryptedIdKomisi)->update($data);
-
-
-
-            return redirect()->back()->with('success', 'Komisi berhasil diubah');
-        }
-
+    }
 }

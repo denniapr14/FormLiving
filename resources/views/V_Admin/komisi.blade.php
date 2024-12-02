@@ -242,9 +242,16 @@
                                     </td>
 
                                     <td>
+                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'AdminAccounting' || $user->kategori == 'StafAcc')
+
                                         <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#editKomisi{{ $komisi->id_komisi }}">
                                             Edit Komisi
                                         </button>
+                                        @endif
+
+                                        @if ($user->kategori == 'SuperAdmin' || $user->kategori == 'Sekretaris')
+                                        <a href="{{ route('cetakKomisi.admin', [$getProjek->nama_projek, Crypt::encrypt($komisi->id_komisi)]) }}" class="btn btn-outline-info btn-sm">Cetak Komisi</a>
+                                        @endif
 
                                         <!-- Edit Komisi Modal -->
                                         <div class="modal fade" id="editKomisi{{ $komisi->id_komisi }}" tabindex="-1" role="dialog" aria-labelledby="editKomisiModalLabel{{ $komisi->id_komisi }}" aria-hidden="true">
